@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+<Ui>
+	<!-- Reference lua script file here -->
+	<Script file="AccountLogin.lua" />
+	
+	<!-- Account login frame -->
+	<Frame name="AccountLogin" setAllPoints="true">
+		<Layers>
+			<Layer>
+				<Texture file="Interface/Logo">
+					<Size>
+						<AbsDimension x="200" y="100"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset>
+								<AbsDimension x="0" y="8"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
+			</Layer>
+		</Layers>
+	</Frame>
+</Ui>

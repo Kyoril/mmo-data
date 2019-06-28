@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<Ui>
+	<Script file="FrameParent.lua" />
+	<Frame name="FrameParent">
+		<Scripts>
+			<OnLoad>FrameParent_OnLoad();</OnLoad>
+			<OnEvent>FrameParent_OnEvent();</OnEvent>
+			<OnUpdate>FrameParentFadeUpdate(arg1);</OnUpdate>
+		</Scripts>
+	</Frame>
+</Ui>

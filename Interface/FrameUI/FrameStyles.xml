@@ -1,0 +1,33 @@
+<?xml version="1.0" ?>
+<Ui>
+	<!-- A simple frame with a background area -->
+	<FrameStyle name="SimpleFrameStyle">
+		<ImagerySection name="Main">
+			<ImageryComponent>
+				<Area>
+					<Dim type="LEFT_EDGE"><AbsoluteDim value="0" /></Dim>
+					<Dim type="TOP_EDGE"><AbsoluteDim value="0" /></Dim>
+					<Dim type="RIGHT_EDGE"><UnifiedDim scale="1" type="RIGHT_EDGE" /></Dim>
+					<Dim type="BOTTOM_EDGE"><UnifiedDim scale="1" type="BOTTOM_EDGE" /></Dim>
+				</Area>
+				<Texture name="FrameBackground" />
+				<VertFormat type="STRETCHED" />
+				<HorzFormat type="STRETCHED" />
+			</ImageryComponent>
+		</ImagerySection>
+		
+		<!-- Enabled state imagery -->
+		<StateImagery name="Enabled">
+			<Layer>
+				<Section section="Main" />
+			</Layer>
+		</StateImagery>
+		
+		<!-- Disabled state imagery -->
+		<StateImagery name="Disabled">
+			<Layer>
+				<Section section="Main" color="FF888888" />
+			</Layer>
+		</StateImagery>
+	</FrameStyle>
+</Ui>
