@@ -1,25 +1,62 @@
 <?xml version="1.0" ?>
-<Ui>
+<UiLayout>
 	<!-- Reference lua script file here -->
 	<Script file="AccountLogin.lua" />
 	
 	<!-- Account login frame -->
-	<Frame name="AccountLogin" setAllPoints="true">
-		<Layers>
-			<Layer>
-				<Texture file="Interface/Logo">
-					<Size>
-						<AbsDimension x="200" y="100"/>
-					</Size>
-					<Anchors>
-						<Anchor point="TOP">
-							<Offset>
-								<AbsDimension x="0" y="8"/>
-							</Offset>
-						</Anchor>
-					</Anchors>
-				</Texture>
-			</Layer>
-		</Layers>
+	<Frame name="AccountLogin" parent="GlueParent">
+		<Area>
+			<Anchor point="LEFT" />
+			<Anchor point="RIGHT" />
+			<Anchor point="TOP" />
+			<Anchor point="BOTTOM" />
+		</Area>
+		
+		<Frame name="AccountNameLabel" inherits="GlueTextLarge" text="ACCOUNT_NAME">
+			<Area>
+				<Position><AbsDimension y="75"/></Position>
+				<Anchor point="H_CENTER" />
+			</Area>
+		</Frame>
+		<Frame name="AccountNameField" inherits="GlueTextField" text="Faewyn">
+			<Area>
+				<Position><AbsDimension y="115"/></Position>
+				<Anchor point="H_CENTER" />
+			</Area>
+		</Frame>
+		<Frame name="AccountPasswordLabel" inherits="GlueTextLarge" text="ACCOUNT_PASSWORD">
+			<Area>
+				<Position><AbsDimension y="180"/></Position>
+				<Anchor point="H_CENTER" />
+			</Area>
+		</Frame>
+		<Frame name="AccountPasswordField" inherits="GlueTextField" password="true" text="********">
+			<Area>
+				<Position><AbsDimension y="210"/></Position>
+				<Anchor point="H_CENTER" />
+			</Area>
+		</Frame>
+		
+		<Frame name="CopyrightLabel" inherits="GlueTextSmall" text="COPYRIGHT_TEXT">
+			<Area>
+				<Size><AbsDimension x="0" y="22" /></Size>
+				<Anchor point="H_CENTER" />
+				<Anchor point="BOTTOM" />
+			</Area>
+		</Frame>
+		
+		<Frame name="LoginButton" inherits="GlueButton" text="LOGIN">
+			<Area>
+				<Position><AbsDimension y="300" /></Position>
+				<Anchor point="H_CENTER" />
+			</Area>
+		</Frame>
+		
+		<Frame name="QuitButton" inherits="GlueButton" text="QUIT">
+			<Area>
+				<Anchor point="RIGHT" />
+				<Anchor point="BOTTOM" />
+			</Area>
+		</Frame>
 	</Frame>
-</Ui>
+</UiLayout>

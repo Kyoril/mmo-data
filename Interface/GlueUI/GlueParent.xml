@@ -1,11 +1,20 @@
 <?xml version="1.0" ?>
-<Ui>
+<UiLayout>
 	<Script file="GlueParent.lua" />
-	<Frame name="GlueParent" setAllPoints="true">
+	<Frame name="GlueParent" parent="TopFrame">
+		<Area>
+			<Anchor point="TOP" />
+			<Anchor point="BOTTOM" />
+			<Anchor point="LEFT" />
+			<Anchor point="RIGHT" />
+		</Area>
+		
+		<!-- TODO: 
 		<Scripts>
 			<OnLoad>GlueParent_OnLoad();</OnLoad>
 			<OnEvent>GlueParent_OnEvent();</OnEvent>
 			<OnUpdate>GlueParentFadeUpdate(arg1);</OnUpdate>
 		</Scripts>
+		-->
 	</Frame>
-</Ui>
+</UiLayout>

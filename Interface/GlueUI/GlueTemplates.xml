@@ -1,0 +1,162 @@
+<?xml version="1.0"?>
+
+<!-- This file contains frame templates that are often used by the GlueUI part. -->
+<UiLayout>
+	
+	<!-- GlueButton template: Common buttons -->
+	<Frame name="GlueButton" type="Button" style="GlueButton" renderer="ButtonRenderer">
+		<Visual>
+			<ImagerySection name="NormalFrame">
+				<BorderComponent texture="Interface/GlueUI/ButtonNormal.htex" borderSize="30">
+					<Area>
+						<!-- TODO: Define area -->
+					</Area>
+				</BorderComponent>
+			</ImagerySection>
+			<ImagerySection name="HoveredFrame">
+				<BorderComponent texture="Interface/GlueUI/ButtonHovered.htex" borderSize="30">
+					<Area>
+						<!-- TODO: Define area -->
+					</Area>
+				</BorderComponent>
+			</ImagerySection>
+			<ImagerySection name="PushedFrame">
+				<BorderComponent texture="Interface/GlueUI/ButtonPushed.htex" borderSize="30">
+					<Area>
+						<!-- TODO: Define area -->
+					</Area>
+				</BorderComponent>
+			</ImagerySection>
+			<ImagerySection name="DisabledFrame">
+				<BorderComponent texture="Interface/GlueUI/ButtonDisabled.htex" borderSize="30">
+					<Area>
+						<!-- TODO: Define area -->
+					</Area>
+				</BorderComponent>
+			</ImagerySection>
+			<ImagerySection name="Caption">
+				<TextComponent font="Fonts/arbutusslab-regular.ttf" size="10" outline="1" color="FFEED37C" horzAlign="CENTER" vertAlign="CENTER">
+					<Area>
+						<!-- TODO: Define area -->
+					</Area>
+				</TextComponent>
+			</ImagerySection>
+			<!-- TODO: Remove these sections and only use the Caption section with overridden color values -->
+			<ImagerySection name="HoveredCaption">
+				<TextComponent font="Fonts/arbutusslab-regular.ttf" size="10" outline="1" color="FFFFFFFF" horzAlign="CENTER" vertAlign="CENTER">
+					<Area>
+						<!-- TODO: Define area -->
+					</Area>
+				</TextComponent>
+			</ImagerySection>
+			<ImagerySection name="DisabledCaption">
+				<TextComponent font="Fonts/arbutusslab-regular.ttf" size="10" outline="1" color="AE888888" horzAlign="CENTER" vertAlign="CENTER">
+					<Area>
+						<!-- TODO: Define area -->
+					</Area>
+				</TextComponent>
+			</ImagerySection>
+			<StateImagery name="Normal">
+				<Layer>
+					<Section section="NormalFrame" />
+					<Section section="Caption" color="FFEED37C" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Hovered">
+				<Layer>
+					<Section section="HoveredFrame" />
+					<Section section="HoveredCaption" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Pushed">
+				<Layer>
+					<Section section="PushedFrame" />
+					<Section section="Caption" color="FFAAAAAA" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="DisabledFrame" />
+					<Section section="DisabledCaption" color="AE888888" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+		<Area>
+			<Size>
+				<AbsDimension x="220" y="64" />
+			</Size>
+		</Area>
+	</Frame>
+	
+	<!-- Small label -->
+	<Frame name="GlueTextSmall" style="GlueTextSmall" renderer="DefaultRenderer">
+		<Visual>
+			<ImagerySection name="Text">
+				<TextComponent font="Fonts/arbutusslab-regular.ttf" size="10" outline="1" color="FFEED37C" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+		<Area>
+			<Size><AbsDimension x="200" y="22" /></Size>
+		</Area>
+	</Frame>
+	
+	<!-- Large label (headline) -->
+	<Frame name="GlueTextLarge" style="GlueTextLarge" renderer="DefaultRenderer">
+		<Visual>
+			<ImagerySection name="Text">
+				<TextComponent font="Fonts/arbutusslab-regular.ttf" size="18" outline="1" color="FFEED37C" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+		<Area>
+			<Size><AbsDimension x="200" y="45" /></Size>
+		</Area>
+	</Frame>
+	
+	<!-- TextField template -->
+	<Frame name="GlueTextField" style="GlueTextField" renderer="DefaultRenderer">
+		<Visual>
+			<ImagerySection name="Frame">
+				<BorderComponent texture="Interface/GlueUI/TextFieldBorder.htex" borderSize="40">
+					<Area></Area>
+				</BorderComponent>
+				<TextComponent font="Fonts/arbutusslab-regular.ttf" size="10" outline="1" color="FFEED37C" vertAlign="CENTER" >
+					<Area></Area>
+				</TextComponent>
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Frame" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="Frame" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+		<Area>
+			<Size><AbsDimension x="220" y="48" /></Size>
+		</Area>
+	</Frame>
+	
+</UiLayout>
