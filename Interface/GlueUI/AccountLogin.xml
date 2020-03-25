@@ -4,57 +4,77 @@
 	<Script file="AccountLogin.lua" />
 	
 	<!-- Account login frame -->
-	<Frame name="AccountLogin" parent="GlueParent">
-		<Area>
-			<Anchor point="LEFT" />
-			<Anchor point="RIGHT" />
-			<Anchor point="TOP" />
-			<Anchor point="BOTTOM" />
-		</Area>
-		
-		<Frame name="AccountNameLabel" inherits="GlueTextLarge" text="ACCOUNT_NAME">
+	<Frame name="AccountLogin" parent="GlueParent" setAllPoints="true" hidden="false">
+´		<Property name="Focusable" value="true" />
+	
+		<Events>
+			<OnEvent>
+				AccountLogin_OnEvent(event)
+			</OnEvent>
+		</Events>
+	
+		<Frame name="AccountPasswordField" inherits="GlueTextField">
+			<Property name="Masked" value="true" />
 			<Area>
-				<Position><AbsDimension y="75"/></Position>
+				<Anchor point="BOTTOM" relativePoint="V_CENTER" />
 				<Anchor point="H_CENTER" />
 			</Area>
 		</Frame>
-		<Frame name="AccountNameField" inherits="GlueTextField" text="Faewyn">
+		<Frame name="AccountPasswordLabel" inherits="GlueTextLarge">
+			<Property name="Text" value="ACCOUNT_PASSWORD" />
 			<Area>
-				<Position><AbsDimension y="115"/></Position>
+				<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="AccountPasswordField" offset="-8" />
 				<Anchor point="H_CENTER" />
 			</Area>
 		</Frame>
-		<Frame name="AccountPasswordLabel" inherits="GlueTextLarge" text="ACCOUNT_PASSWORD">
+		<Frame name="AccountNameField" inherits="GlueTextField">
 			<Area>
-				<Position><AbsDimension y="180"/></Position>
+				<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="AccountPasswordLabel" offset="-16" />
 				<Anchor point="H_CENTER" />
 			</Area>
 		</Frame>
-		<Frame name="AccountPasswordField" inherits="GlueTextField" password="true" text="********">
+		<Frame name="AccountNameLabel" inherits="GlueTextLarge">
+			<Property name="Text" value="ACCOUNT_NAME" />
 			<Area>
-				<Position><AbsDimension y="210"/></Position>
-				<Anchor point="H_CENTER" />
-			</Area>
-		</Frame>
-		
-		<Frame name="CopyrightLabel" inherits="GlueTextSmall" text="COPYRIGHT_TEXT">
-			<Area>
-				<Size><AbsDimension x="0" y="22" /></Size>
-				<Anchor point="H_CENTER" />
-				<Anchor point="BOTTOM" />
-			</Area>
-		</Frame>
-		
-		<Frame name="LoginButton" inherits="GlueButton" text="LOGIN">
-			<Area>
-				<Position><AbsDimension y="300" /></Position>
+				<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="AccountNameField" offset="-8" />
 				<Anchor point="H_CENTER" />
 			</Area>
 		</Frame>
 		
-		<Frame name="QuitButton" inherits="GlueButton" text="QUIT">
+		<Frame name="LoginButton" inherits="GlueButtonPrimary">
+			<Property name="Text" value="LOGIN" />
 			<Area>
-				<Anchor point="RIGHT" />
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="AccountPasswordField" offset="64" />
+				<Anchor point="H_CENTER" />
+			</Area>
+			<Events>
+				<OnClicked>
+					LoginButton:Disable()
+					GlueDialogLabel:SetText("Connecting...")
+					GlueDialogBackground:Show()
+					RunConsoleCommand("login " .. AccountNameField:GetText() .. " " .. AccountPasswordField:GetText())
+				</OnClicked>
+			</Events>
+		</Frame>
+		
+		<Frame name="QuitButton" inherits="GlueButton">
+			<Property name="Text" value="QUIT" />
+			<Area>
+				<Anchor point="RIGHT" offset="-24" />
+				<Anchor point="BOTTOM" offset="-24"/>
+			</Area>
+			<Events>
+				<OnClicked>
+					RunConsoleCommand("quit")
+				</OnClicked>
+			</Events>
+		</Frame>
+		
+		<Frame name="CopyrightLabel" inherits="GlueTextSmall">
+			<Property name="Text" value="COPYRIGHT_TEXT" />
+			<Area>
+				<Size><AbsDimension x="0" y="22" offset="-8" /></Size>
+				<Anchor point="H_CENTER" />
 				<Anchor point="BOTTOM" />
 			</Area>
 		</Frame>

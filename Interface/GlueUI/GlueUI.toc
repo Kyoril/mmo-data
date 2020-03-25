@@ -1,6 +1,9 @@
 # Include control templates first so that they are known when the layout files that
 # reference them by name are able to find them
-Interface/GlueUI/GlueTemplates.xml
+GlueTemplates.xml
+
 # Load layout files
-Interface/GlueUI/GlueParent.xml
-Interface/GlueUI/AccountLogin.xml
+GlueParent.xml
+AccountLogin.xml
+GlueDialog.xml
+CharSelect.xml

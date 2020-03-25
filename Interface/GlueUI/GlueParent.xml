@@ -1,14 +1,8 @@
 <?xml version="1.0" ?>
 <UiLayout>
 	<Script file="GlueParent.lua" />
-	<Frame name="GlueParent" parent="TopFrame">
-		<Area>
-			<Anchor point="TOP" />
-			<Anchor point="BOTTOM" />
-			<Anchor point="LEFT" />
-			<Anchor point="RIGHT" />
-		</Area>
-		
+	
+	<Frame name="GlueParent" parent="TopFrame" setAllPoints="true">
 		<!-- TODO: 
 		<Scripts>
 			<OnLoad>GlueParent_OnLoad();</OnLoad>

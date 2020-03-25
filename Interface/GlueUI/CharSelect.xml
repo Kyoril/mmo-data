@@ -1,0 +1,100 @@
+<?xml version="1.0"?>
+<UiLayout>
+	<Frame name="CharButton" type="Button" renderer="ButtonRenderer">
+		<Visual>
+			<ImagerySection name="FrameNormal">
+				<BorderComponent texture="Interface/GlueUI/CharButtonUp.htex" borderSize="16" />
+			</ImagerySection>
+			<ImagerySection name="FrameHovered">
+				<BorderComponent texture="Interface/GlueUI/CharButtonHovered.htex" borderSize="16" />
+			</ImagerySection>
+			<ImagerySection name="FramePushed">
+				<BorderComponent texture="Interface/GlueUI/CharButtonPushed.htex" borderSize="16" />
+			</ImagerySection>
+			<ImagerySection name="FrameDisabled">
+				<BorderComponent texture="Interface/GlueUI/CharButtonDisabled.htex" borderSize="16" />
+			</ImagerySection>
+			<ImagerySection name="Icon">
+				<ImageComponent texture="Interface/GlueUI/AlphaMask.htex">
+					<Area><Inset all="14" /></Area>
+				</ImageComponent>
+				<ImageComponent texture="Interface/GlueUI/IconHelmet.htex">
+					<Area><Inset all="14" /></Area>
+				</ImageComponent>
+			</ImagerySection>
+			<StateImagery name="Normal">
+				<Layer>
+					<Section section="FrameNormal" />
+					<Section section="Icon" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Hovered">
+				<Layer>
+					<Section section="FrameHovered" />
+					<Section section="Icon" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Pushed">
+				<Layer>
+					<Section section="FramePushed" />
+					<Section section="Icon" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="FrameDisabled" />
+					<Section section="Icon" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+		<Area>
+			<Size><AbsDimension x="96" y="96" /></Size>
+		</Area>
+	</Frame>
+	
+	<!-- This is the character selection screen frame. It covers the whole screen. -->
+	<Frame name="CharSelect" parent="GlueParent" setAllPoints="true" hidden="true">
+		
+		<Frame name="CharSelectEnterButton" inherits="GlueButtonPrimary">
+			<Property name="Text" value="ENTER_WORLD" />
+			<Area>
+				<Anchor point="BOTTOM" offset="-50" />
+				<Anchor point="H_CENTER" />
+			</Area>
+		</Frame>
+		
+		<Frame name="CharDeleteButton" inherits="GlueButton">
+			<Property name="Text" value="DELETE_CHARACTER" />
+			<Area>
+				<Anchor point="RIGHT" offset="-12" />
+				<Anchor point="BOTTOM" offset="-12" />
+			</Area>
+		</Frame>
+		<Frame name="CharCreateButton" inherits="GlueButton">
+			<Property name="Text" value="CREATE_CHARACTER" />
+			<Area>
+				<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CharDeleteButton" offset="-12" />
+				<Anchor point="BOTTOM" offset="-12" />
+			</Area>
+		</Frame>
+		
+		<Frame name="CharButton02" inherits="CharButton">
+			<Area>
+				<Anchor point="H_CENTER" />
+				<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="CharSelectEnterButton" offset="-16" />
+			</Area>
+		</Frame>
+		<Frame name="CharButton01" inherits="CharButton">
+			<Area>
+				<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CharButton02" />
+				<Anchor point="BOTTOM" relativePoint="BOTTOM" relativeTo="CharButton02" />
+			</Area>
+		</Frame>
+		<Frame name="CharButton03" inherits="CharButton">
+			<Area>
+				<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CharButton02" />
+				<Anchor point="BOTTOM" relativePoint="BOTTOM" relativeTo="CharButton02" />
+			</Area>
+		</Frame>
+	</Frame>
+</UiLayout>
