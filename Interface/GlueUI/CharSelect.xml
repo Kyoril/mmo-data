@@ -53,7 +53,8 @@
 	</Frame>
 	
 	<!-- This is the character selection screen frame. It covers the whole screen. -->
-	<Frame name="CharSelect" parent="GlueParent" setAllPoints="true" hidden="true">
+	<Frame name="CharSelect" parent="GlueParent" setAllPoints="true">
+		<Property name="Visible" value="false" />
 		
 		<Frame name="CharSelectEnterButton" inherits="GlueButtonPrimary">
 			<Property name="Text" value="ENTER_WORLD" />
@@ -73,8 +74,8 @@
 		<Frame name="CharCreateButton" inherits="GlueButton">
 			<Property name="Text" value="CREATE_CHARACTER" />
 			<Area>
-				<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CharDeleteButton" offset="-12" />
-				<Anchor point="BOTTOM" offset="-12" />
+				<Anchor point="RIGHT" offset="-12" />
+				<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="CharDeleteButton" offset="-12" />
 			</Area>
 		</Frame>
 		

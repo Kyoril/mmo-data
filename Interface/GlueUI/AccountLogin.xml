@@ -49,10 +49,7 @@
 			</Area>
 			<Events>
 				<OnClicked>
-					LoginButton:Disable()
-					GlueDialogLabel:SetText("Connecting...")
-					GlueDialogBackground:Show()
-					RunConsoleCommand("login " .. AccountNameField:GetText() .. " " .. AccountPasswordField:GetText())
+					AccountLogin_Login()
 				</OnClicked>
 			</Events>
 		</Frame>

@@ -2,6 +2,8 @@
 
 <!-- This file contains frame templates that are often used by the GlueUI part. -->
 <UiLayout xmlns="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://mmo-dev.net/ Ui.xsd">
+	<Font name="DefaultSmall" file="Fonts/arbutusslab-regular.ttf" size="10" outline="1" />
+	<Font name="DefaultHeader" file="Fonts/arbutusslab-regular.ttf" size="18" outline="1" />
 	
 	<!-- GlueButton template: Common buttons -->
 	<Frame name="GlueButton" type="Button" renderer="ButtonRenderer">
@@ -35,7 +37,7 @@
 				</BorderComponent>
 			</ImagerySection>
 			<ImagerySection name="Caption">
-				<TextComponent font="Fonts/arbutusslab-regular.ttf" size="10" outline="1" color="FFEED37C" horzAlign="CENTER" vertAlign="CENTER">
+				<TextComponent color="FFEED37C" horzAlign="CENTER" vertAlign="CENTER">
 					<Area>
 						<!-- TODO: Define area -->
 					</Area>
@@ -43,14 +45,14 @@
 			</ImagerySection>
 			<!-- TODO: Remove these sections and only use the Caption section with overridden color values -->
 			<ImagerySection name="HoveredCaption">
-				<TextComponent font="Fonts/arbutusslab-regular.ttf" size="10" outline="1" color="FFFFFFFF" horzAlign="CENTER" vertAlign="CENTER">
+				<TextComponent color="FFFFFFFF" horzAlign="CENTER" vertAlign="CENTER">
 					<Area>
 						<!-- TODO: Define area -->
 					</Area>
 				</TextComponent>
 			</ImagerySection>
 			<ImagerySection name="DisabledCaption">
-				<TextComponent font="Fonts/arbutusslab-regular.ttf" size="10" outline="1" color="AE888888" horzAlign="CENTER" vertAlign="CENTER">
+				<TextComponent color="AE888888" horzAlign="CENTER" vertAlign="CENTER">
 					<Area>
 						<!-- TODO: Define area -->
 					</Area>
@@ -88,6 +90,7 @@
 		</Area>
 	</Frame>
 	
+	<!-- Primary glue button -->
 	<Frame name="GlueButtonPrimary" type="Button" renderer="ButtonRenderer">
 		<Visual>
 			<ImagerySection name="NormalFrame">
@@ -119,7 +122,7 @@
 				</BorderComponent>
 			</ImagerySection>
 			<ImagerySection name="Caption">
-				<TextComponent font="Fonts/arbutusslab-regular.ttf" size="10" outline="1" color="FFEED37C" horzAlign="CENTER" vertAlign="CENTER">
+				<TextComponent color="FFEED37C" horzAlign="CENTER" vertAlign="CENTER">
 					<Area>
 						<!-- TODO: Define area -->
 					</Area>
@@ -127,14 +130,14 @@
 			</ImagerySection>
 			<!-- TODO: Remove these sections and only use the Caption section with overridden color values -->
 			<ImagerySection name="HoveredCaption">
-				<TextComponent font="Fonts/arbutusslab-regular.ttf" size="10" outline="1" color="FFFFFFFF" horzAlign="CENTER" vertAlign="CENTER">
+				<TextComponent color="FFFFFFFF" horzAlign="CENTER" vertAlign="CENTER">
 					<Area>
 						<!-- TODO: Define area -->
 					</Area>
 				</TextComponent>
 			</ImagerySection>
 			<ImagerySection name="DisabledCaption">
-				<TextComponent font="Fonts/arbutusslab-regular.ttf" size="10" outline="1" color="AE888888" horzAlign="CENTER" vertAlign="CENTER">
+				<TextComponent color="AE888888" horzAlign="CENTER" vertAlign="CENTER">
 					<Area>
 						<!-- TODO: Define area -->
 					</Area>
@@ -174,9 +177,11 @@
 	
 	<!-- Small label -->
 	<Frame name="GlueTextSmall" renderer="DefaultRenderer">
+		<Property name="Font" value="DefaultSmall" />
+		^
 		<Visual>
 			<ImagerySection name="Text">
-				<TextComponent font="Fonts/arbutusslab-regular.ttf" size="10" outline="1" color="FFEED37C" horzAlign="CENTER" />
+				<TextComponent color="FFEED37C" horzAlign="CENTER" />
 			</ImagerySection>
 			<StateImagery name="Enabled">
 				<Layer>
@@ -196,9 +201,11 @@
 	
 	<!-- Large label (headline) -->
 	<Frame name="GlueTextLarge" renderer="DefaultRenderer">
+		<Property name="Font" value="DefaultHeader" />
+		
 		<Visual>
 			<ImagerySection name="Text">
-				<TextComponent font="Fonts/arbutusslab-regular.ttf" size="18" outline="1" color="FFEED37C" horzAlign="CENTER" />
+				<TextComponent color="FFEED37C" horzAlign="CENTER" />
 			</ImagerySection>
 			<StateImagery name="Enabled">
 				<Layer>
@@ -218,17 +225,20 @@
 	
 	<!-- TextField template -->
 	<Frame name="GlueTextField" type="TextField" renderer="TextFieldRenderer">
+		<Property name="TextSection" value="Text" />
+		<Property name="HorzAlign" value="LEFT" />
+		<Property name="VertAlign" value="CENTER" />
+	
 		<Visual>
 			<ImagerySection name="Frame">
 				<BorderComponent texture="Interface/GlueUI/TextFieldBorder.htex" borderSize="40">
 					<Area></Area>
 				</BorderComponent>
 			</ImagerySection>
-			<ImagerySection name="Text">
-				<TextComponent font="Fonts/arbutusslab-regular.ttf" size="10" outline="1" color="FFEED37C" vertAlign="CENTER" >
-					<Area><Inset all="16" /></Area>
-				</TextComponent>
+			<ImagerySection name="Caret">
+				<ImageComponent texture="Interface/GlueUI/Caret.htex" />
 			</ImagerySection>
+			
 			<StateImagery name="Enabled">
 				<Layer>
 					<Section section="Frame" />
@@ -239,14 +249,9 @@
 					<Section section="Frame" />
 				</Layer>
 			</StateImagery>
-			<StateImagery name="EnabledText">
+			<StateImagery name="Caret">
 				<Layer>
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="DisabledText">
-				<Layer>
-					<Section section="Text" />
+					<Section section="Caret" />
 				</Layer>
 			</StateImagery>
 		</Visual>

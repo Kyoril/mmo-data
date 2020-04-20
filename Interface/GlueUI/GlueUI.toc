@@ -5,5 +5,6 @@ GlueTemplates.xml
 # Load layout files
 GlueParent.xml
 AccountLogin.xml
-GlueDialog.xml
 CharSelect.xml
+
+GlueDialog.xml

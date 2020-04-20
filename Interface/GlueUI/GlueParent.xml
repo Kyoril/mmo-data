@@ -3,6 +3,8 @@
 	<Script file="GlueParent.lua" />
 	
 	<Frame name="GlueParent" parent="TopFrame" setAllPoints="true">
+		<Property name="Font" value="DefaultSmall" />
+	
 		<!-- TODO: 
 		<Scripts>
 			<OnLoad>GlueParent_OnLoad();</OnLoad>
