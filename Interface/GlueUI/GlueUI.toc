@@ -5,6 +5,7 @@ GlueTemplates.xml
 # Load layout files
 GlueParent.xml
 AccountLogin.xml
+RealmList.xml
 CharSelect.xml
 
 GlueDialog.xml

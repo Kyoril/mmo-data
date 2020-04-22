@@ -28,12 +28,6 @@
 					<Anchor point="H_CENTER" />
 					<Anchor point="BOTTOM" relativeTo="GlueDialog" offset="-20" />
 				</Area>
-				<Events>
-					<OnClicked>
-						GlueDialogBackground:Hide()
-						GlueDialogs[GlueDialog.which].OnAccept()
-					</OnClicked>
-				</Events>
 			</Frame>
 			
 			<Frame name="GlueButton02" inherits="GlueButton">
@@ -44,12 +38,6 @@
 					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="GlueButton01" offset="10" />
 					<Anchor point="BOTTOM" relativeTo="GlueDialog" offset="-20" />
 				</Area>
-				<Events>
-					<OnClicked>
-						GlueDialogBackground:Hide()
-						GlueDialogs[GlueDialog.which].OnAccept()
-					</OnClicked>
-				</Events>
 			</Frame>
 		</Frame>
 	</Frame>

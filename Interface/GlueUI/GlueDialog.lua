@@ -95,3 +95,21 @@ function GlueDialog_Hide()
 		OnCancel()
 	end
 end
+
+function GlueDialog_Button1Clicked()
+	GlueDialogBackground:Hide()
+	GlueDialogs[GlueDialog.which].OnAccept()
+end
+
+function GlueDialog_Button2Clicked()
+	GlueDialogBackground:Hide()
+	GlueDialogs[GlueDialog.which].OnAccept()
+end
+
+function GlueDialog_Load()
+	GlueButton01:SetClickedHandler(GlueDialog_Button1Clicked)
+	GlueButton02:SetClickedHandler(GlueDialog_Button2Clicked)
+end
+
+
+GlueDialog_Load()

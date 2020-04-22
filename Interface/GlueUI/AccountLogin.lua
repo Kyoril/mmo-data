@@ -23,27 +23,31 @@ end
 -- This function is called when the AccountLogin frame is loaded
 function AccountLogin_OnLoad()
 	-- Register the frame to receive events
-	AccountLogin:RegisterEvent("AUTH_SUCCESS")
-	AccountLogin:RegisterEvent("AUTH_FAILED")
-end
-
--- This function is called every time a frame event is triggered for the AccountLogin frame.
-function AccountLogin_OnEvent(event)
-	-- Depending on the event, react respectively
-	if (event == "AUTH_SUCCESS") then
+	AccountLogin:RegisterEvent("AUTH_SUCCESS", function()
 		-- Hide account login window
-		AccountLogin:Hide()
+		--AccountLogin:Hide()
 		
 		-- Show character list
-		CharSelect:Show()
+		--CharSelect:Show()
 		
 		-- Show new glue dialog
 		GlueDialog_Show("RETRIEVE_CHAR_LIST")
-	elseif (event == "AUTH_FAILED") then
+	end)
+	
+	AccountLogin:RegisterEvent("AUTH_FAILED", function(errorCode)
 		GlueDialog_Show("AUTH_ERROR")
-	end
+	end)
+	
+	AccountLogin:RegisterEvent("REALM_LIST", function()
+		GlueDialog_Hide()
+		RealmListFrame:Show()
+	end)
+	
+	LoginButton:SetClickedHandler(AccountLogin_Login)
+	QuitButton:SetClickedHandler(function() 
+		RunConsoleCommand("quit")
+	end)
 end
-
 
 -- Frame loaded
 AccountLogin_OnLoad()
