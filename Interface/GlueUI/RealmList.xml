@@ -1,5 +1,7 @@
 <?xml version="1.0" ?>
 <UiLayout>
+	<Script file="RealmList.lua" />
+
 	<Frame name="RealmListFrame" parent="GlueParent" setAllPoints="true">
 		<Property name="Visible" value="false" />
 		<Property name="Focusable" value="true" />
@@ -10,6 +12,39 @@
 				<Anchor point="V_CENTER" />
 				<Anchor point="H_CENTER" />
 			</Area>
+			
+			<Frame name="RealmListHeaderLabel" inherits="GlueTextLarge">
+				<Property name="Text" value="REALM_LIST" />
+				<Area>
+					<Anchor point="H_CENTER" />
+					<Anchor point="TOP" offset="24" />
+				</Area>
+			</Frame>
+			<Frame name="RealmListHeaderSubLabel" inherits="GlueTextSmall">
+				<Property name="Text" value="CHOOSE_A_REALM" />
+				<Area>
+					<Anchor point="H_CENTER" />
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmListHeaderLabel" />
+				</Area>
+			</Frame>
+			
+			
+			<Frame name="RealmListButton01" inherits="GlueButton">
+				<Property name="Text" value="OKAY" />
+				<Area>
+					<Size><AbsDimension x="200" y="64" /></Size>
+					<Anchor point="H_CENTER" offset="-120" />
+					<Anchor point="BOTTOM" offset="-24" />
+				</Area>
+			</Frame>
+			<Frame name="RealmListButton02" inherits="GlueButton">
+				<Property name="Text" value="CANCEL" />
+				<Area>
+					<Size><AbsDimension x="200" y="64" /></Size>
+					<Anchor point="H_CENTER" offset="120" />
+					<Anchor point="BOTTOM" offset="-24" />
+				</Area>
+			</Frame>
 		</Frame>
 	</Frame>
 </UiLayout>

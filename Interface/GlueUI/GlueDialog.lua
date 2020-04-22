@@ -90,20 +90,23 @@ function GlueDialog_Show(which, text, data)
 end
 
 function GlueDialog_Hide()
-	local OnCancel = GlueDialogs[GlueDialog.which].OnCancel
-	if (OnCancel) then
-		OnCancel()
-	end
+	GlueDialog_Button2Clicked()
 end
 
 function GlueDialog_Button1Clicked()
 	GlueDialogBackground:Hide()
-	GlueDialogs[GlueDialog.which].OnAccept()
+	
+	if (GlueDialogs[GlueDialog.which].OnAccept) then
+		GlueDialogs[GlueDialog.which].OnAccept()
+	end
 end
 
 function GlueDialog_Button2Clicked()
 	GlueDialogBackground:Hide()
-	GlueDialogs[GlueDialog.which].OnAccept()
+	
+	if (GlueDialogs[GlueDialog.which].OnCancel) then
+		GlueDialogs[GlueDialog.which].OnCancel()
+	end
 end
 
 function GlueDialog_Load()

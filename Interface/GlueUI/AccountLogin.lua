@@ -20,33 +20,32 @@ function AccountLogin_Login()
 	RunConsoleCommand("login " .. username .. " " .. password)
 end
 
+function AccountLogin_Quit()
+	RunConsoleCommand("quit")
+end
+
+-- Called when the realm list was received
+function AccountLogin_OnRealmList()
+	GlueDialog_Hide()
+	RealmListFrame:Show()
+end
+
 -- This function is called when the AccountLogin frame is loaded
 function AccountLogin_OnLoad()
 	-- Register the frame to receive events
 	AccountLogin:RegisterEvent("AUTH_SUCCESS", function()
-		-- Hide account login window
-		--AccountLogin:Hide()
-		
-		-- Show character list
-		--CharSelect:Show()
-		
-		-- Show new glue dialog
-		GlueDialog_Show("RETRIEVE_CHAR_LIST")
+		GlueDialog_Show("RETRIEVE_REALM_LIST")
 	end)
-	
 	AccountLogin:RegisterEvent("AUTH_FAILED", function(errorCode)
 		GlueDialog_Show("AUTH_ERROR")
 	end)
 	
-	AccountLogin:RegisterEvent("REALM_LIST", function()
-		GlueDialog_Hide()
-		RealmListFrame:Show()
-	end)
-	
+	-- Register realm list event
+	AccountLogin:RegisterEvent("REALM_LIST", AccountLogin_OnRealmList)
+
+	-- Register button click events
 	LoginButton:SetClickedHandler(AccountLogin_Login)
-	QuitButton:SetClickedHandler(function() 
-		RunConsoleCommand("quit")
-	end)
+	QuitButton:SetClickedHandler(AccountLogin_Quit)
 end
 
 -- Frame loaded
