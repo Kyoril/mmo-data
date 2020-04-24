@@ -3,6 +3,24 @@
 selectedRealm = nil			-- Selected realm name
 
 
+function RealmList_Show()
+	RealmListFrame:Show()
+	RealmListButton01:Disable()
+	
+	-- Clear realm list entries
+	RealmList:RemoveAllChildren()
+	
+	-- Load realm data
+	local realms = loginConnector:GetRealms()
+	for realm in realms do
+		print("Realm: "..realm.id.." - "..realm.name)
+	end	
+end
+
+function RealmList_Hide()
+	RealmListFrame:Hide()
+end
+
 function RealmList_OnLoad()
 	-- Setup button handlers
 	RealmListButton01:SetClickedHandler(RealmList_Accept)
@@ -11,7 +29,7 @@ end
 
 function RealmList_Accept()
 	-- Hide realm list
-	RealmListFrame:Hide()
+	RealmList_Hide()
 	
 	-- Show connect dialog
 	
@@ -21,8 +39,9 @@ end
 
 function RealmList_Cancel()
 	-- Hide realm list frame
-	RealmListFrame:Hide()
-	
+	RealmList_Hide()
+	-- Show login ui again
+	AccountLogin:Show()
 	-- Reenable login button in login ui
 	LoginButton:Enable()
 end

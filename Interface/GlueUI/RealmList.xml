@@ -28,7 +28,6 @@
 				</Area>
 			</Frame>
 			
-			
 			<Frame name="RealmListButton01" inherits="GlueButton">
 				<Property name="Text" value="OKAY" />
 				<Area>
@@ -43,6 +42,26 @@
 					<Size><AbsDimension x="200" y="64" /></Size>
 					<Anchor point="H_CENTER" offset="120" />
 					<Anchor point="BOTTOM" offset="-24" />
+				</Area>
+			</Frame>
+			
+			<Frame name="RealmList" renderer="DefaultRenderer">
+				<Visual>
+					<ImagerySection name="Frame">
+						<ImageComponent texture="Interface/GlueUI/RealmListBackground.htex" tiling="BOTH" />
+						<BorderComponent texture="Interface/GlueUI/RealmListBorder.htex" borderSize="8" />
+					</ImagerySection>
+					<StateImagery name="Enabled">
+						<Layer>
+							<Section section="Frame" />
+						</Layer>
+					</StateImagery>
+				</Visual>
+				<Area>
+					<Anchor point="LEFT" offset="10" />
+					<Anchor point="RIGHT" offset="-10" />
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmListHeaderSubLabel" offset="12" />
+					<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="RealmListButton01" offset="-12" />
 				</Area>
 			</Frame>
 		</Frame>

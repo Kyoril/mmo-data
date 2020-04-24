@@ -27,7 +27,8 @@ end
 -- Called when the realm list was received
 function AccountLogin_OnRealmList()
 	GlueDialog_Hide()
-	RealmListFrame:Show()
+	AccountLogin:Hide()
+	RealmList_Show()
 end
 
 -- This function is called when the AccountLogin frame is loaded
