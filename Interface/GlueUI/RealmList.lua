@@ -67,10 +67,11 @@ function RealmList_Accept()
 	-- Hide realm list
 	RealmList_Hide()
 	
-	-- Show connect dialog
-	
-	-- TODO: Connect to the selected realm
-	
+	-- Show message box
+	GlueDialog_Show("CONNECTING_TO_REALM")
+
+	-- Connect to the given realm
+	realmConnector:ConnectToRealm(selectedRealm)
 end
 
 function RealmList_Cancel()

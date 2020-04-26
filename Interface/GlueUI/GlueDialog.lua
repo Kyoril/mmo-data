@@ -12,12 +12,35 @@ GlueDialogs["CONNECTING"] = {
 	end
 }
 
+GlueDialogs["CONNECTING_TO_REALM"] = {
+	text = "CONNECTING",
+	button1 = "CANCEL",
+	button2 = nil,
+	OnAccept = function()
+		-- Show realm list again
+		RealmList_Show()
+	end,
+	OnCancel = function()
+	end
+}
+
 GlueDialogs["AUTH_ERROR"] = {
 	text = "AUTH_ERROR",
 	button1 = "OKAY",
 	button2 = nil,
 	OnAccept = function()
 		LoginButton:Enable()
+	end,
+	OnCancel = function()
+	end
+}
+
+GlueDialogs["REALM_AUTH_ERROR"] = {
+	text = "AUTH_ERROR",
+	button1 = "OKAY",
+	button2 = nil,
+	OnAccept = function()
+		RealmList_Show()
 	end,
 	OnCancel = function()
 	end
@@ -50,8 +73,7 @@ GlueDialogs["RETRIEVE_CHAR_LIST"] = {
 	button2 = nil,
 	OnAccept = function()
 		CharSelect:Hide()
-		AccountLogin:Show()
-		LoginButton:Enable()
+		RealmList_Show()
 	end,
 	OnCancel = function()
 	end

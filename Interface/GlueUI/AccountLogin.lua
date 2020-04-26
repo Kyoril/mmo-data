@@ -41,6 +41,13 @@ function AccountLogin_OnLoad()
 		GlueDialog_Show("AUTH_ERROR")
 	end)
 	
+	AccountLogin:RegisterEvent("REALM_AUTH_SUCCESS", function()
+		GlueDialog_Show("RETRIEVE_CHAR_LIST")
+	end)
+	AccountLogin:RegisterEvent("REALM_AUTH_FAILED", function(errorCode)
+		GlueDialog_Show("REALM_AUTH_ERROR")
+	end)
+	
 	-- Register realm list event
 	AccountLogin:RegisterEvent("REALM_LIST", AccountLogin_OnRealmList)
 
