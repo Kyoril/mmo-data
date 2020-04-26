@@ -2,13 +2,61 @@
 <UiLayout>
 	<Script file="RealmList.lua" />
 
+	<!-- Virtual frame for realm list items -->
+	<Frame name="RealmListItem" type="Button" renderer="ButtonRenderer">
+		<Visual>
+			<ImagerySection name="BackgroundDefault">
+				<ImageComponent texture="Interface/GlueUI/ListItemHighlight.htex" tint="7F000000" tiling="VERTICAL">
+					<Area><Inset all="2" /></Area>
+				</ImageComponent>
+			</ImagerySection>
+			<ImagerySection name="BackgroundHighlight">
+				<ImageComponent texture="Interface/GlueUI/ListItemHighlight.htex" tint="7FFACC12" tiling="VERTICAL">
+					<Area><Inset all="2" /></Area>
+				</ImageComponent>
+			</ImagerySection>
+			<ImagerySection name="TextDefault">
+				<TextComponent color="FFD0D0D0" horzAlign="LEFT" vertAlign="CENTER" />
+			</ImagerySection>
+			<ImagerySection name="TextHovered">
+				<TextComponent color="FFFFFFFF" horzAlign="LEFT" vertAlign="CENTER" />
+			</ImagerySection>
+			
+			<StateImagery name="Normal">
+				<Layer>
+					<Section section="BackgroundDefault" />
+					<Section section="TextDefault" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Hovered">
+				<Layer>
+					<Section section="BackgroundHighlight" />
+					<Section section="TextHovered" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Pushed">
+				<Layer>
+					<Section section="TextDefault" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="TextDefault" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+		<Area>
+			<Size><AbsDimension y="30" /></Size>
+		</Area>
+	</Frame>
+	
 	<Frame name="RealmListFrame" parent="GlueParent" setAllPoints="true">
 		<Property name="Visible" value="false" />
 		<Property name="Focusable" value="true" />
 		
 		<Frame name="RealmListBorder" inherits="GlueBorderFrame">
 			<Area>
-				<Size><AbsDimension x="800" y="600" /></Size>
+				<Size><AbsDimension x="720" y="560" /></Size>
 				<Anchor point="V_CENTER" />
 				<Anchor point="H_CENTER" />
 			</Area>
