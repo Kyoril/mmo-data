@@ -31,21 +31,24 @@ function AccountLogin_OnRealmList()
 	RealmList_Show()
 end
 
+function AccountLogin_AuthError(frame, errorCode)
+	GlueDialog_Show("AUTH_ERROR", AUTH_ERROR_STRING[errorCode])
+end
+
 -- This function is called when the AccountLogin frame is loaded
 function AccountLogin_OnLoad()
 	-- Register the frame to receive events
 	AccountLogin:RegisterEvent("AUTH_SUCCESS", function()
 		GlueDialog_Show("RETRIEVE_REALM_LIST")
 	end)
-	AccountLogin:RegisterEvent("AUTH_FAILED", function(errorCode)
-		GlueDialog_Show("AUTH_ERROR")
-	end)
+	AccountLogin:RegisterEvent("AUTH_FAILED", AccountLogin_AuthError)
 	
 	AccountLogin:RegisterEvent("REALM_AUTH_SUCCESS", function()
 		GlueDialog_Show("RETRIEVE_CHAR_LIST")
+		CharSelect:Show()
 	end)
 	AccountLogin:RegisterEvent("REALM_AUTH_FAILED", function(errorCode)
-		GlueDialog_Show("REALM_AUTH_ERROR")
+		GlueDialog_Show("REALM_AUTH_ERROR", AUTH_ERROR_STRING[errorCode])
 	end)
 	
 	-- Register realm list event

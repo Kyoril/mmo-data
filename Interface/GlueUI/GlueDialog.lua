@@ -25,7 +25,7 @@ GlueDialogs["CONNECTING_TO_REALM"] = {
 }
 
 GlueDialogs["AUTH_ERROR"] = {
-	text = "AUTH_ERROR",
+	text = "",
 	button1 = "OKAY",
 	button2 = nil,
 	OnAccept = function()
@@ -36,7 +36,7 @@ GlueDialogs["AUTH_ERROR"] = {
 }
 
 GlueDialogs["REALM_AUTH_ERROR"] = {
-	text = "AUTH_ERROR",
+	text = "",
 	button1 = "OKAY",
 	button2 = nil,
 	OnAccept = function()
@@ -79,6 +79,22 @@ GlueDialogs["RETRIEVE_CHAR_LIST"] = {
 	end
 }
 
+AUTH_ERROR_STRING = {}
+AUTH_ERROR_STRING[0] = "AUTH_STATUS_SUCCESS"
+AUTH_ERROR_STRING[1] = "AUTH_STATUS_FAIL_BANNED"
+AUTH_ERROR_STRING[2] = "AUTH_STATUS_FAIL_WRONG_CREDENTIALS"
+AUTH_ERROR_STRING[3] = "AUTH_STATUS_FAIL_ALREADY_ONLINE"
+AUTH_ERROR_STRING[4] = "AUTH_STATUS_FAIL_NO_TIME"
+AUTH_ERROR_STRING[5] = "AUTH_STATUS_FAIL_DB_BUSY"
+AUTH_ERROR_STRING[6] = "AUTH_STATUS_FAIL_VERSION_INVALID"
+AUTH_ERROR_STRING[7] = "AUTH_STATUS_FAIL_VERSION_UPDATE"
+AUTH_ERROR_STRING[8] = "AUTH_STATUS_FAIL_INVALID_SERVER"
+AUTH_ERROR_STRING[9] = "AUTH_STATUS_FAIL_SUSPENDED"
+AUTH_ERROR_STRING[10] = "AUTH_STATUS_FAIL_NO_ACCESS"
+AUTH_ERROR_STRING[11] = "AUTH_STATUS_FAIL_PARENTAL_CONTROL"
+AUTH_ERROR_STRING[12] = "AUTH_STATUS_FAIL_LOCKED"
+AUTH_ERROR_STRING[13] = "AUTH_STATUS_FAIL_TRIAL"
+AUTH_ERROR_STRING[14] = "AUTH_STATUS_FAIL_INTERNAL_ERROR"
 
 function GlueDialog_Show(which, text, data)
 	-- Hide the previous dialog using the cancel button
@@ -87,10 +103,10 @@ function GlueDialog_Show(which, text, data)
 	end
 	
 	-- Setup the dialog text
-	if (text) then
-		GlueDialogLabel:SetText(text)
+	if (text ~= nil) then
+		GlueDialogLabel:SetText(Localize(text))
 	else
-		GlueDialogLabel:SetText(GlueDialogs[which].text)
+		GlueDialogLabel:SetText(Localize(GlueDialogs[which].text))
 	end
 
 	-- Check if there is a second button requested
@@ -101,7 +117,7 @@ function GlueDialog_Show(which, text, data)
 	end
 	
 	-- Change button text
-	GlueButton01:SetText(GlueDialogs[which].button1)
+	GlueButton01:SetText(Localize(GlueDialogs[which].button1))
 
 	-- Save parameters
 	GlueDialog.which = which

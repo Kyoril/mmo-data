@@ -1,0 +1,38 @@
+strings = 
+{
+	(key = "OKAY", string = "Okay")
+	(key = "CANCEL", string = "Cancel")
+	
+	(key = "ACCOUNT_PASSWORD", string = "Account Password")
+	(key = "ACCOUNT_NAME", string = "Account Name")
+	(key = "LOGIN", string = "Login")
+	(key = "QUIT", string = "Quit")
+	(key = "COPYRIGHT_TEXT", string = "Copyright (C) 2020")
+	
+	(key = "REALM_LIST", string = "Realm List")
+	(key = "CHOOSE_A_REALM", string = "Choose a realm from the list below:")
+	
+	(key = "ENTER_WORLD", string = "Enter World")
+	(key = "DELETE_CHARACTER", string = "Delete Character")
+	(key = "CREATE_CHARACTER", string = "Create Character")
+	
+	(key = "AUTH_STATUS_SUCCESS", string = "Success")
+	(key = "AUTH_STATUS_FAIL_BANNED", string = "This account has been closed and is no longer available for use.\nPlease go to https://mmo-dev.net/banned.html for further information.")
+	(key = "AUTH_STATUS_FAIL_WRONG_CREDENTIALS", string = "The information you have entered is not valid.\nPlease check the spelling of the account name and password.\nIf you need help in retrieving a lost or stolen password,\nsee https://mmo-dev.net for more information.")
+	(key = "AUTH_STATUS_FAIL_ALREADY_ONLINE", string = "This account is already logged in. Please check the spelling and try again.")
+	(key = "AUTH_STATUS_FAIL_NO_TIME", string = "You have used up your prepaid time for this account.\nPlease purchase more to continue playing.")
+	(key = "AUTH_STATUS_FAIL_DB_BUSY", string = "Could not log in at this time. Please try again later.")
+	(key = "AUTH_STATUS_FAIL_VERSION_INVALID", string = "Unable to validate game version. This may be caused by file corruption or interference of another program.\nPlease visit https://mmo-dev.net for more information and possible solutions to this issue.")
+	(key = "AUTH_STATUS_FAIL_VERSION_UPDATE", string = "")
+	(key = "AUTH_STATUS_FAIL_INVALID_SERVER", string = "Unable to connect.")
+	(key = "AUTH_STATUS_FAIL_SUSPENDED", string = "This account has been temporarily suspended.\nPlease go to https://mmo-dev.net/banned.html for further information.")
+	(key = "AUTH_STATUS_FAIL_NO_ACCESS", string = "Unable to connect.")
+	(key = "AUTH_STATUS_FAIL_PARENTAL_CONTROL", string = "Access to this account has been blocked by parental controls.\nYour settings may be changed in your account preferences at https://mmo-dev.net.")
+	(key = "AUTH_STATUS_FAIL_LOCKED", string = "You have applied a lock to your account. You can change your locked status at https://mmo-dev.net.")
+	(key = "AUTH_STATUS_FAIL_TRIAL", string = "Your trial subscription has expired. Please visit https://mmo-dev.net to upgrade your account.")
+	(key = "AUTH_STATUS_FAIL_INTERNAL_ERROR", string = "Internal error.")
+	
+	(key = "CONNECTING", string = "Connecting...")
+	(key = "RETRIEVING_CHAR_LIST", string = "Retrieving character list...")
+	(key = "RETRIEVING_REALM_LIST", string = "Retrieving realm list...")
+}
