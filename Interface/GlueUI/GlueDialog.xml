@@ -7,7 +7,7 @@
 	
 		<Frame name="GlueDialog" inherits="GlueBorderFrame">
 			<Area>
-				<Size><AbsDimension x="600" y="160" /></Size>
+				<Size><AbsDimension x="800" y="245" /></Size>
 				<Anchor point="H_CENTER" />
 				<Anchor point="V_CENTER" />
 			</Area>

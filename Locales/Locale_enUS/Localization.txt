@@ -18,7 +18,7 @@ strings =
 	
 	(key = "AUTH_STATUS_SUCCESS", string = "Success")
 	(key = "AUTH_STATUS_FAIL_BANNED", string = "This account has been closed and is no longer available for use.\nPlease go to https://mmo-dev.net/banned.html for further information.")
-	(key = "AUTH_STATUS_FAIL_WRONG_CREDENTIALS", string = "The information you have entered is not valid.\nPlease check the spelling of the account name and password.\nIf you need help in retrieving a lost or stolen password,\nsee https://mmo-dev.net for more information.")
+	(key = "AUTH_STATUS_FAIL_WRONG_CREDENTIALS", string = "The information you have entered is not valid. Please check the spelling of the account name and password. If you need help in retrieving a lost or stolen password, see https://mmo-dev.net for more information.")
 	(key = "AUTH_STATUS_FAIL_ALREADY_ONLINE", string = "This account is already logged in. Please check the spelling and try again.")
 	(key = "AUTH_STATUS_FAIL_NO_TIME", string = "You have used up your prepaid time for this account.\nPlease purchase more to continue playing.")
 	(key = "AUTH_STATUS_FAIL_DB_BUSY", string = "Could not log in at this time. Please try again later.")
@@ -35,4 +35,6 @@ strings =
 	(key = "CONNECTING", string = "Connecting...")
 	(key = "RETRIEVING_CHAR_LIST", string = "Retrieving character list...")
 	(key = "RETRIEVING_REALM_LIST", string = "Retrieving realm list...")
+	
+	(key = "CHANGE_REALM", string = "Change Realm")
 }

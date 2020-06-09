@@ -35,4 +35,6 @@ strings =
 	(key = "CONNECTING", string = "Verbinde...")
 	(key = "RETRIEVING_CHAR_LIST", string = "Rufe Charakterliste ab...")
 	(key = "RETRIEVING_REALM_LIST", string = "Rufe Realmliste ab...")
+	
+	(key = "CHANGE_REALM", string = "Realm wechseln")
 }

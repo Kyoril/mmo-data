@@ -31,6 +31,11 @@ function AccountLogin_OnRealmList()
 	RealmList_Show()
 end
 
+function AccountLogin_OnCharList()
+	GlueDialog_Hide()
+	CharList_Show()
+end
+
 function AccountLogin_AuthError(frame, errorCode)
 	GlueDialog_Show("AUTH_ERROR", AUTH_ERROR_STRING[errorCode])
 end
@@ -50,10 +55,14 @@ function AccountLogin_OnLoad()
 	AccountLogin:RegisterEvent("REALM_AUTH_FAILED", function(errorCode)
 		GlueDialog_Show("REALM_AUTH_ERROR", AUTH_ERROR_STRING[errorCode])
 	end)
+	AccountLogin:RegisterEvent("REALM_DISCONNECTED", function(errorCode)
+		GlueDialog_Show("REALM_AUTH_ERROR", "DISCONNECTED")
+	end)
 	
 	-- Register realm list event
 	AccountLogin:RegisterEvent("REALM_LIST", AccountLogin_OnRealmList)
-
+	AccountLogin:RegisterEvent("CHAR_LIST", AccountLogin_OnCharList)
+	
 	-- Register button click events
 	LoginButton:SetClickedHandler(AccountLogin_Login)
 	QuitButton:SetClickedHandler(AccountLogin_Quit)

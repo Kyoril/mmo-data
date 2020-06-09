@@ -1,5 +1,8 @@
 <?xml version="1.0"?>
 <UiLayout>
+	<Script file="CharSelect.lua" />
+
+	<!-- Virtual character button -->
 	<Frame name="CharButton" type="Button" renderer="ButtonRenderer">
 		<Visual>
 			<ImagerySection name="FrameNormal">
@@ -58,44 +61,76 @@
 		
 		<Frame name="CharSelectEnterButton" inherits="GlueButtonPrimary">
 			<Property name="Text" value="ENTER_WORLD" />
+			<Property name="Enabled" value="False" />
 			<Area>
 				<Anchor point="BOTTOM" offset="-50" />
 				<Anchor point="H_CENTER" />
 			</Area>
 		</Frame>
 		
-		<Frame name="CharDeleteButton" inherits="GlueButton">
-			<Property name="Text" value="DELETE_CHARACTER" />
+		<!-- Character list -->
+		<Frame name="CharListFrame" inherits="GlueBorderFrame">
 			<Area>
+				<Anchor point="TOP" offset="12" />
 				<Anchor point="RIGHT" offset="-12" />
 				<Anchor point="BOTTOM" offset="-12" />
+				<Size><AbsDimension x="360" /></Size>
 			</Area>
-		</Frame>
-		<Frame name="CharCreateButton" inherits="GlueButton">
-			<Property name="Text" value="CREATE_CHARACTER" />
-			<Area>
-				<Anchor point="RIGHT" offset="-12" />
-				<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="CharDeleteButton" offset="-12" />
-			</Area>
-		</Frame>
-		
-		<Frame name="CharButton02" inherits="CharButton">
-			<Area>
-				<Anchor point="H_CENTER" />
-				<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="CharSelectEnterButton" offset="-16" />
-			</Area>
-		</Frame>
-		<Frame name="CharButton01" inherits="CharButton">
-			<Area>
-				<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CharButton02" />
-				<Anchor point="BOTTOM" relativePoint="BOTTOM" relativeTo="CharButton02" />
-			</Area>
-		</Frame>
-		<Frame name="CharButton03" inherits="CharButton">
-			<Area>
-				<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CharButton02" />
-				<Anchor point="BOTTOM" relativePoint="BOTTOM" relativeTo="CharButton02" />
-			</Area>
+			
+			<Frame name="CharDeleteButton" inherits="GlueButton">
+				<Property name="Text" value="DELETE_CHARACTER" />
+				<Property name="Enabled" value="False" />
+				<Area>
+					<Anchor point="LEFT" offset="24" />
+					<Anchor point="RIGHT" offset="-24" />
+					<Anchor point="BOTTOM" offset="-24" />
+				</Area>
+			</Frame>
+			<Frame name="CharCreateButton" inherits="GlueButton">
+				<Property name="Text" value="CREATE_CHARACTER" />
+				<Area>
+					<Anchor point="LEFT" relativeTo="CharDeleteButton" />
+					<Anchor point="RIGHT" relativeTo="CharDeleteButton" />
+					<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="CharDeleteButton" offset="-8" />
+				</Area>
+			</Frame>
+			<Frame name="RealmNameLabel" inherits="GlueTextLarge">
+				<Property name="Text" value="REALM" />
+				<Area>
+					<Anchor point="LEFT" relativeTo="CharDeleteButton" />
+					<Anchor point="RIGHT" relativeTo="CharDeleteButton" />
+					<Anchor point="TOP" offset="24" />
+				</Area>
+			</Frame>
+			<Frame name="ChangeRealmButton" inherits="GlueButton">
+				<Property name="Text" value="CHANGE_REALM" />
+				<Area>
+					<Anchor point="LEFT" relativeTo="CharDeleteButton" />
+					<Anchor point="RIGHT" relativeTo="CharDeleteButton" />
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmNameLabel" offset="8" />
+				</Area>
+			</Frame>
+			
+			<Frame name="CharList" renderer="DefaultRenderer">
+				<Visual>
+					<ImagerySection name="Frame">
+						<ImageComponent texture="Interface/GlueUI/RealmListBackground.htex" tiling="BOTH" />
+						<BorderComponent texture="Interface/GlueUI/RealmListBorder.htex" borderSize="8" />
+					</ImagerySection>
+					<StateImagery name="Enabled">
+						<Layer>
+							<Section section="Frame" />
+						</Layer>
+					</StateImagery>
+				</Visual>
+				<Area>
+					<Anchor point="LEFT" offset="8" />
+					<Anchor point="RIGHT" offset="-8" />
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="ChangeRealmButton" offset="20" />
+					<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="CharCreateButton" offset="-20" />
+				</Area>
+				
+			</Frame>
 		</Frame>
 	</Frame>
 </UiLayout>
