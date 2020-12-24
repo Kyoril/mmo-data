@@ -59,6 +59,10 @@
 	<Frame name="CharSelect" parent="GlueParent" setAllPoints="true">
 		<Property name="Visible" value="false" />
 		
+		<Frame name="CharModel" type="Model" setAllPoints="true" renderer="ModelRenderer">
+			<Property name="ModelFile" value="Models/Cube/Cube.hmsh" />
+		</Frame>
+		
 		<Frame name="CharSelectEnterButton" inherits="GlueButtonPrimary">
 			<Property name="Text" value="ENTER_WORLD" />
 			<Property name="Enabled" value="False" />

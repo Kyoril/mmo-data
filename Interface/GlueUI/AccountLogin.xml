@@ -4,8 +4,9 @@
 	<Script file="AccountLogin.lua" />
 	
 	<!-- Account login frame -->
-	<Frame name="AccountLogin" parent="GlueParent" setAllPoints="true" hidden="false">
-´		<Property name="Focusable" value="true" />
+	<Frame name="AccountLogin" parent="GlueParent" setAllPoints="true" type="Model" renderer="ModelRenderer">
+		<Property name="Focusable" value="true" />
+		<!--<Property name="ModelFile" value="Models/Cube/Cube.mesh" />-->
 		
 		<Frame name="AccountPasswordField" inherits="GlueTextField">
 			<Property name="Masked" value="true" />
@@ -59,5 +60,6 @@
 				<Anchor point="BOTTOM" />
 			</Area>
 		</Frame>
+		
 	</Frame>
 </UiLayout>

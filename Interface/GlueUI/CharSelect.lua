@@ -66,3 +66,11 @@ function CharList_Show()
 	-- Show the character selection screen
 	CharSelect:Show()
 end
+
+function CharSelect_EnterWorld()
+	if (selectedCharacter ~= nil) then
+		realmConnector:EnterWorld(selectedCharacter)
+	end
+end
+
+CharSelectEnterButton:SetClickedHandler(CharSelect_EnterWorld)
