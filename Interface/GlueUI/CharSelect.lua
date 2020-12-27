@@ -12,9 +12,13 @@ function SelectedCharacter_Changed()
 	if (selectedCharacter ~= nil) then
 		CharSelectEnterButton:Enable()
 		CharDeleteButton:Enable()
+		CharModel:Show()
+		SelectedCharName:SetText(selectedCharacter.name)
 	else
 		CharSelectEnterButton:Disable()
 		CharDeleteButton:Disable()
+		CharModel:Hide()
+		SelectedCharName:SetText(Localize("NO_CHARACTER"))
 	end
 end
 
@@ -73,4 +77,30 @@ function CharSelect_EnterWorld()
 	end
 end
 
+function CharSelect_CreateCharacter()
+	
+end
+
+function CharSelect_DeleteCharacter()
+	DeleteConfirmation:Show()
+end
+
+function CharSelect_ChangeRealm()
+	CharSelect:Hide()
+	RealmList_Show()
+end
+
+function CharSelect_ConfirmDelete()
+	
+end
+
+function CharSelect_CancelDelete()
+	DeleteConfirmation:Hide()
+end
+
 CharSelectEnterButton:SetClickedHandler(CharSelect_EnterWorld)
+CharCreateButton:SetClickedHandler(CharSelect_CreateCharacter)
+CharDeleteButton:SetClickedHandler(CharSelect_DeleteCharacter)
+ChangeRealmButton:SetClickedHandler(CharSelect_ChangeRealm)
+DeleteConfirmButton:SetClickedHandler(CharSelect_ConfirmDelete)
+DeleteCancelButton:SetClickedHandler(CharSelect_CancelDelete)

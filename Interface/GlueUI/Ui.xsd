@@ -22,7 +22,7 @@
   </xs:complexType>
 
   <xs:element name="Frame" type="FrameType" />
-  
+
   <xs:element name="UiLayout">
     <xs:complexType>
       <xs:sequence>
@@ -30,7 +30,7 @@
           <xs:complexType>
             <xs:simpleContent>
               <xs:extension base="xs:string">
-                <xs:attribute name="file" type="xs:string" />
+                <xs:attribute name="file" type="xs:string" use="required" />
               </xs:extension>
             </xs:simpleContent>
           </xs:complexType>

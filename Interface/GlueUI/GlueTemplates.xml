@@ -178,7 +178,7 @@
 	<!-- Small label -->
 	<Frame name="GlueTextSmall" renderer="DefaultRenderer">
 		<Property name="Font" value="DefaultSmall" />
-		^
+
 		<Visual>
 			<ImagerySection name="Text">
 				<TextComponent color="FFEED37C" horzAlign="CENTER" />
@@ -202,6 +202,7 @@
 	<!-- Large label (headline) -->
 	<Frame name="GlueTextLarge" renderer="DefaultRenderer">
 		<Property name="Font" value="DefaultHeader" />
+		<Property name="HorzAlign" value="CENTER" />
 		
 		<Visual>
 			<ImagerySection name="Text">
