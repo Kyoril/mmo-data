@@ -7,5 +7,6 @@ GlueParent.xml
 AccountLogin.xml
 RealmList.xml
 CharSelect.xml
+CharCreate.xml
 
 GlueDialog.xml

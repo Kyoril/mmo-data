@@ -37,4 +37,7 @@ strings =
 	(key = "RETRIEVING_REALM_LIST", string = "Retrieving realm list...")
 	
 	(key = "CHANGE_REALM", string = "Change Realm")
+
+	(key = "DELETE", string = "Delete")
+	(key = "CONFIRM_CHAR_DELETE", string = "Do you really want to delete your character?\n\nYou will loose any progress you made!")
 }

@@ -1,4 +1,4 @@
-strings = 
+﻿strings = 
 {
 	(key = "OKAY", string = "Okay")
 	(key = "CANCEL", string = "Abbrechen")
@@ -37,4 +37,7 @@ strings =
 	(key = "RETRIEVING_REALM_LIST", string = "Rufe Realmliste ab...")
 	
 	(key = "CHANGE_REALM", string = "Realm wechseln")
+
+	(key = "DELETE", string = "Löschen")
+	(key = "CONFIRM_CHAR_DELETE", string = "Möchtet Ihr den Charakter wirklich löschen?\n\nJeglicher Fortschritt wird dabei verloren gehen!")
 }

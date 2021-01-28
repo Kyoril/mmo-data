@@ -56,8 +56,20 @@
 	</Frame>
 	
 	<!-- This is the character selection screen frame. It covers the whole screen. -->
-	<Frame name="CharSelect" parent="GlueParent" setAllPoints="true">
+	<Frame name="CharSelect" parent="GlueParent" setAllPoints="true" renderer="DefaultRenderer">
 		<Property name="Visible" value="false" />
+
+		<!-- For now, only a placeholder image is rendered in the background -->
+		<Visual>
+			<ImagerySection name="Background">
+				<ImageComponent texture="Interface/GlueUI/BackgroundPH.htex" tiling="NONE" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Background" />
+				</Layer>
+			</StateImagery>
+		</Visual>
 		
 		<Frame name="CharModel" type="Model" setAllPoints="true" renderer="ModelRenderer">
 			<Property name="Visible" value="false" />
@@ -168,7 +180,6 @@
 					<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="SelectedCharLevel" offset="-8" />
 					<Anchor point="H_CENTER" />
 				</Area>
-				<Property name="Text" value="Faewyn" />
 			</Frame>
 
 
@@ -206,7 +217,7 @@
 					<Anchor point="H_CENTER" />
 					<Anchor point="V_CENTER" />
 					<Size>
-						<AbsDimension x="660" y="340" />
+						<AbsDimension x="660" y="240" />
 					</Size>
 				</Area>
 

@@ -78,7 +78,7 @@ function CharSelect_EnterWorld()
 end
 
 function CharSelect_CreateCharacter()
-	
+	CharCreate_Show()
 end
 
 function CharSelect_DeleteCharacter()
@@ -98,6 +98,8 @@ function CharSelect_CancelDelete()
 	DeleteConfirmation:Hide()
 end
 
+
+-- Register button handlers
 CharSelectEnterButton:SetClickedHandler(CharSelect_EnterWorld)
 CharCreateButton:SetClickedHandler(CharSelect_CreateCharacter)
 CharDeleteButton:SetClickedHandler(CharSelect_DeleteCharacter)
