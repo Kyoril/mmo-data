@@ -1,2 +1,0 @@
-FrameTextures.xml
-FrameStyles.xml

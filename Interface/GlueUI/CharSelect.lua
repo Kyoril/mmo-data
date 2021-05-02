@@ -1,6 +1,8 @@
 
 -- Variables
 selectedCharacter = nil			-- Selected character
+selectedCharacterIndex = -1
+characters = {}
 
 
 function CharListItem_Clicked(item)
@@ -14,7 +16,23 @@ function SelectedCharacter_Changed()
 		CharDeleteButton:Enable()
 		CharModel:Show()
 		SelectedCharName:SetText(selectedCharacter.name)
+
+		if (selectedCharacterIndex < #characters) then
+			CharSelectNextButton:Show()
+		else
+			CharSelectNextButton:Hide()
+		end
+		
+		if (selectedCharacterIndex > 0) then
+			CharSelectPrevButton:Show()
+		else
+			CharSelectPrevButton:Hide()
+		end
+
 	else
+		CharSelectNextButton:Hide()
+		CharSelectPrevButton:Hide()
+
 		CharSelectEnterButton:Disable()
 		CharDeleteButton:Disable()
 		CharModel:Hide()
@@ -35,8 +53,14 @@ function CharList_Show()
 	local lastCharListItem = nil
 	
 	-- Load char list data for iteration
-	local characters = realmConnector:GetCharViews()
-	for character in characters do
+	characters = {}
+	selectedCharacterIndex = -1
+	selectedCharacter = nil
+
+	local characterIndex = 1
+	for character in realmConnector:GetCharViews() do
+		table.insert(characters, character)
+
 		-- Clone item
 		local charListItem = CharButton:Clone()
 		CharList:AddChild(charListItem)
@@ -63,12 +87,27 @@ function CharList_Show()
 		-- Make the first character the selected one (if there is any)
 		if (selectedCharacter == nil) then
 			selectedCharacter = character
+			selectedCharacterIndex = characterIndex
 			SelectedCharacter_Changed()
 		end
+
+		characterIndex = characterIndex + 1
 	end
 	
 	-- Show the character selection screen
 	CharSelect:Show()
+end
+
+function SelectNextCharacter()
+	selectedCharacterIndex = selectedCharacterIndex + 1
+	selectedCharacter = characters[selectedCharacterIndex]
+	SelectedCharacter_Changed()
+end
+
+function SelectPrevCharacter()
+	selectedCharacterIndex = selectedCharacterIndex - 1
+	selectedCharacter = characters[selectedCharacterIndex]
+	SelectedCharacter_Changed()
 end
 
 function CharSelect_EnterWorld()
@@ -106,3 +145,5 @@ CharDeleteButton:SetClickedHandler(CharSelect_DeleteCharacter)
 ChangeRealmButton:SetClickedHandler(CharSelect_ChangeRealm)
 DeleteConfirmButton:SetClickedHandler(CharSelect_ConfirmDelete)
 DeleteCancelButton:SetClickedHandler(CharSelect_CancelDelete)
+CharSelectNextButton:SetClickedHandler(CharSelect_CancelDelete)
+CharSelectPrevButton:SetClickedHandler(CharSelect_CancelDelete)

@@ -150,6 +150,31 @@
 				</Area>
 			</Frame>
 
+
+			<Frame name="CharSelectNextButton" inherits="GlueButton">
+				<Property name="Text" value="&gt;" />
+				<Property name="Visible" value="False" />
+				<Area>
+					<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="CharSelectEnterButton" />
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CharSelectEnterButton" offset="12" />
+					<Size>
+						<AbsDimension x="64" y="64" />
+					</Size>
+				</Area>
+			</Frame>
+
+			<Frame name="CharSelectPrevButton" inherits="GlueButton">
+				<Property name="Text" value="&lt;" />
+				<Property name="Visible" value="False" />
+				<Area>
+					<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="CharSelectEnterButton" />
+					<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CharSelectEnterButton" offset="-12" />
+					<Size>
+						<AbsDimension x="64" y="64" />
+					</Size>
+				</Area>
+			</Frame>
+
 			<Frame name="SelectedCharLevel" inherits="GlueTextSmall">
 				<Property name="HorzAlign" value="RIGHT" />
 				<Area>
