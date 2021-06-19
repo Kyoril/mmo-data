@@ -112,7 +112,7 @@ end
 
 function CharSelect_EnterWorld()
 	if (selectedCharacter ~= nil) then
-		realmConnector:EnterWorld(selectedCharacter)
+		loginState:EnterWorld(selectedCharacter)
 	end
 end
 
