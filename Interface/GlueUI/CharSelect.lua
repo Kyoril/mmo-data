@@ -28,6 +28,9 @@ function CharList_Show()
 	-- Set realm name
 	RealmNameLabel:SetText(realmConnector:GetRealmName())
 	
+	-- Remove all character button views
+	CharList:RemoveAllChildren()
+
 	-- Reset selected character
 	selectedCharacter = nil
 	SelectedCharacter_Changed()
@@ -104,6 +107,10 @@ function CharSelect_ConfirmDelete()
 	if (selectedCharacter ~= nil) then
 		realmConnector:DeleteCharacter(selectedCharacter)
 	end
+
+	DeleteConfirmation:Hide()
+
+	GlueDialog_Show("CONNECTING")
 end
 
 function CharSelect_CancelDelete()

@@ -33,6 +33,8 @@ end
 
 function AccountLogin_OnCharList()
 	GlueDialog_Hide()
+
+	print("Displaying char list...")
 	CharList_Show()
 end
 

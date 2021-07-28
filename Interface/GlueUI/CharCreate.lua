@@ -9,6 +9,8 @@ end
 
 function CharCreate_Submit()
 	if (string.len(NewCharacterNameBox:GetText()) > 0) then
+		
+		GlueDialog_Show("CREATING_CHARACTER")
 		realmConnector:CreateCharacter(NewCharacterNameBox:GetText())
 	end
 end

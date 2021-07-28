@@ -79,6 +79,27 @@ GlueDialogs["RETRIEVE_CHAR_LIST"] = {
 	end
 }
 
+GlueDialogs["CREATING_CHARACTER"] = {
+	text = "CREATING_CHARACTER",
+	button1 = "CANCEL",
+	button2 = nil,
+	OnAccept = function()
+	end,
+	OnCancel = function()
+	end
+}
+
+GlueDialogs["DELETING_CHARACTER"] = {
+	text = "DELETING_CHARACTER",
+	button1 = "CANCEL",
+	button2 = nil,
+	OnAccept = function()
+		CharList_Show()
+	end,
+	OnCancel = function()
+	end
+}
+
 AUTH_ERROR_STRING = {}
 AUTH_ERROR_STRING[0] = "AUTH_STATUS_SUCCESS"
 AUTH_ERROR_STRING[1] = "AUTH_STATUS_FAIL_BANNED"
