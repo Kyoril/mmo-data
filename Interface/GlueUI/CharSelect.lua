@@ -16,23 +16,7 @@ function SelectedCharacter_Changed()
 		CharDeleteButton:Enable()
 		CharModel:Show()
 		SelectedCharName:SetText(selectedCharacter.name)
-
-		if (selectedCharacterIndex < #characters) then
-			CharSelectNextButton:Show()
-		else
-			CharSelectNextButton:Hide()
-		end
-		
-		if (selectedCharacterIndex > 0) then
-			CharSelectPrevButton:Show()
-		else
-			CharSelectPrevButton:Hide()
-		end
-
 	else
-		CharSelectNextButton:Hide()
-		CharSelectPrevButton:Hide()
-
 		CharSelectEnterButton:Disable()
 		CharDeleteButton:Disable()
 		CharModel:Hide()
@@ -66,17 +50,16 @@ function CharList_Show()
 		CharList:AddChild(charListItem)
 		
 		-- Assign realm data
-		charListItem:SetText(character.name)
+		charListItem:SetText(character.name .. "\n" .. "Level " .. character.level)
 		charListItem.userData = character
 		
 		-- Setup anchor points
 		if (lastCharListItem ~= nil) then
-			charListItem:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, lastCharListItem, 4.0)
+			charListItem:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, lastCharListItem, 8.0)
 		else
-			charListItem:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, 4.0)
+			charListItem:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, 16.0)
 		end
-		--charListItem:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, 0.0)
-		--charListItem:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, 0.0)
+		charListItem:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, 8.0)
 		
 		-- Register click handler
 		charListItem:SetClickedHandler(CharListItem_Clicked)
@@ -88,25 +71,13 @@ function CharList_Show()
 		if (selectedCharacter == nil) then
 			selectedCharacter = character
 			selectedCharacterIndex = characterIndex
-			SelectedCharacter_Changed()
 		end
 
 		characterIndex = characterIndex + 1
 	end
-	
+
 	-- Show the character selection screen
 	CharSelect:Show()
-end
-
-function SelectNextCharacter()
-	selectedCharacterIndex = selectedCharacterIndex + 1
-	selectedCharacter = characters[selectedCharacterIndex]
-	SelectedCharacter_Changed()
-end
-
-function SelectPrevCharacter()
-	selectedCharacterIndex = selectedCharacterIndex - 1
-	selectedCharacter = characters[selectedCharacterIndex]
 	SelectedCharacter_Changed()
 end
 
@@ -130,7 +101,9 @@ function CharSelect_ChangeRealm()
 end
 
 function CharSelect_ConfirmDelete()
-	
+	if (selectedCharacter ~= nil) then
+		realmConnector:DeleteCharacter(selectedCharacter)
+	end
 end
 
 function CharSelect_CancelDelete()
@@ -145,5 +118,3 @@ CharDeleteButton:SetClickedHandler(CharSelect_DeleteCharacter)
 ChangeRealmButton:SetClickedHandler(CharSelect_ChangeRealm)
 DeleteConfirmButton:SetClickedHandler(CharSelect_ConfirmDelete)
 DeleteCancelButton:SetClickedHandler(CharSelect_CancelDelete)
-CharSelectNextButton:SetClickedHandler(CharSelect_CancelDelete)
-CharSelectPrevButton:SetClickedHandler(CharSelect_CancelDelete)

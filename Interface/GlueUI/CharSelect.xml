@@ -4,6 +4,7 @@
 
 	<!-- Virtual character button -->
 	<Frame name="CharButton" type="Button" renderer="ButtonRenderer">
+		<Property name="Font" value="DefaultHeader" />
 		<Visual>
 			<ImagerySection name="FrameNormal">
 				<BorderComponent texture="Interface/GlueUI/CharButtonUp.htex" borderSize="16" />
@@ -24,6 +25,11 @@
 				<ImageComponent texture="Interface/GlueUI/IconHelmet.htex">
 					<Area><Inset all="14" /></Area>
 				</ImageComponent>
+				<TextComponent color="FFEED37C" horzAlign="LEFT" vertAlign="TOP">
+					<Area>
+						<Inset left="96" top="8" />
+					</Area>
+				</TextComponent>
 			</ImagerySection>
 			<StateImagery name="Normal">
 				<Layer>
@@ -75,48 +81,6 @@
 			<Property name="Visible" value="false" />
 			<Property name="ModelFile" value="Models/Cube/Cube.hmsh" />
 		</Frame>
-		
-		<!-- Character list -->
-		<Frame name="CharListFrame" inherits="GlueBorderFrame">
-			<Property name="Visible" value="false" />
-			
-			<Area>
-				<Anchor point="TOP" offset="12" />
-				<Anchor point="RIGHT" offset="-12" />
-				<Anchor point="BOTTOM" offset="-12" />
-				<Size><AbsDimension x="360" /></Size>
-			</Area>
-			
-			<Frame name="RealmNameLabel" inherits="GlueTextLarge">
-				<Property name="Text" value="REALM" />
-				<Area>
-					<Anchor point="LEFT" offset="24" />
-					<Anchor point="RIGHT" offset="-24" />
-					<Anchor point="TOP" offset="24" />
-				</Area>
-			</Frame>
-			
-			<Frame name="CharList" renderer="DefaultRenderer">
-				<Visual>
-					<ImagerySection name="Frame">
-						<ImageComponent texture="Interface/GlueUI/RealmListBackground.htex" tiling="BOTH" />
-						<BorderComponent texture="Interface/GlueUI/RealmListBorder.htex" borderSize="8" />
-					</ImagerySection>
-					<StateImagery name="Enabled">
-						<Layer>
-							<Section section="Frame" />
-						</Layer>
-					</StateImagery>
-				</Visual>
-				<Area>
-					<Anchor point="LEFT" offset="8" />
-					<Anchor point="RIGHT" offset="-8" />
-					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmNameLabel" offset="20" />
-					<Anchor point="BOTTOM" offset="-24" />
-				</Area>
-				
-			</Frame>
-		</Frame>
 
 		<Frame name="BackgroundFrame" renderer="DefaultRenderer">
 			<Area>
@@ -139,39 +103,12 @@
 				</StateImagery>
 			</Visual>
 
-
-
 			<Frame name="CharSelectEnterButton" inherits="GlueButtonPrimary">
 				<Property name="Text" value="ENTER_WORLD" />
 				<Property name="Enabled" value="False" />
 				<Area>
 					<Anchor point="BOTTOM" offset="-24" />
 					<Anchor point="H_CENTER" />
-				</Area>
-			</Frame>
-
-
-			<Frame name="CharSelectNextButton" inherits="GlueButton">
-				<Property name="Text" value="&gt;" />
-				<Property name="Visible" value="False" />
-				<Area>
-					<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="CharSelectEnterButton" />
-					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CharSelectEnterButton" offset="12" />
-					<Size>
-						<AbsDimension x="64" y="64" />
-					</Size>
-				</Area>
-			</Frame>
-
-			<Frame name="CharSelectPrevButton" inherits="GlueButton">
-				<Property name="Text" value="&lt;" />
-				<Property name="Visible" value="False" />
-				<Area>
-					<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="CharSelectEnterButton" />
-					<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CharSelectEnterButton" offset="-12" />
-					<Size>
-						<AbsDimension x="64" y="64" />
-					</Size>
 				</Area>
 			</Frame>
 
@@ -186,7 +123,7 @@
 				</Area>
 				<Property name="Text" value="Level 1" />
 			</Frame>
-			
+
 			<Frame name="SelectedCharClass" inherits="GlueTextSmall">
 				<Property name="HorzAlign" value="RIGHT" />
 				<Area>
@@ -199,7 +136,7 @@
 				</Area>
 				<Property name="Text" value="ADVENTURER" />
 			</Frame>
-			
+
 			<Frame name="SelectedCharName" inherits="GlueTextLarge">
 				<Area>
 					<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="SelectedCharLevel" offset="-8" />
@@ -231,9 +168,52 @@
 					<Anchor point="BOTTOM" relativePoint="BOTTOM" relativeTo="CharDeleteButton" />
 				</Area>
 			</Frame>
-		
+
 		</Frame>
-		
+
+		<!-- Character list -->
+		<Frame name="CharListFrame" inherits="GlueBorderFrame">
+			<Property name="Visible" value="true" />
+
+			<Area>
+				<Anchor point="TOP" offset="12" />
+				<Anchor point="RIGHT" offset="-12" />
+				<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="CharDeleteButton" offset="-12" />
+				<Size>
+					<AbsDimension x="360" />
+				</Size>
+			</Area>
+
+			<Frame name="RealmNameLabel" inherits="GlueTextLarge">
+				<Property name="Text" value="REALM" />
+				<Area>
+					<Anchor point="LEFT" offset="24" />
+					<Anchor point="RIGHT" offset="-24" />
+					<Anchor point="TOP" offset="24" />
+				</Area>
+			</Frame>
+
+			<Frame name="CharList" renderer="DefaultRenderer">
+				<Visual>
+					<ImagerySection name="Frame">
+						<ImageComponent texture="Interface/GlueUI/RealmListBackground.htex" tiling="BOTH" />
+						<BorderComponent texture="Interface/GlueUI/RealmListBorder.htex" borderSize="8" />
+					</ImagerySection>
+					<StateImagery name="Enabled">
+						<Layer>
+							<Section section="Frame" />
+						</Layer>
+					</StateImagery>
+				</Visual>
+				<Area>
+					<Anchor point="LEFT" offset="8" />
+					<Anchor point="RIGHT" offset="-8" />
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmNameLabel" offset="20" />
+					<Anchor point="BOTTOM" offset="-96" />
+				</Area>
+			</Frame>
+		</Frame>
+
 		<Frame name="DeleteConfirmation" setAllPoints="true">
 			<Property name="Visible" value="false" />
 
