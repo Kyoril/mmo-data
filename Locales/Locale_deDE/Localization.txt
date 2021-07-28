@@ -16,6 +16,9 @@
 	(key = "DELETE_CHARACTER", string = "Charakter löschen")
 	(key = "CREATE_CHARACTER", string = "Charakter erstellen")
 	
+	(key = "CREATING_CHARACTER", string = "Neuer Charakter wird erstellt...")
+	(key = "DELETING_CHARACTER", string = "Charakter wird gelöscht...")
+	
 	(key = "AUTH_STATUS_SUCCESS", string = "Erfolg")
 	(key = "AUTH_STATUS_FAIL_BANNED", string = "Dieser Account ist geschlossen und nicht länger verfügbar.\nBitte besuchen Sie https://mmo-dev.net/banned.html für weitere Informationen.")
 	(key = "AUTH_STATUS_FAIL_WRONG_CREDENTIALS", string = "The information you have entered is not valid.\nPlease check the spelling of the account name and password.\nIf you need help in retrieving a lost or stolen password,\nsee https://mmo-dev.net for more information.")

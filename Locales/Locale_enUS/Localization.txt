@@ -16,6 +16,9 @@ strings =
 	(key = "DELETE_CHARACTER", string = "Delete Character")
 	(key = "CREATE_CHARACTER", string = "Create Character")
 	
+	(key = "CREATING_CHARACTER", string = "Creating New Character...")
+	(key = "DELETING_CHARACTER", string = "Deleting Character...")
+	
 	(key = "AUTH_STATUS_SUCCESS", string = "Success")
 	(key = "AUTH_STATUS_FAIL_BANNED", string = "This account has been closed and is no longer available for use.\nPlease go to https://mmo-dev.net/banned.html for further information.")
 	(key = "AUTH_STATUS_FAIL_WRONG_CREDENTIALS", string = "The information you have entered is not valid. Please check the spelling of the account name and password. If you need help in retrieving a lost or stolen password, see https://mmo-dev.net for more information.")

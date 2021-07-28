@@ -33,8 +33,7 @@ end
 
 function AccountLogin_OnCharList()
 	GlueDialog_Hide()
-
-	print("Displaying char list...")
+	CharCreate:Hide()
 	CharList_Show()
 end
 
