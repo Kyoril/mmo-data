@@ -1,0 +1,33 @@
+<?xml version="1.0" ?>
+<UiLayout>
+	<Script file="ChatFrame.lua" />
+
+	<Frame name="ChatFrame" parent="GameParent" renderer="DefaultRenderer">
+		<Property name="Font" value="DefaultSmall" />
+		<Property name="Text" value="Chat goes here!" />
+
+		<Visual>
+			<ImagerySection name="Text">
+				<TextComponent color="FFEED37C" horzAlign="LEFT" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+		
+		<Area>
+			<Anchor point="LEFT" offset="16" />
+			<Anchor point="BOTTOM" offset="-16" />
+			<Size>
+				<AbsDimension x="480" y="200" />
+			</Size>
+		</Area>
+	</Frame>
+</UiLayout>

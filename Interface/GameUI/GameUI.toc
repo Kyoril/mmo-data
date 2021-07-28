@@ -1,1 +1,2 @@
 GameParent.xml
+ChatFrame.xml
