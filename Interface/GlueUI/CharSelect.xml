@@ -1,0 +1,258 @@
+<?xml version="1.0"?>
+<UiLayout xmlns="http://mmo-dev.net/ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://mmo-dev.net/ui UI.xsd">
+	<Script file="CharSelect.lua" />
+
+	<!-- Virtual character button -->
+	<Frame name="CharButton" type="Button" renderer="ButtonRenderer">
+		<Property name="Font" value="DefaultHeader" />
+		<Visual>
+			<ImagerySection name="FrameNormal">
+				<BorderComponent texture="Interface/GlueUI/CharButtonUp.htex" borderSize="16" />
+			</ImagerySection>
+			<ImagerySection name="FrameHovered">
+				<BorderComponent texture="Interface/GlueUI/CharButtonHovered.htex" borderSize="16" />
+			</ImagerySection>
+			<ImagerySection name="FramePushed">
+				<BorderComponent texture="Interface/GlueUI/CharButtonPushed.htex" borderSize="16" />
+			</ImagerySection>
+			<ImagerySection name="FrameDisabled">
+				<BorderComponent texture="Interface/GlueUI/CharButtonDisabled.htex" borderSize="16" />
+			</ImagerySection>
+			<ImagerySection name="Icon">
+				<ImageComponent texture="Interface/GlueUI/AlphaMask.htex">
+					<Area><Inset all="14" /></Area>
+				</ImageComponent>
+				<ImageComponent texture="Interface/GlueUI/IconHelmet.htex">
+					<Area><Inset all="14" /></Area>
+				</ImageComponent>
+				<TextComponent color="FFEED37C" horzAlign="LEFT" vertAlign="TOP">
+					<Area>
+						<Inset left="96" top="8" />
+					</Area>
+				</TextComponent>
+			</ImagerySection>
+			<StateImagery name="Normal">
+				<Layer>
+					<Section section="FrameNormal" />
+					<Section section="Icon" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Hovered">
+				<Layer>
+					<Section section="FrameHovered" />
+					<Section section="Icon" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Pushed">
+				<Layer>
+					<Section section="FramePushed" />
+					<Section section="Icon" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="FrameDisabled" />
+					<Section section="Icon" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+		<Area>
+			<Size><AbsDimension x="96" y="96" /></Size>
+		</Area>
+	</Frame>
+	
+	<!-- This is the character selection screen frame. It covers the whole screen. -->
+	<Frame name="CharSelect" parent="GlueParent" setAllPoints="true" renderer="DefaultRenderer">
+		<Property name="Visible" value="false" />
+
+		<!-- For now, only a placeholder image is rendered in the background -->
+		<Visual>
+			<ImagerySection name="Background">
+				<ImageComponent texture="Interface/GlueUI/BackgroundPH.htex" tiling="NONE" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Background" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+		
+		<Frame name="CharModel" type="Model" setAllPoints="true" renderer="ModelRenderer">
+			<Property name="Visible" value="false" />
+			<Property name="ModelFile" value="Models/Cube/Cube.hmsh" />
+		</Frame>
+
+		<Frame name="BackgroundFrame" renderer="DefaultRenderer">
+			<Area>
+				<Anchor point="LEFT"/>
+				<Anchor point="RIGHT"/>
+				<Anchor point="BOTTOM"/>
+				<Size>
+					<AbsDimension y="200" />
+				</Size>
+			</Area>
+			<Visual>
+				<ImagerySection name="Background">
+					<ImageComponent texture="Interface/GlueUI/GradientBlack.htex" tiling="HORZ" />
+				</ImagerySection>
+
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Background" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+
+			<Frame name="CharSelectEnterButton" inherits="GlueButtonPrimary">
+				<Property name="Text" value="ENTER_WORLD" />
+				<Property name="Enabled" value="False" />
+				<Area>
+					<Anchor point="BOTTOM" offset="-24" />
+					<Anchor point="H_CENTER" />
+				</Area>
+			</Frame>
+
+			<Frame name="SelectedCharLevel" inherits="GlueTextSmall">
+				<Property name="HorzAlign" value="RIGHT" />
+				<Area>
+					<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="CharSelectEnterButton" offset="-12" />
+					<Anchor point="RIGHT" relativeTo="CharSelectEnterButton" />
+					<Size>
+						<AbsDimension x="80" y="15" />
+					</Size>
+				</Area>
+				<Property name="Text" value="Level 1" />
+			</Frame>
+
+			<Frame name="SelectedCharClass" inherits="GlueTextSmall">
+				<Property name="HorzAlign" value="RIGHT" />
+				<Area>
+					<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="CharSelectEnterButton" offset="-12" />
+					<Anchor point="LEFT" relativeTo="CharSelectEnterButton" />
+					<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="SelectedCharLevel" />
+					<Size>
+						<AbsDimension x="80" y="15" />
+					</Size>
+				</Area>
+				<Property name="Text" value="ADVENTURER" />
+			</Frame>
+
+			<Frame name="SelectedCharName" inherits="GlueTextLarge">
+				<Area>
+					<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="SelectedCharLevel" offset="-8" />
+					<Anchor point="H_CENTER" />
+				</Area>
+			</Frame>
+
+
+			<Frame name="ChangeRealmButton" inherits="GlueButton">
+				<Property name="Text" value="CHANGE_REALM" />
+				<Area>
+					<Anchor point="LEFT" offset="24" />
+					<Anchor point="BOTTOM" offset="-24" />
+				</Area>
+			</Frame>
+
+			<Frame name="CharDeleteButton" inherits="GlueButton">
+				<Property name="Text" value="DELETE_CHARACTER" />
+				<Property name="Enabled" value="False" />
+				<Area>
+					<Anchor point="RIGHT" offset="-24" />
+					<Anchor point="BOTTOM" offset="-24" />
+				</Area>
+			</Frame>
+			<Frame name="CharCreateButton" inherits="GlueButton">
+				<Property name="Text" value="CREATE_CHARACTER" />
+				<Area>
+					<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CharDeleteButton" offset="-12" />
+					<Anchor point="BOTTOM" relativePoint="BOTTOM" relativeTo="CharDeleteButton" />
+				</Area>
+			</Frame>
+
+		</Frame>
+
+		<!-- Character list -->
+		<Frame name="CharListFrame" inherits="GlueBorderFrame">
+			<Property name="Visible" value="true" />
+
+			<Area>
+				<Anchor point="TOP" offset="12" />
+				<Anchor point="RIGHT" offset="-12" />
+				<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="CharDeleteButton" offset="-12" />
+				<Size>
+					<AbsDimension x="360" />
+				</Size>
+			</Area>
+
+			<Frame name="RealmNameLabel" inherits="GlueTextLarge">
+				<Property name="Text" value="REALM" />
+				<Area>
+					<Anchor point="LEFT" offset="24" />
+					<Anchor point="RIGHT" offset="-24" />
+					<Anchor point="TOP" offset="24" />
+				</Area>
+			</Frame>
+
+			<Frame name="CharList" renderer="DefaultRenderer">
+				<Visual>
+					<ImagerySection name="Frame">
+						<ImageComponent texture="Interface/GlueUI/RealmListBackground.htex" tiling="BOTH" />
+						<BorderComponent texture="Interface/GlueUI/RealmListBorder.htex" borderSize="8" />
+					</ImagerySection>
+					<StateImagery name="Enabled">
+						<Layer>
+							<Section section="Frame" />
+						</Layer>
+					</StateImagery>
+				</Visual>
+				<Area>
+					<Anchor point="LEFT" offset="8" />
+					<Anchor point="RIGHT" offset="-8" />
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmNameLabel" offset="20" />
+					<Anchor point="BOTTOM" offset="-96" />
+				</Area>
+			</Frame>
+		</Frame>
+
+		<Frame name="DeleteConfirmation" setAllPoints="true">
+			<Property name="Visible" value="false" />
+
+			<Frame name="DeleteConfirmationFrame" inherits="GlueBorderFrame">
+				<Area>
+					<Anchor point="H_CENTER" />
+					<Anchor point="V_CENTER" />
+					<Size>
+						<AbsDimension x="660" y="240" />
+					</Size>
+				</Area>
+
+				<Frame name="DeleteConfirmationHeader" inherits="GlueTextLarge">
+					<Property name="Text" value="CONFIRM_CHAR_DELETE" />
+					<Area>
+						<Anchor point="LEFT" offset="24" />
+						<Anchor point="RIGHT" offset="-24" />
+						<Anchor point="TOP" offset="24" />
+					</Area>
+				</Frame>
+
+				<Frame name="DeleteConfirmButton" inherits="GlueButton">
+					<Property name="Text" value="DELETE" />
+					<Area>
+						<Anchor point="LEFT" offset="24" />
+						<Anchor point="RIGHT" relativePoint="H_CENTER" offset="-12" />
+						<Anchor point="BOTTOM" offset="-24" />
+					</Area>
+				</Frame>
+
+				<Frame name="DeleteCancelButton" inherits="GlueButton">
+					<Property name="Text" value="CANCEL" />
+					<Area>
+						<Anchor point="LEFT" relativePoint="H_CENTER" offset="12" />
+						<Anchor point="RIGHT" offset="-24" />
+						<Anchor point="BOTTOM" offset="-24" />
+					</Area>
+				</Frame>
+			</Frame>
+		</Frame>
+	</Frame>
+</UiLayout>

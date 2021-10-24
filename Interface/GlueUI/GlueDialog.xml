@@ -1,0 +1,44 @@
+<?xml version="1.0" ?>
+<UiLayout>
+	<Script file="GlueDialog.lua" />
+	
+	<Frame name="GlueDialogBackground" parent="GlueParent" setAllPoints="true">
+		<Property name="Visible" value="false" />
+	
+		<Frame name="GlueDialog" inherits="GlueBorderFrame">
+			<Area>
+				<Size><AbsDimension x="800" y="245" /></Size>
+				<Anchor point="H_CENTER" />
+				<Anchor point="V_CENTER" />
+			</Area>
+			
+			<Frame name="GlueDialogLabel" inherits="GlueTextLarge">
+				<Property name="Text" value="Connecting..." />
+				<Area>
+					<Anchor point="LEFT" offset="20" />
+					<Anchor point="RIGHT" offset="-20" />
+					<Anchor point="TOP" offset="30" />
+				</Area>
+			</Frame>
+			
+			<Frame name="GlueButton01" inherits="GlueButton">
+				<Property name="Text" value="CANCEL" />
+				
+				<Area>
+					<Anchor point="H_CENTER" />
+					<Anchor point="BOTTOM" relativeTo="GlueDialog" offset="-20" />
+				</Area>
+			</Frame>
+			
+			<Frame name="GlueButton02" inherits="GlueButton">
+				<Property name="Text" value="CANCEL" />
+				<Property name="Visible" value="false" />
+				
+				<Area>
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="GlueButton01" offset="10" />
+					<Anchor point="BOTTOM" relativeTo="GlueDialog" offset="-20" />
+				</Area>
+			</Frame>
+		</Frame>
+	</Frame>
+</UiLayout>

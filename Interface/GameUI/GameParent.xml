@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<UiLayout>
+	<Script file="GameParent.lua" />
+
+	<Frame name="GameParent" parent="TopGameFrame" setAllPoints="true">
+		<Property name="Font" value="DefaultSmall" />
+
+		<Frame name="WorldFrame" type="World" renderer="WorldRenderer" setAllPoints="true">
+
+		</Frame>
+	</Frame>
+</UiLayout>

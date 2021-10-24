@@ -1,0 +1,65 @@
+<?xml version="1.0" ?>
+<UiLayout>
+	<!-- Reference lua script file here -->
+	<Script file="AccountLogin.lua" />
+	
+	<!-- Account login frame -->
+	<Frame name="AccountLogin" parent="GlueParent" setAllPoints="true" type="Model" renderer="ModelRenderer">
+		<Property name="Focusable" value="true" />
+		<!--<Property name="ModelFile" value="Models/Cube/Cube.mesh" />-->
+		
+		<Frame name="AccountPasswordField" inherits="GlueTextField">
+			<Property name="Masked" value="true" />
+			<Area>
+				<Anchor point="BOTTOM" relativePoint="V_CENTER" />
+				<Anchor point="H_CENTER" />
+			</Area>
+		</Frame>
+		<Frame name="AccountPasswordLabel" inherits="GlueTextLarge">
+			<Property name="Text" value="ACCOUNT_PASSWORD" />
+			<Area>
+				<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="AccountPasswordField" offset="-8" />
+				<Anchor point="H_CENTER" />
+			</Area>
+		</Frame>
+		<Frame name="AccountNameField" inherits="GlueTextField">
+			<Area>
+				<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="AccountPasswordLabel" offset="-16" />
+				<Anchor point="H_CENTER" />
+			</Area>
+		</Frame>
+		<Frame name="AccountNameLabel" inherits="GlueTextLarge">
+			<Property name="Text" value="ACCOUNT_NAME" />
+			<Area>
+				<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="AccountNameField" offset="-8" />
+				<Anchor point="H_CENTER" />
+			</Area>
+		</Frame>
+		
+		<Frame name="LoginButton" inherits="GlueButtonPrimary">
+			<Property name="Text" value="LOGIN" />
+			<Area>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="AccountPasswordField" offset="64" />
+				<Anchor point="H_CENTER" />
+			</Area>
+		</Frame>
+		
+		<Frame name="QuitButton" inherits="GlueButton">
+			<Property name="Text" value="QUIT" />
+			<Area>
+				<Anchor point="RIGHT" offset="-24" />
+				<Anchor point="BOTTOM" offset="-24"/>
+			</Area>
+		</Frame>
+		
+		<Frame name="CopyrightLabel" inherits="GlueTextSmall">
+			<Property name="Text" value="COPYRIGHT_TEXT" />
+			<Area>
+				<Size><AbsDimension x="0" y="22" offset="-8" /></Size>
+				<Anchor point="H_CENTER" />
+				<Anchor point="BOTTOM" />
+			</Area>
+		</Frame>
+		
+	</Frame>
+</UiLayout>

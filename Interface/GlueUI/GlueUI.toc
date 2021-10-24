@@ -1,0 +1,12 @@
+# Include control templates first so that they are known when the layout files that
+# reference them by name are able to find them
+GlueTemplates.xml
+
+# Load layout files
+GlueParent.xml
+AccountLogin.xml
+RealmList.xml
+CharSelect.xml
+CharCreate.xml
+
+GlueDialog.xml
