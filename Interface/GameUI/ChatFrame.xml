@@ -2,13 +2,167 @@
 <UiLayout>
 	<Script file="ChatFrame.lua" />
 
+	<Font name="ChatFont" file="Fonts/arbutusslab-regular.ttf" size="12" outline="1" />
+
+	<Frame name="ChatButton" type="Button" renderer="ButtonRenderer">
+		<Visual>
+			<ImagerySection name="NormalFrame">
+				<BorderComponent texture="Interface/GameUI/ChatButton_Up.htex" borderSize="16">
+					<Area>
+						<!-- TODO: Define area -->
+					</Area>
+				</BorderComponent>
+			</ImagerySection>
+			<ImagerySection name="HoveredFrame">
+				<BorderComponent texture="Interface/GameUI/ChatButton_Hovered.htex" borderSize="16">
+					<Area>
+						<!-- TODO: Define area -->
+					</Area>
+				</BorderComponent>
+			</ImagerySection>
+			<ImagerySection name="PushedFrame">
+				<BorderComponent texture="Interface/GameUI/ChatButton_Down.htex" borderSize="16">
+					<Area>
+						<!-- TODO: Define area -->
+					</Area>
+				</BorderComponent>
+			</ImagerySection>
+			<ImagerySection name="DisabledFrame">
+				<BorderComponent texture="Interface/GameUI/ChatButton_Disabled.htex" borderSize="16">
+					<Area>
+						<!-- TODO: Define area -->
+					</Area>
+				</BorderComponent>
+			</ImagerySection>
+			<StateImagery name="Normal">
+				<Layer>
+					<Section section="NormalFrame" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Hovered">
+				<Layer>
+					<Section section="HoveredFrame" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Pushed">
+				<Layer>
+					<Section section="PushedFrame" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="DisabledFrame" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+		<Area>
+			<Size>
+				<AbsDimension x="50" y="50" />
+			</Size>
+		</Area>
+	</Frame>
+
+	<Frame name="ChatScrollEndButton" parent="GameParent" inherits="ChatButton">
+		<Area>
+			<Anchor point="LEFT" offset="8" />
+			<Anchor point="BOTTOM" offset="-8" />
+		</Area>
+	</Frame>
+	
+	<Frame name="ChatScrollDownButton" parent="GameParent" inherits="ChatButton">
+		<Area>
+			<Anchor point="LEFT" relativeTo="ChatScrollEndButton" />
+			<Anchor point="BOTTOM" relativeTo="ChatScrollEndButton" relativePoint="TOP" offset="-8" />
+		</Area>
+		
+		<Frame name="DownIcon" type="Frame" renderer="DefaultRenderer">
+			<Visual>
+				<ImagerySection name="NormalIcon">
+					<ImageComponent texture="Interface/GameUI/ChatIcon_DownArrow.htex">
+						<Area>
+						</Area>
+					</ImageComponent>
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="NormalIcon" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+			<Area>
+				<Anchor point="LEFT" offset="8" />
+				<Anchor point="TOP" offset="8" />
+				<Anchor point="RIGHT" offset="-8" />
+				<Anchor point="BOTTOM" offset="-8" />
+			</Area>
+		</Frame>
+	</Frame>
+	
+	<Frame name="ChatScrollUpButton" parent="GameParent" inherits="ChatButton">
+		<Area>
+			<Anchor point="LEFT" relativeTo="ChatScrollDownButton" />
+			<Anchor point="BOTTOM" relativeTo="ChatScrollDownButton" relativePoint="TOP" offset="-8" />
+		</Area>
+		
+		<Frame name="UpIcon" type="Frame" renderer="DefaultRenderer">
+			<Visual>
+				<ImagerySection name="NormalIcon">
+					<ImageComponent texture="Interface/GameUI/ChatIcon_UpArrow.htex">
+						<Area>
+						</Area>
+					</ImageComponent>
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="NormalIcon" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+			<Area>
+				<Anchor point="LEFT" offset="8" />
+				<Anchor point="TOP" offset="8" />
+				<Anchor point="RIGHT" offset="-8" />
+				<Anchor point="BOTTOM" offset="-8" />
+			</Area>
+		</Frame>
+	</Frame>
+	
+	<Frame name="ChatBubbleButton" parent="GameParent" inherits="ChatButton">
+		<Area>
+			<Anchor point="LEFT" relativeTo="ChatScrollUpButton" />
+			<Anchor point="BOTTOM" relativeTo="ChatScrollUpButton" relativePoint="TOP" offset="-8" />
+		</Area>
+		
+		<Frame name="BubbleIcon" type="Frame" renderer="DefaultRenderer">
+			<Visual>
+				<ImagerySection name="NormalIcon">
+					<ImageComponent texture="Interface/GameUI/ChatIcon_Dialogue.htex">
+						<Area>
+						</Area>
+					</ImageComponent>
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="NormalIcon" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+			<Area>
+				<Anchor point="LEFT" offset="8" />
+				<Anchor point="TOP" offset="8" />
+				<Anchor point="RIGHT" offset="-8" />
+				<Anchor point="BOTTOM" offset="-8" />
+			</Area>
+		</Frame>
+	</Frame>
+	
 	<Frame name="ChatFrame" parent="GameParent" renderer="DefaultRenderer">
-		<Property name="Font" value="DefaultSmall" />
-		<Property name="Text" value="Chat goes here!" />
+		<Property name="Font" value="ChatFont" />
+		<Property name="Text" value="MMORPG Development Project" />
 
 		<Visual>
 			<ImagerySection name="Text">
-				<TextComponent color="FFEED37C" horzAlign="LEFT" />
+				<TextComponent color="ffffd200" horzAlign="LEFT" />
 			</ImagerySection>
 			<StateImagery name="Enabled">
 				<Layer>
@@ -23,11 +177,13 @@
 		</Visual>
 		
 		<Area>
-			<Anchor point="LEFT" offset="16" />
-			<Anchor point="BOTTOM" offset="-16" />
+			<Anchor point="LEFT" relativeTo="ChatScrollEndButton" relativePoint="RIGHT" offset="8" />
+			<Anchor point="BOTTOM" relativeTo="ChatScrollEndButton" />
+			<Anchor point="TOP" relativeTo="ChatBubbleButton" />
 			<Size>
 				<AbsDimension x="480" y="200" />
 			</Size>
 		</Area>
 	</Frame>
+	
 </UiLayout>
