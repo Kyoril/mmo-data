@@ -86,7 +86,7 @@ end
 
 function CharSelect_EnterWorld()
 	if (selectedCharacter ~= nil) then
-		loginState:EnterWorld(selectedCharacter)
+		EnterWorld(selectedCharacter)
 	end
 end
 
