@@ -7,7 +7,7 @@ strings =
 	(key = "ACCOUNT_NAME", string = "Account Name")
 	(key = "LOGIN", string = "Login")
 	(key = "QUIT", string = "Quit")
-	(key = "COPYRIGHT_TEXT", string = "Copyright (C) 2020")
+	(key = "COPYRIGHT_TEXT", string = "Copyright (C) 2019 - 2022, Robin Klimonow. All rights reserved.")
 	
 	(key = "REALM_LIST", string = "Realm List")
 	(key = "CHOOSE_A_REALM", string = "Choose a realm from the list below:")

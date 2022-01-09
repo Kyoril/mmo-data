@@ -60,12 +60,50 @@
 		</Area>
 	</Frame>
 
+	<Frame name="ChatInput" parent="GameParent" type="TextField" renderer="TextFieldRenderer">
+		<Property name="TextSection" value="Text" />
+		<Property name="HorzAlign" value="LEFT" />
+		<Property name="VertAlign" value="CENTER" />
+	
+		<Visual>
+			<ImagerySection name="Frame">
+				<BorderComponent texture="Interface/GlueUI/TextFieldBorder.htex" borderSize="40">
+					<Area></Area>
+				</BorderComponent>
+			</ImagerySection>
+			<ImagerySection name="Caret">
+				<ImageComponent texture="Interface/GlueUI/Caret.htex" />
+			</ImagerySection>
+			
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Frame" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="Frame" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Caret">
+				<Layer>
+					<Section section="Caret" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+		<Area>
+			<Anchor point="BOTTOM" offset="-8" />
+			<Anchor point="LEFT" offset="66" />
+			<Size><AbsDimension x="480" y="48" /></Size>
+		</Area>
+	</Frame>
+
 	<Frame name="ChatScrollEndButton" parent="GameParent" inherits="ChatButton">
 		<Property name="Icon" value="Interface/GameUI/ChatIcon_DownArrow.htex" />
 			
 		<Area>
 			<Anchor point="LEFT" offset="8" />
-			<Anchor point="BOTTOM" offset="-8" />
+			<Anchor point="BOTTOM" relativeTo="ChatInput" relativePoint="TOP" offset="-8" />
 		</Area>
 	</Frame>
 	
@@ -120,9 +158,7 @@
 			<Anchor point="LEFT" relativeTo="ChatScrollEndButton" relativePoint="RIGHT" offset="8" />
 			<Anchor point="BOTTOM" relativeTo="ChatScrollEndButton" />
 			<Anchor point="TOP" relativeTo="ChatBubbleButton" />
-			<Size>
-				<AbsDimension x="480" y="200" />
-			</Size>
+			<Anchor point="RIGHT" relativeTo="ChatInput" />
 		</Area>
 	</Frame>
 	
