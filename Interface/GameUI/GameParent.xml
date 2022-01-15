@@ -6,7 +6,13 @@
 		<Property name="Font" value="DefaultSmall" />
 
 		<Frame name="WorldFrame" type="World" renderer="WorldRenderer" setAllPoints="true">
-			
+			<Frame name="TestTitleBar" inherits="TitleBar">
+				<Property name="text" value="Title Bar" />
+				<Area>
+					<Anchor point="LEFT" />
+					<Anchor point="TOP" />
+				</Area>
+			</Frame>
 		</Frame>
 	</Frame>
 </UiLayout>

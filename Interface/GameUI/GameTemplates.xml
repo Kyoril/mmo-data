@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<UiLayout>
+	<Frame name="TitleBar" renderer="DefaultRenderer">
+		<Property name="Font" value="DefaultHeader" />
+
+		<Visual>
+			<ImagerySection name="Background">
+				<BorderComponent texture="Interface/GameUI/Borders_01_07.htex" borderSize="24" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Background" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+
+		<Area>
+			<Size><AbsDimension x="1000" y="90" /></Size>
+		</Area>
+	</Frame>
+</UiLayout>

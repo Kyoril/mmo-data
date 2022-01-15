@@ -54,8 +54,9 @@
 		
 		<Frame name="CopyrightLabel" inherits="GlueTextSmall">
 			<Property name="Text" value="COPYRIGHT_TEXT" />
+
 			<Area>
-				<Size><AbsDimension x="0" y="22" offset="-8" /></Size>
+				<Size><AbsDimension x="0" y="44" offset="-8" /></Size>
 				<Anchor point="H_CENTER" />
 				<Anchor point="BOTTOM" />
 			</Area>

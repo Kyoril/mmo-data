@@ -1,2 +1,3 @@
+GameTemplates.xml
 GameParent.xml
 ChatFrame.xml
