@@ -1,11 +1,14 @@
 <?xml version="1.0" ?>
-<UiLayout>
+<UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
 	<Frame name="TitleBar" renderer="DefaultRenderer">
 		<Property name="Font" value="DefaultHeader" />
 
 		<Visual>
 			<ImagerySection name="Background">
 				<BorderComponent texture="Interface/GameUI/Borders_01_07.htex" borderSize="24" />
+				<TextComponent color="FFEED37C" horzAlign="CENTER">
+					<Area><Inset all="16" /></Area>
+				</TextComponent>
 			</ImagerySection>
 			<StateImagery name="Enabled">
 				<Layer>
