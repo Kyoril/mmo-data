@@ -176,7 +176,7 @@
 	
 		<Visual>
 			<ImagerySection name="Frame">
-				<BorderComponent texture="Interface/GlueUI/TextFieldBorder.htex" borderSize="40">
+				<BorderComponent texture="Interface/GlueUI/TextFieldBorder.htex" borderSize="12">
 					<Area></Area>
 				</BorderComponent>
 			</ImagerySection>
