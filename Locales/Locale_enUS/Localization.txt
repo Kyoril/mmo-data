@@ -6,7 +6,7 @@ strings =
 	(key = "ACCOUNT_PASSWORD", string = "Account Password")
 	(key = "ACCOUNT_NAME", string = "Account Name")
 	(key = "LOGIN", string = "Login")
-	(key = "QUIT", string = "Quit")
+	(key = "QUIT", string = "Quit Game")
 	(key = "COPYRIGHT_TEXT", string = "Copyright (C) 2019 - 2022, Robin Klimonow. All rights reserved.")
 	
 	(key = "REALM_LIST", string = "Realm List")
@@ -43,4 +43,7 @@ strings =
 
 	(key = "DELETE", string = "Delete")
 	(key = "CONFIRM_CHAR_DELETE", string = "Do you really want to delete your character?\n\nYou will loose any progress you made!")
+
+	(key = "CLOSE", string = "Close")
+	(key = "MENU", string = "Menu")
 }

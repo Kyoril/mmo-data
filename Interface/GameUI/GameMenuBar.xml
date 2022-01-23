@@ -1,0 +1,34 @@
+<?xml version="1.0" ?>
+<UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
+	<Script file="GameMenuBar.lua" />
+	
+	<Frame name="GameMenuBarButtonTemplate" inherits="GlueButton">
+		<Area>
+			<Size><AbsDimension x="400" y="96"/></Size>
+			<Anchor point="LEFT" offset="16" />
+		</Area>
+	</Frame>
+
+	<Frame name="GameMenuBar" renderer="DefaultRenderer" parent="GameParent">
+		<Visual>
+			<ImagerySection name="Background">
+				<ImageComponent texture="Interface/GlueUI/DefaultFrameBorderBack.htex" tiling="BOTH" tint="FFFFE3B0">
+					<Area><Inset all="8" /></Area>
+				</ImageComponent>
+				<BorderComponent texture="Interface/GlueUI/DefaultFrameBorderTop.htex" borderSize="45" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Background" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+
+		<Area>
+			<Size><AbsDimension y="140" /></Size>
+			<Anchor point="BOTTOM" offset="24" />
+			<Anchor point="LEFT" offset="-24" />
+			<Anchor point="Right" offset="24" />
+		</Area>
+	</Frame>
+</UiLayout>

@@ -150,7 +150,7 @@
 
 	<xs:complexType name="AreaComponentType">
 		<xs:sequence>
-			<xs:choice>
+			<xs:choice minOccurs="0">
 				<xs:element name="Inset" type="InsetType" />
 			</xs:choice>
 		</xs:sequence>
@@ -167,7 +167,7 @@
 
 	<xs:complexType name="FrameType">
 		<xs:sequence>
-			<xs:choice maxOccurs="unbounded">
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
 				<xs:element name="Property" type="PropertyType" maxOccurs="unbounded" />
 				<xs:element name="Visual" type="VisualType" maxOccurs="1" />
 				<xs:element name="Area" maxOccurs="1" type="AreaType" />
@@ -177,6 +177,8 @@
 
 		<xs:attribute name="name" type="xs:string" use="required" />
 		<xs:attribute name="renderer" type="FrameRendererType" use="optional" />
+		<xs:attribute name="inherits" type="xs:string" use="optional" />
+		<xs:attribute name="parent" type="xs:string" use="optional" />
 	</xs:complexType>
 
 	<xs:element name="Frame" type="FrameType" />

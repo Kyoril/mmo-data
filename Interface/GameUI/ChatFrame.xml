@@ -2,7 +2,7 @@
 <UiLayout>
 	<Script file="ChatFrame.lua" />
 
-	<Font name="ChatFont" file="Fonts/arbutusslab-regular.ttf" size="12" outline="1" />
+	<Font name="ChatFont" file="Fonts/arbutusslab-regular.ttf" size="18" outline="1" />
 
 	<Frame name="ChatButton" type="Button" renderer="ButtonRenderer">
 		<Property name="Icon" />
@@ -55,7 +55,7 @@
 		</Visual>
 		<Area>
 			<Size>
-				<AbsDimension x="50" y="50" />
+				<AbsDimension x="74" y="74" />
 			</Size>
 		</Area>
 	</Frame>
@@ -92,9 +92,9 @@
 			</StateImagery>
 		</Visual>
 		<Area>
-			<Anchor point="BOTTOM" offset="-8" />
-			<Anchor point="LEFT" offset="66" />
-			<Size><AbsDimension x="480" y="48" /></Size>
+			<Anchor point="BOTTOM" relativePoint="TOP" offset="-8" relativeTo="GameMenuBar" />
+			<Anchor point="LEFT" offset="96" />
+			<Size><AbsDimension x="720" y="74" /></Size>
 		</Area>
 	</Frame>
 
