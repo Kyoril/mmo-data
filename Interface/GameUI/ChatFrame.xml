@@ -2,7 +2,7 @@
 <UiLayout>
 	<Script file="ChatFrame.lua" />
 
-	<Font name="ChatFont" file="Fonts/arbutusslab-regular.ttf" size="18" outline="1" />
+	<Font name="ChatFont" file="Fonts/arbutusslab-regular.ttf" size="14" outline="1" />
 
 	<Frame name="ChatButton" type="Button" renderer="ButtonRenderer">
 		<Property name="Icon" />
@@ -55,15 +55,17 @@
 		</Visual>
 		<Area>
 			<Size>
-				<AbsDimension x="74" y="74" />
+				<AbsDimension x="50" y="50" />
 			</Size>
 		</Area>
 	</Frame>
 
 	<Frame name="ChatInput" parent="GameParent" type="TextField" renderer="TextFieldRenderer">
 		<Property name="TextSection" value="Text" />
+		<Property name="Font" value="ChatFont" />
 		<Property name="HorzAlign" value="LEFT" />
 		<Property name="VertAlign" value="CENTER" />
+		<Property name="Visible" value="False" />
 	
 		<Visual>
 			<ImagerySection name="Frame">
@@ -93,8 +95,8 @@
 		</Visual>
 		<Area>
 			<Anchor point="BOTTOM" relativePoint="TOP" offset="-8" relativeTo="GameMenuBar" />
-			<Anchor point="LEFT" offset="96" />
-			<Size><AbsDimension x="720" y="74" /></Size>
+			<Anchor point="LEFT" offset="64" />
+			<Size><AbsDimension x="830" y="50" /></Size>
 		</Area>
 	</Frame>
 
