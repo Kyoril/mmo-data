@@ -2,7 +2,7 @@
 <UiLayout>
 	<Script file="ChatFrame.lua" />
 
-	<Font name="ChatFont" file="Fonts/arbutusslab-regular.ttf" size="14" outline="1" />
+	<Font name="ChatFont" file="Fonts/arbutusslab-regular.ttf" size="16" outline="1" />
 
 	<Frame name="ChatButton" type="Button" renderer="ButtonRenderer">
 		<Property name="Icon" />

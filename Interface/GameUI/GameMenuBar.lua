@@ -1,6 +1,6 @@
 
-MENUBAR_H_PADDING = 16.0
-MENUBAR_V_PADDING = 16.0
+MENUBAR_H_PADDING = 8.0
+MENUBAR_V_PADDING = 4.0
 
 local menuBarOffset = MENUBAR_H_PADDING + 20.0
 
@@ -15,6 +15,7 @@ function AddMenuBarButton(text, callback)
 
 	-- Setup anchor points
 	button:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, MENUBAR_V_PADDING)
+	button:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.BOTTOM, nil, -MENUBAR_V_PADDING)
 	button:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, menuBarOffset)
 
 	-- Increase offset

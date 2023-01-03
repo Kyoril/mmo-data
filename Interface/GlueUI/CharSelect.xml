@@ -79,7 +79,7 @@
 		
 		<Frame name="CharModel" type="Model" setAllPoints="true" renderer="ModelRenderer">
 			<Property name="Visible" value="false" />
-			<Property name="ModelFile" value="Models/Cube/Cube.hmsh" />
+			<Property name="ModelFile" value="Models/Mannequin/Mannequin.hmsh" />
 		</Frame>
 
 		<Frame name="BackgroundFrame" renderer="DefaultRenderer">

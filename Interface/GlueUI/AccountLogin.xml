@@ -4,9 +4,22 @@
 	<Script file="AccountLogin.lua" />
 	
 	<!-- Account login frame -->
-	<Frame name="AccountLogin" parent="GlueParent" setAllPoints="true" type="Model" renderer="ModelRenderer">
+	<Frame name="AccountLogin" parent="GlueParent" setAllPoints="true" renderer="DefaultRenderer">
 		<Property name="Focusable" value="true" />
 		<!--<Property name="ModelFile" value="Models/Cube/Cube.mesh" />-->
+		
+		<!-- For now, only a placeholder image is rendered in the background -->
+		<Visual>
+			<ImagerySection name="Background">
+				<ImageComponent texture="Interface/GlueUI/LoginBackgroundPH.htex" tiling="NONE" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Background" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+
 		
 		<Frame name="AccountPasswordField" inherits="GlueTextField">
 			<Property name="Masked" value="true" />
