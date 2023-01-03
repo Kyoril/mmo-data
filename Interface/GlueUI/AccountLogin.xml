@@ -93,7 +93,7 @@
 			<Area>
 				<Size><AbsDimension x="0" y="44" offset="-8" /></Size>
 				<Anchor point="H_CENTER" />
-				<Anchor point="BOTTOM" />
+				<Anchor point="BOTTOM" offset="-24" />
 			</Area>
 		</Frame>
 		
