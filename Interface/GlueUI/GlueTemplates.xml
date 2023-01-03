@@ -2,8 +2,8 @@
 
 <!-- This file contains frame templates that are often used by the GlueUI part. -->
 <UiLayout xmlns="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://mmo-dev.net/ Ui.xsd">
-	<Font name="DefaultSmall" file="Fonts/arbutusslab-regular.ttf" size="20" outline="1" />
-	<Font name="DefaultHeader" file="Fonts/arbutusslab-regular.ttf" size="36" outline="1" />
+	<Font name="DefaultSmall" file="Fonts/arbutusslab-regular.ttf" size="28" outline="1" />
+	<Font name="DefaultHeader" file="Fonts/arbutusslab-regular.ttf" size="36" outline="4" />
 	
 	<!-- GlueButton template: Common buttons -->
 	<Frame name="GlueButton" type="Button" renderer="ButtonRenderer">
@@ -21,7 +21,7 @@
 				<BorderComponent texture="Interface/GlueUI/ButtonDisabled.htex" borderSize="30" />
 			</ImagerySection>
 			<ImagerySection name="Caption">
-				<TextComponent color="FFEED37C" horzAlign="CENTER" vertAlign="CENTER" />
+				<TextComponent color="FFEDE1B1" horzAlign="CENTER" vertAlign="CENTER" />
 			</ImagerySection>
 			<!-- TODO: Remove these sections and only use the Caption section with overridden color values -->
 			<ImagerySection name="HoveredCaption">
@@ -33,7 +33,7 @@
 			<StateImagery name="Normal">
 				<Layer>
 					<Section section="NormalFrame" />
-					<Section section="Caption" color="FFEED37C" />
+					<Section section="Caption" color="FFEDE1B1" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="Hovered">
@@ -78,7 +78,7 @@
 				<BorderComponent texture="Interface/GlueUI/PrimaryButtonDisabled.htex" borderSize="64" />
 			</ImagerySection>
 			<ImagerySection name="Caption">
-				<TextComponent color="FFEED37C" horzAlign="CENTER" vertAlign="CENTER" />
+				<TextComponent color="FFEDE1B1" horzAlign="CENTER" vertAlign="CENTER" />
 			</ImagerySection>
 			<!-- TODO: Remove these sections and only use the Caption section with overridden color values -->
 			<ImagerySection name="HoveredCaption">
@@ -90,7 +90,7 @@
 			<StateImagery name="Normal">
 				<Layer>
 					<Section section="NormalFrame" />
-					<Section section="Caption" color="FFEED37C" />
+					<Section section="Caption" color="FFEDE1B1" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="Hovered">

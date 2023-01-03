@@ -6,7 +6,8 @@ strings =
 	(key = "ACCOUNT_PASSWORD", string = "Account Password")
 	(key = "ACCOUNT_NAME", string = "Account Name")
 	(key = "LOGIN", string = "Login")
-	(key = "QUIT", string = "Quit Game")
+	(key = "QUIT", string = "Quit")
+	(key = "SETTINGS", string = "Settings")
 	(key = "COPYRIGHT_TEXT", string = "Copyright (C) 2019 - 2022, Robin Klimonow. All rights reserved.")
 	
 	(key = "REALM_LIST", string = "Realm List")
