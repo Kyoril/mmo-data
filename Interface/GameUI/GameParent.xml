@@ -5,8 +5,6 @@
 	<Frame name="GameParent" parent="TopGameFrame" setAllPoints="true">
 		<Property name="Font" value="DefaultSmall" />
 
-		<Frame name="WorldFrame" type="World" renderer="WorldRenderer" setAllPoints="true">
-			
-		</Frame>
+		<Frame name="WorldFrame" type="World" renderer="WorldRenderer" setAllPoints="true" />
 	</Frame>
 </UiLayout>

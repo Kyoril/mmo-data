@@ -20,14 +20,14 @@
 			</ImagerySection>
 			<ImagerySection name="Icon">
 				<ImageComponent texture="Interface/GlueUI/AlphaMask.htex">
-					<Area><Inset all="14" /></Area>
+					<Area><Inset all="16" /></Area>
 				</ImageComponent>
 				<ImageComponent texture="Interface/GlueUI/IconHelmet.htex">
-					<Area><Inset all="14" /></Area>
+					<Area><Inset all="16" /></Area>
 				</ImageComponent>
 				<TextComponent color="FFEED37C" horzAlign="LEFT" vertAlign="TOP">
 					<Area>
-						<Inset left="96" top="8" />
+						<Inset left="128" top="16" />
 					</Area>
 				</TextComponent>
 			</ImagerySection>
@@ -57,7 +57,7 @@
 			</StateImagery>
 		</Visual>
 		<Area>
-			<Size><AbsDimension x="96" y="96" /></Size>
+			<Size><AbsDimension x="128" y="128" /></Size>
 		</Area>
 	</Frame>
 	
@@ -79,7 +79,7 @@
 		
 		<Frame name="CharModel" type="Model" setAllPoints="true" renderer="ModelRenderer">
 			<Property name="Visible" value="false" />
-			<Property name="ModelFile" value="Models/Cube/Cube.hmsh" />
+			<Property name="ModelFile" value="Models/Mannequin/Mannequin.hmsh" />
 		</Frame>
 
 		<Frame name="BackgroundFrame" renderer="DefaultRenderer">
@@ -87,9 +87,7 @@
 				<Anchor point="LEFT"/>
 				<Anchor point="RIGHT"/>
 				<Anchor point="BOTTOM"/>
-				<Size>
-					<AbsDimension y="200" />
-				</Size>
+				<Size><AbsDimension y="400" /></Size>
 			</Area>
 			<Visual>
 				<ImagerySection name="Background">
@@ -115,10 +113,10 @@
 			<Frame name="SelectedCharLevel" inherits="GlueTextSmall">
 				<Property name="HorzAlign" value="RIGHT" />
 				<Area>
-					<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="CharSelectEnterButton" offset="-12" />
+					<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="CharSelectEnterButton" offset="-24" />
 					<Anchor point="RIGHT" relativeTo="CharSelectEnterButton" />
 					<Size>
-						<AbsDimension x="80" y="15" />
+						<AbsDimension x="160" y="30" />
 					</Size>
 				</Area>
 				<Property name="Text" value="Level 1" />
@@ -127,11 +125,11 @@
 			<Frame name="SelectedCharClass" inherits="GlueTextSmall">
 				<Property name="HorzAlign" value="RIGHT" />
 				<Area>
-					<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="CharSelectEnterButton" offset="-12" />
+					<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="CharSelectEnterButton" offset="-24" />
 					<Anchor point="LEFT" relativeTo="CharSelectEnterButton" />
 					<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="SelectedCharLevel" />
 					<Size>
-						<AbsDimension x="80" y="15" />
+						<AbsDimension x="160" y="30" />
 					</Size>
 				</Area>
 				<Property name="Text" value="ADVENTURER" />
@@ -139,7 +137,7 @@
 
 			<Frame name="SelectedCharName" inherits="GlueTextLarge">
 				<Area>
-					<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="SelectedCharLevel" offset="-8" />
+					<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="SelectedCharLevel" offset="-16" />
 					<Anchor point="H_CENTER" />
 				</Area>
 			</Frame>
@@ -148,8 +146,8 @@
 			<Frame name="ChangeRealmButton" inherits="GlueButton">
 				<Property name="Text" value="CHANGE_REALM" />
 				<Area>
-					<Anchor point="LEFT" offset="24" />
-					<Anchor point="BOTTOM" offset="-24" />
+					<Anchor point="LEFT" offset="48" />
+					<Anchor point="BOTTOM" offset="-48" />
 				</Area>
 			</Frame>
 
@@ -157,14 +155,14 @@
 				<Property name="Text" value="DELETE_CHARACTER" />
 				<Property name="Enabled" value="False" />
 				<Area>
-					<Anchor point="RIGHT" offset="-24" />
-					<Anchor point="BOTTOM" offset="-24" />
+					<Anchor point="RIGHT" offset="-48" />
+					<Anchor point="BOTTOM" offset="-48" />
 				</Area>
 			</Frame>
 			<Frame name="CharCreateButton" inherits="GlueButton">
 				<Property name="Text" value="CREATE_CHARACTER" />
 				<Area>
-					<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CharDeleteButton" offset="-12" />
+					<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CharDeleteButton" offset="-24" />
 					<Anchor point="BOTTOM" relativePoint="BOTTOM" relativeTo="CharDeleteButton" />
 				</Area>
 			</Frame>
@@ -176,20 +174,20 @@
 			<Property name="Visible" value="true" />
 
 			<Area>
-				<Anchor point="TOP" offset="12" />
-				<Anchor point="RIGHT" offset="-12" />
-				<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="CharDeleteButton" offset="-12" />
+				<Anchor point="TOP" offset="24" />
+				<Anchor point="RIGHT" offset="-24" />
+				<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="CharDeleteButton" offset="-24" />
 				<Size>
-					<AbsDimension x="360" />
+					<AbsDimension x="720" />
 				</Size>
 			</Area>
 
 			<Frame name="RealmNameLabel" inherits="GlueTextLarge">
 				<Property name="Text" value="REALM" />
 				<Area>
-					<Anchor point="LEFT" offset="24" />
-					<Anchor point="RIGHT" offset="-24" />
-					<Anchor point="TOP" offset="24" />
+					<Anchor point="LEFT" offset="48" />
+					<Anchor point="RIGHT" offset="-48" />
+					<Anchor point="TOP" offset="48" />
 				</Area>
 			</Frame>
 
@@ -206,10 +204,10 @@
 					</StateImagery>
 				</Visual>
 				<Area>
-					<Anchor point="LEFT" offset="8" />
-					<Anchor point="RIGHT" offset="-8" />
-					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmNameLabel" offset="20" />
-					<Anchor point="BOTTOM" offset="-96" />
+					<Anchor point="LEFT" offset="16" />
+					<Anchor point="RIGHT" offset="-16" />
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmNameLabel" offset="40" />
+					<Anchor point="BOTTOM" offset="-192" />
 				</Area>
 			</Frame>
 		</Frame>
@@ -222,34 +220,34 @@
 					<Anchor point="H_CENTER" />
 					<Anchor point="V_CENTER" />
 					<Size>
-						<AbsDimension x="660" y="240" />
+						<AbsDimension x="1320" y="480" />
 					</Size>
 				</Area>
 
 				<Frame name="DeleteConfirmationHeader" inherits="GlueTextLarge">
 					<Property name="Text" value="CONFIRM_CHAR_DELETE" />
 					<Area>
-						<Anchor point="LEFT" offset="24" />
-						<Anchor point="RIGHT" offset="-24" />
-						<Anchor point="TOP" offset="24" />
+						<Anchor point="LEFT" offset="48" />
+						<Anchor point="RIGHT" offset="-48" />
+						<Anchor point="TOP" offset="48" />
 					</Area>
 				</Frame>
 
 				<Frame name="DeleteConfirmButton" inherits="GlueButton">
 					<Property name="Text" value="DELETE" />
 					<Area>
-						<Anchor point="LEFT" offset="24" />
-						<Anchor point="RIGHT" relativePoint="H_CENTER" offset="-12" />
-						<Anchor point="BOTTOM" offset="-24" />
+						<Anchor point="LEFT" offset="48" />
+						<Anchor point="RIGHT" relativePoint="H_CENTER" offset="-24" />
+						<Anchor point="BOTTOM" offset="-48" />
 					</Area>
 				</Frame>
 
 				<Frame name="DeleteCancelButton" inherits="GlueButton">
 					<Property name="Text" value="CANCEL" />
 					<Area>
-						<Anchor point="LEFT" relativePoint="H_CENTER" offset="12" />
-						<Anchor point="RIGHT" offset="-24" />
-						<Anchor point="BOTTOM" offset="-24" />
+						<Anchor point="LEFT" relativePoint="H_CENTER" offset="24" />
+						<Anchor point="RIGHT" offset="-48" />
+						<Anchor point="BOTTOM" offset="-48" />
 					</Area>
 				</Frame>
 			</Frame>

@@ -1,0 +1,63 @@
+<?xml version="1.0" ?>
+<UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
+	<Script file="GameMenu.lua" />
+	
+	<Frame name="GameMenuButtonTemplate" inherits="GlueButton">
+		<Area>
+			<Anchor point="LEFT" offset="16" />
+			<Anchor point="RIGHT" offset="-16" />
+			<Size><AbsDimension x="440" y="112" /></Size>
+		</Area>
+	</Frame>
+
+	<Frame name="GameMenu" renderer="DefaultRenderer" parent="GameParent">
+		<Property name="Visible" value="False" />
+
+		<Visual>
+			<ImagerySection name="Background">
+				<BorderComponent texture="Interface/GameUI/fg4_borders_01_03.htex" borderSize="250" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Background" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+
+		<Area>
+			<Size><AbsDimension x="540" y="128" /></Size>
+			<Anchor point="H_CENTER" />
+			<Anchor point="V_CENTER" />
+		</Area>
+
+		<Frame name="MenuTitleBar" inherits="TitleBar">
+			<Property name="Text" value="MENU" />
+
+			<Area>
+				<Anchor point="TOP" offset="62" />
+				<Anchor point="LEFT" offset="48" />
+				<Anchor point="RIGHT" offset="-48" />
+			</Area>
+		</Frame>
+
+		<Frame name="GameMenuButtons" renderer="DefaultRenderer">
+			<Visual>
+				<ImagerySection name="Border">
+					<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Border" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+
+			<Area>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="MenuTitleBar" offset="5" />
+				<Anchor point="LEFT" offset="48" />
+				<Anchor point="RIGHT" offset="-48" />
+				<Anchor point="BOTTOM" offset="-48" />
+			</Area>
+		</Frame>
+	</Frame>
+</UiLayout>

@@ -41,6 +41,10 @@ function AccountLogin_AuthError(frame, errorCode)
 	GlueDialog_Show("AUTH_ERROR", AUTH_ERROR_STRING[errorCode])
 end
 
+function AccountLogin_OnConnect()
+	GlueDialog_Show("CONNECTING")
+end
+
 -- This function is called when the AccountLogin frame is loaded
 function AccountLogin_OnLoad()
 	-- Register the frame to receive events
@@ -63,10 +67,15 @@ function AccountLogin_OnLoad()
 	-- Register realm list event
 	AccountLogin:RegisterEvent("REALM_LIST", AccountLogin_OnRealmList)
 	AccountLogin:RegisterEvent("CHAR_LIST", AccountLogin_OnCharList)
+	AccountLogin:RegisterEvent("LOGIN_CONNECT", AccountLogin_OnConnect)
 	
 	-- Register button click events
 	LoginButton:SetClickedHandler(AccountLogin_Login)
 	QuitButton:SetClickedHandler(AccountLogin_Quit)
+
+	if (realmConnector:IsConnected()) then
+		GlueDialog_Show("CONNECTING")
+	end
 end
 
 -- Frame loaded

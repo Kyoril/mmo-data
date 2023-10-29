@@ -7,17 +7,17 @@
 	
 		<Frame name="GlueDialog" inherits="GlueBorderFrame">
 			<Area>
-				<Size><AbsDimension x="800" y="245" /></Size>
+				<Size><AbsDimension x="1600" y="490" /></Size>
 				<Anchor point="H_CENTER" />
 				<Anchor point="V_CENTER" />
 			</Area>
 			
 			<Frame name="GlueDialogLabel" inherits="GlueTextLarge">
-				<Property name="Text" value="Connecting..." />
+				<Property name="Text" value="CONNECTING" />
 				<Area>
-					<Anchor point="LEFT" offset="20" />
-					<Anchor point="RIGHT" offset="-20" />
-					<Anchor point="TOP" offset="30" />
+					<Anchor point="LEFT" offset="40" />
+					<Anchor point="RIGHT" offset="-40" />
+					<Anchor point="TOP" offset="60" />
 				</Area>
 			</Frame>
 			
@@ -26,7 +26,7 @@
 				
 				<Area>
 					<Anchor point="H_CENTER" />
-					<Anchor point="BOTTOM" relativeTo="GlueDialog" offset="-20" />
+					<Anchor point="BOTTOM" relativeTo="GlueDialog" offset="-40" />
 				</Area>
 			</Frame>
 			
@@ -35,8 +35,8 @@
 				<Property name="Visible" value="false" />
 				
 				<Area>
-					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="GlueButton01" offset="10" />
-					<Anchor point="BOTTOM" relativeTo="GlueDialog" offset="-20" />
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="GlueButton01" offset="20" />
+					<Anchor point="BOTTOM" relativeTo="GlueDialog" offset="-40" />
 				</Area>
 			</Frame>
 		</Frame>

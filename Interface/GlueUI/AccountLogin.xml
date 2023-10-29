@@ -4,15 +4,48 @@
 	<Script file="AccountLogin.lua" />
 	
 	<!-- Account login frame -->
-	<Frame name="AccountLogin" parent="GlueParent" setAllPoints="true" type="Model" renderer="ModelRenderer">
+	<Frame name="AccountLogin" parent="GlueParent" setAllPoints="true" renderer="DefaultRenderer">
 		<Property name="Focusable" value="true" />
 		<!--<Property name="ModelFile" value="Models/Cube/Cube.mesh" />-->
+		
+		<!-- For now, only a placeholder image is rendered in the background -->
+		<Visual>
+			<ImagerySection name="Background">
+				<ImageComponent texture="Interface/GlueUI/LoginBackgroundPH.htex" tiling="NONE" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Background" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+
+		<Frame name="LoginBackgroundFrameBottom" renderer="DefaultRenderer">
+			<Area>
+				<Anchor point="LEFT"/>
+				<Anchor point="RIGHT"/>
+				<Anchor point="BOTTOM"/>
+				<Size><AbsDimension y="400" /></Size>
+			</Area>
+			<Visual>
+				<ImagerySection name="Background">
+					<ImageComponent texture="Interface/GlueUI/GradientBlack.htex" tiling="HORZ" />
+				</ImagerySection>
+
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Background" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+		</Frame>
 		
 		<Frame name="AccountPasswordField" inherits="GlueTextField">
 			<Property name="Masked" value="true" />
 			<Area>
 				<Anchor point="BOTTOM" relativePoint="V_CENTER" />
 				<Anchor point="H_CENTER" />
+				<Size><AbsDimension x="600" y="90" /></Size>
 			</Area>
 		</Frame>
 		<Frame name="AccountPasswordLabel" inherits="GlueTextLarge">
@@ -26,6 +59,7 @@
 			<Area>
 				<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="AccountPasswordLabel" offset="-16" />
 				<Anchor point="H_CENTER" />
+				<Size><AbsDimension x="600" y="90" /></Size>
 			</Area>
 		</Frame>
 		<Frame name="AccountNameLabel" inherits="GlueTextLarge">
@@ -41,6 +75,7 @@
 			<Area>
 				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="AccountPasswordField" offset="64" />
 				<Anchor point="H_CENTER" />
+				<Size><AbsDimension x="600" y="128"/></Size>
 			</Area>
 		</Frame>
 		
@@ -54,10 +89,20 @@
 		
 		<Frame name="CopyrightLabel" inherits="GlueTextSmall">
 			<Property name="Text" value="COPYRIGHT_TEXT" />
+
 			<Area>
-				<Size><AbsDimension x="0" y="22" offset="-8" /></Size>
+				<Size><AbsDimension x="0" y="44" offset="-8" /></Size>
 				<Anchor point="H_CENTER" />
-				<Anchor point="BOTTOM" />
+				<Anchor point="BOTTOM" offset="-24" />
+			</Area>
+		</Frame>
+		
+		<Frame name="LoginSettingsButton" inherits="GlueButton">
+			<Property name="Text" value="SETTINGS" />
+			<Property name="Enabled" value="False" />
+			<Area>
+				<Anchor point="LEFT" offset="24" />
+				<Anchor point="BOTTOM" offset="-24"/>
 			</Area>
 		</Frame>
 		

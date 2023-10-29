@@ -7,7 +7,8 @@
 	(key = "ACCOUNT_NAME", string = "Accountname")
 	(key = "LOGIN", string = "Anmelden")
 	(key = "QUIT", string = "Beenden")
-	(key = "COPYRIGHT_TEXT", string = "Copyright (C) 2020")
+	(key = "SETTINGS", string = "Einstellungen")
+	(key = "COPYRIGHT_TEXT", string = "Copyright (C) 2019 - 2022, Robin Klimonow. Alle Rechte vorbehalten.")
 	
 	(key = "REALM_LIST", string = "Realmliste")
 	(key = "CHOOSE_A_REALM", string = "Wählt einen Realm aus der folgenden Liste:")
@@ -43,4 +44,7 @@
 
 	(key = "DELETE", string = "Löschen")
 	(key = "CONFIRM_CHAR_DELETE", string = "Möchtet Ihr den Charakter wirklich löschen?\n\nJeglicher Fortschritt wird dabei verloren gehen!")
+	
+	(key = "CLOSE", string = "Schließen")
+	(key = "MENU", string = "Menü")
 }

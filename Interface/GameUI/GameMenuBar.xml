@@ -1,0 +1,71 @@
+<?xml version="1.0" ?>
+<UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
+	<Script file="GameMenuBar.lua" />
+	
+	<Frame name="GameMenuBarButtonTemplate" inherits="GlueButton">
+		<Area>
+			<Size><AbsDimension x="400" y="96"/></Size>
+			<Anchor point="LEFT" offset="16" />
+		</Area>
+	</Frame>
+
+	<Frame name="GameMenuBar" renderer="DefaultRenderer" parent="GameParent">
+		<Visual>
+			<ImagerySection name="Background">
+				<ImageComponent texture="Interface/GameUI/fg4_borders_stone_bg_01_result.htex" tiling="BOTH">
+					<Area><Inset all="8" /></Area>
+				</ImageComponent>
+				<BorderComponent texture="Interface/GameUI/fg4_borders_stone_edges_result.htex" borderSize="45" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Background" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+
+		<Frame name="GameMenuBarTLFrame" renderer="DefaultRenderer">
+			<Visual>
+				<ImagerySection name="Background">
+					<ImageComponent texture="Interface/GameUI/fg4_borders_01_14.htex" tiling="NONE" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Background" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+				
+			<Area>
+				<Size><AbsDimension x="48" y="48" /></Size>
+				<Anchor point="TOP" offset="0" />
+				<Anchor point="LEFT" offset="0" />
+			</Area>
+		</Frame>
+
+		<Frame name="GameMenuBarTRFrame" renderer="DefaultRenderer">
+			<Visual>
+				<ImagerySection name="Background">
+					<ImageComponent texture="Interface/GameUI/fg4_borders_01_14-05.htex" tiling="NONE" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Background" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+				
+			<Area>
+				<Size><AbsDimension x="48" y="48" /></Size>
+				<Anchor point="TOP" offset="0" />
+				<Anchor point="RIGHT" offset="0" />
+			</Area>
+		</Frame>
+		<Area>
+			<Size><AbsDimension y="96" /></Size>
+			<Anchor point="BOTTOM" offset="0" />
+			<Anchor point="LEFT" offset="0" />
+			<Anchor point="RIGHT" offset="0" />
+		</Area>
+	</Frame>
+</UiLayout>

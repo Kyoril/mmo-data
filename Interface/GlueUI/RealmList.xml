@@ -7,12 +7,12 @@
 		<Visual>
 			<ImagerySection name="BackgroundDefault">
 				<ImageComponent texture="Interface/GlueUI/ListItemHighlight.htex" tint="7F000000" tiling="VERTICAL">
-					<Area><Inset all="2" /></Area>
+					<Area><Inset all="4" /></Area>
 				</ImageComponent>
 			</ImagerySection>
 			<ImagerySection name="BackgroundHighlight">
 				<ImageComponent texture="Interface/GlueUI/ListItemHighlight.htex" tint="7FFACC12" tiling="VERTICAL">
-					<Area><Inset all="2" /></Area>
+					<Area><Inset all="4" /></Area>
 				</ImageComponent>
 			</ImagerySection>
 			<ImagerySection name="TextDefault">
@@ -46,17 +46,30 @@
 			</StateImagery>
 		</Visual>
 		<Area>
-			<Size><AbsDimension y="30" /></Size>
+			<Size><AbsDimension y="60" /></Size>
 		</Area>
 	</Frame>
 	
-	<Frame name="RealmListFrame" parent="GlueParent" setAllPoints="true">
+	<Frame name="RealmListFrame" parent="GlueParent" setAllPoints="true" renderer="DefaultRenderer">
 		<Property name="Visible" value="false" />
 		<Property name="Focusable" value="true" />
+
+		
+		<!-- For now, only a placeholder image is rendered in the background -->
+		<Visual>
+			<ImagerySection name="Background">
+				<ImageComponent texture="Interface/GlueUI/LoginBackgroundPH.htex" tiling="NONE" tint="FF444444" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Background" />
+				</Layer>
+			</StateImagery>
+		</Visual>
 		
 		<Frame name="RealmListBorder" inherits="GlueBorderFrame">
 			<Area>
-				<Size><AbsDimension x="720" y="560" /></Size>
+				<Size><AbsDimension x="1440" y="1120" /></Size>
 				<Anchor point="V_CENTER" />
 				<Anchor point="H_CENTER" />
 			</Area>
@@ -65,7 +78,7 @@
 				<Property name="Text" value="REALM_LIST" />
 				<Area>
 					<Anchor point="H_CENTER" />
-					<Anchor point="TOP" offset="24" />
+					<Anchor point="TOP" offset="48" />
 				</Area>
 			</Frame>
 			<Frame name="RealmListHeaderSubLabel" inherits="GlueTextSmall">
@@ -79,17 +92,17 @@
 			<Frame name="RealmListButton01" inherits="GlueButton">
 				<Property name="Text" value="OKAY" />
 				<Area>
-					<Size><AbsDimension x="200" y="64" /></Size>
-					<Anchor point="H_CENTER" offset="-120" />
-					<Anchor point="BOTTOM" offset="-24" />
+					<Size><AbsDimension x="400" y="128" /></Size>
+					<Anchor point="H_CENTER" offset="-240" />
+					<Anchor point="BOTTOM" offset="-48" />
 				</Area>
 			</Frame>
 			<Frame name="RealmListButton02" inherits="GlueButton">
 				<Property name="Text" value="CANCEL" />
 				<Area>
-					<Size><AbsDimension x="200" y="64" /></Size>
-					<Anchor point="H_CENTER" offset="120" />
-					<Anchor point="BOTTOM" offset="-24" />
+					<Size><AbsDimension x="400" y="128" /></Size>
+					<Anchor point="H_CENTER" offset="240" />
+					<Anchor point="BOTTOM" offset="-48" />
 				</Area>
 			</Frame>
 			
@@ -106,10 +119,10 @@
 					</StateImagery>
 				</Visual>
 				<Area>
-					<Anchor point="LEFT" offset="10" />
-					<Anchor point="RIGHT" offset="-10" />
-					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmListHeaderSubLabel" offset="12" />
-					<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="RealmListButton01" offset="-12" />
+					<Anchor point="LEFT" offset="20" />
+					<Anchor point="RIGHT" offset="-20" />
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmListHeaderSubLabel" offset="24" />
+					<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="RealmListButton01" offset="-24" />
 				</Area>
 			</Frame>
 		</Frame>
