@@ -162,6 +162,13 @@
 			<Anchor point="RIGHT" relativeTo="ChatInput" />
 		</Area>
 
+		<Scripts>
+			<OnLoad>
+				return function(this)
+					ChatFrame_OnLoad(this);
+				end
+			</OnLoad>
+		</Scripts>
 	</Frame>
 	
 </UiLayout>
