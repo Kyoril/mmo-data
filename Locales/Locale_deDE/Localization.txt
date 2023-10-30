@@ -1,4 +1,4 @@
-﻿strings = 
+strings = 
 {
 	(key = "OKAY", string = "Okay")
 	(key = "CANCEL", string = "Abbrechen")

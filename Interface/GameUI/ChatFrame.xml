@@ -2,7 +2,7 @@
 <UiLayout>
 	<Script file="ChatFrame.lua" />
 
-	<Font name="ChatFont" file="Fonts/arbutusslab-regular.ttf" size="16" outline="1" />
+	<Font name="ChatFont" file="Fonts/ARIALN.TTF" size="30" outline="0" />
 
 	<Frame name="ChatButton" type="Button" renderer="ButtonRenderer">
 		<Property name="Icon" />
@@ -136,7 +136,7 @@
 		</Area>
 	</Frame>
 	
-	<Frame name="ChatFrame" parent="GameParent" renderer="DefaultRenderer">
+	<Frame name="ChatFrame" parent="GameParent" type="ScrollableMessageFrame">
 		<Property name="Font" value="ChatFont" />
 		<Property name="Text" value="MMORPG Development Project" />
 

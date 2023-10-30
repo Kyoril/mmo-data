@@ -2,6 +2,62 @@
 <UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
 	<Script file="GameMenuBar.lua" />
 	
+	<Frame name="GameMenuBarImageButton" type="Button" renderer="ButtonRenderer">
+		<Property name="Icon" />
+
+		<Visual>
+			<ImagerySection name="Image">
+				<ImageComponent>
+					<Area>
+						<Inset all="8" />
+					</Area>
+					<PropertyValue property="Icon" />
+				</ImageComponent>
+			</ImagerySection>
+			<ImagerySection name="NormalFrame">
+				<BorderComponent texture="Interface/GlueUI/ButtonNormal.htex" borderSize="30" />
+			</ImagerySection>
+			<ImagerySection name="HoveredFrame">
+				<BorderComponent texture="Interface/GlueUI/ButtonHovered.htex" borderSize="30" />
+			</ImagerySection>
+			<ImagerySection name="PushedFrame">
+				<BorderComponent texture="Interface/GlueUI/ButtonPushed.htex" borderSize="30" />
+			</ImagerySection>
+			<ImagerySection name="DisabledFrame">
+				<BorderComponent texture="Interface/GlueUI/ButtonDisabled.htex" borderSize="30" />
+			</ImagerySection>
+			<StateImagery name="Normal">
+				<Layer>
+					<Section section="NormalFrame" />
+					<Section section="Image" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Hovered">
+				<Layer>
+					<Section section="HoveredFrame" />
+					<Section section="Image" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Pushed">
+				<Layer>
+					<Section section="PushedFrame" />
+					<Section section="Image" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="DisabledFrame" />
+					<Section section="Image" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+		<Area>
+			<Size>
+				<AbsDimension x="128" y="128" />
+			</Size>
+		</Area>
+	</Frame>
+
 	<Frame name="GameMenuBarButtonTemplate" inherits="GlueButton">
 		<Area>
 			<Size><AbsDimension x="400" y="96"/></Size>
@@ -10,7 +66,7 @@
 	</Frame>
 
 	<Frame name="GameMenuBar" renderer="DefaultRenderer" parent="GameParent">
-		<Visual>
+		<!--<Visual>
 			<ImagerySection name="Background">
 				<ImageComponent texture="Interface/GameUI/fg4_borders_stone_bg_01_result.htex" tiling="BOTH">
 					<Area><Inset all="8" /></Area>
@@ -22,8 +78,9 @@
 					<Section section="Background" />
 				</Layer>
 			</StateImagery>
-		</Visual>
+		</Visual>-->
 
+		<!--
 		<Frame name="GameMenuBarTLFrame" renderer="DefaultRenderer">
 			<Visual>
 				<ImagerySection name="Background">
@@ -61,6 +118,8 @@
 				<Anchor point="RIGHT" offset="0" />
 			</Area>
 		</Frame>
+		-->
+		
 		<Area>
 			<Size><AbsDimension y="96" /></Size>
 			<Anchor point="BOTTOM" offset="0" />

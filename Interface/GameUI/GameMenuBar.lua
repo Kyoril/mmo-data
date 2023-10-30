@@ -8,7 +8,7 @@ function AddMenuBarButton(text, callback)
 	local childCount = GameMenu:GetChildCount()
 
 	-- Create a new button from the template and add it to the window
-	local button = GameMenuBarButtonTemplate:Clone()
+	local button = GameMenuBarImageButton:Clone()
 	button:SetText(Localize(text))
 	button:SetClickedHandler(callback)
 	GameMenuBar:AddChild(button)
@@ -20,6 +20,8 @@ function AddMenuBarButton(text, callback)
 
 	-- Increase offset
 	menuBarOffset = menuBarOffset + button:GetWidth() + MENUBAR_H_PADDING
+	print("Added menu button " .. text)
+
 end
 
 function OnMenuItem_Clicked()
@@ -30,4 +32,9 @@ function OnMenuItem_Clicked()
 	end
 end
 
+function OnCharacter_Clicked()
+
+end
+
 AddMenuBarButton("MENU", OnMenuItem_Clicked)
+AddMenuBarButton("CHARACTER", OnCharacter_Clicked)
