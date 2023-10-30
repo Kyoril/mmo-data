@@ -57,12 +57,6 @@ function RealmList_Hide()
 	RealmListFrame:Hide()
 end
 
-function RealmList_OnLoad()
-	-- Setup button handlers
-	RealmListButton01:SetClickedHandler(RealmList_Accept)
-	RealmListButton02:SetClickedHandler(RealmList_Cancel)
-end
-
 function RealmList_Accept()
 	-- Hide realm list
 	RealmList_Hide()
@@ -82,7 +76,3 @@ function RealmList_Cancel()
 	-- Reenable login button in login ui
 	LoginButton:Enable()
 end
-
-
--- Initialize realm list
-RealmList_OnLoad()

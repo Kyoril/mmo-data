@@ -28,6 +28,14 @@
 					<Anchor point="H_CENTER" />
 					<Anchor point="BOTTOM" relativeTo="GlueDialog" offset="-40" />
 				</Area>
+				
+				<Scripts>
+					<OnClick>
+						return function(this)
+							GlueDialog_Button1Clicked();
+						end
+					</OnClick>
+				</Scripts>
 			</Frame>
 			
 			<Frame name="GlueButton02" inherits="GlueButton">
@@ -38,6 +46,14 @@
 					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="GlueButton01" offset="20" />
 					<Anchor point="BOTTOM" relativeTo="GlueDialog" offset="-40" />
 				</Area>
+
+				<Scripts>
+					<OnClick>
+						return function(this)
+							GlueDialog_Button2Clicked();
+						end
+					</OnClick>
+				</Scripts>
 			</Frame>
 		</Frame>
 	</Frame>

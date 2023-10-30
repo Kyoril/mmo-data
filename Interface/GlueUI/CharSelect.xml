@@ -104,10 +104,19 @@
 			<Frame name="CharSelectEnterButton" inherits="GlueButtonPrimary">
 				<Property name="Text" value="ENTER_WORLD" />
 				<Property name="Enabled" value="False" />
+
 				<Area>
 					<Anchor point="BOTTOM" offset="-24" />
 					<Anchor point="H_CENTER" />
 				</Area>
+
+				<Scripts>
+					<OnClick>
+						return function(this)
+							CharSelect_EnterWorld();
+						end
+					</OnClick>
+				</Scripts>
 			</Frame>
 
 			<Frame name="SelectedCharLevel" inherits="GlueTextSmall">
@@ -145,26 +154,53 @@
 
 			<Frame name="ChangeRealmButton" inherits="GlueButton">
 				<Property name="Text" value="CHANGE_REALM" />
+
 				<Area>
 					<Anchor point="LEFT" offset="48" />
 					<Anchor point="BOTTOM" offset="-48" />
 				</Area>
+				
+				<Scripts>
+					<OnClick>
+						return function(this)
+							CharSelect_ChangeRealm();
+						end
+					</OnClick>
+				</Scripts>
 			</Frame>
 
 			<Frame name="CharDeleteButton" inherits="GlueButton">
 				<Property name="Text" value="DELETE_CHARACTER" />
 				<Property name="Enabled" value="False" />
+
 				<Area>
 					<Anchor point="RIGHT" offset="-48" />
 					<Anchor point="BOTTOM" offset="-48" />
 				</Area>
+				
+				<Scripts>
+					<OnClick>
+						return function(this)
+							CharSelect_DeleteCharacter();
+						end
+					</OnClick>
+				</Scripts>
 			</Frame>
+
 			<Frame name="CharCreateButton" inherits="GlueButton">
 				<Property name="Text" value="CREATE_CHARACTER" />
 				<Area>
 					<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CharDeleteButton" offset="-24" />
 					<Anchor point="BOTTOM" relativePoint="BOTTOM" relativeTo="CharDeleteButton" />
 				</Area>
+
+				<Scripts>
+					<OnClick>
+						return function(this)
+							CharSelect_CreateCharacter();
+						end
+					</OnClick>
+				</Scripts>
 			</Frame>
 
 		</Frame>
@@ -235,20 +271,38 @@
 
 				<Frame name="DeleteConfirmButton" inherits="GlueButton">
 					<Property name="Text" value="DELETE" />
+
 					<Area>
 						<Anchor point="LEFT" offset="48" />
 						<Anchor point="RIGHT" relativePoint="H_CENTER" offset="-24" />
 						<Anchor point="BOTTOM" offset="-48" />
 					</Area>
+						
+					<Scripts>
+						<OnClick>
+							return function(this)
+								CharSelect_ConfirmDelete();
+							end
+						</OnClick>
+					</Scripts>
 				</Frame>
 
 				<Frame name="DeleteCancelButton" inherits="GlueButton">
 					<Property name="Text" value="CANCEL" />
+
 					<Area>
 						<Anchor point="LEFT" relativePoint="H_CENTER" offset="24" />
 						<Anchor point="RIGHT" offset="-48" />
 						<Anchor point="BOTTOM" offset="-48" />
 					</Area>
+
+					<Scripts>
+						<OnClick>
+							return function(this)
+								CharSelect_CancelDelete();
+							end
+						</OnClick>
+					</Scripts>
 				</Frame>
 			</Frame>
 		</Frame>

@@ -136,9 +136,8 @@
 		</Area>
 	</Frame>
 	
-	<Frame name="ChatFrame" parent="GameParent" type="ScrollableMessageFrame">
+	<Frame name="ChatFrame" parent="GameParent" type="ScrollingMessageFrame">
 		<Property name="Font" value="ChatFont" />
-		<Property name="Text" value="MMORPG Development Project" />
 
 		<Visual>
 			<ImagerySection name="Text">
@@ -162,6 +161,7 @@
 			<Anchor point="TOP" relativeTo="ChatBubbleButton" />
 			<Anchor point="RIGHT" relativeTo="ChatInput" />
 		</Area>
+
 	</Frame>
 	
 </UiLayout>

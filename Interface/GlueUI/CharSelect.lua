@@ -116,12 +116,3 @@ end
 function CharSelect_CancelDelete()
 	DeleteConfirmation:Hide()
 end
-
-
--- Register button handlers
-CharSelectEnterButton:SetClickedHandler(CharSelect_EnterWorld)
-CharCreateButton:SetClickedHandler(CharSelect_CreateCharacter)
-CharDeleteButton:SetClickedHandler(CharSelect_DeleteCharacter)
-ChangeRealmButton:SetClickedHandler(CharSelect_ChangeRealm)
-DeleteConfirmButton:SetClickedHandler(CharSelect_ConfirmDelete)
-DeleteCancelButton:SetClickedHandler(CharSelect_CancelDelete)

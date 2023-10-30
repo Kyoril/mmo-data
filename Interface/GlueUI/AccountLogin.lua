@@ -20,10 +20,6 @@ function AccountLogin_Login()
 	RunConsoleCommand("login " .. username .. " " .. password)
 end
 
-function AccountLogin_Quit()
-	RunConsoleCommand("quit")
-end
-
 -- Called when the realm list was received
 function AccountLogin_OnRealmList()
 	GlueDialog_Hide()
@@ -69,14 +65,7 @@ function AccountLogin_OnLoad()
 	AccountLogin:RegisterEvent("CHAR_LIST", AccountLogin_OnCharList)
 	AccountLogin:RegisterEvent("LOGIN_CONNECT", AccountLogin_OnConnect)
 	
-	-- Register button click events
-	LoginButton:SetClickedHandler(AccountLogin_Login)
-	QuitButton:SetClickedHandler(AccountLogin_Quit)
-
 	if (realmConnector:IsConnected()) then
 		GlueDialog_Show("CONNECTING")
 	end
 end
-
--- Frame loaded
-AccountLogin_OnLoad()

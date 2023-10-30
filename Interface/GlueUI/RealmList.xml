@@ -96,6 +96,14 @@
 					<Anchor point="H_CENTER" offset="-240" />
 					<Anchor point="BOTTOM" offset="-48" />
 				</Area>
+				
+				<Scripts>
+					<OnClick>
+						return function(this)
+							RealmList_Accept();
+						end
+					</OnClick>
+				</Scripts>
 			</Frame>
 			<Frame name="RealmListButton02" inherits="GlueButton">
 				<Property name="Text" value="CANCEL" />
@@ -104,6 +112,14 @@
 					<Anchor point="H_CENTER" offset="240" />
 					<Anchor point="BOTTOM" offset="-48" />
 				</Area>
+
+				<Scripts>
+					<OnClick>
+						return function(this)
+							RealmList_Cancel();
+						end
+					</OnClick>
+				</Scripts>
 			</Frame>
 			
 			<Frame name="RealmList" renderer="DefaultRenderer">

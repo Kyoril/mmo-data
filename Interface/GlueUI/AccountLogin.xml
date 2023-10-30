@@ -77,6 +77,13 @@
 				<Anchor point="H_CENTER" />
 				<Size><AbsDimension x="600" y="128"/></Size>
 			</Area>
+			<Scripts>
+				<OnClick>
+					return function(this)
+						AccountLogin_Login();
+					end
+				</OnClick>
+			</Scripts>
 		</Frame>
 		
 		<Frame name="QuitButton" inherits="GlueButton">
@@ -85,6 +92,14 @@
 				<Anchor point="RIGHT" offset="-24" />
 				<Anchor point="BOTTOM" offset="-24"/>
 			</Area>
+			
+			<Scripts>
+				<OnClick>
+					return function(this)
+						RunConsoleCommand("quit");
+					end
+				</OnClick>
+			</Scripts>
 		</Frame>
 		
 		<Frame name="CopyrightLabel" inherits="GlueTextSmall">
@@ -106,5 +121,12 @@
 			</Area>
 		</Frame>
 		
+		<Scripts>
+			<OnLoad>
+				return function(this)
+					AccountLogin_OnLoad();
+				end
+			</OnLoad>
+		</Scripts>
 	</Frame>
 </UiLayout>

@@ -5,12 +5,18 @@
 	<Frame name="GlueParent" parent="TopFrame" setAllPoints="true">
 		<Property name="Font" value="DefaultSmall" />
 	
-		<!-- TODO: 
 		<Scripts>
-			<OnLoad>GlueParent_OnLoad();</OnLoad>
-			<OnEvent>GlueParent_OnEvent();</OnEvent>
-			<OnUpdate>GlueParentFadeUpdate(arg1);</OnUpdate>
+			<OnLoad>
+				return function(this)
+					GlueParent_OnLoad(this);
+				end
+			</OnLoad>
+			<!--<OnEvent>GlueParent_OnEvent();</OnEvent>-->
+			<OnUpdate>
+				return function(this, elapsed)
+					GlueParentFadeUpdate(this, elapsed);
+				end
+			</OnUpdate>
 		</Scripts>
-		-->
 	</Frame>
 </UiLayout>
