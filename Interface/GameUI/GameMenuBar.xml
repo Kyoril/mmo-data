@@ -9,22 +9,22 @@
 			<ImagerySection name="Image">
 				<ImageComponent>
 					<Area>
-						<Inset all="8" />
+						<Inset all="16" />
 					</Area>
 					<PropertyValue property="Icon" />
 				</ImageComponent>
 			</ImagerySection>
 			<ImagerySection name="NormalFrame">
-				<BorderComponent texture="Interface/GlueUI/ButtonNormal.htex" borderSize="30" />
+				<BorderComponent texture="Interface/BW_ButtonSmall_Up.htex" borderSize="30" />
 			</ImagerySection>
 			<ImagerySection name="HoveredFrame">
-				<BorderComponent texture="Interface/GlueUI/ButtonHovered.htex" borderSize="30" />
+				<BorderComponent texture="Interface/BW_ButtonSmall_Over.htex" borderSize="30" />
 			</ImagerySection>
 			<ImagerySection name="PushedFrame">
-				<BorderComponent texture="Interface/GlueUI/ButtonPushed.htex" borderSize="30" />
+				<BorderComponent texture="Interface/BW_ButtonSmall_Down.htex" borderSize="30" />
 			</ImagerySection>
 			<ImagerySection name="DisabledFrame">
-				<BorderComponent texture="Interface/GlueUI/ButtonDisabled.htex" borderSize="30" />
+				<BorderComponent texture="Interface/BW_ButtonSmall_Up.htex" borderSize="30" />
 			</ImagerySection>
 			<StateImagery name="Normal">
 				<Layer>
@@ -66,7 +66,7 @@
 	</Frame>
 
 	<Frame name="GameMenuBar" renderer="DefaultRenderer" parent="GameParent">
-		<!--<Visual>
+		<Visual>
 			<ImagerySection name="Background">
 				<ImageComponent texture="Interface/GameUI/fg4_borders_stone_bg_01_result.htex" tiling="BOTH">
 					<Area><Inset all="8" /></Area>
@@ -78,53 +78,76 @@
 					<Section section="Background" />
 				</Layer>
 			</StateImagery>
-		</Visual>-->
+		</Visual>
 
-		<!--
-		<Frame name="GameMenuBarTLFrame" renderer="DefaultRenderer">
+		<Frame name="MenuBarButtons" renderer="DefaultRenderer">
+			<Area>
+				<Anchor point="LEFT" relativePoint="H_CENTER" offset="584" />
+				<Anchor point="TOP" />
+				<Anchor point="BOTTOM" />
+				<Anchor point="RIGHT" offset="-64" />
+			</Area>
+			
 			<Visual>
 				<ImagerySection name="Background">
-					<ImageComponent texture="Interface/GameUI/fg4_borders_01_14.htex" tiling="NONE" />
+					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlack.htex" borderSize="30">
+						<Area><Inset bottom="8" left="0" top="8" right="8" /></Area>
+					</BorderComponent>
 				</ImagerySection>
+
 				<StateImagery name="Enabled">
 					<Layer>
 						<Section section="Background" />
 					</Layer>
 				</StateImagery>
 			</Visual>
-				
-			<Area>
-				<Size><AbsDimension x="48" y="48" /></Size>
-				<Anchor point="TOP" offset="0" />
-				<Anchor point="LEFT" offset="0" />
-			</Area>
 		</Frame>
 
-		<Frame name="GameMenuBarTRFrame" renderer="DefaultRenderer">
+		<Frame name="LeftSideDecoration" renderer="DefaultRenderer">
+			<Area>
+				<Anchor point="LEFT" relativePoint="LEFT" offset="64" />
+				<Anchor point="BOTTOM" relativePoint="BOTTOM" offset="48" />
+				<Size><AbsDimension x="-256" y="256" /></Size>
+			</Area>
+
 			<Visual>
 				<ImagerySection name="Background">
-					<ImageComponent texture="Interface/GameUI/fg4_borders_01_14-05.htex" tiling="NONE" />
+					<ImageComponent texture="Interface/GameUI/fg4_icons_emblemLion_result.htex" tiling="NONE" />
 				</ImagerySection>
+
 				<StateImagery name="Enabled">
 					<Layer>
 						<Section section="Background" />
 					</Layer>
 				</StateImagery>
 			</Visual>
-				
-			<Area>
-				<Size><AbsDimension x="48" y="48" /></Size>
-				<Anchor point="TOP" offset="0" />
-				<Anchor point="RIGHT" offset="0" />
-			</Area>
 		</Frame>
-		-->
+
 		
+		<Frame name="RightSideDecoration" renderer="DefaultRenderer">
+			<Area>
+				<Anchor point="LEFT" relativePoint="RIGHT" offset="-64" />
+				<Anchor point="BOTTOM" relativePoint="BOTTOM" offset="48" />
+				<Size><AbsDimension x="256" y="256" /></Size>
+			</Area>
+
+			<Visual>
+				<ImagerySection name="Background">
+					<ImageComponent texture="Interface/GameUI/fg4_icons_emblemLion_result.htex" tiling="NONE" />
+				</ImagerySection>
+
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Background" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+		</Frame>
+
 		<Area>
-			<Size><AbsDimension y="96" /></Size>
+			<Size><AbsDimension x="2176" y="140" /></Size>
 			<Anchor point="BOTTOM" offset="0" />
-			<Anchor point="LEFT" offset="0" />
-			<Anchor point="RIGHT" offset="0" />
+			<Anchor point="H_CENTER" offset="0" />
 		</Area>
 	</Frame>
 </UiLayout>

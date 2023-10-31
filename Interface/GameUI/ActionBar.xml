@@ -1,0 +1,166 @@
+<?xml version="1.0" ?>
+<UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
+	<Script file="GameMenuBar.lua" />
+
+	<Frame name="ActionBarButtonTemplate" type="Button" renderer="ButtonRenderer">
+		<Property name="Icon" />
+
+		<Visual>
+			<ImagerySection name="Image">
+				<ImageComponent>
+					<Area>
+						<Inset all="16" />
+					</Area>
+					<PropertyValue property="Icon" />
+				</ImageComponent>
+			</ImagerySection>
+			<ImagerySection name="NormalFrame">
+				<BorderComponent texture="Interface/BW_ButtonSmall_Up.htex" borderSize="30" />
+			</ImagerySection>
+			<ImagerySection name="HoveredFrame">
+				<BorderComponent texture="Interface/BW_ButtonSmall_Over.htex" borderSize="30" />
+			</ImagerySection>
+			<ImagerySection name="PushedFrame">
+				<BorderComponent texture="Interface/BW_ButtonSmall_Down.htex" borderSize="30" />
+			</ImagerySection>
+			<ImagerySection name="DisabledFrame">
+				<BorderComponent texture="Interface/BW_ButtonSmall_Up.htex" borderSize="30" />
+			</ImagerySection>
+			<StateImagery name="Normal">
+				<Layer>
+					<Section section="NormalFrame" />
+					<Section section="Image" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Hovered">
+				<Layer>
+					<Section section="HoveredFrame" />
+					<Section section="Image" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Pushed">
+				<Layer>
+					<Section section="PushedFrame" />
+					<Section section="Image" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="DisabledFrame" />
+					<Section section="Image" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+		<Area>
+			<Size>
+				<AbsDimension x="128" y="128" />
+			</Size>
+		</Area>
+	</Frame>
+
+    <Frame name="ActionBar" parent="GameMenuBar">
+        <Area>
+			<Anchor point="BOTTOM" offset="-8" />
+			<Anchor point="LEFT" offset="72" />
+            <Anchor point="RIGHT" relativePoint="H_CENTER" offset="512" />
+            <Anchor point="TOP" offset="8" />
+        </Area>
+
+        <Frame name="ActionButton1" inherits="ActionBarButtonTemplate">
+            <Area>
+                <Anchor point="LEFT" offset="0" />
+                <Anchor point="TOP" offset="0" />
+                <Anchor point="BOTTOM" offset="0" />
+            </Area>
+        </Frame>
+        
+        <Frame name="ActionButton2" inherits="ActionBarButtonTemplate">
+            <Area>
+                <Anchor point="LEFT" relativeTo="ActionButton1" relativePoint="RIGHT" offset="0" />
+                <Anchor point="TOP" offset="0" />
+                <Anchor point="BOTTOM" offset="0" />
+            </Area>
+        </Frame>
+        
+        <Frame name="ActionButton3" inherits="ActionBarButtonTemplate">
+            <Area>
+                <Anchor point="LEFT" relativeTo="ActionButton2" relativePoint="RIGHT" offset="0" />
+                <Anchor point="TOP" offset="0" />
+                <Anchor point="BOTTOM" offset="0" />
+            </Area>
+        </Frame>
+        
+        <Frame name="ActionButton4" inherits="ActionBarButtonTemplate">
+            <Area>
+                <Anchor point="LEFT" relativeTo="ActionButton3" relativePoint="RIGHT" offset="0" />
+                <Anchor point="TOP" offset="0" />
+                <Anchor point="BOTTOM" offset="0" />
+            </Area>
+        </Frame>
+        
+        <Frame name="ActionButton5" inherits="ActionBarButtonTemplate">
+            <Area>
+                <Anchor point="LEFT" relativeTo="ActionButton4" relativePoint="RIGHT" offset="0" />
+                <Anchor point="TOP" offset="0" />
+                <Anchor point="BOTTOM" offset="0" />
+            </Area>
+        </Frame>
+        
+        <Frame name="ActionButton6" inherits="ActionBarButtonTemplate">
+            <Area>
+                <Anchor point="LEFT" relativeTo="ActionButton5" relativePoint="RIGHT" offset="0" />
+                <Anchor point="TOP" offset="0" />
+                <Anchor point="BOTTOM" offset="0" />
+            </Area>
+        </Frame>
+
+        <Frame name="ActionButton7" inherits="ActionBarButtonTemplate">
+            <Area>
+                <Anchor point="LEFT" relativeTo="ActionButton6" relativePoint="RIGHT" offset="0" />
+                <Anchor point="TOP" offset="0" />
+                <Anchor point="BOTTOM" offset="0" />
+            </Area>
+        </Frame>
+        
+        <Frame name="ActionButton8" inherits="ActionBarButtonTemplate">
+            <Area>
+                <Anchor point="LEFT" relativeTo="ActionButton7" relativePoint="RIGHT" offset="0" />
+                <Anchor point="TOP" offset="0" />
+                <Anchor point="BOTTOM" offset="0" />
+            </Area>
+        </Frame>
+        
+        <Frame name="ActionButton9" inherits="ActionBarButtonTemplate">
+            <Area>
+                <Anchor point="LEFT" relativeTo="ActionButton8" relativePoint="RIGHT" offset="0" />
+                <Anchor point="TOP" offset="0" />
+                <Anchor point="BOTTOM" offset="0" />
+            </Area>
+        </Frame>
+        
+        <Frame name="ActionButton10" inherits="ActionBarButtonTemplate">
+            <Area>
+                <Anchor point="LEFT" relativeTo="ActionButton9" relativePoint="RIGHT" offset="0" />
+                <Anchor point="TOP" offset="0" />
+                <Anchor point="BOTTOM" offset="0" />
+            </Area>
+        </Frame>
+        
+        <Frame name="ActionButton11" inherits="ActionBarButtonTemplate">
+            <Area>
+                <Anchor point="LEFT" relativeTo="ActionButton10" relativePoint="RIGHT" offset="0" />
+                <Anchor point="TOP" offset="0" />
+                <Anchor point="BOTTOM" offset="0" />
+            </Area>
+        </Frame>
+
+        <Frame name="ActionButton12" inherits="ActionBarButtonTemplate">
+            <Area>
+                <Anchor point="LEFT" relativeTo="ActionButton11" relativePoint="RIGHT" offset="0" />
+                <Anchor point="TOP" offset="0" />
+                <Anchor point="BOTTOM" offset="0" />
+            </Area>
+        </Frame>
+    </Frame>
+    
+</UiLayout>

@@ -2,5 +2,6 @@ GameTemplates.xml
 GameParent.xml
 GameMenu.xml
 GameMenuBar.xml
+ActionBar.xml
 ChatFrame.xml
 

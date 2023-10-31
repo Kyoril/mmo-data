@@ -94,7 +94,7 @@
 			</StateImagery>
 		</Visual>
 		<Area>
-			<Anchor point="BOTTOM" relativePoint="TOP" offset="-8" relativeTo="GameMenuBar" />
+			<Anchor point="BOTTOM" relativePoint="TOP" offset="-24" relativeTo="GameMenuBar" />
 			<Anchor point="LEFT" offset="64" />
 			<Size><AbsDimension x="830" y="50" /></Size>
 		</Area>
@@ -107,6 +107,14 @@
 			<Anchor point="LEFT" offset="8" />
 			<Anchor point="BOTTOM" relativeTo="ChatInput" relativePoint="TOP" offset="-8" />
 		</Area>
+
+		<Scripts>
+			<OnClick>
+				return function(this)
+					ChatFrame_ScrollToBottom(this);
+				end
+			</OnClick>
+		</Scripts>
 	</Frame>
 	
 	<Frame name="ChatScrollDownButton" parent="GameParent" inherits="ChatButton">
@@ -116,6 +124,14 @@
 			<Anchor point="LEFT" relativeTo="ChatScrollEndButton" />
 			<Anchor point="BOTTOM" relativeTo="ChatScrollEndButton" relativePoint="TOP" offset="-8" />
 		</Area>
+
+		<Scripts>
+			<OnClick>
+				return function(this)
+					ChatFrame_ScrollDown(this);
+				end
+			</OnClick>
+		</Scripts>
 	</Frame>
 	
 	<Frame name="ChatScrollUpButton" parent="GameParent" inherits="ChatButton">
@@ -125,6 +141,14 @@
 			<Anchor point="LEFT" relativeTo="ChatScrollDownButton" />
 			<Anchor point="BOTTOM" relativeTo="ChatScrollDownButton" relativePoint="TOP" offset="-8" />
 		</Area>
+		
+		<Scripts>
+			<OnClick>
+				return function(this)
+					ChatFrame_ScrollUp(this);
+				end
+			</OnClick>
+		</Scripts>
 	</Frame>
 	
 	<Frame name="ChatBubbleButton" parent="GameParent" inherits="ChatButton">
