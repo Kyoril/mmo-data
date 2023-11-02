@@ -5,3 +5,4 @@ GameMenuBar.xml
 ActionBar.xml
 ChatFrame.xml
 
+DebugUI.xml

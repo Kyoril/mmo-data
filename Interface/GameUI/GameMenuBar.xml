@@ -80,6 +80,58 @@
 			</StateImagery>
 		</Visual>
 
+		<Frame name="PlayerExperienceBar" type="ProgressBar">
+			<Property name="Progress" value="0.5" />
+			<Property name="Text" value="200 / 400" />
+			<Property name="Font" value="DefaultSmall" />
+
+			<Area>
+				<Anchor point="LEFT" />
+				<Anchor point="RIGHT" />
+				<Anchor point="BOTTOM" relativePoint="TOP" />
+				<Size><AbsDimension y="48" /></Size>
+			</Area>
+
+			<Visual>
+				<ImagerySection name="Caption">
+					<TextComponent color="FFFFFFFF" horzAlign="CENTER" vertAlign="CENTER" />
+				</ImagerySection>
+				<ImagerySection name="Background">
+					<BorderComponent texture="Interface/fg4_borders_01_33.htex" borderSize="5" />
+				</ImagerySection>
+				<ImagerySection name="Border">
+					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlack.htex" borderSize="24" />
+				</ImagerySection>
+				<ImagerySection name="Progress">
+					<ImageComponent texture="Interface/fg4_gradientWhiteV1_result.htex" tiling="HORZ" tint="FF94008C">
+						<Area><Inset all="8" /></Area>
+					</ImageComponent>
+				</ImagerySection>
+
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Background" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="Disabled">
+					<Layer>
+						<Section section="Background" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="Progress">
+					<Layer>
+						<Section section="Progress" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="Overlay">
+					<Layer>
+						<Section section="Border" />
+						<Section section="Caption" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+		</Frame>
+
 		<Frame name="MenuBarButtons" renderer="DefaultRenderer">
 			<Area>
 				<Anchor point="LEFT" relativePoint="H_CENTER" offset="584" />

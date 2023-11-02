@@ -47,6 +47,18 @@
 				<Anchor point="H_CENTER" />
 				<Size><AbsDimension x="600" y="90" /></Size>
 			</Area>
+			<Scripts>
+				<OnTabPressed>
+					return function(this)
+						AccountNameField:CaptureInput();
+					end
+				</OnTabPressed>
+				<OnEnterPressed>
+					return function(this)
+						AccountLogin_Login();
+					end
+				</OnEnterPressed>
+			</Scripts>
 		</Frame>
 		<Frame name="AccountPasswordLabel" inherits="GlueTextLarge">
 			<Property name="Text" value="ACCOUNT_PASSWORD" />
@@ -61,6 +73,18 @@
 				<Anchor point="H_CENTER" />
 				<Size><AbsDimension x="600" y="90" /></Size>
 			</Area>
+			<Scripts>
+				<OnTabPressed>
+					return function(this)
+						AccountPasswordField:CaptureInput();
+					end
+				</OnTabPressed>
+				<OnEnterPressed>
+					return function(this)
+						AccountLogin_Login();
+					end
+				</OnEnterPressed>
+			</Scripts>
 		</Frame>
 		<Frame name="AccountNameLabel" inherits="GlueTextLarge">
 			<Property name="Text" value="ACCOUNT_NAME" />

@@ -1,0 +1,64 @@
+<?xml version="1.0" ?>
+<UiLayout>
+	<Script file="DebugUI.lua" />
+
+	<Frame name="DebugPanel" renderer="DefaultRenderer" parent="GameParent">
+		<Property name="Visible" value="False" />
+
+		<Visual>
+			<ImagerySection name="Background">
+				<BorderComponent texture="Interface/GameUI/fg4_borders_01_03.htex" borderSize="250" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Background" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+
+		<Area>
+			<Size><AbsDimension x="540" y="128" /></Size>
+			<Anchor point="H_CENTER" />
+			<Anchor point="V_CENTER" />
+		</Area>
+
+		<Frame name="DebugTitleBar" inherits="TitleBar">
+			<Property name="Text" value="DEBUG_MENU" />
+
+			<Area>
+				<Anchor point="TOP" offset="62" />
+				<Anchor point="LEFT" offset="48" />
+				<Anchor point="RIGHT" offset="-48" />
+			</Area>
+		</Frame>
+
+		<Frame name="DebugMenuButtons" renderer="DefaultRenderer">
+			<Visual>
+				<ImagerySection name="Border">
+					<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Border" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+
+			<Area>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="DebugTitleBar" offset="5" />
+				<Anchor point="LEFT" offset="48" />
+				<Anchor point="RIGHT" offset="-48" />
+				<Anchor point="BOTTOM" offset="-48" />
+			</Area>
+		</Frame>
+
+        <Scripts>
+            <OnLoad>
+                return function(this)
+                    DebugUI_OnLoad(this)
+                end
+            </OnLoad>
+        </Scripts>
+    </Frame>
+
+</UiLayout>

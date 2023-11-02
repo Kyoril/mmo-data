@@ -55,7 +55,7 @@
 		</Visual>
 		<Area>
 			<Size>
-				<AbsDimension x="50" y="50" />
+				<AbsDimension x="64" y="64" />
 			</Size>
 		</Area>
 	</Frame>
@@ -96,8 +96,15 @@
 		<Area>
 			<Anchor point="BOTTOM" relativePoint="TOP" offset="-24" relativeTo="GameMenuBar" />
 			<Anchor point="LEFT" offset="64" />
-			<Size><AbsDimension x="830" y="50" /></Size>
+			<Size><AbsDimension x="830" y="72" /></Size>
 		</Area>
+		<Scripts>
+			<OnEnterPressed>
+				return function(this)
+					ChatFrame_SendMessage(this);
+				end
+			</OnEnterPressed>
+		</Scripts>
 	</Frame>
 
 	<Frame name="ChatScrollEndButton" parent="GameParent" inherits="ChatButton">
