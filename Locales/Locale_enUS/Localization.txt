@@ -47,4 +47,7 @@ strings =
 
 	(key = "CLOSE", string = "Close")
 	(key = "MENU", string = "Menu")
+
+	(key = "CHAT_FORMAT_SAY", string = "[%s] says: %s")
+	(key = "CHAT_FORMAT_YELL", string = "[%s] yells: %s")
 }

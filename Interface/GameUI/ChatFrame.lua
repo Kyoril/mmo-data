@@ -1,10 +1,10 @@
 
 function ChatFrame_OnLoad(this)
     this:RegisterEvent("CHAT_MSG_SAY", function(this, character, message)
-        ChatFrame:AddMessage("[" ..  character .. "] says: " .. message, 1.0, 1.0, 1.0);
+        ChatFrame:AddMessage(string.format(CHAT_FORMAT_SAY, character, message), 1.0, 1.0, 1.0);
     end)
     this:RegisterEvent("CHAT_MSG_YELL", function(this, character, message)
-        ChatFrame:AddMessage("[" .. character .. "] yells: " .. message, 1.0, 0.0, 0.0);
+        ChatFrame:AddMessage(string.format(CHAT_FORMAT_YELL, character, message), 1.0, 0.0, 0.0);
     end)
 
     this:RegisterEvent("OPEN_CHAT", function(this)
