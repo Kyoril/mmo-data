@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
-	<Font name="DefaultSmall" file="Fonts/arbutusslab-regular.ttf" size="28" outline="1" />
-	<Font name="DefaultHeader" file="Fonts/arbutusslab-regular.ttf" size="36" outline="4" />
+	<Font name="DefaultSmall" file="Fonts/arbutusslab-regular.ttf" size="30" outline="1" />
+	<Font name="DefaultHeader" file="Fonts/arbutusslab-regular.ttf" size="42" outline="2" />
 	
 	<!-- GlueButton template: Common buttons -->
 	<Frame name="GlueButton" type="Button" renderer="ButtonRenderer">
@@ -59,6 +59,30 @@
 			<Size>
 				<AbsDimension x="440" y="128" />
 			</Size>
+		</Area>
+	</Frame>
+	
+	<!-- Small label -->
+	<Frame name="TextSmall" renderer="DefaultRenderer">
+		<Property name="Font" value="DefaultSmall" />
+
+		<Visual>
+			<ImagerySection name="Text">
+				<TextComponent color="FFEED37C" horzAlign="CENTER" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+		<Area>
+			<Size><AbsDimension x="0" y="44" /></Size>
 		</Area>
 	</Frame>
 	

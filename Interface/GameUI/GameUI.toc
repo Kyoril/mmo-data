@@ -4,5 +4,7 @@ GameMenu.xml
 GameMenuBar.xml
 ActionBar.xml
 ChatFrame.xml
+TargetFrame.xml
+SpellBook.xml
 
 DebugUI.xml

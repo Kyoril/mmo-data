@@ -4,6 +4,11 @@ MENUBAR_V_PADDING = 4.0
 
 local menuBarOffset = MENUBAR_H_PADDING + 0.0
 
+function GameMenuBar_OnLoad()
+	AddMenuBarButton("Interface/Icons/fg4_icons_menu_result.htex", OnMenuItem_Clicked)
+	AddMenuBarButton("Interface/Icons/fg4_icons_helmet_result.htex", OnCharacter_Clicked)	
+end
+
 function AddMenuBarButton(text, callback)
 	local childCount = GameMenu:GetChildCount()
 
@@ -33,6 +38,3 @@ end
 function OnCharacter_Clicked()
 
 end
-
-AddMenuBarButton("Interface/Icons/fg4_icons_menu_result.htex", OnMenuItem_Clicked)
-AddMenuBarButton("Interface/Icons/fg4_icons_helmet_result.htex", OnCharacter_Clicked)

@@ -81,7 +81,7 @@
 		</Visual>
 
 		<Frame name="PlayerExperienceBar" type="ProgressBar">
-			<Property name="Progress" value="0.5" />
+			<Property name="Progress" value="0.12783" />
 			<Property name="Text" value="200 / 400" />
 			<Property name="Font" value="DefaultSmall" />
 
@@ -201,5 +201,13 @@
 			<Anchor point="BOTTOM" offset="0" />
 			<Anchor point="H_CENTER" offset="0" />
 		</Area>
+
+		<Scripts>
+			<OnLoad>
+				return function(this)
+					GameMenuBar_OnLoad();
+				end
+			</OnLoad>
+		</Scripts>
 	</Frame>
 </UiLayout>
