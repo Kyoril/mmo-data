@@ -48,6 +48,15 @@ strings =
 	(key = "CLOSE", string = "Close")
 	(key = "MENU", string = "Menu")
 
+	(key = "SECONDS", string = "sec")
+	(key = "MINUTES", string = "min")
+	(key = "COOLDOWN", string = "cooldown")
+	(key = "INSTANT", string = "Instant")
+	(key = "CAST_FORMAT", string = "%s cast")
+	(key = "LEVEL_REQUIREMENT_FORMAT", string = "Requires level %d")
+
+	(key = "MANA", string = "mana")
+
 	(key = "CHAT_FORMAT_SAY", string = "[%s] says: %s")
 	(key = "CHAT_FORMAT_YELL", string = "[%s] yells: %s")
 }

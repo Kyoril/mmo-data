@@ -1,0 +1,4 @@
+version = 1
+spells = (file = "spells.data")
+maps = (file = "maps.data")
+spell_categories = (file = "spell_categories.data")
