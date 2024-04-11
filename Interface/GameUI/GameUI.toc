@@ -7,5 +7,6 @@ ChatFrame.xml
 TargetFrame.xml
 SpellBook.xml
 GameTooltip.xml
+CastBar.xml
 
 DebugUI.xml

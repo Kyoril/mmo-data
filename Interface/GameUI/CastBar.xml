@@ -1,0 +1,69 @@
+<?xml version="1.0" ?>
+<UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
+	<Script file="CastBar.lua" />
+
+    <Frame name="PlayerCastBar" type="ProgressBar" parent="GameParent">
+        <Property name="Progress" value="0.12783" />
+        <Property name="Text" value="SPELL_NAME" />
+        <Property name="Font" value="DefaultSmall" />
+		<Property name="Visible" value="False" />
+
+        <Area>
+            <Anchor point="H_CENTER" />
+            <Anchor point="BOTTOM" offset="-400" />
+            <Size><AbsDimension x="400" y="48" /></Size>
+        </Area>
+
+        <Visual>
+            <ImagerySection name="Caption">
+                <TextComponent color="FFFFFFFF" horzAlign="CENTER" vertAlign="CENTER" />
+            </ImagerySection>
+            <ImagerySection name="Background">
+                <BorderComponent texture="Interface/fg4_borders_01_33.htex" borderSize="5" />
+            </ImagerySection>
+            <ImagerySection name="Border">
+                <BorderComponent texture="Interface/GameUI/fg4_borders_insetBlack.htex" borderSize="24" />
+            </ImagerySection>
+            <ImagerySection name="Progress">
+                <ImageComponent texture="Interface/fg4_gradientWhiteV1_result.htex" tiling="HORZ" tint="FF888800">
+                    <Area><Inset all="8" /></Area>
+                </ImageComponent>
+            </ImagerySection>
+
+            <StateImagery name="Enabled">
+                <Layer>
+                    <Section section="Background" />
+                </Layer>
+            </StateImagery>
+            <StateImagery name="Disabled">
+                <Layer>
+                    <Section section="Background" />
+                </Layer>
+            </StateImagery>
+            <StateImagery name="Progress">
+                <Layer>
+                    <Section section="Progress" />
+                </Layer>
+            </StateImagery>
+            <StateImagery name="Overlay">
+                <Layer>
+                    <Section section="Border" />
+                    <Section section="Caption" />
+                </Layer>
+            </StateImagery>
+        </Visual>
+        
+		<Scripts>
+			<OnLoad>
+				return function(this)
+					CastBar_OnLoad(this);
+				end
+			</OnLoad>
+			<OnUpdate>
+				return function(this, elapsed)
+					CastBar_OnUpdate(this, elapsed);
+				end
+			</OnUpdate>
+		</Scripts>
+    </Frame>
+</UiLayout>

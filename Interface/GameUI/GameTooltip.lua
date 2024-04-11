@@ -72,4 +72,4 @@ function GameTooltip_SetSpell(spell)
     end
 end
 
-GameTooltip_SetSpell(project.spells:GetById(3));
+GameTooltip_SetSpell(project.spells:GetById(4));
