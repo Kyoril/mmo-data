@@ -80,6 +80,8 @@
 	</Frame>
 
     <Frame name="SpellBook" renderer="DefaultRenderer" parent="GameParent">
+		<Property name="Visible" value="False" />
+
 		<Visual>
 			<ImagerySection name="Background">
 				<BorderComponent texture="Interface/GameUI/fg4_borders_01_03.htex" borderSize="250" />
