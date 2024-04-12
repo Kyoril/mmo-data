@@ -1,0 +1,74 @@
+<?xml version="1.0" ?>
+<UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
+	<Script file="GameTooltip.lua" />
+	
+	<Font name="TooltipTitleFont" file="Fonts/ARIALN.TTF" size="32" outline="0" />
+	<Font name="TooltipFont" file="Fonts/ARIALN.TTF" size="26" outline="0" />
+
+    <Frame name="GameTooltipLineTemplate" renderer="DefaultRenderer">
+		<Property name="Font" value="TooltipFont" />
+
+        <Visual>
+			<ImagerySection name="Text">
+				<TextComponent color="FFFFFFFF" horzAlign="LEFT" />
+            </ImagerySection>
+
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+        </Visual>
+        <Area>
+            <Size><AbsDimension x="512" y="32" /></Size>
+        </Area>
+    </Frame>
+    
+    <Frame name="GameTooltip" renderer="DefaultRenderer" parent="GameParent">
+		<Visual>
+			<ImagerySection name="Background">
+				<ImageComponent texture="Interface/GlueUI/TransparentBorder.htex" tiling="NONE">
+					<Area><Inset all="8" /></Area>
+                </ImageComponent>
+				<BorderComponent texture="Interface/GameUI/fg4_borders_stone_edges_result.htex" borderSize="32" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Background" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+
+        <Frame name="GameTooltipTitle" inherits="TextSmall">
+            <Property name="Font" value="TooltipTitleFont" />
+            <Property name="Text" value="TITLE" />
+
+            <Area>
+                <Size><AbsDimension y="32" /></Size>
+                <Anchor point="TOP" offset="16" />
+                <Anchor point="LEFT" offset="16" />
+                <Anchor point="RIGHT" offset="-16" />
+            </Area>
+        </Frame>
+
+        <Frame name="GameTooltipLines">
+            <Area>
+                <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="GameTooltipTitle" offset="8" />
+                <Anchor point="LEFT" relativeTo="GameTooltipTitle" />
+                <Anchor point="RIGHT" relativeTo="GameTooltipTitle" />
+                <Anchor point="BOTTOM" offset="-8" />
+            </Area>
+        </Frame>
+
+		<Area>
+			<Size><AbsDimension x="540" y="96" /></Size>
+			<Anchor point="RIGHT" offset="-64" />
+			<Anchor point="BOTTOM" offset="-64" />
+		</Area>
+	</Frame>
+</UiLayout>

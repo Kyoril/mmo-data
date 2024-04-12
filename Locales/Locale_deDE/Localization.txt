@@ -48,6 +48,15 @@ strings =
 	(key = "CLOSE", string = "Schließen")
 	(key = "MENU", string = "Menü")
 	
+	(key = "SECONDS", string = "Sek.")
+	(key = "MINUTES", string = "Min.")
+	(key = "COOLDOWN", string = "Abklingzeit")
+	
+	(key = "INSTANT", string = "Sofort")
+	(key = "CAST_FORMAT", string = "Wirken in %s")
+	(key = "MANA", string = "Mana")
+	(key = "LEVEL_REQUIREMENT_FORMAT", string = "Benötigt Stufe %d")
+
 	(key = "CHAT_FORMAT_SAY", string = "[%s] sagt: %s")
 	(key = "CHAT_FORMAT_YELL", string = "[%s] schreit: %s")
 }
