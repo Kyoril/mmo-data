@@ -45,6 +45,7 @@ function GameTooltip_SetSpell(spell)
     end
 
     GameTooltip_Clear();
+    GameTooltip_Clear();
     GameTooltip_SetTitle(spell.name);
 
     -- Line 1: Cost
@@ -74,6 +75,7 @@ function GameTooltip_SetSpell(spell)
 
     -- Line 3: Description
     if (spell.description ~= nil) then
+        GameTooltip_AddLine(GetSpellDescription(spell), TOOLTIP_LINE_LEFT);
         GameTooltip_AddLine(GetSpellDescription(spell), TOOLTIP_LINE_LEFT);
     end
 end

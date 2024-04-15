@@ -76,7 +76,6 @@
 
 		<Frame name="TargetManaBar" type="ProgressBar">
 			<Property name="Progress" value="0.12783" />
-			<Property name="Text" value="0%" />
 			<Property name="Font" value="DefaultSmall" />
 
 			<Area>
