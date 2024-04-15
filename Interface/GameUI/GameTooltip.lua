@@ -3,6 +3,8 @@ TOOLTIP_LINE_LEFT = 0
 TOOLTIP_LINE_CENTER = 1
 TOOLTIP_LINE_RIGHT = 2
 
+TooltipHeight = 32
+
 function GameTooltip_SetTitle(title)
     GameTooltipTitle:SetText(title);
 end
@@ -10,11 +12,12 @@ end
 function GameTooltip_Clear()
     GameTooltipTitle:SetText("");
     GameTooltipLines:RemoveAllChildren();
+    
+    TooltipHeight = 32;
+    GameTooltip:SetHeight(TooltipHeight);
 end
 
 function GameTooltip_AddLine(line, alignment)
-    print ("Add line: '" .. line .. "'");
-
 	-- Create a new button from the template and add it to the window
 	local lineFrame = GameTooltipLineTemplate:Clone();
 	lineFrame:SetText(line);
@@ -28,10 +31,12 @@ function GameTooltip_AddLine(line, alignment)
     
     lineFrame:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, 8);
     lineFrame:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, 8);
-    lineFrame:SetHeight(32);
 
-    GameTooltip:SetHeight(112 + GameTooltipLines:GetChildCount() * 32)
-    
+    local textHeight = lineFrame:GetTextHeight();
+    TooltipHeight = TooltipHeight + textHeight;
+    lineFrame:SetHeight(textHeight);
+
+    GameTooltip:SetHeight(TooltipHeight);
 end
 
 function GameTooltip_SetSpell(spell)
@@ -39,6 +44,7 @@ function GameTooltip_SetSpell(spell)
         return
     end
 
+    GameTooltip_Clear();
     GameTooltip_SetTitle(spell.name);
 
     -- Line 1: Cost
@@ -68,8 +74,6 @@ function GameTooltip_SetSpell(spell)
 
     -- Line 3: Description
     if (spell.description ~= nil) then
-        GameTooltip_AddLine(spell.description, TOOLTIP_LINE_LEFT);
+        GameTooltip_AddLine(GetSpellDescription(spell), TOOLTIP_LINE_LEFT);
     end
 end
-
-GameTooltip_SetSpell(project.spells:GetById(4));

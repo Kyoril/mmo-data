@@ -5,6 +5,30 @@
 	<Frame name="GameParent" parent="TopGameFrame" setAllPoints="true">
 		<Property name="Font" value="DefaultSmall" />
 
-		<Frame name="WorldFrame" type="World" renderer="WorldRenderer" setAllPoints="true" />
+		<Frame name="WorldFrame" type="World" renderer="WorldRenderer" setAllPoints="true">
+			<Frame name="ErrorText" inherits="TextSmall">
+				<Property name="Visible" value="False" />
+
+				<Area>
+					<Anchor point="H_CENTER" />
+					<Anchor point="V_CENTER" offset="-300" />
+					<Size><AbsDimension x="400" y="32" /></Size>
+				</Area>
+			</Frame>
+		</Frame>
+
+		<Scripts>
+			<OnLoad>
+				return function(this)
+					GameParent_OnLoad(this);
+				end
+			</OnLoad>
+			<OnUpdate>
+				
+				return function(this, elapsed)
+					GameParent_OnUpdate(this, elapsed);
+				end
+			</OnUpdate>
+		</Scripts>
 	</Frame>
 </UiLayout>

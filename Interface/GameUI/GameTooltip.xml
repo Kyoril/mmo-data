@@ -30,6 +30,8 @@
     </Frame>
     
     <Frame name="GameTooltip" renderer="DefaultRenderer" parent="GameParent">
+		<Property name="Visible" value="False" />
+		
 		<Visual>
 			<ImagerySection name="Background">
 				<ImageComponent texture="Interface/GlueUI/TransparentBorder.htex" tiling="NONE">

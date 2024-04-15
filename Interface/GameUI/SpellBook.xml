@@ -2,6 +2,30 @@
 <UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
 	<Script file="SpellBook.lua" />
 
+	<!-- Small label -->
+	<Frame name="SpellNameLabel" renderer="DefaultRenderer">
+		<Property name="Font" value="DefaultSmall" />
+
+		<Visual>
+			<ImagerySection name="Text">
+				<TextComponent color="FFEED37C" horzAlign="LEFT" vertAlign="TOP" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+		<Area>
+			<Size><AbsDimension x="0" y="40" /></Size>
+		</Area>
+	</Frame>
+	
 	<Frame name="SpellBookButtonTemplate" type="Button" renderer="ButtonRenderer">
 		<Property name="Icon" />
 
@@ -52,8 +76,8 @@
 			</StateImagery>
 		</Visual>
 
-        <Frame name="NameLabel" inherits="TextSmall">
-            <Property name="Text" value="Spell" />
+        <Frame name="NameLabel" inherits="SpellNameLabel">
+            <Property name="Text" value="" />
                 
             <Area>
                 <Anchor point="TOP" />
@@ -62,8 +86,8 @@
             </Area>
         </Frame>
 
-        <Frame name="SubLabel" inherits="TextSmall">
-            <Property name="Text" value="Rank 1" />
+        <Frame name="SubLabel" inherits="SpellNameLabel">
+            <Property name="Text" value="" />
             
             <Area>
                 <Anchor point="TOP" relativeTo="NameLabel" relativePoint="BOTTOM" />
@@ -80,6 +104,8 @@
 	</Frame>
 
     <Frame name="SpellBook" renderer="DefaultRenderer" parent="GameParent">
+		<Property name="Visible" value="False" />
+
 		<Visual>
 			<ImagerySection name="Background">
 				<BorderComponent texture="Interface/GameUI/fg4_borders_01_03.htex" borderSize="250" />
@@ -136,6 +162,109 @@
                 <Anchor point="TOP" relativeTo="SpellBookButton03" />
                 <Anchor point="LEFT" relativeTo="SpellBookButton02" />
             </Area>
+        </Frame>
+
+        <Frame inherits="SpellBookButtonTemplate" name="SpellBookButton05">
+            <Area>
+                <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="SpellBookButton03" offset="16" />
+                <Anchor point="LEFT" relativeTo="SpellBookButton03" />
+            </Area>
+        </Frame>
+
+        <Frame inherits="SpellBookButtonTemplate" name="SpellBookButton06">
+            <Area>
+                <Anchor point="TOP" relativeTo="SpellBookButton05" />
+                <Anchor point="LEFT" relativeTo="SpellBookButton04" />
+            </Area>
+        </Frame>
+
+        <Frame inherits="SpellBookButtonTemplate" name="SpellBookButton07">
+            <Area>
+                <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="SpellBookButton05" offset="16" />
+                <Anchor point="LEFT" relativeTo="SpellBookButton05" />
+            </Area>
+        </Frame>
+
+        <Frame inherits="SpellBookButtonTemplate" name="SpellBookButton08">
+            <Area>
+                <Anchor point="TOP" relativeTo="SpellBookButton07" />
+                <Anchor point="LEFT" relativeTo="SpellBookButton06" />
+            </Area>
+        </Frame>
+
+        <Frame inherits="SpellBookButtonTemplate" name="SpellBookButton09">
+            <Area>
+                <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="SpellBookButton07" offset="16" />
+                <Anchor point="LEFT" relativeTo="SpellBookButton07" />
+            </Area>
+        </Frame>
+
+        <Frame inherits="SpellBookButtonTemplate" name="SpellBookButton10">
+            <Area>
+                <Anchor point="TOP" relativeTo="SpellBookButton09" />
+                <Anchor point="LEFT" relativeTo="SpellBookButton08" />
+            </Area>
+        </Frame>
+
+        <Frame inherits="SpellBookButtonTemplate" name="SpellBookButton11">
+            <Area>
+                <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="SpellBookButton09" offset="16" />
+                <Anchor point="LEFT" relativeTo="SpellBookButton09" />
+            </Area>
+        </Frame>
+
+        <Frame inherits="SpellBookButtonTemplate" name="SpellBookButton12">
+            <Area>
+                <Anchor point="TOP" relativeTo="SpellBookButton11" />
+                <Anchor point="LEFT" relativeTo="SpellBookButton10" />
+            </Area>
+        </Frame>
+
+        <Frame inherits="TextSmall" name="SpellBookPageLabel">
+			<Property name="Text" value="Page 1" />
+
+            <Area>
+                <Anchor point="BOTTOM" offset="-128" />
+                <Anchor point="LEFT" />
+				<Anchor point="RIGHT" />
+				<Size><AbsDimension y="39" /></Size>
+            </Area>
+        </Frame>
+
+        <Frame inherits="GlueButton" name="SpellBookPrevPageButton">
+			<Property name="Text" value="&lt;" />
+
+            <Area>
+                <Anchor point="BOTTOM" offset="-64" />
+                <Anchor point="LEFT" offset="192" />
+				<Size><AbsDimension x="128" y="128" /></Size>
+            </Area>
+
+			<Scripts>
+				<OnClick>
+					return function(this)
+						SpellBook_PrevPage()
+					end
+				</OnClick>
+			</Scripts>
+        </Frame>
+
+        <Frame inherits="GlueButton" name="SpellBookNextPageButton">
+			<Property name="Text" value="&gt;" />
+
+            <Area>
+                <Anchor point="BOTTOM" offset="-64" />
+                <Anchor point="RIGHT" offset="-192" />
+				<Size><AbsDimension x="128" y="128" /></Size>
+            </Area>
+			
+			<Scripts>
+				<OnClick>
+					return function(this)
+						SpellBook_NextPage()
+					end
+				</OnClick>
+			</Scripts>
         </Frame>
 
         <Scripts>
