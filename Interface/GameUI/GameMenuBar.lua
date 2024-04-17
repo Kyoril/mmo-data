@@ -4,9 +4,25 @@ MENUBAR_V_PADDING = 4.0
 
 local menuBarOffset = MENUBAR_H_PADDING + 0.0
 
-function GameMenuBar_OnLoad()
+function GameMenuBar_OnPlayerXpChanged(self)
+	local xp = PlayerXp();
+	local nextLevelXp = PlayerNextLevelXp();
+
+	local percent = 0;
+	if (nextLevelXp > 0) then
+		percent = xp / nextLevelXp;
+	end
+
+	PlayerExperienceBar:SetProgress(percent);
+	PlayerExperienceBar:SetText(xp .. " / " .. nextLevelXp);
+end
+
+function GameMenuBar_OnLoad(self)
 	AddMenuBarButton("Interface/Icons/fg4_icons_menu_result.htex", OnMenuItem_Clicked)
 	AddMenuBarButton("Interface/Icons/fg4_icons_helmet_result.htex", OnCharacter_Clicked)
+
+	self:RegisterEvent("PLAYER_XP_CHANGED", GameMenuBar_OnPlayerXpChanged)
+	self:RegisterEvent("PLAYER_ENTER_WORLD", GameMenuBar_OnPlayerXpChanged)
 end
 
 function AddMenuBarButton(text, callback)

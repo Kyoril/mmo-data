@@ -205,7 +205,7 @@
 		<Scripts>
 			<OnLoad>
 				return function(this)
-					GameMenuBar_OnLoad();
+					GameMenuBar_OnLoad(this);
 				end
 			</OnLoad>
 		</Scripts>
