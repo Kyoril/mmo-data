@@ -103,8 +103,14 @@ function SpellBook_PrevPage()
     SpellBook_UpdatePage();
 end
 
+function SpellBook_SpellsChanged(self)
+    SpellBook_UpdatePage();
+end
+
 function SpellBook_OnLoad()
     SpellBookPage = 1;
+
+    self:RegisterEvent("PLAYER_SPELLS_CHANGED", ActionBar_UpdateButtons);
 
     for i = 1, SPELLS_PER_PAGE do
         local button = _G["SpellBookButton" .. string.format("%02d", i)];

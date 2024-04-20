@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
-	<Script file="GameMenuBar.lua" />
+	<Script file="ActionBar.lua" />
 
 	<Frame name="ActionBarButtonTemplate" type="Button" renderer="ButtonRenderer">
 		<Property name="Icon" />
@@ -66,7 +66,7 @@
             <Anchor point="TOP" offset="8" />
         </Area>
 
-        <Frame name="ActionButton1" inherits="ActionBarButtonTemplate">
+        <Frame name="ActionButton1" inherits="ActionBarButtonTemplate" id="1">
             <Area>
                 <Anchor point="LEFT" offset="0" />
                 <Anchor point="TOP" offset="0" />
@@ -74,7 +74,7 @@
             </Area>
         </Frame>
         
-        <Frame name="ActionButton2" inherits="ActionBarButtonTemplate">
+        <Frame name="ActionButton2" inherits="ActionBarButtonTemplate" id="2">
             <Area>
                 <Anchor point="LEFT" relativeTo="ActionButton1" relativePoint="RIGHT" offset="0" />
                 <Anchor point="TOP" offset="0" />
@@ -82,7 +82,7 @@
             </Area>
         </Frame>
         
-        <Frame name="ActionButton3" inherits="ActionBarButtonTemplate">
+        <Frame name="ActionButton3" inherits="ActionBarButtonTemplate" id="3">
             <Area>
                 <Anchor point="LEFT" relativeTo="ActionButton2" relativePoint="RIGHT" offset="0" />
                 <Anchor point="TOP" offset="0" />
@@ -90,7 +90,7 @@
             </Area>
         </Frame>
         
-        <Frame name="ActionButton4" inherits="ActionBarButtonTemplate">
+        <Frame name="ActionButton4" inherits="ActionBarButtonTemplate" id="4">
             <Area>
                 <Anchor point="LEFT" relativeTo="ActionButton3" relativePoint="RIGHT" offset="0" />
                 <Anchor point="TOP" offset="0" />
@@ -98,7 +98,7 @@
             </Area>
         </Frame>
         
-        <Frame name="ActionButton5" inherits="ActionBarButtonTemplate">
+        <Frame name="ActionButton5" inherits="ActionBarButtonTemplate" id="5">
             <Area>
                 <Anchor point="LEFT" relativeTo="ActionButton4" relativePoint="RIGHT" offset="0" />
                 <Anchor point="TOP" offset="0" />
@@ -106,7 +106,7 @@
             </Area>
         </Frame>
         
-        <Frame name="ActionButton6" inherits="ActionBarButtonTemplate">
+        <Frame name="ActionButton6" inherits="ActionBarButtonTemplate" id="6">
             <Area>
                 <Anchor point="LEFT" relativeTo="ActionButton5" relativePoint="RIGHT" offset="0" />
                 <Anchor point="TOP" offset="0" />
@@ -114,7 +114,7 @@
             </Area>
         </Frame>
 
-        <Frame name="ActionButton7" inherits="ActionBarButtonTemplate">
+        <Frame name="ActionButton7" inherits="ActionBarButtonTemplate" id="7">
             <Area>
                 <Anchor point="LEFT" relativeTo="ActionButton6" relativePoint="RIGHT" offset="0" />
                 <Anchor point="TOP" offset="0" />
@@ -122,7 +122,7 @@
             </Area>
         </Frame>
         
-        <Frame name="ActionButton8" inherits="ActionBarButtonTemplate">
+        <Frame name="ActionButton8" inherits="ActionBarButtonTemplate" id="8">
             <Area>
                 <Anchor point="LEFT" relativeTo="ActionButton7" relativePoint="RIGHT" offset="0" />
                 <Anchor point="TOP" offset="0" />
@@ -130,7 +130,7 @@
             </Area>
         </Frame>
         
-        <Frame name="ActionButton9" inherits="ActionBarButtonTemplate">
+        <Frame name="ActionButton9" inherits="ActionBarButtonTemplate" id="9">
             <Area>
                 <Anchor point="LEFT" relativeTo="ActionButton8" relativePoint="RIGHT" offset="0" />
                 <Anchor point="TOP" offset="0" />
@@ -138,7 +138,7 @@
             </Area>
         </Frame>
         
-        <Frame name="ActionButton10" inherits="ActionBarButtonTemplate">
+        <Frame name="ActionButton10" inherits="ActionBarButtonTemplate" id="10">
             <Area>
                 <Anchor point="LEFT" relativeTo="ActionButton9" relativePoint="RIGHT" offset="0" />
                 <Anchor point="TOP" offset="0" />
@@ -146,7 +146,7 @@
             </Area>
         </Frame>
         
-        <Frame name="ActionButton11" inherits="ActionBarButtonTemplate">
+        <Frame name="ActionButton11" inherits="ActionBarButtonTemplate" id="11">
             <Area>
                 <Anchor point="LEFT" relativeTo="ActionButton10" relativePoint="RIGHT" offset="0" />
                 <Anchor point="TOP" offset="0" />
@@ -154,13 +154,21 @@
             </Area>
         </Frame>
 
-        <Frame name="ActionButton12" inherits="ActionBarButtonTemplate">
+        <Frame name="ActionButton12" inherits="ActionBarButtonTemplate" id="12">
             <Area>
                 <Anchor point="LEFT" relativeTo="ActionButton11" relativePoint="RIGHT" offset="0" />
                 <Anchor point="TOP" offset="0" />
                 <Anchor point="BOTTOM" offset="0" />
             </Area>
         </Frame>
+
+        <Scripts>
+            <OnLoad>
+                return function(this)
+                    ActionBar_OnLoad(this)
+                end
+            </OnLoad>
+        </Scripts>
     </Frame>
     
 </UiLayout>
