@@ -27,7 +27,10 @@ function ActionButton_OnLeave(self)
 end
 
 function ActionButton_OnClick(self)
-    print("ActionButton_OnClick: " .. self:GetName() .. " (id: " .. self.id .. ")");
+    
+    local id = self.id;
+    CastSpell(id - 1);
+
 end
 
 function ActionBar_UpdateButtons(self)
