@@ -270,7 +270,7 @@
         <Scripts>
             <OnLoad>
                 return function(this)
-                    SpellBook_OnLoad()
+                    SpellBook_OnLoad(this)
                 end
             </OnLoad>
         </Scripts>

@@ -107,7 +107,7 @@ function SpellBook_SpellsChanged(self)
     SpellBook_UpdatePage();
 end
 
-function SpellBook_OnLoad()
+function SpellBook_OnLoad(self)
     SpellBookPage = 1;
 
     self:RegisterEvent("PLAYER_SPELLS_CHANGED", ActionBar_UpdateButtons);

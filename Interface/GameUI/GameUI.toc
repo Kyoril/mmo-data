@@ -5,6 +5,7 @@ GameMenuBar.xml
 ActionBar.xml
 ChatFrame.xml
 TargetFrame.xml
+PlayerFrame.xml
 SpellBook.xml
 GameTooltip.xml
 CastBar.xml
