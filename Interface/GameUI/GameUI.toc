@@ -9,5 +9,6 @@ PlayerFrame.xml
 SpellBook.xml
 GameTooltip.xml
 CastBar.xml
+CombatLog.xml
 
 DebugUI.xml

@@ -1,0 +1,91 @@
+<?xml version="1.0" ?>
+<UiLayout>
+	<Script file="CombatLog.lua" />
+
+	<Frame name="CombatLogScrollEndButton" parent="GameParent" inherits="ChatButton">
+		<Property name="Icon" value="Interface/GameUI/ChatIcon_DownArrow.htex" />
+			
+		<Area>
+			<Anchor point="RIGHT" offset="-8" />
+			<Anchor point="BOTTOM" relativeTo="ChatScrollEndButton" />
+		</Area>
+
+		<Scripts>
+			<OnClick>
+				return function(this)
+					CombatLog_ScrollToBottom(this);
+				end
+			</OnClick>
+		</Scripts>
+	</Frame>
+	
+	<Frame name="CombatLogScrollDownButton" parent="GameParent" inherits="ChatButton">
+		<Property name="Icon" value="Interface/GameUI/ChatIcon_DownArrow.htex" />
+
+		<Area>
+			<Anchor point="LEFT" relativeTo="CombatLogScrollEndButton" />
+			<Anchor point="BOTTOM" relativeTo="CombatLogScrollEndButton" relativePoint="TOP" offset="-8" />
+		</Area>
+
+		<Scripts>
+			<OnClick>
+				return function(this)
+					CombatLog_ScrollDown(this);
+				end
+			</OnClick>
+		</Scripts>
+	</Frame>
+	
+	<Frame name="CombatLogScrollUpButton" parent="GameParent" inherits="ChatButton">
+		<Property name="Icon" value="Interface/GameUI/ChatIcon_UpArrow.htex" />
+
+		<Area>
+			<Anchor point="LEFT" relativeTo="CombatLogScrollDownButton" />
+			<Anchor point="BOTTOM" relativeTo="CombatLogScrollDownButton" relativePoint="TOP" offset="-8" />
+		</Area>
+		
+		<Scripts>
+			<OnClick>
+				return function(this)
+					CombatLog_ScrollUp(this);
+				end
+			</OnClick>
+		</Scripts>
+	</Frame>
+	
+	<Frame name="CombatLog" parent="GameParent" type="ScrollingMessageFrame">
+		<Property name="Font" value="ChatFont" />
+
+		<Visual>
+			<ImagerySection name="Text">
+				<TextComponent color="ffffd200" horzAlign="LEFT" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+		
+		<Area>
+			<Anchor point="RIGHT" relativeTo="CombatLogScrollEndButton" relativePoint="LEFT" offset="-8" />
+			<Anchor point="BOTTOM" relativeTo="CombatLogScrollEndButton" />
+			<Anchor point="TOP" relativeTo="ChatFrame" />
+			<Size><AbsDimension x="830" /></Size>
+		</Area>
+
+		<Scripts>
+			<OnLoad>
+				return function(this)
+					CombatLog_OnLoad(this);
+				end
+			</OnLoad>
+		</Scripts>
+	</Frame>
+	
+</UiLayout>
