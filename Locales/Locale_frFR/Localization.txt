@@ -1,0 +1,63 @@
+strings = 
+{
+        (key = "OKAY", string = "Okay")
+        (key = "CANCEL", string = "Annuler")
+
+        (key = "ACCOUNT_PASSWORD", string = "Mot de passe")
+        (key = "ACCOUNT_NAME", string = "Nom")
+        (key = "LOGIN", string = "Se connecter")
+        (key = "QUIT", string = "Quiter")
+        (key = "SETTINGS", string = "Paramètres")
+        (key = "COPYRIGHT_TEXT", string = "Copyright (C) 2019 - 2022, Robin Klimonow. Touts droits reservés.")
+
+        (key = "REALM_LIST", string = "Realm list")
+        (key = "CHOOSE_A_REALM", string = "Choisissez un realm de la liste ci-dessous :")
+
+        (key = "ENTER_WORLD", string = "Entrer dans le monde")
+        (key = "DELETE_CHARACTER", string = "Supprimer le personnage")
+        (key = "CREATE_CHARACTER", string = "Créer un personnage")
+
+        (key = "CREATING_CHARACTER", string = "Création du personnage en cours...")
+        (key = "DELETING_CHARACTER", string = "Suppression du personnage...")
+
+        (key = "AUTH_STATUS_SUCCESS", string = "Réussi")
+        (key = "AUTH_STATUS_FAIL_BANNED", string = "Ce compte a été supprimer et n'est desormais plus uttilisable.\nAllez sur https://mmo-dev.net/banned.html pour plus de renseignement.")
+        (key = "AUTH_STATUS_FAIL_WRONG_CREDENTIALS", string = "Les informations entrés sont invalides.\nVeuillez vérifier votre nom et votre mot de passe.\nSi vous avez besoin d'aide ou que vous avez perdu vore mot de passe,\nallez voir sur https://mmo-dev.net.")
+        (key = "AUTH_STATUS_FAIL_ALREADY_ONLINE", string = "Ce compte est déjà connecté. Veuillez vérifier vos paramètres de connections et réessayer.")
+        (key = "AUTH_STATUS_FAIL_NO_TIME", string = "Vos credits gratuits touchent à leurs fin.\nVeuillez en achetez d'auutres pour continuer à jouer.")
+        (key = "AUTH_STATUS_FAIL_DB_BUSY", string = "Impossible de se connecter maintenant. Veuullez réessayer plus tard.")
+        (key = "AUTH_STATUS_FAIL_VERSION_INVALID", string = "Impossible de vérifier votre version de jeu. Cela peut être dût à une corruption des fichiers du jeu ou par un programme tiers .\nAllez sur https://mmo-dev.net pour essayer de trouver une solution à votre problème.")
+        (key = "AUTH_STATUS_FAIL_VERSION_UPDATE", string = "")
+        (key = "AUTH_STATUS_FAIL_INVALID_SERVER", string = "Impossible de se connecter.")
+        (key = "AUTH_STATUS_FAIL_SUSPENDED", string = "Ce compte à été temporairemenr bloqué.\nVeuillez visiter https://mmo-dev.net/banned.html pour plus d'informations.")
+        (key = "AUTH_STATUS_FAIL_NO_ACCESS", string = "Impossible de se connecter.")
+        (key = "AUTH_STATUS_FAIL_PARENTAL_CONTROL", string = "L'accès à ce compte à été bloqué par le contrôle parental.\nCela peut être modifier dans les paramètres du compte sur https://mmo-dev.net.")
+        (key = "AUTH_STATUS_FAIL_LOCKED", string = "Vous avez bloqué ce compte. Débloquez-le sur https://mmo-dev.net.")
+        (key = "AUTH_STATUS_FAIL_TRIAL", string = "Votre essai gratuit est fini. Allez sur https://mmo-dev.net pour mettre votre compte à jour.")
+        (key = "AUTH_STATUS_FAIL_INTERNAL_ERROR", string = "Erreur interne.")
+
+        (key = "CONNECTING", string = "Connection...")
+        (key = "RETRIEVING_CHAR_LIST", string = "Récupération de la liste des personnages...")
+        (key = "RETRIEVING_REALM_LIST", string = "Récupération de la realm list...")
+
+        (key = "CHANGE_REALM", string = "Changer de realm")
+
+        (key = "DELETE", string = "Supprimer")
+        (key = "CONFIRM_CHAR_DELETE", string = "Êtes-vous sûr de vouloir supprimer le personnage?\n\nVotre avencement sera perdu!")
+
+        (key = "CLOSE", string = "Fermer")
+        (key = "MENU", string = "Menu")
+
+        (key = "SECONDS", string = "sec.")
+        (key = "MINUTES", string = "min.")
+        (key = "COOLDOWN", string = "Temps de recharge")
+
+        (key = "INSTANT", string = "Instantané")
+        (key = "CAST_FORMAT", string = "Agit en %s")
+        (key = "MANA", string = "Mana")
+        (key = "SPELL_BOOK_PAGE_FORMAT", string = "Page %d")
+        (key = "LEVEL_REQUIREMENT_FORMAT", string = "Necessite le niveau %d")
+
+        (key = "CHAT_FORMAT_SAY", string = "[%s] dit: %s")
+        (key = "CHAT_FORMAT_YELL", string = "[%s] cris: %s")
+}
