@@ -2,6 +2,65 @@
 <UiLayout xmlns="http://mmo-dev.net/ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://mmo-dev.net/ui UI.xsd">
 	<Script file="CharCreate.lua" />
 
+	<!-- Virtual character button -->
+	<Frame name="CharClassButton" type="Button" renderer="ButtonRenderer">
+		<Property name="Icon" />
+		<Property name="Font" value="" />
+
+		<Visual>
+			<ImagerySection name="FrameNormal">
+				<BorderComponent texture="Interface/GlueUI/CharButtonUp.htex" borderSize="16" />
+			</ImagerySection>
+			<ImagerySection name="FrameHovered">
+				<BorderComponent texture="Interface/GlueUI/CharButtonHovered.htex" borderSize="16" />
+			</ImagerySection>
+			<ImagerySection name="FramePushed">
+				<BorderComponent texture="Interface/GlueUI/CharButtonPushed.htex" borderSize="16" />
+			</ImagerySection>
+			<ImagerySection name="FrameDisabled">
+				<BorderComponent texture="Interface/GlueUI/CharButtonDisabled.htex" borderSize="16" />
+			</ImagerySection>
+			<ImagerySection name="Icon">
+				<ImageComponent>
+					<Area><Inset all="16" /></Area>
+					<PropertyValue property="Icon" />
+				</ImageComponent>
+				<TextComponent color="FFEED37C" horzAlign="CENTER" vertAlign="TOP">
+					<Area>
+						<Inset left="0" top="200" />
+					</Area>
+				</TextComponent>
+			</ImagerySection>
+			<StateImagery name="Normal">
+				<Layer>
+					<Section section="FrameNormal" />
+					<Section section="Icon" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Hovered">
+				<Layer>
+					<Section section="FrameHovered" />
+					<Section section="Icon" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Pushed">
+				<Layer>
+					<Section section="FramePushed" />
+					<Section section="Icon" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="FrameDisabled" />
+					<Section section="Icon" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+		<Area>
+			<Size><AbsDimension x="192" y="192" /></Size>
+		</Area>
+	</Frame>
+	
 	<!-- This is the character selection screen frame. It covers the whole screen. -->
 	<Frame name="CharCreate" parent="GlueParent" setAllPoints="true" renderer="DefaultRenderer">
 		<Property name="Visible" value="false" />
@@ -51,7 +110,44 @@
 					<Anchor point="H_CENTER" />
 				</Area>
 			</Frame>
-			
+				
+			<Frame name="WarriorClassButton" inherits="CharClassButton">
+				<Property name="Icon" value="Interface/Icons/Classes/Warrior.htex" />
+				<Property name="Text" value="WARRIOR" />
+				
+				<Area>
+					<Anchor point="BOTTOM" offset="-256" />
+					<Anchor point="H_CENTER" />
+				</Area>
+			</Frame>
+			<Frame name="PaladinClassButton" inherits="CharClassButton">
+				<Property name="Icon" value="Interface/Icons/Classes/Paladin.htex" />
+				<Property name="Text" value="PALADIN" />
+				
+				<Area>
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="WarriorClassButton" offset="16" />
+					<Anchor point="BOTTOM" relativeTo="WarriorClassButton" />
+				</Area>
+			</Frame>
+			<Frame name="MageClassButton" inherits="CharClassButton">
+				<Property name="Icon" value="Interface/Icons/Classes/Mage.htex" />
+				<Property name="Text" value="MAGE" />
+				
+				<Area>
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="PaladinClassButton" offset="16" />
+					<Anchor point="BOTTOM" relativeTo="WarriorClassButton" />
+				</Area>
+			</Frame>
+			<Frame name="NecromancerClassButton" inherits="CharClassButton">
+				<Property name="Icon" value="Interface/Icons/Classes/Necromancer.htex" />
+				<Property name="Text" value="NECROMANCER" />
+
+				<Area>
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="MageClassButton" offset="16" />
+					<Anchor point="BOTTOM" relativeTo="WarriorClassButton" />
+				</Area>
+			</Frame>
+
 			<Frame name="NewCharacterNameBox" inherits="GlueTextField">
 				<Area>
 					<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="CharCreateSubmitButton" offset="-8" />
