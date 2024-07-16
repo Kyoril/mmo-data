@@ -60,4 +60,15 @@ strings =
 
 	(key = "CHAT_FORMAT_SAY", string = "[%s] says: %s")
 	(key = "CHAT_FORMAT_YELL", string = "[%s] yells: %s")
+
+	(key = "MALE", string = "Male")
+	(key = "FEMALE", string = "Female")
+	
+	
+	(key = "CHAR_CREATE_ERR_ERROR", string = "Character creation failed.")
+	(key = "CHAR_CREATE_ERR_NAME_IN_USE", string = "The character name is already in use.")
+	(key = "CHAR_CREATE_ERR_DISABLED", string = "Creation of that race and/or class is currently disabled.")
+	(key = "CHAR_CREATE_ERR_SERVER_LIMIT", string = "You have reached the limit of characters on the server.")
+	(key = "CHAR_CREATE_ERR_ACCOUNT_LIMIT", string = "You have reached the limit of characters on the account.")
+	(key = "CHAR_CREATE_ERR_ONLY_EXISTING", string = "You can not create new characters on this server right now. Please try again later.")
 }

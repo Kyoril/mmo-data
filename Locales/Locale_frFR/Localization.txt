@@ -60,4 +60,12 @@ strings =
 
         (key = "CHAT_FORMAT_SAY", string = "[%s] dit: %s")
         (key = "CHAT_FORMAT_YELL", string = "[%s] cris: %s")
+
+        
+	(key = "CHAR_CREATE_ERR_ERROR", string = "CHAR_CREATE_ERR_ERROR")
+	(key = "CHAR_CREATE_ERR_NAME_IN_USE", string = "CHAR_CREATE_ERR_NAME_IN_USE")
+	(key = "CHAR_CREATE_ERR_DISABLED", string = "CHAR_CREATE_ERR_DISABLED")
+	(key = "CHAR_CREATE_ERR_SERVER_LIMIT", string = "CHAR_CREATE_ERR_SERVER_LIMIT")
+	(key = "CHAR_CREATE_ERR_ACCOUNT_LIMIT", string = "CHAR_CREATE_ERR_ACCOUNT_LIMIT")
+	(key = "CHAR_CREATE_ERR_ONLY_EXISTING", string = "CHAR_CREATE_ERR_ONLY_EXISTING")
 }

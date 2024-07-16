@@ -82,6 +82,26 @@
 			<Property name="ModelFile" value="Models/Cube/Cube.hmsh" />
 		</Frame>
 		
+		<Frame name="MaleButton" inherits="CharClassButton">
+			<Property name="Icon" value="Interface/Icons/Classes/Warrior.htex" />
+			<Property name="Text" value="MALE" />
+			
+			<Area>
+				<Anchor point="TOP" offset="32" />
+				<Anchor point="H_CENTER" offset="-112" />
+			</Area>
+		</Frame>
+		
+		<Frame name="FemaleButton" inherits="CharClassButton">
+			<Property name="Icon" value="Interface/Icons/Classes/Warrior.htex" />
+			<Property name="Text" value="FEMALE" />
+			
+			<Area>
+				<Anchor point="TOP" offset="32" />
+				<Anchor point="H_CENTER" offset="112" />
+			</Area>
+		</Frame>
+		
 		<Frame renderer="DefaultRenderer">
 			<Area>
 				<Anchor point="LEFT"/>
@@ -120,6 +140,7 @@
 					<Anchor point="H_CENTER" />
 				</Area>
 			</Frame>
+
 			<Frame name="PaladinClassButton" inherits="CharClassButton">
 				<Property name="Icon" value="Interface/Icons/Classes/Paladin.htex" />
 				<Property name="Text" value="PALADIN" />

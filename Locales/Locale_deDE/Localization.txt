@@ -60,4 +60,14 @@ strings =
 
 	(key = "CHAT_FORMAT_SAY", string = "[%s] sagt: %s")
 	(key = "CHAT_FORMAT_YELL", string = "[%s] schreit: %s")
+	
+	(key = "MALE", string = "Männlich")
+	(key = "FEMALE", string = "Weiblich")
+	
+	(key = "CHAR_CREATE_ERR_ERROR", string = "Charaktererstellung fehlgeschlagen.")
+	(key = "CHAR_CREATE_ERR_NAME_IN_USE", string = "Der Charaktername ist bereits in Verwendung.")
+	(key = "CHAR_CREATE_ERR_DISABLED", string = "Die Charaktererstellung ist für die gewählte Klasse und/oder Rasse gesperrt.")
+	(key = "CHAR_CREATE_ERR_SERVER_LIMIT", string = "Ihr habt bereits die maximale Anzahl an Charakteren auf dem Server erreicht.")
+	(key = "CHAR_CREATE_ERR_ACCOUNT_LIMIT", string = "Ihr habt bereits die maximale Anzahl an Charakteren auf dem Account erreicht.")
+	(key = "CHAR_CREATE_ERR_ONLY_EXISTING", string = "Derzeit könnt Ihr auf dem Server keine neuen Charaktere erstellen. Versucht es später erneut.")
 }

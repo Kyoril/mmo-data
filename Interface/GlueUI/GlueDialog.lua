@@ -46,6 +46,16 @@ GlueDialogs["REALM_AUTH_ERROR"] = {
 	end
 }
 
+GlueDialogs["CHAR_CREATION_ERROR"] = {
+	text = "",
+	button1 = "OKAY",
+	button2 = nil,
+	OnAccept = function()
+	end,
+	OnCancel = function()
+	end
+}
+
 GlueDialogs["AUTH_SUCCESS"] = {
 	text = "AUTH_SUCCESS",
 	button1 = "CANCEL",

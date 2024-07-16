@@ -7,8 +7,15 @@ function GameParent_OnSpellError(self, spellError)
     ErrorText:Show();
 end
 
+function GameParent_OnAttackSwingError(self, attackSwingError)
+    ErrorTimer = 1.0;
+    ErrorText:SetText(Localize(attackSwingError));
+    ErrorText:Show();
+end
+
 function GameParent_OnLoad(self)
     self:RegisterEvent("PLAYER_SPELL_CAST_FAILED", GameParent_OnSpellError);
+    self:RegisterEvent("ATTACK_SWING_ERROR", GameParent_OnAttackSwingError);
 end
 
 function GameParent_OnUpdate(self, elapsed)

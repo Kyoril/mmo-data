@@ -11,8 +11,8 @@
 
 				<Area>
 					<Anchor point="H_CENTER" />
-					<Anchor point="V_CENTER" offset="-300" />
-					<Size><AbsDimension x="400" y="32" /></Size>
+					<Anchor point="V_CENTER" offset="-600" />
+					<Size><AbsDimension x="1000" y="32" /></Size>
 				</Area>
 			</Frame>
 		</Frame>
