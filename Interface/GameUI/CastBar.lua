@@ -15,6 +15,11 @@ function CastBar_OnCastStart(self, spell, castTime)
         castTime = spell.casttime
     end
 
+    -- If no cast time, don't show the cast bar
+    if (castTime <= 0) then
+        return
+    end
+
     CastBarEndTime = castTime / 1000.0;
     PlayerCastBar:SetProperty("Progress", "0.0");
     PlayerCastBar:SetText(CastBarSpell.name);
