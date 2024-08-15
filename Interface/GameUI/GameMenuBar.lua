@@ -8,13 +8,18 @@ function GameMenuBar_OnPlayerXpChanged(self)
 	local xp = PlayerXp();
 	local nextLevelXp = PlayerNextLevelXp();
 
-	local percent = 0;
-	if (nextLevelXp > 0) then
-		percent = xp / nextLevelXp;
+	-- If next level xp <= 0, this means that we can't get any experience points at the moment
+	-- So we also hide the XP bar to signal this to the player.
+	if (nextLevelXp <= 0) then
+		PlayerExperienceBar:Hide();
+		return;
 	end
+
+	local percent = xp / nextLevelXp;
 
 	PlayerExperienceBar:SetProgress(percent);
 	PlayerExperienceBar:SetText(xp .. " / " .. nextLevelXp);
+	PlayerExperienceBar:Show();
 end
 
 function GameMenuBar_OnLoad(self)
