@@ -61,8 +61,19 @@ strings =
 	(key = "CHAT_FORMAT_SAY", string = "[%s] says: %s")
 	(key = "CHAT_FORMAT_YELL", string = "[%s] yells: %s")
 
+	(key = "NAME", string = "Name")
+	
 	(key = "MALE", string = "Male")
 	(key = "FEMALE", string = "Female")
+
+	(key = "RACE_HUMAN", string = "Human")
+
+	(key = "CLASS_WARRIOR", string = "Warrior")
+	(key = "CLASS_MAGE", string = "Mage")
+
+	(key = "RACE", string = "Race")
+	(key = "CLASS", string = "Class")
+	(key = "GENDER", string = "Gender")
 	
 	(key = "CHAR_CREATE_ERR_ERROR", string = "Character creation failed.")
 	(key = "CHAR_CREATE_ERR_INVALID_NAME", string = "The chosen character name is invalid.\nYou may only use letters from A-Z.")

@@ -20,7 +20,7 @@ CHAR_CREATION_ERROR_STRING[6] = "CHAR_CREATE_ERR_ONLY_EXISTING"
 function CharCreate_OnLoad(this)
 	-- Reset custom properties
 	CharCreate.selectedRace = RACE_HUMAN;
-	CharCreate.selectedClass = CLASS_MAGE;
+	CharCreate.selectedClass = CLASS_WARRIOR;
 	CharCreate.selectedGender = GENDER_MALE;
 end
 
@@ -30,6 +30,42 @@ function CharCreate_Show()
 
 	-- Show the character creation screen
 	CharCreate:Show()
+end
+
+function OnRaceChange_Clicked(this)
+	-- Uncheck all other races (TODO: Make this dynamic!)
+	RaceHumanButton:SetChecked(false);
+
+	-- Ensure we are always checked
+	this:SetChecked(true);
+
+	-- Set the selected race id
+	CharCreate.selectedRace = this.id;
+end
+
+function OnClassChange_Clicked(this)
+	-- Uncheck all other races (TODO: Make this dynamic!)
+	ClassMageButton:SetChecked(false);
+	ClassWarriorButton:SetChecked(false);
+
+	-- Ensure we are always checked
+	this:SetChecked(true);
+
+	-- Set the selected class id
+	CharCreate.selectedClass = this.id;
+end
+
+
+function OnGenderChange_Clicked(this)
+	-- Uncheck all other buttons
+	GenderMaleButton:SetChecked(false);
+	GenderFemaleButton:SetChecked(false);
+
+	-- Ensure we are always checked
+	this:SetChecked(true);
+
+	-- Set the selected gender id
+	CharCreate.selectedGender = this.id;
 end
 
 function CharCreate_Submit()
