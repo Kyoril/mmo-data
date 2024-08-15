@@ -110,6 +110,37 @@ GlueDialogs["DELETING_CHARACTER"] = {
 	end
 }
 
+GlueDialogs["CHAR_CREATE_NAME_TOO_SHORT"] = {
+	text = "CHAR_CREATE_NAME_TOO_SHORT",
+	button1 = "OKAY",
+	button2 = nil,
+	OnAccept = function()
+	end,
+	OnCancel = function()
+	end
+}
+
+GlueDialogs["CHAR_CREATE_NAME_TOO_LONG"] = {
+	text = "CHAR_CREATE_NAME_TOO_LONG",
+	button1 = "OKAY",
+	button2 = nil,
+	OnAccept = function()
+	end,
+	OnCancel = function()
+	end
+}
+
+GlueDialogs["CHAR_CREATE_ERR_INVALID_NAME"] = {
+	text = "CHAR_CREATE_ERR_INVALID_NAME",
+	button1 = "OKAY",
+	button2 = nil,
+	OnAccept = function()
+	end,
+	OnCancel = function()
+	end
+}
+
+
 AUTH_ERROR_STRING = {}
 AUTH_ERROR_STRING[0] = "AUTH_STATUS_SUCCESS"
 AUTH_ERROR_STRING[1] = "AUTH_STATUS_FAIL_BANNED"

@@ -65,9 +65,14 @@ strings =
 	(key = "FEMALE", string = "Weiblich")
 	
 	(key = "CHAR_CREATE_ERR_ERROR", string = "Charaktererstellung fehlgeschlagen.")
+	(key = "CHAR_CREATE_ERR_INVALID_NAME", string = "Der eingegebene Charaktername ist ungültig.\nEs sind nur Zeichen von A-Z erlaubt.")
 	(key = "CHAR_CREATE_ERR_NAME_IN_USE", string = "Der Charaktername ist bereits in Verwendung.")
 	(key = "CHAR_CREATE_ERR_DISABLED", string = "Die Charaktererstellung ist für die gewählte Klasse und/oder Rasse gesperrt.")
 	(key = "CHAR_CREATE_ERR_SERVER_LIMIT", string = "Ihr habt bereits die maximale Anzahl an Charakteren auf dem Server erreicht.")
 	(key = "CHAR_CREATE_ERR_ACCOUNT_LIMIT", string = "Ihr habt bereits die maximale Anzahl an Charakteren auf dem Account erreicht.")
 	(key = "CHAR_CREATE_ERR_ONLY_EXISTING", string = "Derzeit könnt Ihr auf dem Server keine neuen Charaktere erstellen. Versucht es später erneut.")
+	
+	(key = "CHAR_CREATE_NAME_TOO_SHORT", string = "Bitte gib einen Namen mit mindestens 3 Zeichen ein.")
+	(key = "CHAR_CREATE_NAME_TOO_LONG", string = "Die maximale Länge eines Charakternamens beträgt 12 Zeichen.")
+	
 }

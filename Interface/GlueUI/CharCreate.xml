@@ -108,7 +108,7 @@
 				<Anchor point="RIGHT"/>
 				<Anchor point="BOTTOM"/>
 				<Size>
-					<AbsDimension y="200" />
+					<AbsDimension y="512" />
 				</Size>
 			</Area>
 			<Visual>
@@ -129,6 +129,14 @@
 					<Anchor point="BOTTOM" offset="-24" />
 					<Anchor point="H_CENTER" />
 				</Area>
+					
+				<Scripts>
+					<OnClick>
+						return function(this)
+							CharCreate_Submit();
+						end
+					</OnClick>
+				</Scripts>
 			</Frame>
 				
 			<Frame name="WarriorClassButton" inherits="CharClassButton">
@@ -182,7 +190,23 @@
 					<Anchor point="RIGHT" offset="-24" />
 					<Anchor point="BOTTOM" offset="-24" />
 				</Area>
+				
+				<Scripts>
+					<OnClick>
+						return function(this)
+							CharSelect_Cancel();
+						end
+					</OnClick>
+				</Scripts>
 			</Frame>
 		</Frame>
+
+		<Scripts>
+			<OnLoad>
+				return function(this)
+					CharCreate_OnLoad(this);
+				end
+			</OnLoad>
+		</Scripts>
 	</Frame>
 </UiLayout>
