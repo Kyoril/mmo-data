@@ -26,11 +26,17 @@ function ActionButton_OnLeave(self)
     GameTooltip:Hide()
 end
 
+function ActionButton_Down(id)
+    print("ActionButton_Down: " .. id);
+end
+
+function ActionButton_Up(id)
+
+end
+
 function ActionButton_OnClick(self)
-    
     local id = self.id;
     CastSpell(id - 1);
-
 end
 
 function ActionBar_UpdateButtons(self)

@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bindings>
+    <Binding name="MOVEFORWARD" description="Move forward" category="MOVEMENT">
+        return function(key, keystate)
+            if keystate == "DOWN" then
+                MoveForwardStart();
+            else
+                MoveForwardStop();
+            end
+        end
+	</Binding>
+	<Binding name="MOVEBACKWARD" description="Move backward" category="MOVEMENT">
+		return function(key, keystate)
+            if keystate == "DOWN" then
+                MoveBackwardStart();
+            else
+                MoveBackwardStop();
+            end
+        end
+	</Binding>
+	<Binding name="TURNLEFT" description="Turn left" category="MOVEMENT">
+		return function(key, keystate)
+            if keystate == "DOWN" then
+                TurnLeftStart();
+            else
+                TurnLeftStop();
+            end
+        end
+	</Binding>
+	<Binding name="TURNRIGHT" description="Turn right" category="MOVEMENT">
+        return function(key, keystate)
+            if keystate == "DOWN" then
+                TurnRightStart();
+            else
+                TurnRightStop();
+            end
+        end
+	</Binding>
+	<Binding name="STRAFELEFT" description="Strafe left" category="MOVEMENT">
+		return function(key, keystate)
+            if keystate == "DOWN" then
+                StrafeLeftStart();
+            else
+                StrafeLeftStop();
+            end
+        end
+	</Binding>
+	<Binding name="STRAFERIGHT" description="Strafe right" category="MOVEMENT">
+		return function(key, keystate)
+            if keystate == "DOWN" then
+                StrafeRightStart();
+            else
+                StrafeRightStop();
+            end
+        end
+	</Binding>
+	<Binding name="JUMP" description="Jump" category="MOVEMENT">
+		return function(key, keystate)
+		    -- Jump();
+            print("JUMPING!");
+        end
+	</Binding>
+	<Binding name="SITORSTAND" description="Toggle sit/stand" category="MOVEMENT">
+        return function(key, keystate)
+		    -- SitOrStand();
+        end
+	</Binding>
+
+    <!-- Chat frame bindings -->
+	<Binding name="OPENCHAT" description="Bring up chat box" category="CHAT">
+        return function(key, keystate)
+            if keystate == "UP" then
+		        ChatFrame_OpenChat("");
+            end
+        end
+	</Binding>
+	<Binding name="CHATPAGEUP" description="Scroll chat pane up one page" category="CHAT">
+        return function(key, keystate)
+            if keystate == "DOWN" then
+		        ChatFrame_ScrollUp();
+            end
+        end
+	</Binding>
+	<Binding name="CHATPAGEDOWN" description="Scroll chat pane down one page" category="CHAT">
+        return function(key, keystate)
+            if keystate == "DOWN" then
+		        ChatFrame_ScrollDown();
+            end
+        end
+	</Binding>
+	<Binding name="CHATBOTTOM" description="Scroll chat pane down one page" category="CHAT">
+        return function(key, keystate)
+            if keystate == "DOWN" then
+		        ChatFrame_ScrollToBottom();
+            end
+        end
+	</Binding>
+
+    <!-- Action bar bindings -->
+	<Binding name="ACTIONBUTTON1" description="Trigger action button 1" category="ACTIONBAR">
+        return function(key, keystate)
+            if keystate == "DOWN" then
+                ActionButton_Down(1);
+            else
+                ActionButton_Up(1);
+            end
+        end
+	</Binding>
+	<Binding name="ACTIONBUTTON2" description="Trigger action button 2" category="ACTIONBAR">
+		return function(key, keystate)
+            if keystate == "DOWN" then
+                ActionButton_Down(2);
+            else
+                ActionButton_Up(2);
+            end
+        end
+	</Binding>
+	<Binding name="ACTIONBUTTON3" description="Trigger action button 3" category="ACTIONBAR">
+		return function(key, keystate)
+            if keystate == "DOWN" then
+                ActionButton_Down(3);
+            else
+                ActionButton_Up(3);
+            end
+        end
+	</Binding>
+	<Binding name="ACTIONBUTTON4" description="Trigger action button 4" category="ACTIONBAR">
+		return function(key, keystate)
+            if keystate == "DOWN" then
+                ActionButton_Down(4);
+            else
+                ActionButton_Up(4);
+            end
+        end
+	</Binding>
+	<Binding name="ACTIONBUTTON5" description="Trigger action button 5" category="ACTIONBAR">
+		return function(key, keystate)
+            if keystate == "DOWN" then
+                ActionButton_Down(5);
+            else
+                ActionButton_Up(5);
+            end
+        end
+	</Binding>
+	<Binding name="ACTIONBUTTON6" description="Trigger action button 6" category="ACTIONBAR">
+		return function(key, keystate)
+            if keystate == "DOWN" then
+                ActionButton_Down(6);
+            else
+                ActionButton_Up(6);
+            end
+        end
+	</Binding>
+	<Binding name="ACTIONBUTTON7" description="Trigger action button 7" category="ACTIONBAR">
+		return function(key, keystate)
+            if keystate == "DOWN" then
+                ActionButton_Down(7);
+            else
+                ActionButton_Up(7);
+            end
+        end
+	</Binding>
+	<Binding name="ACTIONBUTTON8" description="Trigger action button 8" category="ACTIONBAR">
+		return function(key, keystate)
+            if keystate == "DOWN" then
+                ActionButton_Down(8);
+            else
+                ActionButton_Up(8);
+            end
+        end
+	</Binding>
+	<Binding name="ACTIONBUTTON9" description="Trigger action button 9" category="ACTIONBAR">
+		return function(key, keystate)
+            if keystate == "DOWN" then
+                ActionButton_Down(9);
+            else
+                ActionButton_Up(9);
+            end
+        end
+	</Binding>
+	<Binding name="ACTIONBUTTON10" description="Trigger action button 10" category="ACTIONBAR">
+		return function(key, keystate)
+            if keystate == "DOWN" then
+                ActionButton_Down(10);
+            else
+                ActionButton_Up(10);
+            end
+        end
+	</Binding>
+	<Binding name="ACTIONBUTTON11" description="Trigger action button 11" category="ACTIONBAR">
+		return function(key, keystate)
+            if keystate == "DOWN" then
+                ActionButton_Down(11);
+            else
+                ActionButton_Up(11);
+            end
+        end
+	</Binding>
+	<Binding name="ACTIONBUTTON12" description="Trigger action button 12" category="ACTIONBAR">
+		return function(key, keystate)
+            if keystate == "DOWN" then
+                ActionButton_Down(12);
+            else
+                ActionButton_Up(12);
+            end
+        end
+	</Binding>
+</Bindings>

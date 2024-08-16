@@ -7,12 +7,16 @@ function ChatFrame_OnLoad(this)
         ChatFrame:AddMessage(string.format(CHAT_FORMAT_YELL, character, message), 1.0, 0.0, 0.0);
     end)
 
-    this:RegisterEvent("OPEN_CHAT", function(this)
-        ChatInput:Show();
-        ChatInput:CaptureInput();
-    end)
-
     ChatFrame:AddMessage("Welcome to the game!", 1.0, 1.0, 0.0);
+end
+
+function ChatFrame_OpenChat(input)
+    if (input) then
+        ChatInput:SetText(input);
+    end
+
+    ChatInput:Show();
+    ChatInput:CaptureInput();
 end
 
 function ChatFrame_SendMessage(this)
