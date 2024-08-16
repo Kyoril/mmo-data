@@ -27,11 +27,33 @@ function ActionButton_OnLeave(self)
 end
 
 function ActionButton_Down(id)
-    print("ActionButton_Down: " .. id);
+
+    if (id == nil) then
+        return;
+    end
+
+    if (id < 1 or id > 12) then
+        return;
+    end
+
+    local button = _G["ActionButton"..id];
+    button:SetButtonState(ButtonState.PUSHED);
 end
 
 function ActionButton_Up(id)
 
+    if (id == nil) then
+        return;
+    end
+
+    if (id < 1 or id > 12) then
+        return;
+    end
+
+    local button = _G["ActionButton"..id];
+    button:SetButtonState(ButtonState.NORMAL);
+
+    ActionButton_OnClick(button);
 end
 
 function ActionButton_OnClick(self)
