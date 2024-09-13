@@ -1,4 +1,5 @@
 version = 1
+ranges = (file = "ranges.data")
 spells = (file = "spells.data")
 maps = (file = "maps.data")
 spell_categories = (file = "spell_categories.data")

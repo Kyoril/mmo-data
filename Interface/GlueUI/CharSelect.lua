@@ -3,9 +3,17 @@
 selectedCharacter = nil			-- Selected character
 selectedCharacterIndex = -1
 characters = {}
+characterButtons = {}
 
 
 function CharListItem_Clicked(item)
+	-- For each button in characterButtons, call SetChecked(false)
+	for i = 1, #characterButtons do
+		characterButtons[i]:SetChecked(false)
+	end
+
+	item:SetChecked(true);
+
 	selectedCharacter = item.userData
 	SelectedCharacter_Changed()
 end
@@ -41,42 +49,48 @@ function CharList_Show()
 	
 	-- Load char list data for iteration
 	characters = {}
+	characterButtons = {}
 	selectedCharacterIndex = -1
 	selectedCharacter = nil
 
 	local characterIndex = 1
 	for character in realmConnector:GetCharViews() do
-		table.insert(characters, character)
+		table.insert(characters, character);
 
 		-- Clone item
-		local charListItem = CharButton:Clone()
-		CharList:AddChild(charListItem)
+		local charListItem = CharButton:Clone();
+		CharList:AddChild(charListItem);
 		
 		-- Assign realm data
-		charListItem:SetText(character.name .. "\n" .. "Level " .. character.level)
-		charListItem.userData = character
+		charListItem:SetText(character.name .. "\n" .. "Level " .. character.level);
+		charListItem.userData = character;
 		
 		-- Setup anchor points
 		if (lastCharListItem ~= nil) then
-			charListItem:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, lastCharListItem, 8.0)
+			charListItem:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, lastCharListItem, 8.0);
 		else
-			charListItem:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, 16.0)
+			charListItem:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, 16.0);
 		end
-		charListItem:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, 8.0)
+		charListItem:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, 8.0);
+		charListItem:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, -8.0);
 		
 		-- Register click handler
-		charListItem:SetClickedHandler(CharListItem_Clicked)
+		charListItem:SetClickedHandler(CharListItem_Clicked);
+		
+		-- Add charListItem to list of character buttons
+		table.insert(characterButtons, charListItem);
 		
 		-- Remember realm list item
-		lastCharListItem = charListItem
+		lastCharListItem = charListItem;
 		
 		-- Make the first character the selected one (if there is any)
 		if (selectedCharacter == nil) then
-			selectedCharacter = character
-			selectedCharacterIndex = characterIndex
+			selectedCharacter = character;
+			selectedCharacterIndex = characterIndex;
+			charListItem:SetChecked(true);
 		end
 
-		characterIndex = characterIndex + 1
+		characterIndex = characterIndex + 1;
 	end
 
 	-- Show the character selection screen
