@@ -56,8 +56,10 @@
 	</Binding>
 	<Binding name="JUMP" description="Jump" category="MOVEMENT">
 		return function(key, keystate)
-		    -- Jump();
-            print("JUMPING!");
+            if keystate == "DOWN" then
+		        -- Jump();
+                print("JUMPING!");
+            end
         end
 	</Binding>
 	<Binding name="SITORSTAND" description="Toggle sit/stand" category="MOVEMENT">

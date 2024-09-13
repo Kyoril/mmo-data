@@ -3,62 +3,128 @@
 	<Script file="CharSelect.lua" />
 
 	<!-- Virtual character button -->
-	<Frame name="CharButton" type="Button" renderer="ButtonRenderer">
+	<Frame name="CharButton" type="Button" renderer="CheckboxRenderer">
 		<Property name="Font" value="DefaultHeader" />
+		<Property name="Checkable" value="true" />
+
 		<Visual>
 			<ImagerySection name="FrameNormal">
-				<BorderComponent texture="Interface/GlueUI/CharButtonUp.htex" borderSize="16" />
+				<ImageComponent texture="Interface/GlueUI/CharSelectButtonBackground.htex" />
 			</ImagerySection>
 			<ImagerySection name="FrameHovered">
-				<BorderComponent texture="Interface/GlueUI/CharButtonHovered.htex" borderSize="16" />
+				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="FFFF9B38" />
 			</ImagerySection>
 			<ImagerySection name="FramePushed">
-				<BorderComponent texture="Interface/GlueUI/CharButtonPushed.htex" borderSize="16" />
+				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="FF9E5E22">
+					<Area>
+						<Inset left="16" top="16" />
+					</Area>
+				</ImageComponent>
 			</ImagerySection>
 			<ImagerySection name="FrameDisabled">
-				<BorderComponent texture="Interface/GlueUI/CharButtonDisabled.htex" borderSize="16" />
+				<ImageComponent texture="Interface/GlueUI/CharSelectButtonBackground.htex" tint="88404040" />
 			</ImagerySection>
-			<ImagerySection name="Icon">
-				<ImageComponent texture="Interface/GlueUI/AlphaMask.htex">
-					<Area><Inset all="16" /></Area>
+
+			<ImagerySection name="FrameNormalChecked">
+				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="FF033F08" />
+			</ImagerySection>
+			<ImagerySection name="FramePushedChecked">
+				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="FF033F08">
+					<Area>
+						<Inset left="16" top="16" />
+					</Area>
 				</ImageComponent>
-				<ImageComponent texture="Interface/GlueUI/IconHelmet.htex">
-					<Area><Inset all="16" /></Area>
-				</ImageComponent>
+			</ImagerySection>
+			<ImagerySection name="Text">
 				<TextComponent color="FFEED37C" horzAlign="LEFT" vertAlign="TOP">
 					<Area>
-						<Inset left="128" top="16" />
+						<Inset left="150" top="8" />
 					</Area>
 				</TextComponent>
 			</ImagerySection>
+			<ImagerySection name="TextDisabled">
+				<TextComponent color="88404040" horzAlign="LEFT" vertAlign="TOP">
+					<Area>
+						<Inset left="150" top="8" />
+					</Area>
+				</TextComponent>
+			</ImagerySection>
+
 			<StateImagery name="Normal">
 				<Layer>
 					<Section section="FrameNormal" />
-					<Section section="Icon" />
+					<Section section="Text" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="Hovered">
 				<Layer>
 					<Section section="FrameHovered" />
-					<Section section="Icon" />
+					<Section section="Text" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="Pushed">
 				<Layer>
 					<Section section="FramePushed" />
-					<Section section="Icon" />
+					<Section section="Text" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="Disabled">
 				<Layer>
 					<Section section="FrameDisabled" />
-					<Section section="Icon" />
+					<Section section="TextDisabled" />
+				</Layer>
+			</StateImagery>
+			
+			<StateImagery name="NormalChecked">
+				<Layer>
+					<Section section="FrameNormalChecked" />
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="HoveredChecked">
+				<Layer>
+					<Section section="FrameNormalChecked" />
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="PushedChecked">
+				<Layer>
+					<Section section="FramePushedChecked" />
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="DisabledChecked">
+				<Layer>
+					<Section section="FrameDisabled" />
+					<Section section="TextDisabled" />
 				</Layer>
 			</StateImagery>
 		</Visual>
 		<Area>
 			<Size><AbsDimension x="128" y="128" /></Size>
 		</Area>
+
+		<Frame name="CharIcon" renderer="DefaultRenderer">
+			<Visual>
+				<ImagerySection name="Icon">
+					<ImageComponent texture="Interface/GlueUI/IconHelmet.htex">
+						<Area><Inset all="16" /></Area>
+					</ImageComponent>
+				</ImagerySection>
+
+				<StateImagery name="Normal">
+					<Layer>
+						<Section section="Icon" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+
+			<Area>
+				<Anchor point="TOP" offset="8" />
+				<Anchor point="LEFT" offset="8" />
+				<Size><AbsDimension x="128" y="128" /></Size>
+			</Area>
+		</Frame>
 	</Frame>
 	
 	<!-- This is the character selection screen frame. It covers the whole screen. -->
