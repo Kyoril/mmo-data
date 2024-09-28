@@ -1,0 +1,79 @@
+<?xml version="1.0" ?>
+<UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
+	<Script file="AuraBar.lua" />
+
+    <Frame name="AuraBar" parent="GameParent">
+        <Area>
+			<Anchor point="TOP" offset="8" />
+			<Anchor point="RIGHT" offset="-8" />
+            <Size>
+                <AbsDimension x="128" y="128" />
+            </Size>
+        </Area>
+
+        <Frame name="AuraButton1" inherits="AuraBarButtonTemplate" id="1">
+            <Area>
+                <Anchor point="RIGHT" offset="0" />
+                <Anchor point="TOP" offset="0" />
+            </Area>
+        </Frame>
+        
+        <Frame name="AuraButton2" inherits="AuraBarButtonTemplate" id="2">
+            <Area>
+                <Anchor point="RIGHT" relativeTo="AuraButton1" relativePoint="LEFT" offset="0" />
+                <Anchor point="TOP" offset="0" />
+            </Area>
+        </Frame>
+        
+        <Frame name="AuraButton3" inherits="AuraBarButtonTemplate" id="3">
+            <Area>
+                <Anchor point="RIGHT" relativeTo="AuraButton2" relativePoint="LEFT" offset="0" />
+                <Anchor point="TOP" offset="0" />
+            </Area>
+        </Frame>
+        
+        <Frame name="AuraButton4" inherits="AuraBarButtonTemplate" id="4">
+            <Area>
+                <Anchor point="RIGHT" relativeTo="AuraButton3" relativePoint="LEFT" offset="0" />
+                <Anchor point="TOP" offset="0" />
+            </Area>
+        </Frame>
+        
+        <Frame name="AuraButton5" inherits="AuraBarButtonTemplate" id="5">
+            <Area>
+                <Anchor point="RIGHT" relativeTo="AuraButton4" relativePoint="LEFT" offset="0" />
+                <Anchor point="TOP" offset="0" />
+            </Area>
+        </Frame>
+        
+        <Frame name="AuraButton6" inherits="AuraBarButtonTemplate" id="6">
+            <Area>
+                <Anchor point="RIGHT" relativeTo="AuraButton5" relativePoint="LEFT" offset="0" />
+                <Anchor point="TOP" offset="0" />
+            </Area>
+        </Frame>
+        
+        <Frame name="AuraButton7" inherits="AuraBarButtonTemplate" id="7">
+            <Area>
+                <Anchor point="RIGHT" relativeTo="AuraButton6" relativePoint="LEFT" offset="0" />
+                <Anchor point="TOP" offset="0" />
+            </Area>
+        </Frame>
+        
+        <Frame name="AuraButton8" inherits="AuraBarButtonTemplate" id="8">
+            <Area>
+                <Anchor point="RIGHT" relativeTo="AuraButton7" relativePoint="LEFT" offset="0" />
+                <Anchor point="TOP" offset="0" />
+            </Area>
+        </Frame>
+
+        <Scripts>
+            <OnLoad>
+                return function(this)
+                    AuraBar_OnLoad(this);
+                end
+            </OnLoad>
+        </Scripts>
+    </Frame>
+    
+</UiLayout>

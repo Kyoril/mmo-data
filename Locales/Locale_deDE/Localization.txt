@@ -75,6 +75,12 @@ strings =
 	(key = "CLASS", string = "Klasse")
 	(key = "GENDER", string = "Geschlecht")
 	
+	(key = "STAMINA", string = "Ausdauer")
+	(key = "STRENGTH", string = "Stärke")
+	(key = "AGILITY", string = "Beweglichkeit")
+	(key = "INTELLECT", string = "Intelligenz")
+	(key = "SPIRIT", string = "Willenskraft")
+
 	(key = "CHAR_CREATE_ERR_ERROR", string = "Charaktererstellung fehlgeschlagen.")
 	(key = "CHAR_CREATE_ERR_INVALID_NAME", string = "Der eingegebene Charaktername ist ungültig.\nEs sind nur Zeichen von A-Z erlaubt.")
 	(key = "CHAR_CREATE_ERR_NAME_IN_USE", string = "Der Charaktername ist bereits in Verwendung.")

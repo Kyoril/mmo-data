@@ -98,6 +98,14 @@
         end
 	</Binding>
 
+	<Binding name="TOGGLECHARACTERWINDOW" description="Toggle the character window" category="INTERFACE">
+		return function(key, keystate)
+            if keystate == "UP" then
+                CharacterWindow_Toggle();
+            end
+        end
+	</Binding>
+
     <!-- Action bar bindings -->
 	<Binding name="ACTIONBUTTON1" description="Trigger action button 1" category="ACTIONBAR">
         return function(key, keystate)

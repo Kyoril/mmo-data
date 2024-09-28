@@ -75,6 +75,12 @@ strings =
 	(key = "CLASS", string = "Class")
 	(key = "GENDER", string = "Gender")
 	
+	(key = "STAMINA", string = "Stamina")
+	(key = "STRENGTH", string = "Strength")
+	(key = "AGILITY", string = "Agility")
+	(key = "INTELLECT", string = "Intellect")
+	(key = "SPIRIT", string = "Spirit")
+	
 	(key = "CHAR_CREATE_ERR_ERROR", string = "Character creation failed.")
 	(key = "CHAR_CREATE_ERR_INVALID_NAME", string = "The chosen character name is invalid.\nYou may only use letters from A-Z.")
 	(key = "CHAR_CREATE_ERR_NAME_IN_USE", string = "The character name is already in use.")

@@ -1,0 +1,75 @@
+<?xml version="1.0" ?>
+<UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
+	<Script file="AuraButton.lua" />
+
+	<Frame name="AuraBarButtonTemplate" type="Button" renderer="ButtonRenderer">
+		<Property name="Icon" />
+
+		<Visual>
+			<ImagerySection name="Image">
+				<ImageComponent>
+					<Area>
+						<Inset all="16" />
+					</Area>
+					<PropertyValue property="Icon" />
+				</ImageComponent>
+			</ImagerySection>
+			<ImagerySection name="NormalFrame">
+				<BorderComponent texture="Interface/BW_ButtonSmall_Up.htex" borderSize="30" />
+			</ImagerySection>
+			<ImagerySection name="HoveredFrame">
+				<BorderComponent texture="Interface/BW_ButtonSmall_Over.htex" borderSize="30" />
+			</ImagerySection>
+			<ImagerySection name="PushedFrame">
+				<BorderComponent texture="Interface/BW_ButtonSmall_Down.htex" borderSize="30" />
+			</ImagerySection>
+			<ImagerySection name="DisabledFrame">
+				<BorderComponent texture="Interface/BW_ButtonSmall_Up.htex" borderSize="30" />
+			</ImagerySection>
+			<StateImagery name="Normal">
+				<Layer>
+					<Section section="NormalFrame" />
+					<Section section="Image" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Hovered">
+				<Layer>
+					<Section section="HoveredFrame" />
+					<Section section="Image" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Pushed">
+				<Layer>
+					<Section section="PushedFrame" />
+					<Section section="Image" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="DisabledFrame" />
+					<Section section="Image" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+
+		<Area>
+			<Size>
+				<AbsDimension x="128" y="128" />
+			</Size>
+		</Area>
+        
+        <Scripts>
+            <OnLoad>
+                return function(this)
+                    AuraButton_OnLoad(this);
+                end
+            </OnLoad>
+            <OnUpdate>
+                return function(this, elapsed)
+                    AuraButton_OnUpdate(this, elapsed);
+                end
+            </OnUpdate>
+        </Scripts>
+	</Frame>
+
+</UiLayout>

@@ -1,0 +1,209 @@
+<?xml version="1.0" ?>
+<UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
+	<Script file="CharacterWindow.lua" />
+	
+	<Frame name="CharacterStatLabelTemplate" renderer="DefaultRenderer">
+		<Property name="Font" value="DefaultSmall" />
+
+		<Visual>
+			<ImagerySection name="Text">
+				<TextComponent color="FFEED37C" horzAlign="LEFT" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+		<Area>
+			<Size><AbsDimension x="0" y="44" /></Size>
+		</Area>
+	</Frame>
+
+	<Frame name="CharacterStatValueTemplate" renderer="DefaultRenderer">
+		<Property name="Font" value="DefaultSmall" />
+
+		<Visual>
+			<ImagerySection name="Text">
+				<TextComponent color="FFFFFFFF" horzAlign="RIGHT" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+		<Area>
+			<Size><AbsDimension x="0" y="44" /></Size>
+		</Area>
+	</Frame>
+	
+	<Frame name="CharacterWindow" renderer="DefaultRenderer" parent="GameParent">
+		<Property name="Visible" value="False" />
+
+		<Visual>
+			<ImagerySection name="Background">
+				<BorderComponent texture="Interface/GameUI/fg4_borders_01_03.htex" borderSize="250" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Background" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+
+		<Area>
+			<Size><AbsDimension x="960" y="1280" /></Size>
+			<Anchor point="LEFT" offset="48" />
+			<Anchor point="V_CENTER" />
+		</Area>
+
+        <Scripts>
+            <OnLoad>
+                return function(this)
+                    CharacterWindow_OnLoad(this)
+                end
+            </OnLoad>
+        </Scripts>
+
+		<Frame name="CharacterWindowTitle" inherits="TitleBar">
+			<Property name="Text" value="CHARACTER" />
+
+			<Area>
+				<Anchor point="TOP" offset="62" />
+				<Anchor point="LEFT" offset="48" />
+				<Anchor point="RIGHT" offset="-48" />
+			</Area>
+		</Frame>
+
+		<Frame name="CharacterWindowAttributeFrame" renderer="DefaultRenderer">
+			<Visual>
+				<ImagerySection name="Border">
+					<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Border" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+
+			<Area>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterWindowTitle" offset="5" />
+				<Anchor point="LEFT" offset="48" />
+				<Anchor point="RIGHT" offset="-48" />
+				<Anchor point="BOTTOM" offset="-48" />
+			</Area>
+
+			<Frame name="CharacterStatLabel0" inherits="CharacterStatLabelTemplate" id="0">
+				<Property name="Text" value="STAMINA" />
+
+				<Area>
+					<Anchor point="TOP" offset="32" />
+					<Anchor point="LEFT" offset="24" />
+					<Anchor point="RIGHT" offset="-8" />
+				</Area>
+			</Frame>
+
+			<Frame name="CharacterStat0" inherits="CharacterStatValueTemplate" id="0">
+				<Property name="Text" value="0" />
+
+				<Area>
+					<Anchor point="TOP" relativeTo="CharacterStatLabel0" />
+					<Anchor point="LEFT" offset="8" />
+					<Anchor point="RIGHT" offset="-24" />
+				</Area>
+			</Frame>
+			
+			<Frame name="CharacterStatLabel1" inherits="CharacterStatLabelTemplate" id="1">
+				<Property name="Text" value="STRENGTH" />
+
+				<Area>
+					<Anchor point="TOP" offset="8" relativePoint="BOTTOM" relativeTo="CharacterStatLabel0" />
+					<Anchor point="LEFT" offset="24" />
+					<Anchor point="RIGHT" offset="-8" />
+				</Area>
+			</Frame>
+
+			<Frame name="CharacterStat1" inherits="CharacterStatValueTemplate" id="1">
+				<Property name="Text" value="0" />
+
+				<Area>
+					<Anchor point="TOP" relativeTo="CharacterStatLabel1" />
+					<Anchor point="LEFT" offset="8" />
+					<Anchor point="RIGHT" offset="-24" />
+				</Area>
+			</Frame>
+
+			<Frame name="CharacterStatLabel2" inherits="CharacterStatLabelTemplate" id="2">
+				<Property name="Text" value="AGILITY" />
+
+				<Area>
+					<Anchor point="TOP" offset="8" relativePoint="BOTTOM" relativeTo="CharacterStatLabel1" />
+					<Anchor point="LEFT" offset="24" />
+					<Anchor point="RIGHT" offset="-8" />
+				</Area>
+			</Frame>
+
+			<Frame name="CharacterStat2" inherits="CharacterStatValueTemplate" id="2">
+				<Property name="Text" value="0" />
+
+				<Area>
+					<Anchor point="TOP" relativeTo="CharacterStatLabel2" />
+					<Anchor point="LEFT" offset="8" />
+					<Anchor point="RIGHT" offset="-24" />
+				</Area>
+			</Frame>
+
+			<Frame name="CharacterStatLabel3" inherits="CharacterStatLabelTemplate" id="3">
+				<Property name="Text" value="INTELLECT" />
+
+				<Area>
+					<Anchor point="TOP" offset="8" relativePoint="BOTTOM" relativeTo="CharacterStatLabel2" />
+					<Anchor point="LEFT" offset="24" />
+					<Anchor point="RIGHT" offset="-8" />
+				</Area>
+			</Frame>
+
+			<Frame name="CharacterStat3" inherits="CharacterStatValueTemplate" id="3">
+				<Property name="Text" value="0" />
+
+				<Area>
+					<Anchor point="TOP" relativeTo="CharacterStatLabel3" />
+					<Anchor point="LEFT" offset="8" />
+					<Anchor point="RIGHT" offset="-24" />
+				</Area>
+			</Frame>
+
+			<Frame name="CharacterStatLabel4" inherits="CharacterStatLabelTemplate" id="4">
+				<Property name="Text" value="SPIRIT" />
+
+				<Area>
+					<Anchor point="TOP" offset="8" relativePoint="BOTTOM" relativeTo="CharacterStatLabel3" />
+					<Anchor point="LEFT" offset="24" />
+					<Anchor point="RIGHT" offset="-8" />
+				</Area>
+			</Frame>
+
+			<Frame name="CharacterStat4" inherits="CharacterStatValueTemplate" id="4">
+				<Property name="Text" value="0" />
+
+				<Area>
+					<Anchor point="TOP" relativeTo="CharacterStatLabel4" />
+					<Anchor point="LEFT" offset="8" />
+					<Anchor point="RIGHT" offset="-24" />
+				</Area>
+			</Frame>
+		</Frame>
+	</Frame>
+</UiLayout>
