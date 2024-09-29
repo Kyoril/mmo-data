@@ -86,6 +86,16 @@
 			</Area>
 		</Frame>
 
+		<Frame name="CharacterWindowAttributesLabel" inherits="TextSmall">
+			<Property name="Text" value="ATTRIBUTES" />
+
+			<Area>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterWindowTitle" offset="5" />
+				<Anchor point="LEFT" offset="48" />
+				<Anchor point="RIGHT" offset="-48" />
+			</Area>
+		</Frame>
+
 		<Frame name="CharacterWindowAttributeFrame" renderer="DefaultRenderer">
 			<Visual>
 				<ImagerySection name="Border">
@@ -99,10 +109,10 @@
 			</Visual>
 
 			<Area>
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterWindowTitle" offset="5" />
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterWindowAttributesLabel" offset="5" />
 				<Anchor point="LEFT" offset="48" />
 				<Anchor point="RIGHT" offset="-48" />
-				<Anchor point="BOTTOM" offset="-48" />
+				<Size><AbsDimension x="0" y="320" /></Size>
 			</Area>
 
 			<Frame name="CharacterStatLabel0" inherits="CharacterStatLabelTemplate" id="0">
@@ -200,6 +210,56 @@
 
 				<Area>
 					<Anchor point="TOP" relativeTo="CharacterStatLabel4" />
+					<Anchor point="LEFT" offset="8" />
+					<Anchor point="RIGHT" offset="-24" />
+				</Area>
+			</Frame>
+		</Frame>
+
+		<Frame name="CharacterWindowDefenseLabel" inherits="TextSmall">
+			<Property name="Text" value="DEFENSE" />
+
+			<Area>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterWindowAttributeFrame" offset="5" />
+				<Anchor point="LEFT" offset="48" />
+				<Anchor point="RIGHT" offset="-48" />
+			</Area>
+		</Frame>
+		
+		<Frame name="CharacterWindowDefenseFrame" renderer="DefaultRenderer">
+			<Visual>
+				<ImagerySection name="Border">
+					<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Border" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+
+			<Area>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterWindowDefenseLabel" offset="5" />
+				<Anchor point="LEFT" offset="48" />
+				<Anchor point="RIGHT" offset="-48" />
+				<Size><AbsDimension x="0" y="100" /></Size>
+			</Area>
+
+			<Frame name="CharacterArmorLabel" inherits="CharacterStatLabelTemplate">
+				<Property name="Text" value="ARMOR" />
+
+				<Area>
+					<Anchor point="TOP" offset="32" />
+					<Anchor point="LEFT" offset="24" />
+					<Anchor point="RIGHT" offset="-8" />
+				</Area>
+			</Frame>
+
+			<Frame name="CharacterArmorStat" inherits="CharacterStatValueTemplate">
+				<Property name="Text" value="0" />
+
+				<Area>
+					<Anchor point="TOP" relativeTo="CharacterArmorLabel" />
 					<Anchor point="LEFT" offset="8" />
 					<Anchor point="RIGHT" offset="-24" />
 				</Area>

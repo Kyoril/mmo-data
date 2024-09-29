@@ -8,7 +8,7 @@ strings =
         (key = "LOGIN", string = "Se connecter")
         (key = "QUIT", string = "Quiter")
         (key = "SETTINGS", string = "Paramètres")
-        (key = "COPYRIGHT_TEXT", string = "Copyright (C) 2019 - 2022, Robin Klimonow. Touts droits reservés.")
+        (key = "COPYRIGHT_TEXT", string = "Copyright (C) 2019 - 2024, Kyoril. Touts droits reservés.")
 
         (key = "REALM_LIST", string = "Realm list")
         (key = "CHOOSE_A_REALM", string = "Choisissez un realm de la liste ci-dessous :")

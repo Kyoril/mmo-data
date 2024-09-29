@@ -13,7 +13,6 @@ function CharacterWindow_OnLoad(self)
 	AddMenuBarButton("Interface/Icons/fg4_icons_menu_result.htex", CharacterWindow_Toggle);
 end
 
-
 function CharacterWindow_RefreshStats()
     for i = 0, 4 do
         local base, modifier = UnitStat("player", i);
@@ -32,4 +31,15 @@ function CharacterWindow_RefreshStats()
             end
         end
     end
+
+    local baseArmor, modifierArmor = UnitArmor("player");
+    CharacterArmorStat:SetText(tostring(baseArmor + modifierArmor));
+    if (modifierArmor > 0) then
+        CharacterArmorStat:SetProperty("Color", "FF20FF20")
+    elseif (modifierArmor < 0) then
+        CharacterArmorStat:SetProperty("Color", "FFFF2020")
+    else
+        CharacterArmorStat:SetProperty("Color", "FFFFFFFF")
+    end
+
 end
