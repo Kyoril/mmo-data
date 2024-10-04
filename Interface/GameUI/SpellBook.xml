@@ -119,8 +119,8 @@
 
         <Area>
 			<Size><AbsDimension x="960" y="1280" /></Size>
-            <Anchor point="LEFT" offset="32" />
-            <Anchor point="TOP" offset="256" />
+			<Anchor point="LEFT" offset="0" />
+			<Anchor point="TOP" offset="300" />
         </Area>
 
 		<Frame name="SpellBookTitleBar" inherits="TitleBar">

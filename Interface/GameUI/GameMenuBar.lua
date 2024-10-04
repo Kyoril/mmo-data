@@ -50,9 +50,10 @@ end
 
 function OnMenuItem_Clicked()
 	if (GameMenu:IsVisible()) then
-		GameMenu:Hide()
+		HideUIPanel(GameMenu)
 	else
-		GameMenu:Show()
+		CloseAllWindows();
+		ShowUIPanel(GameMenu)
 	end
 end
 

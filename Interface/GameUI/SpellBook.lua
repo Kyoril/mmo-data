@@ -86,10 +86,10 @@ end
 
 function SpellBook_Toggle()
     if (SpellBook:IsVisible()) then
-        SpellBook:Hide();
+        HideUIPanel(SpellBook);
     else
         SpellBook_UpdatePage();
-        SpellBook:Show();
+        ShowUIPanel(SpellBook);
     end
 end
 

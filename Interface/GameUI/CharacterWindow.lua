@@ -1,9 +1,9 @@
 
 function CharacterWindow_Toggle()
     if (CharacterWindow:IsVisible()) then
-        CharacterWindow:Hide();
+        HideUIPanel(CharacterWindow);
     else
-        CharacterWindow:Show();
+        ShowUIPanel(CharacterWindow);
         CharacterWindow_RefreshStats();
     end
 end
