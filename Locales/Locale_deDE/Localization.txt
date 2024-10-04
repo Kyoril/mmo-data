@@ -92,4 +92,6 @@ strings =
 	(key = "CHAR_CREATE_NAME_TOO_SHORT", string = "Bitte gib einen Namen mit mindestens 3 Zeichen ein.")
 	(key = "CHAR_CREATE_NAME_TOO_LONG", string = "Die maximale Länge eines Charakternamens beträgt 12 Zeichen.")
 	
+	(key = "YOU_DIED", string = "Euer Charakter ist tot!")
+	(key = "DEATH_RELEASE", string = "Geist freilassen")
 }

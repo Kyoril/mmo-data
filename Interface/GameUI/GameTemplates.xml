@@ -107,4 +107,84 @@
 			<Size><AbsDimension x="1000" y="90" /></Size>
 		</Area>
 	</Frame>
+
+	<!-- Large label (headline) -->
+	<Frame name="TextLarge" renderer="DefaultRenderer">
+		<Property name="Font" value="DefaultHeader" />
+		<Property name="HorzAlign" value="CENTER" />
+		
+		<Visual>
+			<ImagerySection name="Text">
+				<TextComponent color="FFEED37C" horzAlign="CENTER" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+		<Area>
+			<Size><AbsDimension x="0" y="60" /></Size>
+		</Area>
+	</Frame>
+	
+	<!-- TextField template -->
+	<Frame name="GameTextField" type="TextField" renderer="TextFieldRenderer">
+		<Property name="TextSection" value="Text" />
+		<Property name="HorzAlign" value="LEFT" />
+		<Property name="VertAlign" value="CENTER" />
+	
+		<Visual>
+			<ImagerySection name="Frame">
+				<BorderComponent texture="Interface/GlueUI/TextFieldBorder.htex" borderSize="12">
+					<Area></Area>
+				</BorderComponent>
+			</ImagerySection>
+			<ImagerySection name="Caret">
+				<ImageComponent texture="Interface/GlueUI/Caret.htex" />
+			</ImagerySection>
+			
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Frame" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="Frame" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Caret">
+				<Layer>
+					<Section section="Caret" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+		<Area>
+			<Size><AbsDimension x="440" y="90" /></Size>
+		</Area>
+	</Frame>
+	
+	<Frame name="DialogBorderFrame" renderer="DefaultRenderer">
+		<Visual>
+			<ImagerySection name="Background">
+				<ImageComponent texture="Interface/GlueUI/DefaultFrameBorderBack.htex" tiling="BOTH" tint="FFFFE3B0">
+					<Area><Inset all="8" /></Area>
+				</ImageComponent>
+				<BorderComponent texture="Interface/GlueUI/DefaultFrameBorderTop.htex" borderSize="45">
+					<Area></Area>
+				</BorderComponent>
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Background" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+	</Frame>
 </UiLayout>

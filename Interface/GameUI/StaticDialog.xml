@@ -1,0 +1,66 @@
+<?xml version="1.0" ?>
+<UiLayout>
+	<Script file="StaticDialog.lua" />
+
+	<Frame name="StaticDialog" inherits="DialogBorderFrame" parent="GameParent">
+		<Property name="Visible" value="false" />
+
+		<Area>
+			<Size><AbsDimension x="1200" y="490" /></Size>
+			<Anchor point="H_CENTER" />
+			<Anchor point="V_CENTER" />
+		</Area>
+		
+		<Frame name="StaticDialogLabel" inherits="TextSmall">
+			<Property name="Text" value="" />
+			<Area>
+				<Anchor point="LEFT" offset="40" />
+				<Anchor point="RIGHT" offset="-40" />
+				<Anchor point="TOP" offset="60" />
+			</Area>
+		</Frame>
+		
+		<Frame name="StaticDialogButton01" inherits="GlueButton">
+			<Property name="Text" value="CANCEL" />
+			
+			<Area>
+				<Anchor point="H_CENTER" />
+				<Anchor point="BOTTOM" relativeTo="StaticDialog" offset="-40" />
+			</Area>
+			
+			<Scripts>
+				<OnClick>
+					return function(this)
+						StaticDialog_Button1Clicked();
+					end
+				</OnClick>
+			</Scripts>
+		</Frame>
+		
+		<Frame name="StaticDialogButton02" inherits="GlueButton">
+			<Property name="Text" value="CANCEL" />
+			<Property name="Visible" value="false" />
+			
+			<Area>
+				<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="StaticDialogButton01" offset="20" />
+				<Anchor point="BOTTOM" relativeTo="StaticDialog" offset="-40" />
+			</Area>
+
+			<Scripts>
+				<OnClick>
+					return function(this)
+						StaticDialog_Button2Clicked();
+					end
+				</OnClick>
+			</Scripts>
+		</Frame>
+	
+		<Scripts>
+			<OnLoad>
+				return function(this)
+					StaticDialog_OnLoad(this);
+				end
+			</OnLoad>
+		</Scripts>
+	</Frame>
+</UiLayout>

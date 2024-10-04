@@ -1,5 +1,6 @@
 GameTemplates.xml
 GameParent.xml
+StaticDialog.xml
 GameMenu.xml
 GameMenuBar.xml
 ActionBar.xml
