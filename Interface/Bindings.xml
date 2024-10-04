@@ -106,6 +106,14 @@
         end
 	</Binding>
 
+	<Binding name="TOGGLESPELLBOOK" description="Toggle the spell book" category="INTERFACE">
+		return function(key, keystate)
+            if keystate == "UP" then
+                SpellBook_Toggle();
+            end
+        end
+	</Binding>
+
     <!-- Action bar bindings -->
 	<Binding name="ACTIONBUTTON1" description="Trigger action button 1" category="ACTIONBAR">
         return function(key, keystate)
