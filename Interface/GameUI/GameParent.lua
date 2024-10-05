@@ -145,6 +145,7 @@ function HideUIPanel(frame)
 	-- If we're hiding the left frame, move the center frame back left, unless it's a native center frame
 	if ( frame == GetLeftFrame() ) then
 		local centerFrame = GetCenterFrame();
+
 		if ( centerFrame ) then
 			local info = UIPanelWindows[centerFrame:GetName()];
 			if ( info and (info.area == "left") ) then
@@ -152,6 +153,7 @@ function HideUIPanel(frame)
 				return;
 			end
 		end
+
 		SetLeftFrame(nil);
 		return;
 	end

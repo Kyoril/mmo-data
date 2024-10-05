@@ -68,4 +68,17 @@ strings =
 	(key = "CHAR_CREATE_ERR_SERVER_LIMIT", string = "CHAR_CREATE_ERR_SERVER_LIMIT")
 	(key = "CHAR_CREATE_ERR_ACCOUNT_LIMIT", string = "CHAR_CREATE_ERR_ACCOUNT_LIMIT")
 	(key = "CHAR_CREATE_ERR_ONLY_EXISTING", string = "CHAR_CREATE_ERR_ONLY_EXISTING")
+        
+	(key = "CHAR_CREATE_NAME_TOO_SHORT", string = "Please enter a character name with at least 3 characters.")
+	(key = "CHAR_CREATE_NAME_TOO_LONG", string = "The maximum length of a character name is 12 characters.")
+	
+	(key = "YOU_DIED", string = "Your character is dead!")
+	(key = "DEATH_RELEASE", string = "Release")
+	
+	(key = "FORMAT_DURATION_HOURS", string = "%.0f hours")
+	(key = "FORMAT_DURATION_HOURS_PRECISE", string = "%.2f hours")
+	(key = "FORMAT_DURATION_MINUTES", string = "%.0f minutes")
+	(key = "FORMAT_DURATION_MINUTES_PRECISE", string = "%.2f minutes")
+	(key = "FORMAT_DURATION_SECONDS", string = "%.0f seconds")
+	(key = "FORMAT_DURATION_SECONDS_PRECISE", string = "%.2f seconds")
 }
