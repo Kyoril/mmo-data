@@ -3,7 +3,7 @@ TOOLTIP_LINE_LEFT = 0
 TOOLTIP_LINE_CENTER = 1
 TOOLTIP_LINE_RIGHT = 2
 
-TooltipHeight = 32
+TooltipHeight = 90
 
 function GameTooltip_SetTitle(title)
     GameTooltipTitle:SetText(title);
@@ -13,7 +13,7 @@ function GameTooltip_Clear()
     GameTooltipTitle:SetText("");
     GameTooltipLines:RemoveAllChildren();
     
-    TooltipHeight = 32;
+    TooltipHeight = 90;
     GameTooltip:SetHeight(TooltipHeight);
 end
 
@@ -30,7 +30,7 @@ function GameTooltip_AddLine(line, alignment, color)
     end
     
     lineFrame:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, 8);
-    lineFrame:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, 8);
+    lineFrame:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, -8);
 
     if ( color ~= nil ) then
         lineFrame:SetProperty("Color", color);
