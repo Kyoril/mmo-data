@@ -2,8 +2,8 @@
 <UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
 	<Script file="GameTooltip.lua" />
 	
-	<Font name="TooltipTitleFont" file="Fonts/ARIALN.TTF" size="32" outline="0" />
-	<Font name="TooltipFont" file="Fonts/ARIALN.TTF" size="26" outline="0" />
+	<Font name="TooltipTitleFont" file="Fonts/arbutusslab-regular.ttf" size="32" outline="0" />
+	<Font name="TooltipFont" file="Fonts/arbutusslab-regular.ttf" size="26" outline="0" />
 
     <Frame name="GameTooltipLineTemplate" renderer="DefaultRenderer">
 		<Property name="Font" value="TooltipFont" />

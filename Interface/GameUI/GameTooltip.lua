@@ -68,9 +68,11 @@ function GameTooltip_SetSpell(spell)
         GameTooltip_AddLine(cooldownText .. Localize("COOLDOWN"), TOOLTIP_LINE_LEFT);
     end
 
-    if (spell.level ~= 0) then
+    if ((spell.level ~= 0) and (spell.level > UnitLevel("player"))) then
         GameTooltip_AddLine(string.format(Localize("LEVEL_REQUIREMENT_FORMAT"), spell.level), TOOLTIP_LINE_LEFT);
     end
+
+    GameTooltip_AddLine("");
 
     -- Line 3: Description
     if (spell.description ~= nil) then
