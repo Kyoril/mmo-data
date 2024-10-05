@@ -81,7 +81,7 @@
 
         <Frame name="NameLabel" inherits="SpellNameLabel">
             <Property name="Text" value="" />
-            <Property name="Color" value="FFEED37C" />
+            <Property name="Color" value="FFFFD100" />
                 
             <Area>
                 <Anchor point="TOP" />

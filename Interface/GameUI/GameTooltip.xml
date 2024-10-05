@@ -10,7 +10,7 @@
 
         <Visual>
 			<ImagerySection name="Text">
-				<TextComponent color="FFFFFFFF" horzAlign="LEFT" />
+				<TextComponent color="FFFFFFFF" horzAlign="LEFT" vertAlign="TOP" />
             </ImagerySection>
 
 			<StateImagery name="Enabled">

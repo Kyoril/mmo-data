@@ -81,4 +81,10 @@ strings =
 	(key = "FORMAT_DURATION_MINUTES_PRECISE", string = "%.2f minutes")
 	(key = "FORMAT_DURATION_SECONDS", string = "%.0f seconds")
 	(key = "FORMAT_DURATION_SECONDS_PRECISE", string = "%.2f seconds")
+        
+	(key = "SPELLBOOK", string = "Spell Book")
+        (key = "CHARACTER", string = "Character")
+	(key = "ATTRIBUTES", string = "Attributes")
+	(key = "DEFENSE", string = "Defense")
+	(key = "ARMOR", string = "Armor")
 }

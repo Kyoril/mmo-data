@@ -17,7 +17,7 @@ function GameTooltip_Clear()
     GameTooltip:SetHeight(TooltipHeight);
 end
 
-function GameTooltip_AddLine(line, alignment)
+function GameTooltip_AddLine(line, alignment, color)
 	-- Create a new button from the template and add it to the window
 	local lineFrame = GameTooltipLineTemplate:Clone();
 	lineFrame:SetText(line);
@@ -31,6 +31,10 @@ function GameTooltip_AddLine(line, alignment)
     
     lineFrame:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, 8);
     lineFrame:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, 8);
+
+    if ( color ~= nil ) then
+        lineFrame:SetProperty("Color", color);
+    end
 
     local textHeight = lineFrame:GetTextHeight();
     TooltipHeight = TooltipHeight + textHeight;
@@ -48,7 +52,14 @@ function GameTooltip_SetSpell(spell)
     GameTooltip_SetTitle(spell.name);
 
     -- Line 1: Cost
-    GameTooltip_AddLine(string.format("%d", spell.cost) .. " " .. Localize("MANA"), TOOLTIP_LINE_LEFT);
+    if ( spell.cost ~= 0 ) then
+        local costColor = nil;
+        if (UnitMana("player") < spell.cost) then
+            costColor = "FFFF2020";
+        end
+
+        GameTooltip_AddLine(string.format("%d", spell.cost) .. " " .. Localize("MANA"), TOOLTIP_LINE_LEFT, costColor);
+    end
 
     -- Line 2: Cast time and cooldown
     if (spell.casttime == 0) then
@@ -69,13 +80,11 @@ function GameTooltip_SetSpell(spell)
     end
 
     if ((spell.level ~= 0) and (spell.level > UnitLevel("player"))) then
-        GameTooltip_AddLine(string.format(Localize("LEVEL_REQUIREMENT_FORMAT"), spell.level), TOOLTIP_LINE_LEFT);
+        GameTooltip_AddLine(string.format(Localize("LEVEL_REQUIREMENT_FORMAT"), spell.level), TOOLTIP_LINE_LEFT, "FFFF2020");
     end
-
-    GameTooltip_AddLine("");
 
     -- Line 3: Description
     if (spell.description ~= nil) then
-        GameTooltip_AddLine(GetSpellDescription(spell), TOOLTIP_LINE_LEFT);
+        GameTooltip_AddLine(GetSpellDescription(spell), TOOLTIP_LINE_LEFT, "FFFFD100");
     end
 end
