@@ -226,7 +226,7 @@
             </Area>
         </Frame>
 
-        <Frame inherits="TextSmall" name="SpellBookPageLabel">
+        <Frame inherits="TextCenter" name="SpellBookPageLabel">
 			<Property name="Text" value="Page 1" />
 
             <Area>
