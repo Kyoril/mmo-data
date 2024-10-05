@@ -78,7 +78,7 @@ function SpellButton_Update(button)
     end
 
     button:GetChild(0):SetText(spell.name);
-    button:GetChild(1):SetText("");
+    button:GetChild(1):SetText("Rank 1");
     button:SetProperty("icon", spell.icon);
     button:Enable();
 

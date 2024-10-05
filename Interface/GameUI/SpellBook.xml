@@ -2,13 +2,16 @@
 <UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
 	<Script file="SpellBook.lua" />
 
+	<Font name="SpellNameLabelFont" file="Fonts/arbutusslab-regular.ttf" size="26" outline="0" />
+	<Font name="SpellSubLabelFont" file="Fonts/arbutusslab-regular.ttf" size="20" outline="0" />
+
 	<!-- Small label -->
 	<Frame name="SpellNameLabel" renderer="DefaultRenderer">
-		<Property name="Font" value="DefaultSmall" />
+		<Property name="Font" value="SpellNameLabelFont" />
 
 		<Visual>
 			<ImagerySection name="Text">
-				<TextComponent color="FFEED37C" horzAlign="LEFT" vertAlign="TOP" />
+				<TextComponent color="FFFFFFFF" horzAlign="LEFT" vertAlign="TOP" />
 			</ImagerySection>
 			<StateImagery name="Enabled">
 				<Layer>
@@ -78,21 +81,24 @@
 
         <Frame name="NameLabel" inherits="SpellNameLabel">
             <Property name="Text" value="" />
+            <Property name="Color" value="FFEED37C" />
                 
             <Area>
                 <Anchor point="TOP" />
                 <Anchor point="LEFT" offset="128" />
-                <Size><AbsDimension x="128" y="32" /></Size>
+                <Size><AbsDimension x="256" y="32" /></Size>
             </Area>
         </Frame>
 
         <Frame name="SubLabel" inherits="SpellNameLabel">
             <Property name="Text" value="" />
+            <Property name="Color" value="FF808080" />
+		    <Property name="Font" value="SpellSubLabelFont" />
             
             <Area>
                 <Anchor point="TOP" relativeTo="NameLabel" relativePoint="BOTTOM" />
                 <Anchor point="LEFT" offset="128" />
-                <Size><AbsDimension x="128" y="32" /></Size>
+                <Size><AbsDimension x="256" y="32" /></Size>
             </Area>
         </Frame>
 
