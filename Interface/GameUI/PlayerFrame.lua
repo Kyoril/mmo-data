@@ -1,5 +1,7 @@
 
 function PlayerFrame_Update(self)
+    PlayerName:SetText(UnitName("player"));
+
     local health = UnitHealth("player");
     local maxHealth = UnitHealthMax("player");
     PlayerHealthBar:SetProgress(health / maxHealth);

@@ -5,6 +5,7 @@ struct VertexIn
 	float3 normal : NORMAL;
 	float3 binormal : BINORMAL;
 	float3 tangent : TANGENT;
+	float2 uv0 : TEXCOORD0;
 	uint4 boneIndices : BLENDINDICES;
 	float4 boneWeights : BLENDWEIGHT;
 };
@@ -16,8 +17,9 @@ struct VertexOut
 	float3 normal : NORMAL;
 	float3 binormal : BINORMAL;
 	float3 tangent : TANGENT;
-	float3 worldPos : TEXCOORD0;
-	float3 viewDir : TEXCOORD1;
+	float2 uv0 : TEXCOORD0;
+	float3 worldPos : TEXCOORD1;
+	float3 viewDir : TEXCOORD2;
 };
 
 cbuffer Matrices
@@ -53,6 +55,7 @@ VertexOut main(VertexIn input)
 	output.pos = mul(output.pos, matView);
 	output.pos = mul(output.pos, matProj);
 	output.color = input.color;
+	output.uv0 = input.uv0;
 	output.binormal = normalize(mul(normalize(transformedBinormal), (float3x3)matWorld));
 	output.tangent = normalize(mul(normalize(transformedTangent), (float3x3)matWorld));
 	output.normal = normalize(mul(normalize(transformedNormal), (float3x3)matWorld));
