@@ -33,17 +33,17 @@ struct VertexOut
 	float3 viewDir : TEXCOORD2;
 };
 
-// Textures/Brick_01/T_brick_01_BaseColor.htex
+// Textures/T_plaster_Mask.htex
 Texture2D tex0;
 SamplerState sampler0;
 
-// Textures/T_plaster_Mask.htex
-Texture2D tex1;
-SamplerState sampler1;
+// BaseColor
+Texture2D texparam0;
+SamplerState paramsampler0;
 
-// Textures/Brick_01/T_brick_01_Normal.htex
-Texture2D tex2;
-SamplerState sampler2;
+// Normal
+Texture2D texparam1;
+SamplerState paramsampler1;
 
 float3 fresnelSchlick(float cosTheta, float3 F0)
 {
@@ -103,7 +103,7 @@ float4 main(VertexOut input) : SV_Target
 
 	float2 expr_4 = expr_2 * expr_3;
 
-	float4 expr_5 = tex0.Sample(sampler0, expr_4.xy);
+	float4 expr_5 = texparam0.Sample(paramsampler0, expr_4.xy);
 
 	float3 expr_6 = expr_5.rgb;
 
@@ -237,13 +237,13 @@ float4 main(VertexOut input) : SV_Target
 
 	float2 expr_71 = expr_70.rb;
 
-	float4 expr_72 = tex1.Sample(sampler1, expr_71.xy);
+	float4 expr_72 = tex0.Sample(sampler0, expr_71.xy);
 
 	float3 expr_73 = expr_72.rgb;
 
 	float2 expr_74 = expr_70.gb;
 
-	float4 expr_75 = tex1.Sample(sampler1, expr_74.xy);
+	float4 expr_75 = tex0.Sample(sampler0, expr_74.xy);
 
 	float3 expr_76 = expr_75.rgb;
 
@@ -277,7 +277,7 @@ float4 main(VertexOut input) : SV_Target
 
 	float2 expr_91 = expr_70.rg;
 
-	float4 expr_92 = tex1.Sample(sampler1, expr_91.xy);
+	float4 expr_92 = tex0.Sample(sampler0, expr_91.xy);
 
 	float3 expr_93 = expr_92.rgb;
 
@@ -315,7 +315,7 @@ float4 main(VertexOut input) : SV_Target
 
 	float expr_110 = expr_107 + expr_109;
 
-	float4 expr_111 = tex2.Sample(sampler2, expr_4.xy);
+	float4 expr_111 = texparam1.Sample(paramsampler1, expr_4.xy);
 
 	float expr_112 = expr_111.b;
 
