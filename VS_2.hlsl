@@ -32,7 +32,7 @@ cbuffer Matrices
 
 cbuffer Bones
 {
-	column_major matrix matBone[64];
+	column_major matrix matBone[128];
 };
 
 VertexOut main(VertexIn input)
