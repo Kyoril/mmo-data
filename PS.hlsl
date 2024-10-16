@@ -16,13 +16,9 @@ struct VertexOut
 	float3 viewDir : TEXCOORD2;
 };
 
-// Skin
+// BaseColor
 Texture2D texparam0;
 SamplerState paramsampler0;
-
-// Underwear
-Texture2D texparam1;
-SamplerState paramsampler1;
 
 float3 fresnelSchlick(float cosTheta, float3 F0)
 {
@@ -78,14 +74,6 @@ float4 main(VertexOut input) : SV_Target
 
 	float3 expr_2 = expr_1.rgb;
 
-	float4 expr_3 = texparam1.Sample(paramsampler1, expr_0.xy);
-
-	float3 expr_4 = expr_3.rgb;
-
-	float expr_5 = expr_3.a;
-
-	float3 expr_6 = lerp(expr_2, expr_4, expr_5);
-
 	float roughness = 1.0;
 
 	float metallic = 0.0;
@@ -94,7 +82,7 @@ float4 main(VertexOut input) : SV_Target
 
 	float3 baseColor = float3(1.0, 1.0, 1.0);
 
-	baseColor = expr_6;
+	baseColor = expr_2;
 
 	baseColor = pow(baseColor, 2.2);
 	float3 ao = float3(1.0, 1.0, 1.0);
