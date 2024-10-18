@@ -24,7 +24,7 @@ end
 
 function GameMenuBar_OnLoad(self)
 	AddMenuBarButton("Interface/Icons/fg4_icons_menu_result.htex", OnMenuItem_Clicked)
-	AddMenuBarButton("Interface/Icons/fg4_icons_helmet_result.htex", OnCharacter_Clicked)
+	AddMenuBarButton("Interface/Icons/fg4_icons_firesword_result.htex", SpellBook_Toggle)
 
 	self:RegisterEvent("PLAYER_XP_CHANGED", GameMenuBar_OnPlayerXpChanged)
 	self:RegisterEvent("PLAYER_ENTER_WORLD", GameMenuBar_OnPlayerXpChanged)
@@ -57,6 +57,3 @@ function OnMenuItem_Clicked()
 	end
 end
 
-function OnCharacter_Clicked()
-	SpellBook_Toggle();
-end

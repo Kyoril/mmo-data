@@ -13,6 +13,8 @@ CombatLog.xml
 CharacterWindow.xml
 AuraButton.xml
 AuraBar.xml
+MoneyFrame.xml
+InventoryFrame.xml
 
 GameTooltip.xml
 

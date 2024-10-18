@@ -1,0 +1,45 @@
+<?xml version="1.0" ?>
+<UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
+	<Script file="MoneyFrame.lua" />
+	
+    <Frame name="MoneyFrameTemplate">		
+		<Area>
+			<Size><AbsDimension x="540" y="96" /></Size>
+			<Anchor point="RIGHT" offset="-64" />
+			<Anchor point="BOTTOM" offset="-64" />
+		</Area>
+
+        <Frame name="CopperButton" renderer="DefaultRenderer">
+            <Property name="Text" value="0" />
+
+            <Area>
+                <Size><AbsDimension x="96" y="96" /></Size>
+                <Anchor point="RIGHT" offset="0" />
+                <Anchor point="BOTTOM" offset="0" />
+                <Anchor point="TOP" offset="0" />
+            </Area>
+        </Frame>
+        
+        <Frame name="SilverButton" renderer="DefaultRenderer">
+            <Property name="Text" value="0" />
+            
+            <Area>
+                <Size><AbsDimension x="96" y="96" /></Size>
+                <Anchor point="RIGHT" relativeTo="CopperButton" relativePoint="LEFT" offset="0" />
+                <Anchor point="BOTTOM" offset="0" />
+                <Anchor point="TOP" offset="0" />
+            </Area>
+        </Frame>
+        
+        <Frame name="GoldButton" renderer="DefaultRenderer">
+            <Property name="Text" value="0" />
+
+            <Area>
+                <Size><AbsDimension x="96" y="96" /></Size>
+                <Anchor point="RIGHT" relativeTo="SilverButton" relativePoint="LEFT" offset="0" />
+                <Anchor point="BOTTOM" offset="0" />
+                <Anchor point="TOP" offset="0" />
+            </Area>
+        </Frame>
+	</Frame>
+</UiLayout>

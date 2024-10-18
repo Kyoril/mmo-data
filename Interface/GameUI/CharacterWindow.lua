@@ -10,7 +10,7 @@ end
 
 function CharacterWindow_OnLoad(self)
     -- Register the character window in the menu bar as a button
-	AddMenuBarButton("Interface/Icons/fg4_icons_menu_result.htex", CharacterWindow_Toggle);
+	AddMenuBarButton("Interface/Icons/fg4_icons_helmet_result.htex", CharacterWindow_Toggle);
 end
 
 function CharacterWindow_RefreshStats()

@@ -1,0 +1,109 @@
+<?xml version="1.0" ?>
+<UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
+	<Script file="InventoryFrame.lua" />
+	
+	<Frame name="MoneyText" renderer="DefaultRenderer">
+		<Property name="Font" value="DefaultSmall" />
+
+		<Visual>
+			<ImagerySection name="Text">
+				<TextComponent color="FFFFFFFF" horzAlign="RIGHT" vertAlign="TOP" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+		<Area>
+			<Size><AbsDimension x="0" y="44" /></Size>
+		</Area>
+	</Frame>
+
+    <Frame name="InventoryFrame" renderer="DefaultRenderer" parent="GameParent">
+		<Property name="Visible" value="False" />
+		
+		<Visual>
+			<ImagerySection name="Background">
+				<BorderComponent texture="Interface/GameUI/fg4_borders_01_03.htex" borderSize="250" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Background" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+
+		<Area>
+			<Size><AbsDimension x="960" y="1280" /></Size>
+			<Anchor point="BOTTOM" offset="-64" />
+			<Anchor point="RIGHT" offset="-64" />
+		</Area>
+
+		<Frame name="PlayerMoney" renderer="DefaultRenderer">
+			<Property name="Font" value="SmallLabelFont" />
+
+			<Visual>
+				<ImagerySection name="Border">
+					<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" />
+				</ImagerySection>
+				<ImagerySection name="Text">
+					<TextComponent />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Border" />
+						<Section section="Text" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+
+			<Area>
+				<Anchor point="BOTTOM" offset="-48" />
+				<Anchor point="LEFT" offset="48" />
+				<Anchor point="RIGHT" offset="-48" />
+				<Size><AbsDimension x="0" y="72" /></Size>
+			</Area>
+
+			<Frame name="CopperText" inherits="MoneyText">
+				<Area>
+					<Anchor point="BOTTOM" offset="-8" />
+					<Anchor point="RIGHT" offset="-16" />
+					<Anchor point="TOP" offset="8" />
+					<Size><AbsDimension x="100" y="72" /></Size>
+				</Area>
+			</Frame>
+
+			<Frame name="SilverText" inherits="MoneyText">
+				<Area>
+					<Anchor point="BOTTOM" offset="-8" />
+					<Anchor point="RIGHT" offset="-16" relativeTo="CopperText" relativePoint="LEFT" />
+					<Anchor point="TOP" offset="8" />
+					<Size><AbsDimension x="100" y="72" /></Size>
+				</Area>
+			</Frame>
+			
+			<Frame name="GoldText" inherits="MoneyText">
+				<Area>
+					<Anchor point="BOTTOM" offset="-8" />
+					<Anchor point="RIGHT" offset="-16" relativeTo="SilverText" relativePoint="LEFT" />
+					<Anchor point="TOP" offset="8" />
+					<Size><AbsDimension x="100" y="72" /></Size>
+				</Area>
+			</Frame>
+
+			<Scripts>
+				<OnShow>
+					return function(self)
+						InventoryFrame_UpdateMoney(InventoryFrame);
+					end
+				</OnShow>
+			</Scripts>
+		</Frame>
+	</Frame>
+</UiLayout>
