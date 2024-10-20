@@ -20,15 +20,23 @@ end
 
 function SelectedCharacter_Changed()
 	if (selectedCharacter ~= nil) then
-		CharSelectEnterButton:Enable()
-		CharDeleteButton:Enable()
-		CharModel:Show()
+		CharSelectEnterButton:Enable();
+		CharDeleteButton:Enable();
+
+		local model = gameData.models:GetById(selectedCharacter.displayId);
+		if not model then
+			CharModel:Hide();
+		else
+			CharModel:SetProperty("ModelFile", model.filename);
+			CharModel:Show();
+		end
+
 		SelectedCharName:SetText(selectedCharacter.name)
 	else
-		CharSelectEnterButton:Disable()
-		CharDeleteButton:Disable()
-		CharModel:Hide()
-		SelectedCharName:SetText(Localize("NO_CHARACTER"))
+		CharSelectEnterButton:Disable();
+		CharDeleteButton:Disable();
+		CharModel:Hide();
+		SelectedCharName:SetText(Localize("NO_CHARACTER"));
 	end
 end
 
