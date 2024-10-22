@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
 	<Script file="InventoryFrame.lua" />
-	
+
 	<Frame name="MoneyText" renderer="DefaultRenderer">
 		<Property name="Font" value="DefaultSmall" />
 
@@ -41,9 +41,19 @@
 
 		<Area>
 			<Size><AbsDimension x="960" y="1280" /></Size>
-			<Anchor point="BOTTOM" offset="-64" />
-			<Anchor point="RIGHT" offset="-64" />
+			<Anchor point="BOTTOM" offset="-128" />
+			<Anchor point="RIGHT" offset="0" />
 		</Area>
+
+		<Frame name="InventoryTitleBar" inherits="TitleBar">
+			<Property name="Text" value="INVENTORY" />
+
+			<Area>
+				<Anchor point="TOP" offset="62" />
+				<Anchor point="LEFT" offset="48" />
+				<Anchor point="RIGHT" offset="-48" />
+			</Area>
+		</Frame>
 
 		<Frame name="PlayerMoney" renderer="DefaultRenderer">
 			<Property name="Font" value="SmallLabelFont" />
@@ -71,6 +81,8 @@
 			</Area>
 
 			<Frame name="CopperText" inherits="MoneyText">
+				<Property name="Color" value="FFCC8000" />
+
 				<Area>
 					<Anchor point="BOTTOM" offset="-8" />
 					<Anchor point="RIGHT" offset="-16" />
@@ -80,6 +92,8 @@
 			</Frame>
 
 			<Frame name="SilverText" inherits="MoneyText">
+				<Property name="Color" value="FFFFFFFF" />
+
 				<Area>
 					<Anchor point="BOTTOM" offset="-8" />
 					<Anchor point="RIGHT" offset="-16" relativeTo="CopperText" relativePoint="LEFT" />
@@ -89,6 +103,8 @@
 			</Frame>
 			
 			<Frame name="GoldText" inherits="MoneyText">
+				<Property name="Color" value="FFFFCC00" />
+
 				<Area>
 					<Anchor point="BOTTOM" offset="-8" />
 					<Anchor point="RIGHT" offset="-16" relativeTo="SilverText" relativePoint="LEFT" />
@@ -105,5 +121,18 @@
 				</OnShow>
 			</Scripts>
 		</Frame>
+
+		<Scripts>
+			<OnLoad>
+				return function(this)
+					InventoryFrame_Load(this);
+				end
+			</OnLoad>
+			<OnShow>
+				return function(this)
+					InventoryFrame_OnShow(this);
+				end
+			</OnShow>
+		</Scripts>
 	</Frame>
 </UiLayout>

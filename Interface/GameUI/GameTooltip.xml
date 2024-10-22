@@ -46,21 +46,9 @@
 			</StateImagery>
 		</Visual>
 
-        <Frame name="GameTooltipTitle" inherits="TextSmall">
-            <Property name="Font" value="TooltipTitleFont" />
-            <Property name="Text" value="TITLE" />
-
-            <Area>
-                <Size><AbsDimension y="32" /></Size>
-                <Anchor point="TOP" offset="16" />
-                <Anchor point="LEFT" offset="16" />
-                <Anchor point="RIGHT" offset="-16" />
-            </Area>
-        </Frame>
-
         <Frame name="GameTooltipLines">
             <Area>
-                <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="GameTooltipTitle" offset="8" />
+                <Anchor point="TOP" relativePoint="TOP" offset="16" />
                 <Anchor point="LEFT" offset="8" />
                 <Anchor point="RIGHT" offset="-8" />
                 <Anchor point="BOTTOM" offset="-8" />

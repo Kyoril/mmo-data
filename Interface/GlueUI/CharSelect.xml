@@ -145,7 +145,8 @@
 		
 		<Frame name="CharModel" type="Model" setAllPoints="true" renderer="ModelRenderer">
 			<Property name="Visible" value="false" />
-			<Property name="ModelFile" value="Models/Mannequin_Edit.hmsh" />
+			<Property name="Yaw" value="-120" />
+			<Property name="Animation" value="Idle" />
 		</Frame>
 
 		<Frame name="BackgroundFrame" renderer="DefaultRenderer">

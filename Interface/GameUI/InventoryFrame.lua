@@ -1,10 +1,32 @@
 
-function InventoryFrame_Load(self)
+NUM_BACKPACK_SLOTS = 16
+NUM_BAG_SLOTS = 4
+INVENTORY_SLOTS_PER_ROW = 8
 
+function InventoryFrame_Load(this)
+    local buttonSize = InventoryItemButtonTemplate:GetWidth();
+
+    -- Ensure backpack slots are created
+    for i = 1, NUM_BACKPACK_SLOTS do
+        local slot = InventoryItemButtonTemplate:Clone();
+        slot.id = GetBackpackSlot(i - 1);
+        this:AddChild(slot);
+        slot:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, this, 64 + math.fmod((i - 1), INVENTORY_SLOTS_PER_ROW) * buttonSize);
+        slot:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, InventoryTitleBar, math.floor((i - 1) / INVENTORY_SLOTS_PER_ROW) * buttonSize);
+    end
+
+    this:SetWidth(128 + INVENTORY_SLOTS_PER_ROW * buttonSize);
+    this:SetHeight(128 + math.ceil(NUM_BACKPACK_SLOTS / INVENTORY_SLOTS_PER_ROW) * buttonSize + PlayerMoney:GetHeight() + InventoryTitleBar:GetHeight());
+
+    
+	AddMenuBarButton("Interface/Icons/fg4_icons_backpack_result.htex", ToggleInventory)
 end
 
-function InventoryFrame_Update(self, delta)
+function InventoryFrame_OnShow(this)
+    
+end
 
+function InventoryFrame_Update(this, delta)
 end
 
 function InventoryFrame_UpdateMoney(self)

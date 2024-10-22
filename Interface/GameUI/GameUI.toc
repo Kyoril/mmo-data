@@ -14,6 +14,7 @@ CharacterWindow.xml
 AuraButton.xml
 AuraBar.xml
 MoneyFrame.xml
+InventoryButton.xml
 InventoryFrame.xml
 
 GameTooltip.xml

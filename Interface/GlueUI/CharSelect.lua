@@ -5,6 +5,8 @@ selectedCharacterIndex = -1
 characters = {}
 characterButtons = {}
 
+rotationDirection = 0
+
 
 function CharListItem_Clicked(item)
 	-- For each button in characterButtons, call SetChecked(false)
