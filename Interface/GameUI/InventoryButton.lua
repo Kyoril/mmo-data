@@ -2,6 +2,7 @@
 function InventoryItemButton_OnLoad(this)
     this:SetOnEnterHandler(InventoryItemButton_OnEnter);
     this:SetOnLeaveHandler(ActionButton_OnLeave);
+    this:SetClickedHandler(InventoryItemButton_OnClick);    
 end
 
 function InventoryItemButton_OnEnter(this)
@@ -16,6 +17,11 @@ function InventoryItemButton_OnEnter(this)
 
     GameTooltip_SetItem(item);
     GameTooltip:Show();
+end
+
+function InventoryItemButton_OnClick(this)
+    -- Activate item swap action
+    PickupContainerItem(this.id);
 end
 
 function InventoryItemButton_OnLeave(this)
