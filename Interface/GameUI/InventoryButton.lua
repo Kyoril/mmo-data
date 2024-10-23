@@ -31,6 +31,7 @@ end
 function InventoryItemButton_OnUpdate(this, elapsed)
     local icon = GetInventorySlotIcon("player", this.id);
     if not icon then
+        this:SetText("");
         this:SetProperty("Icon", "");
         return;
     end
