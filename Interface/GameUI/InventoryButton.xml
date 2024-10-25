@@ -75,16 +75,6 @@
                     InventoryItemButton_OnLoad(this);
                 end
             </OnLoad>
-			<OnEnter>
-				return function(this)
-					InventoryItemButton_OnEnter(this);
-				end
-			</OnEnter>
-			<OnLeave>
-				return function(this)
-					InventoryItembutton_OnLeave(this);
-				end
-			</OnLeave>
             <OnUpdate>
                 return function(this, elapsed)
                     InventoryItemButton_OnUpdate(this, elapsed);

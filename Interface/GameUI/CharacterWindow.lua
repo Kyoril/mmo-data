@@ -3,6 +3,9 @@ function CharacterWindow_Toggle()
     if (CharacterWindow:IsVisible()) then
         HideUIPanel(CharacterWindow);
     else
+        CharacterWindowTitle:SetText(UnitName("player"));
+        CharacterFrameModel:SetProperty("ModelFile", "Models/Character/Human/Male/HumanMale.hmsh");
+        CharacterFrameModel:SetHeight(CharacterFrameModel:GetHeight() + 1);
         ShowUIPanel(CharacterWindow);
         CharacterWindow_RefreshStats();
     end
