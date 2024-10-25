@@ -1,4 +1,9 @@
 
+ResourceBarColors = {}
+ResourceBarColors[0] = "FF0000FF"; -- Mana
+ResourceBarColors[1] = "FFFF0000"; -- Rage
+ResourceBarColors[2] = "FFFFFF00"; -- Energy
+
 function TargetFrame_OnLoad()
     TargetFrame_Update();
 
@@ -21,16 +26,20 @@ function TargetFrame_Update()
         TargetHealthBar:SetProgress(healthPct);
         TargetHealthBar:SetText(math.floor(healthPct * 100) .. "%");
 
-        mana = UnitMana("target");
-        maxMana = UnitManaMax("target");
-        if (maxMana == 0) then
-            mana = 0;
-            maxMana = 1;
-        end
+        -- Get power type
+        local powerType = UnitPowerType("target");
+        TargetManaBar:SetProperty("ProgressColor", ResourceBarColors[powerType]);
 
-        manaPct = mana / maxMana;
-        TargetManaBar:SetProgress(manaPct);
-        TargetManaBar:SetText(math.floor(manaPct * 100) .. "%");
+        local power = UnitPower("target", powerType);
+        local maxPower = UnitPowerMax("target", powerType);
+        if (maxPower == 0) then
+            power = 0;
+            maxPower = 1;
+        end
+        
+        local powerPct = power / maxPower;
+        TargetManaBar:SetProgress(powerPct);
+        TargetManaBar:SetText(math.floor(powerPct * 100) .. "%");
 
         TargetFrame:Show();
     else

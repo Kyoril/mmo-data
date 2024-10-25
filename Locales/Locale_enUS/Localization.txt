@@ -55,7 +55,10 @@ strings =
 	(key = "CAST_FORMAT", string = "%s cast")
 	(key = "LEVEL_REQUIREMENT_FORMAT", string = "Requires level %d")
 
-	(key = "MANA", string = "mana")
+	(key = "MANA", string = "Mana")
+	(key = "RAGE", string = "Rage")
+	(key = "ENERGY", string = "Energy")
+
 	(key = "SPELL_BOOK_PAGE_FORMAT", string = "Page %d")
 
 	(key = "CHAT_FORMAT_SAY", string = "[%s] says: %s")

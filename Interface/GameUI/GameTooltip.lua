@@ -13,6 +13,11 @@ ItemQualityColors[3] = "FF0070DD"; -- Rare
 ItemQualityColors[4] = "FFA335EE"; -- Epic
 ItemQualityColors[5] = "FFFF8000"; -- Legendary
 
+PowerTypeNames = {};
+PowerTypeNames[0] = "MANA";
+PowerTypeNames[1] = "RAGE";
+PowerTypeNames[2] = "ENERGY";
+
 function GameTooltip_Clear()
     GameTooltipLines:RemoveAllChildren();
     
@@ -71,11 +76,11 @@ function GameTooltip_SetSpell(spell)
     -- Line 1: Cost
     if ( spell.cost ~= 0 ) then
         local costColor = nil;
-        if (UnitMana("player") < spell.cost) then
+        if (UnitPower("player", spell.powertype) < spell.cost) then
             costColor = "FFFF2020";
         end
 
-        GameTooltip_AddLine(string.format("%d", spell.cost) .. " " .. Localize("MANA"), TOOLTIP_LINE_LEFT, costColor);
+        GameTooltip_AddLine(string.format("%d", spell.cost) .. " " .. Localize(PowerTypeNames[spell.powertype]), TOOLTIP_LINE_LEFT, costColor);
     end
 
     -- Line 2: Cast time and cooldown

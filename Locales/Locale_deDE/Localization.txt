@@ -55,6 +55,8 @@ strings =
 	(key = "INSTANT", string = "Sofort")
 	(key = "CAST_FORMAT", string = "Wirken in %s")
 	(key = "MANA", string = "Mana")
+	(key = "RAGE", string = "Wut")
+	(key = "ENERGY", string = "Energie")
 	(key = "SPELL_BOOK_PAGE_FORMAT", string = "Seite %d")
 	(key = "LEVEL_REQUIREMENT_FORMAT", string = "Benötigt Stufe %d")
 

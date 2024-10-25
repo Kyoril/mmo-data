@@ -94,7 +94,7 @@
 					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlack.htex" borderSize="24" />
 				</ImagerySection>
 				<ImagerySection name="Progress">
-					<ImageComponent texture="Interface/fg4_gradientWhiteV1_result.htex" tiling="HORZ" tint="FF0000FF">
+					<ImageComponent texture="Interface/fg4_gradientWhiteV1_result.htex" tiling="HORZ">
 						<Area><Inset all="8" /></Area>
 					</ImageComponent>
 				</ImagerySection>
