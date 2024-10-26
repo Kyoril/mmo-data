@@ -1,0 +1,148 @@
+<?xml version="1.0" ?>
+<UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
+	<Script file="LootFrame.lua" />
+	
+    <Frame name="LootButtonTemplate" type="Button" renderer="ButtonRenderer">
+        <Property name="Icon" />
+
+        <Visual>
+			<ImagerySection name="Image">
+				<ImageComponent>
+					<Area>
+						<Inset all="16" />
+					</Area>
+					<PropertyValue property="Icon" />
+				</ImageComponent>
+			</ImagerySection>
+			<ImagerySection name="Text">
+				<TextComponent horzAlign="LEFT" vertAlign="TOP">
+					<Area>
+						<Inset left="150" top="8" />
+					</Area>
+				</TextComponent>
+			</ImagerySection>
+			<ImagerySection name="NormalFrame">
+				<BorderComponent texture="Interface/BW_ButtonSmall_Up.htex" borderSize="30" />
+			</ImagerySection>
+			<ImagerySection name="HoveredFrame">
+				<BorderComponent texture="Interface/BW_ButtonSmall_Over.htex" borderSize="30" />
+			</ImagerySection>
+			<ImagerySection name="PushedFrame">
+				<BorderComponent texture="Interface/BW_ButtonSmall_Down.htex" borderSize="30" />
+			</ImagerySection>
+			<ImagerySection name="DisabledFrame">
+				<BorderComponent texture="Interface/BW_ButtonSmall_Up.htex" borderSize="30" />
+			</ImagerySection>
+			<StateImagery name="Normal">
+				<Layer>
+					<Section section="NormalFrame" />
+					<Section section="Image" />
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Hovered">
+				<Layer>
+					<Section section="HoveredFrame" />
+					<Section section="Image" />
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Pushed">
+				<Layer>
+					<Section section="PushedFrame" />
+					<Section section="Image" />
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="DisabledFrame" />
+					<Section section="Image" />
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+
+		<Area>
+			<Size>
+				<AbsDimension x="128" y="128" />
+			</Size>
+		</Area>
+    </Frame>
+
+    <Frame name="LootFrame" parent="GameParent" renderer="DefaultRenderer">
+        <Property name="Visible" value="false" />
+
+		<Visual>
+			<ImagerySection name="Background">
+				<BorderComponent texture="Interface/GameUI/fg4_borders_01_03.htex" borderSize="250" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Background" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+
+		<Scripts>
+			<OnLoad>
+				return function(self)
+					LootFrame_OnLoad(self);
+				end
+			</OnLoad>
+			<OnShow>
+				return function(self)
+					LootFrame_OnShow(self);
+				end
+			</OnShow>
+			<OnHide>
+				return function(self)
+					LootFrame_OnHide(self);
+				end
+			</OnHide>
+			<OnUpdate>
+				return function(self, elapsed)
+					LootFrame_OnUpdate(self, elapsed);
+				end
+			</OnUpdate>
+		</Scripts>
+
+		<Area>
+			<Size><AbsDimension x="640" y="640" /></Size>
+			<Anchor point="LEFT" offset="0" />
+			<Anchor point="TOP" offset="300" />
+		</Area>
+
+        <Frame name="LootButton1" inherits="LootButtonTemplate">
+            <Property name="Text" value="Test" />
+            <Area>
+                <Anchor point="LEFT" offset="64" />
+                <Anchor point="TOP" offset="64" />
+            </Area>
+        </Frame>
+
+        <Frame name="LootButton2" inherits="LootButtonTemplate">
+            <Property name="Text" value="Test" />
+            <Area>
+                <Anchor point="LEFT" relativeTo="LootButton1" />
+                <Anchor point="TOP" offset="0" relativePoint="BOTTOM" relativeTo="LootButton1" />
+            </Area>
+        </Frame>
+
+        <Frame name="LootButton3" inherits="LootButtonTemplate">
+            <Property name="Text" value="Test" />
+            <Area>
+                <Anchor point="LEFT" relativeTo="LootButton2" />
+                <Anchor point="TOP" offset="0" relativePoint="BOTTOM" relativeTo="LootButton2" />
+            </Area>
+        </Frame>
+
+        <Frame name="LootButton4" inherits="LootButtonTemplate">
+            <Property name="Text" value="Test" />
+            <Area>
+                <Anchor point="LEFT" relativeTo="LootButton3" />
+                <Anchor point="TOP" offset="0" relativePoint="BOTTOM" relativeTo="LootButton3" />
+            </Area>
+        </Frame>
+	</Frame>
+</UiLayout>
