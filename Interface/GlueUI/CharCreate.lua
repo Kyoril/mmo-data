@@ -9,6 +9,11 @@ CLASS_WARLOCK = 3
 GENDER_MALE = 0
 GENDER_FEMALE = 1
 
+DisplayIds = {}
+DisplayIds[RACE_HUMAN] = {}
+DisplayIds[RACE_HUMAN][GENDER_MALE] = 0
+DisplayIds[RACE_HUMAN][GENDER_FEMALE] = 3
+
 CHAR_CREATION_ERROR_STRING = {}
 CHAR_CREATION_ERROR_STRING[1] = "CHAR_CREATE_ERR_ERROR"
 CHAR_CREATION_ERROR_STRING[2] = "CHAR_CREATE_ERR_NAME_IN_USE"
@@ -22,6 +27,23 @@ function CharCreate_OnLoad(this)
 	CharCreate.selectedRace = RACE_HUMAN;
 	CharCreate.selectedClass = CLASS_WARRIOR;
 	CharCreate.selectedGender = GENDER_MALE;
+	CharCreate_UpdateModel();
+end
+
+function CharCreate_UpdateModel()
+	local displayId = DisplayIds[CharCreate.selectedRace][CharCreate.selectedGender];
+	if not displayId then
+		CharCreateModel:Hide();
+		return;
+	end
+
+	local model = gameData.models:GetById(displayId);
+	if not model then
+		CharCreateModel:Hide();
+	else
+		CharCreateModel:SetProperty("ModelFile", model.filename);
+		CharCreateModel:Show();
+	end
 end
 
 function CharCreate_Show()
@@ -41,6 +63,7 @@ function OnRaceChange_Clicked(this)
 
 	-- Set the selected race id
 	CharCreate.selectedRace = this.id;
+	CharCreate_UpdateModel();
 end
 
 function OnClassChange_Clicked(this)
@@ -66,6 +89,7 @@ function OnGenderChange_Clicked(this)
 
 	-- Set the selected gender id
 	CharCreate.selectedGender = this.id;
+	CharCreate_UpdateModel();
 end
 
 function CharCreate_Submit()

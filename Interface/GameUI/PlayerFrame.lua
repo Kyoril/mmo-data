@@ -28,3 +28,8 @@ function PlayerFrame_OnLoad(self)
     self:RegisterEvent("PLAYER_POWER_CHANGED", PlayerFrame_Update);
     self:RegisterEvent("PLAYER_LEVEL_CHANGED", PlayerFrame_Update);
 end
+
+function PlayerFrame_OnClick(self)
+    print("Player frame clicked!");
+    TargetUnit("player");
+end

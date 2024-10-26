@@ -231,4 +231,44 @@
             end
         end
 	</Binding>
+    
+	<Binding name="TARGETSELF" description="Target yourself" category="TARGET">
+        return function(key, keystate)
+            if keystate == "UP" then
+                TargetUnit("player");
+            end
+        end
+	</Binding>
+
+	<Binding name="TARGETPARTYMEMBER1" description="Target party member 1" category="TARGET">
+		return function(key, keystate)
+            if keystate == "UP" then
+                TargetUnit("party1");
+            end
+        end
+	</Binding>
+
+	<Binding name="TARGETPARTYMEMBER2" description="Target party member 2" category="TARGET">
+		return function(key, keystate)
+            if keystate == "UP" then
+                TargetUnit("party2");
+            end
+        end
+	</Binding>
+
+	<Binding name="TARGETPARTYMEMBER3" description="Target party member 3" category="TARGET">
+		return function(key, keystate)
+            if keystate == "UP" then
+                TargetUnit("party3");
+            end
+        end
+	</Binding>
+
+	<Binding name="TARGETPARTYMEMBER4" description="Target party member 4" category="TARGET">
+		return function(key, keystate)
+            if keystate == "UP" then
+                TargetUnit("party4");
+            end
+        end
+	</Binding>
 </Bindings>

@@ -123,6 +123,16 @@
 			</Visual>
 		</Frame>
 
+		<Frame name="PlayerFrameClick" setAllPoints="true">
+			<Scripts>
+				<OnClick>
+					return function(self)
+						PlayerFrame_OnClick(PlayerFrame);
+					end
+				</OnClick>
+			</Scripts>
+		</Frame>
+
         <Scripts>
             <OnLoad>
                 return function(self)
