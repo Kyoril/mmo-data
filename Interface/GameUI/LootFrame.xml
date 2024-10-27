@@ -15,9 +15,9 @@
 				</ImageComponent>
 			</ImagerySection>
 			<ImagerySection name="Text">
-				<TextComponent horzAlign="LEFT" vertAlign="TOP">
+				<TextComponent horzAlign="RIGHT" vertAlign="BOTTOM">
 					<Area>
-						<Inset left="150" top="8" />
+						<Inset all="8" />
 					</Area>
 				</TextComponent>
 			</ImagerySection>
@@ -114,35 +114,68 @@
 		</Area>
 
         <Frame name="LootButton1" inherits="LootButtonTemplate" id="1">
-            <Property name="Text" value="Test" />
             <Area>
                 <Anchor point="LEFT" offset="64" />
                 <Anchor point="TOP" offset="64" />
             </Area>
         </Frame>
 
+        <Frame name="LootText1" inherits="TextSmall" id="1">
+            <Area>
+                <Anchor point="TOP" relativeTo="LootButton1" offset="0" />
+                <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="LootButton1" offset="0" />
+                <Anchor point="RIGHT" />
+                <Anchor point="BOTTOM" relativeTo="LootButton1" offset="0" />
+            </Area>
+        </Frame>
+
         <Frame name="LootButton2" inherits="LootButtonTemplate" id="2">
-            <Property name="Text" value="Test" />
             <Area>
                 <Anchor point="LEFT" relativeTo="LootButton1" />
                 <Anchor point="TOP" offset="0" relativePoint="BOTTOM" relativeTo="LootButton1" />
             </Area>
         </Frame>
 
+        <Frame name="LootText2" inherits="TextSmall" id="2">
+            <Area>
+                <Anchor point="TOP" relativeTo="LootButton2" offset="0" />
+                <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="LootButton2" offset="0" />
+                <Anchor point="RIGHT" />
+                <Anchor point="BOTTOM" relativeTo="LootButton2" offset="0" />
+            </Area>
+        </Frame>
+
         <Frame name="LootButton3" inherits="LootButtonTemplate" id="3">
-            <Property name="Text" value="Test" />
             <Area>
                 <Anchor point="LEFT" relativeTo="LootButton2" />
                 <Anchor point="TOP" offset="0" relativePoint="BOTTOM" relativeTo="LootButton2" />
             </Area>
         </Frame>
 
+        <Frame name="LootText3" inherits="TextSmall" id="3">
+            <Area>
+                <Anchor point="TOP" relativeTo="LootButton3" offset="0" />
+                <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="LootButton3" offset="0" />
+                <Anchor point="RIGHT" />
+                <Anchor point="BOTTOM" relativeTo="LootButton3" offset="0" />
+            </Area>
+        </Frame>
+
         <Frame name="LootButton4" inherits="LootButtonTemplate" id="4">
-            <Property name="Text" value="Test" />
             <Area>
                 <Anchor point="LEFT" relativeTo="LootButton3" />
                 <Anchor point="TOP" offset="0" relativePoint="BOTTOM" relativeTo="LootButton3" />
             </Area>
         </Frame>
+		
+        <Frame name="LootText4" inherits="TextSmall" id="4">
+            <Area>
+                <Anchor point="TOP" relativeTo="LootButton4" offset="0" />
+                <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="LootButton4" offset="0" />
+                <Anchor point="RIGHT" />
+                <Anchor point="BOTTOM" relativeTo="LootButton4" offset="0" />
+            </Area>
+        </Frame>
+
 	</Frame>
 </UiLayout>

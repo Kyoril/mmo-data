@@ -52,6 +52,10 @@ strings =
 	(key = "MINUTES", string = "Min.")
 	(key = "COOLDOWN", string = "Abklingzeit")
 	
+	(key = "COPPER", string = "Kupfer")
+	(key = "SILVER", string = "Silver")
+	(key = "GOLD", string = "Gold")
+
 	(key = "INSTANT", string = "Sofort")
 	(key = "CAST_FORMAT", string = "Wirken in %s")
 	(key = "MANA", string = "Mana")

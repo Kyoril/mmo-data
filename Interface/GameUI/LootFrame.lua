@@ -1,7 +1,7 @@
 LOOTFRAME_NUMBUTTONS = 4;
 
 function LootFrame_OnLootOpened(self)
-    LootFrame.page = 1
+    LootFrame.page = 1;
     ShowUIPanel(self);
 
     if not self:IsVisible() then
@@ -71,29 +71,32 @@ function LootFrame_OnUpdate(self, elapsed)
 
     for index = 1, LOOTFRAME_NUMBUTTONS, 1 do
 		local button = getglobal("LootButton"..index);
+		local text = getglobal("LootText"..index);
 		local slot = (numLootToShow * (LootFrame.page - 1)) + index;
 
 		if ( slot <= numLootItems ) then	
 			if ( (LootSlotIsItem(slot) or LootSlotIsCoin(slot)) and index <= numLootToShow ) then
-				--local texture;
-				--local item;
+				local texture;
+				local item;
 				local quantity = 1;
-				--texture, item, quantity = GetLootSlotInfo(slot);
-				--getglobal("LootButton"..index.."IconTexture"):SetTexture(texture);
-				--getglobal("LootButton"..index.."Text"):SetText(item);
-				button:SetProperty("Icon", "Interface/Icons/Items/Tex_spare_parts_11_b.htex");
-				
+				texture, item, quantity = GetLootSlotInfo(slot);
+				button:SetProperty("Icon", texture);
+				text:SetText(item);
+
 				if ( quantity > 1 ) then
 					button:SetText(tostring(quantity));
 				else
 					button:SetText("");
 				end
 				button:Show();
+				text:Show();
 			else
 				button:Hide();
+				text:Hide();
 			end
 		else
 			button:Hide();
+			text:Hide();
 		end
 	end
 end

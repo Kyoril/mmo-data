@@ -52,6 +52,10 @@ strings =
 	(key = "MINUTES", string = "min.")
 	(key = "COOLDOWN", string = "Temps de recharge")
 
+	(key = "COPPER", string = "COPPER")
+	(key = "SILVER", string = "SILVER")
+	(key = "GOLD", string = "GOLD")
+
 	(key = "INSTANT", string = "Instantané")
 	(key = "CAST_FORMAT", string = "Agit en %s")
 	(key = "MANA", string = "Mana")

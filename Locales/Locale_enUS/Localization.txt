@@ -58,6 +58,10 @@ strings =
 	(key = "MANA", string = "Mana")
 	(key = "RAGE", string = "Rage")
 	(key = "ENERGY", string = "Energy")
+	
+	(key = "COPPER", string = "Copper")
+	(key = "SILVER", string = "Silver")
+	(key = "GOLD", string = "Gold")
 
 	(key = "SPELL_BOOK_PAGE_FORMAT", string = "Page %d")
 
