@@ -29,14 +29,19 @@ function LootFrame_OnLootClosed(self)
 end
 
 function LootFrame_OnLoad(self)
+	for index = 1, LOOTFRAME_NUMBUTTONS, 1 do
+		local button = getglobal("LootButton"..index);
+		if button then
+			button:SetClickedHandler(LootButton_OnClick);
+		end
+	end
+
     self:RegisterEvent("LOOT_OPENED", LootFrame_OnLootOpened);
     self:RegisterEvent("LOOT_SLOT_CLEARED", LootFrame_OnLootSlotCleared);
     self:RegisterEvent("LOOT_CLOSED", LootFrame_OnLootClosed);
 end
 
 function LootFrame_OnShow(self)
-	print("Showing loot frame");
-
 	LootFrame.numLootItems = GetNumLootItems();
 	LootFrame_OnUpdate(LootFrame, 0);
 

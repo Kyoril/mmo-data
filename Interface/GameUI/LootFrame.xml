@@ -113,7 +113,7 @@
 			<Anchor point="TOP" offset="300" />
 		</Area>
 
-        <Frame name="LootButton1" inherits="LootButtonTemplate">
+        <Frame name="LootButton1" inherits="LootButtonTemplate" id="1">
             <Property name="Text" value="Test" />
             <Area>
                 <Anchor point="LEFT" offset="64" />
@@ -121,7 +121,7 @@
             </Area>
         </Frame>
 
-        <Frame name="LootButton2" inherits="LootButtonTemplate">
+        <Frame name="LootButton2" inherits="LootButtonTemplate" id="2">
             <Property name="Text" value="Test" />
             <Area>
                 <Anchor point="LEFT" relativeTo="LootButton1" />
@@ -129,7 +129,7 @@
             </Area>
         </Frame>
 
-        <Frame name="LootButton3" inherits="LootButtonTemplate">
+        <Frame name="LootButton3" inherits="LootButtonTemplate" id="3">
             <Property name="Text" value="Test" />
             <Area>
                 <Anchor point="LEFT" relativeTo="LootButton2" />
@@ -137,7 +137,7 @@
             </Area>
         </Frame>
 
-        <Frame name="LootButton4" inherits="LootButtonTemplate">
+        <Frame name="LootButton4" inherits="LootButtonTemplate" id="4">
             <Property name="Text" value="Test" />
             <Area>
                 <Anchor point="LEFT" relativeTo="LootButton3" />
