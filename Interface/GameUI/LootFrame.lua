@@ -1,7 +1,7 @@
 LOOTFRAME_NUMBUTTONS = 4;
 
 function LootFrame_OnLootOpened(self)
-    self.page = 1
+    LootFrame.page = 1
     ShowUIPanel(self);
 
     if not self:IsVisible() then
@@ -35,10 +35,12 @@ function LootFrame_OnLoad(self)
 end
 
 function LootFrame_OnShow(self)
-	self.numLootItems = GetNumLootItems();
-	LootFrame_OnUpdate(self, 0);
+	print("Showing loot frame");
 
-	if ( self.numLootItems == 0 ) then
+	LootFrame.numLootItems = GetNumLootItems();
+	LootFrame_OnUpdate(LootFrame, 0);
+
+	if ( LootFrame.numLootItems == 0 ) then
 		-- TODO: Play sound of empty loot window opening
 	else
 		-- TODO: Play sound of loot window opening
@@ -55,10 +57,9 @@ function LootButton_OnClick(button)
 end
 
 function LootFrame_OnUpdate(self, elapsed)
-	--[[
 	local numLootItems = LootFrame.numLootItems;
-
     local numLootToShow = LOOTFRAME_NUMBUTTONS;
+	
 	if ( numLootItems > LOOTFRAME_NUMBUTTONS ) then
 		numLootToShow = numLootToShow - 1;
 	end
@@ -69,19 +70,18 @@ function LootFrame_OnUpdate(self, elapsed)
 
 		if ( slot <= numLootItems ) then	
 			if ( (LootSlotIsItem(slot) or LootSlotIsCoin(slot)) and index <= numLootToShow ) then
-				local texture;
-				local item;
-				local quantity;
-				texture, item, quantity = GetLootSlotInfo(slot);
-				getglobal("LootButton"..index.."IconTexture"):SetTexture(texture);
-				getglobal("LootButton"..index.."Text"):SetText(item);
-
-				local countString = getglobal("LootButton"..index.."Count");
+				--local texture;
+				--local item;
+				local quantity = 1;
+				--texture, item, quantity = GetLootSlotInfo(slot);
+				--getglobal("LootButton"..index.."IconTexture"):SetTexture(texture);
+				--getglobal("LootButton"..index.."Text"):SetText(item);
+				button:SetProperty("Icon", "Interface/Icons/Items/Tex_spare_parts_11_b.htex");
+				
 				if ( quantity > 1 ) then
-					countString:SetText(quantity);
-					countString:Show();
+					button:SetText(tostring(quantity));
 				else
-					countString:Hide();
+					button:SetText("");
 				end
 				button:Show();
 			else
@@ -91,5 +91,4 @@ function LootFrame_OnUpdate(self, elapsed)
 			button:Hide();
 		end
 	end
-	]]
 end
