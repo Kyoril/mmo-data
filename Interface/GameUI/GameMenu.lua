@@ -31,5 +31,11 @@ function OnCloseButton_Clicked()
 	HideUIPanel(GameMenu);
 end
 
-AddMenuButton("CLOSE", OnCloseButton_Clicked)
-AddMenuButton("QUIT", OnQuitButton_Clicked)
+function GameMenu_OnLoad(this)
+	
+	MenuTitleBar:GetChild(0):SetClickedHandler(OnCloseButton_Clicked);
+		
+	AddMenuButton("CLOSE", OnCloseButton_Clicked)
+	AddMenuButton("QUIT", OnQuitButton_Clicked)
+end
+

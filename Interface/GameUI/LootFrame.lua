@@ -25,7 +25,7 @@ function LootFrame_OnLootSlotCleared(self, absoluteSlot)
 end
 
 function LootFrame_OnLootClosed(self)
-    HideUIPanel(self);
+    HideUIPanel(LootFrame);
 end
 
 function LootFrame_OnLoad(self)
@@ -35,6 +35,9 @@ function LootFrame_OnLoad(self)
 			button:SetClickedHandler(LootButton_OnClick);
 		end
 	end
+
+	-- Subscribe for title bar close handler (HACKY! Order of items is important which sucks)
+	LootFrame:GetChild(0):GetChild(0):SetClickedHandler(LootFrame_OnLootClosed);
 
     self:RegisterEvent("LOOT_OPENED", LootFrame_OnLootOpened);
     self:RegisterEvent("LOOT_SLOT_CLEARED", LootFrame_OnLootSlotCleared);

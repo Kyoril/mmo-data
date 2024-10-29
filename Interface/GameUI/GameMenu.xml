@@ -24,6 +24,7 @@
 			</StateImagery>
 		</Visual>
 
+
 		<Area>
 			<Size><AbsDimension x="540" y="128" /></Size>
 			<Anchor point="H_CENTER" />
@@ -59,5 +60,13 @@
 				<Anchor point="BOTTOM" offset="-48" />
 			</Area>
 		</Frame>
+		
+		<Scripts>
+			<OnLoad>
+				return function(self)
+					GameMenu_OnLoad(self);
+				end
+			</OnLoad>
+		</Scripts>
 	</Frame>
 </UiLayout>

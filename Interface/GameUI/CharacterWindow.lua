@@ -12,6 +12,10 @@ function CharacterWindow_Toggle()
 end
 
 function CharacterWindow_OnLoad(self)
+    
+	-- Subscribe for title bar close handler (HACKY! Order of items is important which sucks)
+	CharacterWindow:GetChild(0):GetChild(0):SetClickedHandler(CharacterWindow_Toggle);
+
     -- Register the character window in the menu bar as a button
 	AddMenuBarButton("Interface/Icons/fg4_icons_helmet_result.htex", CharacterWindow_Toggle);
 end

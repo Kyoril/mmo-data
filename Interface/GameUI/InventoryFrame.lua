@@ -18,6 +18,7 @@ function InventoryFrame_Load(this)
     this:SetWidth(48 + INVENTORY_SLOTS_PER_ROW * buttonSize);
     this:SetHeight(48 + math.ceil(NUM_BACKPACK_SLOTS / INVENTORY_SLOTS_PER_ROW) * buttonSize + PlayerMoney:GetHeight() + InventoryTitleBar:GetHeight());
 
+	InventoryFrame:GetChild(0):GetChild(0):SetClickedHandler(ToggleInventory);
     
 	AddMenuBarButton("Interface/Icons/fg4_icons_backpack_result.htex", ToggleInventory)
 end

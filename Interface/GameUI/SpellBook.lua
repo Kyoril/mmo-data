@@ -120,6 +120,8 @@ function SpellBook_OnLoad(self)
         button:SetOnLeaveHandler(SpellButton_OnLeave);
     end
 
+	SpellBookTitleBar:GetChild(0):SetClickedHandler(SpellBook_Toggle);
+    
     SpellBook_UpdatePage();
 end
 
