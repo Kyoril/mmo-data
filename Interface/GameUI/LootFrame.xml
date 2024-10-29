@@ -70,6 +70,23 @@
 		</Area>
     </Frame>
 
+	<Frame name="LootButtonBorderTemplate" renderer="DefaultRenderer">
+		<Area>
+			<Size><AbsDimension y="144" /></Size>
+		</Area>
+		
+		<Visual>
+			<ImagerySection name="Background">
+				<BorderComponent texture="Interface/GameUI/fg4_iconsSlot.htex" borderSize="64" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Background" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+	</Frame>
+	
     <Frame name="LootFrame" parent="GameParent" renderer="DefaultRenderer">
         <Property name="Visible" value="false" />
 
@@ -108,74 +125,188 @@
 		</Scripts>
 
 		<Area>
-			<Size><AbsDimension x="640" y="640" /></Size>
+			<Size><AbsDimension x="640" y="760" /></Size>
 			<Anchor point="LEFT" offset="0" />
 			<Anchor point="TOP" offset="300" />
 		</Area>
 
-        <Frame name="LootButton1" inherits="LootButtonTemplate" id="1">
-            <Area>
-                <Anchor point="LEFT" offset="24" />
-                <Anchor point="TOP" offset="24" />
-            </Area>
-        </Frame>
 
-        <Frame name="LootText1" inherits="TextSmall" id="1">
-            <Area>
-                <Anchor point="TOP" relativeTo="LootButton1" offset="0" />
-                <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="LootButton1" offset="0" />
-                <Anchor point="RIGHT" />
-                <Anchor point="BOTTOM" relativeTo="LootButton1" offset="0" />
-            </Area>
-        </Frame>
+		<Frame name="LootTitleBar" inherits="TitleBar">
+			<Property name="Text" value="LOOT" />
 
-        <Frame name="LootButton2" inherits="LootButtonTemplate" id="2">
-            <Area>
-                <Anchor point="LEFT" relativeTo="LootButton1" />
-                <Anchor point="TOP" offset="0" relativePoint="BOTTOM" relativeTo="LootButton1" />
-            </Area>
-        </Frame>
+			<Area>
+				<Anchor point="TOP" offset="24" />
+				<Anchor point="LEFT" offset="24" />
+				<Anchor point="RIGHT" offset="-24" />
+			</Area>
+		</Frame>
 
-        <Frame name="LootText2" inherits="TextSmall" id="2">
-            <Area>
-                <Anchor point="TOP" relativeTo="LootButton2" offset="0" />
-                <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="LootButton2" offset="0" />
-                <Anchor point="RIGHT" />
-                <Anchor point="BOTTOM" relativeTo="LootButton2" offset="0" />
-            </Area>
-        </Frame>
+		<Frame name="LootButton1Border" inherits="LootButtonBorderTemplate">
+			<Area>
+				<Anchor point="LEFT" offset="24" />
+				<Anchor point="RIGHT" offset="-24" />
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="LootTitleBar" offset="8" />
+			</Area>
+			
+			<Frame name="LootButton1" inherits="LootButtonTemplate" id="1">
+				<Area>
+					<Anchor point="LEFT" offset="8" />
+					<Anchor point="TOP" offset="8" />
+				</Area>
+			</Frame>
 
-        <Frame name="LootButton3" inherits="LootButtonTemplate" id="3">
-            <Area>
-                <Anchor point="LEFT" relativeTo="LootButton2" />
-                <Anchor point="TOP" offset="0" relativePoint="BOTTOM" relativeTo="LootButton2" />
-            </Area>
-        </Frame>
+			<Frame name="LootText1" renderer="DefaultRenderer" id="1">
+				<Property name="Font" value="DefaultSmall" />
 
-        <Frame name="LootText3" inherits="TextSmall" id="3">
-            <Area>
-                <Anchor point="TOP" relativeTo="LootButton3" offset="0" />
-                <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="LootButton3" offset="0" />
-                <Anchor point="RIGHT" />
-                <Anchor point="BOTTOM" relativeTo="LootButton3" offset="0" />
-            </Area>
-        </Frame>
-
-        <Frame name="LootButton4" inherits="LootButtonTemplate" id="4">
-            <Area>
-                <Anchor point="LEFT" relativeTo="LootButton3" />
-                <Anchor point="TOP" offset="0" relativePoint="BOTTOM" relativeTo="LootButton3" />
-            </Area>
-        </Frame>
+				<Area>
+					<Anchor point="TOP" relativeTo="LootButton1" offset="0" />
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="LootButton1" offset="8" />
+					<Anchor point="RIGHT" />
+					<Anchor point="BOTTOM" offset="-8" />
+					<Size><AbsDimension x="0" y="44" /></Size>
+				</Area>
+						
+				<Visual>
+					<ImagerySection name="Text">
+						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="CENTER" />
+					</ImagerySection>
+					<StateImagery name="Enabled">
+						<Layer>
+							<Section section="Text" />
+						</Layer>
+					</StateImagery>
+					<StateImagery name="Disabled">
+						<Layer>
+							<Section section="Text" />
+						</Layer>
+					</StateImagery>
+				</Visual>
+			</Frame>
+		</Frame>
 		
-        <Frame name="LootText4" inherits="TextSmall" id="4">
-            <Area>
-                <Anchor point="TOP" relativeTo="LootButton4" offset="0" />
-                <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="LootButton4" offset="0" />
-                <Anchor point="RIGHT" />
-                <Anchor point="BOTTOM" relativeTo="LootButton4" offset="0" />
-            </Area>
-        </Frame>
+		<Frame name="LootButton2Border" inherits="LootButtonBorderTemplate">
+			<Area>
+				<Anchor point="LEFT" relativeTo="LootButton1Border" />
+				<Anchor point="RIGHT" relativeTo="LootButton1Border" />
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="LootButton1Border" offset="8" />
+			</Area>
+			
+			<Frame name="LootButton2" inherits="LootButtonTemplate" id="2">
+				<Area>
+					<Anchor point="LEFT" offset="8" />
+					<Anchor point="TOP" offset="8" />
+				</Area>
+			</Frame>
 
+			<Frame name="LootText2" renderer="DefaultRenderer" id="2">
+				<Property name="Font" value="DefaultSmall" />
+				<Area>
+					<Anchor point="TOP" relativeTo="LootButton2" offset="0" />
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="LootButton2" offset="8" />
+					<Anchor point="RIGHT" />
+					<Anchor point="BOTTOM" offset="-8" />
+					<Size><AbsDimension x="0" y="44" /></Size>
+				</Area>
+				<Visual>
+					<ImagerySection name="Text">
+						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="CENTER" />
+					</ImagerySection>
+					<StateImagery name="Enabled">
+						<Layer>
+							<Section section="Text" />
+						</Layer>
+					</StateImagery>
+					<StateImagery name="Disabled">
+						<Layer>
+							<Section section="Text" />
+						</Layer>
+					</StateImagery>
+				</Visual>
+			</Frame>
+		</Frame>
+		
+		<Frame name="LootButton3Border" inherits="LootButtonBorderTemplate">
+			<Area>
+				<Anchor point="LEFT" relativeTo="LootButton2Border" />
+				<Anchor point="RIGHT" relativeTo="LootButton2Border" />
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="LootButton2Border" offset="8" />
+			</Area>
+			
+			<Frame name="LootButton3" inherits="LootButtonTemplate" id="3">
+				<Area>
+					<Anchor point="LEFT" offset="8" />
+					<Anchor point="TOP" offset="8" />
+				</Area>
+			</Frame>
+
+			<Frame name="LootText3" renderer="DefaultRenderer" id="3">
+				<Property name="Font" value="DefaultSmall" />
+				<Area>
+					<Anchor point="TOP" relativeTo="LootButton3" offset="0" />
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="LootButton3" offset="8" />
+					<Anchor point="RIGHT" />
+					<Anchor point="BOTTOM" offset="-8" />
+					<Size><AbsDimension x="0" y="44" /></Size>
+				</Area>
+				<Visual>
+					<ImagerySection name="Text">
+						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="CENTER" />
+					</ImagerySection>
+					<StateImagery name="Enabled">
+						<Layer>
+							<Section section="Text" />
+						</Layer>
+					</StateImagery>
+					<StateImagery name="Disabled">
+						<Layer>
+							<Section section="Text" />
+						</Layer>
+					</StateImagery>
+				</Visual>
+			</Frame>
+		</Frame>
+		
+		<Frame name="LootButton4Border" inherits="LootButtonBorderTemplate">
+			<Area>
+				<Anchor point="LEFT" relativeTo="LootButton3Border" />
+				<Anchor point="RIGHT" relativeTo="LootButton3Border" />
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="LootButton3Border" offset="8" />
+			</Area>
+			
+			<Frame name="LootButton4" inherits="LootButtonTemplate" id="4">
+				<Area>
+					<Anchor point="LEFT" offset="8" />
+					<Anchor point="TOP" offset="8" />
+				</Area>
+			</Frame>
+
+			<Frame name="LootText4" renderer="DefaultRenderer" id="4">
+				<Property name="Font" value="DefaultSmall" />
+				
+				<Area>
+					<Anchor point="TOP" relativeTo="LootButton4" offset="0" />
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="LootButton4" offset="8" />
+					<Anchor point="RIGHT" />
+					<Anchor point="BOTTOM" offset="-8" />
+					<Size><AbsDimension x="0" y="44" /></Size>
+				</Area>
+		
+				<Visual>
+					<ImagerySection name="Text">
+						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="CENTER" />
+					</ImagerySection>
+					<StateImagery name="Enabled">
+						<Layer>
+							<Section section="Text" />
+						</Layer>
+					</StateImagery>
+					<StateImagery name="Disabled">
+						<Layer>
+							<Section section="Text" />
+						</Layer>
+					</StateImagery>
+				</Visual>
+			</Frame>
+		</Frame>
 	</Frame>
 </UiLayout>

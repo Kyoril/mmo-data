@@ -72,6 +72,7 @@ function LootFrame_OnUpdate(self, elapsed)
     for index = 1, LOOTFRAME_NUMBUTTONS, 1 do
 		local button = getglobal("LootButton"..index);
 		local text = getglobal("LootText"..index);
+		local border = getglobal("LootButton"..index.."Border");
 		local slot = (numLootToShow * (LootFrame.page - 1)) + index;
 
 		if ( slot <= numLootItems ) then	
@@ -88,15 +89,12 @@ function LootFrame_OnUpdate(self, elapsed)
 				else
 					button:SetText("");
 				end
-				button:Show();
-				text:Show();
+				border:Show();
 			else
-				button:Hide();
-				text:Hide();
+				border:Hide();
 			end
 		else
-			button:Hide();
-			text:Hide();
+			border:Hide();
 		end
 	end
 end

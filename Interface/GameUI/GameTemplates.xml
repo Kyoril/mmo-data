@@ -64,6 +64,63 @@
 		</Area>
 	</Frame>
 	
+	<!-- GlueButton template: Common buttons -->
+	<Frame name="IconButton" type="Button" renderer="ButtonRenderer">
+		<Property name="Icon" />
+
+		<Visual>
+			<ImagerySection name="NormalFrame">
+				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Up_result.htex" borderSize="22" />
+			</ImagerySection>
+			<ImagerySection name="HoveredFrame">
+				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Over_result.htex" borderSize="22" />
+			</ImagerySection>
+			<ImagerySection name="PushedFrame">
+				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Down_result.htex" borderSize="22" />
+			</ImagerySection>
+			<ImagerySection name="DisabledFrame">
+				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall2_Disabled_result.htex" borderSize="22" />
+			</ImagerySection>
+			<ImagerySection name="Caption">
+				<ImageComponent>
+					<Area>
+						<Inset all="16" />
+					</Area>
+					<PropertyValue property="Icon" />
+				</ImageComponent>
+			</ImagerySection>
+			<StateImagery name="Normal">
+				<Layer>
+					<Section section="NormalFrame" />
+					<Section section="Caption" color="FFFFFFFF" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Hovered">
+				<Layer>
+					<Section section="HoveredFrame" />
+					<Section section="Caption" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Pushed">
+				<Layer>
+					<Section section="PushedFrame" />
+					<Section section="Caption" color="FFAAAAAA" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="DisabledFrame" />
+					<Section section="Caption" color="AE888888" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+		<Area>
+			<Size>
+				<AbsDimension x="440" y="128" />
+			</Size>
+		</Area>
+	</Frame>
+	
 	<!-- Small label -->
 	<Frame name="TextSmall" renderer="DefaultRenderer">
 		<Property name="Font" value="DefaultSmall" />
@@ -132,6 +189,17 @@
 		<Area>
 			<Size><AbsDimension x="1000" y="90" /></Size>
 		</Area>
+
+		<Frame name="CloseButton" inherits="IconButton">
+			<Property name="Icon" value="Interface/Icons/fg4_iconsGold_close_result.htex" />
+
+			<Area>
+				<Anchor point="TOP" offset="0" />
+				<Anchor point="RIGHT" offset="0" />
+				<Anchor point="BOTTOM" offset="0" />
+				<Size><AbsDimension x="90" y="90" /></Size>
+			</Area>
+		</Frame>
 	</Frame>
 
 	<!-- Large label (headline) -->
