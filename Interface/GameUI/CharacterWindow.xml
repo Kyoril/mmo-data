@@ -71,9 +71,14 @@
         <Scripts>
             <OnLoad>
                 return function(this)
-                    CharacterWindow_OnLoad(this)
+                    CharacterWindow_OnLoad(this);
                 end
             </OnLoad>
+			<OnShow>
+				return function(this)
+					CharacterWindow_OnShow(this);
+				end
+			</OnShow>
         </Scripts>
 
 		<Frame name="CharacterWindowTitle" inherits="TitleBar">
@@ -278,6 +283,7 @@
 
 			<Frame name="CharacterFrameModel" type="Model" renderer="ModelRenderer" >
 				<Property name="Yaw" value="-120" />
+				<Property name="Zoom" value="2.75" />
 				<Property name="Animation" value="Idle" />
 
 				<Area>

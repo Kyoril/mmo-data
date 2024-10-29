@@ -51,7 +51,7 @@ function GameTooltip_AddLine(line, alignment, color)
     GameTooltip:SetHeight(TooltipHeight);
 end
 
-function GameTooltip_SetItem(item)
+function GameTooltip_SetItem(slot, item)
     if (item == nil) then
         return
     end
@@ -59,9 +59,30 @@ function GameTooltip_SetItem(item)
     GameTooltip_Clear();
     GameTooltip_AddLine(item.name, TOOLTIP_LINE_LEFT, ItemQualityColors[item.quality]);
 
+    local class, subclass, inventoryType = GetInventorySlotType("player", slot);
+    if (class == "ARMOR" or class == "WEAPON") then
+        GameTooltip_AddLine(Localize(inventoryType) .. " - " .. Localize(subclass), TOOLTIP_LINE_LEFT);
+    elseif (class == "CONTAINER") then
+        GameTooltip_AddLine(Localize(inventoryType), TOOLTIP_LINE_LEFT);
+    end
+
+    if (class == "ARMOR") then
+        GameTooltip_AddLine(string.format(Localize("ARMOR_VALUE"), item.armor) , TOOLTIP_LINE_LEFT);
+    end
+
+    if (item.block > 0) then
+        GameTooltip_AddLine(string.format(Localize("BLOCK_VALUE"), item.block) , TOOLTIP_LINE_LEFT);
+    end
+
     -- Line 3: Description
     if (item.description:len() > 0) then
         GameTooltip_AddLine(item.description, TOOLTIP_LINE_LEFT, "FFFFD100");
+    end
+    
+    if (item.maxdurability > 0) then
+        -- TODO: Get actual value
+        local durability = item.maxdurability;
+        GameTooltip_AddLine(string.format(Localize("DURABILITY_VALUE"), durability, item.maxdurability) , TOOLTIP_LINE_LEFT);
     end
 end
 

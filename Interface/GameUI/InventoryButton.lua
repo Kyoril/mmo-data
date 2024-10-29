@@ -12,10 +12,15 @@ function InventoryItemButton_OnEnter(this)
     end
 
     GameTooltip:ClearAnchors();
-    GameTooltip:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.TOP, this, -16);
-    GameTooltip:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, this, 0);
 
-    GameTooltip_SetItem(item);
+    if (this:GetX() >= 300) then
+        GameTooltip:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, this, 0);
+    else
+        GameTooltip:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, this, 0);
+    end
+    GameTooltip:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.TOP, this, -16);
+
+    GameTooltip_SetItem(this.id, item);
     GameTooltip:Show();
 end
 

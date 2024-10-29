@@ -7,17 +7,32 @@ function CharacterWindow_Toggle()
         CharacterFrameModel:SetProperty("ModelFile", "Models/Character/Human/Male/HumanMale.hmsh");
         CharacterFrameModel:SetHeight(CharacterFrameModel:GetHeight() + 1);
         ShowUIPanel(CharacterWindow);
-        CharacterWindow_RefreshStats();
     end
 end
 
 function CharacterWindow_OnLoad(self)
-    
 	-- Subscribe for title bar close handler (HACKY! Order of items is important which sucks)
 	CharacterWindow:GetChild(0):GetChild(0):SetClickedHandler(CharacterWindow_Toggle);
 
     -- Register the character window in the menu bar as a button
 	AddMenuBarButton("Interface/Icons/fg4_icons_helmet_result.htex", CharacterWindow_Toggle);
+end
+
+function CharacterWindow_OnShow(this)
+    CharacterWindow_RefreshStats();
+    
+    local displayId = UnitDisplayId("player");
+    if (displayId and displayId >= 0) then
+        local model = gameData.models:GetById(displayId);
+        if (model) then
+            CharacterFrameModel:SetProperty("ModelFile", model.filename);
+            CharacterFrameModel:Show();
+        else
+            CharacterFrameModel:Hide();
+        end
+    else
+        CharacterFrameModel:Hide();
+    end
 end
 
 function CharacterWindow_RefreshStats()
