@@ -11,12 +11,12 @@ function InventoryFrame_Load(this)
         local slot = InventoryItemButtonTemplate:Clone();
         slot.id = GetBackpackSlot(i - 1);
         this:AddChild(slot);
-        slot:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, this, 64 + math.fmod((i - 1), INVENTORY_SLOTS_PER_ROW) * buttonSize);
+        slot:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, this, 24 + math.fmod((i - 1), INVENTORY_SLOTS_PER_ROW) * buttonSize);
         slot:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, InventoryTitleBar, math.floor((i - 1) / INVENTORY_SLOTS_PER_ROW) * buttonSize);
     end
 
-    this:SetWidth(128 + INVENTORY_SLOTS_PER_ROW * buttonSize);
-    this:SetHeight(128 + math.ceil(NUM_BACKPACK_SLOTS / INVENTORY_SLOTS_PER_ROW) * buttonSize + PlayerMoney:GetHeight() + InventoryTitleBar:GetHeight());
+    this:SetWidth(48 + INVENTORY_SLOTS_PER_ROW * buttonSize);
+    this:SetHeight(48 + math.ceil(NUM_BACKPACK_SLOTS / INVENTORY_SLOTS_PER_ROW) * buttonSize + PlayerMoney:GetHeight() + InventoryTitleBar:GetHeight());
 
     
 	AddMenuBarButton("Interface/Icons/fg4_icons_backpack_result.htex", ToggleInventory)

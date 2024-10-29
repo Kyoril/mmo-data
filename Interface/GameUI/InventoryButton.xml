@@ -4,8 +4,17 @@
 
 	<Frame name="InventoryItemButtonTemplate" type="Button" renderer="ButtonRenderer">
 		<Property name="Icon" />
+		<Property name="Background" />
 
 		<Visual>
+			<ImagerySection name="Background">
+				<ImageComponent>
+					<Area>
+						<Inset all="16" />
+					</Area>
+					<PropertyValue property="Background" />
+				</ImageComponent>
+			</ImagerySection>
 			<ImagerySection name="Image">
 				<ImageComponent>
 					<Area>
@@ -36,6 +45,7 @@
 			<StateImagery name="Normal">
 				<Layer>
 					<Section section="NormalFrame" />
+					<Section section="Background" />
 					<Section section="Image" />
 					<Section section="Text" />
 				</Layer>
@@ -43,6 +53,7 @@
 			<StateImagery name="Hovered">
 				<Layer>
 					<Section section="HoveredFrame" />
+					<Section section="Background" />
 					<Section section="Image" />
 					<Section section="Text" />
 				</Layer>
@@ -50,6 +61,7 @@
 			<StateImagery name="Pushed">
 				<Layer>
 					<Section section="PushedFrame" />
+					<Section section="Background" />
 					<Section section="Image" />
 					<Section section="Text" />
 				</Layer>
@@ -57,6 +69,7 @@
 			<StateImagery name="Disabled">
 				<Layer>
 					<Section section="DisabledFrame" />
+					<Section section="Background" />
 					<Section section="Image" />
 					<Section section="Text" />
 				</Layer>

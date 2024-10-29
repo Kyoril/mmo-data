@@ -114,7 +114,7 @@
 
 		<Visual>
 			<ImagerySection name="Background">
-				<BorderComponent texture="Interface/GameUI/fg4_borders_01_03.htex" borderSize="250" />
+				<BorderComponent texture="Interface/GameUI/fg4_borders_simple.htex" borderSize="250" />
 			</ImagerySection>
 			<StateImagery name="Enabled">
 				<Layer>
@@ -133,9 +133,9 @@
 			<Property name="Text" value="SPELLBOOK" />
 
 			<Area>
-				<Anchor point="TOP" offset="62" />
-				<Anchor point="LEFT" offset="48" />
-				<Anchor point="RIGHT" offset="-48" />
+				<Anchor point="TOP" offset="24" />
+				<Anchor point="LEFT" offset="24" />
+				<Anchor point="RIGHT" offset="-24" />
 			</Area>
 		</Frame>
 
@@ -143,7 +143,7 @@
             <Property name="Icon" value="Interface/Icons/Spells/S_Attack.htex" />
             <Area>
                 <Anchor point="TOP" relativeTo="SpellBookTitleBar" relativePoint="BOTTOM" offset="16" />
-                <Anchor point="LEFT" offset="64" />
+                <Anchor point="LEFT" offset="24" />
             </Area>
         </Frame>
 

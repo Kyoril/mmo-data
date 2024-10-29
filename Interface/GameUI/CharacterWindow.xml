@@ -53,7 +53,7 @@
 
 		<Visual>
 			<ImagerySection name="Background">
-				<BorderComponent texture="Interface/GameUI/fg4_borders_01_03.htex" borderSize="250" />
+				<BorderComponent texture="Interface/GameUI/fg4_borders_simple.htex" borderSize="250" />
 			</ImagerySection>
 			<StateImagery name="Enabled">
 				<Layer>
@@ -80,134 +80,214 @@
 			<Property name="Text" value="CHARACTER" />
 
 			<Area>
-				<Anchor point="TOP" offset="62" />
-				<Anchor point="LEFT" offset="48" />
-				<Anchor point="RIGHT" offset="-48" />
+				<Anchor point="TOP" offset="24" />
+				<Anchor point="LEFT" offset="24" />
+				<Anchor point="RIGHT" offset="-24" />
 			</Area>
 		</Frame>
 
 		<Frame name="CharacterInvSlotHead" inherits="InventoryItemButtonTemplate" id="65280">
+			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_helmet.htex" />
+
 			<Area>
-				<Anchor point="LEFT" offset="64" />
+				<Anchor point="LEFT" offset="24" />
 				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterWindowTitle" offset="8" />
 			</Area>
 		</Frame>
 		
 		<Frame name="CharacterInvSlotNeck" inherits="InventoryItemButtonTemplate" id="65281">
+			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_necklace.htex" />
+
 			<Area>
-				<Anchor point="LEFT" offset="64" />
+				<Anchor point="LEFT" offset="24" />
 				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterInvSlotHead" offset="2" />
 			</Area>
 		</Frame>
 
 		<Frame name="CharacterInvSlotShoulder" inherits="InventoryItemButtonTemplate" id="65282">
+			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_spaulders.htex" />
+
 			<Area>
-				<Anchor point="LEFT" offset="64" />
+				<Anchor point="LEFT" offset="24" />
 				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterInvSlotNeck" offset="2" />
 			</Area>
 		</Frame>
 
 		<Frame name="CharacterInvSlotBack" inherits="InventoryItemButtonTemplate" id="65294">
+			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_cape.htex" />
+
 			<Area>
-				<Anchor point="LEFT" offset="64" />
+				<Anchor point="LEFT" offset="24" />
 				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterInvSlotShoulder" offset="2" />
 			</Area>
 		</Frame>
 
 		<Frame name="CharacterInvSlotChest" inherits="InventoryItemButtonTemplate" id="65283">
+			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_chest.htex" />
+
 			<Area>
-				<Anchor point="LEFT" offset="64" />
+				<Anchor point="LEFT" offset="24" />
 				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterInvSlotBack" offset="2" />
 			</Area>
 		</Frame>
 
 		<Frame name="CharacterInvSlotShirt" inherits="InventoryItemButtonTemplate" id="65284">
+			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_shirt.htex" />
+
 			<Area>
-				<Anchor point="LEFT" offset="64" />
+				<Anchor point="LEFT" offset="24" />
 				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterInvSlotChest" offset="2" />
 			</Area>
 		</Frame>
 
 		<Frame name="CharacterInvSlotTabard" inherits="InventoryItemButtonTemplate" id="65298">
+			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_shirt.htex" />
+
 			<Area>
-				<Anchor point="LEFT" offset="64" />
+				<Anchor point="LEFT" offset="24" />
 				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterInvSlotShirt" offset="2" />
 			</Area>
 		</Frame>
 
 		<Frame name="CharacterInvSlotWrists" inherits="InventoryItemButtonTemplate" id="65288">
+			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_arms.htex" />
+
 			<Area>
-				<Anchor point="LEFT" offset="64" />
+				<Anchor point="LEFT" offset="24" />
 				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterInvSlotTabard" offset="2" />
 			</Area>
 		</Frame>
 
 		<Frame name="CharacterInvSlotHands" inherits="InventoryItemButtonTemplate" id="65289">
+			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_gloves.htex" />
+
 			<Area>
-				<Anchor point="RIGHT" offset="-64" />
+				<Anchor point="RIGHT" offset="-24" />
 				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterWindowTitle" offset="8" />
 			</Area>
 		</Frame>
 		
 		<Frame name="CharacterInvSlotWaist" inherits="InventoryItemButtonTemplate" id="65285">
+			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_belt.htex" />
+
 			<Area>
-				<Anchor point="RIGHT" offset="-64" />
+				<Anchor point="RIGHT" offset="-24" />
 				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterInvSlotHands" offset="2" />
 			</Area>
 		</Frame>
 
 		<Frame name="CharacterInvSlotLegs" inherits="InventoryItemButtonTemplate" id="65286">
+			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_pants.htex" />
+
 			<Area>
-				<Anchor point="RIGHT" offset="-64" />
+				<Anchor point="RIGHT" offset="-24" />
 				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterInvSlotWaist" offset="2" />
 			</Area>
 		</Frame>
 
 		<Frame name="CharacterInvSlotFeet" inherits="InventoryItemButtonTemplate" id="65287">
+			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_boots.htex" />
+
 			<Area>
-				<Anchor point="RIGHT" offset="-64" />
+				<Anchor point="RIGHT" offset="-24" />
 				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterInvSlotLegs" offset="2" />
 			</Area>
 		</Frame>
 
 		<Frame name="CharacterInvSlotFinger1" inherits="InventoryItemButtonTemplate" id="65290">
+			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_ring.htex" />
+
 			<Area>
-				<Anchor point="RIGHT" offset="-64" />
+				<Anchor point="RIGHT" offset="-24" />
 				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterInvSlotFeet" offset="2" />
 			</Area>
 		</Frame>
 
 		<Frame name="CharacterInvSlotFinger2" inherits="InventoryItemButtonTemplate" id="65291">
+			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_ring.htex" />
+
 			<Area>
-				<Anchor point="RIGHT" offset="-64" />
+				<Anchor point="RIGHT" offset="-24" />
 				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterInvSlotFinger1" offset="2" />
 			</Area>
 		</Frame>
 
 		<Frame name="CharacterInvSlotTrinket1" inherits="InventoryItemButtonTemplate" id="65292">
+			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_trinket.htex" />
+
 			<Area>
-				<Anchor point="RIGHT" offset="-64" />
+				<Anchor point="RIGHT" offset="-24" />
 				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterInvSlotFinger2" offset="2" />
 			</Area>
 		</Frame>
 
 		<Frame name="CharacterInvSlotTrinket2" inherits="InventoryItemButtonTemplate" id="65293">
+			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_trinket.htex" />
+
 			<Area>
-				<Anchor point="RIGHT" offset="-64" />
+				<Anchor point="RIGHT" offset="-24" />
 				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterInvSlotTrinket1" offset="2" />
 			</Area>
 		</Frame>
 
-		<Frame name="CharacterFrameModel" type="Model" renderer="ModelRenderer">
-			<Property name="Yaw" value="-120" />
-			<Property name="Animation" value="Idle" />
+		<Frame name="CharacterInvSlotOffHand" inherits="InventoryItemButtonTemplate" id="65296">
+			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_shield.htex" />
 
 			<Area>
-				<Anchor point="LEFT" offset="200" />
-				<Anchor point="RIGHT" offset="-200" />
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterWindowTitle" offset="2" />
-				<Size><AbsDimension x="0" y="680" /></Size>
+				<Anchor point="H_CENTER" />
+				<Anchor point="BOTTOM" offset="-24" />
 			</Area>
+		</Frame>
+
+		<Frame name="CharacterInvSlotMainHand" inherits="InventoryItemButtonTemplate" id="65295">
+			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_sword.htex" />
+
+			<Area>
+				<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CharacterInvSlotOffHand" offset="-8" />
+				<Anchor point="BOTTOM" relativeTo="CharacterInvSlotOffHand" />
+			</Area>
+		</Frame>
+
+		<Frame name="CharacterInvSlotRanged" inherits="InventoryItemButtonTemplate" id="65297">
+			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_bow.htex" />
+
+			<Area>
+				<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CharacterInvSlotOffHand" offset="8" />
+				<Anchor point="BOTTOM" relativeTo="CharacterInvSlotOffHand" />
+			</Area>
+		</Frame>
+
+		<Frame name="CharacterModelFrameBorder" renderer="DefaultRenderer">
+			<Area>
+				<Anchor point="LEFT" offset="160" />
+				<Anchor point="RIGHT" offset="-160" />
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterWindowTitle" offset="8" />
+				<Anchor point="BOTTOM" offset="-160" />
+			</Area>
+				
+			<Visual>
+				<ImagerySection name="Background">
+					<BorderComponent texture="Interface/GameUI/fg4_iconsSlot.htex" borderSize="64" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Background" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+
+			<Frame name="CharacterFrameModel" type="Model" renderer="ModelRenderer" >
+				<Property name="Yaw" value="-120" />
+				<Property name="Animation" value="Idle" />
+
+				<Area>
+					<Anchor point="LEFT" offset="8" />
+					<Anchor point="RIGHT" offset="8" />
+					<Anchor point="TOP" offset="8" />
+					<Anchor point="BOTTOM" offset="-400" />
+				</Area>
+			</Frame>
+
 		</Frame>
 
 		<Frame name="CharacterWindowAttributesLabel" inherits="TextSmall">
@@ -215,8 +295,8 @@
 
 			<Area>
 				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterFrameModel" offset="5" />
-				<Anchor point="LEFT" offset="200" />
-				<Anchor point="RIGHT" offset="-200" />
+				<Anchor point="LEFT" offset="190" />
+				<Anchor point="RIGHT" offset="-190" />
 			</Area>
 		</Frame>
 
@@ -234,7 +314,7 @@
 
 			<Area>
 				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterWindowAttributesLabel" offset="5" />
-				<Anchor point="LEFT" offset="200" />
+				<Anchor point="LEFT" offset="180" />
 				<Anchor point="RIGHT" relativePoint="H_CENTER" offset="0" />
 				<Size><AbsDimension x="0" y="320" /></Size>
 			</Area>
@@ -346,7 +426,7 @@
 			<Area>
 				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterFrameModel" offset="2" />
 				<Anchor point="LEFT" relativePoint="H_CENTER" offset="0" />
-				<Anchor point="RIGHT" offset="-200" />
+				<Anchor point="RIGHT" offset="-180" />
 			</Area>
 		</Frame>
 		
@@ -365,7 +445,7 @@
 			<Area>
 				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterWindowDefenseLabel" offset="5" />
 				<Anchor point="LEFT" relativePoint="H_CENTER" offset="0" />
-				<Anchor point="RIGHT" offset="-200" />
+				<Anchor point="RIGHT" offset="-180" />
 				<Size><AbsDimension x="0" y="100" /></Size>
 			</Area>
 
