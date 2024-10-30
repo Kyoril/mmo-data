@@ -15,6 +15,12 @@ function GameParent_OnSpellError(self, spellError)
     ErrorText:Show();
 end
 
+function GameParent_OnGameError(self, gameError)
+    ErrorTimer = 4.0;
+    ErrorText:SetText(Localize(gameError));
+    ErrorText:Show();
+end
+
 function GameParent_OnAttackSwingError(self, attackSwingError)
     ErrorTimer = 1.0;
     ErrorText:SetText(Localize(attackSwingError));
@@ -27,6 +33,7 @@ function GameParent_OnPlayerDead()
 end
 
 function GameParent_OnLoad(self)
+    self:RegisterEvent("GAME_ERROR", GameParent_OnGameError);
     self:RegisterEvent("PLAYER_SPELL_CAST_FAILED", GameParent_OnSpellError);
     self:RegisterEvent("ATTACK_SWING_ERROR", GameParent_OnAttackSwingError);
     self:RegisterEvent("PLAYER_DEAD", GameParent_OnPlayerDead);
