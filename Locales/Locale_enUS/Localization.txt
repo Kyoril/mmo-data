@@ -45,6 +45,8 @@ strings =
 	(key = "DELETE", string = "Delete")
 	(key = "CONFIRM_CHAR_DELETE", string = "Do you really want to delete your character?\n\nYou will loose any progress you made!")
 
+	(key = "WORLD_SERVER_DOWN", string = "World server is down.")
+	
 	(key = "CLOSE", string = "Close")
 	(key = "MENU", string = "Menu")
 

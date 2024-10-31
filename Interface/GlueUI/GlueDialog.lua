@@ -140,6 +140,16 @@ GlueDialogs["CHAR_CREATE_ERR_INVALID_NAME"] = {
 	end
 }
 
+GlueDialogs["ENTER_WORLD_FAILED"] = {
+	text = "",
+	button1 = "OKAY",
+	button2 = nil,
+	OnAccept = function()
+	end,
+	OnCancel = function()
+	end
+}
+
 
 AUTH_ERROR_STRING = {}
 AUTH_ERROR_STRING[0] = "AUTH_STATUS_SUCCESS"

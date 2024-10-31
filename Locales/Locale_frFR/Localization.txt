@@ -45,6 +45,8 @@ strings =
 	(key = "DELETE", string = "Supprimer")
 	(key = "CONFIRM_CHAR_DELETE", string = "Êtes-vous sûr de vouloir supprimer le personnage?\n\nVotre avencement sera perdu!")
 
+	(key = "WORLD_SERVER_DOWN", string = "WORLD_SERVER_DOWN")
+
 	(key = "CLOSE", string = "Fermer")
 	(key = "MENU", string = "Menu")
 

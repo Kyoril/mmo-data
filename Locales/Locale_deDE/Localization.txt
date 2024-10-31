@@ -45,6 +45,8 @@ strings =
 	(key = "DELETE", string = "Löschen")
 	(key = "CONFIRM_CHAR_DELETE", string = "Möchtet Ihr den Charakter wirklich löschen?\n\nJeglicher Fortschritt wird dabei verloren gehen!")
 	
+	(key = "WORLD_SERVER_DOWN", string = "Der Welt-Server ist nicht verfügbar.")
+
 	(key = "CLOSE", string = "Schließen")
 	(key = "MENU", string = "Menü")
 	

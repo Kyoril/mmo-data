@@ -51,7 +51,6 @@ function AccountLogin_OnLoad()
 	
 	AccountLogin:RegisterEvent("REALM_AUTH_SUCCESS", function()
 		GlueDialog_Show("RETRIEVE_CHAR_LIST");
-		CharSelect:Show();
 	end)
 	AccountLogin:RegisterEvent("REALM_AUTH_FAILED", function(errorCode)
 		GlueDialog_Show("REALM_AUTH_ERROR", AUTH_ERROR_STRING[errorCode]);
@@ -65,9 +64,7 @@ function AccountLogin_OnLoad()
 	AccountLogin:RegisterEvent("CHAR_LIST", AccountLogin_OnCharList);
 	AccountLogin:RegisterEvent("LOGIN_CONNECT", AccountLogin_OnConnect);
 	
-	if (realmConnector:IsConnected()) then
-		GlueDialog_Show("CONNECTING");
-	else
+	if (not realmConnector:IsConnected()) then
 		AccountNameField:CaptureInput();
 	end
 end

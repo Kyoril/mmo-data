@@ -22,6 +22,12 @@ function GlueParent_OnLoad(this)
 	this:RegisterEvent("GET_PREFERRED_REALM_INFO", function()
 
 	end);
+
+	this:RegisterEvent("ENTER_WORLD_FAILED", function(frame, errorCode)
+		CharList_Show();
+		GlueDialog_Show("ENTER_WORLD_FAILED", Localize(errorCode));
+	end)
+	
 end
 
 function GlueParentFadeUpdate(this, elapsed)
