@@ -12,7 +12,7 @@ end
 
 function TargetFrame_Update()
     if (UnitExists("target")) then
-        TargetName:SetText("Level " .. UnitLevel("target") .. " " .. UnitName("target"));
+        TargetName:SetText("[" .. UnitLevel("target") .. "] " .. UnitName("target"));
 
         -- Update progress bars
         health = UnitHealth("target");
