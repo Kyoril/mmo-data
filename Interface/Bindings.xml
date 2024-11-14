@@ -56,9 +56,8 @@
 	</Binding>
 	<Binding name="JUMP" description="Jump" category="MOVEMENT">
 		return function(key, keystate)
-            if keystate == "DOWN" then
-		        -- Jump();
-                print("JUMPING!");
+            if keystate == "UP" then
+		        Jump();
             end
         end
 	</Binding>
