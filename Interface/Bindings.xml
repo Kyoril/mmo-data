@@ -4,7 +4,7 @@
         return function(key, keystate)
             if keystate == "DOWN" then
                 MoveForwardStart();
-            else
+            elseif keystate == "UP" then
                 MoveForwardStop();
             end
         end
@@ -13,7 +13,7 @@
 		return function(key, keystate)
             if keystate == "DOWN" then
                 MoveBackwardStart();
-            else
+            elseif keystate == "UP" then
                 MoveBackwardStop();
             end
         end
@@ -22,7 +22,7 @@
 		return function(key, keystate)
             if keystate == "DOWN" then
                 TurnLeftStart();
-            else
+            elseif keystate == "UP" then
                 TurnLeftStop();
             end
         end
@@ -31,7 +31,7 @@
         return function(key, keystate)
             if keystate == "DOWN" then
                 TurnRightStart();
-            else
+            elseif keystate == "UP" then
                 TurnRightStop();
             end
         end
@@ -40,7 +40,7 @@
 		return function(key, keystate)
             if keystate == "DOWN" then
                 StrafeLeftStart();
-            else
+            elseif keystate == "UP" then
                 StrafeLeftStop();
             end
         end
@@ -49,14 +49,14 @@
 		return function(key, keystate)
             if keystate == "DOWN" then
                 StrafeRightStart();
-            else
+            elseif keystate == "UP" then
                 StrafeRightStop();
             end
         end
 	</Binding>
 	<Binding name="JUMP" description="Jump" category="MOVEMENT">
 		return function(key, keystate)
-            if keystate == "UP" then
+            if keystate == "DOWN" then
 		        Jump();
             end
         end
@@ -77,21 +77,21 @@
 	</Binding>
 	<Binding name="CHATPAGEUP" description="Scroll chat pane up one page" category="CHAT">
         return function(key, keystate)
-            if keystate == "DOWN" then
+            if keystate == "DOWN" or keystate == "REPEAT" then
 		        ChatFrame_ScrollUp();
             end
         end
 	</Binding>
 	<Binding name="CHATPAGEDOWN" description="Scroll chat pane down one page" category="CHAT">
         return function(key, keystate)
-            if keystate == "DOWN" then
+            if keystate == "DOWN" or keystate == "REPEAT" then
 		        ChatFrame_ScrollDown();
             end
         end
 	</Binding>
 	<Binding name="CHATBOTTOM" description="Scroll chat pane down one page" category="CHAT">
         return function(key, keystate)
-            if keystate == "DOWN" then
+            if keystate == "DOWN" or keystate == "REPEAT" then
 		        ChatFrame_ScrollToBottom();
             end
         end
@@ -99,7 +99,7 @@
 
 	<Binding name="TOGGLECHARACTERWINDOW" description="Toggle the character window" category="INTERFACE">
 		return function(key, keystate)
-            if keystate == "UP" then
+            if keystate == "DOWN" then
                 CharacterWindow_Toggle();
             end
         end
@@ -107,7 +107,7 @@
 
 	<Binding name="TOGGLESPELLBOOK" description="Toggle the spell book" category="INTERFACE">
 		return function(key, keystate)
-            if keystate == "UP" then
+            if keystate == "DOWN" then
                 SpellBook_Toggle();
             end
         end
@@ -115,7 +115,7 @@
 
     <Binding name="TOGGLEINVENTORY" description="Toggle the inventory" category="INTERFACE">
 		return function(key, keystate)
-            if keystate == "UP" then
+            if keystate == "DOWN" then
                 ToggleInventory();
             end
         end
@@ -126,7 +126,7 @@
         return function(key, keystate)
             if keystate == "DOWN" then
                 ActionButton_Down(1);
-            else
+            elseif keystate == "UP" then
                 ActionButton_Up(1);
             end
         end
@@ -135,7 +135,7 @@
 		return function(key, keystate)
             if keystate == "DOWN" then
                 ActionButton_Down(2);
-            else
+            elseif keystate == "UP" then
                 ActionButton_Up(2);
             end
         end
@@ -144,7 +144,7 @@
 		return function(key, keystate)
             if keystate == "DOWN" then
                 ActionButton_Down(3);
-            else
+            elseif keystate == "UP" then
                 ActionButton_Up(3);
             end
         end
@@ -153,7 +153,7 @@
 		return function(key, keystate)
             if keystate == "DOWN" then
                 ActionButton_Down(4);
-            else
+            elseif keystate == "UP" then
                 ActionButton_Up(4);
             end
         end
@@ -162,7 +162,7 @@
 		return function(key, keystate)
             if keystate == "DOWN" then
                 ActionButton_Down(5);
-            else
+            elseif keystate == "UP" then
                 ActionButton_Up(5);
             end
         end
@@ -171,7 +171,7 @@
 		return function(key, keystate)
             if keystate == "DOWN" then
                 ActionButton_Down(6);
-            else
+            elseif keystate == "UP" then
                 ActionButton_Up(6);
             end
         end
@@ -180,7 +180,7 @@
 		return function(key, keystate)
             if keystate == "DOWN" then
                 ActionButton_Down(7);
-            else
+            elseif keystate == "UP" then
                 ActionButton_Up(7);
             end
         end
@@ -189,7 +189,7 @@
 		return function(key, keystate)
             if keystate == "DOWN" then
                 ActionButton_Down(8);
-            else
+            elseif keystate == "UP" then
                 ActionButton_Up(8);
             end
         end
@@ -198,7 +198,7 @@
 		return function(key, keystate)
             if keystate == "DOWN" then
                 ActionButton_Down(9);
-            else
+            elseif keystate == "UP" then
                 ActionButton_Up(9);
             end
         end
@@ -207,7 +207,7 @@
 		return function(key, keystate)
             if keystate == "DOWN" then
                 ActionButton_Down(10);
-            else
+            elseif keystate == "UP" then
                 ActionButton_Up(10);
             end
         end
@@ -216,7 +216,7 @@
 		return function(key, keystate)
             if keystate == "DOWN" then
                 ActionButton_Down(11);
-            else
+            elseif keystate == "UP" then
                 ActionButton_Up(11);
             end
         end
@@ -225,7 +225,7 @@
 		return function(key, keystate)
             if keystate == "DOWN" then
                 ActionButton_Down(12);
-            else
+            elseif keystate == "UP" then
                 ActionButton_Up(12);
             end
         end
@@ -233,7 +233,7 @@
     
 	<Binding name="TARGETSELF" description="Target yourself" category="TARGET">
         return function(key, keystate)
-            if keystate == "UP" then
+            if keystate == "DOWN" then
                 TargetUnit("player");
             end
         end
@@ -241,7 +241,7 @@
 
 	<Binding name="TARGETPARTYMEMBER1" description="Target party member 1" category="TARGET">
 		return function(key, keystate)
-            if keystate == "UP" then
+            if keystate == "DOWN" then
                 TargetUnit("party1");
             end
         end
@@ -249,7 +249,7 @@
 
 	<Binding name="TARGETPARTYMEMBER2" description="Target party member 2" category="TARGET">
 		return function(key, keystate)
-            if keystate == "UP" then
+            if keystate == "DOWN" then
                 TargetUnit("party2");
             end
         end
@@ -257,7 +257,7 @@
 
 	<Binding name="TARGETPARTYMEMBER3" description="Target party member 3" category="TARGET">
 		return function(key, keystate)
-            if keystate == "UP" then
+            if keystate == "DOWN" then
                 TargetUnit("party3");
             end
         end
@@ -265,7 +265,7 @@
 
 	<Binding name="TARGETPARTYMEMBER4" description="Target party member 4" category="TARGET">
 		return function(key, keystate)
-            if keystate == "UP" then
+            if keystate == "DOWN" then
                 TargetUnit("party4");
             end
         end
