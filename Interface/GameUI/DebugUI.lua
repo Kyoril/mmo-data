@@ -4,6 +4,16 @@ DEBUG_BUTTON_V_PADDING = 16.0
 
 local debugMenuOffsetY = DEBUG_BUTTON_V_PADDING
 
+function ProfilingLabel_OnProfile(this, objectCount)
+    ProfilingLabel:SetText("Checked objects: " .. objectCount);
+end
+
+function ProfilingLabel_OnLoad(this)
+    
+    ProfilingLabel:RegisterEvent("HEIGHTCHECK_PROFILE", ProfilingLabel_OnProfile)
+
+end
+
 function DebugUI_AddMenuButton(text, callback)
 	-- Create a new button from the template and add it to the window
 	local button = GameMenuButtonTemplate:Clone()

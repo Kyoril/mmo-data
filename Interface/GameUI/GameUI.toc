@@ -18,4 +18,5 @@ MoneyFrame.xml
 InventoryFrame.xml
 LootFrame.xml
 GameTooltip.xml
-DebugUI.xml
+
+#DebugUI.xml

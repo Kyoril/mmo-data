@@ -2,6 +2,36 @@
 <UiLayout>
 	<Script file="DebugUI.lua" />
 
+	<Frame name="ProfilingLabel" renderer="DefaultRenderer" parent="GameParent">
+		<Property name="Text" value="Profiling..." />
+
+		<Area>
+			<Anchor point="LEFT" />
+			<Anchor point="TOP" />
+			<Anchor point="RIGHT" />
+			<Size><AbsDimension x="540" y="128" /></Size>
+		</Area>
+
+		<Visual>
+			<ImagerySection name="Text">
+				<TextComponent font="Interface/Fonts/DefaultFont.xml" text="Profiling" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+
+		<Scripts>
+			<OnLoad>
+				return function(this)
+					ProfilingLabel_OnLoad(this);
+				end
+			</OnLoad>
+		</Scripts>
+	</Frame>
+
 	<Frame name="DebugPanel" renderer="DefaultRenderer" parent="GameParent">
 		<Property name="Visible" value="False" />
 
