@@ -122,6 +122,24 @@
 			</Scripts>
 		</Frame>
 
+		<Frame name="BagContainer">
+			<Area>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="InventoryTitleBar" offset="0" />
+				<Anchor point="LEFT" offset="24" />
+				<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="PlayerMoney" />
+				<Size><AbsDimension x="128" /></Size>
+			</Area>
+		</Frame>
+
+		<Frame name="ItemSlotContainer">
+			<Area>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="InventoryTitleBar" offset="0" />
+				<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="BagContainer" offset="16" />
+				<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="PlayerMoney" />
+				<Anchor point="RIGHT" offset="-24" />
+			</Area>
+		</Frame>
+
 		<Scripts>
 			<OnLoad>
 				return function(this)
