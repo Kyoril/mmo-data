@@ -270,4 +270,12 @@
             end
         end
 	</Binding>
+
+	<Binding name="TRAINERDEBUG" description="Toggle trainer frame for debugging" category="DEBUG">
+		return function(key, keystate)
+            if keystate == "DOWN" then
+                TrainerFrame_Toggle();
+            end
+        end
+	</Binding>
 </Bindings>

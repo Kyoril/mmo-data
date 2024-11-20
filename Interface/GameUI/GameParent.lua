@@ -5,9 +5,22 @@ UIPanelWindows = {};
 UIPanelWindows["GameMenu"] = { area = "center", pushable = 0 };
 UIPanelWindows["SpellBook"] = { area = "left", pushable = 0 };
 UIPanelWindows["CharacterWindow"] = { area = "left", pushable = 1 };
+UIPanelWindows["TrainerFrame"] = { area = "left", pushable = 0 };
+UIPanelWindows["MerchantFrame"] = { area = "left", pushable = 0 };
 UIPanelWindows["LootFrame"] = { area = "left", pushable = 0 };
 
 local menuOffsetY = BUTTON_V_PADDING
+
+function SidePanel_OnClose(closeButton)
+	-- Parent of the button is the titlebar, whose parent is the frame
+	HideUIPanel(closeButton:GetParent():GetParent());
+end
+
+function SidePanel_OnLoad(self)
+	self.titleBar = self:GetChild(0);
+	self.titleBar.closeButton = self.titleBar:GetChild(0);
+	self.titleBar.closeButton:SetClickedHandler(SidePanel_OnClose);
+end
 
 function GameParent_OnSpellError(self, spellError)
     ErrorTimer = 4.0;

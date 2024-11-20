@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
+	<Script file="TrainerFrame.lua" />
+	
+	<Frame name="TrainerFrame" inherits="SidePanelTemplate" parent="GameParent">
+		<Property name="Visible" value="False" />
+
+        <Scripts>
+            <OnLoad>
+                return function(this)
+                    TrainerFrame_OnLoad(this);
+                end
+            </OnLoad>
+			<OnShow>
+				return function(this)
+					TrainerFrame_OnShow(this);
+				end
+			</OnShow>
+        </Scripts>
+	</Frame>
+</UiLayout>

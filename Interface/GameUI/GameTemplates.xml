@@ -281,4 +281,41 @@
 			</StateImagery>
 		</Visual>
 	</Frame>
+
+	<Frame name="SidePanelTemplate" renderer="DefaultRenderer">
+		<Visual>
+			<ImagerySection name="Background">
+				<BorderComponent texture="Interface/GameUI/fg4_borders_simple.htex" borderSize="250" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Background" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+
+		<Scripts>
+			<OnLoad>
+				return function(self)
+					SidePanel_OnLoad(self);
+				end
+			</OnLoad>
+		</Scripts>
+		
+		<Area>
+			<Size><AbsDimension x="960" y="1280" /></Size>
+			<Anchor point="LEFT" offset="0" />
+			<Anchor point="TOP" offset="300" />
+		</Area>
+		
+		<Frame name="SidePanelTitleBar" inherits="TitleBar">
+			<Property name="Text" value="TITLEBAR" />
+
+			<Area>
+				<Anchor point="TOP" offset="24" />
+				<Anchor point="LEFT" offset="24" />
+				<Anchor point="RIGHT" offset="-24" />
+			</Area>
+		</Frame>
+	</Frame>
 </UiLayout>
