@@ -215,4 +215,5 @@ strings =
 	(key = "RANGED_RIGHT", string = "Schusswaffe")
 	(key = "QUIVER", string = "Köcher")
 	(key = "RELIC", string = "Relikt")
+	(key = "SPELL_RANK_FORMAT", string = "Rang %d")
 }

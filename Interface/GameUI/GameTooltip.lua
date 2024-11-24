@@ -94,6 +94,10 @@ function GameTooltip_SetSpell(spell)
     GameTooltip_Clear();
     GameTooltip_AddLine(spell.name, TOOLTIP_LINE_LEFT, "FFFFD100");
 
+    if (spell.rank ~= nil and spell.rank > 0) then
+        GameTooltip_AddLine(string.format(Localize("SPELL_RANK_FORMAT"), spell.rank), TOOLTIP_LINE_LEFT, "FF808080");
+    end
+    
     -- Line 1: Cost
     if ( spell.cost ~= 0 ) then
         local costColor = nil;

@@ -216,4 +216,5 @@ strings =
 	(key = "RANGED_RIGHT", string = "Ranged Right")
 	(key = "QUIVER", string = "Quiver")
 	(key = "RELIC", string = "Relic")
+	(key = "SPELL_RANK_FORMAT", string = "Rank %d")
 }
