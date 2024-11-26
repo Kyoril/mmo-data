@@ -6,7 +6,7 @@ UIPanelWindows["GameMenu"] = { area = "center", pushable = 0 };
 UIPanelWindows["SpellBook"] = { area = "left", pushable = 0 };
 UIPanelWindows["CharacterWindow"] = { area = "left", pushable = 1 };
 UIPanelWindows["TrainerFrame"] = { area = "left", pushable = 0 };
-UIPanelWindows["MerchantFrame"] = { area = "left", pushable = 0 };
+UIPanelWindows["VendorFrame"] = { area = "left", pushable = 0 };
 UIPanelWindows["LootFrame"] = { area = "left", pushable = 0 };
 
 local menuOffsetY = BUTTON_V_PADDING

@@ -1,12 +1,12 @@
-MERCHANT_ITEMS_PER_PAGE = 12;
+VENDOR_ITEMS_PER_PAGE = 12;
 
-function MerchantFrame_UpdateMerchantItems()
+function VendorFrame_UpdateVendorItems()
     local numItems = GetVendorNumItems();
-    for i = 1, MERCHANT_ITEMS_PER_PAGE, 1 do
-        local index = (((MerchantFrame.page - 1) * MERCHANT_ITEMS_PER_PAGE) + i);
-        local border = _G["MerchantButton" .. i .. "Border"];
-        local itemText = _G["MerchantText" .. i];
-        local button = _G["MerchantButton" .. i];
+    for i = 1, VENDOR_ITEMS_PER_PAGE, 1 do
+        local index = (((VendorFrame.page - 1) * VENDOR_ITEMS_PER_PAGE) + i);
+        local border = _G["VendorButton" .. i .. "Border"];
+        local itemText = _G["VendorText" .. i];
+        local button = _G["VendorButton" .. i];
 
         if (index <= numItems) then
             local name, texture, price, quantity, numAvailable, isUsable = GetVendorItemInfo(index - 1);
@@ -26,27 +26,27 @@ function MerchantFrame_UpdateMerchantItems()
     end
 end
 
-function MerchantFrame_Show(self)
+function VendorFrame_Show(self)
     self:GetChild(0):SetText(UnitName("target"));
-    MerchantFrame.page = 1;
+    VendorFrame.page = 1;
 
     ShowUIPanel(self);
     OpenInventory();
 
-    MerchantFrame_UpdateMerchantItems();
+    VendorFrame_UpdateVendorItems();
 end
 
-function MerchantFrame_Close(self)
+function VendorFrame_Close(self)
     HideUIPanel(self);
 end
 
-function MerchantFrame_OnLoad(self)
+function VendorFrame_OnLoad(self)
     -- Initialize side panel functionality first, like the close button
     SidePanel_OnLoad(self);
 
-    self:RegisterEvent("VENDOR_SHOW", MerchantFrame_Show);
-    self:RegisterEvent("VENDOR_CLOSED", MerchantFrame_Close);
+    self:RegisterEvent("VENDOR_SHOW", VendorFrame_Show);
+    self:RegisterEvent("VENDOR_CLOSED", VendorFrame_Close);
 end
 
-function MerchantFrame_OnShow(self)
+function VendorFrame_OnShow(self)
 end

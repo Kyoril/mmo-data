@@ -18,7 +18,7 @@ MoneyFrame.xml
 InventoryFrame.xml
 LootFrame.xml
 TrainerFrame.xml
-MerchantFrame.xml
+VendorFrame.xml
 GameTooltip.xml
 
 #DebugUI.xml
