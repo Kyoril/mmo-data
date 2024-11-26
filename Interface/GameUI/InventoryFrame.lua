@@ -96,13 +96,17 @@ function InventoryFrame_UpdateMoney(self)
     end
 end
 
+function OpenInventory()
+    if ( not CanOpenPanels() ) then
+        return;
+    end    
+    InventoryFrame:Show();
+end
+
 function ToggleInventory()
     if (InventoryFrame:IsVisible()) then    
         InventoryFrame:Hide();
     else
-        if ( not CanOpenPanels() ) then
-            return;
-        end    
-        InventoryFrame:Show();
+        OpenInventory();
     end
 end

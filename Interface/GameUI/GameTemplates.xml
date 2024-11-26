@@ -3,7 +3,7 @@
 	<Font name="DefaultSmall" file="Fonts/arbutusslab-regular.ttf" size="26" outline="1" />
 	<Font name="DefaultHeader" file="Fonts/arbutusslab-regular.ttf" size="42" outline="2" />
 	
-	<Font name="SmallLabelFont" file="Fonts/arbutusslab-regular.ttf" size="24" outline="0" />
+	<Font name="SmallLabelFont" file="Fonts/arbutusslab-regular.ttf" size="22" outline="0" />
 
 	<!-- GlueButton template: Common buttons -->
 	<Frame name="GlueButton" type="Button" renderer="ButtonRenderer">

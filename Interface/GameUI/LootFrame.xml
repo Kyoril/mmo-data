@@ -31,7 +31,7 @@
 				<BorderComponent texture="Interface/BW_ButtonSmall_Down.htex" borderSize="30" />
 			</ImagerySection>
 			<ImagerySection name="DisabledFrame">
-				<BorderComponent texture="Interface/BW_ButtonSmall_Up.htex" borderSize="30" />
+				<BorderComponent texture="Interface/BW_ButtonSmall_Up.htex" borderSize="30" tint="80808080" />
 			</ImagerySection>
 			<StateImagery name="Normal">
 				<Layer>
@@ -79,9 +79,17 @@
 			<ImagerySection name="Background">
 				<BorderComponent texture="Interface/GameUI/fg4_iconsSlot.htex" borderSize="64" />
 			</ImagerySection>
+			<ImagerySection name="DisabledBackground">
+				<BorderComponent texture="Interface/GameUI/fg4_iconsSlot.htex" borderSize="64" tint="80303030" />
+			</ImagerySection>
 			<StateImagery name="Enabled">
 				<Layer>
 					<Section section="Background" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="DisabledBackground" />
 				</Layer>
 			</StateImagery>
 		</Visual>

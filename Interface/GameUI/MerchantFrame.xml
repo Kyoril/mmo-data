@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
 	<Script file="MerchantFrame.lua" />
-	
+
 	<Frame name="MerchantFrame" inherits="SidePanelTemplate" parent="GameParent">
 		<Property name="Visible" value="False" />
 
@@ -17,5 +17,522 @@
 				end
 			</OnShow>
         </Scripts>
+
+		<Frame name="MerchantButton1Border" inherits="LootButtonBorderTemplate">
+			<Area>
+				<Anchor point="LEFT" offset="24" />
+				<Anchor point="RIGHT" relativePoint="H_CENTER" offset="-12" />
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="MerchantFrame_SidePanelTitleBar" offset="8" />
+			</Area>
+			
+			<Frame name="MerchantButton1" inherits="LootButtonTemplate" id="1">
+				<Area>
+					<Anchor point="LEFT" offset="8" />
+					<Anchor point="TOP" offset="8" />
+				</Area>
+			</Frame>
+
+			<Frame name="MerchantText1" renderer="DefaultRenderer" id="1">
+				<Property name="Font" value="SmallLabelFont" />
+
+				<Area>
+					<Anchor point="TOP" relativeTo="MerchantButton1" offset="0" />
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="MerchantButton1" offset="8" />
+					<Anchor point="RIGHT" />
+					<Anchor point="BOTTOM" offset="-8" />
+					<Size><AbsDimension x="0" y="44" /></Size>
+				</Area>
+						
+				<Visual>
+					<ImagerySection name="Text">
+						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
+					</ImagerySection>
+					<StateImagery name="Enabled">
+						<Layer>
+							<Section section="Text" />
+						</Layer>
+					</StateImagery>
+					<StateImagery name="Disabled">
+						<Layer>
+							<Section section="Text" />
+						</Layer>
+					</StateImagery>
+				</Visual>
+			</Frame>
+		</Frame>
+
+		<Frame name="MerchantButton2Border" inherits="LootButtonBorderTemplate">
+			<Area>
+				<Anchor point="LEFT" relativePoint="H_CENTER" offset="0" />
+				<Anchor point="RIGHT" offset="-24" />
+				<Anchor point="TOP" relativeTo="MerchantButton1Border" />
+			</Area>
+
+			<Frame name="MerchantButton2" inherits="LootButtonTemplate" id="2">
+				<Area>
+					<Anchor point="LEFT" offset="8" />
+					<Anchor point="TOP" offset="8" />
+				</Area>
+			</Frame>
+
+			<Frame name="MerchantText2" renderer="DefaultRenderer" id="2">
+				<Property name="Font" value="SmallLabelFont" />
+
+				<Area>
+					<Anchor point="TOP" relativeTo="MerchantButton2" offset="0" />
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="MerchantButton2" offset="8" />
+					<Anchor point="RIGHT" />
+					<Anchor point="BOTTOM" offset="-8" />
+					<Size><AbsDimension x="0" y="44" /></Size>
+				</Area>
+
+				<Visual>
+					<ImagerySection name="Text">
+						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
+					</ImagerySection>
+					<StateImagery name="Enabled">
+						<Layer>
+							<Section section="Text" />
+						</Layer>
+					</StateImagery>
+					<StateImagery name="Disabled">
+						<Layer>
+							<Section section="Text" />
+						</Layer>
+					</StateImagery>
+				</Visual>
+			</Frame>
+		</Frame>
+
+		<Frame name="MerchantButton3Border" inherits="LootButtonBorderTemplate">
+			<Area>
+				<Anchor point="LEFT" relativeTo="MerchantButton1Border" />
+				<Anchor point="RIGHT" relativeTo="MerchantButton1Border" />
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="MerchantButton1Border" offset="8" />
+			</Area>
+
+			<Frame name="MerchantButton3" inherits="LootButtonTemplate" id="3">
+				<Area>
+					<Anchor point="LEFT" offset="8" />
+					<Anchor point="TOP" offset="8" />
+				</Area>
+			</Frame>
+
+			<Frame name="MerchantText3" renderer="DefaultRenderer" id="3">
+				<Property name="Font" value="SmallLabelFont" />
+
+				<Area>
+					<Anchor point="TOP" relativeTo="MerchantButton3" offset="0" />
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="MerchantButton3" offset="8" />
+					<Anchor point="RIGHT" />
+					<Anchor point="BOTTOM" offset="-8" />
+					<Size><AbsDimension x="0" y="44" /></Size>
+				</Area>
+
+				<Visual>
+					<ImagerySection name="Text">
+						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
+					</ImagerySection>
+					<StateImagery name="Enabled">
+						<Layer>
+							<Section section="Text" />
+						</Layer>
+					</StateImagery>
+					<StateImagery name="Disabled">
+						<Layer>
+							<Section section="Text" />
+						</Layer>
+					</StateImagery>
+				</Visual>
+			</Frame>
+		</Frame>
+
+		<Frame name="MerchantButton4Border" inherits="LootButtonBorderTemplate">
+			<Area>
+				<Anchor point="LEFT" relativeTo="MerchantButton2Border" />
+				<Anchor point="RIGHT" relativeTo="MerchantButton2Border" />
+				<Anchor point="TOP" relativeTo="MerchantButton3Border" />
+			</Area>
+			
+			<Frame name="MerchantButton4" inherits="LootButtonTemplate" id="4">
+				<Area>
+					<Anchor point="LEFT" offset="8" />
+					<Anchor point="TOP" offset="8" />
+				</Area>
+			</Frame>
+
+			<Frame name="MerchantText4" renderer="DefaultRenderer" id="4">
+				<Property name="Font" value="SmallLabelFont" />
+
+				<Area>
+					<Anchor point="TOP" relativeTo="MerchantButton4" offset="0" />
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="MerchantButton4" offset="8" />
+					<Anchor point="RIGHT" />
+					<Anchor point="BOTTOM" offset="-8" />
+					<Size><AbsDimension x="0" y="44" /></Size>
+				</Area>
+						
+				<Visual>
+					<ImagerySection name="Text">
+						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
+					</ImagerySection>
+					<StateImagery name="Enabled">
+						<Layer>
+							<Section section="Text" />
+						</Layer>
+					</StateImagery>
+					<StateImagery name="Disabled">
+						<Layer>
+							<Section section="Text" />
+						</Layer>
+					</StateImagery>
+				</Visual>
+			</Frame>
+		</Frame>
+
+		<Frame name="MerchantButton5Border" inherits="LootButtonBorderTemplate">
+			<Area>
+				<Anchor point="LEFT" relativeTo="MerchantButton3Border" />
+				<Anchor point="RIGHT" relativeTo="MerchantButton3Border" />
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="MerchantButton3Border" offset="8" />
+			</Area>
+			
+			<Frame name="MerchantButton5" inherits="LootButtonTemplate" id="5">
+				<Area>
+					<Anchor point="LEFT" offset="8" />
+					<Anchor point="TOP" offset="8" />
+				</Area>
+			</Frame>
+
+			<Frame name="MerchantText5" renderer="DefaultRenderer" id="5">
+				<Property name="Font" value="SmallLabelFont" />
+
+				<Area>
+					<Anchor point="TOP" relativeTo="MerchantButton5" offset="0" />
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="MerchantButton5" offset="8" />
+					<Anchor point="RIGHT" />
+					<Anchor point="BOTTOM" offset="-8" />
+					<Size><AbsDimension x="0" y="44" /></Size>
+				</Area>
+						
+				<Visual>
+					<ImagerySection name="Text">
+						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
+					</ImagerySection>
+					<StateImagery name="Enabled">
+						<Layer>
+							<Section section="Text" />
+						</Layer>
+					</StateImagery>
+					<StateImagery name="Disabled">
+						<Layer>
+							<Section section="Text" />
+						</Layer>
+					</StateImagery>
+				</Visual>
+			</Frame>
+		</Frame>
+		
+		<Frame name="MerchantButton6Border" inherits="LootButtonBorderTemplate">
+			<Area>
+				<Anchor point="LEFT" relativeTo="MerchantButton4Border" />
+				<Anchor point="RIGHT" relativeTo="MerchantButton4Border" />
+				<Anchor point="TOP" relativeTo="MerchantButton5Border" />
+			</Area>
+			
+			<Frame name="MerchantButton6" inherits="LootButtonTemplate" id="6">
+				<Area>
+					<Anchor point="LEFT" offset="8" />
+					<Anchor point="TOP" offset="8" />
+				</Area>
+			</Frame>
+
+			<Frame name="MerchantText6" renderer="DefaultRenderer" id="6">
+				<Property name="Font" value="SmallLabelFont" />
+
+				<Area>
+					<Anchor point="TOP" relativeTo="MerchantButton6" offset="0" />
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="MerchantButton6" offset="8" />
+					<Anchor point="RIGHT" />
+					<Anchor point="BOTTOM" offset="-8" />
+					<Size><AbsDimension x="0" y="44" /></Size>
+				</Area>
+						
+				<Visual>
+					<ImagerySection name="Text">
+						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
+					</ImagerySection>
+					<StateImagery name="Enabled">
+						<Layer>
+							<Section section="Text" />
+						</Layer>
+					</StateImagery>
+					<StateImagery name="Disabled">
+						<Layer>
+							<Section section="Text" />
+						</Layer>
+					</StateImagery>
+				</Visual>
+			</Frame>
+		</Frame>
+		
+		<Frame name="MerchantButton7Border" inherits="LootButtonBorderTemplate">
+			<Area>
+				<Anchor point="LEFT" relativeTo="MerchantButton5Border" />
+				<Anchor point="RIGHT" relativeTo="MerchantButton5Border" />
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="MerchantButton5Border" offset="8" />
+			</Area>
+			
+			<Frame name="MerchantButton7" inherits="LootButtonTemplate" id="7">
+				<Area>
+					<Anchor point="LEFT" offset="8" />
+					<Anchor point="TOP" offset="8" />
+				</Area>
+			</Frame>
+
+			<Frame name="MerchantText7" renderer="DefaultRenderer" id="7">
+				<Property name="Font" value="SmallLabelFont" />
+
+				<Area>
+					<Anchor point="TOP" relativeTo="MerchantButton7" offset="0" />
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="MerchantButton7" offset="8" />
+					<Anchor point="RIGHT" />
+					<Anchor point="BOTTOM" offset="-8" />
+					<Size><AbsDimension x="0" y="44" /></Size>
+				</Area>
+						
+				<Visual>
+					<ImagerySection name="Text">
+						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
+					</ImagerySection>
+					<StateImagery name="Enabled">
+						<Layer>
+							<Section section="Text" />
+						</Layer>
+					</StateImagery>
+					<StateImagery name="Disabled">
+						<Layer>
+							<Section section="Text" />
+						</Layer>
+					</StateImagery>
+				</Visual>
+			</Frame>
+		</Frame>
+		
+		<Frame name="MerchantButton8Border" inherits="LootButtonBorderTemplate">
+			<Area>
+				<Anchor point="LEFT" relativeTo="MerchantButton6Border" />
+				<Anchor point="RIGHT" relativeTo="MerchantButton6Border" />
+				<Anchor point="TOP" relativeTo="MerchantButton7Border" />
+			</Area>
+			
+			<Frame name="MerchantButton8" inherits="LootButtonTemplate" id="8">
+				<Area>
+					<Anchor point="LEFT" offset="8" />
+					<Anchor point="TOP" offset="8" />
+				</Area>
+			</Frame>
+
+			<Frame name="MerchantText8" renderer="DefaultRenderer" id="8">
+				<Property name="Font" value="SmallLabelFont" />
+
+				<Area>
+					<Anchor point="TOP" relativeTo="MerchantButton8" offset="0" />
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="MerchantButton8" offset="8" />
+					<Anchor point="RIGHT" />
+					<Anchor point="BOTTOM" offset="-8" />
+					<Size><AbsDimension x="0" y="44" /></Size>
+				</Area>
+						
+				<Visual>
+					<ImagerySection name="Text">
+						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
+					</ImagerySection>
+					<StateImagery name="Enabled">
+						<Layer>
+							<Section section="Text" />
+						</Layer>
+					</StateImagery>
+					<StateImagery name="Disabled">
+						<Layer>
+							<Section section="Text" />
+						</Layer>
+					</StateImagery>
+				</Visual>
+			</Frame>
+		</Frame>
+		
+		<Frame name="MerchantButton9Border" inherits="LootButtonBorderTemplate">
+			<Area>
+				<Anchor point="LEFT" relativeTo="MerchantButton7Border" />
+				<Anchor point="RIGHT" relativeTo="MerchantButton7Border" />
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="MerchantButton7Border" offset="8" />
+			</Area>
+			
+			<Frame name="MerchantButton9" inherits="LootButtonTemplate" id="9">
+				<Area>
+					<Anchor point="LEFT" offset="8" />
+					<Anchor point="TOP" offset="8" />
+				</Area>
+			</Frame>
+
+			<Frame name="MerchantText9" renderer="DefaultRenderer" id="9">
+				<Property name="Font" value="SmallLabelFont" />
+
+				<Area>
+					<Anchor point="TOP" relativeTo="MerchantButton9" offset="0" />
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="MerchantButton9" offset="8" />
+					<Anchor point="RIGHT" />
+					<Anchor point="BOTTOM" offset="-8" />
+					<Size><AbsDimension x="0" y="44" /></Size>
+				</Area>
+						
+				<Visual>
+					<ImagerySection name="Text">
+						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
+					</ImagerySection>
+					<StateImagery name="Enabled">
+						<Layer>
+							<Section section="Text" />
+						</Layer>
+					</StateImagery>
+					<StateImagery name="Disabled">
+						<Layer>
+							<Section section="Text" />
+						</Layer>
+					</StateImagery>
+				</Visual>
+			</Frame>
+		</Frame>
+		
+		<Frame name="MerchantButton10Border" inherits="LootButtonBorderTemplate">
+			<Area>
+				<Anchor point="LEFT" relativeTo="MerchantButton8Border" />
+				<Anchor point="RIGHT" relativeTo="MerchantButton8Border" />
+				<Anchor point="TOP" relativeTo="MerchantButton9Border" />
+			</Area>
+			
+			<Frame name="MerchantButton10" inherits="LootButtonTemplate" id="10">
+				<Area>
+					<Anchor point="LEFT" offset="8" />
+					<Anchor point="TOP" offset="8" />
+				</Area>
+			</Frame>
+
+			<Frame name="MerchantText10" renderer="DefaultRenderer" id="10">
+				<Property name="Font" value="SmallLabelFont" />
+
+				<Area>
+					<Anchor point="TOP" relativeTo="MerchantButton10" offset="0" />
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="MerchantButton10" offset="8" />
+					<Anchor point="RIGHT" />
+					<Anchor point="BOTTOM" offset="-8" />
+					<Size><AbsDimension x="0" y="44" /></Size>
+				</Area>
+						
+				<Visual>
+					<ImagerySection name="Text">
+						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
+					</ImagerySection>
+					<StateImagery name="Enabled">
+						<Layer>
+							<Section section="Text" />
+						</Layer>
+					</StateImagery>
+					<StateImagery name="Disabled">
+						<Layer>
+							<Section section="Text" />
+						</Layer>
+					</StateImagery>
+				</Visual>
+			</Frame>
+		</Frame>
+		
+		<Frame name="MerchantButton11Border" inherits="LootButtonBorderTemplate">
+			<Area>
+				<Anchor point="LEFT" relativeTo="MerchantButton9Border" />
+				<Anchor point="RIGHT" relativeTo="MerchantButton9Border" />
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="MerchantButton9Border" offset="8" />
+			</Area>
+			
+			<Frame name="MerchantButton11" inherits="LootButtonTemplate" id="11">
+				<Area>
+					<Anchor point="LEFT" offset="8" />
+					<Anchor point="TOP" offset="8" />
+				</Area>
+			</Frame>
+
+			<Frame name="MerchantText11" renderer="DefaultRenderer" id="11">
+				<Property name="Font" value="SmallLabelFont" />
+
+				<Area>
+					<Anchor point="TOP" relativeTo="MerchantButton11" offset="0" />
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="MerchantButton11" offset="8" />
+					<Anchor point="RIGHT" />
+					<Anchor point="BOTTOM" offset="-8" />
+					<Size><AbsDimension x="0" y="44" /></Size>
+				</Area>
+						
+				<Visual>
+					<ImagerySection name="Text">
+						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
+					</ImagerySection>
+					<StateImagery name="Enabled">
+						<Layer>
+							<Section section="Text" />
+						</Layer>
+					</StateImagery>
+					<StateImagery name="Disabled">
+						<Layer>
+							<Section section="Text" />
+						</Layer>
+					</StateImagery>
+				</Visual>
+			</Frame>
+		</Frame>
+		
+		<Frame name="MerchantButton12Border" inherits="LootButtonBorderTemplate">
+			<Area>
+				<Anchor point="LEFT" relativeTo="MerchantButton10Border" />
+				<Anchor point="RIGHT" relativeTo="MerchantButton10Border" />
+				<Anchor point="TOP" relativeTo="MerchantButton11Border" />
+			</Area>
+			
+			<Frame name="MerchantButton12" inherits="LootButtonTemplate" id="12">
+				<Area>
+					<Anchor point="LEFT" offset="8" />
+					<Anchor point="TOP" offset="8" />
+				</Area>
+			</Frame>
+
+			<Frame name="MerchantText12" renderer="DefaultRenderer" id="12">
+				<Property name="Font" value="SmallLabelFont" />
+
+				<Area>
+					<Anchor point="TOP" relativeTo="MerchantButton12" offset="0" />
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="MerchantButton12" offset="8" />
+					<Anchor point="RIGHT" />
+					<Anchor point="BOTTOM" offset="-8" />
+					<Size><AbsDimension x="0" y="44" /></Size>
+				</Area>
+						
+				<Visual>
+					<ImagerySection name="Text">
+						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
+					</ImagerySection>
+					<StateImagery name="Enabled">
+						<Layer>
+							<Section section="Text" />
+						</Layer>
+					</StateImagery>
+					<StateImagery name="Disabled">
+						<Layer>
+							<Section section="Text" />
+						</Layer>
+					</StateImagery>
+				</Visual>
+			</Frame>
+		</Frame>
+		
 	</Frame>
 </UiLayout>
