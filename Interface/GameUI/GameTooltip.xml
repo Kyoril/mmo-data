@@ -55,6 +55,27 @@
             </Area>
         </Frame>
 
+		<Frame name="TooltipMoneyText" inherits="TextSmall">
+			<Property name="Text" value="SELL_PRICE" />
+			<Property name="Font" value="SmallLabelFont" />
+			
+            <Area>
+                <Anchor point="LEFT" offset="16" />
+                <Anchor point="RIGHT" offset="-16" />
+                <Anchor point="BOTTOM" offset="-16" />
+            </Area>
+		</Frame>
+
+		<Frame name="TooltipMoneyFrame" inherits="MoneyFrameTemplate">
+			<Property name="Visible" value="False" />
+			
+			<Area>
+				<Anchor point="BOTTOM" offset="-16" />
+				<Anchor point="LEFT" offset="16" />
+				<Anchor point="RIGHT" offset="-16" />
+			</Area>
+		</Frame>
+
 		<Area>
 			<Size><AbsDimension x="540" y="96" /></Size>
 			<Anchor point="RIGHT" offset="-64" />

@@ -2,29 +2,6 @@
 <UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
 	<Script file="InventoryFrame.lua" />
 
-	<Frame name="MoneyText" renderer="DefaultRenderer">
-		<Property name="Font" value="DefaultSmall" />
-
-		<Visual>
-			<ImagerySection name="Text">
-				<TextComponent color="FFFFFFFF" horzAlign="RIGHT" vertAlign="TOP" />
-			</ImagerySection>
-			<StateImagery name="Enabled">
-				<Layer>
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer>
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-		</Visual>
-		<Area>
-			<Size><AbsDimension x="0" y="44" /></Size>
-		</Area>
-	</Frame>
-
     <Frame name="InventoryFrame" renderer="DefaultRenderer" parent="GameParent">
 		<Property name="Visible" value="False" />
 		

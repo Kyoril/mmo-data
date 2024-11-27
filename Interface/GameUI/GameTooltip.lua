@@ -23,6 +23,9 @@ function GameTooltip_Clear()
     
     TooltipHeight = 48;
     GameTooltip:SetHeight(TooltipHeight);
+
+    TooltipMoneyFrame:Hide(); 
+    TooltipMoneyText:Hide();
 end
 
 function GameTooltip_AddLine(line, alignment, color)
@@ -47,6 +50,16 @@ function GameTooltip_AddLine(line, alignment, color)
     local textHeight = lineFrame:GetTextHeight();
     TooltipHeight = TooltipHeight + textHeight;
     lineFrame:SetHeight(textHeight);
+
+    GameTooltip:SetHeight(TooltipHeight);
+end
+
+function GameTooltip_SetMoney(money)
+    TooltipHeight = TooltipHeight + TooltipMoneyFrame:GetHeight() + 8;
+    
+    RefreshMoneyFrame("TooltipMoneyFrame", money, false, false, true);
+    TooltipMoneyFrame:Show();
+    TooltipMoneyText:Show();
 
     GameTooltip:SetHeight(TooltipHeight);
 end
@@ -83,6 +96,11 @@ function GameTooltip_SetItem(slot, item)
         -- TODO: Get actual value
         local durability = item.maxdurability;
         GameTooltip_AddLine(string.format(Localize("DURABILITY_VALUE"), durability, item.maxdurability) , TOOLTIP_LINE_LEFT);
+    end
+
+    if (item.sellPrice > 0) then
+        local count = GetInventorySlotCount("player", slot);
+        GameTooltip_SetMoney(item.sellPrice * count);
     end
 end
 

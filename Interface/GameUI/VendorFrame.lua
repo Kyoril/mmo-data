@@ -8,6 +8,8 @@ function VendorFrame_UpdateVendorItems()
         local itemText = _G["VendorText" .. i];
         local button = _G["VendorButton" .. i];
 
+        local money = _G["VendorMoney" .. i];
+
         if (index <= numItems) then
             local name, texture, price, quantity, numAvailable, isUsable = GetVendorItemInfo(index - 1);
             itemText:SetText(name);
@@ -17,8 +19,13 @@ function VendorFrame_UpdateVendorItems()
             else
                 button:SetText("");
             end
+
+            RefreshMoneyFrame("VendorMoney" .. i, price, false, false, true);
+            money:Show();
+
             border:Enable();
         else
+            money:Hide();
             itemText:SetText("");
             button:SetProperty("Icon", "");
             border:Disable();

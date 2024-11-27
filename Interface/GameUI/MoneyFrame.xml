@@ -2,40 +2,65 @@
 <UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
 	<Script file="MoneyFrame.lua" />
 	
-    <Frame name="MoneyFrameTemplate">		
+	<Frame name="MoneyText" renderer="DefaultRenderer">
+		<Property name="Font" value="DefaultSmall" />
+
+		<Visual>
+			<ImagerySection name="Text">
+				<TextComponent color="FFFFFFFF" horzAlign="RIGHT" vertAlign="TOP" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+		</Visual>
 		<Area>
-			<Size><AbsDimension x="540" y="96" /></Size>
+			<Size><AbsDimension x="100" y="44" /></Size>
+		</Area>
+	</Frame>
+
+    <Frame name="MoneyFrameTemplate">
+		<Property name="Font" value="SmallLabelFont" />
+
+		<Area>
+			<Size><AbsDimension x="540" y="44" /></Size>
 			<Anchor point="RIGHT" offset="-64" />
 			<Anchor point="BOTTOM" offset="-64" />
 		</Area>
 
-        <Frame name="CopperButton" renderer="DefaultRenderer">
+        <Frame name="CopperButton" inherits="MoneyText">
             <Property name="Text" value="0" />
+			<Property name="Color" value="FFCC8000" />
 
             <Area>
-                <Size><AbsDimension x="96" y="96" /></Size>
                 <Anchor point="RIGHT" offset="0" />
                 <Anchor point="BOTTOM" offset="0" />
                 <Anchor point="TOP" offset="0" />
             </Area>
         </Frame>
         
-        <Frame name="SilverButton" renderer="DefaultRenderer">
+        <Frame name="SilverButton" inherits="MoneyText">
             <Property name="Text" value="0" />
+			<Property name="Color" value="FFFFFFFF" />
             
             <Area>
-                <Size><AbsDimension x="96" y="96" /></Size>
                 <Anchor point="RIGHT" relativeTo="CopperButton" relativePoint="LEFT" offset="0" />
                 <Anchor point="BOTTOM" offset="0" />
                 <Anchor point="TOP" offset="0" />
             </Area>
         </Frame>
         
-        <Frame name="GoldButton" renderer="DefaultRenderer">
+        <Frame name="GoldButton" inherits="MoneyText">
             <Property name="Text" value="0" />
+			<Property name="Color" value="FFFFCC00" />
 
             <Area>
-                <Size><AbsDimension x="96" y="96" /></Size>
                 <Anchor point="RIGHT" relativeTo="SilverButton" relativePoint="LEFT" offset="0" />
                 <Anchor point="BOTTOM" offset="0" />
                 <Anchor point="TOP" offset="0" />

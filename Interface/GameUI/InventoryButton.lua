@@ -24,9 +24,13 @@ function InventoryItemButton_OnEnter(this)
     GameTooltip:Show();
 end
 
-function InventoryItemButton_OnClick(this)
-    -- Activate item swap action
-    PickupContainerItem(this.id);
+function InventoryItemButton_OnClick(this, button)
+    if (button == "LEFT") then
+        -- Activate item swap action
+        PickupContainerItem(this.id);
+    elseif (button == "RIGHT") then
+        UseContainerItem(this.id);
+    end
 end
 
 function InventoryItemButton_OnLeave(this)

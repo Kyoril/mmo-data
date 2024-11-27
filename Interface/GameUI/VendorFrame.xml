@@ -59,6 +59,14 @@
 					</StateImagery>
 				</Visual>
 			</Frame>
+
+			<Frame name="VendorMoney1" inherits="MoneyFrameTemplate">
+				<Area>
+					<Anchor point="BOTTOM" relativeTo="VendorButton1Border" offset="-8" />
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="VendorButton1" offset="8" />
+					<Anchor point="RIGHT" relativeTo="VendorButton1Border" offset="-8" />
+				</Area>
+			</Frame>
 		</Frame>
 
 		<Frame name="VendorButton2Border" inherits="LootButtonBorderTemplate">
@@ -101,6 +109,14 @@
 						</Layer>
 					</StateImagery>
 				</Visual>
+			</Frame>
+
+			<Frame name="VendorMoney2" inherits="MoneyFrameTemplate">
+				<Area>
+					<Anchor point="BOTTOM" relativeTo="VendorButton2Border" offset="-8" />
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="VendorButton2" offset="8" />
+					<Anchor point="RIGHT" relativeTo="VendorButton2Border" offset="-8" />
+				</Area>
 			</Frame>
 		</Frame>
 
@@ -145,6 +161,14 @@
 					</StateImagery>
 				</Visual>
 			</Frame>
+
+			<Frame name="VendorMoney3" inherits="MoneyFrameTemplate">
+				<Area>
+					<Anchor point="BOTTOM" relativeTo="VendorButton3Border" offset="-8" />
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="VendorButton3" offset="8" />
+					<Anchor point="RIGHT" relativeTo="VendorButton3Border" offset="-8" />
+				</Area>
+			</Frame>
 		</Frame>
 
 		<Frame name="VendorButton4Border" inherits="LootButtonBorderTemplate">
@@ -187,6 +211,14 @@
 						</Layer>
 					</StateImagery>
 				</Visual>
+			</Frame>
+			
+			<Frame name="VendorMoney4" inherits="MoneyFrameTemplate">
+				<Area>
+					<Anchor point="BOTTOM" relativeTo="VendorButton4Border" offset="-8" />
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="VendorButton4" offset="8" />
+					<Anchor point="RIGHT" relativeTo="VendorButton4Border" offset="-8" />
+				</Area>
 			</Frame>
 		</Frame>
 
@@ -231,6 +263,14 @@
 					</StateImagery>
 				</Visual>
 			</Frame>
+			
+			<Frame name="VendorMoney5" inherits="MoneyFrameTemplate">
+				<Area>
+					<Anchor point="BOTTOM" relativeTo="VendorButton5Border" offset="-8" />
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="VendorButton5" offset="8" />
+					<Anchor point="RIGHT" relativeTo="VendorButton5Border" offset="-8" />
+				</Area>
+			</Frame>
 		</Frame>
 		
 		<Frame name="VendorButton6Border" inherits="LootButtonBorderTemplate">
@@ -273,6 +313,14 @@
 						</Layer>
 					</StateImagery>
 				</Visual>
+			</Frame>
+
+			<Frame name="VendorMoney6" inherits="MoneyFrameTemplate">
+				<Area>
+					<Anchor point="BOTTOM" relativeTo="VendorButton6Border" offset="-8" />
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="VendorButton6" offset="8" />
+					<Anchor point="RIGHT" relativeTo="VendorButton6Border" offset="-8" />
+				</Area>
 			</Frame>
 		</Frame>
 		
@@ -317,6 +365,14 @@
 					</StateImagery>
 				</Visual>
 			</Frame>
+			
+			<Frame name="VendorMoney7" inherits="MoneyFrameTemplate">
+				<Area>
+					<Anchor point="BOTTOM" relativeTo="VendorButton7Border" offset="-8" />
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="VendorButton7" offset="8" />
+					<Anchor point="RIGHT" relativeTo="VendorButton7Border" offset="-8" />
+				</Area>
+			</Frame>
 		</Frame>
 		
 		<Frame name="VendorButton8Border" inherits="LootButtonBorderTemplate">
@@ -359,6 +415,14 @@
 						</Layer>
 					</StateImagery>
 				</Visual>
+			</Frame>
+			
+			<Frame name="VendorMoney8" inherits="MoneyFrameTemplate">
+				<Area>
+					<Anchor point="BOTTOM" relativeTo="VendorButton8Border" offset="-8" />
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="VendorButton8" offset="8" />
+					<Anchor point="RIGHT" relativeTo="VendorButton8Border" offset="-8" />
+				</Area>
 			</Frame>
 		</Frame>
 		
@@ -403,6 +467,14 @@
 					</StateImagery>
 				</Visual>
 			</Frame>
+			
+			<Frame name="VendorMoney9" inherits="MoneyFrameTemplate">
+				<Area>
+					<Anchor point="BOTTOM" relativeTo="VendorButton9Border" offset="-8" />
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="VendorButton9" offset="8" />
+					<Anchor point="RIGHT" relativeTo="VendorButton9Border" offset="-8" />
+				</Area>
+			</Frame>
 		</Frame>
 		
 		<Frame name="VendorButton10Border" inherits="LootButtonBorderTemplate">
@@ -445,6 +517,14 @@
 						</Layer>
 					</StateImagery>
 				</Visual>
+			</Frame>
+
+			<Frame name="VendorMoney10" inherits="MoneyFrameTemplate">
+				<Area>
+					<Anchor point="BOTTOM" relativeTo="VendorButton10Border" offset="-8" />
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="VendorButton10" offset="8" />
+					<Anchor point="RIGHT" relativeTo="VendorButton10Border" offset="-8" />
+				</Area>
 			</Frame>
 		</Frame>
 		
@@ -489,6 +569,14 @@
 					</StateImagery>
 				</Visual>
 			</Frame>
+
+			<Frame name="VendorMoney11" inherits="MoneyFrameTemplate">
+				<Area>
+					<Anchor point="BOTTOM" relativeTo="VendorButton11Border" offset="-8" />
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="VendorButton11" offset="8" />
+					<Anchor point="RIGHT" relativeTo="VendorButton11Border" offset="-8" />
+				</Area>
+			</Frame>
 		</Frame>
 		
 		<Frame name="VendorButton12Border" inherits="LootButtonBorderTemplate">
@@ -531,6 +619,14 @@
 						</Layer>
 					</StateImagery>
 				</Visual>
+			</Frame>
+			
+			<Frame name="VendorMoney12" inherits="MoneyFrameTemplate">
+				<Area>
+					<Anchor point="BOTTOM" relativeTo="VendorButton12Border" offset="-8" />
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="VendorButton12" offset="8" />
+					<Anchor point="RIGHT" relativeTo="VendorButton12Border" offset="-8" />
+				</Area>
 			</Frame>
 		</Frame>
 		
