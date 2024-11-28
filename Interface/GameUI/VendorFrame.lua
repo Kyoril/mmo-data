@@ -29,6 +29,7 @@ function VendorFrame_UpdateVendorItems()
             local name, texture, price, quantity, numAvailable, isUsable = GetVendorItemInfo(index - 1);
             itemText:SetText(name);
             button:SetProperty("Icon", texture);
+            button.id = index - 1;
             if (quantity > 0) then
                 button:SetText(quantity);
             else
@@ -84,7 +85,7 @@ end
 
 function VendorButton_OnClick(self, button)
     if (button == "RIGHT") then
-        print("TODO: Buy item from vendor if possible");
+        BuyVendorItem(self.id);
     elseif(button == "LEFT") then
         printf("TODO: Grab item from vendor");
     end
