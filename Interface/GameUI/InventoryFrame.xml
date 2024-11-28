@@ -57,36 +57,11 @@
 				<Size><AbsDimension x="0" y="72" /></Size>
 			</Area>
 
-			<Frame name="CopperText" inherits="MoneyText">
-				<Property name="Color" value="FFCC8000" />
-
+			<Frame name="PlayerMoneyFrame" inherits="MoneyFrameTemplate">
 				<Area>
-					<Anchor point="BOTTOM" offset="-8" />
+					<Anchor point="BOTTOM" offset="-16" />
 					<Anchor point="RIGHT" offset="-16" />
-					<Anchor point="TOP" offset="8" />
-					<Size><AbsDimension x="100" y="72" /></Size>
-				</Area>
-			</Frame>
-
-			<Frame name="SilverText" inherits="MoneyText">
-				<Property name="Color" value="FFFFFFFF" />
-
-				<Area>
-					<Anchor point="BOTTOM" offset="-8" />
-					<Anchor point="RIGHT" offset="-16" relativeTo="CopperText" relativePoint="LEFT" />
-					<Anchor point="TOP" offset="8" />
-					<Size><AbsDimension x="100" y="72" /></Size>
-				</Area>
-			</Frame>
-			
-			<Frame name="GoldText" inherits="MoneyText">
-				<Property name="Color" value="FFFFCC00" />
-
-				<Area>
-					<Anchor point="BOTTOM" offset="-8" />
-					<Anchor point="RIGHT" offset="-16" relativeTo="SilverText" relativePoint="LEFT" />
-					<Anchor point="TOP" offset="8" />
-					<Size><AbsDimension x="100" y="72" /></Size>
+					<Size><AbsDimension x="100" y="44" /></Size>
 				</Area>
 			</Frame>
 

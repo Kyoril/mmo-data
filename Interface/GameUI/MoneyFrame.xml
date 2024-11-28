@@ -7,7 +7,7 @@
 
 		<Visual>
 			<ImagerySection name="Text">
-				<TextComponent color="FFFFFFFF" horzAlign="RIGHT" vertAlign="TOP" />
+				<TextComponent color="FFFFFFFF" horzAlign="LEFT" vertAlign="TOP" />
 			</ImagerySection>
 			<StateImagery name="Enabled">
 				<Layer>
@@ -22,6 +22,32 @@
 		</Visual>
 		<Area>
 			<Size><AbsDimension x="100" y="44" /></Size>
+		</Area>
+	</Frame>
+
+	<Frame name="MoneyCoinFrame" renderer="DefaultRenderer">
+		<Property name="Icon" />
+
+		<Visual>
+			<ImagerySection name="Image">
+				<ImageComponent>
+					<PropertyValue property="Icon" />
+				</ImageComponent>
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Image" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="Image" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+
+		<Area>
+			<Size><AbsDimension x="44" y="44" /></Size>
 		</Area>
 	</Frame>
 
@@ -44,7 +70,7 @@
                 <Anchor point="TOP" offset="0" />
             </Area>
         </Frame>
-        
+		
         <Frame name="SilverButton" inherits="MoneyText">
             <Property name="Text" value="0" />
 			<Property name="Color" value="FFFFFFFF" />
@@ -66,5 +92,17 @@
                 <Anchor point="TOP" offset="0" />
             </Area>
         </Frame>
+
+		<Frame name="CopperCoin" inherits="MoneyCoinFrame">
+			<Property name="Icon" value="Interface/Icons/Copper.htex" />
+		</Frame>
+        
+		<Frame name="SilverCoin" inherits="MoneyCoinFrame">
+			<Property name="Icon" value="Interface/Icons/Silver.htex" />
+		</Frame>
+
+		<Frame name="GoldCoin" inherits="MoneyCoinFrame">
+			<Property name="Icon" value="Interface/Icons/Gold.htex" />
+		</Frame>
 	</Frame>
 </UiLayout>

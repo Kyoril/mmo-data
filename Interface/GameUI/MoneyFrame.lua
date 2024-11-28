@@ -2,10 +2,10 @@
 COPPER_PER_SILVER = 100;
 SILVER_PER_GOLD = 100;
 COPPER_PER_GOLD = COPPER_PER_SILVER * SILVER_PER_GOLD;
-MONEY_ICON_WIDTH = 0;
-MONEY_BUTTON_SPACING = 16;
-MONEY_ICON_WIDTH_SMALL = 0;
-MONEY_BUTTON_SPACING_SMALL = 8;
+MONEY_ICON_WIDTH = 44;
+MONEY_BUTTON_SPACING = 4;
+MONEY_ICON_WIDTH_SMALL = 44;
+MONEY_BUTTON_SPACING_SMALL = 4;
 
 MoneyTypeInfo = { };
 MoneyTypeInfo["PLAYER"] = {
@@ -90,6 +90,10 @@ function RefreshMoneyFrame(frameName, money, small, collapse, showSmallerCoins)
 	local silverButton = _G[frameName.."_SilverButton"];
 	local copperButton = _G[frameName.."_CopperButton"];
 
+	local copperIcon = _G[frameName.."_CopperCoin"];
+	local silverIcon = _G[frameName.."_SilverCoin"];
+	local goldIcon = _G[frameName.."_GoldCoin"];
+
 	local iconWidth = MONEY_ICON_WIDTH;
 	local spacing = MONEY_BUTTON_SPACING;
 	if ( small ) then
@@ -100,12 +104,15 @@ function RefreshMoneyFrame(frameName, money, small, collapse, showSmallerCoins)
 	goldButton:SetText(tostring(gold));
 	goldButton:SetWidth(goldButton:GetTextWidth() + iconWidth);
 	goldButton:Show();
+	goldIcon:Show();
 	silverButton:SetText(tostring(silver));
 	silverButton:SetWidth(silverButton:GetTextWidth() + iconWidth);
 	silverButton:Show();
+	silverIcon:Show();
 	copperButton:SetText(tostring(copper));
 	copperButton:SetWidth(copperButton:GetTextWidth() + iconWidth);
 	copperButton:Show();
+	copperIcon:Show();
 
 	local frame = _G[frameName];
 	frame.staticMoney = money;
@@ -123,6 +130,7 @@ function RefreshMoneyFrame(frameName, money, small, collapse, showSmallerCoins)
 		end
 	else
 		goldButton:Hide();
+		goldIcon:Hide();
 	end
 
 	if ( silver > 0 or showLowerDenominations ) then
@@ -137,11 +145,12 @@ function RefreshMoneyFrame(frameName, money, small, collapse, showSmallerCoins)
 		end
 	else
 		silverButton:Hide();
+		silverIcon:Hide();
 		goldButton:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, silverButton, 0);
 	end
 
 	-- Used if we're not showing lower denominations
-	if ( copper > 0 or showLowerDenominations or showSmallerCoins) then
+	if ( copper > 0 or showLowerDenominations or showSmallerCoins) then		
 		width = width + copperButton:GetWidth();
 		silverButton:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.LEFT, copperButton, -spacing);
 		if ( silverButton:IsVisible() ) then
@@ -149,16 +158,26 @@ function RefreshMoneyFrame(frameName, money, small, collapse, showSmallerCoins)
 		end
 	else
 		copperButton:Hide();
+		copperIcon:Hide();
 		silverButton:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, copperButton, 0);
 	end
+
+	silverIcon:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, silverButton, 0);
+	silverIcon:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.BOTTOM, silverButton, 0);
+
+	goldIcon:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, goldButton, 0);
+	goldIcon:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.BOTTOM, goldButton, 0);
+
+	copperIcon:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, copperButton, 0);
+	copperIcon:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.BOTTOM, copperButton, 0);
 
 	frame:SetWidth(width);
 end
 
 function SetMoneyFrameColor(frameName, r, g, b)
-	local goldButton = getglobal(frameName.."GoldButton");
-	local silverButton = getglobal(frameName.."SilverButton");
-	local copperButton = getglobal(frameName.."CopperButton");
+	local goldButton = _G[frameName.."_GoldButton"];
+	local silverButton = _G[frameName.."_SilverButton"];
+	local copperButton = _G[frameName.."_CopperButton"];
 
 	goldButton:SetTextColor(r, g, b);
 	silverButton:SetTextColor(r, g, b);

@@ -1,9 +1,9 @@
-VENDOR_ITEMS_PER_PAGE = 12;
+VENDOR_ITEMS_PER_PAGE = 14;
 
 function VendorFrame_UpdateVendorItems()
     local numItems = GetVendorNumItems();
 
-    if numItems >= VENDOR_ITEMS_PER_PAGE then
+    if VendorFrame.page * VENDOR_ITEMS_PER_PAGE < numItems then
         VendorNextPageButton:Enable();
     else
         VendorNextPageButton:Disable();
@@ -15,7 +15,7 @@ function VendorFrame_UpdateVendorItems()
         VendorPrevPageButton:Enable();
     end
 
-    VendorPageLabel:SetText("Page " .. tostring(VendorFrame.page));
+    VendorPageLabel:SetText(string.format(Localize("SPELL_BOOK_PAGE_FORMAT"), VendorFrame.page));
 
     for i = 1, VENDOR_ITEMS_PER_PAGE, 1 do
         local index = (((VendorFrame.page - 1) * VENDOR_ITEMS_PER_PAGE) + i);
@@ -82,12 +82,26 @@ function VendorFrame_Close(self)
     HideUIPanel(self);
 end
 
+function VendorButton_OnClick(self, button)
+    if (button == "RIGHT") then
+        print("TODO: Buy item from vendor if possible");
+    elseif(button == "LEFT") then
+        printf("TODO: Grab item from vendor");
+    end
+end
+
 function VendorFrame_OnLoad(self)
     -- Initialize side panel functionality first, like the close button
     SidePanel_OnLoad(self);
 
     self:RegisterEvent("VENDOR_SHOW", VendorFrame_Show);
     self:RegisterEvent("VENDOR_CLOSED", VendorFrame_Close);
+
+    
+    for i = 1, VENDOR_ITEMS_PER_PAGE, 1 do
+        local button = _G["VendorButton" .. i];
+        button:SetClickedHandler(VendorButton_OnClick);
+    end
 end
 
 function VendorFrame_OnShow(self)
