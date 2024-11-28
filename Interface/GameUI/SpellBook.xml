@@ -230,7 +230,7 @@
 			<Property name="Text" value="Page 1" />
 
             <Area>
-                <Anchor point="BOTTOM" offset="-128" />
+                <Anchor point="BOTTOM" offset="-48" />
                 <Anchor point="LEFT" />
 				<Anchor point="RIGHT" />
 				<Size><AbsDimension y="39" /></Size>
@@ -238,12 +238,12 @@
         </Frame>
 
         <Frame inherits="GlueButton" name="SpellBookPrevPageButton">
-			<Property name="Text" value="&lt;" />
+			<Property name="Icon" value="Interface/Icons/fg4_iconsGold_leftArrow.htex" />
 
             <Area>
-                <Anchor point="BOTTOM" offset="-64" />
-                <Anchor point="LEFT" offset="192" />
-				<Size><AbsDimension x="128" y="128" /></Size>
+                <Anchor point="BOTTOM" offset="-24" />
+                <Anchor point="LEFT" offset="24" />
+				<Size><AbsDimension x="96" y="96" /></Size>
             </Area>
 
 			<Scripts>
@@ -256,12 +256,12 @@
         </Frame>
 
         <Frame inherits="GlueButton" name="SpellBookNextPageButton">
-			<Property name="Text" value="&gt;" />
+			<Property name="Icon" value="Interface/Icons/fg4_iconsGold_rightArrow.htex" />
 
             <Area>
-                <Anchor point="BOTTOM" offset="-64" />
-                <Anchor point="RIGHT" offset="-192" />
-				<Size><AbsDimension x="128" y="128" /></Size>
+                <Anchor point="BOTTOM" offset="-24" />
+                <Anchor point="RIGHT" offset="-24" />
+				<Size><AbsDimension x="96" y="96" /></Size>
             </Area>
 			
 			<Scripts>

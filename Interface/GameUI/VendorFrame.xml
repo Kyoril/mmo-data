@@ -630,5 +630,52 @@
 			</Frame>
 		</Frame>
 		
+        <Frame inherits="TextCenter" name="VendorPageLabel">
+			<Property name="Text" value="Page 1" />
+
+            <Area>
+                <Anchor point="BOTTOM" offset="-48" />
+                <Anchor point="LEFT" />
+				<Anchor point="RIGHT" />
+				<Size><AbsDimension y="39" /></Size>
+            </Area>
+        </Frame>
+
+        <Frame inherits="GlueButton" name="VendorPrevPageButton">
+			<Property name="Icon" value="Interface/Icons/fg4_iconsGold_leftArrow.htex" />
+
+            <Area>
+                <Anchor point="BOTTOM" offset="-24" />
+                <Anchor point="LEFT" offset="24" />
+				<Size><AbsDimension x="96" y="96" /></Size>
+            </Area>
+
+			<Scripts>
+				<OnClick>
+					return function(this)
+						VendorFrame_PrevPage()
+					end
+				</OnClick>
+			</Scripts>
+        </Frame>
+
+        <Frame inherits="GlueButton" name="VendorNextPageButton">
+			<Property name="Icon" value="Interface/Icons/fg4_iconsGold_rightArrow.htex" />
+
+            <Area>
+                <Anchor point="BOTTOM" offset="-24" />
+                <Anchor point="RIGHT" offset="-24" />
+				<Size><AbsDimension x="96" y="96" /></Size>
+            </Area>
+			
+			<Scripts>
+				<OnClick>
+					return function(this)
+						VendorFrame_NextPage()
+					end
+				</OnClick>
+			</Scripts>
+        </Frame>
+
 	</Frame>
 </UiLayout>

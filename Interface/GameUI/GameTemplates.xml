@@ -8,6 +8,7 @@
 	<!-- GlueButton template: Common buttons -->
 	<Frame name="GlueButton" type="Button" renderer="ButtonRenderer">
 		<Property name="Font" value="DefaultSmall" />
+		<Property name="Icon" />
 
 		<Visual>
 			<ImagerySection name="NormalFrame">
@@ -25,6 +26,22 @@
 			<ImagerySection name="Caption">
 				<TextComponent color="FFFFD100" horzAlign="CENTER" vertAlign="CENTER" />
 			</ImagerySection>
+			<ImagerySection name="Image">
+				<ImageComponent>
+					<Area>
+						<Inset all="16" />
+					</Area>
+					<PropertyValue property="Icon" />
+				</ImageComponent>
+			</ImagerySection>
+			<ImagerySection name="ImageDisabled">
+				<ImageComponent tint="80888888">
+					<Area>
+						<Inset all="16" />
+					</Area>
+					<PropertyValue property="Icon" />
+				</ImageComponent>
+			</ImagerySection>
 			<!-- TODO: Remove these sections and only use the Caption section with overridden color values -->
 			<ImagerySection name="HoveredCaption">
 				<TextComponent color="FFFFFFFF" horzAlign="CENTER" vertAlign="CENTER" />
@@ -35,24 +52,28 @@
 			<StateImagery name="Normal">
 				<Layer>
 					<Section section="NormalFrame" />
+					<Section section="Image" />
 					<Section section="Caption" color="FFFFD100" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="Hovered">
 				<Layer>
 					<Section section="HoveredFrame" />
+					<Section section="Image" />
 					<Section section="HoveredCaption" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="Pushed">
 				<Layer>
 					<Section section="PushedFrame" />
+					<Section section="Image" />
 					<Section section="Caption" color="FFAAAAAA" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="Disabled">
 				<Layer>
 					<Section section="DisabledFrame" />
+					<Section section="ImageDisabled" />
 					<Section section="DisabledCaption" color="AE888888" />
 				</Layer>
 			</StateImagery>
