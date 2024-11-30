@@ -80,7 +80,7 @@ function VendorFrame_Show(self)
 end
 
 function VendorFrame_Close(self)
-    HideUIPanel(self);
+    HideUIPanel(VendorFrame);
 end
 
 function VendorButton_OnClick(self, button)
@@ -98,7 +98,6 @@ function VendorFrame_OnLoad(self)
     self:RegisterEvent("VENDOR_SHOW", VendorFrame_Show);
     self:RegisterEvent("VENDOR_CLOSED", VendorFrame_Close);
 
-    
     for i = 1, VENDOR_ITEMS_PER_PAGE, 1 do
         local button = _G["VendorButton" .. i];
         button:SetClickedHandler(VendorButton_OnClick);

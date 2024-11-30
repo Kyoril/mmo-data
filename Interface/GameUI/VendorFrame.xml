@@ -16,6 +16,12 @@
 					VendorFrame_OnShow(this);
 				end
 			</OnShow>
+			<OnHide>
+				return function(this)
+					print("Hiding vendor frame");
+					CloseVendor();
+				end
+			</OnHide>
         </Scripts>
 
 		<Frame name="VendorButton1Border" inherits="LootButtonBorderTemplate">
