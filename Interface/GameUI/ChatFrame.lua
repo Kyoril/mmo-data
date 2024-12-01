@@ -36,6 +36,10 @@ function ChatFrame_OnPlayerLevelUp(self, newLevel, health, mana, stamina, streng
     end
 end
 
+function ChatFrame_OnSpellLearned(this, spellName)
+    ChatFrame:AddMessage(string.format(Localize("NEW_ABILITY_LEARNED"), spellName), 1.0, 1.0, 0.0);
+end
+
 function ChatFrame_OnLoad(this)
     this:RegisterEvent("CHAT_MSG_SAY", function(this, character, message)
         ChatFrame:AddMessage(string.format(CHAT_FORMAT_SAY, character, message), 1.0, 1.0, 1.0);
@@ -45,6 +49,7 @@ function ChatFrame_OnLoad(this)
     end)
 
     this:RegisterEvent("PLAYER_LEVEL_UP", ChatFrame_OnPlayerLevelUp);
+    this:RegisterEvent("SPELL_LEARNED", ChatFrame_OnSpellLearned);
 
     ChatFrame:AddMessage("Welcome to the game!", 1.0, 1.0, 0.0);
 end

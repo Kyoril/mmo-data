@@ -110,7 +110,7 @@ end
 function SpellBook_OnLoad(self)
     SpellBookPage = 1;
 
-    self:RegisterEvent("PLAYER_SPELLS_CHANGED", ActionBar_UpdateButtons);
+    self:RegisterEvent("SPELL_LEARNED", ActionBar_UpdateButtons);
 
     for i = 1, SPELLS_PER_PAGE do
         local button = _G["SpellBookButton" .. string.format("%02d", i)];

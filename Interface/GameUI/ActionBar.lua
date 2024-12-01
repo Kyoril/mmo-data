@@ -74,7 +74,7 @@ function ActionBar_UpdateButtons(self)
 end
 
 function ActionBar_OnLoad(self)
-    self:RegisterEvent("PLAYER_SPELLS_CHANGED", ActionBar_UpdateButtons);
+    self:RegisterEvent("SPELL_LEARNED", ActionBar_UpdateButtons);
 
     -- Set up the 12 action bar buttons
     for i = 1, 12 do
