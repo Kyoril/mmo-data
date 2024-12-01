@@ -217,4 +217,8 @@ strings =
 	(key = "QUIVER", string = "Quiver")
 	(key = "RELIC", string = "Relic")
 	(key = "SPELL_RANK_FORMAT", string = "Rank %d")
+	(key = "INVITATION", string = "%s invites you to a group")
+	(key = "YES", string = "Yes")
+	(key = "NO", string = "No")
+	(key = "INVENTORY", string = "Inventory")
 }

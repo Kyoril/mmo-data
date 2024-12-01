@@ -9,8 +9,36 @@ StaticDialogs["DEATH"] = {
 		ReviveMe();
 	end,
 	OnCancel = function()
-	end
-}
+	end,
+	timeout = 0,
+	whileDead = true,
+	notClosableByLogout = true
+};
+
+StaticDialogs["PARTY_INVITE"] = {
+	text = "INVITATION",
+	button1 = "ACCEPT",
+	button2 = "DECLINE",
+	OnAccept = function()
+		AcceptGroup();
+	end,
+	OnCancel = function()
+		DeclineGroup();
+	end,
+	timeout = 60,
+	whileDead = true
+};
+
+StaticDialogs["DELETE_ITEM"] = {
+	text = "DELETE_ITEM",
+	button1 = "YES",
+	button2 = "NO",
+	OnAccept = function()
+		DeleteCursorItem();
+	end,
+	timeout = 0,
+	exclusive = false
+};
 
 function StaticDialog_OnLoad(self)
 
