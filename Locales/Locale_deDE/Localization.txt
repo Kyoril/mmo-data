@@ -231,6 +231,7 @@ strings =
 	(key = "LEVEL_UP_INTELLECT", string = "Eure Intelligenz wurde um %d Punkt(e) erhöht.")
 	(key = "LEVEL_UP_SPIRIT", string = "Eure Willenskraft wurde um %d Punkt(e) erhöht.")
 	(key = "LEVEL_UP_AGILITY", string = "Eure Beweglichkeit wurde um %d Punkt(e) erhöht.")
+	(key = "LEVEL_UP_CHAR_ATTR_POINTS", string = "Ihr habt %d Attributpunkte erhalten.")
 	(key = "NEW_SPELL_LEARNED", string = "Ihr habt einen neuen Zauber erlent: %s")
 	(key = "NEW_ABILITY_LEARNED", string = "Ihr habt eine neue Fähigkeit erlent: %s")
 }

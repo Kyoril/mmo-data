@@ -35,7 +35,13 @@ function CharacterWindow_OnShow(this)
     end
 end
 
+function CharacterWindow_AddAttributeClicked(this)
+    AddAttributePoint(this.id);
+end
+
 function CharacterWindow_RefreshStats()
+    CharacterWindowAttributePointsLabel:SetText(tostring(UnitNumAttributePoints("player")));
+
     for i = 0, 4 do
         local base, modifier = UnitStat("player", i);
 

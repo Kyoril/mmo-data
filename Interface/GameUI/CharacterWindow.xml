@@ -306,6 +306,16 @@
 			</Area>
 		</Frame>
 
+		<Frame name="CharacterWindowAttributePointsLabel" inherits="TextSmallRight">
+			<Property name="Text" value="0" />
+
+			<Area>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterFrameModel" offset="5" />
+				<Anchor point="LEFT" offset="190" />
+				<Anchor point="RIGHT" relativePoint="H_CENTER" offset="-16" />
+			</Area>
+		</Frame>
+
 		<Frame name="CharacterWindowAttributeFrame" renderer="DefaultRenderer">
 			<Visual>
 				<ImagerySection name="Border">
@@ -335,15 +345,28 @@
 				</Area>
 			</Frame>
 
+			<Frame name="CharacterStatAdd0" inherits="GlueButton" id="0">
+				<Property name="Text" value="+" />
+
+				<Area>
+					<Anchor point="TOP" relativeTo="CharacterStatLabel0" offset="-12" />
+					<Anchor point="RIGHT" offset="-12" />
+					<Size><AbsDimension x="64" y="64" /></Size>
+				</Area>
+
+				<Scripts><OnClick>return function(self) CharacterWindow_AddAttributeClicked(self); end</OnClick></Scripts>
+			</Frame>
+			
 			<Frame name="CharacterStat0" inherits="CharacterStatValueTemplate" id="0">
 				<Property name="Text" value="0" />
 
 				<Area>
 					<Anchor point="TOP" relativeTo="CharacterStatLabel0" />
 					<Anchor point="LEFT" offset="8" />
-					<Anchor point="RIGHT" offset="-24" />
+					<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CharacterStatAdd0" offset="-8" />
 				</Area>
 			</Frame>
+			
 			
 			<Frame name="CharacterStatLabel1" inherits="CharacterStatLabelTemplate" id="1">
 				<Property name="Text" value="STRENGTH" />
@@ -355,13 +378,25 @@
 				</Area>
 			</Frame>
 
+			<Frame name="CharacterStatAdd1" inherits="GlueButton" id="1">
+				<Property name="Text" value="+" />
+
+				<Area>
+					<Anchor point="TOP" relativeTo="CharacterStatLabel1" offset="-12" />
+					<Anchor point="RIGHT" offset="-12" />
+					<Size><AbsDimension x="64" y="64" /></Size>
+				</Area>
+
+				<Scripts><OnClick>return function(self) CharacterWindow_AddAttributeClicked(self); end</OnClick></Scripts>
+			</Frame>
+			
 			<Frame name="CharacterStat1" inherits="CharacterStatValueTemplate" id="1">
 				<Property name="Text" value="0" />
 
 				<Area>
 					<Anchor point="TOP" relativeTo="CharacterStatLabel1" />
 					<Anchor point="LEFT" offset="8" />
-					<Anchor point="RIGHT" offset="-24" />
+					<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CharacterStatAdd1" offset="-8" />
 				</Area>
 			</Frame>
 
@@ -375,13 +410,25 @@
 				</Area>
 			</Frame>
 
+			<Frame name="CharacterStatAdd2" inherits="GlueButton" id="2">
+				<Property name="Text" value="+" />
+
+				<Area>
+					<Anchor point="TOP" relativeTo="CharacterStatLabel2" offset="-12" />
+					<Anchor point="RIGHT" offset="-12" />
+					<Size><AbsDimension x="64" y="64" /></Size>
+				</Area>
+
+				<Scripts><OnClick>return function(self) CharacterWindow_AddAttributeClicked(self); end</OnClick></Scripts>
+			</Frame>
+
 			<Frame name="CharacterStat2" inherits="CharacterStatValueTemplate" id="2">
 				<Property name="Text" value="0" />
 
 				<Area>
 					<Anchor point="TOP" relativeTo="CharacterStatLabel2" />
 					<Anchor point="LEFT" offset="8" />
-					<Anchor point="RIGHT" offset="-24" />
+					<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CharacterStatAdd2" offset="-8" />
 				</Area>
 			</Frame>
 
@@ -395,13 +442,25 @@
 				</Area>
 			</Frame>
 
+			<Frame name="CharacterStatAdd3" inherits="GlueButton" id="3">
+				<Property name="Text" value="+" />
+
+				<Area>
+					<Anchor point="TOP" relativeTo="CharacterStatLabel3" offset="-12" />
+					<Anchor point="RIGHT" offset="-12" />
+					<Size><AbsDimension x="64" y="64" /></Size>
+				</Area>
+				
+				<Scripts><OnClick>return function(self) CharacterWindow_AddAttributeClicked(self); end</OnClick></Scripts>
+			</Frame>
+
 			<Frame name="CharacterStat3" inherits="CharacterStatValueTemplate" id="3">
 				<Property name="Text" value="0" />
 
 				<Area>
 					<Anchor point="TOP" relativeTo="CharacterStatLabel3" />
 					<Anchor point="LEFT" offset="8" />
-					<Anchor point="RIGHT" offset="-24" />
+					<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CharacterStatAdd3" offset="-8" />
 				</Area>
 			</Frame>
 
@@ -415,13 +474,25 @@
 				</Area>
 			</Frame>
 
+			<Frame name="CharacterStatAdd4" inherits="GlueButton" id="4">
+				<Property name="Text" value="+" />
+
+				<Area>
+					<Anchor point="TOP" relativeTo="CharacterStatLabel4" offset="-12" />
+					<Anchor point="RIGHT" offset="-12" />
+					<Size><AbsDimension x="64" y="64" /></Size>
+				</Area>
+				
+				<Scripts><OnClick>return function(self) CharacterWindow_AddAttributeClicked(self); end</OnClick></Scripts>
+			</Frame>
+
 			<Frame name="CharacterStat4" inherits="CharacterStatValueTemplate" id="4">
 				<Property name="Text" value="0" />
 
 				<Area>
 					<Anchor point="TOP" relativeTo="CharacterStatLabel4" />
 					<Anchor point="LEFT" offset="8" />
-					<Anchor point="RIGHT" offset="-24" />
+					<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CharacterStatAdd4" offset="-8" />
 				</Area>
 			</Frame>
 		</Frame>

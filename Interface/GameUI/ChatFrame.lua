@@ -1,5 +1,5 @@
 
-function ChatFrame_OnPlayerLevelUp(self, newLevel, health, mana, stamina, strength, agility, intellect, spirit, tp)
+function ChatFrame_OnPlayerLevelUp(self, newLevel, health, mana, stamina, strength, agility, intellect, spirit, tp, ap)
     -- Add level up notification
     ChatFrame:AddMessage(string.format(Localize("LEVEL_UP"), newLevel), 1.0, 1.0, 0.0);
 
@@ -33,6 +33,10 @@ function ChatFrame_OnPlayerLevelUp(self, newLevel, health, mana, stamina, streng
         else
             ChatFrame:AddMessage(string.format(Localize("LEVEL_UP_CHAR_POINTS_P1"), tp), 1.0, 1.0, 0.0);
         end
+    end
+
+    if ap ~= 0 then
+        ChatFrame:AddMessage(string.format(Localize("LEVEL_UP_CHAR_ATTR_POINTS"), ap), 1.0, 1.0, 0.0);
     end
 end
 

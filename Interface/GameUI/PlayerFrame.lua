@@ -30,6 +30,5 @@ function PlayerFrame_OnLoad(self)
 end
 
 function PlayerFrame_OnClick(self)
-    print("Player frame clicked!");
     TargetUnit("player");
 end

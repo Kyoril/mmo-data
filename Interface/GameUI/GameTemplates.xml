@@ -165,7 +165,30 @@
 			<Size><AbsDimension x="0" y="44" /></Size>
 		</Area>
 	</Frame>
-	
+
+	<Frame name="TextSmallRight" renderer="DefaultRenderer">
+		<Property name="Font" value="DefaultSmall" />
+
+		<Visual>
+			<ImagerySection name="Text">
+				<TextComponent color="FFFFD100" horzAlign="RIGHT" vertAlign="TOP" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+		<Area>
+			<Size><AbsDimension x="0" y="44" /></Size>
+		</Area>
+	</Frame>
+
 	<!-- Small label -->
 	<Frame name="TextCenter" renderer="DefaultRenderer">
 		<Property name="Font" value="DefaultSmall" />

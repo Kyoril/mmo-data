@@ -69,12 +69,16 @@ function ActionBar_UpdateButtons(self)
         local spell = GetSpell(i - 1);
         if (spell ~= nil) then
             button:SetProperty("Icon", spell.icon);
+        else
+            print("Failed to find spell for button "..tostring(i-1));
         end
     end
 end
 
 function ActionBar_OnLoad(self)
     self:RegisterEvent("SPELL_LEARNED", ActionBar_UpdateButtons);
+    self:RegisterEvent("PLAYER_SPELLS_CHANGED", ActionBar_UpdateButtons);
+    self:RegisterEvent("PLAYER_ENTER_WORLD", ActionBar_UpdateButtons);
 
     -- Set up the 12 action bar buttons
     for i = 1, 12 do
