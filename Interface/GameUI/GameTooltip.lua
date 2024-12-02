@@ -98,6 +98,18 @@ function GameTooltip_SetItem(slot, item)
         GameTooltip_AddLine(string.format(Localize("DURABILITY_VALUE"), durability, item.maxdurability) , TOOLTIP_LINE_LEFT);
     end
 
+    for i = 0, 4 do
+        local itemSpell = GetItemSpell(item, i);
+        if itemSpell then
+            local itemTrigger = GetItemSpellTriggerType(item, i);
+            if itemTrigger then
+                GameTooltip_AddLine(Localize(itemTrigger) .. ": " .. GetSpellDescription(itemSpell), TOOLTIP_LINE_LEFT, "FF00FF00");
+            else
+                print("No trigger type :(");
+            end
+        end
+    end
+
     if (item.sellPrice > 0) then
         local count = GetInventorySlotCount("player", slot);
         GameTooltip_SetMoney(item.sellPrice * count);

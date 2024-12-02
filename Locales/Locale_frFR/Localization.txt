@@ -234,4 +234,8 @@ strings =
 	(key = "LEVEL_UP_CHAR_ATTR_POINTS", string = "You have gained %d attribute points.")
 	(key = "NEW_SPELL_LEARNED", string = "You have learned a new spell: %s")
 	(key = "NEW_ABILITY_LEARNED", string = "You have learned a new ability: %s")
+	
+	(key = "ON_USE", string = "Use")
+	(key = "ON_EQUIP", string = "Equip")
+	(key = "HIT_CHANCE", string = "Hit Chance")
 }
