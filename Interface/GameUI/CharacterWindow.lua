@@ -14,6 +14,8 @@ function CharacterWindow_OnLoad(self)
 	-- Subscribe for title bar close handler (HACKY! Order of items is important which sucks)
 	CharacterWindow:GetChild(0):GetChild(0):SetClickedHandler(CharacterWindow_Toggle);
 
+    self:RegisterEvent("PLAYER_ATTRIBUTES_CHANGED", CharacterWindow_RefreshStats);
+
     -- Register the character window in the menu bar as a button
 	AddMenuBarButton("Interface/Icons/fg4_icons_helmet_result.htex", CharacterWindow_Toggle);
 end
@@ -40,7 +42,18 @@ function CharacterWindow_AddAttributeClicked(this)
 end
 
 function CharacterWindow_RefreshStats()
-    CharacterWindowAttributePointsLabel:SetText(tostring(UnitNumAttributePoints("player")));
+    local attributePointsAvailable = UnitNumAttributePoints("player");
+
+    for attribute = 0, 4 do
+        local attributeCost = UnitAttributeCost("player", attribute);
+        if (attributeCost > attributePointsAvailable) then
+            _G["CharacterStatAdd" .. attribute]:Disable();
+        else
+            _G["CharacterStatAdd" .. attribute]:Enable();
+        end
+    end
+
+    CharacterWindowAttributePointsLabel:SetText(tostring(attributePointsAvailable));
 
     for i = 0, 4 do
         local base, modifier = UnitStat("player", i);
