@@ -1,9 +1,8 @@
 
 function AuraButton_OnLoad(self)
-    local buffIndex = GetPlayerAura(self.id);
-	self.buffIndex = buffIndex;
+    local spell, duration = UnitAura("player", self.id);
 
-	if ( buffIndex < 0 ) then
+	if ( spell == nil ) then
 		self:Hide();
 		return;
 	else

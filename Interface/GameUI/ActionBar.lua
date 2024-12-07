@@ -69,8 +69,6 @@ function ActionBar_UpdateButtons(self)
         local spell = GetSpell(i - 1);
         if (spell ~= nil) then
             button:SetProperty("Icon", spell.icon);
-        else
-            print("Failed to find spell for button "..tostring(i-1));
         end
     end
 end
