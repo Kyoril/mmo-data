@@ -4,6 +4,7 @@
 
 	<Frame name="AuraBarButtonTemplate" type="Button" renderer="ButtonRenderer">
 		<Property name="Icon" />
+		<Property name="Font" value="AuraTimeFont" />
 
 		<Visual>
 			<ImagerySection name="Image">
@@ -14,6 +15,13 @@
 					<PropertyValue property="Icon" />
 				</ImageComponent>
 			</ImagerySection>
+            <ImagerySection name="Text">
+                <TextComponent color="FFFFD100" horzAlign="CENTER" vertAlign="TOP">
+					<Area>
+						<Inset top="128" />
+					</Area>
+				</TextComponent>
+            </ImagerySection>
 			<ImagerySection name="NormalFrame">
 				<BorderComponent texture="Interface/BW_ButtonSmall_Up.htex" borderSize="30" />
 			</ImagerySection>
@@ -30,24 +38,28 @@
 				<Layer>
 					<Section section="NormalFrame" />
 					<Section section="Image" />
+					<Section section="Text" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="Hovered">
 				<Layer>
 					<Section section="HoveredFrame" />
 					<Section section="Image" />
+					<Section section="Text" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="Pushed">
 				<Layer>
 					<Section section="PushedFrame" />
 					<Section section="Image" />
+					<Section section="Text" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="Disabled">
 				<Layer>
 					<Section section="DisabledFrame" />
 					<Section section="Image" />
+					<Section section="Text" />
 				</Layer>
 			</StateImagery>
 		</Visual>

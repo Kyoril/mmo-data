@@ -23,6 +23,12 @@ function AuraButton_Refresh(self)
 	if spell then
 		self:SetProperty("Icon", spell.icon);
 	end
+
+	if aura:CanExpire() then
+		self:SetText(string.format("%.0f min", aura:GetDuration() / 60000.0));
+	else
+		self:SetText("");
+	end
 end
 
 function AuraButton_OnLoad(self)
@@ -30,4 +36,5 @@ function AuraButton_OnLoad(self)
 end
 
 function AuraButton_OnUpdate(self, elapsed)
+	AuraButton_Refresh(self);
 end
