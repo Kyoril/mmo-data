@@ -73,7 +73,6 @@
 			</Visual>
 		</Frame>
 
-
 		<Frame name="TargetManaBar" type="ProgressBar">
 			<Property name="Progress" value="0.12783" />
 			<Property name="Font" value="DefaultSmall" />
@@ -124,6 +123,96 @@
 				</StateImagery>
 			</Visual>
 		</Frame>
+
+        <Frame name="TargetAuraButton1" inherits="AuraBarButtonTemplate" id="1">
+            <Area>
+                <Anchor point="LEFT" offset="0" />
+                <Anchor point="TOP" relativePoint="BOTTOM" offset="0" />
+				<Size><AbsDimension x="96" y="96" /></Size>
+            </Area>
+			<Scripts>
+				<OnLoad>
+					return function(this)
+					end
+				</OnLoad>
+				<OnUpdate>
+					return function(this, elapsed)
+					end
+				</OnUpdate>
+			</Scripts>
+        </Frame>
+        
+        <Frame name="TargetAuraButton2" inherits="AuraBarButtonTemplate" id="2">
+            <Area>
+                <Anchor point="LEFT" relativeTo="TargetAuraButton1" relativePoint="RIGHT" offset="0" />
+                <Anchor point="TOP" relativeTo="TargetAuraButton1" />
+				<Size><AbsDimension x="96" y="96" /></Size>
+            </Area>
+			<Scripts>
+				<OnLoad>
+					return function(this)
+					end
+				</OnLoad>
+				<OnUpdate>
+					return function(this, elapsed)
+					end
+				</OnUpdate>
+			</Scripts>
+        </Frame>
+        
+        <Frame name="TargetAuraButton3" inherits="AuraBarButtonTemplate" id="3">
+            <Area>
+                <Anchor point="LEFT" relativeTo="TargetAuraButton2" relativePoint="RIGHT" offset="0" />
+                <Anchor point="TOP" relativeTo="TargetAuraButton1" />
+				<Size><AbsDimension x="96" y="96" /></Size>
+            </Area>
+			<Scripts>
+				<OnLoad>
+					return function(this)
+					end
+				</OnLoad>
+				<OnUpdate>
+					return function(this, elapsed)
+					end
+				</OnUpdate>
+			</Scripts>
+        </Frame>
+        
+        <Frame name="TargetAuraButton4" inherits="AuraBarButtonTemplate" id="4">
+            <Area>
+                <Anchor point="LEFT" relativeTo="TargetAuraButton3" relativePoint="RIGHT" offset="0" />
+                <Anchor point="TOP" relativeTo="TargetAuraButton1" />
+				<Size><AbsDimension x="96" y="96" /></Size>
+            </Area>
+			<Scripts>
+				<OnLoad>
+					return function(this)
+					end
+				</OnLoad>
+				<OnUpdate>
+					return function(this, elapsed)
+					end
+				</OnUpdate>
+			</Scripts>
+        </Frame>
+        
+        <Frame name="TargetAuraButton5" inherits="AuraBarButtonTemplate" id="5">
+            <Area>
+                <Anchor point="LEFT" relativeTo="TargetAuraButton4" relativePoint="RIGHT" offset="0" />
+                <Anchor point="TOP" relativeTo="TargetAuraButton1" />
+				<Size><AbsDimension x="96" y="96" /></Size>
+            </Area>
+			<Scripts>
+				<OnLoad>
+					return function(this)
+					end
+				</OnLoad>
+				<OnUpdate>
+					return function(this, elapsed)
+					end
+				</OnUpdate>
+			</Scripts>
+        </Frame>
 
 		<Scripts>
 			<OnLoad>

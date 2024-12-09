@@ -5,7 +5,6 @@ GameMenu.xml
 GameMenuBar.xml
 ActionBar.xml
 ChatFrame.xml
-TargetFrame.xml
 PlayerFrame.xml
 SpellBook.xml
 CastBar.xml
@@ -14,6 +13,7 @@ InventoryButton.xml
 CharacterWindow.xml
 AuraButton.xml
 AuraBar.xml
+TargetFrame.xml
 MoneyFrame.xml
 InventoryFrame.xml
 LootFrame.xml

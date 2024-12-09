@@ -7,7 +7,7 @@
 			<Anchor point="TOP" offset="8" />
 			<Anchor point="RIGHT" offset="-8" />
             <Size>
-                <AbsDimension x="128" y="128" />
+                <AbsDimension x="1024" y="128" />
             </Size>
         </Area>
 

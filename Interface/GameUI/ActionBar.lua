@@ -17,9 +17,8 @@ function ActionButton_OnEnter(self)
     GameTooltip:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.TOP, self, -16)
     GameTooltip:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, self, 0)
 
-    GameTooltip_SetSpell(spell)
-    
-    GameTooltip:Show()
+    GameTooltip_SetSpell(spell);
+    GameTooltip:Show();
 end
 
 function ActionButton_OnLeave(self)

@@ -10,13 +10,53 @@ function TargetFrame_OnLoad()
     TargetFrame:RegisterEvent("PLAYER_TARGET_CHANGED", TargetFrame_Update);
 end
 
+function TargetFrame_UpdateAuras()
+    local unit = GetUnit("target");
+    for i = 1, 5 do
+        local button = _G["TargetAuraButton" .. i];
+        
+        if not unit then
+            button:Hide();
+            return;
+        end
+
+        local auraCount = unit:GetAuraCount();
+        if button.id > auraCount then
+            button:Hide();
+            return;
+        end
+
+        local aura = unit:GetAura(button.id - 1);
+        if not aura then
+            button:Hide();
+            return;
+        end
+
+        -- TODO: If aura has expired, remove it from the list
+        if aura:IsExpired() then
+            button:Hide();
+            return;
+        end
+
+        -- We have an aura in the given slot, show the button
+        button:Show();
+
+        local spell = aura:GetSpell();
+        if spell then
+            button:SetProperty("Icon", spell.icon);
+        end
+    end
+end
+
 function TargetFrame_Update()
-    if (UnitExists("target")) then
-        TargetName:SetText("[" .. UnitLevel("target") .. "] " .. UnitName("target"));
+    local target = GetUnit("target");
+
+    if target ~= nil then
+        TargetName:SetText("[" .. target:GetLevel() .. "] " .. UnitName("target"));
 
         -- Update progress bars
-        health = UnitHealth("target");
-        maxHealth = UnitHealthMax("target");
+        health = target:GetHealth();
+        maxHealth = target:GetMaxHealth();
         if (maxHealth == 0) then
             health = 0;
             maxHealth = 1;
@@ -30,8 +70,8 @@ function TargetFrame_Update()
         local powerType = UnitPowerType("target");
         TargetManaBar:SetProperty("ProgressColor", ResourceBarColors[powerType]);
 
-        local power = UnitPower("target", powerType);
-        local maxPower = UnitPowerMax("target", powerType);
+        local power = target:GetPower(powerType);
+        local maxPower = target:GetMaxPower(powerType);
         if (maxPower == 0) then
             power = 0;
             maxPower = 1;
@@ -42,6 +82,8 @@ function TargetFrame_Update()
         TargetManaBar:SetText(math.floor(powerPct * 100) .. "%");
 
         TargetFrame:Show();
+
+        TargetFrame_UpdateAuras();
     else
         TargetFrame:Hide();
     end
