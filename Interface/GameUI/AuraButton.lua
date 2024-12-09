@@ -2,6 +2,7 @@
 function AuraButton_Refresh(self)
 	local unit = GetUnit("player");
 	if not unit then
+		self:Hide();
 		return;
 	end
 
@@ -17,6 +18,13 @@ function AuraButton_Refresh(self)
 		return;
 	end
 
+	-- TODO: If aura has expired, remove it from the list
+	if aura:IsExpired() then
+		self:Hide();
+		return;
+	end
+
+	-- We have an aura in the given slot, show the button
 	self:Show();
 
 	local spell = aura:GetSpell();
