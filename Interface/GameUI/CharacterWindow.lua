@@ -3,8 +3,12 @@ function CharacterWindow_Toggle()
     if (CharacterWindow:IsVisible()) then
         HideUIPanel(CharacterWindow);
     else
-        CharacterWindowTitle:SetText(UnitName("player"));
-        CharacterFrameModel:SetProperty("ModelFile", "Models/Character/Human/Male/HumanMale.hmsh");
+        local player = GetUnit("player");
+        if player then
+            CharacterWindowTitle:SetText(player:GetName());
+            CharacterFrameModel:SetProperty("ModelFile", "Models/Character/Human/Male/HumanMale.hmsh");
+        end
+
         CharacterFrameModel:SetHeight(CharacterFrameModel:GetHeight() + 1);
         ShowUIPanel(CharacterWindow);
     end
@@ -66,7 +70,8 @@ function CharacterWindow_AddAttributeClicked(this)
 end
 
 function CharacterWindow_RefreshStats()
-    local attributePointsAvailable = UnitNumAttributePoints("player");
+    local player = GetUnit("player");
+    local attributePointsAvailable = player:GetAvailableAttributePoints();
 
     for attribute = 0, 4 do
         local attributeCost = UnitAttributeCost("player", attribute);

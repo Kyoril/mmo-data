@@ -75,7 +75,8 @@ function ShowUIPanel(frame, force)
 		return;
 	end
 
-	if ( UnitHealth("player") <= 0 and (info.area ~= center) and (frame ~= SuggestFrame) ) then
+	local player = GetUnit("player");
+	if ( player:GetHealth() <= 0 and (info.area ~= center) and (frame ~= SuggestFrame) ) then
 		return;
 	end
 
@@ -256,7 +257,8 @@ function MovePanelToCenter()
 end
 
 function CanOpenPanels()
-	if ( UnitHealth("player") <= 0 ) then
+	local player = GetUnit("player");
+	if ( player:GetHealth() <= 0 ) then
 		return nil;
 	end
 

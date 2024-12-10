@@ -52,7 +52,7 @@ function TargetFrame_Update()
     local target = GetUnit("target");
 
     if target ~= nil then
-        TargetName:SetText("[" .. target:GetLevel() .. "] " .. UnitName("target"));
+        TargetName:SetText("[" .. target:GetLevel() .. "] " .. target:GetName());
 
         -- Update progress bars
         health = target:GetHealth();
@@ -67,7 +67,7 @@ function TargetFrame_Update()
         TargetHealthBar:SetText(math.floor(healthPct * 100) .. "%");
 
         -- Get power type
-        local powerType = UnitPowerType("target");
+        local powerType = target:GetPowerType();
         TargetManaBar:SetProperty("ProgressColor", ResourceBarColors[powerType]);
 
         local power = target:GetPower(powerType);

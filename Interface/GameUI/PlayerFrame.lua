@@ -5,19 +5,21 @@ ResourceBarColors[1] = "FFFF0000"; -- Rage
 ResourceBarColors[2] = "FFFFFF00"; -- Energy
 
 function PlayerFrame_Update(self)
-    PlayerName:SetText(UnitName("player"));
+    local player = GetUnit("player");
 
-    local health = UnitHealth("player");
-    local maxHealth = UnitHealthMax("player");
+    PlayerName:SetText(player:GetName());
+
+    local health = player:GetHealth();
+    local maxHealth = player:GetMaxHealth();
     PlayerHealthBar:SetProgress(health / maxHealth);
     PlayerHealthBar:SetText(health .. " / " .. maxHealth);
 
     -- Get power type
-    local powerType = UnitPowerType("player");
+    local powerType = player:GetPowerType();
     PlayerManaBar:SetProperty("ProgressColor", ResourceBarColors[powerType]);
 
-    local power = UnitPower("player", powerType);
-    local maxPower = UnitPowerMax("player", powerType);
+    local power = player:GetPower(powerType);
+    local maxPower = player:GetMaxPower(powerType);
     PlayerManaBar:SetProgress(power / maxPower);
     PlayerManaBar:SetText(power .. " / " .. maxPower);
 end

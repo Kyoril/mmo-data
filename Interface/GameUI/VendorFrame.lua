@@ -70,7 +70,11 @@ function VendorFrame_PrevPage()
 end
 
 function VendorFrame_Show(self)
-    self:GetChild(0):SetText(UnitName("target"));
+    local target = GetUnit("target");
+    if target then
+        self:GetChild(0):SetText(target:GetName());
+    end
+
     VendorFrame.page = 1;
 
     ShowUIPanel(self);

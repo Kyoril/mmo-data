@@ -132,6 +132,8 @@ function GameTooltip_SetAura(spell)
 end
 
 function GameTooltip_SetSpell(spell)
+    local player = GetUnit("player");
+
     GameTooltip_Clear();
 
     if (spell == nil) then
@@ -147,7 +149,7 @@ function GameTooltip_SetSpell(spell)
     -- Line 1: Cost
     if ( spell.cost ~= 0 ) then
         local costColor = nil;
-        if (UnitPower("player", spell.powertype) < spell.cost) then
+        if (player:GetPower(spell.powertype) < spell.cost) then
             costColor = "FFFF2020";
         end
 
@@ -172,7 +174,7 @@ function GameTooltip_SetSpell(spell)
         GameTooltip_AddLine(cooldownText .. Localize("COOLDOWN"), TOOLTIP_LINE_LEFT);
     end
 
-    if ((spell.level ~= 0) and (spell.level > UnitLevel("player"))) then
+    if ((spell.level ~= 0) and (spell.level > player:GetLevel())) then
         GameTooltip_AddLine(string.format(Localize("LEVEL_REQUIREMENT_FORMAT"), spell.level), TOOLTIP_LINE_LEFT, "FFFF2020");
     end
 
