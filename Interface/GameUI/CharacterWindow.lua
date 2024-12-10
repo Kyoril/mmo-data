@@ -18,6 +18,30 @@ function CharacterWindow_OnLoad(self)
 
     -- Register the character window in the menu bar as a button
 	AddMenuBarButton("Interface/Icons/fg4_icons_helmet_result.htex", CharacterWindow_Toggle);
+
+    CharacterArmorStat:SetOnEnterHandler(CharacterWindow_ArmorLabel_OnEnter);
+    CharacterArmorStat:SetOnLeaveHandler(CharacterWindow_HideTooltip);
+end
+
+function CharacterWindow_ArmorLabel_OnEnter(self)
+    local unit = GetUnit("player");
+    if not unit then
+        return;
+    end
+
+    GameTooltip_Clear();
+    GameTooltip:ClearAnchors();
+    GameTooltip:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, self, 0);
+    GameTooltip:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, self, 0);
+
+    GameTooltip_AddLine(Localize("ARMOR"), TOOLTIP_LINE_LEFT, "FFFFD100");
+    GameTooltip_AddLine(string.format(Localize("ARMOR_DESCRIPTION"), unit:GetArmorReductionFactor() * 100.0), TOOLTIP_LINE_LEFT, "FFFFD100");
+
+    GameTooltip:Show();
+end
+
+function CharacterWindow_HideTooltip()
+    GameTooltip:Hide();
 end
 
 function CharacterWindow_OnShow(this)

@@ -238,4 +238,6 @@ strings =
 	(key = "ON_USE", string = "Benutzen")
 	(key = "ON_EQUIP", string = "Anlegen")
 	(key = "HIT_CHANCE", string = "Trefferchance")
+	
+	(key = "ARMOR_DESCRIPTION", string = "Reduziert eingehenden physischen Schaden um %.2f%%.")
 }
