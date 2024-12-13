@@ -194,7 +194,7 @@
 				<Anchor point="TOP" offset="24" relativePoint="BOTTOM" relativeTo="CharRaceFrame" />
 				<Anchor point="RIGHT" offset="-24" />
 				<Size>
-					<AbsDimension x="720" y="520" />	<!-- 128 px per race button on top of 264px base height -->
+					<AbsDimension x="720" y="648" />	<!-- 128 px per race button on top of 264px base height -->
 				</Size>
 			</Area>
 
@@ -275,6 +275,25 @@
 							<Anchor point="LEFT" offset="4" />
 							<Anchor point="RIGHT" offset="-4" />
 							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="ClassMageButton" />
+						</Area>
+					</Frame>
+
+					<Frame name="ClassShadowmancerButton" inherits="ListCheckButtonBase" id="3">
+						<Property name="Text" value="CLASS_SHADOWMANCER" />
+						<Property name="Checkable" value="true" />
+
+						<Scripts>
+							<OnClick>
+								return function(this)
+									OnClassChange_Clicked(this);
+								end
+							</OnClick>
+						</Scripts>
+
+						<Area>
+							<Anchor point="LEFT" offset="4" />
+							<Anchor point="RIGHT" offset="-4" />
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="ClassClericButton" />
 						</Area>
 					</Frame>
 				<Area>

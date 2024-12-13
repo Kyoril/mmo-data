@@ -80,6 +80,7 @@ strings =
 	(key = "CLASS_WARRIOR", string = "Warrior")
 	(key = "CLASS_MAGE", string = "Mage")
 	(key = "CLASS_CLERIC", string = "Cleric")
+	(key = "CLASS_SHADOWMANCER", string = "Shadowmancer")
 
 	(key = "RACE", string = "Race")
 	(key = "CLASS", string = "Class")
