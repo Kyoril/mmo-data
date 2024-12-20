@@ -1,4 +1,6 @@
 
+MAX_ACTION_BUTTONS = 12;
+
 function ActionButton_OnEnter(self)
 
     local id = tonumber(self.id);
@@ -31,7 +33,7 @@ function ActionButton_Down(id)
         return;
     end
 
-    if (id < 1 or id > 12) then
+    if (id < 1 or id > MAX_ACTION_BUTTONS) then
         return;
     end
 
@@ -40,34 +42,42 @@ function ActionButton_Down(id)
 end
 
 function ActionButton_Up(id)
-
     if (id == nil) then
         return;
     end
 
-    if (id < 1 or id > 12) then
+    if (id < 1 or id > MAX_ACTION_BUTTONS) then
         return;
     end
 
     local button = _G["ActionButton"..id];
     button:SetButtonState(ButtonState.NORMAL);
 
-    ActionButton_OnClick(button);
+    ActionButton_OnClick(button, "RIGHT");
 end
 
-function ActionButton_OnClick(self)
-    local id = self.id;
-    CastSpell(id - 1);
+function ActionButton_OnClick(self, button)
+    if button == "LEFT" then
+        PickupActionButton(self.id - 1);
+    else
+        UseActionButton(self.id - 1);
+    end
 end
 
 function ActionBar_UpdateButtons(self)
-    -- Set up the 12 action bar buttons
-    for i = 1, 12 do
+    for i = 1, MAX_ACTION_BUTTONS do
         local button = _G["ActionButton"..i];
 
-        local spell = GetSpell(i - 1);
-        if (spell ~= nil) then
-            button:SetProperty("Icon", spell.icon);
+        if IsActionButtonSpell(i - 1) then
+            local spell = GetActionButtonSpell(i - 1);
+            if (spell ~= nil) then
+                button:SetProperty("Icon", spell.icon);
+            end
+        elseif IsActionButtonItem(i - 1) then
+            local item = GetActionButtonItem(i - 1);
+            if (item ~= nil) then
+                button:SetProperty("Icon", item.icon);
+            end
         end
     end
 end
@@ -76,9 +86,9 @@ function ActionBar_OnLoad(self)
     self:RegisterEvent("SPELL_LEARNED", ActionBar_UpdateButtons);
     self:RegisterEvent("PLAYER_SPELLS_CHANGED", ActionBar_UpdateButtons);
     self:RegisterEvent("PLAYER_ENTER_WORLD", ActionBar_UpdateButtons);
+    self:RegisterEvent("ACTION_BAR_CHANGED", ActionBar_UpdateButtons);
 
-    -- Set up the 12 action bar buttons
-    for i = 1, 12 do
+    for i = 1, MAX_ACTION_BUTTONS do
         local button = _G["ActionButton"..i];
         button:SetClickedHandler(ActionButton_OnClick);
         button:SetOnEnterHandler(ActionButton_OnEnter);

@@ -21,7 +21,7 @@ function SpellBook_UpdatePage()
 
 end
 
-function SpellButton_OnClick(self)
+function SpellButton_OnClick(self, button)
     
     local id = tonumber(self.userData);
     if (id == nil) then
@@ -30,8 +30,16 @@ function SpellButton_OnClick(self)
     end
 
     local spellIndex = id + (SpellBookPage - 1) * SPELLS_PER_PAGE;
-    CastSpell(spellIndex)
+    local spell = GetSpell(spellIndex);
+    if (spell == nil) then
+        return;
+    end
 
+    if button == "LEFT" then
+        PickupSpell(spell.id);
+    else
+        CastSpell(spellIndex)
+    end
 end
 
 function SpellButton_OnEnter(self)
