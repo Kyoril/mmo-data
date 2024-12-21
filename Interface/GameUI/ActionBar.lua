@@ -3,28 +3,25 @@ MAX_ACTION_BUTTONS = 12;
 
 function ActionButton_OnEnter(self)
 
-    local id = tonumber(self.id);
-    if (id == nil) then
-        self:Disable();
-        return;
+    if IsActionButtonSpell(self.id - 1) then
+        local spell = GetActionButtonSpell(self.id - 1);
+        if (spell ~= nil) then
+            GameTooltip:ClearAnchors();
+            GameTooltip:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.TOP, self, -16);
+            GameTooltip:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, self, 0);
+            GameTooltip_SetSpell(spell);
+            GameTooltip:Show();
+        end
+    elseif IsActionButtonItem(self.id - 1) then
+        local item = GetActionButtonItem(self.id - 1);
+        if (item ~= nil) then
+            GameTooltip:Hide();
+        end
     end
-
-    local spellIndex = id - 1;
-    local spell = GetSpell(spellIndex);
-    if (spell == nil) then
-        return
-    end
-
-    GameTooltip:ClearAnchors()
-    GameTooltip:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.TOP, self, -16)
-    GameTooltip:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, self, 0)
-
-    GameTooltip_SetSpell(spell);
-    GameTooltip:Show();
 end
 
 function ActionButton_OnLeave(self)
-    GameTooltip:Hide()
+    GameTooltip:Hide();
 end
 
 function ActionButton_Down(id)
