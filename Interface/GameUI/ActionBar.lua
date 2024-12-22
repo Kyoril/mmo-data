@@ -50,11 +50,11 @@ function ActionButton_Up(id)
     local button = _G["ActionButton"..id];
     button:SetButtonState(ButtonState.NORMAL);
 
-    ActionButton_OnClick(button, "RIGHT");
+    ActionButton_OnClick(button, "LEFT");
 end
 
 function ActionButton_OnClick(self, button)
-    if button == "LEFT" then
+    if (not IsActionButtonUsable(self.id - 1)) or IsShiftKeyDown() then
         PickupActionButton(self.id - 1);
     else
         UseActionButton(self.id - 1);
@@ -69,12 +69,19 @@ function ActionBar_UpdateButtons(self)
             local spell = GetActionButtonSpell(i - 1);
             if (spell ~= nil) then
                 button:SetProperty("Icon", spell.icon);
+            else
+                button:SetProperty("Icon", "");
             end
         elseif IsActionButtonItem(i - 1) then
             local item = GetActionButtonItem(i - 1);
             if (item ~= nil) then
                 button:SetProperty("Icon", item.icon);
+            else
+                button:SetProperty("Icon", "");
             end
+        else
+            -- Clear icon!
+            button:SetProperty("Icon", "");
         end
     end
 end
