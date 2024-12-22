@@ -3,7 +3,7 @@ TOOLTIP_LINE_LEFT = 0
 TOOLTIP_LINE_CENTER = 1
 TOOLTIP_LINE_RIGHT = 2
 
-TooltipHeight = 48
+TooltipHeight = 40
 
 ItemQualityColors = {};
 ItemQualityColors[0] = "FF9C9C9C"; -- Poor
@@ -21,7 +21,7 @@ PowerTypeNames[2] = "ENERGY";
 function GameTooltip_Clear()
     GameTooltipLines:RemoveAllChildren();
     
-    TooltipHeight = 48;
+    TooltipHeight = 40;
     GameTooltip:SetHeight(TooltipHeight);
 
     TooltipMoneyFrame:Hide(); 
@@ -48,7 +48,7 @@ function GameTooltip_AddLine(line, alignment, color)
     end
 
     local textHeight = lineFrame:GetTextHeight();
-    TooltipHeight = TooltipHeight + textHeight;
+    TooltipHeight = TooltipHeight + textHeight + 8;
     lineFrame:SetHeight(textHeight);
 
     GameTooltip:SetHeight(TooltipHeight);
