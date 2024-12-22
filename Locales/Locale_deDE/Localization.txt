@@ -241,4 +241,6 @@ strings =
 	(key = "HIT_CHANCE", string = "Trefferchance")
 	
 	(key = "ARMOR_DESCRIPTION", string = "Reduziert eingehenden physischen Schaden um %.2f%%.")
+	
+	(key = "SELL_PRICE", string = "Verkaufspreis")
 }

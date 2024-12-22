@@ -79,7 +79,7 @@ function GameTooltip_SetItem(slot, item)
         GameTooltip_AddLine(Localize(inventoryType), TOOLTIP_LINE_LEFT);
     end
 
-    if (class == "ARMOR") then
+    if (class == "ARMOR" and item.armor > 0) then
         GameTooltip_AddLine(string.format(Localize("ARMOR_VALUE"), item.armor) , TOOLTIP_LINE_LEFT);
     end
 
@@ -104,8 +104,6 @@ function GameTooltip_SetItem(slot, item)
             local itemTrigger = GetItemSpellTriggerType(item, i);
             if itemTrigger then
                 GameTooltip_AddLine(Localize(itemTrigger) .. ": " .. GetSpellDescription(itemSpell), TOOLTIP_LINE_LEFT, "FF00FF00");
-            else
-                print("No trigger type :(");
             end
         end
     end
