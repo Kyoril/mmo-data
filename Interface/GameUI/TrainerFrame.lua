@@ -1,6 +1,6 @@
 
 function TrainerFrame_OnTrainerShow(self)
-    
+    ShowUIPanel(self);
 end
 
 function TrainerFrame_OnTrainerUpdate(self)
@@ -22,7 +22,10 @@ function TrainerFrame_OnLoad(self)
 end
 
 function TrainerFrame_OnShow(self)
-
+    local target = GetUnit("target");
+    if target then
+        self:GetChild(0):SetText(target:GetName());
+    end
 end
 
 function TrainerFrame_Toggle()
