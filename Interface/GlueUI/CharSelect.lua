@@ -76,7 +76,7 @@ function CharList_Show()
 
 		-- Assign realm data
 		charListItem:SetText(character.name);
-		charListItem:GetChild(1):SetText("Level " .. character.level .. " " .. Localize(characterClass));
+		charListItem:GetChild(0):SetText("Level " .. character.level .. " " .. Localize(characterClass));
 		charListItem.userData = character;
 		
 		-- Setup anchor points

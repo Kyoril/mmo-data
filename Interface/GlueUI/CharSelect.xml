@@ -104,30 +104,6 @@
 			<Size><AbsDimension x="128" y="128" /></Size>
 		</Area>
 
-		<Frame name="CharIcon" renderer="DefaultRenderer">
-			<Property name="Clickable" value="false" />
-			
-			<Visual>
-				<ImagerySection name="Icon">
-					<ImageComponent texture="Interface/GlueUI/IconHelmet.htex">
-						<Area><Inset all="16" /></Area>
-					</ImageComponent>
-				</ImagerySection>
-
-				<StateImagery name="Normal">
-					<Layer>
-						<Section section="Icon" />
-					</Layer>
-				</StateImagery>
-			</Visual>
-
-			<Area>
-				<Anchor point="TOP" offset="8" />
-				<Anchor point="LEFT" offset="8" />
-				<Size><AbsDimension x="128" y="128" /></Size>
-			</Area>
-		</Frame>
-
 		<Frame name="CharSubtext" renderer="DefaultRenderer">
 			<Property name="Font" value="DefaultSmall" />
 			<Property name="Enabled" value="false" />
