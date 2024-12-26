@@ -7,6 +7,7 @@ characterButtons = {}
 
 rotationDirection = 0
 
+characterClassNames = {"CLASS_MAGE", "CLASS_WARRIOR", "CLASS_CLERIC", "CLASS_SHADOWMANCER"};
 
 function CharListItem_Clicked(item)
 	-- For each button in characterButtons, call SetChecked(false)
@@ -32,13 +33,10 @@ function SelectedCharacter_Changed()
 			CharModel:SetProperty("ModelFile", model.filename);
 			CharModel:Show();
 		end
-
-		SelectedCharName:SetText(selectedCharacter.name)
 	else
 		CharSelectEnterButton:Disable();
 		CharDeleteButton:Disable();
 		CharModel:Hide();
-		SelectedCharName:SetText(Localize("NO_CHARACTER"));
 	end
 end
 
@@ -47,7 +45,7 @@ function CharList_Show()
 	RealmNameLabel:SetText(realmConnector:GetRealmName())
 	
 	-- Remove all character button views
-	CharList:RemoveAllChildren()
+	CharListContent:RemoveAllChildren()
 
 	-- Reset selected character
 	selectedCharacter = nil
@@ -69,10 +67,16 @@ function CharList_Show()
 
 		-- Clone item
 		local charListItem = CharButton:Clone();
-		CharList:AddChild(charListItem);
+		CharListContent:AddChild(charListItem);
 		
+		local characterClass = "UNKNOWN";
+		if character.classId >= 0 and character.classId < #characterClassNames then
+			characterClass = characterClassNames[character.classId + 1];
+		end
+
 		-- Assign realm data
-		charListItem:SetText(character.name .. "\n" .. "Level " .. character.level);
+		charListItem:SetText(character.name);
+		charListItem:GetChild(1):SetText("Level " .. character.level .. " " .. Localize(characterClass));
 		charListItem.userData = character;
 		
 		-- Setup anchor points

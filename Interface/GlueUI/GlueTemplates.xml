@@ -7,6 +7,9 @@
 	
 	<!-- GlueButton template: Common buttons -->
 	<Frame name="GlueButton" type="Button" renderer="ButtonRenderer">
+		<Property name="Font" value="DefaultSmall" />
+		<Property name="Icon" />
+
 		<Visual>
 			<ImagerySection name="NormalFrame">
 				<BorderComponent texture="Interface/GlueUI/ButtonNormal.htex" borderSize="30" />
@@ -30,27 +33,47 @@
 			<ImagerySection name="DisabledCaption">
 				<TextComponent color="AE888888" horzAlign="CENTER" vertAlign="CENTER" />
 			</ImagerySection>
+			<ImagerySection name="Image">
+				<ImageComponent>
+					<Area>
+						<Inset all="16" />
+					</Area>
+					<PropertyValue property="Icon" />
+				</ImageComponent>
+			</ImagerySection>
+			<ImagerySection name="ImageDisabled">
+				<ImageComponent tint="80888888">
+					<Area>
+						<Inset all="16" />
+					</Area>
+					<PropertyValue property="Icon" />
+				</ImageComponent>
+			</ImagerySection>
 			<StateImagery name="Normal">
 				<Layer>
 					<Section section="NormalFrame" />
+					<Section section="Image" />
 					<Section section="Caption" color="FFEDE1B1" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="Hovered">
 				<Layer>
 					<Section section="HoveredFrame" />
+					<Section section="Image" />
 					<Section section="HoveredCaption" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="Pushed">
 				<Layer>
 					<Section section="PushedFrame" />
+					<Section section="Image" />
 					<Section section="Caption" color="FFAAAAAA" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="Disabled">
 				<Layer>
 					<Section section="DisabledFrame" />
+					<Section section="ImageDisabled" />
 					<Section section="DisabledCaption" color="AE888888" />
 				</Layer>
 			</StateImagery>
@@ -221,5 +244,67 @@
 				</Layer>
 			</StateImagery>
 		</Visual>
+	</Frame>
+
+	<Frame name="VerticalScrollBar" type="ScrollBar" renderer="DefaultRenderer">
+		<Property name="Orientation" value="VERTICAL" />
+
+		<Visual>
+			<ImagerySection name="Border">
+				<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Border" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="Border" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+
+		<Area>
+			<Anchor point="RIGHT" offset="-16" />
+			<Size>
+				<AbsDimension x="96" y="256" />
+			</Size>
+		</Area>
+
+		<Frame name="ScrollUpButton" inherits="GlueButton">
+			<Property name="Icon" value="Interface/Icons/IconGold_ArrowUp.htex" />
+			<Area>
+				<Anchor point="TOP" offset="8" />
+				<Anchor point="LEFT" offset="8" />
+				<Size>
+					<AbsDimension x="80" y="80" />
+				</Size>
+			</Area>
+		</Frame>
+		
+		<Frame name="ScrollDownButton" inherits="GlueButton">
+			<Property name="Icon" value="Interface/Icons/IconGold_ArrowDown.htex" />
+			<Area>
+				<Anchor point="BOTTOM" offset="-8" />
+				<Anchor point="LEFT" offset="8" />
+				<Size>
+					<AbsDimension x="80" y="80" />
+				</Size>
+			</Area>
+		</Frame>
+		
+		<Frame name="ThumbButton" inherits="GlueButton">
+			<Property name="Visible" value="false" />
+			
+			<Area>
+				<Anchor point="TOP" offset="80" />
+				<Anchor point="BOTTOM" offset="-80" />
+				<Anchor point="LEFT" offset="8" />
+				<Size>
+					<AbsDimension x="80" y="128" />
+				</Size>
+			</Area>
+		</Frame>
 	</Frame>
 </UiLayout>

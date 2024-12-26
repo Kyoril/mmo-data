@@ -38,14 +38,14 @@
 			<ImagerySection name="Text">
 				<TextComponent color="FFEED37C" horzAlign="LEFT" vertAlign="TOP">
 					<Area>
-						<Inset left="150" top="8" />
+						<Inset left="8" top="8" />
 					</Area>
 				</TextComponent>
 			</ImagerySection>
 			<ImagerySection name="TextDisabled">
 				<TextComponent color="88404040" horzAlign="LEFT" vertAlign="TOP">
 					<Area>
-						<Inset left="150" top="8" />
+						<Inset left="8" top="8" />
 					</Area>
 				</TextComponent>
 			</ImagerySection>
@@ -105,6 +105,8 @@
 		</Area>
 
 		<Frame name="CharIcon" renderer="DefaultRenderer">
+			<Property name="Clickable" value="false" />
+			
 			<Visual>
 				<ImagerySection name="Icon">
 					<ImageComponent texture="Interface/GlueUI/IconHelmet.htex">
@@ -125,8 +127,49 @@
 				<Size><AbsDimension x="128" y="128" /></Size>
 			</Area>
 		</Frame>
+
+		<Frame name="CharSubtext" renderer="DefaultRenderer">
+			<Property name="Font" value="DefaultSmall" />
+			<Property name="Enabled" value="false" />
+			<Property name="Clickable" value="false" />
+			
+			<Visual>
+				<ImagerySection name="Text">
+					<TextComponent color="FF808080" horzAlign="LEFT" vertAlign="TOP">
+						<Area>
+							<Inset left="8" top="8" />
+						</Area>
+					</TextComponent>
+				</ImagerySection>
+				<ImagerySection name="TextDisabled">
+					<TextComponent color="FF808080" horzAlign="LEFT" vertAlign="TOP">
+						<Area>
+							<Inset left="8" top="8" />
+						</Area>
+					</TextComponent>
+				</ImagerySection>
+
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Text" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="Disabled">
+					<Layer>
+						<Section section="TextDisabled" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+
+			<Area>
+				<Anchor point="TOP" offset="64" />
+				<Anchor point="LEFT" offset="8" />
+				<Anchor point="RIGHT" offset="-8" />
+				<Size><AbsDimension x="128" y="128" /></Size>
+			</Area>
+		</Frame>
 	</Frame>
-	
+
 	<!-- This is the character selection screen frame. It covers the whole screen. -->
 	<Frame name="CharSelect" parent="GlueParent" setAllPoints="true" renderer="DefaultRenderer">
 		<Property name="Visible" value="false" />
@@ -173,7 +216,7 @@
 				<Property name="Enabled" value="False" />
 
 				<Area>
-					<Anchor point="BOTTOM" offset="-24" />
+					<Anchor point="BOTTOM" offset="-48" />
 					<Anchor point="H_CENTER" />
 				</Area>
 
@@ -185,39 +228,6 @@
 					</OnClick>
 				</Scripts>
 			</Frame>
-
-			<Frame name="SelectedCharLevel" inherits="GlueTextSmall">
-				<Property name="HorzAlign" value="RIGHT" />
-				<Area>
-					<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="CharSelectEnterButton" offset="-24" />
-					<Anchor point="RIGHT" relativeTo="CharSelectEnterButton" />
-					<Size>
-						<AbsDimension x="160" y="30" />
-					</Size>
-				</Area>
-				<Property name="Text" value="Level 1" />
-			</Frame>
-
-			<Frame name="SelectedCharClass" inherits="GlueTextSmall">
-				<Property name="HorzAlign" value="RIGHT" />
-				<Area>
-					<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="CharSelectEnterButton" offset="-24" />
-					<Anchor point="LEFT" relativeTo="CharSelectEnterButton" />
-					<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="SelectedCharLevel" />
-					<Size>
-						<AbsDimension x="160" y="30" />
-					</Size>
-				</Area>
-				<Property name="Text" value="ADVENTURER" />
-			</Frame>
-
-			<Frame name="SelectedCharName" inherits="GlueTextLarge">
-				<Area>
-					<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="SelectedCharLevel" offset="-16" />
-					<Anchor point="H_CENTER" />
-				</Area>
-			</Frame>
-
 
 			<Frame name="ChangeRealmButton" inherits="GlueButton">
 				<Property name="Text" value="CHANGE_REALM" />
@@ -297,8 +307,11 @@
 			<Frame name="CharList" renderer="DefaultRenderer">
 				<Visual>
 					<ImagerySection name="Frame">
-						<ImageComponent texture="Interface/GlueUI/RealmListBackground.htex" tiling="BOTH" />
-						<BorderComponent texture="Interface/GlueUI/RealmListBorder.htex" borderSize="8" />
+						<ImageComponent texture="Interface/GlueUI/RealmListBackground.htex" tiling="BOTH">
+							<Area><Inset all="8" /></Area>
+						</ImageComponent>
+						<!--<BorderComponent texture="Interface/GlueUI/RealmListBorder.htex" borderSize="8" />-->
+						<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" />
 					</ImagerySection>
 					<StateImagery name="Enabled">
 						<Layer>
@@ -310,7 +323,25 @@
 					<Anchor point="LEFT" offset="16" />
 					<Anchor point="RIGHT" offset="-16" />
 					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmNameLabel" offset="40" />
-					<Anchor point="BOTTOM" offset="-192" />
+					<Anchor point="BOTTOM" offset="-16" />
+				</Area>
+
+				<Frame name="CharListContent">
+					<Area>
+						<Anchor point="LEFT" />
+						<Anchor point="RIGHT" offset="-96" />
+						<Anchor point="TOP" />
+						<Anchor point="BOTTOM" />
+					</Area>
+				</Frame>
+			</Frame>
+			
+			<Frame name="TestScrollBar" inherits="VerticalScrollBar">
+				<Property name="Enabled" value="false" />
+				<Area>
+					<Anchor point="RIGHT" offset="-16" />
+					<Anchor point="TOP" relativeTo="CharList" />
+					<Anchor point="BOTTOM" relativeTo="CharList" />
 				</Area>
 			</Frame>
 		</Frame>
@@ -373,5 +404,6 @@
 				</Frame>
 			</Frame>
 		</Frame>
+
 	</Frame>
 </UiLayout>
