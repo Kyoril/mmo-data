@@ -243,4 +243,7 @@ strings =
 	(key = "ARMOR_DESCRIPTION", string = "Reduziert eingehenden physischen Schaden um %.2f%%.")
 	
 	(key = "SELL_PRICE", string = "Verkaufspreis")
+	
+	(key = "TRAINER_SPELL_COST", string = "Preis:")
+	(key = "TRAIN", string = "Lernen")
 }

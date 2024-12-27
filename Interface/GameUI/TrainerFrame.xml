@@ -2,9 +2,395 @@
 <UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
 	<Script file="TrainerFrame.lua" />
 	
+	<Frame name="TrainerSpellbutton" type="Button" renderer="CheckboxRenderer">
+		<Property name="Font" value="DefaultSmall" />
+		<Property name="Checkable" value="true" />
+
+		<Visual>
+			<ImagerySection name="FrameNormal">
+				<ImageComponent texture="Interface/GlueUI/CharSelectButtonBackground.htex" />
+			</ImagerySection>
+			<ImagerySection name="FrameHovered">
+				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="FFFF9B38" />
+			</ImagerySection>
+			<ImagerySection name="FramePushed">
+				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="FF9E5E22">
+					<Area>
+						<Inset left="16" top="16" />
+					</Area>
+				</ImageComponent>
+			</ImagerySection>
+			<ImagerySection name="FrameDisabled">
+				<ImageComponent texture="Interface/GlueUI/CharSelectButtonBackground.htex" tint="88404040" />
+			</ImagerySection>
+
+			<ImagerySection name="FrameNormalChecked">
+				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="FF033F08" />
+			</ImagerySection>
+			<ImagerySection name="FramePushedChecked">
+				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="FF033F08">
+					<Area>
+						<Inset left="16" top="16" />
+					</Area>
+				</ImageComponent>
+			</ImagerySection>
+			<ImagerySection name="Text">
+				<TextComponent color="FFEED37C" horzAlign="LEFT" vertAlign="TOP">
+					<Area>
+						<Inset left="16" top="16" />
+					</Area>
+				</TextComponent>
+			</ImagerySection>
+			<ImagerySection name="TextDisabled">
+				<TextComponent color="88404040" horzAlign="LEFT" vertAlign="TOP">
+					<Area>
+						<Inset left="16" top="16" />
+					</Area>
+				</TextComponent>
+			</ImagerySection>
+
+			<StateImagery name="Normal">
+				<Layer>
+					<Section section="FrameNormal" />
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Hovered">
+				<Layer>
+					<Section section="FrameHovered" />
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Pushed">
+				<Layer>
+					<Section section="FramePushed" />
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="FrameDisabled" />
+					<Section section="TextDisabled" />
+				</Layer>
+			</StateImagery>
+			
+			<StateImagery name="NormalChecked">
+				<Layer>
+					<Section section="FrameNormalChecked" />
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="HoveredChecked">
+				<Layer>
+					<Section section="FrameNormalChecked" />
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="PushedChecked">
+				<Layer>
+					<Section section="FramePushedChecked" />
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="DisabledChecked">
+				<Layer>
+					<Section section="FrameDisabled" />
+					<Section section="TextDisabled" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+		<Area>
+			<Size><AbsDimension x="128" y="64" /></Size>
+		</Area>
+	</Frame>
+
+	<Frame name="SpellPreviewButtonTemplate" type="Button" renderer="ButtonRenderer">
+		<Property name="Icon" />
+
+		<Visual>
+			<ImagerySection name="Image">
+				<ImageComponent>
+					<Area>
+						<Inset all="16" />
+					</Area>
+					<PropertyValue property="Icon" />
+				</ImageComponent>
+			</ImagerySection>
+			<ImagerySection name="NormalFrame">
+				<BorderComponent texture="Interface/BW_ButtonSmall_Up.htex" borderSize="30" />
+			</ImagerySection>
+			<ImagerySection name="HoveredFrame">
+				<BorderComponent texture="Interface/BW_ButtonSmall_Over.htex" borderSize="30" />
+			</ImagerySection>
+			<ImagerySection name="DisabledFrame">
+				<BorderComponent texture="Interface/BW_ButtonSmall_Up.htex" borderSize="30" />
+			</ImagerySection>
+			<StateImagery name="Normal">
+				<Layer>
+					<Section section="NormalFrame" />
+					<Section section="Image" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Hovered">
+				<Layer>
+					<Section section="HoveredFrame" />
+					<Section section="Image" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Pushed">
+				<Layer>
+					<Section section="HoveredFrame" />
+					<Section section="Image" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="DisabledFrame" />
+					<Section section="Image" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+
+		<Area>
+			<Size>
+				<AbsDimension x="128" y="128" />
+			</Size>
+		</Area>
+	</Frame>
+
 	<Frame name="TrainerFrame" inherits="SidePanelTemplate" parent="GameParent">
 		<Property name="Visible" value="False" />
 
+		<Frame name="TrainerSpellList" renderer="DefaultRenderer">
+			<Visual>
+				<ImagerySection name="Frame">
+					<ImageComponent texture="Interface/GlueUI/RealmListBackground.htex" tiling="BOTH">
+						<Area><Inset all="8" /></Area>
+					</ImageComponent>
+					<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Frame" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+
+			<Area>
+				<Anchor point="LEFT" offset="16" />
+				<Anchor point="RIGHT" offset="-16" />
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TrainerFrame_SidePanelTitleBar" />
+				<Size><AbsDimension y="640" /></Size>		<!-- 64 px per item, 10 items -->
+			</Area>
+
+			<Frame name="TrainerSpellListContent">
+				<Area>
+					<Anchor point="LEFT" />
+					<Anchor point="RIGHT" offset="-96" />
+					<Anchor point="TOP" />
+					<Anchor point="BOTTOM" />
+				</Area>
+				
+				<Frame name="TrainerSpellButton01" inherits="TrainerSpellbutton" id="1">
+					<Area>
+						<Anchor point="LEFT" offset="8" />
+						<Anchor point="RIGHT" offset="-8" />
+						<Anchor point="TOP" offset="8" />
+					</Area>
+					<Scripts><OnClick>return function(this) TrainerSpellButton_OnClick(this); end</OnClick></Scripts>
+				</Frame>
+				
+				<Frame name="TrainerSpellButton02" inherits="TrainerSpellbutton" id="2">
+					<Area>
+						<Anchor point="LEFT" relativeTo="TrainerSpellButton01" />
+						<Anchor point="RIGHT" relativeTo="TrainerSpellButton01" />
+						<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TrainerSpellButton01" />
+					</Area>
+					<Scripts><OnClick>return function(this) TrainerSpellButton_OnClick(this); end</OnClick></Scripts>
+				</Frame>
+				
+				<Frame name="TrainerSpellButton03" inherits="TrainerSpellbutton" id="3">
+					<Area>
+						<Anchor point="LEFT" relativeTo="TrainerSpellButton01" />
+						<Anchor point="RIGHT" relativeTo="TrainerSpellButton01" />
+						<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TrainerSpellButton02" />
+					</Area>
+					<Scripts><OnClick>return function(this) TrainerSpellButton_OnClick(this); end</OnClick></Scripts>
+				</Frame>
+				
+				<Frame name="TrainerSpellButton04" inherits="TrainerSpellbutton" id="4">
+					<Area>
+						<Anchor point="LEFT" relativeTo="TrainerSpellButton01" />
+						<Anchor point="RIGHT" relativeTo="TrainerSpellButton01" />
+						<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TrainerSpellButton03" />
+					</Area>
+					<Scripts><OnClick>return function(this) TrainerSpellButton_OnClick(this); end</OnClick></Scripts>
+				</Frame>
+				
+				<Frame name="TrainerSpellButton05" inherits="TrainerSpellbutton" id="5">
+					<Area>
+						<Anchor point="LEFT" relativeTo="TrainerSpellButton01" />
+						<Anchor point="RIGHT" relativeTo="TrainerSpellButton01" />
+						<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TrainerSpellButton04" />
+					</Area>
+					<Scripts><OnClick>return function(this) TrainerSpellButton_OnClick(this); end</OnClick></Scripts>
+				</Frame>
+				
+				<Frame name="TrainerSpellButton06" inherits="TrainerSpellbutton" id="6">
+					<Area>
+						<Anchor point="LEFT" relativeTo="TrainerSpellButton01" />
+						<Anchor point="RIGHT" relativeTo="TrainerSpellButton01" />
+						<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TrainerSpellButton05" />
+					</Area>
+					<Scripts><OnClick>return function(this) TrainerSpellButton_OnClick(this); end</OnClick></Scripts>
+				</Frame>
+
+				<Frame name="TrainerSpellButton07" inherits="TrainerSpellbutton" id="7">
+					<Area>
+						<Anchor point="LEFT" relativeTo="TrainerSpellButton01" />
+						<Anchor point="RIGHT" relativeTo="TrainerSpellButton01" />
+						<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TrainerSpellButton06" />
+					</Area>
+					<Scripts><OnClick>return function(this) TrainerSpellButton_OnClick(this); end</OnClick></Scripts>
+				</Frame>
+				
+				<Frame name="TrainerSpellButton08" inherits="TrainerSpellbutton" id="8">
+					<Area>
+						<Anchor point="LEFT" relativeTo="TrainerSpellButton01" />
+						<Anchor point="RIGHT" relativeTo="TrainerSpellButton01" />
+						<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TrainerSpellButton07" />
+					</Area>
+					<Scripts><OnClick>return function(this) TrainerSpellButton_OnClick(this); end</OnClick></Scripts>
+				</Frame>
+				
+				<Frame name="TrainerSpellButton09" inherits="TrainerSpellbutton" id="9">
+					<Area>
+						<Anchor point="LEFT" relativeTo="TrainerSpellButton01" />
+						<Anchor point="RIGHT" relativeTo="TrainerSpellButton01" />
+						<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TrainerSpellButton08" />
+					</Area>
+					<Scripts><OnClick>return function(this) TrainerSpellButton_OnClick(this); end</OnClick></Scripts>
+				</Frame>
+				
+				<Frame name="TrainerSpellButton10" inherits="TrainerSpellbutton" id="10">
+					<Area>
+						<Anchor point="LEFT" relativeTo="TrainerSpellButton01" />
+						<Anchor point="RIGHT" relativeTo="TrainerSpellButton01" />
+						<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TrainerSpellButton09" />
+					</Area>
+					<Scripts><OnClick>return function(this) TrainerSpellButton_OnClick(this); end</OnClick></Scripts>
+				</Frame>
+			</Frame>
+
+			<Frame name="TrainerSpellListScrollBar" inherits="VerticalScrollBar">
+				<Property name="Enabled" value="false" />
+				<Area>
+					<Anchor point="RIGHT" offset="0" />
+					<Anchor point="TOP" offset="0" />
+					<Anchor point="BOTTOM" offset="0" />
+				</Area>
+			</Frame>
+		</Frame>
+
+		<Frame name="TrainerSpellDescFrame" renderer="DefaultRenderer">
+			<Visual>
+				<ImagerySection name="Frame">
+					<ImageComponent texture="Interface/GlueUI/RealmListBackground.htex" tiling="BOTH">
+						<Area><Inset all="8" /></Area>
+					</ImageComponent>
+					<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Frame" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+			<Area>
+				<Anchor point="LEFT" offset="16" />
+				<Anchor point="RIGHT" offset="-16" />
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TrainerSpellList" />
+				<Anchor point="BOTTOM" offset="-96" />
+			</Area>
+
+			<Frame name="TrainerSpellDescContent" setAllPoints="true">
+				<Property name="Visible" value="false" />
+
+				<Frame name="TrainerSpellPreviewButton" inherits="SpellPreviewButtonTemplate">
+					<Area>
+						<Anchor point="LEFT" offset="16" />
+						<Anchor point="TOP" offset="16" />
+					</Area>
+				</Frame>
+
+				<Frame name="TrainerSpellPreviewName" inherits="TextSmall">
+					<Area>
+						<Anchor point="LEFT" relativeTo="TrainerSpellPreviewButton" relativePoint="RIGHT" offset="16" />
+						<Anchor point="TOP" relativeTo="TrainerSpellPreviewButton" />
+					</Area>
+				</Frame>
+
+				<Frame name="TrainerSpellCostLabel" inherits="TextSmall">
+					<Property name="Text" value="TRAINER_SPELL_COST" />
+
+					<Area>
+						<Anchor point="TOP" relativeTo="TrainerSpellPreviewName" relativePoint="BOTTOM" offset="16" />
+						<Anchor point="LEFT" relativeTo="TrainerSpellPreviewName" />
+					</Area>
+				</Frame>
+
+				<Frame name="TrainerSpellCostMoney" inherits="MoneyFrameTemplate">
+					<Area>
+						<Anchor point="TOP" relativeTo="TrainerSpellPreviewName" relativePoint="BOTTOM" offset="16" />
+						<Anchor point="LEFT" relativeTo="TrainerSpellCostLabel" relativePoint="RIGHT" />
+					</Area>
+				</Frame>
+				
+				<Frame name="TrainerSpellDescriptionText" inherits="TextSmall">
+					<Area>
+						<Anchor point="TOP" relativeTo="TrainerSpellPreviewButton" relativePoint="BOTTOM" offset="0" />
+						<Anchor point="LEFT" relativeTo="TrainerSpellPreviewButton" />
+						<Anchor point="RIGHT" offset="-16" />
+					</Area>
+				</Frame>
+			</Frame>
+		</Frame>
+
+        <Frame inherits="GlueButton" name="TrainerBuyButton">
+			<Property name="Text" value="TRAIN" />
+			<Property name="Enabled" value="false" />
+
+            <Area>
+                <Anchor point="BOTTOM" offset="-16" />
+                <Anchor point="RIGHT" offset="-16" />
+				<Size><AbsDimension x="256" y="80" /></Size>
+            </Area>
+			
+			<Scripts>
+				<OnClick>
+					return function(this)
+						-- TODO
+					end
+				</OnClick>
+			</Scripts>
+        </Frame>
+
+		<Frame name="TrainerPlayerMoneyBorder" inherits="LootButtonBorderTemplate">
+			<Area>
+				<Anchor point="LEFT" offset="16" />
+				<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="TrainerBuyButton" offset="-16" />
+				<Anchor point="TOP" relativeTo="TrainerBuyButton" />
+				<Anchor point="BOTTOM" relativeTo="TrainerBuyButton" />
+			</Area>
+				
+			<Frame name="TrainerPlayerMoneyFrame" inherits="MoneyFrameTemplate">
+				<Area>
+					<Anchor point="BOTTOM" offset="-16" />
+					<Anchor point="RIGHT" offset="-16" />
+				</Area>
+			</Frame>
+		</Frame>
+		
         <Scripts>
             <OnLoad>
                 return function(this)
