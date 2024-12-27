@@ -11,6 +11,12 @@ function TrainerFrame_OnTrainerClosed(self)
     HideUIPanel(self);
 end
 
+function TrainerBuyButton_OnClick(self)
+    if TrainerFrame.selectedSpellIndex then
+        BuyTrainerSpell(TrainerFrame.selectedSpellIndex);
+    end
+end
+
 function TrainerFrame_CanBuySpell(trainerSpellIndex)
     if not trainerSpellIndex then
         return false;
@@ -50,11 +56,12 @@ function TrainerSpellButton_OnClick(item)
         TrainerSpellPreviewName:SetText(spellName);
         TrainerSpellPreviewButton.userData = gameData.spells:GetById(spellId);
         TrainerSpellDescriptionText:SetText(GetSpellDescription(TrainerSpellPreviewButton.userData));
-
         RefreshMoneyFrame("TrainerSpellCostMoney", cost, false, false, true);
 
+        TrainerFrame.selectedSpellIndex = item.id - 1;
         TrainerSpellDescContent:Show();
     else
+        TrainerFrame.selectedSpellIndex = nil;
         TrainerSpellDescContent:Hide();
     end
     
@@ -97,6 +104,7 @@ function TrainerFrame_OnShow(self)
     -- Reset preview
     TrainerSpellDescContent:Hide();
     TrainerBuyButton:Disable();
+    TrainerFrame.selectedSpellId = nil;
 
     local numTrainerSpells = GetNumTrainerSpells();
 

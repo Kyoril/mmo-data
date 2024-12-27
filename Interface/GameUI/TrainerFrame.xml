@@ -369,7 +369,7 @@
 			<Scripts>
 				<OnClick>
 					return function(this)
-						-- TODO
+						TrainerBuyButton_OnClick(this);
 					end
 				</OnClick>
 			</Scripts>
