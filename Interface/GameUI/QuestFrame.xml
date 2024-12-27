@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
+	<Script file="QuestFrame.lua" />
+
+	<Frame name="QuestFrame" inherits="SidePanelTemplate" parent="GameParent">
+		<Property name="Visible" value="False" />
+
+        <Scripts>
+            <OnLoad>
+                return function(this)
+                    QuestFrame_OnLoad(this);
+                end
+            </OnLoad>
+			<OnShow>
+				return function(this)
+					QuestFrame_OnShow(this);
+				end
+			</OnShow>
+        </Scripts>
+
+    </Frame>
+</UiLayout>

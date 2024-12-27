@@ -19,6 +19,7 @@ InventoryFrame.xml
 LootFrame.xml
 TrainerFrame.xml
 VendorFrame.xml
+QuestFrame.xml
 GameTooltip.xml
 
 #DebugUI.xml

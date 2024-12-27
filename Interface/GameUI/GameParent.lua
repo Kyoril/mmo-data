@@ -8,6 +8,7 @@ UIPanelWindows["CharacterWindow"] = { area = "left", pushable = 1 };
 UIPanelWindows["TrainerFrame"] = { area = "left", pushable = 0 };
 UIPanelWindows["VendorFrame"] = { area = "left", pushable = 0 };
 UIPanelWindows["LootFrame"] = { area = "left", pushable = 0 };
+UIPanelWindows["QuestFrame"] = { area = "left", pushable = 0 };
 
 local menuOffsetY = BUTTON_V_PADDING
 
