@@ -10,6 +10,10 @@ function QuestFrame_ShowPanel(panel)
     panel:Show();
 end
 
+function QuestFrame_OnQuestFinished(self)
+    HideUIPanel(QuestFrame);
+end
+
 function QuestFrameAcceptButton_OnClick(self)
     
     local questDetails = GetQuestDetails();
@@ -87,6 +91,7 @@ function QuestFrame_OnLoad(self)
     -- Register for events
     self:RegisterEvent("QUEST_GREETING", QuestFrame_OnQuestGreeting);
     self:RegisterEvent("QUEST_DETAIL", QuestFrame_OnQuestDetail);
+    self:RegisterEvent("QUEST_FINISHED", QuestFrame_OnQuestFinished);
 
     QuestDetailAcceptButton:SetWidth(QuestDetailAcceptButton:GetTextWidth() + 64);
 end
