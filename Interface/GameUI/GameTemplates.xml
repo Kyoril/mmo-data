@@ -146,10 +146,13 @@
 	<!-- Small label -->
 	<Frame name="TextSmall" renderer="DefaultRenderer">
 		<Property name="Font" value="DefaultSmall" />
+		<Property name="HorzAlign" value="LEFT" />
+		<Property name="VertAlign" value="TOP" />
+		<Property name="TextColor" value="FFFFD100" />
 
 		<Visual>
 			<ImagerySection name="Text">
-				<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
+				<TextComponent color="$TextColor" horzAlign="$HorzAlign" vertAlign="$VertAlign" />
 			</ImagerySection>
 			<StateImagery name="Enabled">
 				<Layer>

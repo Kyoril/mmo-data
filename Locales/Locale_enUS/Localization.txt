@@ -247,4 +247,6 @@ strings =
 
 	(key = "TRAINER_SPELL_COST", string = "Cost:")
 	(key = "TRAIN", string = "Train")
+
+	(key = "AVAILABLE_QUESTS", string = "Available Quests")
 }

@@ -2,9 +2,161 @@
 <UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
 	<Script file="QuestFrame.lua" />
 
+	<Font name="QuestTitleFont" file="Fonts/arbutusslab-regular.ttf" size="30" outline="0" />
+	<Font name="QuestFont" file="Fonts/arbutusslab-regular.ttf" size="24" outline="0" />
+
+    <Frame name="QuestFramePanelTemplate" renderer="DefaultRenderer" setAllPoints="true">
+        <Property name="Visible" value="False" />
+
+        <Visual>
+            <ImagerySection name="Frame">
+                <BorderComponent texture="Interface/GlueUI/FrameBorder01.htex" border="48" tint="FFD8C6A8">
+                    <Area><Inset right="96" top="8" left="8" bottom="8" /></Area>
+                </BorderComponent>
+                <BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" />
+            </ImagerySection>
+            <StateImagery name="Enabled">
+                <Layer>
+                    <Section section="Frame" />
+                </Layer>
+            </StateImagery>
+            <StateImagery name="Disabled">
+                <Layer>
+                    <Section section="Frame" />
+                </Layer>
+            </StateImagery>
+        </Visual>
+    </Frame>
+
+    <Frame name="QuestMenuButtonTemplate" type="Button" renderer="ButtonRenderer">
+        <Property name="Font" value="QuestFont" />
+        <Property name="Icon" />
+
+        <Visual>
+			<ImagerySection name="BackgroundHighlight">
+				<ImageComponent texture="Interface/GlueUI/ListItemHighlight.htex" tint="7FFACC12" tiling="VERTICAL">
+					<Area><Inset all="4" /></Area>
+				</ImageComponent>
+			</ImagerySection>
+			<ImagerySection name="BackgroundPressed">
+				<ImageComponent texture="Interface/GlueUI/ListItemHighlight.htex" tint="7FFACC12" tiling="VERTICAL">
+					<Area><Inset top="8" bottom="0" left="4" right="4" /></Area>
+				</ImageComponent>
+			</ImagerySection>
+            <ImagerySection name="Icon">
+                <ImageComponent tiling="NONE">
+                    <Area><Inset all="6" /><Size><AbsDimension x="48" y="48" /></Size></Area>
+					<PropertyValue property="Icon" />
+                </ImageComponent>
+            </ImagerySection>
+			<ImagerySection name="TextDefault">
+				<TextComponent color="FF100500" horzAlign="LEFT" vertAlign="CENTER">
+					<Area><Inset left="64" /></Area>
+                </TextComponent>
+			</ImagerySection>
+			<ImagerySection name="TextHovered">
+				<TextComponent color="FFFFFFFF" horzAlign="LEFT" vertAlign="CENTER">
+					<Area><Inset left="64" /></Area>
+                </TextComponent>
+			</ImagerySection>
+			<ImagerySection name="TextPressed">
+				<TextComponent color="FFCDCDCD" horzAlign="LEFT" vertAlign="CENTER">
+					<Area><Inset left="64" /></Area>
+                </TextComponent>
+			</ImagerySection>
+			
+			<StateImagery name="Normal">
+				<Layer>
+                    <Section section="Icon" />
+					<Section section="TextDefault" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Hovered">
+				<Layer>
+					<Section section="BackgroundHighlight" />
+                    <Section section="Icon" />
+					<Section section="TextHovered" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Pushed">
+				<Layer>
+					<Section section="BackgroundPressed" />
+                    <Section section="Icon" />
+					<Section section="TextPressed" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+                    <Section section="Icon" />
+					<Section section="TextDefault" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+		<Area>
+			<Size><AbsDimension y="60" /></Size>
+		</Area>
+    </Frame>
+
 	<Frame name="QuestFrame" inherits="SidePanelTemplate" parent="GameParent">
 		<Property name="Visible" value="False" />
 
+        <Frame name="QuestFramePanels">
+            <Area>
+                <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestFrame_SidePanelTitleBar" />
+                <Anchor point="LEFT" offset="24" />
+                <Anchor point="RIGHT" offset="-24" />
+                <Anchor point="BOTTOM" offset="-24" />
+            </Area>
+
+            <Frame name="QuestFrameGreetingPanel" inherits="QuestFramePanelTemplate" setAllPoints="true">
+                <Frame name="GreetingPanelScrollBar" inherits="VerticalScrollBar">
+                    <Property name="Enabled" value="false" />
+
+                    <Area>
+                        <Anchor point="RIGHT" offset="0" />
+                        <Anchor point="TOP" offset="0" />
+                        <Anchor point="BOTTOM" offset="0" />
+                    </Area>
+                </Frame>
+
+                <Frame name="GreetingText" inherits="TextSmall">
+                    <Property name="Font" value="QuestFont" />
+                    <Property name="TextColor" value="FF100500" />
+
+                    <Area>
+                        <Anchor point="TOP" offset="32" />
+                        <Anchor point="LEFT" offset="32" />
+                        <Anchor point="RIGHT" relativePoint="LEFT" relativeTo="GreetingPanelScrollBar" offset="-16" />
+                    </Area>
+                </Frame>
+
+                <Frame name="QuestFrameAvailableQuests" inherits="TextSmall">
+                    <Property name="Text" value="AVAILABLE_QUESTS" />
+                    <Property name="TextColor" value="FF100500" />
+                    <Property name="Font" value="QuestTitleFont" />
+
+                    <Area>
+                        <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="GreetingText" offset="32" />
+                        <Anchor point="LEFT" offset="32" />
+                        <Anchor point="RIGHT" relativePoint="LEFT" relativeTo="GreetingPanelScrollBar" offset="-16" />
+                    </Area>
+                </Frame>
+                
+                <Frame name="AvailableQuestList">
+                    <Area>
+                        <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestFrameAvailableQuests" offset="8" />
+                        <Anchor point="LEFT" offset="32" />
+                        <Anchor point="RIGHT" relativePoint="LEFT" relativeTo="GreetingPanelScrollBar" offset="-16" />
+                        <Anchor point="BOTTOM" offset="-16" />
+                    </Area>
+                </Frame>
+            </Frame>
+
+            <Frame name="QuestFrameDetailPanel" inherits="QuestFramePanelTemplate" setAllPoints="true">
+            
+            </Frame>
+        </Frame>
+        
         <Scripts>
             <OnLoad>
                 return function(this)
