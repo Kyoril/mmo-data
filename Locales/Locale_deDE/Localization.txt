@@ -248,4 +248,7 @@ strings =
 	(key = "TRAIN", string = "Lernen")
 	
 	(key = "AVAILABLE_QUESTS", string = "Verfügbare Quests")
+	(key = "QUEST_REWARDS", string = "Belohnungen")
+	(key = "QUEST_OBJECTIVES", string = "Questbeschreibung")
+	(key = "ACCEPT_QUEST", string = "Annehmen")
 }

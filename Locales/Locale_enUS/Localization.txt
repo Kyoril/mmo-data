@@ -249,4 +249,7 @@ strings =
 	(key = "TRAIN", string = "Train")
 
 	(key = "AVAILABLE_QUESTS", string = "Available Quests")
+	(key = "QUEST_REWARDS", string = "Rewards")
+	(key = "QUEST_OBJECTIVES", string = "Quest Objectives")
+	(key = "ACCEPT_QUEST", string = "Accept")
 }

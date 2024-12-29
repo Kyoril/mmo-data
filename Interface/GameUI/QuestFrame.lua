@@ -10,6 +10,23 @@ function QuestFrame_ShowPanel(panel)
     panel:Show();
 end
 
+function QuestFrameAcceptButton_OnClick(self)
+    
+    local questDetails = GetQuestDetails();
+    if not questDetails then
+        return;
+    end
+
+    -- Accept the quest
+    AcceptQuest(questDetails.id);
+end
+
+function QuestListButton_OnClick(self)
+    -- Ask for quest details of the clicked quest id. Once the details are received from the server,
+    -- the QuestFrame_OnQuestDetail function will be called due to the QUEST_DETAIL event being triggered.
+    QueryQuestDetails(self.id);
+end
+
 function QuestFrame_OnQuestGreeting(self)
     -- Ensure the quest frame is visible as in every event
 	ShowUIPanel(QuestFrame);
@@ -24,9 +41,10 @@ function QuestFrame_OnQuestGreeting(self)
         local quest = GetAvailableQuest(i - 1);
         if quest then
             local button = QuestMenuButtonTemplate:Clone();
-            button.id = i - 1;
+            button.id = quest.id;
             button:SetText(quest.title);
             button:SetProperty("Icon", "Interface/Icons/Icon_QuestAvailable.htex");
+            button:SetClickedHandler(QuestListButton_OnClick);
             -- Anchor frame
             button:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, (i - 1) * 60);
             button:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, 16);
@@ -40,9 +58,21 @@ function QuestFrame_OnQuestGreeting(self)
 end
 
 function QuestFrame_OnQuestDetail(self)
+    
+    local questDetails = GetQuestDetails();
+    if not questDetails then
+        return;
+    end
+
     -- Ensure the quest frame is visible as in every event
 	ShowUIPanel(QuestFrame);
-    
+
+    QuestDetailTitle:SetText(questDetails.title);
+    QuestDetailDetails:SetText(questDetails.details);
+    QuestDetailDetails:SetHeight(QuestDetailDetails:GetTextHeight());
+    QuestDetailObjectives:SetText(questDetails.objectives);
+    QuestDetailObjectives:SetHeight(QuestDetailObjectives:GetTextHeight());
+
     -- Ensure the greeting panel is visible
     QuestFrame_ShowPanel(QuestFrameDetailPanel);
 end
@@ -57,6 +87,8 @@ function QuestFrame_OnLoad(self)
     -- Register for events
     self:RegisterEvent("QUEST_GREETING", QuestFrame_OnQuestGreeting);
     self:RegisterEvent("QUEST_DETAIL", QuestFrame_OnQuestDetail);
+
+    QuestDetailAcceptButton:SetWidth(QuestDetailAcceptButton:GetTextWidth() + 64);
 end
 
 function QuestFrame_OnShow(self)

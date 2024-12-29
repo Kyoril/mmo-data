@@ -153,7 +153,100 @@
             </Frame>
 
             <Frame name="QuestFrameDetailPanel" inherits="QuestFramePanelTemplate" setAllPoints="true">
-            
+                
+                <Frame name="QuestDetailPanelScrollBar" inherits="VerticalScrollBar">
+                    <Property name="Enabled" value="false" />
+
+                    <Area>
+                        <Anchor point="RIGHT" offset="0" />
+                        <Anchor point="TOP" offset="0" />
+                        <Anchor point="BOTTOM" offset="0" />
+                    </Area>
+                </Frame>
+                
+                <Frame name="QuestDetailScrollContent">
+                    <Area>
+                        <Anchor point="TOP" offset="0" />
+                        <Anchor point="LEFT" offset="0" />
+                        <Anchor point="RIGHT" relativePoint="LEFT" relativeTo="QuestDetailPanelScrollBar" />
+                        <Anchor point="BOTTOM" offset="-96" />
+                    </Area>
+
+                    <Frame name="QuestDetailTitle" inherits="TextSmall">
+                        <Property name="TextColor" value="FF100500" />
+                        <Property name="Font" value="QuestTitleFont" />
+
+                        <Area>
+                            <Anchor point="TOP" offset="32" />
+                            <Anchor point="LEFT" offset="32" />
+                            <Anchor point="RIGHT" offset="-16" />
+                        </Area>
+                    </Frame>
+                    
+                    <Frame name="QuestDetailDetails" inherits="TextSmall">
+                        <Property name="TextColor" value="FF100500" />
+                        <Property name="Font" value="QuestFont" />
+
+                        <Area>
+                            <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestDetailTitle" offset="8" />
+                            <Anchor point="LEFT" offset="32" />
+                            <Anchor point="RIGHT" offset="-16" />
+                        </Area>
+                    </Frame>
+                    
+                    <Frame name="QuestDetailObjectivesHeader" inherits="TextSmall">
+                        <Property name="Text" value="QUEST_OBJECTIVES" />
+                        <Property name="TextColor" value="FF100500" />
+                        <Property name="Font" value="QuestTitleFont" />
+
+                        <Area>
+                            <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestDetailDetails" offset="32" />
+                            <Anchor point="LEFT" offset="32" />
+                            <Anchor point="RIGHT" offset="-16" />
+                        </Area>
+                    </Frame>
+                    
+                    <Frame name="QuestDetailObjectives" inherits="TextSmall">
+                        <Property name="TextColor" value="FF100500" />
+                        <Property name="Font" value="QuestFont" />
+
+                        <Area>
+                            <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestDetailObjectivesHeader" offset="8" />
+                            <Anchor point="LEFT" offset="32" />
+                            <Anchor point="RIGHT" offset="-16" />
+                        </Area>
+                    </Frame>
+                    
+                    <Frame name="QuestDetailRewards" inherits="TextSmall">
+                        <Property name="Text" value="QUEST_REWARDS" />
+                        <Property name="TextColor" value="FF100500" />
+                        <Property name="Font" value="QuestTitleFont" />
+
+                        <Area>
+                            <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestDetailObjectives" offset="32" />
+                            <Anchor point="LEFT" offset="32" />
+                            <Anchor point="RIGHT" offset="-16" />
+                        </Area>
+                    </Frame>
+                </Frame>
+
+                <Frame name="QuestDetailAcceptButton" inherits="GlueButton">
+                    <Property name="Text" value="ACCEPT_QUEST" />
+
+                    <Area>
+                        <Anchor point="BOTTOM" offset="-16" />
+                        <Anchor point="RIGHT" offset="-96" />
+                        <Size><AbsDimension x="384" y="80" /></Size>
+                    </Area>
+
+                    <Scripts>
+                        <OnClick>
+                            return function(self)
+                                QuestFrameAcceptButton_OnClick(self);
+                            end
+                        </OnClick>
+                    </Scripts>
+                </Frame>
             </Frame>
         </Frame>
         
