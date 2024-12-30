@@ -20,3 +20,7 @@ end
 function QuestLogFrame_OnShow(self)
 
 end
+
+function QuestListQuestButton_OnClick(self)
+    
+end

@@ -2,8 +2,292 @@
 <UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
 	<Script file="QuestLogFrame.lua" />
 
+	<Frame name="QuestListQuestButton" type="Button" renderer="CheckboxRenderer">
+		<Property name="Font" value="DefaultSmall" />
+		<Property name="Checkable" value="true" />
+
+		<Visual>
+			<ImagerySection name="FrameNormal">
+				<ImageComponent texture="Interface/GlueUI/CharSelectButtonBackground.htex" />
+			</ImagerySection>
+			<ImagerySection name="FrameHovered">
+				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="FFFF9B38" />
+			</ImagerySection>
+			<ImagerySection name="FramePushed">
+				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="FF9E5E22">
+					<Area>
+						<Inset left="16" top="16" />
+					</Area>
+				</ImageComponent>
+			</ImagerySection>
+			<ImagerySection name="FrameDisabled">
+				<ImageComponent texture="Interface/GlueUI/CharSelectButtonBackground.htex" tint="88404040" />
+			</ImagerySection>
+
+			<ImagerySection name="FrameNormalChecked">
+				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="FF033F08" />
+			</ImagerySection>
+			<ImagerySection name="FramePushedChecked">
+				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="FF033F08">
+					<Area>
+						<Inset left="16" top="16" />
+					</Area>
+				</ImageComponent>
+			</ImagerySection>
+			<ImagerySection name="Text">
+				<TextComponent color="FFEED37C" horzAlign="LEFT" vertAlign="TOP">
+					<Area>
+						<Inset left="16" top="16" />
+					</Area>
+				</TextComponent>
+			</ImagerySection>
+			<ImagerySection name="TextDisabled">
+				<TextComponent color="88404040" horzAlign="LEFT" vertAlign="TOP">
+					<Area>
+						<Inset left="16" top="16" />
+					</Area>
+				</TextComponent>
+			</ImagerySection>
+
+			<StateImagery name="Normal">
+				<Layer>
+					<Section section="FrameNormal" />
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Hovered">
+				<Layer>
+					<Section section="FrameHovered" />
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Pushed">
+				<Layer>
+					<Section section="FramePushed" />
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="FrameDisabled" />
+					<Section section="TextDisabled" />
+				</Layer>
+			</StateImagery>
+			
+			<StateImagery name="NormalChecked">
+				<Layer>
+					<Section section="FrameNormalChecked" />
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="HoveredChecked">
+				<Layer>
+					<Section section="FrameNormalChecked" />
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="PushedChecked">
+				<Layer>
+					<Section section="FramePushedChecked" />
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="DisabledChecked">
+				<Layer>
+					<Section section="FrameDisabled" />
+					<Section section="TextDisabled" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+		<Area>
+			<Size><AbsDimension x="128" y="64" /></Size>
+		</Area>
+	</Frame>
+
 	<Frame name="QuestLogFrame" inherits="SidePanelTemplate" parent="GameParent">
 		<Property name="Visible" value="False" />
+
+        <Frame name="QuestLogQuestList" renderer="DefaultRenderer">
+			<Visual>
+				<ImagerySection name="Frame">
+					<ImageComponent texture="Interface/GlueUI/RealmListBackground.htex" tiling="BOTH">
+						<Area><Inset all="8" /></Area>
+					</ImageComponent>
+					<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Frame" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+
+			<Area>
+				<Anchor point="LEFT" offset="16" />
+				<Anchor point="RIGHT" offset="-16" />
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestLogFrame_SidePanelTitleBar" />
+				<Size><AbsDimension y="416" /></Size>		<!-- 64 px per item, 6 items + 32 -->
+			</Area>
+
+			<Frame name="QuestLogFrameQuestListContent">
+				<Area>
+					<Anchor point="LEFT" />
+					<Anchor point="RIGHT" offset="-96" />
+					<Anchor point="TOP" />
+					<Anchor point="BOTTOM" />
+				</Area>
+
+                <Frame name="QuestListButton1" inherits="QuestListQuestButton" id="1">
+                    <Area>
+                        <Anchor point="LEFT" offset="8" />
+                        <Anchor point="RIGHT" offset="-8" />
+                        <Anchor point="TOP" offset="16" />
+                    </Area>
+                    <Scripts><OnClick>return function(this) QuestListQuestButton_OnClick(this); end</OnClick></Scripts>
+                </Frame>
+                
+                <Frame name="QuestListButton2" inherits="QuestListQuestButton" id="2">
+                    <Area>
+                        <Anchor point="LEFT" relativeTo="QuestListButton1" />
+                        <Anchor point="RIGHT" relativeTo="QuestListButton1" />
+                        <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestListButton1" />
+                    </Area>
+                    <Scripts><OnClick>return function(this) QuestListQuestButton_OnClick(this); end</OnClick></Scripts>
+                </Frame>
+                
+                <Frame name="QuestListButton3" inherits="QuestListQuestButton" id="3">
+                    <Area>
+                        <Anchor point="LEFT" relativeTo="QuestListButton1" />
+                        <Anchor point="RIGHT" relativeTo="QuestListButton1" />
+                        <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestListButton2" />
+                    </Area>
+                    <Scripts><OnClick>return function(this) QuestListQuestButton_OnClick(this); end</OnClick></Scripts>
+                </Frame>
+                
+                <Frame name="QuestListButton4" inherits="QuestListQuestButton" id="4">
+                    <Area>
+                        <Anchor point="LEFT" relativeTo="QuestListButton1" />
+                        <Anchor point="RIGHT" relativeTo="QuestListButton1" />
+                        <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestListButton3" />
+                    </Area>
+                    <Scripts><OnClick>return function(this) TrainerSpellButton_OnClick(this); end</OnClick></Scripts>
+                </Frame>
+                
+                <Frame name="QuestListButton5" inherits="QuestListQuestButton" id="5">
+                    <Area>
+                        <Anchor point="LEFT" relativeTo="QuestListButton1" />
+                        <Anchor point="RIGHT" relativeTo="QuestListButton1" />
+                        <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestListButton4" />
+                    </Area>
+                    <Scripts><OnClick>return function(this) QuestListQuestButton_OnClick(this); end</OnClick></Scripts>
+                </Frame>
+                
+                <Frame name="QuestListButton6" inherits="QuestListQuestButton" id="6">
+                    <Area>
+                        <Anchor point="LEFT" relativeTo="QuestListButton1" />
+                        <Anchor point="RIGHT" relativeTo="QuestListButton1" />
+                        <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestListButton5" />
+                    </Area>
+                    <Scripts><OnClick>return function(this) QuestListQuestButton_OnClick(this); end</OnClick></Scripts>
+                </Frame>
+			</Frame>
+            
+			<Frame name="QuestLogQuestListScrollBar" inherits="VerticalScrollBar">
+				<Property name="Enabled" value="false" />
+				<Area>
+					<Anchor point="RIGHT" offset="0" />
+					<Anchor point="TOP" offset="0" />
+					<Anchor point="BOTTOM" offset="0" />
+				</Area>
+			</Frame>
+        </Frame>
+
+        <Frame name="QuestLogQuestDetailsFrame" inherits="QuestFramePanelTemplate">
+            <Property name="Visible" value="true" />
+            
+			<Area>
+				<Anchor point="LEFT" offset="16" />
+				<Anchor point="RIGHT" offset="-16" />
+				<Anchor point="BOTTOM" offset="-16" />
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestLogQuestList" />
+			</Area>
+
+            <Frame name="QuestLogQuestDetailPanelScrollBar" inherits="VerticalScrollBar">
+                <Property name="Enabled" value="false" />
+
+                <Area>
+                    <Anchor point="RIGHT" offset="0" />
+                    <Anchor point="TOP" offset="0" />
+                    <Anchor point="BOTTOM" offset="0" />
+                </Area>
+            </Frame>
+            
+            <Frame name="QuestLogQuestDetailScrollContent">
+                <Area>
+                    <Anchor point="TOP" offset="0" />
+                    <Anchor point="LEFT" offset="0" />
+                    <Anchor point="RIGHT" relativePoint="LEFT" relativeTo="QuestLogQuestDetailPanelScrollBar" />
+                    <Anchor point="BOTTOM" offset="-96" />
+                </Area>
+
+                <Frame name="QuestLogQuestDetailTitle" inherits="TextSmall">
+                    <Property name="TextColor" value="FF100500" />
+                    <Property name="Font" value="QuestTitleFont" />
+
+                    <Area>
+                        <Anchor point="TOP" offset="32" />
+                        <Anchor point="LEFT" offset="32" />
+                        <Anchor point="RIGHT" offset="-16" />
+                    </Area>
+                </Frame>
+                
+                <Frame name="QuestLogQuestDetailDetails" inherits="TextSmall">
+                    <Property name="TextColor" value="FF100500" />
+                    <Property name="Font" value="QuestFont" />
+
+                    <Area>
+                        <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestLogQuestDetailTitle" offset="8" />
+                        <Anchor point="LEFT" offset="32" />
+                        <Anchor point="RIGHT" offset="-16" />
+                    </Area>
+                </Frame>
+                
+                <Frame name="QuestLogQuestDetailObjectivesHeader" inherits="TextSmall">
+                    <Property name="Text" value="QUEST_OBJECTIVES" />
+                    <Property name="TextColor" value="FF100500" />
+                    <Property name="Font" value="QuestTitleFont" />
+
+                    <Area>
+                        <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestLogQuestDetailDetails" offset="32" />
+                        <Anchor point="LEFT" offset="32" />
+                        <Anchor point="RIGHT" offset="-16" />
+                    </Area>
+                </Frame>
+                
+                <Frame name="QuestLogQuestDetailObjectives" inherits="TextSmall">
+                    <Property name="TextColor" value="FF100500" />
+                    <Property name="Font" value="QuestFont" />
+
+                    <Area>
+                        <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestLogQuestDetailObjectivesHeader" offset="8" />
+                        <Anchor point="LEFT" offset="32" />
+                        <Anchor point="RIGHT" offset="-16" />
+                    </Area>
+                </Frame>
+                
+                <Frame name="QuestLogQuestDetailRewards" inherits="TextSmall">
+                    <Property name="Text" value="QUEST_REWARDS" />
+                    <Property name="TextColor" value="FF100500" />
+                    <Property name="Font" value="QuestTitleFont" />
+
+                    <Area>
+                        <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestLogQuestDetailObjectives" offset="32" />
+                        <Anchor point="LEFT" offset="32" />
+                        <Anchor point="RIGHT" offset="-16" />
+                    </Area>
+                </Frame>
+            </Frame>
+        </Frame>
 
         <Scripts>
             <OnLoad>
