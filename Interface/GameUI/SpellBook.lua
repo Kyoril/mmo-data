@@ -131,5 +131,7 @@ function SpellBook_OnLoad(self)
 	SpellBookTitleBar:GetChild(0):SetClickedHandler(SpellBook_Toggle);
     
     SpellBook_UpdatePage();
+    
+    AddMenuBarButton("Interface/Icons/fg4_icons_firesword_result.htex", SpellBook_Toggle);
 end
 

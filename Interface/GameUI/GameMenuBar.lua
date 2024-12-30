@@ -23,9 +23,6 @@ function GameMenuBar_OnPlayerXpChanged(self)
 end
 
 function GameMenuBar_OnLoad(self)
-	AddMenuBarButton("Interface/Icons/fg4_icons_menu_result.htex", OnMenuItem_Clicked)
-	AddMenuBarButton("Interface/Icons/fg4_icons_firesword_result.htex", SpellBook_Toggle)
-
 	self:RegisterEvent("PLAYER_XP_CHANGED", GameMenuBar_OnPlayerXpChanged)
 	self:RegisterEvent("PLAYER_ENTER_WORLD", GameMenuBar_OnPlayerXpChanged)
 end
@@ -48,12 +45,4 @@ function AddMenuBarButton(text, callback)
 	menuBarOffset = menuBarOffset + button:GetWidth() + MENUBAR_H_PADDING
 end
 
-function OnMenuItem_Clicked()
-	if (GameMenu:IsVisible()) then
-		HideUIPanel(GameMenu)
-	else
-		CloseAllWindows();
-		ShowUIPanel(GameMenu)
-	end
-end
 

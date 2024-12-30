@@ -282,7 +282,7 @@
 	<Binding name="TOGGLEQUESTLOG" description="Toggle the quest log." category="INTERFACE">
 		return function(key, keystate)
             if keystate == "DOWN" then
-                -- TODO
+                QuestLogFrame_Toggle();
             end
         end
 	</Binding>

@@ -31,11 +31,22 @@ function OnCloseButton_Clicked()
 	HideUIPanel(GameMenu);
 end
 
+function OnMenuItem_Clicked()
+	if (GameMenu:IsVisible()) then
+		HideUIPanel(GameMenu)
+	else
+		CloseAllWindows();
+		ShowUIPanel(GameMenu)
+	end
+end
+
 function GameMenu_OnLoad(this)
 	
 	MenuTitleBar:GetChild(0):SetClickedHandler(OnCloseButton_Clicked);
 		
-	AddMenuButton("CLOSE", OnCloseButton_Clicked)
-	AddMenuButton("QUIT", OnQuitButton_Clicked)
+	AddMenuButton("CLOSE", OnCloseButton_Clicked);
+	AddMenuButton("QUIT", OnQuitButton_Clicked);
+	
+	AddMenuBarButton("Interface/Icons/fg4_icons_menu_result.htex", OnMenuItem_Clicked);
 end
 
