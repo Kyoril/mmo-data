@@ -6,6 +6,10 @@ function QuestLogFrame_OnLoad(self)
     -- Localize quest log text
     self:GetChild(0):SetText(Localize("QUESTS"));
 
+    -- Register for events
+    self:RegisterEvent("QUEST_LOG_UPDATE", QuestLog_Update);
+
+    -- Add button to the main menu bar of the game
     AddMenuBarButton("Interface/Icons/fg4_icons_questlog_result.htex", QuestLogFrame_Toggle);
 end
 
@@ -18,9 +22,37 @@ function QuestLogFrame_Toggle()
 end
 
 function QuestLogFrame_OnShow(self)
-
+    QuestLog_Update();
 end
 
 function QuestListQuestButton_OnClick(self)
-    
+    QuestLogQuestDetailScrollContent:Hide();
+
+    if self.userData then
+        QuestLogQuestDetailTitle:SetText(self.userData.quest.title);
+        QuestLogQuestDetailDetails:SetText(self.userData.quest.details);
+        QuestLogQuestDetailDetails:SetHeight(QuestLogQuestDetailDetails:GetTextHeight());
+        QuestLogQuestDetailObjectives:SetText(self.userData.quest.objectives);
+        QuestLogQuestDetailObjectives:SetHeight(QuestLogQuestDetailObjectives:GetTextHeight());
+        QuestLogQuestDetailScrollContent:Show();
+    end
+end
+
+function QuestLog_Update()
+    local numEntries = GetNumQuestLogEntries();
+    QuestLogQuestDetailScrollContent:Hide();
+
+    for i = 1, 6 do
+        local button = _G["QuestListButton" .. i];
+
+        local questLogEntry = GetQuestLogEntry(i - 1);
+        if questLogEntry then
+            button.userData = questLogEntry;
+            button:SetText(questLogEntry.quest.title);
+            button:Show();
+        else
+            button.userData = nil;
+            button:Hide();
+        end
+    end
 end
