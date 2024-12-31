@@ -3,7 +3,7 @@
 	<Script file="QuestLogFrame.lua" />
 
 	<Frame name="QuestListQuestButton" type="Button" renderer="CheckboxRenderer">
-		<Property name="Font" value="DefaultSmall" />
+		<Property name="Font" value="QuestFont" />
 		<Property name="Checkable" value="true" />
 
 		<Visual>
@@ -16,7 +16,7 @@
 			<ImagerySection name="FramePushed">
 				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="FF9E5E22">
 					<Area>
-						<Inset left="16" top="16" />
+						<Inset left="8" top="8" />
 					</Area>
 				</ImageComponent>
 			</ImagerySection>
@@ -30,21 +30,21 @@
 			<ImagerySection name="FramePushedChecked">
 				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="FF033F08">
 					<Area>
-						<Inset left="16" top="16" />
+						<Inset left="8" top="8" />
 					</Area>
 				</ImageComponent>
 			</ImagerySection>
 			<ImagerySection name="Text">
 				<TextComponent color="FFEED37C" horzAlign="LEFT" vertAlign="TOP">
 					<Area>
-						<Inset left="16" top="16" />
+						<Inset left="8" top="8" />
 					</Area>
 				</TextComponent>
 			</ImagerySection>
 			<ImagerySection name="TextDisabled">
 				<TextComponent color="88404040" horzAlign="LEFT" vertAlign="TOP">
 					<Area>
-						<Inset left="16" top="16" />
+						<Inset left="8" top="8" />
 					</Area>
 				</TextComponent>
 			</ImagerySection>
@@ -100,7 +100,7 @@
 			</StateImagery>
 		</Visual>
 		<Area>
-			<Size><AbsDimension x="128" y="64" /></Size>
+			<Size><AbsDimension x="128" y="48" /></Size>
 		</Area>
 	</Frame>
 
@@ -126,7 +126,7 @@
 				<Anchor point="LEFT" offset="16" />
 				<Anchor point="RIGHT" offset="-16" />
 				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestLogFrame_SidePanelTitleBar" />
-				<Size><AbsDimension y="416" /></Size>		<!-- 64 px per item, 6 items + 32 -->
+				<Size><AbsDimension y="416" /></Size>		<!-- 48 px per item, 8 items + 32 -->
 			</Area>
 
 			<Frame name="QuestLogFrameQuestListContent">
@@ -187,6 +187,24 @@
                         <Anchor point="LEFT" relativeTo="QuestListButton1" />
                         <Anchor point="RIGHT" relativeTo="QuestListButton1" />
                         <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestListButton5" />
+                    </Area>
+                    <Scripts><OnClick>return function(this) QuestListQuestButton_OnClick(this); end</OnClick></Scripts>
+                </Frame>
+				
+                <Frame name="QuestListButton7" inherits="QuestListQuestButton" id="7">
+                    <Area>
+                        <Anchor point="LEFT" relativeTo="QuestListButton1" />
+                        <Anchor point="RIGHT" relativeTo="QuestListButton1" />
+                        <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestListButton6" />
+                    </Area>
+                    <Scripts><OnClick>return function(this) QuestListQuestButton_OnClick(this); end</OnClick></Scripts>
+                </Frame>
+				
+                <Frame name="QuestListButton8" inherits="QuestListQuestButton" id="8">
+                    <Area>
+                        <Anchor point="LEFT" relativeTo="QuestListButton1" />
+                        <Anchor point="RIGHT" relativeTo="QuestListButton1" />
+                        <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestListButton7" />
                     </Area>
                     <Scripts><OnClick>return function(this) QuestListQuestButton_OnClick(this); end</OnClick></Scripts>
                 </Frame>

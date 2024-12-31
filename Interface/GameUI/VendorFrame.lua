@@ -91,7 +91,7 @@ function VendorButton_OnClick(self, button)
     if (button == "RIGHT") then
         BuyVendorItem(self.id);
     elseif(button == "LEFT") then
-        printf("TODO: Grab item from vendor");
+        print("TODO: Grab item from vendor");
     end
 end
 

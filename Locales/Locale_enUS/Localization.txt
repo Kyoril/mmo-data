@@ -253,4 +253,5 @@ strings =
 	(key = "QUEST_OBJECTIVES", string = "Quest Objectives")
 	(key = "ACCEPT_QUEST", string = "Accept")
 	(key = "ABANDON_QUEST", string = "Abandon")
+	(key = "QUEST_COMPLETED_FORMAT", string = "%s (Completed)")
 }

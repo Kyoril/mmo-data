@@ -252,4 +252,5 @@ strings =
 	(key = "QUEST_OBJECTIVES", string = "Questbeschreibung")
 	(key = "ACCEPT_QUEST", string = "Annehmen")
 	(key = "ABANDON_QUEST", string = "Abbrechen")
+	(key = "QUEST_COMPLETED_FORMAT", string = "%s (Abgeschlossen)")
 }

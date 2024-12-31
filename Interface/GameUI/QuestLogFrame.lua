@@ -1,4 +1,6 @@
 
+MAX_DISPLAY_QUESTS = 8;
+
 local selectedQuestId = nil;
 
 function QuestLogFrame_OnLoad(self)
@@ -38,8 +40,18 @@ function QuestLogFrame_OnShow(self)
 end
 
 function QuestListQuestButton_OnClick(self)
+    -- Hide scroll content
     QuestLogQuestDetailScrollContent:Hide();
 
+    -- Uncheck all buttons
+    for i = 1, MAX_DISPLAY_QUESTS do
+        local button = _G["QuestListButton" .. i];
+        button:SetChecked(false);
+    end
+
+    self:SetChecked(true);
+
+    -- If there is a quest selected...
     if self.userData then
         selectedQuestId = self.userData.quest.id;
 
@@ -58,13 +70,19 @@ function QuestLog_Update()
     local numEntries = GetNumQuestLogEntries();
     QuestLogQuestDetailScrollContent:Hide();
 
-    for i = 1, 6 do
+    for i = 1, MAX_DISPLAY_QUESTS do
         local button = _G["QuestListButton" .. i];
 
         local questLogEntry = GetQuestLogEntry(i - 1);
         if questLogEntry then
             button.userData = questLogEntry;
-            button:SetText(questLogEntry.quest.title);
+
+            if questLogEntry.status == 1 then
+                button:SetText(string.format(Localize("QUEST_COMPLETED_FORMAT"), questLogEntry.quest.title));
+            else
+                button:SetText(questLogEntry.quest.title);
+            end
+
             button:Show();
         else
             button.userData = nil;
