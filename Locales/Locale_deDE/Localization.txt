@@ -251,4 +251,5 @@ strings =
 	(key = "QUEST_REWARDS", string = "Belohnungen")
 	(key = "QUEST_OBJECTIVES", string = "Questbeschreibung")
 	(key = "ACCEPT_QUEST", string = "Annehmen")
+	(key = "ABANDON_QUEST", string = "Abbrechen")
 }

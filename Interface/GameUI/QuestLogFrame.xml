@@ -287,6 +287,24 @@
                     </Area>
                 </Frame>
             </Frame>
+
+			<Frame name="QuestLogAbandonButton" inherits="GlueButton">
+                    <Property name="Text" value="ABANDON_QUEST" />
+
+                    <Area>
+                        <Anchor point="BOTTOM" offset="-16" />
+                        <Anchor point="RIGHT" offset="-96" />
+                        <Size><AbsDimension x="384" y="80" /></Size>
+                    </Area>
+
+                    <Scripts>
+                        <OnClick>
+                            return function(self)
+                                QuestLogAbandonButton_OnClick(self);
+                            end
+                        </OnClick>
+                    </Scripts>
+                </Frame>
         </Frame>
 
         <Scripts>
