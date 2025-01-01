@@ -40,6 +40,29 @@ function ChatFrame_OnPlayerLevelUp(self, newLevel, health, mana, stamina, streng
     end
 end
 
+function ChatFrame_OnQuestRewarded(self, questTitle, rewardXp, rewardMoney)
+    ChatFrame:AddMessage(string.format(Localize("QUEST_REWARDED_TITLE"), questTitle), 1.0, 1.0, 0.0);
+    if rewardXp and rewardXp > 0 then
+        ChatFrame:AddMessage(string.format(Localize("QUEST_REWARDED_XP"), rewardXp), 1.0, 1.0, 0.0);
+    end
+    if rewardMoney and rewardMoney > 0 then
+        local copper = rewardMoney % 100;
+        local silver = math.floor(rewardMoney / 100) % 100;
+        local gold = math.floor(rewardMoney / 10000);
+        local moneyString = "";
+
+        if gold > 0 then
+            moneyString = string.format(Localize("MONEY_GOLD_SILVER_COPPER"), gold, silver, copper);
+        elseif silver > 0 then
+            moneyString = string.format(Localize("MONEY_SILVER_COPPER"), silver, copper);
+        else
+            moneyString = string.format(Localize("MONEY_COPPER"), copper);
+        end
+
+        ChatFrame:AddMessage(string.format(Localize("QUEST_REWARDED_MONEY"), moneyString), 1.0, 1.0, 0.0);
+    end
+end
+
 function ChatFrame_OnSpellLearned(this, spellName)
     ChatFrame:AddMessage(string.format(Localize("NEW_ABILITY_LEARNED"), spellName), 1.0, 1.0, 0.0);
 end
@@ -54,6 +77,7 @@ function ChatFrame_OnLoad(this)
 
     this:RegisterEvent("PLAYER_LEVEL_UP", ChatFrame_OnPlayerLevelUp);
     this:RegisterEvent("SPELL_LEARNED", ChatFrame_OnSpellLearned);
+    this:RegisterEvent("QUEST_REWARDED", ChatFrame_OnQuestRewarded);
 
     ChatFrame:AddMessage("Welcome to the game!", 1.0, 1.0, 0.0);
 end

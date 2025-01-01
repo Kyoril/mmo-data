@@ -253,4 +253,14 @@ strings =
 	(key = "ACCEPT_QUEST", string = "Accept")
 	(key = "ABANDON_QUEST", string = "Abandon")
 	(key = "QUEST_COMPLETED_FORMAT", string = "%s (Completed)")
+	(key = "CONTINUE", string = "Continue")
+	(key = "COMPLETE_QUEST", string = "Complete")
+	(key = "QUEST_REWARDED_TITLE", string = "%s completed")
+	(key = "QUEST_REWARDED_XP", string = "Experience gained: %d")
+	(key = "QUEST_REWARDED_MONEY", string = "Received %s")
+	(key = "QUEST_REWARDED_ITEM", string = "Received item: %s")
+	
+	(key = "MONEY_GOLD_SILVER_COPPER", string = "%d Gold, %2d Silver, %2d Copper")
+	(key = "MONEY_SILVER_COPPER", string = "%d Silver, %2d Copper")
+	(key = "MONEY_COPPER", string = "%d Copper")
 }

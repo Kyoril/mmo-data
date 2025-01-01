@@ -31,6 +31,14 @@ function QuestListButton_OnClick(self)
     QueryQuestDetails(self.id);
 end
 
+QuestListIcons = {}
+QuestListIcons[8] = "Interface/Icons/Icon_QuestCompleted.htex";
+QuestListIcons[7] = "Interface/Icons/Icon_QuestCompleted.htex";
+QuestListIcons[6] = "Interface/Icons/Icon_QuestAvailable.htex";
+QuestListIcons[5] = "Interface/Icons/Icon_QuestAvailable.htex";
+QuestListIcons[4] = "Interface/Icons/Icon_QuestCompleted.htex";
+QuestListIcons[3] = "Interface/Icons/Icon_QuestInProgress.htex";
+
 function QuestFrame_OnQuestGreeting(self)
     -- Ensure the quest frame is visible as in every event
 	ShowUIPanel(QuestFrame);
@@ -47,7 +55,7 @@ function QuestFrame_OnQuestGreeting(self)
             local button = QuestMenuButtonTemplate:Clone();
             button.id = quest.id;
             button:SetText(quest.title);
-            button:SetProperty("Icon", "Interface/Icons/Icon_QuestAvailable.htex");
+            button:SetProperty("Icon", QuestListIcons[quest.icon]);
             button:SetClickedHandler(QuestListButton_OnClick);
             -- Anchor frame
             button:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, (i - 1) * 60);
@@ -62,7 +70,6 @@ function QuestFrame_OnQuestGreeting(self)
 end
 
 function QuestFrame_OnQuestDetail(self)
-    
     local questDetails = GetQuestDetails();
     if not questDetails then
         return;
@@ -81,6 +88,51 @@ function QuestFrame_OnQuestDetail(self)
     QuestFrame_ShowPanel(QuestFrameDetailPanel);
 end
 
+
+function QuestFrame_OnQuestRequestItems(self)
+    local questDetails = GetQuestDetails();
+    if not questDetails then
+        return;
+    end
+
+    -- Ensure the quest frame is visible as in every event
+	ShowUIPanel(QuestFrame);
+
+    QuestRequestItemsTitle:SetText(questDetails.title);
+    QuestRequestItemsText:SetText(questDetails.requestItems);
+    QuestRequestItemsText:SetHeight(QuestRequestItemsText:GetTextHeight());
+    
+    -- Ensure the panel is visible
+    QuestFrame_ShowPanel(QuestFrameRequestItemsPanel);
+end
+
+function QuestRewardCompleteButton_OnClick(self)
+    GetQuestReward(0);
+end
+
+function QuestFrame_OnQuestOfferRewards(self)
+    local questDetails = GetQuestDetails();
+    if not questDetails then
+        return;
+    end
+
+    -- Ensure the quest frame is visible as in every event
+	ShowUIPanel(QuestFrame);
+
+    QuestRewardCompleteButton:SetWidth(QuestRewardCompleteButton:GetTextWidth() + 64);
+
+    QuestRewardsTitle:SetText(questDetails.title);
+    QuestRewardsText:SetText(questDetails.offerReward);
+    QuestRewardsText:SetHeight(QuestRewardsText:GetTextHeight());
+
+    -- Ensure the panel is visible
+    QuestFrame_ShowPanel(QuestFrameRewardsPanel);
+end
+
+function QuestRequestItemsNextButton_OnClick(self)
+    -- TODO
+end
+
 function QuestFrame_OnLoad(self)
     -- Initialize side panel functionality first, like the close button
     SidePanel_OnLoad(self);
@@ -91,6 +143,8 @@ function QuestFrame_OnLoad(self)
     -- Register for events
     self:RegisterEvent("QUEST_GREETING", QuestFrame_OnQuestGreeting);
     self:RegisterEvent("QUEST_DETAIL", QuestFrame_OnQuestDetail);
+    self:RegisterEvent("QUEST_REQUEST_ITEMS", QuestFrame_OnQuestRequestItems);
+    self:RegisterEvent("QUEST_OFFER_REWARDS", QuestFrame_OnQuestOfferRewards);
     self:RegisterEvent("QUEST_FINISHED", QuestFrame_OnQuestFinished);
 
     QuestDetailAcceptButton:SetWidth(QuestDetailAcceptButton:GetTextWidth() + 64);
