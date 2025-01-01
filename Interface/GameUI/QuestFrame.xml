@@ -10,7 +10,7 @@
 
         <Visual>
             <ImagerySection name="Frame">
-                <BorderComponent texture="Interface/GlueUI/FrameBorder01.htex" border="48" tint="FFD8C6A8">
+                <BorderComponent texture="Interface/GameUI/QuestFrame_Background.htex" border="96" tint="FFFFFFFF">
                     <Area><Inset right="96" top="8" left="8" bottom="8" /></Area>
                 </BorderComponent>
                 <BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" />
@@ -34,12 +34,12 @@
 
         <Visual>
 			<ImagerySection name="BackgroundHighlight">
-				<ImageComponent texture="Interface/GlueUI/ListItemHighlight.htex" tint="7FFACC12" tiling="VERTICAL">
+				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="FFFACC12" tiling="VERTICAL">
 					<Area><Inset all="4" /></Area>
 				</ImageComponent>
 			</ImagerySection>
 			<ImagerySection name="BackgroundPressed">
-				<ImageComponent texture="Interface/GlueUI/ListItemHighlight.htex" tint="7FFACC12" tiling="VERTICAL">
+				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="FFFACC12" tiling="VERTICAL">
 					<Area><Inset top="8" bottom="0" left="4" right="4" /></Area>
 				</ImageComponent>
 			</ImagerySection>
@@ -55,12 +55,12 @@
                 </TextComponent>
 			</ImagerySection>
 			<ImagerySection name="TextHovered">
-				<TextComponent color="FFFFFFFF" horzAlign="LEFT" vertAlign="CENTER">
+				<TextComponent color="FF100500" horzAlign="LEFT" vertAlign="CENTER">
 					<Area><Inset left="64" /></Area>
                 </TextComponent>
 			</ImagerySection>
 			<ImagerySection name="TextPressed">
-				<TextComponent color="FFCDCDCD" horzAlign="LEFT" vertAlign="CENTER">
+				<TextComponent color="FF100500" horzAlign="LEFT" vertAlign="CENTER">
 					<Area><Inset left="64" /></Area>
                 </TextComponent>
 			</ImagerySection>

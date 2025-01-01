@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
-	<Font name="DefaultSmall" file="Fonts/arbutusslab-regular.ttf" size="26" outline="1" />
-	<Font name="DefaultHeader" file="Fonts/arbutusslab-regular.ttf" size="42" outline="2" />
+	<Font name="DefaultSmall" file="Fonts/arbutusslab-regular.ttf" size="26" outline="0" />
+	<Font name="DefaultHeader" file="Fonts/arbutusslab-regular.ttf" size="42" outline="0" />
 	
 	<Font name="SmallLabelFont" file="Fonts/arbutusslab-regular.ttf" size="22" outline="0" />
 	<Font name="AuraTimeFont" file="Fonts/arbutusslab-regular.ttf" size="18" outline="1" />

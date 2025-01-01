@@ -126,7 +126,7 @@
 				<Anchor point="LEFT" offset="16" />
 				<Anchor point="RIGHT" offset="-16" />
 				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestLogFrame_SidePanelTitleBar" />
-				<Size><AbsDimension y="416" /></Size>		<!-- 48 px per item, 8 items + 32 -->
+				<Size><AbsDimension y="320" /></Size>		<!-- 48 px per item, 6 items + 32 -->
 			</Area>
 
 			<Frame name="QuestLogFrameQuestListContent">
@@ -187,24 +187,6 @@
                         <Anchor point="LEFT" relativeTo="QuestListButton1" />
                         <Anchor point="RIGHT" relativeTo="QuestListButton1" />
                         <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestListButton5" />
-                    </Area>
-                    <Scripts><OnClick>return function(this) QuestListQuestButton_OnClick(this); end</OnClick></Scripts>
-                </Frame>
-				
-                <Frame name="QuestListButton7" inherits="QuestListQuestButton" id="7">
-                    <Area>
-                        <Anchor point="LEFT" relativeTo="QuestListButton1" />
-                        <Anchor point="RIGHT" relativeTo="QuestListButton1" />
-                        <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestListButton6" />
-                    </Area>
-                    <Scripts><OnClick>return function(this) QuestListQuestButton_OnClick(this); end</OnClick></Scripts>
-                </Frame>
-				
-                <Frame name="QuestListButton8" inherits="QuestListQuestButton" id="8">
-                    <Area>
-                        <Anchor point="LEFT" relativeTo="QuestListButton1" />
-                        <Anchor point="RIGHT" relativeTo="QuestListButton1" />
-                        <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestListButton7" />
                     </Area>
                     <Scripts><OnClick>return function(this) QuestListQuestButton_OnClick(this); end</OnClick></Scripts>
                 </Frame>

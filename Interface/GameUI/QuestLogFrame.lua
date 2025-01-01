@@ -1,5 +1,5 @@
 
-MAX_DISPLAY_QUESTS = 8;
+MAX_DISPLAY_QUESTS = 6;
 
 local selectedQuestId = nil;
 
@@ -58,8 +58,12 @@ function QuestListQuestButton_OnClick(self)
         QuestLogQuestDetailTitle:SetText(self.userData.quest.title);
         QuestLogQuestDetailDetails:SetText(self.userData.quest.details);
         QuestLogQuestDetailDetails:SetHeight(QuestLogQuestDetailDetails:GetTextHeight());
+        QuestLogQuestDetailObjectivesHeader:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, QuestLogQuestDetailDetails, 32);
+
         QuestLogQuestDetailObjectives:SetText(self.userData.quest.objectives);
         QuestLogQuestDetailObjectives:SetHeight(QuestLogQuestDetailObjectives:GetTextHeight());
+        QuestLogQuestDetailRewards:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, QuestLogQuestDetailObjectives, 32);
+
         QuestLogQuestDetailScrollContent:Show();
         
         QuestLogAbandonButton:Enable();
