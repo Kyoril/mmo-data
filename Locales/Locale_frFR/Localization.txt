@@ -259,6 +259,8 @@ strings =
 	(key = "QUEST_REWARDED_XP", string = "Experience gained: %d")
 	(key = "QUEST_REWARDED_MONEY", string = "Received %s")
 	(key = "QUEST_REWARDED_ITEM", string = "Received item: %s")
+	(key = "QUEST_ACCEPTED_TITLE", string = "Quest accepted: %s")
+	(key = "QUEST_ABANDONED_TITLE", string = "Quest abandoned: %s")
 	
 	(key = "MONEY_GOLD_SILVER_COPPER", string = "%d Gold, %2d Silver, %2d Copper")
 	(key = "MONEY_SILVER_COPPER", string = "%d Silver, %2d Copper")

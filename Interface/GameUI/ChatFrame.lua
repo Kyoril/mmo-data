@@ -63,6 +63,14 @@ function ChatFrame_OnQuestRewarded(self, questTitle, rewardXp, rewardMoney)
     end
 end
 
+function ChatFrame_OnQuestAccepted(self, questTitle)
+    ChatFrame:AddMessage(string.format(Localize("QUEST_ACCEPTED_TITLE"), questTitle), 1.0, 1.0, 0.0);
+end
+
+function ChatFrame_OnQuestAbandoned(self, questTitle)
+    ChatFrame:AddMessage(string.format(Localize("QUEST_ABANDONED_TITLE"), questTitle), 1.0, 1.0, 0.0);
+end
+
 function ChatFrame_OnSpellLearned(this, spellName)
     ChatFrame:AddMessage(string.format(Localize("NEW_ABILITY_LEARNED"), spellName), 1.0, 1.0, 0.0);
 end
@@ -77,6 +85,8 @@ function ChatFrame_OnLoad(this)
 
     this:RegisterEvent("PLAYER_LEVEL_UP", ChatFrame_OnPlayerLevelUp);
     this:RegisterEvent("SPELL_LEARNED", ChatFrame_OnSpellLearned);
+    this:RegisterEvent("QUEST_ACCEPTED", ChatFrame_OnQuestAccepted);
+    this:RegisterEvent("QUEST_ABANDONED", ChatFrame_OnQuestAbandoned);
     this:RegisterEvent("QUEST_REWARDED", ChatFrame_OnQuestRewarded);
 
     ChatFrame:AddMessage("Welcome to the game!", 1.0, 1.0, 0.0);
