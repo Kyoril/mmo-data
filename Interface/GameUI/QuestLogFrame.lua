@@ -56,11 +56,11 @@ function QuestListQuestButton_OnClick(self)
         selectedQuestId = self.userData.quest.id;
 
         QuestLogQuestDetailTitle:SetText(self.userData.quest.title);
-        QuestLogQuestDetailDetails:SetText(self.userData.quest.details);
+        QuestLogQuestDetailDetails:SetText(GetQuestDetailsText(self.userData.quest));
         QuestLogQuestDetailDetails:SetHeight(QuestLogQuestDetailDetails:GetTextHeight());
         QuestLogQuestDetailObjectivesHeader:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, QuestLogQuestDetailDetails, 32);
 
-        QuestLogQuestDetailObjectives:SetText(self.userData.quest.objectives);
+        QuestLogQuestDetailObjectives:SetText(GetQuestObjectivesText(self.userData.quest));
         QuestLogQuestDetailObjectives:SetHeight(QuestLogQuestDetailObjectives:GetTextHeight());
         QuestLogQuestDetailRewards:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, QuestLogQuestDetailObjectives, 32);
 

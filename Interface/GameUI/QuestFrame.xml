@@ -6,7 +6,7 @@
 	<Font name="QuestFont" file="Fonts/arbutusslab-regular.ttf" size="24" outline="0" />
 
     <Frame name="QuestFramePanelTemplate" renderer="DefaultRenderer" setAllPoints="true">
-        <Property name="Visible" value="False" />
+        <Property name="Visible" value="false" />
 
         <Visual>
             <ImagerySection name="Frame">
@@ -31,6 +31,7 @@
     <Frame name="QuestMenuButtonTemplate" type="Button" renderer="ButtonRenderer">
         <Property name="Font" value="QuestFont" />
         <Property name="Icon" />
+        <Property name="ClippedByParent" value="true" />
 
         <Visual>
 			<ImagerySection name="BackgroundHighlight">
@@ -98,9 +99,11 @@
     </Frame>
 
 	<Frame name="QuestFrame" inherits="SidePanelTemplate" parent="GameParent">
-		<Property name="Visible" value="False" />
+		<Property name="Visible" value="false" />
 
         <Frame name="QuestFramePanels">
+            <Property name="ClippedByParent" value="true" />
+
             <Area>
                 <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestFrame_SidePanelTitleBar" />
                 <Anchor point="LEFT" offset="24" />
@@ -143,6 +146,8 @@
                 </Frame>
                 
                 <Frame name="AvailableQuestList">
+                    <Property name="ClippedByParent" value="true" />
+
                     <Area>
                         <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestFrameAvailableQuests" offset="8" />
                         <Anchor point="LEFT" offset="32" />
@@ -165,6 +170,8 @@
                 </Frame>
                 
                 <Frame name="QuestDetailScrollContent">
+                    <Property name="ClippedByParent" value="true" />
+
                     <Area>
                         <Anchor point="TOP" offset="0" />
                         <Anchor point="LEFT" offset="0" />
@@ -261,6 +268,8 @@
                 </Frame>
                 
                 <Frame name="QuestRequestItemsScrollContent">
+                    <Property name="ClippedByParent" value="true" />
+
                     <Area>
                         <Anchor point="TOP" offset="0" />
                         <Anchor point="LEFT" offset="0" />
@@ -304,6 +313,8 @@
                 </Frame>
                 
                 <Frame name="QuestRewardsScrollContent">
+                    <Property name="ClippedByParent" value="true" />
+                    
                     <Area>
                         <Anchor point="TOP" offset="0" />
                         <Anchor point="LEFT" offset="0" />

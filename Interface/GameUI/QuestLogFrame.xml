@@ -233,6 +233,7 @@
                 <Frame name="QuestLogQuestDetailTitle" inherits="TextSmall">
                     <Property name="TextColor" value="FF100500" />
                     <Property name="Font" value="QuestTitleFont" />
+                	<Property name="ClippedByParent" value="true" />
 
                     <Area>
                         <Anchor point="TOP" offset="32" />
@@ -244,6 +245,7 @@
                 <Frame name="QuestLogQuestDetailDetails" inherits="TextSmall">
                     <Property name="TextColor" value="FF100500" />
                     <Property name="Font" value="QuestFont" />
+                	<Property name="ClippedByParent" value="true" />
 
                     <Area>
                         <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestLogQuestDetailTitle" offset="8" />
@@ -256,6 +258,7 @@
                     <Property name="Text" value="QUEST_OBJECTIVES" />
                     <Property name="TextColor" value="FF100500" />
                     <Property name="Font" value="QuestTitleFont" />
+                	<Property name="ClippedByParent" value="true" />
 
                     <Area>
                         <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestLogQuestDetailDetails" offset="32" />
@@ -267,6 +270,7 @@
                 <Frame name="QuestLogQuestDetailObjectives" inherits="TextSmall">
                     <Property name="TextColor" value="FF100500" />
                     <Property name="Font" value="QuestFont" />
+                	<Property name="ClippedByParent" value="true" />
 
                     <Area>
                         <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestLogQuestDetailObjectivesHeader" offset="8" />
@@ -279,6 +283,7 @@
                     <Property name="Text" value="QUEST_REWARDS" />
                     <Property name="TextColor" value="FF100500" />
                     <Property name="Font" value="QuestTitleFont" />
+                	<Property name="ClippedByParent" value="true" />
 
                     <Area>
                         <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestLogQuestDetailObjectives" offset="32" />

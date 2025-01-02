@@ -65,6 +65,12 @@ function QuestFrame_OnQuestGreeting(self)
         end
     end
 
+    if AvailableQuestList:GetChildCount() == 0 then
+        QuestFrameAvailableQuests:Hide();
+    else
+        QuestFrameAvailableQuests:Show();
+    end
+
     -- Ensure the greeting panel is visible
     QuestFrame_ShowPanel(QuestFrameGreetingPanel);
 end
