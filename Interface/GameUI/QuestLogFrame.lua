@@ -127,11 +127,17 @@ function QuestLog_Update()
     local numEntries = GetNumQuestLogEntries();
     QuestLogQuestDetailScrollContent:Hide();
 
+    local selection = GetQuestLogSelection();
+
     for i = 1, MAX_DISPLAY_QUESTS do
         local button = _G["QuestListButton" .. i];
 
         local questLogEntry = GetQuestLogEntry(i - 1);
         if questLogEntry then
+            if selection == 0 then
+                QuestLogSelectQuest(questLogEntry.id);
+            end
+
             button.userData = questLogEntry;
 
             if questLogEntry.status == 1 then
