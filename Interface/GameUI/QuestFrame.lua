@@ -90,6 +90,23 @@ function QuestFrame_OnQuestDetail(self)
     QuestDetailObjectives:SetText(questDetails.objectives);
     QuestDetailObjectives:SetHeight(QuestDetailObjectives:GetTextHeight());
 
+    if questDetails.rewardedMoney > 0 then
+    
+        QuestDetailRewards:Show();
+        QuestDetailRewardMoneyLabel:SetWidth(QuestDetailRewardMoneyLabel:GetTextWidth());
+        QuestDetailRewardMoneyLabel:Show();
+
+        RefreshMoneyFrame("QuestDetailRewardMoney", questDetails.rewardedMoney, false, false, true);
+        QuestDetailRewardMoney:Show();
+        
+    else
+
+        QuestDetailRewards:Hide();
+        QuestDetailRewardMoneyLabel:Hide();
+        QuestDetailRewardMoney:Hide();
+
+    end
+
     -- Ensure the greeting panel is visible
     QuestFrame_ShowPanel(QuestFrameDetailPanel);
 end

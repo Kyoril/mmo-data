@@ -300,6 +300,25 @@
                         <Anchor point="RIGHT" offset="-16" />
                     </Area>
                 </Frame>
+
+                <Frame name="QuestLogDetailRewardMoneyLabel" inherits="TextSmall">
+                    <Property name="Text" value="QUEST_REWARD_YOU_WILL_RECEIVE" />
+                    <Property name="TextColor" value="FF100500" />
+                    <Property name="Font" value="QuestFont" />
+                	<Property name="ClippedByParent" value="false" />
+
+                    <Area>
+                        <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestLogQuestDetailRewards" offset="8" />
+                        <Anchor point="LEFT" offset="32" />
+                    </Area>
+                </Frame>
+
+				<Frame name="QuestLogDetailRewardMoney" inherits="MoneyFrameTemplate">
+					<Area>
+						<Anchor point="V_CENTER" relativeTo="QuestLogDetailRewardMoneyLabel" />
+						<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="QuestLogDetailRewardMoneyLabel" offset="8" />
+					</Area>
+				</Frame>
             </Frame>
 
 			<Frame name="QuestLogAbandonButton" inherits="GlueButton">

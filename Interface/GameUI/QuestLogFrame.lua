@@ -89,7 +89,24 @@ function QuestLogFrame_UpdateQuestDetails()
     QuestLogQuestDetailObjectivesHeader:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, QuestLogObjectiveList, 32);
     QuestLogQuestDetailObjectives:SetText(GetQuestObjectivesText(questLogEntry.quest));
     QuestLogQuestDetailObjectives:SetHeight(QuestLogQuestDetailObjectives:GetTextHeight());
-    QuestLogQuestDetailRewards:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, QuestLogQuestDetailObjectives, 32);
+
+    local rewardMoney = questLogEntry.quest.rewardMoney;
+    if rewardMoney > 0 then
+        QuestLogQuestDetailRewards:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, QuestLogQuestDetailObjectives, 32);
+        QuestLogQuestDetailRewards:Show();
+
+        QuestLogDetailRewardMoneyLabel:SetWidth(QuestLogDetailRewardMoneyLabel:GetTextWidth());
+        QuestLogDetailRewardMoneyLabel:Show();
+
+        RefreshMoneyFrame("QuestLogDetailRewardMoney", rewardMoney, false, false, true);
+        QuestLogDetailRewardMoney:Show();
+    else
+        QuestLogQuestDetailRewards:Hide();
+        QuestLogDetailRewardMoney:Hide();
+        QuestLogDetailRewardMoneyLabel:Hide();
+    end
+    
+
     QuestLogQuestDetailScrollContent:Show();
     QuestLogAbandonButton:Enable();
 end

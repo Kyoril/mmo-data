@@ -193,6 +193,7 @@
                     <Frame name="QuestDetailDetails" inherits="TextSmall">
                         <Property name="TextColor" value="FF100500" />
                         <Property name="Font" value="QuestFont" />
+                        <Property name="ClippedByParent" value="true" />
 
                         <Area>
                             <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestDetailTitle" offset="8" />
@@ -205,6 +206,7 @@
                         <Property name="Text" value="QUEST_OBJECTIVES" />
                         <Property name="TextColor" value="FF100500" />
                         <Property name="Font" value="QuestTitleFont" />
+                        <Property name="ClippedByParent" value="true" />
 
                         <Area>
                             <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestDetailDetails" offset="32" />
@@ -216,6 +218,7 @@
                     <Frame name="QuestDetailObjectives" inherits="TextSmall">
                         <Property name="TextColor" value="FF100500" />
                         <Property name="Font" value="QuestFont" />
+                        <Property name="ClippedByParent" value="true" />
 
                         <Area>
                             <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestDetailObjectivesHeader" offset="8" />
@@ -228,11 +231,33 @@
                         <Property name="Text" value="QUEST_REWARDS" />
                         <Property name="TextColor" value="FF100500" />
                         <Property name="Font" value="QuestTitleFont" />
+                        <Property name="ClippedByParent" value="true" />
 
                         <Area>
                             <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestDetailObjectives" offset="32" />
                             <Anchor point="LEFT" offset="32" />
                             <Anchor point="RIGHT" offset="-16" />
+                        </Area>
+                    </Frame>
+                        
+                    <Frame name="QuestDetailRewardMoneyLabel" inherits="TextSmall">
+                        <Property name="Text" value="QUEST_REWARD_YOU_WILL_RECEIVE" />
+                        <Property name="TextColor" value="FF100500" />
+                        <Property name="Font" value="QuestFont" />
+                        <Property name="ClippedByParent" value="true" />
+
+                        <Area>
+                            <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestDetailRewards" offset="8" />
+                            <Anchor point="LEFT" offset="32" />
+                        </Area>
+                    </Frame>
+
+                    <Frame name="QuestDetailRewardMoney" inherits="MoneyFrameTemplate">
+                        <Property name="ClippedByParent" value="true" />
+
+                        <Area>
+                            <Anchor point="V_CENTER" relativeTo="QuestDetailRewardMoneyLabel" />
+                            <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="QuestDetailRewardMoneyLabel" offset="8" />
                         </Area>
                     </Frame>
                 </Frame>

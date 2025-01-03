@@ -265,6 +265,7 @@ strings =
 	(key = "QUEST_ITEMS_NEEDED", string = "%s: %d/%d")
 	(key = "QUEST_MONSTERS_KILLED", string = "%s slain: %d/%d")
 	(key = "COMPLETE", string = "Complete")
+	(key = "QUEST_REWARD_YOU_WILL_RECEIVE", string = "You receive: ")
 	
 	(key = "MONEY_GOLD_SILVER_COPPER", string = "%d Gold, %2d Silver, %2d Copper")
 	(key = "MONEY_SILVER_COPPER", string = "%d Silver, %2d Copper")
