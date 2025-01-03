@@ -18,6 +18,93 @@ function SidePanel_OnClose(closeButton)
 	HideUIPanel(closeButton:GetParent():GetParent());
 end
 
+MAX_ERROR_MESSAGES = 3;
+ERROR_HOLD_TIME = 4;
+
+function UIErrorFrame_OnLoad(this)
+	for i = 1, MAX_ERROR_MESSAGES do
+		local text = _G["ErrorText"..i];
+		text.userData = nil;
+		text:Hide();
+	end
+
+	this:RegisterEvent("SYSMSG", UIErrorFrame_OnSysMessage);
+	this:RegisterEvent("UI_INFO_MESSAGE", UIErrorFrame_OnInfoMessage);
+	this:RegisterEvent("UI_ERROR_MESSAGE", UIErrorFrame_OnErrorMessage);
+end
+
+function UIErrorFrame_SetMessage(text, message, color)
+	text.userData = ERROR_HOLD_TIME;
+	text:SetProperty("TextColor", color);
+	text:SetText(message);
+	text:Show();
+end
+
+function UIErrorText_OnUpdate(this, elapsed)
+	if this.userData then
+		this.userData = this.userData - elapsed;
+	end
+end
+
+function UIErrorFrame_AddMessage(message, color)
+	for i = 1, MAX_ERROR_MESSAGES do
+		local text = _G["ErrorText"..i];
+		if not text.userData then
+			UIErrorFrame_SetMessage(text, message, color);
+			return;
+		end
+	end
+
+	-- No free text fields, so shift everything up
+	for i = 1, MAX_ERROR_MESSAGES - 1 do
+		local text = _G["ErrorText"..i];
+		local nextText = _G["ErrorText"..(i + 1)];
+		text.userData = nextText.userData;
+		text:SetProperty("TextColor", nextText:GetProperty("TextColor"));
+		text:SetText(nextText:GetText());
+	end
+
+	-- Add the last message
+	UIErrorFrame_SetMessage(_G["ErrorText"..MAX_ERROR_MESSAGES], message, color);
+end
+
+function UIErrorFrame_OnSysMessage(this, msg)
+	UIErrorFrame_AddMessage(msg, "FFFFFF00");
+end
+
+function UIErrorFrame_OnInfoMessage(this, msg)
+	UIErrorFrame_AddMessage(msg, "FFFFFF00");
+end
+
+function UIErrorFrame_OnErrorMessage(this, msg)
+	UIErrorFrame_AddMessage(msg, "FFFF1900");
+end
+
+function UIErrorFrame_OnUpdate(this, elapsed)
+	local text = _G["ErrorText1"];
+	if not text.userData then
+		return;
+	end
+
+	if text.userData <= 0 then
+		for i = 1, MAX_ERROR_MESSAGES - 1 do
+			local current = _G["ErrorText"..i];
+			local nextText = _G["ErrorText"..(i + 1)];
+			current.userData = nextText.userData;
+			current:SetProperty("TextColor", nextText:GetProperty("TextColor"));
+			current:SetText(nextText:GetText());
+
+			if current.userData == nil then
+				current:Hide();
+			end
+		end
+
+		local lastText = _G["ErrorText"..MAX_ERROR_MESSAGES];
+		lastText.userData = nil;
+		lastText:Hide();
+	end
+end
+
 function SidePanel_OnLoad(self)
 	self.titleBar = self:GetChild(0);
 	self.titleBar.closeButton = self.titleBar:GetChild(0);
@@ -25,21 +112,15 @@ function SidePanel_OnLoad(self)
 end
 
 function GameParent_OnSpellError(self, spellError)
-    ErrorTimer = 4.0;
-    ErrorText:SetText(Localize(spellError));
-    ErrorText:Show();
+	UIErrorFrame_OnErrorMessage(ErrorFrame, Localize(spellError));
 end
 
 function GameParent_OnGameError(self, gameError)
-    ErrorTimer = 4.0;
-    ErrorText:SetText(Localize(gameError));
-    ErrorText:Show();
+	UIErrorFrame_OnErrorMessage(ErrorFrame, Localize(gameError));
 end
 
 function GameParent_OnAttackSwingError(self, attackSwingError)
-    ErrorTimer = 1.0;
-    ErrorText:SetText(Localize(attackSwingError));
-    ErrorText:Show();
+	UIErrorFrame_OnErrorMessage(ErrorFrame, Localize(attackSwingError));
 end
 
 function GameParent_OnPlayerDead()
@@ -52,18 +133,6 @@ function GameParent_OnLoad(self)
     self:RegisterEvent("PLAYER_SPELL_CAST_FAILED", GameParent_OnSpellError);
     self:RegisterEvent("ATTACK_SWING_ERROR", GameParent_OnAttackSwingError);
     self:RegisterEvent("PLAYER_DEAD", GameParent_OnPlayerDead);
-end
-
-function GameParent_OnUpdate(self, elapsed)
-    if (ErrorTimer <= 0.0) then
-        return
-    end
-
-    ErrorTimer = ErrorTimer - elapsed
-
-    if (ErrorTimer <= 0.0) then
-        ErrorText:Hide();
-    end
 end
 
 function ShowUIPanel(frame, force)

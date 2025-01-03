@@ -6,15 +6,87 @@
 		<Property name="Font" value="DefaultSmall" />
 
 		<Frame name="WorldFrame" type="World" renderer="WorldRenderer" setAllPoints="true">
-			<Frame name="ErrorText" inherits="TextSmall">
-				<Property name="Visible" value="False" />
-
+			<Frame name="ErrorFrame">
 				<Area>
 					<Anchor point="H_CENTER" />
 					<Anchor point="V_CENTER" offset="-600" />
-					<Size><AbsDimension x="1000" y="32" /></Size>
+					<Size><AbsDimension x="1000" y="120" /></Size>
 				</Area>
+
+				<Frame name="ErrorText1" inherits="TextSmall" id="1">
+					<Property name="Visible" value="false" />
+					<Property name="HorzAlign" value="CENTER" />
+
+					<Area>
+						<Anchor point="LEFT" />
+						<Anchor point="RIGHT" />
+						<Anchor point="TOP" offset="0" />
+						<Size><AbsDimension y="40" /></Size>
+					</Area>
+					
+					<Scripts>
+						<OnUpdate>
+							return function(this, elapsed)
+								UIErrorText_OnUpdate(this, elapsed);
+							end
+						</OnUpdate>
+					</Scripts>
+				</Frame>
+
+				<Frame name="ErrorText2" inherits="TextSmall" id="2">
+					<Property name="Visible" value="false" />
+					<Property name="HorzAlign" value="CENTER" />
+
+					<Area>
+						<Anchor point="LEFT" />
+						<Anchor point="RIGHT" />
+						<Anchor point="TOP" offset="40" />
+						<Size><AbsDimension y="40" /></Size>
+					</Area>
+					
+					<Scripts>
+						<OnUpdate>
+							return function(this, elapsed)
+								UIErrorText_OnUpdate(this, elapsed);
+							end
+						</OnUpdate>
+					</Scripts>
+				</Frame>
+
+				<Frame name="ErrorText3" inherits="TextSmall" id="3">
+					<Property name="Visible" value="false" />
+					<Property name="HorzAlign" value="CENTER" />
+
+					<Area>
+						<Anchor point="LEFT" />
+						<Anchor point="RIGHT" />
+						<Anchor point="TOP" offset="80" />
+						<Size><AbsDimension y="40" /></Size>
+					</Area>
+
+					<Scripts>
+						<OnUpdate>
+							return function(this, elapsed)
+								UIErrorText_OnUpdate(this, elapsed);
+							end
+						</OnUpdate>
+					</Scripts>
+				</Frame>
+
+				<Scripts>
+					<OnLoad>
+						return function(this)
+							UIErrorFrame_OnLoad(this);
+						end
+					</OnLoad>
+					<OnUpdate>
+						return function(this, elapsed)
+							UIErrorFrame_OnUpdate(this, elapsed);
+						end
+					</OnUpdate>
+				</Scripts>
 			</Frame>
+
 		</Frame>
 
 		<Scripts>
@@ -23,12 +95,6 @@
 					GameParent_OnLoad(this);
 				end
 			</OnLoad>
-			<OnUpdate>
-				
-				return function(this, elapsed)
-					GameParent_OnUpdate(this, elapsed);
-				end
-			</OnUpdate>
 		</Scripts>
 	</Frame>
 </UiLayout>

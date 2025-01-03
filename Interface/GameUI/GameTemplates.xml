@@ -367,6 +367,50 @@
 		</Frame>
 	</Frame>
 
+	<Frame name="ThumbButtonTemplate" type="Thumb" renderer="ButtonRenderer">
+		<Visual>
+			<ImagerySection name="NormalFrame">
+				<BorderComponent texture="Interface/GlueUI/ButtonNormal.htex" borderSize="30" />
+			</ImagerySection>
+			<ImagerySection name="HoveredFrame">
+				<BorderComponent texture="Interface/GlueUI/ButtonHovered.htex" borderSize="30" />
+			</ImagerySection>
+			<ImagerySection name="PushedFrame">
+				<BorderComponent texture="Interface/GlueUI/ButtonPushed.htex" borderSize="30" />
+			</ImagerySection>
+			<ImagerySection name="DisabledFrame">
+				<BorderComponent texture="Interface/GlueUI/ButtonDisabled.htex" borderSize="30" />
+			</ImagerySection>
+			<StateImagery name="Normal">
+				<Layer>
+					<Section section="NormalFrame" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Hovered">
+				<Layer>
+					<Section section="HoveredFrame" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Pushed">
+				<Layer>
+					<Section section="PushedFrame" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="DisabledFrame" />
+				</Layer>
+			</StateImagery>
+		</Visual>		
+		<Area>
+			<Anchor point="TOP" offset="80" />
+			<Anchor point="LEFT" offset="8" />
+			<Size>
+				<AbsDimension x="80" y="256" />
+			</Size>
+		</Area>
+	</Frame>
+	
 	<Frame name="VerticalScrollBar" type="ScrollBar" renderer="DefaultRenderer">
 		<Property name="Orientation" value="VERTICAL" />
 
@@ -415,12 +459,9 @@
 			</Area>
 		</Frame>
 		
-		<Frame name="ThumbButton" inherits="GlueButton">
-			<Property name="Visible" value="false" />
-			
+		<Frame name="ThumbButton" inherits="ThumbButtonTemplate">
 			<Area>
 				<Anchor point="TOP" offset="80" />
-				<Anchor point="BOTTOM" offset="-80" />
 				<Anchor point="LEFT" offset="8" />
 				<Size>
 					<AbsDimension x="80" y="128" />
