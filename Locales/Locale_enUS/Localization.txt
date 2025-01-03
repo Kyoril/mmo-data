@@ -262,6 +262,9 @@ strings =
 	(key = "QUEST_REWARDED_ITEM", string = "Received item: %s")
 	(key = "QUEST_ACCEPTED_TITLE", string = "Quest accepted: %s")
 	(key = "QUEST_ABANDONED_TITLE", string = "Quest abandoned: %s")
+	(key = "QUEST_ITEMS_NEEDED", string = "%s: %d/%d")
+	(key = "QUEST_MONSTERS_KILLED", string = "%s slain: %d/%d")
+	(key = "COMPLETE", string = "Complete")
 	
 	(key = "MONEY_GOLD_SILVER_COPPER", string = "%d Gold, %2d Silver, %2d Copper")
 	(key = "MONEY_SILVER_COPPER", string = "%d Silver, %2d Copper")

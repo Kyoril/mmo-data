@@ -54,12 +54,34 @@ function QuestListQuestButton_OnClick(self)
     -- If there is a quest selected...
     if self.userData then
         selectedQuestId = self.userData.quest.id;
+        QuestLogSelectQuest(selectedQuestId);
 
         QuestLogQuestDetailTitle:SetText(self.userData.quest.title);
         QuestLogQuestDetailDetails:SetText(GetQuestDetailsText(self.userData.quest));
         QuestLogQuestDetailDetails:SetHeight(QuestLogQuestDetailDetails:GetTextHeight());
-        QuestLogQuestDetailObjectivesHeader:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, QuestLogQuestDetailDetails, 32);
 
+        QuestLogObjectiveList:RemoveAllChildren();
+
+        local count = GetQuestObjectiveCount();
+        for i = 1, count do
+            local objective = GetQuestObjectiveText(i - 1);
+            
+            local label = TextSmall:Clone();
+            label:SetProperty("TextColor", "FF100500");
+            label:SetProperty("Font", "QuestFont");
+            label:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, 0);
+            label:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, 0);
+            label:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, (i - 1) * 32);
+            if objective then
+                label:SetText(objective);
+            else
+                label:SetText("UNKNOWN");
+            end
+            QuestLogObjectiveList:AddChild(label);
+        end
+        QuestLogObjectiveList:SetHeight(count * 32);
+        
+        QuestLogQuestDetailObjectivesHeader:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, QuestLogObjectiveList, 32);
         QuestLogQuestDetailObjectives:SetText(GetQuestObjectivesText(self.userData.quest));
         QuestLogQuestDetailObjectives:SetHeight(QuestLogQuestDetailObjectives:GetTextHeight());
         QuestLogQuestDetailRewards:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, QuestLogQuestDetailObjectives, 32);

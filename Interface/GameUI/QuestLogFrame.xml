@@ -253,6 +253,15 @@
                         <Anchor point="RIGHT" offset="-16" />
                     </Area>
                 </Frame>
+
+				<Frame name="QuestLogObjectiveList">
+					<Area>
+                        <Anchor point="LEFT" offset="32" />
+                        <Anchor point="RIGHT" offset="-16" />
+                        <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestLogQuestDetailDetails" offset="16" />
+						<Size><AbsDimension y="0"/></Size>
+					</Area>
+				</Frame>
                 
                 <Frame name="QuestLogQuestDetailObjectivesHeader" inherits="TextSmall">
                     <Property name="Text" value="QUEST_OBJECTIVES" />
@@ -261,7 +270,7 @@
                 	<Property name="ClippedByParent" value="true" />
 
                     <Area>
-                        <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestLogQuestDetailDetails" offset="32" />
+                        <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestLogObjectiveList" offset="32" />
                         <Anchor point="LEFT" offset="32" />
                         <Anchor point="RIGHT" offset="-16" />
                     </Area>
