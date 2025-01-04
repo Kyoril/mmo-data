@@ -3,7 +3,7 @@
 	<Script file="MoneyFrame.lua" />
 	
 	<Frame name="MoneyText" renderer="DefaultRenderer">
-		<Property name="Font" value="DefaultSmall" />
+		<Property name="Font" value="DefaultSmallBorder" />
 
 		<Visual>
 			<ImagerySection name="Text">

@@ -230,10 +230,10 @@
                     <Anchor point="BOTTOM" offset="-96" />
                 </Area>
 
-				<Frame name="QuestLogQuestDetailScrollContent">
+				<Frame name="QuestLogQuestDetailScrollContent" renderer="DefaultRenderer">
 					<Property name="ClippedByParent" value="true" />
 					<Property name="Visible" value="false" />
-					
+
 					<Area>
 						<Anchor point="TOP" offset="0" />
 						<Anchor point="LEFT" offset="0" />

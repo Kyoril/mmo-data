@@ -14,9 +14,15 @@ function QuestLogFrame_OnLoad(self)
     QuestLogAbandonButton:SetWidth(QuestLogAbandonButton:GetTextWidth() + 64);
     QuestLogAbandonButton:Disable();
 
+    -- Setup quest detail scroll bar
+    QuestLogQuestDetailPanelScrollBar:SetMinimum(0);
+    QuestLogQuestDetailPanelScrollBar:SetValue(0);
+    QuestLogQuestDetailPanelScrollBar:SetStep(128); -- Scroll 128 "pixels" at a time when clicking the step buttons
+    QuestLogQuestDetailPanelScrollBar:SetMaximum(0);
     QuestLogQuestDetailPanelScrollBar:SetOnValueChangedHandler(QuestLogQuestDetailPanelScrollBar_OnValueChanged);
+    QuestLogQuestDetailPanelScrollBar:Disable();
 
-    -- Setup scrollbar
+    -- Setup quest list scroll bar
     QuestLogQuestListScrollBar:SetMinimum(0);
     QuestLogQuestListScrollBar:SetValue(0);
     QuestLogQuestListScrollBar:SetMaximum(0);
@@ -31,7 +37,7 @@ function QuestLogFrame_OnLoad(self)
 end
 
 function QuestLogQuestDetailPanelScrollBar_OnValueChanged(self, value)
-    print("Scroll value changed: " .. value);
+    QuestLogQuestDetailScrollContent:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, -value);
 end
 
 function QuestLogQuestListScrollBar_OnValueChanged(self, value)
@@ -75,8 +81,12 @@ function QuestLogFrame_UpdateQuestDetails()
 
     if not questLogEntry then
         QuestLogQuestDetailScrollContent:Hide();
+        QuestLogQuestDetailPanelScrollBar:Disable();
         return;
     end
+
+    -- Scroll up
+    QuestLogQuestDetailPanelScrollBar:SetValue(0);
 
     QuestLogQuestDetailTitle:SetText(questLogEntry.quest.title);
     QuestLogQuestDetailDetails:SetText(GetQuestDetailsText(questLogEntry.quest));
@@ -118,21 +128,23 @@ function QuestLogFrame_UpdateQuestDetails()
         RefreshMoneyFrame("QuestLogDetailRewardMoney", rewardMoney, false, false, true);
         QuestLogDetailRewardMoney:Show();
 
-        QuestLogQuestDetailScrollContent:SetHeight(QuestLogDetailRewardMoneyLabel:GetY() + QuestLogDetailRewardMoneyLabel:GetHeight());
+        QuestLogQuestDetailScrollContent:SetHeight(QuestLogQuestDetailObjectives:GetY() - QuestLogQuestDetailScrollContent:GetY() + QuestLogQuestDetailObjectives:GetHeight() + 80);
     else
         QuestLogQuestDetailRewards:Hide();
         QuestLogDetailRewardMoney:Hide();
         QuestLogDetailRewardMoneyLabel:Hide();
 
-        QuestLogQuestDetailScrollContent:SetHeight(QuestLogQuestDetailObjectives:GetY() + QuestLogQuestDetailObjectives:GetHeight());
+        QuestLogQuestDetailScrollContent:SetHeight(QuestLogQuestDetailObjectives:GetY() - QuestLogQuestDetailScrollContent:GetY() + QuestLogQuestDetailObjectives:GetHeight());
     end
 
     QuestLogQuestDetailScrollContent:Show();
     QuestLogAbandonButton:Enable();
 
     if QuestLogQuestDetailScrollContent:GetHeight() > QuestLogDetailScrollClip:GetHeight() then
+        QuestLogQuestDetailPanelScrollBar:SetMaximum(QuestLogQuestDetailScrollContent:GetHeight() - QuestLogDetailScrollClip:GetHeight());
         QuestLogQuestDetailPanelScrollBar:Enable();
     else
+        QuestLogQuestDetailPanelScrollBar:SetMaximum(0);
         QuestLogQuestDetailPanelScrollBar:Disable();
     end
 end
