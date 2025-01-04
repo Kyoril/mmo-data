@@ -170,7 +170,7 @@
                         <Anchor point="RIGHT" relativeTo="QuestListButton1" />
                         <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestListButton3" />
                     </Area>
-                    <Scripts><OnClick>return function(this) TrainerSpellButton_OnClick(this); end</OnClick></Scripts>
+                    <Scripts><OnClick>return function(this) QuestListQuestButton_OnClick(this); end</OnClick></Scripts>
                 </Frame>
                 
                 <Frame name="QuestListButton5" inherits="QuestListQuestButton" id="5">
@@ -222,104 +222,111 @@
                 </Area>
             </Frame>
             
-            <Frame name="QuestLogQuestDetailScrollContent">
-                <Area>
+			<Frame name="QuestLogDetailScrollClip">
+				<Area>
                     <Anchor point="TOP" offset="0" />
                     <Anchor point="LEFT" offset="0" />
                     <Anchor point="RIGHT" relativePoint="LEFT" relativeTo="QuestLogQuestDetailPanelScrollBar" />
                     <Anchor point="BOTTOM" offset="-96" />
                 </Area>
 
-                <Frame name="QuestLogQuestDetailTitle" inherits="TextSmall">
-                    <Property name="TextColor" value="FF100500" />
-                    <Property name="Font" value="QuestTitleFont" />
-                	<Property name="ClippedByParent" value="true" />
-
-                    <Area>
-                        <Anchor point="TOP" offset="32" />
-                        <Anchor point="LEFT" offset="32" />
-                        <Anchor point="RIGHT" offset="-16" />
-                    </Area>
-                </Frame>
-                
-                <Frame name="QuestLogQuestDetailDetails" inherits="TextSmall">
-                    <Property name="TextColor" value="FF100500" />
-                    <Property name="Font" value="QuestFont" />
-                	<Property name="ClippedByParent" value="true" />
-
-                    <Area>
-                        <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestLogQuestDetailTitle" offset="8" />
-                        <Anchor point="LEFT" offset="32" />
-                        <Anchor point="RIGHT" offset="-16" />
-                    </Area>
-                </Frame>
-
-				<Frame name="QuestLogObjectiveList">
+				<Frame name="QuestLogQuestDetailScrollContent">
+					<Property name="ClippedByParent" value="true" />
+					<Property name="Visible" value="false" />
+					
 					<Area>
-                        <Anchor point="LEFT" offset="32" />
-                        <Anchor point="RIGHT" offset="-16" />
-                        <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestLogQuestDetailDetails" offset="16" />
-						<Size><AbsDimension y="0"/></Size>
+						<Anchor point="TOP" offset="0" />
+						<Anchor point="LEFT" offset="0" />
+						<Anchor point="RIGHT" offset="0" />
+						<Size><AbsDimension y="64" /></Size>
 					</Area>
+
+					<Frame name="QuestLogQuestDetailTitle" inherits="TextSmall">
+						<Property name="TextColor" value="FF100500" />
+						<Property name="Font" value="QuestTitleFont" />
+
+						<Area>
+							<Anchor point="TOP" offset="32" />
+							<Anchor point="LEFT" offset="32" />
+							<Anchor point="RIGHT" offset="-16" />
+						</Area>
+					</Frame>
+					
+					<Frame name="QuestLogQuestDetailDetails" inherits="TextSmall">
+						<Property name="TextColor" value="FF100500" />
+						<Property name="Font" value="QuestFont" />
+
+						<Area>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestLogQuestDetailTitle" offset="8" />
+							<Anchor point="LEFT" offset="32" />
+							<Anchor point="RIGHT" offset="-16" />
+						</Area>
+					</Frame>
+
+					<Frame name="QuestLogObjectiveList">
+						<Area>
+							<Anchor point="LEFT" offset="32" />
+							<Anchor point="RIGHT" offset="-16" />
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestLogQuestDetailDetails" offset="16" />
+							<Size><AbsDimension y="0"/></Size>
+						</Area>
+					</Frame>
+					
+					<Frame name="QuestLogQuestDetailObjectivesHeader" inherits="TextSmall">
+						<Property name="Text" value="QUEST_OBJECTIVES" />
+						<Property name="TextColor" value="FF100500" />
+						<Property name="Font" value="QuestTitleFont" />
+
+						<Area>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestLogObjectiveList" offset="32" />
+							<Anchor point="LEFT" offset="32" />
+							<Anchor point="RIGHT" offset="-16" />
+						</Area>
+					</Frame>
+					
+					<Frame name="QuestLogQuestDetailObjectives" inherits="TextSmall">
+						<Property name="TextColor" value="FF100500" />
+						<Property name="Font" value="QuestFont" />
+
+						<Area>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestLogQuestDetailObjectivesHeader" offset="8" />
+							<Anchor point="LEFT" offset="32" />
+							<Anchor point="RIGHT" offset="-16" />
+						</Area>
+					</Frame>
+					
+					<Frame name="QuestLogQuestDetailRewards" inherits="TextSmall">
+						<Property name="Text" value="QUEST_REWARDS" />
+						<Property name="TextColor" value="FF100500" />
+						<Property name="Font" value="QuestTitleFont" />
+
+						<Area>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestLogQuestDetailObjectives" offset="32" />
+							<Anchor point="LEFT" offset="32" />
+							<Anchor point="RIGHT" offset="-16" />
+						</Area>
+					</Frame>
+
+					<Frame name="QuestLogDetailRewardMoneyLabel" inherits="TextSmall">
+						<Property name="Text" value="QUEST_REWARD_YOU_WILL_RECEIVE" />
+						<Property name="TextColor" value="FF100500" />
+						<Property name="Font" value="QuestFont" />
+
+						<Area>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestLogQuestDetailRewards" offset="8" />
+							<Anchor point="LEFT" offset="32" />
+						</Area>
+					</Frame>
+
+					<Frame name="QuestLogDetailRewardMoney" inherits="MoneyFrameTemplate">
+						<Area>
+							<Anchor point="V_CENTER" relativeTo="QuestLogDetailRewardMoneyLabel" />
+							<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="QuestLogDetailRewardMoneyLabel" offset="8" />
+						</Area>
+					</Frame>
 				</Frame>
-                
-                <Frame name="QuestLogQuestDetailObjectivesHeader" inherits="TextSmall">
-                    <Property name="Text" value="QUEST_OBJECTIVES" />
-                    <Property name="TextColor" value="FF100500" />
-                    <Property name="Font" value="QuestTitleFont" />
-                	<Property name="ClippedByParent" value="true" />
 
-                    <Area>
-                        <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestLogObjectiveList" offset="32" />
-                        <Anchor point="LEFT" offset="32" />
-                        <Anchor point="RIGHT" offset="-16" />
-                    </Area>
-                </Frame>
-                
-                <Frame name="QuestLogQuestDetailObjectives" inherits="TextSmall">
-                    <Property name="TextColor" value="FF100500" />
-                    <Property name="Font" value="QuestFont" />
-                	<Property name="ClippedByParent" value="true" />
-
-                    <Area>
-                        <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestLogQuestDetailObjectivesHeader" offset="8" />
-                        <Anchor point="LEFT" offset="32" />
-                        <Anchor point="RIGHT" offset="-16" />
-                    </Area>
-                </Frame>
-                
-                <Frame name="QuestLogQuestDetailRewards" inherits="TextSmall">
-                    <Property name="Text" value="QUEST_REWARDS" />
-                    <Property name="TextColor" value="FF100500" />
-                    <Property name="Font" value="QuestTitleFont" />
-                	<Property name="ClippedByParent" value="true" />
-
-                    <Area>
-                        <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestLogQuestDetailObjectives" offset="32" />
-                        <Anchor point="LEFT" offset="32" />
-                        <Anchor point="RIGHT" offset="-16" />
-                    </Area>
-                </Frame>
-
-                <Frame name="QuestLogDetailRewardMoneyLabel" inherits="TextSmall">
-                    <Property name="Text" value="QUEST_REWARD_YOU_WILL_RECEIVE" />
-                    <Property name="TextColor" value="FF100500" />
-                    <Property name="Font" value="QuestFont" />
-                	<Property name="ClippedByParent" value="false" />
-
-                    <Area>
-                        <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestLogQuestDetailRewards" offset="8" />
-                        <Anchor point="LEFT" offset="32" />
-                    </Area>
-                </Frame>
-
-				<Frame name="QuestLogDetailRewardMoney" inherits="MoneyFrameTemplate">
-					<Area>
-						<Anchor point="V_CENTER" relativeTo="QuestLogDetailRewardMoneyLabel" />
-						<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="QuestLogDetailRewardMoneyLabel" offset="8" />
-					</Area>
-				</Frame>
-            </Frame>
+			</Frame>
 
 			<Frame name="QuestLogAbandonButton" inherits="GlueButton">
 				<Property name="Text" value="ABANDON_QUEST" />

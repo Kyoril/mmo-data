@@ -14,11 +14,28 @@ function QuestLogFrame_OnLoad(self)
     QuestLogAbandonButton:SetWidth(QuestLogAbandonButton:GetTextWidth() + 64);
     QuestLogAbandonButton:Disable();
 
+    QuestLogQuestDetailPanelScrollBar:SetOnValueChangedHandler(QuestLogQuestDetailPanelScrollBar_OnValueChanged);
+
+    -- Setup scrollbar
+    QuestLogQuestListScrollBar:SetMinimum(0);
+    QuestLogQuestListScrollBar:SetValue(0);
+    QuestLogQuestListScrollBar:SetMaximum(0);
+    QuestLogQuestListScrollBar:SetOnValueChangedHandler(QuestLogQuestListScrollBar_OnValueChanged);
+    QuestLogQuestListScrollBar:Disable();
+
     -- Register for events
     self:RegisterEvent("QUEST_LOG_UPDATE", QuestLogFrame_OnUpdateQuestLog);
 
     -- Add button to the main menu bar of the game
     AddMenuBarButton("Interface/Icons/fg4_icons_questlog_result.htex", QuestLogFrame_Toggle);
+end
+
+function QuestLogQuestDetailPanelScrollBar_OnValueChanged(self, value)
+    print("Scroll value changed: " .. value);
+end
+
+function QuestLogQuestListScrollBar_OnValueChanged(self, value)
+    QuestLog_Update();
 end
 
 function QuestLogAbandonButton_OnClick(button)
@@ -100,15 +117,24 @@ function QuestLogFrame_UpdateQuestDetails()
 
         RefreshMoneyFrame("QuestLogDetailRewardMoney", rewardMoney, false, false, true);
         QuestLogDetailRewardMoney:Show();
+
+        QuestLogQuestDetailScrollContent:SetHeight(QuestLogDetailRewardMoneyLabel:GetY() + QuestLogDetailRewardMoneyLabel:GetHeight());
     else
         QuestLogQuestDetailRewards:Hide();
         QuestLogDetailRewardMoney:Hide();
         QuestLogDetailRewardMoneyLabel:Hide();
+
+        QuestLogQuestDetailScrollContent:SetHeight(QuestLogQuestDetailObjectives:GetY() + QuestLogQuestDetailObjectives:GetHeight());
     end
-    
 
     QuestLogQuestDetailScrollContent:Show();
     QuestLogAbandonButton:Enable();
+
+    if QuestLogQuestDetailScrollContent:GetHeight() > QuestLogDetailScrollClip:GetHeight() then
+        QuestLogQuestDetailPanelScrollBar:Enable();
+    else
+        QuestLogQuestDetailPanelScrollBar:Disable();
+    end
 end
 
 function QuestListQuestButton_OnClick(self)
@@ -142,16 +168,30 @@ end
 
 function QuestLog_Update()
     local numEntries = GetNumQuestLogEntries();
-    QuestLogQuestDetailScrollContent:Hide();
 
-    local selection = GetQuestLogSelection();
+    -- Determine number of quests
+    local questCount = 0;
+    for i = 1, MAX_QUESTLOG_SIZE do
+        local questLogEntry = GetQuestLogEntry(i - 1);
+        if questLogEntry then
+            questCount = questCount + 1;
+        end
+    end
+
+    if questCount > MAX_DISPLAY_QUESTS then
+        QuestLogQuestListScrollBar:SetMaximum(questCount - MAX_DISPLAY_QUESTS);
+        QuestLogQuestListScrollBar:Enable();
+    else
+        QuestLogQuestListScrollBar:SetMaximum(0);
+        QuestLogQuestListScrollBar:Disable();
+    end
 
     for i = 1, MAX_DISPLAY_QUESTS do
         local button = _G["QuestListButton" .. i];
 
-        local questLogEntry = GetQuestLogEntry(i - 1);
+        local questLogEntry = GetQuestLogEntry(i + QuestLogQuestListScrollBar:GetValue() - 1);
         if questLogEntry then
-            if selection == 0 then
+            if GetQuestLogSelection() == 0 then
                 QuestLogSelectQuest(questLogEntry.id);
             end
 
