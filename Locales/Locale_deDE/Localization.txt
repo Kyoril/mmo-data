@@ -269,4 +269,9 @@ strings =
 	(key = "MONEY_GOLD_SILVER_COPPER", string = "%d Gold, %2d Silber, %2d Kupfer")
 	(key = "MONEY_SILVER_COPPER", string = "%d Silber, %2d Kupfer")
 	(key = "MONEY_COPPER", string = "%d Kupfer")
+	
+	(key = "COMBAT", string = "Kampf")
+	(key = "ATTACK_POWER", string = "Kraft")
+	(key = "DAMAGE", string = "Schaden")
+	(key = "ATTACK_SPEED", string = "Tempo")
 }

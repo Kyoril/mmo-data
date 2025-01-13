@@ -102,6 +102,19 @@ function CharacterWindow_RefreshStats()
         end
     end
 
+    local attackTimeSeconds = player:GetAttackTime() / 1000.0;
+    CharacterAttackTimeStat:SetText(string.format("%.2f", attackTimeSeconds));
+    CharacterAttackPowerStat:SetText(string.format("%.0f", player:GetAttackPower()));
+
+    local minDamage = player:GetMinDamage();
+    local maxDamage = player:GetMaxDamage();
+    if minDamage == maxDamage then
+        CharacterDamageStat:SetText(string.format("%.0f", minDamage));
+    else
+        CharacterDamageStat:SetText(string.format("%.0f - %.0f", minDamage, maxDamage));
+    end
+    
+
     local baseArmor, modifierArmor = UnitArmor("player");
     CharacterArmorStat:SetText(tostring(baseArmor + modifierArmor));
     if (modifierArmor > 0) then

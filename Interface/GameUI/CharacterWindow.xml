@@ -298,6 +298,7 @@
 
 		<Frame name="CharacterWindowAttributesLabel" inherits="TextSmall">
 			<Property name="Text" value="ATTRIBUTES" />
+			<Property name="Font" value="SmallLabelFont" />
 
 			<Area>
 				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterFrameModel" offset="5" />
@@ -308,6 +309,7 @@
 
 		<Frame name="CharacterWindowAttributePointsLabel" inherits="TextSmallRight">
 			<Property name="Text" value="0" />
+			<Property name="Font" value="SmallLabelFont" />
 
 			<Area>
 				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterFrameModel" offset="5" />
@@ -497,11 +499,12 @@
 			</Frame>
 		</Frame>
 
-		<Frame name="CharacterWindowDefenseLabel" inherits="TextSmall">
-			<Property name="Text" value="DEFENSE" />
+		<Frame name="CharacterWindowCombatLabel" inherits="TextSmall">
+			<Property name="Text" value="COMBAT" />
+			<Property name="Font" value="SmallLabelFont" />
 
 			<Area>
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterFrameModel" offset="2" />
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterFrameModel" offset="5" />
 				<Anchor point="LEFT" relativePoint="H_CENTER" offset="0" />
 				<Anchor point="RIGHT" offset="-180" />
 			</Area>
@@ -520,10 +523,10 @@
 			</Visual>
 
 			<Area>
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterWindowDefenseLabel" offset="5" />
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterWindowCombatLabel" offset="5" />
 				<Anchor point="LEFT" relativePoint="H_CENTER" offset="0" />
 				<Anchor point="RIGHT" offset="-180" />
-				<Size><AbsDimension x="0" y="100" /></Size>
+				<Size><AbsDimension x="0" y="320" /></Size>
 			</Area>
 
 			<Frame name="CharacterArmorLabel" inherits="CharacterStatLabelTemplate">
@@ -541,6 +544,66 @@
 
 				<Area>
 					<Anchor point="TOP" relativeTo="CharacterArmorLabel" />
+					<Anchor point="LEFT" offset="8" />
+					<Anchor point="RIGHT" offset="-24" />
+				</Area>
+			</Frame>
+			
+			<Frame name="CharacterDamageLabel" inherits="CharacterStatLabelTemplate">
+				<Property name="Text" value="DAMAGE" />
+
+				<Area>
+					<Anchor point="TOP" offset="8" relativePoint="BOTTOM" relativeTo="CharacterArmorLabel" />
+					<Anchor point="LEFT" offset="24" />
+					<Anchor point="RIGHT" offset="-8" />
+				</Area>
+			</Frame>
+
+			<Frame name="CharacterDamageStat" inherits="CharacterStatValueTemplate">
+				<Property name="Text" value="0" />
+
+				<Area>
+					<Anchor point="TOP" relativeTo="CharacterDamageLabel" />
+					<Anchor point="LEFT" offset="8" />
+					<Anchor point="RIGHT" offset="-24" />
+				</Area>
+			</Frame>
+			
+			<Frame name="CharacterAttackPowerLabel" inherits="CharacterStatLabelTemplate">
+				<Property name="Text" value="ATTACK_POWER" />
+
+				<Area>
+					<Anchor point="TOP" offset="8" relativePoint="BOTTOM" relativeTo="CharacterDamageLabel" />
+					<Anchor point="LEFT" offset="24" />
+					<Anchor point="RIGHT" offset="-8" />
+				</Area>
+			</Frame>
+
+			<Frame name="CharacterAttackPowerStat" inherits="CharacterStatValueTemplate">
+				<Property name="Text" value="0" />
+
+				<Area>
+					<Anchor point="TOP" relativeTo="CharacterAttackPowerLabel" />
+					<Anchor point="LEFT" offset="8" />
+					<Anchor point="RIGHT" offset="-24" />
+				</Area>
+			</Frame>
+			
+			<Frame name="CharacterAttackTimeLabel" inherits="CharacterStatLabelTemplate">
+				<Property name="Text" value="ATTACK_SPEED" />
+
+				<Area>
+					<Anchor point="TOP" offset="8" relativePoint="BOTTOM" relativeTo="CharacterAttackPowerLabel" />
+					<Anchor point="LEFT" offset="24" />
+					<Anchor point="RIGHT" offset="-8" />
+				</Area>
+			</Frame>
+
+			<Frame name="CharacterAttackTimeStat" inherits="CharacterStatValueTemplate">
+				<Property name="Text" value="0" />
+
+				<Area>
+					<Anchor point="TOP" relativeTo="CharacterAttackTimeLabel" />
 					<Anchor point="LEFT" offset="8" />
 					<Anchor point="RIGHT" offset="-24" />
 				</Area>
