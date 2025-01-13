@@ -1,0 +1,34 @@
+<?xml version="1.0" ?>
+<UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
+	<Script file="ZoneText.lua" />
+
+    <Font name="ZoneTextFont" file="Fonts/FRIZQT__.TTF" size="64" outline="3" />
+	
+    <Frame name="ZoneText" inherits="TextSmall" parent="GameParent">
+        <Property name="Font" value="ZoneTextFont" />
+		<Property name="HorzAlign" value="CENTER" />
+		<Property name="TextColor" value="FF19FF19" />
+
+		<Area>
+			<Size>
+				<AbsDimension y="128" />
+				<Anchor point="LEFT" />
+                <Anchor point="RIGHT" />
+				<Anchor point="V_CENTER" offset="-256" />
+			</Size>
+		</Area>
+
+		<Scripts>
+			<OnLoad>
+				return function(this)
+					ZoneText_OnLoad(this);
+				end
+			</OnLoad>
+            <OnUpdate>
+                return function(this, elapsed)
+                    ZoneText_OnUpdate(this, elapsed);
+                end
+            </OnUpdate>
+		</Scripts>
+    </Frame>
+</UiLayout>

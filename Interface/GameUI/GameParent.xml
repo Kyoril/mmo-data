@@ -1,7 +1,8 @@
 <?xml version="1.0" ?>
 <UiLayout>
+	<Script file="FadingFrame.lua" />
 	<Script file="GameParent.lua" />
-
+	
 	<Frame name="GameParent" parent="TopGameFrame" setAllPoints="true">
 		<Property name="Font" value="DefaultSmall" />
 
