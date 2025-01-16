@@ -271,18 +271,18 @@
         end
 	</Binding>
 
-	<Binding name="TRAINERDEBUG" description="Toggle trainer frame for debugging" category="DEBUG">
-		return function(key, keystate)
-            if keystate == "DOWN" then
-                TrainerFrame_Toggle();
-            end
-        end
-	</Binding>
-    
 	<Binding name="TOGGLEQUESTLOG" description="Toggle the quest log." category="INTERFACE">
 		return function(key, keystate)
             if keystate == "DOWN" then
                 QuestLogFrame_Toggle();
+            end
+        end
+	</Binding>
+    
+	<Binding name="TOGGLEAUTORUN" description="Toggle autorun on/off" category="MOVEMENT">
+        return function(key, keystate)
+            if keystate == "DOWN" then
+                ToggleAutoRun();
             end
         end
 	</Binding>
