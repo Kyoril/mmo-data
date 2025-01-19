@@ -206,7 +206,7 @@ strings =
 	(key = "SHIELD", string = "Shield")
 	(key = "RANGED", string = "Ranged")
 	(key = "CLOAK", string = "Cloak")
-	(key = "TWO_HANDED_WEAPON", string = "Two Handed Weapon")
+	(key = "TWO_HANDED_WEAPON", string = "Two-Hand")
 	(key = "BAG", string = "Bag")
 	(key = "TABARD", string = "Tabard")
 	(key = "ROBE", string = "Robe")
@@ -275,4 +275,10 @@ strings =
 	(key = "ATTACK_POWER", string = "Power")
 	(key = "DAMAGE", string = "Damage")
 	(key = "ATTACK_SPEED", string = "Atk Speed")
+
+	(key = "CONTAINER_SLOTS", string = "%d Slot Bag")
+	(key = "WEAPON_DAMAGE_MIN_MAX", string = "%d - %d Damage")
+	(key = "WEAPON_DAMAGE", string = "%d Damage")
+	(key = "WEAPON_DPS", string = "(%.2f damage per second)")
+	(key = "WEAPON_ATTACK_SPEED", string = "Speed %.2f")
 }

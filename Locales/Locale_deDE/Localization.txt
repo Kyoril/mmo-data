@@ -205,7 +205,7 @@ strings =
 	(key = "SHIELD", string = "Schild")
 	(key = "RANGED", string = "Schusswaffe")
 	(key = "CLOAK", string = "Umhang")
-	(key = "TWO_HANDED_WEAPON", string = "Zweihandwaffe")
+	(key = "TWO_HANDED_WEAPON", string = "Zweihändig")
 	(key = "BAG", string = "Tasche")
 	(key = "TABARD", string = "Wappenrock")
 	(key = "ROBE", string = "Robe")
@@ -274,4 +274,10 @@ strings =
 	(key = "ATTACK_POWER", string = "Kraft")
 	(key = "DAMAGE", string = "Schaden")
 	(key = "ATTACK_SPEED", string = "Tempo")
+	
+	(key = "CONTAINER_SLOTS", string = "%d Platz Tasche")
+	(key = "WEAPON_DAMAGE_MIN_MAX", string = "%d - %d Schaden")
+	(key = "WEAPON_DAMAGE", string = "%d Schaden")
+	(key = "WEAPON_DPS", string = "(%.2f Schaden pro Sekunde)")
+	(key = "WEAPON_ATTACK_SPEED", string = "Tempo %.2f")
 }

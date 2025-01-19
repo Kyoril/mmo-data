@@ -20,7 +20,7 @@ function InventoryItemButton_OnEnter(this)
     end
     GameTooltip:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.TOP, this, -16);
 
-    GameTooltip_SetItem(this.id, item);
+    GameTooltip_SetItem(item);
     GameTooltip:Show();
 end
 
@@ -38,14 +38,21 @@ function InventoryItemButton_OnLeave(this)
 end
 
 function InventoryItemButton_OnUpdate(this, elapsed)
-    local icon = GetInventorySlotIcon("player", this.id);
+    local item = GetInventorySlotItem("player", this.id);
+    if not item then
+        this:SetText("");
+        this:SetProperty("Icon", "");
+        return;
+    end
+    
+    local icon = item:GetIcon();
     if not icon then
         this:SetText("");
         this:SetProperty("Icon", "");
         return;
     end
 
-    local count = GetInventorySlotCount("player", this.id);
+    local count = item:GetStackCount();
     if count > 1 then
         this:SetText(tostring(count));
     else

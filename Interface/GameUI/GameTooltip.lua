@@ -64,53 +64,84 @@ function GameTooltip_SetMoney(money)
     GameTooltip:SetHeight(TooltipHeight);
 end
 
-function GameTooltip_SetItem(slot, item)
+function GameTooltip_SetItem(item)
     if (item == nil) then
         return
     end
 
     GameTooltip_Clear();
-    GameTooltip_AddLine(item.name, TOOLTIP_LINE_LEFT, ItemQualityColors[item.quality]);
+    GameTooltip_AddLine(item:GetName(), TOOLTIP_LINE_LEFT, ItemQualityColors[item:GetQuality()]);
 
-    local class, subclass, inventoryType = GetInventorySlotType("player", slot);
-    if (class == "ARMOR" or class == "WEAPON") then
-        GameTooltip_AddLine(Localize(inventoryType) .. " - " .. Localize(subclass), TOOLTIP_LINE_LEFT);
-    elseif (class == "CONTAINER") then
+    local class = item:GetClass();
+    local subclass = item:GetSubClass();
+    local inventoryType = item:GetInventoryType();
+
+    if (class == "WEAPON") then
         GameTooltip_AddLine(Localize(inventoryType), TOOLTIP_LINE_LEFT);
+
+        local minDamage = item:GetMinDamage();
+        local maxDamage = item:GetMaxDamage();
+        local dps = item:GetDps();
+        GameTooltip_AddLine(string.format(Localize("WEAPON_DAMAGE_MIN_MAX"), minDamage, maxDamage), TOOLTIP_LINE_LEFT);
+        GameTooltip_AddLine(string.format(Localize("WEAPON_DPS"), dps), TOOLTIP_LINE_LEFT);
+        
+        local speed = item:GetAttackSpeed();
+        GameTooltip_AddLine(string.format(Localize("WEAPON_ATTACK_SPEED"), speed), TOOLTIP_LINE_LEFT);
+    elseif (class == "ARMOR") then
+        GameTooltip_AddLine(Localize(inventoryType), TOOLTIP_LINE_LEFT);
+    elseif (class == "CONTAINER") then
+        local slots = item:GetBagSlots();
+        GameTooltip_AddLine(string.format(Localize("CONTAINER_SLOTS"), slots), TOOLTIP_LINE_LEFT);
     end
 
-    if (class == "ARMOR" and item.armor > 0) then
-        GameTooltip_AddLine(string.format(Localize("ARMOR_VALUE"), item.armor) , TOOLTIP_LINE_LEFT);
+    local armor = item:GetArmor();
+    if (class == "ARMOR" and armor > 0) then
+        GameTooltip_AddLine(string.format(Localize("ARMOR_VALUE"), armor) , TOOLTIP_LINE_LEFT);
     end
 
-    if (item.block > 0) then
-        GameTooltip_AddLine(string.format(Localize("BLOCK_VALUE"), item.block) , TOOLTIP_LINE_LEFT);
+    local block = item:GetBlock();
+    if (block > 0) then
+        GameTooltip_AddLine(string.format(Localize("BLOCK_VALUE"), block) , TOOLTIP_LINE_LEFT);
     end
 
     -- Line 3: Description
-    if (item.description:len() > 0) then
-        GameTooltip_AddLine(item.description, TOOLTIP_LINE_LEFT, "FFFFD100");
+    local description = item:GetDescription();
+    if (description and description:len() > 0) then
+        GameTooltip_AddLine(description, TOOLTIP_LINE_LEFT, "FFFFD100");
     end
     
-    if (item.maxdurability > 0) then
-        -- TODO: Get actual value
-        local durability = item.maxdurability;
-        GameTooltip_AddLine(string.format(Localize("DURABILITY_VALUE"), durability, item.maxdurability) , TOOLTIP_LINE_LEFT);
+    local maxDurability = item:GetMaxDurability();
+    if (maxDurability > 0) then
+        local durability = item:GetDurability();
+        GameTooltip_AddLine(string.format(Localize("DURABILITY_VALUE"), durability, maxDurability) , TOOLTIP_LINE_LEFT);
     end
 
-    for i = 0, 4 do
-        local itemSpell = GetItemSpell(item, i);
-        if itemSpell then
-            local itemTrigger = GetItemSpellTriggerType(item, i);
-            if itemTrigger then
-                GameTooltip_AddLine(Localize(itemTrigger) .. ": " .. GetSpellDescription(itemSpell), TOOLTIP_LINE_LEFT, "FF00FF00");
-            end
+    for i = 0, 9 do
+        local statType = item:GetStatType(i);
+        if statType then
+            local statValue = item:GetStatValue(i);
+            GameTooltip_AddLine(string.format("+%d %s", statValue, Localize(statType)), TOOLTIP_LINE_LEFT, "FF00FF00");
+        else
+            break;
         end
     end
 
-    if (item.sellPrice > 0) then
-        local count = GetInventorySlotCount("player", slot);
-        GameTooltip_SetMoney(item.sellPrice * count);
+    for i = 0, 4 do
+        local itemSpell = item:GetSpell(i);
+        if itemSpell then
+            local itemTrigger = item:GetSpellTriggerType(i);
+            if itemTrigger then
+                GameTooltip_AddLine(Localize(itemTrigger) .. ": " .. GetSpellDescription(itemSpell), TOOLTIP_LINE_LEFT, "FF00FF00");
+            end
+        else
+            break;
+        end
+    end
+
+    local sellPrice = item:GetSellPrice();
+    if (sellPrice > 0) then
+        local count = item:GetStackCount();
+        GameTooltip_SetMoney(sellPrice * count);
     end
 end
 
