@@ -16,17 +16,18 @@ struct VertexOut
 	float3 viewDir : TEXCOORD2;
 };
 
-// Models/Trees/T_tree_bark_basecolor.htex
+// Textures/Stones/T_stone_06_basecolor.htex
 Texture2D tex0;
 SamplerState sampler0;
 
-// Models/Trees/T_tree_bark_normal.htex
+// Textures/Stones/T_moss_basecolor.htex
 Texture2D tex1;
 SamplerState sampler1;
 
-static const float3 DirectionalLightDirection = normalize(float3(0.5f, -1.0f, 0.5f));
-static const float3 DirectionalLightColor = float3(1.0f, 1.0f, 1.0f); // white
-static const float3 SkyLightColor = float3(0.2f, 0.25f, 0.3f);        // subtle bluish sky
+// Textures/Stones/T_stone_06_normal.htex
+Texture2D tex2;
+SamplerState sampler2;
+
 float3 GetWorldNormal(float3 tangentSpaceNormal, float3 N, float3 T, float3 B)
 {
 	// tangentSpaceNormal is usually in range [0,1]. Convert to [-1,1]
@@ -37,137 +38,195 @@ float3 GetWorldNormal(float3 tangentSpaceNormal, float3 N, float3 T, float3 B)
 	return worldNormal;
 }
 
-float3 FresnelSchlick(float cosTheta, float3 F0)
+float3 fresnelSchlick(float cosTheta, float3 F0)
 {
-	return F0 + (1.0f - F0) * pow(1.0f - cosTheta, 5.0f);
+	return F0 + (1.0 - F0) * pow(clamp(1.0 - cosTheta, 0.0, 1.0), 5.0);
+
 }
 
-float D_GGX(float NdotH, float alpha){	float alpha2 = alpha * alpha;	float denom = (NdotH * NdotH) * (alpha2 - 1.0f) + 1.0f;	return alpha2 / (3.14159f * denom * denom);}
-
-float G_SmithGGX_1(float NdotV, float alpha)
+float DistributionGGX(float3 N, float3 H, float roughness)
 {
-	float k = (alpha + 1.0f) * (alpha + 1.0f) / 8.0f;
-	return NdotV / (NdotV * (1.0f - k) + k);
+	float a      = roughness*roughness;
+	float a2     = a*a;
+	float NdotH  = max(dot(N, H), 0.0);
+	float NdotH2 = NdotH*NdotH;
+
+	float num   = a2;
+	float denom = (NdotH2 * (a2 - 1.0) + 1.0);
+	denom = PI * denom * denom;
+	return num / denom;
 }
 
-float G_SmithGGX_1_Correlated(float NdotV, float NdotL, float alpha)
+float GeometrySchlickGGX(float NdotV, float roughness)
 {
-	// This is a correlated version, can also be done separately
-	float k = (alpha + 1.0f) * (alpha + 1.0f) / 8.0f;
-	float gv = NdotV / (NdotV * (1.0f - k) + k);
-	float gl = NdotL / (NdotL * (1.0f - k) + k);
-	return gv * gl;
+	float r = (roughness + 1.0);
+	float k = (r*r) / 8.0;
+	float denom = NdotV * (1.0 - k) + k;
+	return NdotV / denom;
 }
 
-float3 CookTorranceBRDF(
-	float3 N, float3 V, float3 L,
-	float3 F0, float roughness)
+float GeometrySmith(float3 N, float3 V, float3 L, float roughness)
 {
-	float alpha = roughness * roughness;
+	float NdotV = max(dot(N, V), 0.0);
+	float NdotL = max(dot(N, L), 0.0);
+	float ggx2  = GeometrySchlickGGX(NdotV, roughness);
+	float ggx1  = GeometrySchlickGGX(NdotL, roughness);
+	return ggx1 * ggx2;
+}
 
-	float3 H = normalize(V + L);
-
-	float NdotL = saturate(dot(N, L));
-	float NdotV = saturate(dot(N, V));
-	float NdotH = saturate(dot(N, H));
-	float VdotH = saturate(dot(V, H));
-
-	// Normal Distribution Function
-	float D = D_GGX(NdotH, alpha);
-
-	// Geometry
-	float G = G_SmithGGX_1_Correlated(NdotV, NdotL, alpha);
-
-	// Fresnel
-	float3 F = FresnelSchlick(VdotH, F0);
-
-	// Cook-Torrance denominator factor
-	float denominator = 4.0f * NdotV * NdotL + 0.0001f;
-
-	// Final specular
-	float3 specular = (D * G * F) / denominator;
-
-	return specular;
-}float3 DiffuseLambert(float3 albedo){	return albedo / 3.14159f;}float4 main(VertexOut input) : SV_Target
+float4 main(VertexOut input) : SV_Target
 {
 	float4 outputColor = float4(1, 1, 1, 1);
 
-	float3 N = input.normal;
+	float3 N = normalize(input.normal);
 
 	float3 V = normalize(input.viewDir);
 
-	float3 B = input.binormal;
-	float3 T = input.tangent;
+	float3 B = normalize(input.binormal);
+	float3 T = normalize(input.tangent);
 	float3x3 TBN = float3x3(T, B, N);
-	////////////////////////////////////////////////////////////
-	// BEGIN - MATERIAL COMPILER EXPRESSIONS
-	////////////////////////////////////////////////////////////
-	float2 expr_0 = input.uv0;
+	float4 expr_0 = tex0.Sample(sampler0, input.uv0);
 
-	float4 expr_1 = tex0.Sample(sampler0, expr_0.xy);
+	float3 expr_1 = expr_0.rgb;
 
-	float3 expr_2 = expr_1.rgb;
+	float3 expr_2 = input.worldPos.xyz;
 
-	float4 expr_3 = tex1.Sample(sampler1, expr_0.xy);
+	float expr_3 = 0.940000;
 
-	float3 expr_4 = expr_3.rgb;
+	float expr_4 = abs(expr_3);
 
-	float expr_5 = 0.900000;
+	float expr_5 = -1.000000;
 
+	float expr_6 = expr_4 * expr_5;
 
-	////////////////////////////////////////////////////////////
-	// END - MATERIAL COMPILER EXPRESSIONS
-	////////////////////////////////////////////////////////////
+	float3 expr_7 = expr_2 / expr_6;
 
-	N = expr_4;
+	float2 expr_8 = expr_7.rb;
+
+	float4 expr_9 = tex1.Sample(sampler1, expr_8.xy);
+
+	float3 expr_10 = expr_9.rgb;
+
+	float2 expr_11 = expr_7.gb;
+
+	float4 expr_12 = tex1.Sample(sampler1, expr_11.xy);
+
+	float3 expr_13 = expr_12.rgb;
+
+	float3 expr_14 = N;
+
+	float expr_15 = expr_14.r;
+
+	float expr_16 = abs(expr_15);
+
+	float3 expr_17 = lerp(expr_10, expr_13, expr_16);
+
+	float2 expr_18 = expr_7.rg;
+
+	float4 expr_19 = tex1.Sample(sampler1, expr_18.xy);
+
+	float3 expr_20 = expr_19.rgb;
+
+	float expr_21 = expr_14.b;
+
+	float expr_22 = abs(expr_21);
+
+	float3 expr_23 = lerp(expr_17, expr_20, expr_22);
+
+	float3 expr_24 = N;
+
+	float4 expr_25 = float4(0, 1, 0, 1);
+
+	float4 expr_26 = normalize(expr_25);
+
+	float3 expr_27 = dot(expr_24, expr_26);
+
+	float expr_28 = 0.500000;
+
+	float3 expr_29 = expr_27 * expr_28;
+
+	float expr_30 = 0.500000;
+
+	float3 expr_31 = expr_29 + expr_30;
+
+	float expr_32 = 16.820000;
+
+	float3 expr_33 = expr_31 * expr_32;
+
+	float expr_34 = -4.620000;
+
+	float expr_35 = 0.500000;
+
+	float expr_36 = expr_32 * expr_35;
+
+	float expr_37 = expr_34 - expr_36;
+
+	float3 expr_38 = expr_33 + expr_37;
+
+	float expr_39 = 0.000000;
+
+	float expr_40 = 1.000000;
+
+	float3 expr_41 = clamp(expr_38, expr_39, expr_40);
+
+	float3 expr_42 = lerp(expr_1, expr_23, expr_41);
+
+	float2 expr_43 = input.uv0;
+
+	float4 expr_44 = tex2.Sample(sampler2, expr_43.xy);
+
+	float3 expr_45 = expr_44.rgb;
+
+	float expr_46 = 0.076000;
+
+	float expr_47 = 1.000000;
+
+	N = expr_45;
 
 	N = GetWorldNormal(N, input.normal, input.tangent, input.binormal);
-	float specular = 0.5;
+	float specular = saturate(expr_46);
 
-	float roughness = saturate(expr_5);
+	float roughness = saturate(expr_47);
 
 	float metallic = 0.0;
 
 	float opacity = 1.0;
 
-	clip(opacity < 0.33333f ? -1:1);
 	float3 baseColor = float3(1.0, 1.0, 1.0);
 
-	baseColor = expr_2;
+	baseColor = expr_42;
 
-	baseColor = pow(baseColor, 1.0/2.2);
+	if (opacity < 0.3333) { clip(-1); }
+	baseColor = pow(baseColor, 2.2);
 	float3 ao = float3(1.0, 1.0, 1.0);
 
-	float3 skyColor = float3(0.5, 0.55, 0.7);
-	float3 groundColor = float3(0.1, 0.15, 0.1);
-	float NdotUp = saturate(dot(N, float3(0, 1, 0)));
-	float3 diffuseIBL = lerp(groundColor, skyColor, NdotUp);
+	float3 F0 = 0.04;
+	F0 = lerp(F0, baseColor, metallic);
 
-	// Compute the reflectance at normal incidence (F0).
-	// For metals, F0 is baseColor; for dielectrics, it's 'specular' (e.g. 0.04 or user input).
-	float3 F0 = lerp(specular.xxx, baseColor, metallic);
+	float3 L = normalize(-float3(0.5, -1.0, 0.5));
+	float3 H = normalize(V + L);
+	float3 radiance = float3(4.0, 4.0, 4.0);
 
-    // Directional light direction
-    float3 L = normalize(-DirectionalLightDirection); // negative if direction is 'to the surface'
-    float3 H = normalize(L + V);
-
-    // Dot products
-    float NdotL = saturate(dot(N, L));
-    float NdotV = saturate(dot(N, V));
-
-    // Cook-Torrance specular
-    float3 specularTerm = CookTorranceBRDF(N, V, L, F0, 1.0 - roughness);
-
-    // Diffuse (Lambert). For metals, we reduce the diffuse contribution.
-    float3 diffuseColor = lerp(baseColor, 0.0f.xxx, metallic);
-    float3 diffuseTerm  = DiffuseLambert(diffuseColor);
-
-    // Direct lighting from directional light
-    float3 directLighting = (diffuseTerm + specularTerm) * NdotL * DirectionalLightColor;
-	float3 diffuseIblContribution = diffuseIBL * diffuseColor;
-	float3 ambient = SkyLightColor * diffuseColor;
-	float3 color = directLighting + diffuseIblContribution;
-
+	float NDF = DistributionGGX(N, H, roughness);
+	float G   = GeometrySmith(N, V, L, roughness);
+	float3 F = fresnelSchlick(max(dot(H, V), 0.0), F0);
+	float3 kS = F;
+	float3 kD = 1.0f.xxx - kS;
+	kD *= 1.0 - metallic;
+	float3 numerator    = NDF * G * F;
+	float denominator = 4.0 * max(dot(N, V), 0.0) * max(dot(N, L), 0.0)  + 0.0001;
+	float3 specularity     = numerator / denominator;
+	float NdotL = max(dot(N, L), 0.0);
+	float3 Lo = (kD * baseColor / PI + specularity) * radiance * NdotL;
+	kS = fresnelSchlick(max(dot(N, V), 0.0), F0);
+	kD = 1.0f.xxx - kS;
+	kD *= 1.0 - metallic;
+	float3 irradiance = float3(0.1f, 0.25f, 0.3f);
+	float3 diffuse = irradiance * baseColor;
+	float3 ambient = (kD * diffuse) * ao;
+	float3 color = ambient + Lo;
+	color = color / (color + 1.0f.xxx);
+	color = pow(color, (1.0f/2.2f).xxx);
 	outputColor = float4(color, opacity);
 	return outputColor;
 }
