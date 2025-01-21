@@ -176,7 +176,7 @@
 						
 				<Visual>
 					<ImagerySection name="Text">
-						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="CENTER" />
+						<TextComponent color="FFFFFFFF" horzAlign="LEFT" vertAlign="CENTER" />
 					</ImagerySection>
 					<StateImagery name="Enabled">
 						<Layer>
@@ -217,7 +217,7 @@
 				</Area>
 				<Visual>
 					<ImagerySection name="Text">
-						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="CENTER" />
+						<TextComponent color="FFFFFFFF" horzAlign="LEFT" vertAlign="CENTER" />
 					</ImagerySection>
 					<StateImagery name="Enabled">
 						<Layer>
@@ -258,7 +258,7 @@
 				</Area>
 				<Visual>
 					<ImagerySection name="Text">
-						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="CENTER" />
+						<TextComponent color="FFFFFFFF" horzAlign="LEFT" vertAlign="CENTER" />
 					</ImagerySection>
 					<StateImagery name="Enabled">
 						<Layer>
@@ -301,7 +301,7 @@
 		
 				<Visual>
 					<ImagerySection name="Text">
-						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="CENTER" />
+						<TextComponent color="FFFFFFFF" horzAlign="LEFT" vertAlign="CENTER" />
 					</ImagerySection>
 					<StateImagery name="Enabled">
 						<Layer>

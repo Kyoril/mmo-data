@@ -1,6 +1,14 @@
 
 ErrorTimer = 0.0
 
+ItemQualityColors = {};
+ItemQualityColors[0] = "FF9C9C9C"; -- Poor
+ItemQualityColors[1] = "FFFFFFFF"; -- Common
+ItemQualityColors[2] = "FF20FF00"; -- Uncommon
+ItemQualityColors[3] = "FF0070DD"; -- Rare
+ItemQualityColors[4] = "FFA335EE"; -- Epic
+ItemQualityColors[5] = "FFFF8000"; -- Legendary
+
 UIPanelWindows = {};
 UIPanelWindows["GameMenu"] = { area = "center", pushable = 0 };
 UIPanelWindows["SpellBook"] = { area = "left", pushable = 0 };

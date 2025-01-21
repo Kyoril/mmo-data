@@ -5,14 +5,6 @@ TOOLTIP_LINE_RIGHT = 2
 
 TooltipHeight = 40
 
-ItemQualityColors = {};
-ItemQualityColors[0] = "FF9C9C9C"; -- Poor
-ItemQualityColors[1] = "FFFFFFFF"; -- Common
-ItemQualityColors[2] = "FF20FF00"; -- Uncommon
-ItemQualityColors[3] = "FF0070DD"; -- Rare
-ItemQualityColors[4] = "FFA335EE"; -- Epic
-ItemQualityColors[5] = "FFFF8000"; -- Legendary
-
 PowerTypeNames = {};
 PowerTypeNames[0] = "MANA";
 PowerTypeNames[1] = "RAGE";

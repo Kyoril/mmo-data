@@ -28,11 +28,38 @@ function LootFrame_OnLootClosed(self)
     HideUIPanel(LootFrame);
 end
 
+function LootButton_OnEnter(this)
+	local slot = (LOOTFRAME_NUMBUTTONS * (LootFrame.page - 1)) + this.id;
+
+	if LootSlotIsItem(slot) then
+		local entry = GetLootSlotItem(slot);
+		if not entry then
+			return;
+		end
+
+		GameTooltip:ClearAnchors();
+		GameTooltip:SetAnchor(AnchorPoint.LEFT, AnchorPoint.RIGHT, this, 16);
+		GameTooltip:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, this, 0);
+	
+		GameTooltip_Clear();
+		GameTooltip_AddLine(entry.name, TOOLTIP_LINE_LEFT, ItemQualityColors[entry.quality]);
+		GameTooltip:Show();
+	else
+		return;
+	end
+end
+
+function LootButton_OnLeave(this)
+	GameTooltip:Hide();
+end
+
 function LootFrame_OnLoad(self)
 	for index = 1, LOOTFRAME_NUMBUTTONS, 1 do
 		local button = getglobal("LootButton"..index);
 		if button then
 			button:SetClickedHandler(LootButton_OnClick);
+			button:SetOnEnterHandler(LootButton_OnEnter);
+			button:SetOnLeaveHandler(LootButton_OnLeave);
 		end
 	end
 
@@ -57,7 +84,6 @@ end
 
 function LootFrame_OnHide()	
 	CloseLoot();
-	-- TODO: Play sound of loot window closing
 end
 
 function LootButton_OnClick(button)
@@ -86,6 +112,13 @@ function LootFrame_OnUpdate(self, elapsed)
 				texture, item, quantity = GetLootSlotInfo(slot);
 				button:SetProperty("Icon", texture);
 				text:SetText(item);
+
+				if LootSlotIsItem(slot) then
+					local entry = GetLootSlotItem(slot);
+					text:SetProperty("Color", ItemQualityColors[entry.quality]);
+				else
+					text:SetProperty("Color", "FFFFFFFF");
+				end
 
 				if ( quantity > 1 ) then
 					button:SetText(tostring(quantity));
