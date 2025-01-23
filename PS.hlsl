@@ -16,17 +16,13 @@ struct VertexOut
 	float3 viewDir : TEXCOORD2;
 };
 
-// Textures/Stones/T_stone_06_basecolor.htex
-Texture2D tex0;
-SamplerState sampler0;
+// Skin
+Texture2D texparam0;
+SamplerState paramsampler0;
 
-// Textures/Stones/T_moss_basecolor.htex
-Texture2D tex1;
-SamplerState sampler1;
-
-// Textures/Stones/T_stone_06_normal.htex
-Texture2D tex2;
-SamplerState sampler2;
+// Underwear
+Texture2D texparam1;
+SamplerState paramsampler1;
 
 float3 GetWorldNormal(float3 tangentSpaceNormal, float3 N, float3 T, float3 B)
 {
@@ -85,108 +81,23 @@ float4 main(VertexOut input) : SV_Target
 	float3 B = normalize(input.binormal);
 	float3 T = normalize(input.tangent);
 	float3x3 TBN = float3x3(T, B, N);
-	float4 expr_0 = tex0.Sample(sampler0, input.uv0);
+	float4 expr_0 = texparam0.Sample(paramsampler0, input.uv0);
 
 	float3 expr_1 = expr_0.rgb;
 
-	float3 expr_2 = input.worldPos.xyz;
+	float2 expr_2 = input.uv0;
 
-	float expr_3 = 0.940000;
+	float4 expr_3 = texparam1.Sample(paramsampler1, expr_2.xy);
 
-	float expr_4 = abs(expr_3);
+	float3 expr_4 = expr_3.rgb;
 
-	float expr_5 = -1.000000;
+	float expr_5 = expr_3.a;
 
-	float expr_6 = expr_4 * expr_5;
+	float3 expr_6 = lerp(expr_1, expr_4, expr_5);
 
-	float3 expr_7 = expr_2 / expr_6;
+	float specular = 0.5;
 
-	float2 expr_8 = expr_7.rb;
-
-	float4 expr_9 = tex1.Sample(sampler1, expr_8.xy);
-
-	float3 expr_10 = expr_9.rgb;
-
-	float2 expr_11 = expr_7.gb;
-
-	float4 expr_12 = tex1.Sample(sampler1, expr_11.xy);
-
-	float3 expr_13 = expr_12.rgb;
-
-	float3 expr_14 = N;
-
-	float expr_15 = expr_14.r;
-
-	float expr_16 = abs(expr_15);
-
-	float3 expr_17 = lerp(expr_10, expr_13, expr_16);
-
-	float2 expr_18 = expr_7.rg;
-
-	float4 expr_19 = tex1.Sample(sampler1, expr_18.xy);
-
-	float3 expr_20 = expr_19.rgb;
-
-	float expr_21 = expr_14.b;
-
-	float expr_22 = abs(expr_21);
-
-	float3 expr_23 = lerp(expr_17, expr_20, expr_22);
-
-	float3 expr_24 = N;
-
-	float4 expr_25 = float4(0, 1, 0, 1);
-
-	float4 expr_26 = normalize(expr_25);
-
-	float3 expr_27 = dot(expr_24, expr_26);
-
-	float expr_28 = 0.500000;
-
-	float3 expr_29 = expr_27 * expr_28;
-
-	float expr_30 = 0.500000;
-
-	float3 expr_31 = expr_29 + expr_30;
-
-	float expr_32 = 16.820000;
-
-	float3 expr_33 = expr_31 * expr_32;
-
-	float expr_34 = -4.620000;
-
-	float expr_35 = 0.500000;
-
-	float expr_36 = expr_32 * expr_35;
-
-	float expr_37 = expr_34 - expr_36;
-
-	float3 expr_38 = expr_33 + expr_37;
-
-	float expr_39 = 0.000000;
-
-	float expr_40 = 1.000000;
-
-	float3 expr_41 = clamp(expr_38, expr_39, expr_40);
-
-	float3 expr_42 = lerp(expr_1, expr_23, expr_41);
-
-	float2 expr_43 = input.uv0;
-
-	float4 expr_44 = tex2.Sample(sampler2, expr_43.xy);
-
-	float3 expr_45 = expr_44.rgb;
-
-	float expr_46 = 0.076000;
-
-	float expr_47 = 1.000000;
-
-	N = expr_45;
-
-	N = GetWorldNormal(N, input.normal, input.tangent, input.binormal);
-	float specular = saturate(expr_46);
-
-	float roughness = saturate(expr_47);
+	float roughness = 1.0;
 
 	float metallic = 0.0;
 
@@ -194,7 +105,7 @@ float4 main(VertexOut input) : SV_Target
 
 	float3 baseColor = float3(1.0, 1.0, 1.0);
 
-	baseColor = expr_42;
+	baseColor = expr_6;
 
 	if (opacity < 0.3333) { clip(-1); }
 	baseColor = pow(baseColor, 2.2);

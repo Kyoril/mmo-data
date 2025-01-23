@@ -3,16 +3,12 @@ ZoneFadeInDuration = 500;
 ZoneHoldDuration = 1000;
 ZoneFadeOutDuration = 2000;
 
-function SetZoneText()
-    ZoneText:SetText("Falwyn Plains");
-end
-
 function ZoneText_OnZoneChanged(this)
     local text = ZoneText:GetText();
-    local newText = "Falwyn Plains";
+    local newText = GetZoneText();
 
     if(text ~= newText) then
-        SetZoneText();
+        ZoneText:SetText(newText);
         FadingFrame_Show(ZoneText);
     end
 end
