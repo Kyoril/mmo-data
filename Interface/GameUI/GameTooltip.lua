@@ -144,12 +144,10 @@ function GameTooltip_SetAura(spell)
         return
     end
     
-    GameTooltip_AddLine(spell.name, TOOLTIP_LINE_LEFT, "FFFFD100");
+    GameTooltip_AddLine(spell.name, TOOLTIP_LINE_LEFT, "FFFFFFFF");
 
     -- Line 3: Description
-    if (spell.description ~= nil) then
-        GameTooltip_AddLine(GetSpellDescription(spell), TOOLTIP_LINE_LEFT, "FFFFD100");
-    end
+    GameTooltip_AddLine(GetSpellAuraText(spell), TOOLTIP_LINE_LEFT, "FFFFD100");
 end
 
 function GameTooltip_SetSpell(spell)
@@ -178,29 +176,33 @@ function GameTooltip_SetSpell(spell)
     end
 
     -- Line 2: Cast time and cooldown
-    if (spell.casttime == 0) then
-        GameTooltip_AddLine(Localize("INSTANT"), TOOLTIP_LINE_LEFT);
+    if (IsPassiveSpell(spell)) then
+        GameTooltip_AddLine(Localize("PASSIVE"), TOOLTIP_LINE_LEFT, "FF888888");
     else
-        local castFormat = Localize("CAST_FORMAT");
-        GameTooltip_AddLine(string.format(castFormat, string.format("%.1f", spell.casttime / 1000.0) .. " " .. Localize("SECONDS")), TOOLTIP_LINE_LEFT);
+        if (spell.casttime == 0) then
+            GameTooltip_AddLine(Localize("INSTANT"), TOOLTIP_LINE_LEFT);
+        else
+            local castFormat = Localize("CAST_FORMAT");
+            GameTooltip_AddLine(string.format(castFormat, string.format("%.1f", spell.casttime / 1000.0) .. " " .. Localize("SECONDS")), TOOLTIP_LINE_LEFT);
+        end
+    
+        if (spell.cooldown ~= 0) then
+            local cooldownText = "";
+            if (spell.cooldown >= 60000) then
+                cooldownText = string.format("%.1f", spell.cooldown / 60000.0) .. " " .. Localize("MINUTES");
+            else
+                cooldownText = string.format("%.1f", spell.cooldown / 1000.0) .. " " .. Localize("SECONDS");
+            end
+            GameTooltip_AddLine(cooldownText .. Localize("COOLDOWN"), TOOLTIP_LINE_LEFT);
+        end
     end
 
-    if (spell.cooldown ~= 0) then
-        local cooldownText = "";
-        if (spell.cooldown >= 60000) then
-            cooldownText = string.format("%.1f", spell.cooldown / 60000.0) .. " " .. Localize("MINUTES");
-        else
-            cooldownText = string.format("%.1f", spell.cooldown / 1000.0) .. " " .. Localize("SECONDS");
-        end
-        GameTooltip_AddLine(cooldownText .. Localize("COOLDOWN"), TOOLTIP_LINE_LEFT);
-    end
+    
 
     if ((spell.level ~= 0) and (spell.level > player:GetLevel())) then
         GameTooltip_AddLine(string.format(Localize("LEVEL_REQUIREMENT_FORMAT"), spell.level), TOOLTIP_LINE_LEFT, "FFFF2020");
     end
 
     -- Line 3: Description
-    if (spell.description ~= nil) then
-        GameTooltip_AddLine(GetSpellDescription(spell), TOOLTIP_LINE_LEFT, "FFFFD100");
-    end
+    GameTooltip_AddLine(GetSpellDescription(spell), TOOLTIP_LINE_LEFT, "FFFFD100");
 end
