@@ -1,5 +1,6 @@
 GameTemplates.xml
 GameParent.xml
+ZoneText.xml
 StaticDialog.xml
 GameMenuBar.xml
 ActionBar.xml
@@ -20,7 +21,6 @@ TrainerFrame.xml
 VendorFrame.xml
 QuestFrame.xml
 QuestLogFrame.xml
-ZoneText.xml
 GameMenu.xml
 GameTooltip.xml
 

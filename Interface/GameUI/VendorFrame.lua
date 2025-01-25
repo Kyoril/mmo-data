@@ -26,8 +26,9 @@ function VendorFrame_UpdateVendorItems()
         local money = _G["VendorMoney" .. i];
 
         if (index <= numItems) then
-            local name, texture, price, quantity, numAvailable, isUsable = GetVendorItemInfo(index - 1);
-            itemText:SetText(name);
+            local item, texture, price, quantity, numAvailable, isUsable = GetVendorItemInfo(index - 1);
+    
+            itemText:SetText(item.name);
             button:SetProperty("Icon", texture);
             button.id = index - 1;
             if (quantity > 0) then
@@ -95,6 +96,30 @@ function VendorButton_OnClick(self, button)
     end
 end
 
+function VendorButton_OnEnter(this)
+    local numItems = GetVendorNumItems();
+
+    local index = ((VendorFrame.page - 1) * VENDOR_ITEMS_PER_PAGE) + this.id + 1;
+    if (index <= numItems) then
+        local item = GetVendorItemInfo(index - 1);
+        if item then
+            GameTooltip:ClearAnchors();
+            GameTooltip:SetAnchor(AnchorPoint.LEFT, AnchorPoint.RIGHT, this, 16);
+            GameTooltip:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, this, 0);
+            GameTooltip_SetItemTemplate(item);
+            GameTooltip:Show();
+        else
+            print("Item was nil for index " .. index);
+        end
+    else
+        print("Index " .. index .. " was out of bounds (" .. numItems .. ")");
+	end
+end
+
+function VendorButton_OnLeave(this)
+	GameTooltip:Hide();
+end
+
 function VendorFrame_OnLoad(self)
     -- Initialize side panel functionality first, like the close button
     SidePanel_OnLoad(self);
@@ -105,6 +130,8 @@ function VendorFrame_OnLoad(self)
     for i = 1, VENDOR_ITEMS_PER_PAGE, 1 do
         local button = _G["VendorButton" .. i];
         button:SetClickedHandler(VendorButton_OnClick);
+        button:SetOnEnterHandler(VendorButton_OnEnter);
+        button:SetOnLeaveHandler(VendorButton_OnLeave);
     end
 end
 
