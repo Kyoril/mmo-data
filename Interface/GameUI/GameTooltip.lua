@@ -56,6 +56,90 @@ function GameTooltip_SetMoney(money)
     GameTooltip:SetHeight(TooltipHeight);
 end
 
+function GameTooltip_SetItemTemplate(item)
+    if (item == nil) then
+        return
+    end
+
+    GameTooltip_Clear();
+    GameTooltip_AddLine(item.name, TOOLTIP_LINE_LEFT, ItemQualityColors[item.quality]);
+
+    local class = item.class;
+    local subclass = item.subClass;
+    local inventoryType = item.inventoryType;
+
+    if (class == "WEAPON") then
+        GameTooltip_AddLine(Localize(inventoryType), TOOLTIP_LINE_LEFT);
+
+        local minDamage = item.minDamage;
+        local maxDamage = item.maxDamage;
+        local dps = item.dps;
+        GameTooltip_AddLine(string.format(Localize("WEAPON_DAMAGE_MIN_MAX"), minDamage, maxDamage), TOOLTIP_LINE_LEFT);
+        GameTooltip_AddLine(string.format(Localize("WEAPON_DPS"), dps), TOOLTIP_LINE_LEFT);
+        
+        local speed = item.attackSpeed / 1000.0;
+        GameTooltip_AddLine(string.format(Localize("WEAPON_ATTACK_SPEED"), speed), TOOLTIP_LINE_LEFT);
+    elseif (class == "ARMOR") then
+        GameTooltip_AddLine(Localize(inventoryType), TOOLTIP_LINE_LEFT);
+    elseif (class == "CONTAINER") then
+        local slots = item.bagSlots;
+        GameTooltip_AddLine(string.format(Localize("CONTAINER_SLOTS"), slots), TOOLTIP_LINE_LEFT);
+    end
+
+    local armor = item.armor;
+    if (class == "ARMOR" and armor > 0) then
+        GameTooltip_AddLine(string.format(Localize("ARMOR_VALUE"), armor) , TOOLTIP_LINE_LEFT);
+    end
+
+    local block = item.block;
+    if (block > 0) then
+        GameTooltip_AddLine(string.format(Localize("BLOCK_VALUE"), block) , TOOLTIP_LINE_LEFT);
+    end
+
+    -- Line 3: Description
+    local description = item.description;
+    if (description and description:len() > 0) then
+        GameTooltip_AddLine(description, TOOLTIP_LINE_LEFT, "FFFFD100");
+    end
+    
+    local maxDurability = item.maxDurability;
+    if (maxDurability > 0) then
+        local durability = maxDurability;
+        GameTooltip_AddLine(string.format(Localize("DURABILITY_VALUE"), durability, maxDurability) , TOOLTIP_LINE_LEFT);
+    end
+
+    for i = 0, 9 do
+        local statType = item:GetStatType(i);
+        if statType then
+            local statValue = item:GetStatValue(i);
+            GameTooltip_AddLine(string.format("+%d %s", statValue, Localize(statType)), TOOLTIP_LINE_LEFT, "FF00FF00");
+        else
+            break;
+        end
+    end
+    
+    for i = 0, 4 do
+        local itemSpellId = item:GetSpellId(i);
+        if itemSpell ~= 0 then
+            local itemSpell = gameData.spells:GetById(itemSpellId);
+            if itemSpell then
+                local itemTrigger = item:GetSpellTriggerType(i);
+                if itemTrigger then
+                    GameTooltip_AddLine(Localize(itemTrigger) .. ": " .. GetSpellDescription(itemSpell), TOOLTIP_LINE_LEFT, "FF00FF00");
+                end
+            end
+        else
+            break;
+        end
+    end
+
+    local sellPrice = item.sellPrice;
+    if (sellPrice > 0) then
+        local count = 1;    	-- TODO
+        GameTooltip_SetMoney(sellPrice * count);
+    end
+end
+
 function GameTooltip_SetItem(item)
     if (item == nil) then
         return

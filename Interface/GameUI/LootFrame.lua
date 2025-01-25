@@ -40,9 +40,7 @@ function LootButton_OnEnter(this)
 		GameTooltip:ClearAnchors();
 		GameTooltip:SetAnchor(AnchorPoint.LEFT, AnchorPoint.RIGHT, this, 16);
 		GameTooltip:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, this, 0);
-	
-		GameTooltip_Clear();
-		GameTooltip_AddLine(entry.name, TOOLTIP_LINE_LEFT, ItemQualityColors[entry.quality]);
+		GameTooltip_SetItemTemplate(entry);
 		GameTooltip:Show();
 	else
 		return;
