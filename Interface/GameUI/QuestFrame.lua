@@ -174,5 +174,5 @@ function QuestFrame_OnLoad(self)
 end
 
 function QuestFrame_OnShow(self)
-    -- TODO: Play sound effect
+    PlaySound("Sound/Interface/Papers_02.wav");
 end

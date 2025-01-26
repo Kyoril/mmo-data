@@ -120,6 +120,10 @@ function SpellBook_SpellsChanged(self)
     SpellBook_UpdatePage();
 end
 
+function SpellBook_OnShow(self)
+    PlaySound("Sound/Interface/Papers_01.wav");
+end
+
 function SpellBook_OnLoad(self)
     SpellBookPage = 1;
 

@@ -309,6 +309,11 @@
                     SpellBook_OnLoad(this)
                 end
             </OnLoad>
+			<OnShow>
+				return function(this)
+					SpellBook_OnShow(this);
+				end
+			</OnShow>
         </Scripts>
     </Frame>
 </UiLayout>

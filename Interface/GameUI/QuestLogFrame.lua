@@ -62,6 +62,8 @@ end
 function QuestLogFrame_OnShow(self)
     QuestLog_Update();
 
+    PlaySound("Sound/Interface/Papers_02.wav");
+    
     if GetQuestLogSelection() ~= 0 then
         QuestLogFrame_UpdateQuestDetails();
     end
