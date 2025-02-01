@@ -70,6 +70,8 @@ function OnClassChange_Clicked(this)
 	-- Uncheck all other races (TODO: Make this dynamic!)
 	ClassMageButton:SetChecked(false);
 	ClassWarriorButton:SetChecked(false);
+	ClassClericButton:SetChecked(false);
+	ClassShadowmancerButton:SetChecked(false);
 
 	-- Ensure we are always checked
 	this:SetChecked(true);
