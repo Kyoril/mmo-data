@@ -4,13 +4,6 @@ float select(bool expression, float whenTrue, float whenFalse) {
 	return expression ? whenTrue : whenFalse;
 }
 
-cbuffer ScalarParameters
-{
-	float sSpecular;
-	float sRoughness;
-	float sOpacity;
-};
-
 struct VertexOut
 {
 	float4 pos : SV_POSITION;
@@ -18,14 +11,9 @@ struct VertexOut
 	float3 normal : NORMAL;
 	float3 binormal : BINORMAL;
 	float3 tangent : TANGENT;
-	float2 uv0 : TEXCOORD0;
-	float3 worldPos : TEXCOORD1;
-	float3 viewDir : TEXCOORD2;
+	float3 worldPos : TEXCOORD0;
+	float3 viewDir : TEXCOORD1;
 };
-
-// Textures/FalwynPlains/Trees/T_foliage_BaseColor.htex
-Texture2D tex0;
-SamplerState sampler0;
 
 float3 GetWorldNormal(float3 tangentSpaceNormal, float3 N, float3 T, float3 B)
 {
@@ -84,35 +72,17 @@ float4 main(VertexOut input) : SV_Target
 	float3 B = normalize(input.binormal);
 	float3 T = normalize(input.tangent);
 	float3x3 TBN = float3x3(T, B, N);
-	float2 expr_0 = input.uv0;
+	float specular = 0.5;
 
-	float4 expr_1 = tex0.Sample(sampler0, expr_0.xy);
-
-	float3 expr_2 = expr_1.rgb;
-
-	float expr_3 = sSpecular;
-
-	float expr_4 = sRoughness;
-
-	float expr_5 = expr_1.a;
-
-	float expr_6 = sOpacity;
-
-	float expr_7 = expr_5 * expr_6;
-
-	float specular = saturate(expr_3);
-
-	float roughness = saturate(expr_4);
+	float roughness = 1.0;
 
 	float metallic = 0.0;
 
-	float opacity = saturate(expr_7);
+	float opacity = 1.0;
 
 	float3 baseColor = float3(1.0, 1.0, 1.0);
 
-	baseColor = expr_2;
-
-	if (opacity < 0.3333) { clip(-1); }
+	if (opacity <= 0) { clip(-1); }
 	baseColor = pow(baseColor, 2.2);
 	float3 ao = float3(1.0, 1.0, 1.0);
 
