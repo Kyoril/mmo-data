@@ -281,4 +281,8 @@ strings =
 	(key = "WEAPON_DAMAGE", string = "%d Damage")
 	(key = "WEAPON_DPS", string = "(%.2f damage per second)")
 	(key = "WEAPON_ATTACK_SPEED", string = "Speed %.2f")
+
+	(key = "HELP_TEXT_SIMPLE", string = "Type '/help' for a listing of a few commands.")
+	(key = "ACCEPT", string = "Accept")
+	(key = "DECLINE", string = "Decline")
 }

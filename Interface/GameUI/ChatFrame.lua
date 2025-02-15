@@ -1,4 +1,23 @@
 
+function GetSlashCmdTarget(msg)
+	local target = string.gsub(msg, "(%s*)([^%s]+)(.*)", "%2", 1);
+	if ( string.len(target) <= 0 ) then
+		target = UnitName("target");
+	end
+
+	return target;
+end
+
+-- Slash commands
+SlashCmdList = { };
+
+SlashCmdList["INVITE"] = function(msg)
+	if ( GetSlashCmdTarget(msg) ) then
+        local inviteTarget = GetSlashCmdTarget(msg);
+		InviteByName(GetSlashCmdTarget(msg));
+	end
+end
+
 function ChatFrame_OnPlayerLevelUp(self, newLevel, health, mana, stamina, strength, agility, intellect, spirit, tp, ap)
     -- Add level up notification
     ChatFrame:AddMessage(string.format(Localize("LEVEL_UP"), newLevel), 1.0, 1.0, 0.0);
@@ -101,15 +120,78 @@ function ChatFrame_OpenChat(input)
     ChatInput:CaptureInput();
 end
 
-function ChatFrame_SendMessage(this)
-    ChatInput:Hide();
+function ChatFrame_ParseText(send)
+    local text = ChatInput:GetText();
+    if ( string.len(text) <= 0 ) then
+		return;
+	end
 
-    if (string.len(ChatInput:GetText()) > 0) then
-        RunConsoleCommand("sendchatmessage " .. ChatInput:GetText());
-        ChatInput:SetText("");
+	if ( string.sub(text, 1, 1) ~= "/" ) then
+		return;
+	end
+
+	-- If the string is in the format "/cmd blah", command will be "cmd"
+	local command = string.gsub(text, "/([^%s]+)%s(.*)", "/%1", 1);
+	local msg = "";
+
+	if ( command ~= text ) then
+		msg = string.sub(text, string.len(command) + 2);
+	end
+
+	command = string.gsub(command, "%s+", "");
+	command = string.upper(command);
+
+    if (not send) then
+        return;
     end
 
+    -- We now have extracted a command. If we entered "/inv Bob", command will be "/INV". So now lets iterate through all known
+    -- slash commands and see if we have a match there.
+    for index, value in pairs(SlashCmdList) do
+        -- In order to support multiple slash commmand strings, we try to iterate through all possible synonyms.
+        -- A synonym is defined as a global variable in lua named "SLASH_<COMMANDNAME><INDEX>" where index starts at 1.
+        -- So if you define "SLASH_INVITE1" as "/i" and "SLASH_INVITE2" as "/inv", the player can type both "/i" or "/inv" to
+        -- trigger the INVITE slash command.
+		local i = 1;
+		local cmdString = _G["SLASH_"..index..i];
+
+        -- While we find a global named that way...
+		while ( cmdString ) do
+            -- Uppercase the command name found just in case
+			cmdString = string.upper(cmdString);
+			if ( cmdString == command ) then
+                -- We have a match! Execute the command handler and return
+				value(msg);
+                ChatInput_OnEscapePressed();
+				return;
+			end
+
+            -- No match, get the next global command alias if possible and repeat check
+			i = i + 1;
+			cmdString = _G["SLASH_"..index..i];
+		end
+	end
+
+    -- Unknown chat command, display help text
+    ChatFrame:AddMessage(Localize("HELP_TEXT_SIMPLE"), 1.0, 1.0, 0.0);
+    ChatInput_OnEscapePressed();
+end
+
+function ChatInput_OnEscapePressed()
+	ChatInput:SetText("");
+	ChatInput:Hide();
     ChatInput:ReleaseInput();
+end
+
+function ChatFrame_SendMessage(this)
+    ChatFrame_ParseText(true);
+
+	local text = ChatInput:GetText();
+	if ( string.len(string.gsub(text, "%s*(.*)", "%1")) > 0 ) then
+        RunConsoleCommand("sendchatmessage " .. text);
+	end
+
+    ChatInput_OnEscapePressed();
 end
 
 function ChatFrame_ScrollDown(this)

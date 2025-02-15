@@ -1,5 +1,6 @@
 <?xml version="1.0" ?>
 <UiLayout>
+	<Script file="SlashCommandStrings.lua" />
 	<Script file="ChatFrame.lua" />
 
 	<Font name="ChatFont" file="Fonts/ARIALN.TTF" size="30" outline="0" shadowX="1.0" shadowY="1.0" />

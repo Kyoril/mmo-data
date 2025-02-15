@@ -6,26 +6,31 @@
 		<Property name="Visible" value="false" />
 
 		<Area>
-			<Size><AbsDimension x="1200" y="490" /></Size>
+			<Size><AbsDimension x="720" y="490" /></Size>
 			<Anchor point="H_CENTER" />
-			<Anchor point="V_CENTER" />
+			<Anchor point="V_CENTER" offset="-256" />
 		</Area>
 		
 		<Frame name="StaticDialogLabel" inherits="TextSmall">
 			<Property name="Text" value="" />
+			<Property name="HorzAlign" value="CENTER" />
+
 			<Area>
-				<Anchor point="LEFT" offset="40" />
-				<Anchor point="RIGHT" offset="-40" />
-				<Anchor point="TOP" offset="60" />
+				<Anchor point="LEFT" offset="32" />
+				<Anchor point="RIGHT" offset="-32" />
+				<Anchor point="TOP" offset="32" />
 			</Area>
 		</Frame>
 		
-		<Frame name="StaticDialogButton01" inherits="GlueButton">
+		<Frame name="StaticDialogButton1" inherits="GlueButton">
 			<Property name="Text" value="CANCEL" />
 			
 			<Area>
 				<Anchor point="H_CENTER" />
 				<Anchor point="BOTTOM" relativeTo="StaticDialog" offset="-40" />
+				<Size>
+					<AbsDimension x="180" y="80" />
+				</Size>
 			</Area>
 			
 			<Scripts>
@@ -37,13 +42,16 @@
 			</Scripts>
 		</Frame>
 		
-		<Frame name="StaticDialogButton02" inherits="GlueButton">
+		<Frame name="StaticDialogButton2" inherits="GlueButton">
 			<Property name="Text" value="CANCEL" />
 			<Property name="Visible" value="false" />
 			
 			<Area>
-				<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="StaticDialogButton01" offset="20" />
-				<Anchor point="BOTTOM" relativeTo="StaticDialog" offset="-40" />
+				<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="StaticDialogButton1" offset="20" />
+				<Anchor point="BOTTOM" relativeTo="StaticDialogButton1" />
+				<Size>
+					<AbsDimension x="180" y="80" />
+				</Size>
 			</Area>
 
 			<Scripts>

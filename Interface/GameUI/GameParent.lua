@@ -29,6 +29,10 @@ end
 MAX_ERROR_MESSAGES = 3;
 ERROR_HOLD_TIME = 4;
 
+function GameParent_OnPartyInviteRequest(gameParent, inviterName)
+	StaticDialog_Show("PARTY_INVITE", inviterName);
+end
+
 function UIErrorFrame_OnLoad(this)
 	for i = 1, MAX_ERROR_MESSAGES do
 		local text = _G["ErrorText"..i];
@@ -141,6 +145,7 @@ function GameParent_OnLoad(self)
     self:RegisterEvent("PLAYER_SPELL_CAST_FAILED", GameParent_OnSpellError);
     self:RegisterEvent("ATTACK_SWING_ERROR", GameParent_OnAttackSwingError);
     self:RegisterEvent("PLAYER_DEAD", GameParent_OnPlayerDead);
+	self:RegisterEvent("PARTY_INVITE_REQUEST", GameParent_OnPartyInviteRequest);
 end
 
 function ShowUIPanel(frame, force)
