@@ -180,7 +180,7 @@ function StaticDialog_Hide()
 end
 
 function StaticDialog_Button1Clicked()
-	StaticDialog:Hide()
+	StaticDialog:Hide();
 	
 	if (StaticDialogs[StaticDialog.which].OnAccept) then
 		StaticDialogs[StaticDialog.which].OnAccept()
@@ -188,9 +188,9 @@ function StaticDialog_Button1Clicked()
 end
 
 function StaticDialog_Button2Clicked()
-	StaticDialog:Hide()
+	StaticDialog:Hide();
 	
-	if (StaticDialogs[GlueDialog.which].OnCancel) then
-		StaticDialogs[GlueDialog.which].OnCancel()
+	if (StaticDialogs[StaticDialog.which].OnCancel) then
+		StaticDialogs[StaticDialog.which].OnCancel()
 	end
 end
