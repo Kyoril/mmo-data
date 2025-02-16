@@ -1,0 +1,65 @@
+
+function PartyMemberFrame_UpdateMember(self)
+    if (HasPartyMember(self.id)) then
+        local unitName = "party"..self.id;
+        local name = self:GetChild(0);
+        local healthbar = self:GetChild(1);
+        local manabar = self:GetChild(2);
+        local unit = GetUnit(unitName);
+        if (unit) then
+            name:SetText(unit:GetName());
+            healthbar:SetProgress(unit:GetHealth() / unit:GetMaxHealth());
+
+            -- Get power type
+            local powerType = unit:GetPowerType();
+            manabar:SetProperty("ProgressColor", ResourceBarColors[powerType]);
+    
+            local power = unit:GetPower(powerType);
+            local maxPower = unit:GetMaxPower(powerType);
+            manabar:SetProgress(power / maxPower);
+        end
+
+        self:Show();
+    else
+        self:Hide();
+    end
+    
+end
+
+function PartyMemberFrame_OnMembersChanged(self)
+    PartyMemberFrame_UpdateMember(self);
+end
+
+function PartyMemberFrame_OnLeaderChanged(self)
+
+end
+
+function PartyMemberFrame_OnMemberEnable(self)
+
+end
+
+function PartyMemberFrame_OnMemberDisable(self)
+
+end
+
+function PartyMemberFrame_OnLootMethodChanged(self)
+
+end
+
+function PartyMemberFrame_OnLoad(self)
+	self:RegisterEvent("PARTY_MEMBERS_CHANGED", PartyMemberFrame_OnMembersChanged);
+	self:RegisterEvent("PARTY_LEADER_CHANGED", PartyMemberFrame_OnLeaderChanged);
+	self:RegisterEvent("PARTY_MEMBER_ENABLE", PartyMemberFrame_OnMemberEnable);
+	self:RegisterEvent("PARTY_MEMBER_DISABLE", PartyMemberFrame_OnMemberDisable);
+	self:RegisterEvent("PARTY_LOOT_METHOD_CHANGED", PartyMemberFrame_OnLootMethodChanged);
+    
+    PartyMemberFrame_UpdateMember(self);
+end
+
+function PartyFrame_OnLoad(self)
+
+end
+
+function PartyMemberFrame_OnClick(self)
+
+end

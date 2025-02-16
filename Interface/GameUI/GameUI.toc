@@ -6,6 +6,7 @@ GameMenuBar.xml
 ActionBar.xml
 ChatFrame.xml
 PlayerFrame.xml
+PartyFrame.xml
 InventoryButton.xml
 CharacterWindow.xml
 SpellBook.xml

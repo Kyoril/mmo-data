@@ -1,0 +1,212 @@
+<?xml version="1.0" ?>
+<UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="file:\\F:\mmo\data\client\Interface\Ui.xsd">
+	<Script file="PartyFrame.lua" />
+
+    <Frame name="PartyMemberFrameTemplate">
+        <Area>
+            <Size><AbsDimension x="320" y="128" /></Size>
+        </Area>
+
+        <Frame name="Name" inherits="TextSmall">
+            <Property name="Text" value="UNKNOWN" />
+            <Property name="Font" value="SmallLabelFont" />
+
+            <Area>
+                <Anchor point="LEFT" />
+                <Anchor point="RIGHT" />
+                <Anchor point="TOP" />
+                <Size><AbsDimension y="42" /></Size>
+            </Area>
+        </Frame>
+
+        <Frame name="HealthBar" type="ProgressBar">
+            <Property name="Progress" value="0.12783" />
+			<Property name="Font" value="DefaultSmall" />
+
+            <Area>
+                <Anchor point="LEFT" />
+                <Anchor point="RIGHT" />
+                <Anchor point="TOP" relativeTo="Name" relativePoint="BOTTOM" />
+                <Size><AbsDimension y="32" /></Size>
+            </Area>
+            
+			<Visual>
+				<ImagerySection name="Caption">
+					<TextComponent color="FFFFFFFF" horzAlign="CENTER" vertAlign="CENTER" />
+				</ImagerySection>
+				<ImagerySection name="Background">
+					<BorderComponent texture="Interface/fg4_borders_01_33.htex" borderSize="5" />
+				</ImagerySection>
+				<ImagerySection name="Border">
+					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlack.htex" borderSize="24" />
+				</ImagerySection>
+				<ImagerySection name="Progress">
+					<ImageComponent texture="Interface/fg4_gradientWhiteV1_result.htex" tiling="HORZ" tint="FF00FF00">
+						<Area><Inset all="8" /></Area>
+					</ImageComponent>
+				</ImagerySection>
+
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Background" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="Disabled">
+					<Layer>
+						<Section section="Background" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="Progress">
+					<Layer>
+						<Section section="Progress" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="Overlay">
+					<Layer>
+						<Section section="Border" />
+						<Section section="Caption" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+        </Frame>
+
+		<Frame name="ManaBar" type="ProgressBar">
+			<Property name="Progress" value="0.12783" />
+			<Property name="Font" value="DefaultSmall" />
+
+			<Area>
+				<Anchor point="LEFT" />
+				<Anchor point="RIGHT" />
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="HealthBar" />
+				<Size><AbsDimension y="32" /></Size>
+			</Area>
+
+			<Visual>
+				<ImagerySection name="Caption">
+					<TextComponent color="FFFFFFFF" horzAlign="CENTER" vertAlign="CENTER" />
+				</ImagerySection>
+				<ImagerySection name="Background">
+					<BorderComponent texture="Interface/fg4_borders_01_33.htex" borderSize="5" />
+				</ImagerySection>
+				<ImagerySection name="Border">
+					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlack.htex" borderSize="24" />
+				</ImagerySection>
+				<ImagerySection name="Progress">
+					<ImageComponent texture="Interface/fg4_gradientWhiteV1_result.htex" tiling="HORZ">
+						<Area><Inset all="8" /></Area>
+					</ImageComponent>
+				</ImagerySection>
+
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Background" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="Disabled">
+					<Layer>
+						<Section section="Background" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="Progress">
+					<Layer>
+						<Section section="Progress" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="Overlay">
+					<Layer>
+						<Section section="Border" />
+						<Section section="Caption" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+		</Frame>
+    </Frame>
+
+    <Frame name="PartyFrame" parent="GameParent" renderer="DefaultRenderer">
+        <Area>
+            <Anchor point="LEFT" offset="32" />
+            <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="PlayerFrame" offset="32" />
+            <Size><AbsDimension x="320" y="512" /></Size>
+        </Area>
+
+        <Frame name="PartyMember1" inherits="PartyMemberFrameTemplate" id="1">
+            <Property name="Visible" value="false" />
+
+            <Area>
+                <Anchor point="LEFT" />
+                <Anchor point="RIGHT" />
+                <Anchor point="TOP" />
+            </Area>
+
+            <Scripts>
+                <OnLoad>
+                    return function(self)
+                        PartyMemberFrame_OnLoad(self);
+                    end
+                </OnLoad>
+            </Scripts>
+        </Frame>
+
+        <Frame name="PartyMember2" inherits="PartyMemberFrameTemplate" id="2">
+            <Property name="Visible" value="false" />
+
+            <Area>
+                <Anchor point="LEFT" />
+                <Anchor point="RIGHT" />
+                <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="PartyMember1" />
+            </Area>
+
+            <Scripts>
+                <OnLoad>
+                    return function(self)
+                        PartyMemberFrame_OnLoad(self);
+                    end
+                </OnLoad>
+            </Scripts>
+        </Frame>
+
+        <Frame name="PartyMember3" inherits="PartyMemberFrameTemplate" id="3">
+            <Property name="Visible" value="false" />
+
+            <Area>
+                <Anchor point="LEFT" />
+                <Anchor point="RIGHT" />
+                <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="PartyMember2" />
+            </Area>
+
+            <Scripts>
+                <OnLoad>
+                    return function(self)
+                        PartyMemberFrame_OnLoad(self);
+                    end
+                </OnLoad>
+            </Scripts>
+        </Frame>
+
+        <Frame name="PartyMember4" inherits="PartyMemberFrameTemplate" id="4">
+            <Property name="Visible" value="false" />
+            
+            <Area>
+                <Anchor point="LEFT" />
+                <Anchor point="RIGHT" />
+                <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="PartyMember3" />
+            </Area>
+
+            <Scripts>
+                <OnLoad>
+                    return function(self)
+                        PartyMemberFrame_OnLoad(self);
+                    end
+                </OnLoad>
+            </Scripts>
+        </Frame>
+
+        <Scripts>
+            <OnLoad>
+                return function(self)
+                    PartyFrame_OnLoad(self);
+                end
+            </OnLoad>
+        </Scripts>
+    </Frame>
+</UiLayout>

@@ -199,9 +199,9 @@ function ChatFrame_ScrollDown(this)
 end
 
 function ChatFrame_ScrollUp(this)
-    ChatFrame:ScrollUp()
+    ChatFrame:ScrollUp();
 end
 
 function ChatFrame_ScrollToBottom(this)
-    ChatFrame:ScrollToBottom()
+    ChatFrame:ScrollToBottom();
 end
