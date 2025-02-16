@@ -22,8 +22,19 @@ function PartyMemberFrame_UpdateMember(self)
         self:Show();
     else
         self:Hide();
+    end    
+end
+
+function PartyMemberFrame_OnUnitNameUpdate(self, unit)
+    -- Is this our unit?
+    if (unit ~= "party"..self.id) then
+        return;
     end
-    
+
+    -- Adjust unit name display
+    local partyMemberUnit = GetUnit(unit);
+    local name = self:GetChild(0);
+    name:SetText(partyMemberUnit:GetName());
 end
 
 function PartyMemberFrame_OnMembersChanged(self)
@@ -52,6 +63,7 @@ function PartyMemberFrame_OnLoad(self)
 	self:RegisterEvent("PARTY_MEMBER_ENABLE", PartyMemberFrame_OnMemberEnable);
 	self:RegisterEvent("PARTY_MEMBER_DISABLE", PartyMemberFrame_OnMemberDisable);
 	self:RegisterEvent("PARTY_LOOT_METHOD_CHANGED", PartyMemberFrame_OnLootMethodChanged);
+    self:RegisterEvent("UNIT_NAME_UPDATE", PartyMemberFrame_OnUnitNameUpdate)
     
     PartyMemberFrame_UpdateMember(self);
 end
