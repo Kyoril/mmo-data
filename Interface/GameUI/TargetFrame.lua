@@ -8,6 +8,18 @@ function TargetFrame_OnLoad()
     TargetFrame_Update();
 
     TargetFrame:RegisterEvent("PLAYER_TARGET_CHANGED", TargetFrame_Update);
+    TargetFrame:RegisterEvent("UNIT_HEALTH_UPDATED", TargetFrame_OnUnitUpdate);
+    TargetFrame:RegisterEvent("UNIT_POWER_UPDATED", TargetFrame_OnUnitUpdate);
+    TargetFrame:RegisterEvent("UNIT_LEVEL_UPDATED", TargetFrame_OnUnitUpdate);
+    TargetFrame:RegisterEvent("UNIT_NAME_UPDATED", TargetFrame_OnUnitUpdate);
+end
+
+function TargetFrame_OnUnitUpdate(self, unit)
+    if (unit ~= "target") then
+        return;
+    end
+
+    TargetFrame_Update();
 end
 
 function TargetFrame_UpdateAuras()
@@ -51,7 +63,7 @@ end
 function TargetFrame_Update()
     local target = GetUnit("target");
 
-    if target ~= nil then
+    if target then
         TargetName:SetText("[" .. target:GetLevel() .. "] " .. target:GetName());
 
         -- Update progress bars

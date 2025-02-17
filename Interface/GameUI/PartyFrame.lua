@@ -19,13 +19,21 @@ function PartyMemberFrame_UpdateMember(self)
             manabar:SetProgress(power / maxPower);
         else
             -- Offline unit or anything?
-
+            print("Unit " .. unitName .. " not found during update!");
         end
 
         self:Show();
     else
         self:Hide();
     end    
+end
+
+function PartyMemberFrame_OnUnitUpdate(self, unit)
+    if (unit ~= "party"..self.id) then
+        return;
+    end
+
+    PartyMemberFrame_UpdateMember(self);
 end
 
 function PartyMemberFrame_OnUnitNameUpdate(self, unit)
@@ -68,7 +76,11 @@ function PartyMemberFrame_OnLoad(self)
 	self:RegisterEvent("PARTY_MEMBER_ENABLE", PartyMemberFrame_OnMemberEnable);
 	self:RegisterEvent("PARTY_MEMBER_DISABLE", PartyMemberFrame_OnMemberDisable);
 	self:RegisterEvent("PARTY_LOOT_METHOD_CHANGED", PartyMemberFrame_OnLootMethodChanged);
-    self:RegisterEvent("UNIT_NAME_UPDATE", PartyMemberFrame_OnUnitNameUpdate)
+    self:RegisterEvent("UNIT_NAME_UPDATE", PartyMemberFrame_OnUnitNameUpdate);
+
+    self:RegisterEvent("UNIT_HEALTH_UPDATED", PartyMemberFrame_OnUnitUpdate);
+    self:RegisterEvent("UNIT_POWER_UPDATED", PartyMemberFrame_OnUnitUpdate);
+    self:RegisterEvent("UNIT_LEVEL_UPDATED", PartyMemberFrame_OnUnitUpdate);
     
     PartyMemberFrame_UpdateMember(self);
 end
