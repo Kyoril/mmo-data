@@ -17,15 +17,24 @@ function PartyMemberFrame_UpdateMember(self)
             local power = unit:GetPower(powerType);
             local maxPower = unit:GetMaxPower(powerType);
             manabar:SetProgress(power / maxPower);
-        else
-            -- Offline unit or anything?
-            print("Unit " .. unitName .. " not found during update!");
         end
 
         self:Show();
     else
         self:Hide();
     end    
+end
+
+function PartyMemberFrame_OnClick(self, button)
+    local index = self:GetParent().id;
+    local unit = "party"..index;
+
+    if (button == "LEFT") then
+        TargetUnit(unit);
+    elseif (button == "RIGHT") then
+        -- TODO: Show party member context menu here!
+        print("TODO: Implement other button");
+    end
 end
 
 function PartyMemberFrame_OnUnitUpdate(self, unit)
@@ -77,18 +86,15 @@ function PartyMemberFrame_OnLoad(self)
 	self:RegisterEvent("PARTY_MEMBER_DISABLE", PartyMemberFrame_OnMemberDisable);
 	self:RegisterEvent("PARTY_LOOT_METHOD_CHANGED", PartyMemberFrame_OnLootMethodChanged);
     self:RegisterEvent("UNIT_NAME_UPDATE", PartyMemberFrame_OnUnitNameUpdate);
-
     self:RegisterEvent("UNIT_HEALTH_UPDATED", PartyMemberFrame_OnUnitUpdate);
     self:RegisterEvent("UNIT_POWER_UPDATED", PartyMemberFrame_OnUnitUpdate);
     self:RegisterEvent("UNIT_LEVEL_UPDATED", PartyMemberFrame_OnUnitUpdate);
     
+    self:GetChild(3):SetClickedHandler(PartyMemberFrame_OnClick);
+
     PartyMemberFrame_UpdateMember(self);
 end
 
 function PartyFrame_OnLoad(self)
-
-end
-
-function PartyMemberFrame_OnClick(self)
 
 end

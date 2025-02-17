@@ -120,6 +120,8 @@
 				</StateImagery>
 			</Visual>
 		</Frame>
+    
+        <Frame name="ClickFrame" type="Button" setAllPoints="true" />
     </Frame>
 
     <Frame name="PartyFrame" parent="GameParent" renderer="DefaultRenderer">
