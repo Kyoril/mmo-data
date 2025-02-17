@@ -17,6 +17,9 @@ function PartyMemberFrame_UpdateMember(self)
             local power = unit:GetPower(powerType);
             local maxPower = unit:GetMaxPower(powerType);
             manabar:SetProgress(power / maxPower);
+        else
+            -- Offline unit or anything?
+
         end
 
         self:Show();
@@ -33,8 +36,10 @@ function PartyMemberFrame_OnUnitNameUpdate(self, unit)
 
     -- Adjust unit name display
     local partyMemberUnit = GetUnit(unit);
-    local name = self:GetChild(0);
-    name:SetText(partyMemberUnit:GetName());
+    if (partyMemberUnit) then
+        local name = self:GetChild(0);
+        name:SetText(partyMemberUnit:GetName());
+    end
 end
 
 function PartyMemberFrame_OnMembersChanged(self)

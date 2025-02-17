@@ -13,8 +13,13 @@ SlashCmdList = { };
 
 SlashCmdList["INVITE"] = function(msg)
 	if ( GetSlashCmdTarget(msg) ) then
-        local inviteTarget = GetSlashCmdTarget(msg);
 		InviteByName(GetSlashCmdTarget(msg));
+	end
+end
+
+SlashCmdList["UNINVITE"] = function(msg)
+	if ( GetSlashCmdTarget(msg) ) then
+		UninviteByName(GetSlashCmdTarget(msg));
 	end
 end
 
