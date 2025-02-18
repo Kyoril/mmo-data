@@ -284,4 +284,5 @@ strings =
 	(key = "HELP_TEXT_SIMPLE", string = "Type '/help' for a listing of a few commands.")
 	(key = "ACCEPT", string = "Accept")
 	(key = "DECLINE", string = "Decline")
+	(key = "RANDOM_ROLL_RESULT", string = "%s rolls %d (%d-%d)")
 }

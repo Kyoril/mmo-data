@@ -284,4 +284,5 @@ strings =
 	(key = "HELP_TEXT_SIMPLE", string = "Gebt '/hilfe' ein um eine Liste hilfreicher Chatbefehle zu sehen.")
 	(key = "ACCEPT", string = "Annehmen")
 	(key = "DECLINE", string = "Ablehnen")
+	(key = "RANDOM_ROLL_RESULT", string = "%s würfelt %d (%d-%d)")
 }

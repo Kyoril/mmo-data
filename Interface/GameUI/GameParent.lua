@@ -33,6 +33,10 @@ function GameParent_OnPartyInviteRequest(gameParent, inviterName)
 	StaticDialog_Show("PARTY_INVITE", inviterName);
 end
 
+function GameParent_OnRandomRollResult(self, playerName, min, max, result)
+	ChatFrame:AddMessage(string.format(Localize("RANDOM_ROLL_RESULT"), playerName, result, min, max), 1.0, 1.0, 0.0);
+end
+
 function UIErrorFrame_OnLoad(this)
 	for i = 1, MAX_ERROR_MESSAGES do
 		local text = _G["ErrorText"..i];
@@ -146,6 +150,8 @@ function GameParent_OnLoad(self)
     self:RegisterEvent("ATTACK_SWING_ERROR", GameParent_OnAttackSwingError);
     self:RegisterEvent("PLAYER_DEAD", GameParent_OnPlayerDead);
 	self:RegisterEvent("PARTY_INVITE_REQUEST", GameParent_OnPartyInviteRequest);
+
+	self:RegisterEvent("RANDOM_ROLL_RESULT", GameParent_OnRandomRollResult);
 end
 
 function ShowUIPanel(frame, force)

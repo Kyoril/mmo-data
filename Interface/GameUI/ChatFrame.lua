@@ -23,6 +23,29 @@ SlashCmdList["UNINVITE"] = function(msg)
 	end
 end
 
+SlashCmdList["RANDOM"] = function(msg)
+    local num1 = string.gsub(msg, "(%s*)(%d+)(.*)", "%2", 1);
+    local rest = string.gsub(msg, "(%s*)(%d+)(.*)", "%3", 1);
+    num1 = tonumber(num1);
+    
+    local num2 = 0
+    if rest and #rest > 0 then
+        local temp = string.gsub(msg, "(%s*)(%d+)([-%s]+)(%d+)(.*)", "%4", 1);
+        num2 = tonumber(temp) or 0;
+    end
+    
+    -- If num1 is nil, treat it as 0
+    num1 = num1 or 0;
+    
+    if num1 == 0 and num2 == 0 then
+        RandomRoll(1, 100);
+    elseif num2 == 0 then
+        RandomRoll(1, num1);
+    else
+        RandomRoll(num1, num2);
+    end
+end
+
 function ChatFrame_OnPlayerLevelUp(self, newLevel, health, mana, stamina, strength, agility, intellect, spirit, tp, ap)
     -- Add level up notification
     ChatFrame:AddMessage(string.format(Localize("LEVEL_UP"), newLevel), 1.0, 1.0, 0.0);
