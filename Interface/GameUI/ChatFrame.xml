@@ -105,6 +105,16 @@
 					ChatFrame_SendMessage(this);
 				end
 			</OnEnterPressed>
+			<OnEscapePressed>
+				return function(this)
+					ChatInput_OnEscapePressed();
+				end
+			</OnEscapePressed>
+			<OnSpacePressed>
+				return function(this)
+					ChatFrame_ParseText(false);
+				end
+			</OnSpacePressed>
 		</Scripts>
 	</Frame>
 

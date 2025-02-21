@@ -8,6 +8,26 @@ function GetSlashCmdTarget(msg)
 	return target;
 end
 
+ChatType = "SAY";
+
+ChatTypeInfo = { };
+ChatTypeInfo["SAY"]				    = { sticky = 1, r = 1.00, g = 1.00, b = 1.00 };
+ChatTypeInfo["PARTY"]				= { sticky = 1, r = 0.67, g = 0.67, b = 1.00 };
+ChatTypeInfo["GUILD"]				= { sticky = 1, r = 0.25, g = 1.00, b = 0.25 };
+ChatTypeInfo["OFFICER"]				= { sticky = 0, r = 0.25, g = 0.75, b = 0.25 };
+ChatTypeInfo["YELL"]				= { sticky = 0, r = 1.00, g = 0.25, b = 0.25 };
+ChatTypeInfo["WHISPER"]				= { sticky = 0, r = 1.00, g = 0.50, b = 1.00 };
+ChatTypeInfo["WHISPER_INFORM"]		= { sticky = 0, r = 1.00, g = 0.50, b = 1.00 };
+ChatTypeInfo["REPLY"]				= { sticky = 0, r = 1.00, g = 0.50, b = 1.00 };
+ChatTypeInfo["EMOTE"]				= { sticky = 0, r = 1.00, g = 0.50, b = 0.25 };
+ChatTypeInfo["TEXT_EMOTE"]			= { sticky = 0, r = 1.00, g = 0.50, b = 0.25 };
+ChatTypeInfo["SYSTEM"]				= { sticky = 0, r = 1.00, g = 1.00, b = 0.00 };
+ChatTypeInfo["MONSTER_WHISPER"]		= { sticky = 0, r = 1.00, g = 1.00, b = 1.00 };
+ChatTypeInfo["MONSTER_SAY"]			= { sticky = 0, r = 0.70, g = 0.70, b = 0.70 };
+ChatTypeInfo["MONSTER_YELL"]		= { sticky = 0, r = 1.00, g = 0.25, b = 0.25 };
+ChatTypeInfo["MONSTER_EMOTE"]		= { sticky = 0, r = 1.00, g = 0.50, b = 0.25 };
+ChatTypeInfo["CHANNEL"]				= { sticky = 0, r = 1.00, g = 0.75, b = 0.75 };
+
 -- Slash commands
 SlashCmdList = { };
 
@@ -44,6 +64,21 @@ SlashCmdList["RANDOM"] = function(msg)
     else
         RandomRoll(num1, num2);
     end
+end
+
+function rgbToHex(r, g, b)
+    -- Ensure values are in range 0-1
+    r = math.max(0.0, math.min(1.0, r));
+    g = math.max(0.0, math.min(1.0, g));
+    b = math.max(0.0, math.min(1.0, b));
+    
+    -- Convert to 0-255 range, explicitly using math.floor() to ensure integers
+    local ri = math.floor(r * 255 + 0.5);
+    local gi = math.floor(g * 255 + 0.5);
+    local bi = math.floor(b * 255 + 0.5);
+    
+    -- Format as hex string
+    return "FF" .. string.format("%02X%02X%02X", ri, gi, bi);
 end
 
 function ChatFrame_OnPlayerLevelUp(self, newLevel, health, mana, stamina, strength, agility, intellect, spirit, tp, ap)
@@ -124,11 +159,17 @@ end
 
 function ChatFrame_OnLoad(this)
     this:RegisterEvent("CHAT_MSG_SAY", function(this, character, message)
-        ChatFrame:AddMessage(string.format(CHAT_FORMAT_SAY, character, message), 1.0, 1.0, 1.0);
-    end)
+        local info = ChatTypeInfo["SAY"];
+        ChatFrame:AddMessage(string.format(CHAT_FORMAT_SAY, character, message), info.r, info.g, info.b);
+    end);
     this:RegisterEvent("CHAT_MSG_YELL", function(this, character, message)
-        ChatFrame:AddMessage(string.format(CHAT_FORMAT_YELL, character, message), 1.0, 0.0, 0.0);
-    end)
+        local info = ChatTypeInfo["YELL"];
+        ChatFrame:AddMessage(string.format(CHAT_FORMAT_YELL, character, message), info.r, info.g, info.b);
+    end);
+    this:RegisterEvent("CHAT_MSG_PARTY", function(this, character, message)
+        local info = ChatTypeInfo["PARTY"];
+        ChatFrame:AddMessage(string.format(CHAT_FORMAT_PARTY, character, message), info.r, info.g, info.b);
+    end);
 
     this:RegisterEvent("PLAYER_LEVEL_UP", ChatFrame_OnPlayerLevelUp);
     this:RegisterEvent("SPELL_LEARNED", ChatFrame_OnSpellLearned);
@@ -137,6 +178,9 @@ function ChatFrame_OnLoad(this)
     this:RegisterEvent("QUEST_REWARDED", ChatFrame_OnQuestRewarded);
 
     ChatFrame:AddMessage("Welcome to the game!", 1.0, 1.0, 0.0);
+
+    ChatType = "SAY";
+    ChatEdit_UpdateHeader();
 end
 
 function ChatFrame_OpenChat(input)
@@ -146,6 +190,16 @@ function ChatFrame_OpenChat(input)
 
     ChatInput:Show();
     ChatInput:CaptureInput();
+end
+
+function ChatEdit_UpdateHeader()
+	local type = ChatType;
+	if ( not type ) then
+		return;
+	end
+
+	local info = ChatTypeInfo[type];
+	ChatInput:SetProperty("EnabledTextColor", rgbToHex(info.r, info.g, info.b));
 end
 
 function ChatFrame_ParseText(send)
@@ -168,6 +222,27 @@ function ChatFrame_ParseText(send)
 
 	command = string.gsub(command, "%s+", "");
 	command = string.upper(command);
+
+    -- Parse chat type first
+    for index, value in pairs(ChatTypeInfo) do
+        local i = 1;
+        local cmdString = _G["SLASH_"..index..i];
+        while ( cmdString ) do
+            cmdString = string.upper(cmdString);
+            if ( cmdString == command ) then
+                if ( index == "WHISPER" ) then
+                    --ChatEdit_ExtractTellTarget(editBox, msg);
+                else
+                    ChatType = index;
+                    ChatInput:SetText(msg);
+                    ChatEdit_UpdateHeader(ChatInput);
+                end
+                return;
+            end
+            i = i + 1;
+            cmdString = _G["SLASH_"..index..i];
+        end
+    end
 
     if (not send) then
         return;
@@ -216,7 +291,7 @@ function ChatFrame_SendMessage(this)
 
 	local text = ChatInput:GetText();
 	if ( string.len(string.gsub(text, "%s*(.*)", "%1")) > 0 ) then
-        RunConsoleCommand("sendchatmessage " .. text);
+        SendChatMessage(text, ChatType);
 	end
 
     ChatInput_OnEscapePressed();

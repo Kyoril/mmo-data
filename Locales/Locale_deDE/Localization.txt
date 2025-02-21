@@ -68,6 +68,7 @@ strings =
 
 	(key = "CHAT_FORMAT_SAY", string = "[%s] sagt: %s")
 	(key = "CHAT_FORMAT_YELL", string = "[%s] schreit: %s")
+	(key = "CHAT_FORMAT_PARTY", string = "[Gruppe] %s: %s")
 	
 	(key = "NAME", string = "Name")
 
