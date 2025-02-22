@@ -286,4 +286,10 @@ strings =
 	(key = "ACCEPT", string = "Annehmen")
 	(key = "DECLINE", string = "Ablehnen")
 	(key = "RANDOM_ROLL_RESULT", string = "%s würfelt %d (%d-%d)")
+
+	(key = "CHAT_TYPE_SAY", string = "Sagen")
+	(key = "CHAT_TYPE_PARTY", string = "Gruppe")
+	(key = "CHAT_TYPE_YELL", string = "Schreien")
+	(key = "CHAT_TYPE_CHANNEL", string = "%s")
+	(key = "CHAT_TYPE_GUILD", string = "Gilde")
 }

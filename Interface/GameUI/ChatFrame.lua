@@ -199,7 +199,17 @@ function ChatEdit_UpdateHeader()
 	end
 
 	local info = ChatTypeInfo[type];
-	ChatInput:SetProperty("EnabledTextColor", rgbToHex(info.r, info.g, info.b));
+    local textColor = rgbToHex(info.r, info.g, info.b);
+
+    ChatInputHeader:SetProperty("TextColor", textColor)
+    ChatInputHeader:SetText(Localize("CHAT_TYPE_"..ChatType) .. ":");
+    ChatInputHeader:SetWidth(ChatInputHeader:GetTextWidth());
+
+    local offset = ChatInput:GetTextAreaOffset();
+    offset = Rect(ChatInputHeader:GetWidth() + 16.0, offset.top, offset.right, offset.bottom);
+    ChatInput:SetTextAreaOffset(offset);
+
+	ChatInput:SetProperty("EnabledTextColor", textColor);
 end
 
 function ChatFrame_ParseText(send)

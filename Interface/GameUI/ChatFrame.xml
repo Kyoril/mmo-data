@@ -99,6 +99,18 @@
 			<Anchor point="LEFT" offset="64" />
 			<Size><AbsDimension x="830" y="72" /></Size>
 		</Area>
+
+		<Frame name="ChatInputHeader" inherits="TextSmall">
+			<Property name="Font" value="ChatFont" />
+
+			<Area>
+				<Anchor point="LEFT" offset="10" />
+				<Anchor point="TOP" offset="10" />
+				<Anchor point="BOTTOM" offset="-10" />
+				<Size><AbsDimension x="32" /></Size>
+			</Area>
+		</Frame>
+
 		<Scripts>
 			<OnEnterPressed>
 				return function(this)

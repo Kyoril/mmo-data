@@ -286,4 +286,10 @@ strings =
 	(key = "ACCEPT", string = "Accept")
 	(key = "DECLINE", string = "Decline")
 	(key = "RANDOM_ROLL_RESULT", string = "%s rolls %d (%d-%d)")
+	
+	(key = "CHAT_TYPE_SAY", string = "Say")
+	(key = "CHAT_TYPE_PARTY", string = "Party")
+	(key = "CHAT_TYPE_YELL", string = "Yell")
+	(key = "CHAT_TYPE_CHANNEL", string = "%s")
+	(key = "CHAT_TYPE_GUILD", string = "Guild")
 }
