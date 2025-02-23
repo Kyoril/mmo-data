@@ -77,7 +77,7 @@ function GameTooltip_SetItemTemplate(item)
         GameTooltip_AddLine(string.format(Localize("WEAPON_DAMAGE_MIN_MAX"), minDamage, maxDamage), TOOLTIP_LINE_LEFT);
         GameTooltip_AddLine(string.format(Localize("WEAPON_DPS"), dps), TOOLTIP_LINE_LEFT);
         
-        local speed = item.attackSpeed / 1000.0;
+        local speed = item.attackSpeed;
         GameTooltip_AddLine(string.format(Localize("WEAPON_ATTACK_SPEED"), speed), TOOLTIP_LINE_LEFT);
     elseif (class == "ARMOR") then
         GameTooltip_AddLine(Localize(inventoryType), TOOLTIP_LINE_LEFT);
