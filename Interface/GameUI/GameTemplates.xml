@@ -275,7 +275,33 @@
 			<Size><AbsDimension x="0" y="60" /></Size>
 		</Area>
 	</Frame>
-	
+
+	<Frame name="IconTemplate" renderer="DefaultRenderer">
+		<Property name="Icon" />
+
+		<Area>
+			<Size><AbsDimension x="32" y="32" /></Size>
+		</Area>
+
+		<Visual>
+			<ImagerySection name="Image">
+				<ImageComponent tiling="NONE">
+					<PropertyValue property="Icon" />
+				</ImageComponent>
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Image" color="FFFFFFFF" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="Image" color="AE888888" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+	</Frame>
+
 	<!-- TextField template -->
 	<Frame name="GameTextField" type="TextField" renderer="TextFieldRenderer">
 		<Property name="TextSection" value="Text" />

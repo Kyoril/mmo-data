@@ -123,6 +123,16 @@
 			</Visual>
 		</Frame>
 
+        <Frame name="PlayerLeaderIcon" inherits="IconTemplate">
+            <Property name="Visible" value="false" />
+            <Property name="Icon" value="Interface/Icons/fg4_iconsGold_crown_result.htex" />
+
+            <Area>
+                <Anchor point="TOP" />
+                <Anchor point="LEFT" />
+            </Area>
+        </Frame>
+
 		<Frame name="PlayerFrameClick" setAllPoints="true">
 			<Scripts>
 				<OnClick>

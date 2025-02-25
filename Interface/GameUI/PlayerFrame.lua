@@ -30,12 +30,26 @@ function PlayerFrame_OnUnitNameUpdate(self, unit)
     end
 end
 
+function PlayerFrame_UpdateLeader(self)
+    local name = self:GetChild(0);
+    
+    if (IsPartyLeader()) then
+        name:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, 32);
+        self:GetChild(3):Show();
+    else
+        name:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, 0);
+        self:GetChild(3):Hide();
+    end
+end
+
 function PlayerFrame_OnLoad(self)
     self:RegisterEvent("PLAYER_ENTER_WORLD", PlayerFrame_Update);
     self:RegisterEvent("PLAYER_HEALTH_CHANGED", PlayerFrame_Update);
     self:RegisterEvent("PLAYER_POWER_CHANGED", PlayerFrame_Update);
     self:RegisterEvent("PLAYER_LEVEL_CHANGED", PlayerFrame_Update);
-    self:RegisterEvent("UNIT_NAME_UPDATE", PlayerFrame_OnUnitNameUpdate)
+    self:RegisterEvent("UNIT_NAME_UPDATE", PlayerFrame_OnUnitNameUpdate);
+    self:RegisterEvent("PARTY_MEMBERS_CHANGED", PlayerFrame_UpdateLeader);
+    self:RegisterEvent("PARTY_LEADER_CHANGED", PlayerFrame_UpdateLeader);
 end
 
 function PlayerFrame_OnClick(self)

@@ -7,7 +7,7 @@
             <Size><AbsDimension x="320" y="128" /></Size>
         </Area>
 
-        <Frame name="Name" inherits="TextSmall">
+        <Frame name="PartyName" inherits="TextSmall">
             <Property name="Text" value="UNKNOWN" />
             <Property name="Font" value="SmallLabelFont" />
 
@@ -19,14 +19,14 @@
             </Area>
         </Frame>
 
-        <Frame name="HealthBar" type="ProgressBar">
+        <Frame name="PartyHealthBar" type="ProgressBar">
             <Property name="Progress" value="0.12783" />
 			<Property name="Font" value="DefaultSmall" />
 
             <Area>
                 <Anchor point="LEFT" />
                 <Anchor point="RIGHT" />
-                <Anchor point="TOP" relativeTo="Name" relativePoint="BOTTOM" />
+                <Anchor point="TOP" relativeTo="PartyName" relativePoint="BOTTOM" />
                 <Size><AbsDimension y="32" /></Size>
             </Area>
             
@@ -70,14 +70,14 @@
 			</Visual>
         </Frame>
 
-		<Frame name="ManaBar" type="ProgressBar">
+		<Frame name="PartyManaBar" type="ProgressBar">
 			<Property name="Progress" value="0.12783" />
 			<Property name="Font" value="DefaultSmall" />
 
 			<Area>
 				<Anchor point="LEFT" />
 				<Anchor point="RIGHT" />
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="HealthBar" />
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="PartyHealthBar" />
 				<Size><AbsDimension y="32" /></Size>
 			</Area>
 
@@ -121,6 +121,16 @@
 			</Visual>
 		</Frame>
     
+        <Frame name="PartyLeaderIcon" inherits="IconTemplate">
+            <Property name="Visible" value="false" />
+            <Property name="Icon" value="Interface/Icons/fg4_iconsGold_crown_result.htex" />
+
+            <Area>
+                <Anchor point="TOP" />
+                <Anchor point="LEFT" />
+            </Area>
+        </Frame>
+
         <Frame name="ClickFrame" type="Button" setAllPoints="true" />
     </Frame>
 

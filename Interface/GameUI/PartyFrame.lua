@@ -25,6 +25,19 @@ function PartyMemberFrame_UpdateMember(self)
     end    
 end
 
+function PartyMemberFrame_UpdateLeader(self)
+    local leaderIndex = GetPartyLeaderIndex();
+    local name = self:GetChild(0);
+
+    if (leaderIndex and leaderIndex == self.id) then
+        name:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, 32);
+        self:GetChild(3):Show();
+    else
+        name:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, 0);
+        self:GetChild(3):Hide();
+    end
+end
+
 function PartyMemberFrame_OnClick(self, button)
     local index = self:GetParent().id;
     local unit = "party"..index;
@@ -61,10 +74,11 @@ end
 
 function PartyMemberFrame_OnMembersChanged(self)
     PartyMemberFrame_UpdateMember(self);
+    PartyMemberFrame_UpdateLeader(self);
 end
 
 function PartyMemberFrame_OnLeaderChanged(self)
-
+    PartyMemberFrame_UpdateLeader(self);
 end
 
 function PartyMemberFrame_OnMemberEnable(self)
@@ -90,9 +104,10 @@ function PartyMemberFrame_OnLoad(self)
     self:RegisterEvent("UNIT_POWER_UPDATED", PartyMemberFrame_OnUnitUpdate);
     self:RegisterEvent("UNIT_LEVEL_UPDATED", PartyMemberFrame_OnUnitUpdate);
     
-    self:GetChild(3):SetClickedHandler(PartyMemberFrame_OnClick);
+    self:GetChild(4):SetClickedHandler(PartyMemberFrame_OnClick);
 
     PartyMemberFrame_UpdateMember(self);
+    PartyMemberFrame_UpdateLeader(self);
 end
 
 function PartyFrame_OnLoad(self)
