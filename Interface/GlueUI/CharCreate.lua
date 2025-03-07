@@ -23,35 +23,36 @@ CHAR_CREATION_ERROR_STRING[5] = "CHAR_CREATE_ERR_ACCOUNT_LIMIT"
 CHAR_CREATION_ERROR_STRING[6] = "CHAR_CREATE_ERR_ONLY_EXISTING"
 
 function CharCreate_OnLoad(this)
-	-- Reset custom properties
-	CharCreate.selectedRace = RACE_HUMAN;
-	CharCreate.selectedClass = CLASS_WARRIOR;
-	CharCreate.selectedGender = GENDER_MALE;
-	CharCreate_UpdateModel();
+	SetCharCustomizeFrame(CharCreateModel);
 end
 
-function CharCreate_UpdateModel()
-	local displayId = DisplayIds[CharCreate.selectedRace][CharCreate.selectedGender];
-	if not displayId then
-		CharCreateModel:Hide();
-		return;
-	end
+function SetupCustomization()
+	local propertyCount = GetNumCustomizationProperties();
+	CharCreatePropertyList:RemoveAllChildren();
 
-	local model = gameData.models:GetById(displayId);
-	if not model then
-		CharCreateModel:Hide();
-	else
-		CharCreateModel:SetProperty("ModelFile", model.filename);
-		CharCreateModel:Show();
+	for i = 0, propertyCount - 1 do
+		local propertyName = GetCustomizationProperty(i);
+
+		local button = CustomizationPropertyButton:Clone();
+		button:GetChild(0):SetText(propertyName);
+		CharCreatePropertyList:AddChild(button);
+
+		button:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, 12 + i * 164);
+		button:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, 12);
+		button:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, -12);
+		button.userData = propertyName;
 	end
 end
 
 function CharCreate_Show()
+	ResetCharCustomize();
+	SetupCustomization();
+	
 	-- Hide character selection
-	CharSelect:Hide()
+	CharSelect:Hide();
 
 	-- Show the character creation screen
-	CharCreate:Show()
+	CharCreate:Show();
 end
 
 function OnRaceChange_Clicked(this)
@@ -60,10 +61,11 @@ function OnRaceChange_Clicked(this)
 
 	-- Ensure we are always checked
 	this:SetChecked(true);
+	SetCharacterRace(this.id);
+	SetupCustomization();
 
 	-- Set the selected race id
 	CharCreate.selectedRace = this.id;
-	CharCreate_UpdateModel();
 end
 
 function OnClassChange_Clicked(this)
@@ -75,9 +77,7 @@ function OnClassChange_Clicked(this)
 
 	-- Ensure we are always checked
 	this:SetChecked(true);
-
-	-- Set the selected class id
-	CharCreate.selectedClass = this.id;
+	SetCharacterClass(this.id);
 end
 
 
@@ -88,10 +88,8 @@ function OnGenderChange_Clicked(this)
 
 	-- Ensure we are always checked
 	this:SetChecked(true);
-
-	-- Set the selected gender id
-	CharCreate.selectedGender = this.id;
-	CharCreate_UpdateModel();
+	SetCharacterGender(this.id);
+	SetupCustomization();
 end
 
 function CharCreate_Submit()
@@ -116,9 +114,9 @@ function CharCreate_Submit()
 	GlueDialog_Show("CREATING_CHARACTER");
 	realmConnector:CreateCharacter(
 		NewCharacterNameBox:GetText(), 
-		CharCreate.selectedRace,
-		CharCreate.selectedClass,
-		CharCreate.selectedGender);
+		GetCharacterRace(),
+		GetCharacterClass(),
+		GetCharacterGender());
 end
 
 function CharSelect_Cancel()

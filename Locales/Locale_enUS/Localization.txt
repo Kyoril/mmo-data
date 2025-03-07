@@ -293,4 +293,8 @@ strings =
 	(key = "CHAT_TYPE_YELL", string = "Yell")
 	(key = "CHAT_TYPE_CHANNEL", string = "%s")
 	(key = "CHAT_TYPE_GUILD", string = "Guild")
+	
+	(key = "BACK", string = "Back")
+	(key = "CUSTOMIZE", string = "Customize")
+	(key = "CUSTOMIZATION", string = "Customization")
 }

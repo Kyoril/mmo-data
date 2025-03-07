@@ -30,7 +30,7 @@ function SelectedCharacter_Changed()
 		if not model then
 			CharModel:Hide();
 		else
-			CharModel:SetProperty("ModelFile", model.filename);
+			--CharModel:SetProperty("ModelFile", model.filename);
 			CharModel:Show();
 		end
 	else
