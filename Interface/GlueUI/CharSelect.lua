@@ -112,9 +112,7 @@ function CharList_Show()
 end
 
 function CharSelect_EnterWorld()
-	if (selectedCharacter ~= nil) then
-		EnterWorld(selectedCharacter)
-	end
+	EnterWorld();
 end
 
 function CharSelect_CreateCharacter()
