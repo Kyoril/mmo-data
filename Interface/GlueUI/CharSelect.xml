@@ -163,9 +163,10 @@
 		</Visual>
 		
 		<Frame name="CharModel" type="Model" setAllPoints="true" renderer="ModelRenderer">
-			<Property name="Visible" value="false" />
 			<Property name="Yaw" value="-120" />
 			<Property name="Animation" value="Idle" />
+			<Property name="OffsetY" value="1.0" />
+			<Property name="Zoom" value="4.0" />
 		</Frame>
 
 		<Frame name="BackgroundFrame" renderer="DefaultRenderer">
@@ -381,5 +382,12 @@
 			</Frame>
 		</Frame>
 
+		<Scripts>
+			<OnLoad>
+				return function(this)
+					CharSelect_OnLoad(this);
+				end
+			</OnLoad>
+		</Scripts>
 	</Frame>
 </UiLayout>

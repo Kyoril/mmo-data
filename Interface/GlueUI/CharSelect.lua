@@ -9,6 +9,10 @@ rotationDirection = 0
 
 characterClassNames = {"CLASS_MAGE", "CLASS_WARRIOR", "CLASS_CLERIC", "CLASS_SHADOWMANCER"};
 
+function CharSelect_OnLoad(self)
+	SetCharSelectModelFrame(CharModel);
+end
+
 function CharListItem_Clicked(item)
 	-- For each button in characterButtons, call SetChecked(false)
 	for i = 1, #characterButtons do
@@ -18,25 +22,19 @@ function CharListItem_Clicked(item)
 	item:SetChecked(true);
 
 	selectedCharacter = item.userData
-	SelectedCharacter_Changed()
+	selectedCharacterIndex = item.id;
+	SelectedCharacter_Changed();
 end
 
 function SelectedCharacter_Changed()
+	SelectCharacter(selectedCharacterIndex);
+
 	if (selectedCharacter ~= nil) then
 		CharSelectEnterButton:Enable();
 		CharDeleteButton:Enable();
-
-		local model = gameData.models:GetById(selectedCharacter.displayId);
-		if not model then
-			CharModel:Hide();
-		else
-			--CharModel:SetProperty("ModelFile", model.filename);
-			CharModel:Show();
-		end
 	else
 		CharSelectEnterButton:Disable();
 		CharDeleteButton:Disable();
-		CharModel:Hide();
 	end
 end
 
@@ -45,11 +43,12 @@ function CharList_Show()
 	RealmNameLabel:SetText(realmConnector:GetRealmName())
 	
 	-- Remove all character button views
-	CharListContent:RemoveAllChildren()
+	CharListContent:RemoveAllChildren();
 
 	-- Reset selected character
 	selectedCharacter = nil
-	SelectedCharacter_Changed()
+	selectedCharacterIndex = -1
+	SelectedCharacter_Changed();
 	
 	-- Remember the last cloned char list item as we need it as anchor 
 	-- reference frame to align the list items beneath each other
@@ -58,7 +57,6 @@ function CharList_Show()
 	-- Load char list data for iteration
 	characters = {}
 	characterButtons = {}
-	selectedCharacterIndex = -1
 	selectedCharacter = nil
 
 	local characterIndex = 1
@@ -78,6 +76,7 @@ function CharList_Show()
 		charListItem:SetText(character.name);
 		charListItem:GetChild(0):SetText("Level " .. character.level .. " " .. Localize(characterClass));
 		charListItem.userData = character;
+		charListItem.id = characterIndex - 1;
 		
 		-- Setup anchor points
 		if (lastCharListItem ~= nil) then
@@ -100,7 +99,7 @@ function CharList_Show()
 		-- Make the first character the selected one (if there is any)
 		if (selectedCharacter == nil) then
 			selectedCharacter = character;
-			selectedCharacterIndex = characterIndex;
+			selectedCharacterIndex = characterIndex - 1;
 			charListItem:SetChecked(true);
 		end
 
