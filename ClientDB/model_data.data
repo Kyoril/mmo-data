@@ -5,5 +5,5 @@ IHuman Female Model"1Models/Character/Human/Female/HumanFemale_V2.hmsh
 @Human Male Model"*Models/Character/Human/Male/HumanMale.hmsh
 JGameObject - Silverleaf Sprig"'Models/FalwynPlains/Plants/Bush_01.hmsh
 @Skeleton Warrior"*Models/Character/Human/Male/HumanMale.hmsh
-<PLAYER - Human Female Model"ClientDB/HumanFemale.char
-8PLAYER - Human Male Model"ClientDB/HumanMale.char
+QPLAYER - Human Female Model".Models/Character/Human/Female/HumanFemale.char
+KPLAYER - Human Male Model"*Models/Character/Human/Male/HumanMale.char
