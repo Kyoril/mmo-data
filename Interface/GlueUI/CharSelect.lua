@@ -59,9 +59,13 @@ function CharList_Show()
 	characterButtons = {}
 	selectedCharacter = nil
 
-	local characterIndex = 1
-	for character in realmConnector:GetCharViews() do
-		table.insert(characters, character);
+	local numCharacters = GetNumCharacters();
+
+	for characterIndex = 0, numCharacters do
+		local character = GetCharacterInfo(characterIndex);
+		if not character then
+			break;
+		end
 
 		-- Clone item
 		local charListItem = CharButton:Clone();
@@ -76,7 +80,7 @@ function CharList_Show()
 		charListItem:SetText(character.name);
 		charListItem:GetChild(0):SetText("Level " .. character.level .. " " .. Localize(characterClass));
 		charListItem.userData = character;
-		charListItem.id = characterIndex - 1;
+		charListItem.id = characterIndex;
 		
 		-- Setup anchor points
 		if (lastCharListItem ~= nil) then
@@ -99,7 +103,7 @@ function CharList_Show()
 		-- Make the first character the selected one (if there is any)
 		if (selectedCharacter == nil) then
 			selectedCharacter = character;
-			selectedCharacterIndex = characterIndex - 1;
+			selectedCharacterIndex = characterIndex;
 			charListItem:SetChecked(true);
 		end
 
