@@ -112,11 +112,7 @@ function CharCreate_Submit()
 	end
 
 	GlueDialog_Show("CREATING_CHARACTER");
-	realmConnector:CreateCharacter(
-		NewCharacterNameBox:GetText(), 
-		GetCharacterRace(),
-		GetCharacterClass(),
-		GetCharacterGender());
+	CreateCharacter(NewCharacterNameBox:GetText());
 end
 
 function CharSelect_Cancel()
