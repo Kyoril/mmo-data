@@ -281,7 +281,7 @@
 				</StateImagery>
 			</Visual>
 
-			<Frame name="CharacterFrameModel" type="Model" renderer="ModelRenderer" >
+			<Frame name="CharacterFrameModel" type="UnitModel" renderer="ModelRenderer" >
 				<Property name="Yaw" value="-120" />
 				<Property name="Zoom" value="2.75" />
 				<Property name="Animation" value="Idle" />

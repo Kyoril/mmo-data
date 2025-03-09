@@ -19,6 +19,8 @@ function CharacterWindow_OnLoad(self)
 	CharacterWindow:GetChild(0):GetChild(0):SetClickedHandler(CharacterWindow_Toggle);
 
     self:RegisterEvent("PLAYER_ATTRIBUTES_CHANGED", CharacterWindow_RefreshStats);
+    self:RegisterEvent("PLAYER_ENTER_WORLD", CharacterWindow_OnEnterWorld);
+    self:RegisterEvent("PLAYER_MODEL_CHANGED", CharacterWindow_OnPlayerModelChanged);
 
     -- Register the character window in the menu bar as a button
 	AddMenuBarButton("Interface/Icons/fg4_icons_helmet_result.htex", CharacterWindow_Toggle);
@@ -50,23 +52,19 @@ end
 
 function CharacterWindow_OnShow(this)
     CharacterWindow_RefreshStats();
-    
-    local displayId = UnitDisplayId("player");
-    if (displayId and displayId >= 0) then
-        local model = gameData.models:GetById(displayId);
-        if (model) then
-            CharacterFrameModel:SetProperty("ModelFile", model.filename);
-            CharacterFrameModel:Show();
-        else
-            CharacterFrameModel:Hide();
-        end
-    else
-        CharacterFrameModel:Hide();
-    end
+    CharacterFrameModel:SetUnit("player");
 end
 
 function CharacterWindow_AddAttributeClicked(this)
     AddAttributePoint(this.id);
+end
+
+function CharacterWindow_OnEnterWorld(this)
+    CharacterFrameModel:SetUnit("player");
+end
+
+function CharacterWindow_OnPlayerModelChanged(self)
+    CharacterFrameModel:SetUnit("player");
 end
 
 function CharacterWindow_RefreshStats()
