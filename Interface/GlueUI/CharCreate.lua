@@ -62,6 +62,30 @@ function CharCreate_Show()
 	ResetCharCustomize();
 	SetupCustomization();
 	
+	-- Adjust the selected race
+	local race = GetCharacterRace();
+	local raceBtnCount = CharRaceList:GetChildCount();
+	for i = 0, raceBtnCount - 1 do
+		local raceBtn = CharRaceList:GetChild(i);
+		raceBtn:SetChecked(raceBtn.id == race);
+	end
+
+	-- Adjust the selected class
+	local class = GetCharacterClass();
+	local classBtnCount = CharClassList:GetChildCount();
+	for i = 0, classBtnCount - 1 do
+		local classBtn = CharClassList:GetChild(i);
+		classBtn:SetChecked(classBtn.id == class);
+	end
+
+	-- Adjust the selected gender
+	local gender = GetCharacterGender();
+	local genderBtnCount = CharGenderList:GetChildCount();
+	for i = 0, genderBtnCount - 1 do
+		local genderBtn = CharGenderList:GetChild(i);
+		genderBtn:SetChecked(genderBtn.id == gender);
+	end
+
 	-- Hide character selection
 	CharSelect:Hide();
 
