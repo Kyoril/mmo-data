@@ -26,6 +26,14 @@ function CharCreate_OnLoad(this)
 	SetCharCustomizeFrame(CharCreateModel);
 end
 
+function CustomizationPropertyButton_UpdateValue(this)
+	local propertyName = this.userData;
+	local value = GetCustomizationValue(propertyName);
+	if value then
+		this:GetChild(3):SetText(value);
+	end
+end
+
 function SetupCustomization()
 	local propertyCount = GetNumCustomizationProperties();
 	CharCreatePropertyList:RemoveAllChildren();
@@ -35,6 +43,12 @@ function SetupCustomization()
 
 		local button = CustomizationPropertyButton:Clone();
 		button:GetChild(0):SetText(propertyName);
+
+		local value = GetCustomizationValue(propertyName);
+		if value then
+			button:GetChild(3):SetText(value);
+		end
+
 		CharCreatePropertyList:AddChild(button);
 
 		button:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, 12 + i * 164);
