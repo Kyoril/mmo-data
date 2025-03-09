@@ -58,33 +58,41 @@ function SetupCustomization()
 	end
 end
 
-function CharCreate_Show()
-	ResetCharCustomize();
-	SetupCustomization();
-	
-	-- Adjust the selected race
+function OnRaceChanged()
 	local race = GetCharacterRace();
 	local raceBtnCount = CharRaceList:GetChildCount();
 	for i = 0, raceBtnCount - 1 do
 		local raceBtn = CharRaceList:GetChild(i);
 		raceBtn:SetChecked(raceBtn.id == race);
 	end
+end
 
-	-- Adjust the selected class
+function OnClassChanged()
 	local class = GetCharacterClass();
 	local classBtnCount = CharClassList:GetChildCount();
 	for i = 0, classBtnCount - 1 do
 		local classBtn = CharClassList:GetChild(i);
 		classBtn:SetChecked(classBtn.id == class);
 	end
+end
 
-	-- Adjust the selected gender
+function OnGenderChanged()
 	local gender = GetCharacterGender();
 	local genderBtnCount = CharGenderList:GetChildCount();
 	for i = 0, genderBtnCount - 1 do
 		local genderBtn = CharGenderList:GetChild(i);
 		genderBtn:SetChecked(genderBtn.id == gender);
 	end
+end
+
+function CharCreate_Show()
+	ResetCharCustomize();
+	SetupCustomization();
+	
+	-- Adjust the selected race
+	OnRaceChanged();
+	OnClassChanged();
+	OnGenderChanged();
 
 	-- Hide character selection
 	CharSelect:Hide();
@@ -94,40 +102,20 @@ function CharCreate_Show()
 end
 
 function OnRaceChange_Clicked(this)
-	-- Uncheck all other races (TODO: Make this dynamic!)
-	RaceHumanButton:SetChecked(false);
-
-	-- Ensure we are always checked
-	this:SetChecked(true);
 	SetCharacterRace(this.id);
 	SetupCustomization();
-
-	-- Set the selected race id
-	CharCreate.selectedRace = this.id;
+	OnRaceChanged();
 end
 
 function OnClassChange_Clicked(this)
-	-- Uncheck all other races (TODO: Make this dynamic!)
-	ClassMageButton:SetChecked(false);
-	ClassWarriorButton:SetChecked(false);
-	ClassClericButton:SetChecked(false);
-	ClassShadowmancerButton:SetChecked(false);
-
-	-- Ensure we are always checked
-	this:SetChecked(true);
 	SetCharacterClass(this.id);
+	OnClassChanged();
 end
 
-
 function OnGenderChange_Clicked(this)
-	-- Uncheck all other buttons
-	GenderMaleButton:SetChecked(false);
-	GenderFemaleButton:SetChecked(false);
-
-	-- Ensure we are always checked
-	this:SetChecked(true);
 	SetCharacterGender(this.id);
 	SetupCustomization();
+	OnGenderChanged();
 end
 
 function CharCreate_Submit()

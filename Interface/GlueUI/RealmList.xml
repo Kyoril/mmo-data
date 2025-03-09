@@ -83,6 +83,8 @@
 			</Frame>
 			<Frame name="RealmListHeaderSubLabel" inherits="GlueTextSmall">
 				<Property name="Text" value="CHOOSE_A_REALM" />
+				<Property name="HorzAlign" value="CENTER" />
+				
 				<Area>
 					<Anchor point="H_CENTER" />
 					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmListHeaderLabel" />

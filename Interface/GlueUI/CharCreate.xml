@@ -150,6 +150,7 @@
 				<OnClick>
 					return function(this)
 						CycleCustomizationProperty(this:GetParent().userData, true);
+						CustomizationPropertyButton_UpdateValue(this:GetParent());
 					end
 				</OnClick>
 			</Scripts>

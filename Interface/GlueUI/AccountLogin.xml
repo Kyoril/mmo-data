@@ -128,6 +128,7 @@
 		
 		<Frame name="CopyrightLabel" inherits="GlueTextSmall">
 			<Property name="Text" value="COPYRIGHT_TEXT" />
+			<Property name="HorzAlign" value="CENTER" />
 
 			<Area>
 				<Size><AbsDimension x="0" y="44" offset="-8" /></Size>
