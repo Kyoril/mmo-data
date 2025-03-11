@@ -31,13 +31,14 @@ function VendorFrame_UpdateVendorItems()
             itemText:SetText(item.name);
             button:SetProperty("Icon", texture);
             button.id = index - 1;
-            if (quantity > 0) then
-                button:SetText(quantity);
+            if (quantity > 1) then
+                button:SetText(string.format("%d", quantity));
             else
+                quantity = 1;
                 button:SetText("");
             end
 
-            RefreshMoneyFrame("VendorMoney" .. i, price, false, false, true);
+            RefreshMoneyFrame("VendorMoney" .. i, price * quantity, false, false, true);
             money:Show();
 
             border:Enable();
