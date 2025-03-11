@@ -145,6 +145,8 @@ function GameTooltip_SetItem(item)
         return
     end
 
+    local player = GetUnit("player");
+
     GameTooltip_Clear();
     GameTooltip_AddLine(item:GetName(), TOOLTIP_LINE_LEFT, ItemQualityColors[item:GetQuality()]);
 
@@ -209,6 +211,16 @@ function GameTooltip_SetItem(item)
             if itemTrigger then
                 GameTooltip_AddLine(Localize(itemTrigger) .. ": " .. GetSpellDescription(itemSpell), TOOLTIP_LINE_LEFT, "FF00FF00");
             end
+
+            if (itemSpell.level > 1) then
+                local color = "FFFFFFFF";
+                if (itemSpell.level > player:GetLevel()) then
+                    color = "FFFF2020";
+                end
+
+                GameTooltip_AddLine(string.format(Localize("LEVEL_REQUIREMENT_FORMAT"), itemSpell.level), TOOLTIP_LINE_LEFT, color);
+            end
+
         else
             break;
         end
