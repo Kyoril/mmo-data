@@ -1,5 +1,5 @@
 
-2Forest Boar"Models/Creatures/Boar/Boar.char
+8Young Forest Boar"Models/Creatures/Boar/Boar.char
 6Kobold"*Models/Character/Human/Male/HumanMale.hmsh
 IHuman Female Model"1Models/Character/Human/Female/HumanFemale_V2.hmsh
 @Human Male Model"*Models/Character/Human/Male/HumanMale.hmsh
@@ -7,3 +7,6 @@ JGameObject - Silverleaf Sprig"'Models/FalwynPlains/Plants/Bush_01.hmsh
 @Skeleton Warrior"*Models/Character/Human/Male/HumanMale.hmsh
 QPLAYER - Human Female Model".Models/Character/Human/Female/HumanFemale.char
 KPLAYER - Human Male Model"*Models/Character/Human/Male/HumanMale.char
+5	Grimtusk"Models/Creatures/Boar/Boar.char*
+8
+Forest Boar"Models/Creatures/Boar/Boar.char*
