@@ -11,7 +11,7 @@
         <Area>
             <Anchor point="H_CENTER" />
             <Anchor point="BOTTOM" offset="-400" />
-            <Size><AbsDimension x="400" y="48" /></Size>
+            <Size><AbsDimension x="640" y="64" /></Size>
         </Area>
 
         <Visual>

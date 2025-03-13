@@ -7,7 +7,7 @@
 			<Size>
 				<AbsDimension x="440" y="128" />
 				<Anchor point="LEFT" relativePoint="H_CENTER" offset="32" />
-				<Anchor point="BOTTOM" relativeTo="GameMenuBar" relativePoint="TOP" offset="-256" />
+				<Anchor point="BOTTOM" relativeTo="GameMenuBar" relativePoint="TOP" offset="-384" />
 			</Size>
 		</Area>
 
