@@ -286,4 +286,12 @@
             end
         end
 	</Binding>
+
+    <Binding name="TARGETNEARESTENEMY" description="Target the nearest enemy, repeat to cycle" category="TARGET">
+		return function(key, keystate)
+            if keystate == "DOWN" then
+                TargetNearestEnemy();
+            end
+        end
+	</Binding>
 </Bindings>
