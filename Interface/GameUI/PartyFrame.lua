@@ -1,4 +1,16 @@
 
+PARTY_COMMAND_RESULTS = {};
+PARTY_COMMAND_RESULTS[1] = "CANT_INVITE_YOURSELF";
+PARTY_COMMAND_RESULTS[2] = "CANT_FIND_TARGET";
+PARTY_COMMAND_RESULTS[3] = "NOT_IN_YOUR_PARTY";
+PARTY_COMMAND_RESULTS[4] = "NOT_IN_YOUR_INSTANCE";
+PARTY_COMMAND_RESULTS[5] = "PARTY_FULL";
+PARTY_COMMAND_RESULTS[6] = "ALREADY_IN_GROUP";
+PARTY_COMMAND_RESULTS[7] = "YOU_NOT_IN_GROUP";
+PARTY_COMMAND_RESULTS[8] = "YOU_NOT_LEADER";
+PARTY_COMMAND_RESULTS[9] = "TARGET_UNFRIENDLY";
+PARTY_COMMAND_RESULTS[10] = "TARGET_IGNORE_YOU";
+
 function PartyMemberFrame_UpdateMember(self)
     if (HasPartyMember(self.id)) then
         local unitName = "party"..self.id;
@@ -110,6 +122,43 @@ function PartyMemberFrame_OnLoad(self)
     PartyMemberFrame_UpdateLeader(self);
 end
 
-function PartyFrame_OnLoad(self)
+function PartyFrame_OnDisbanded(self)
+    ChatFrame:AddMessage(Localize("GROUP_DISBANDED"), 1.0, 1.0, 0.0);
+end
 
+function PartyFrame_OnMemberJoined(self, memberName)
+    ChatFrame:AddMessage(string.format(Localize("PARTY_MEMBER_JOINED"), memberName), 1.0, 1.0, 0.0);
+end
+
+function PartyFrame_OnMemberLeft(self, memberName)
+    ChatFrame:AddMessage(string.format(Localize("PARTY_MEMBER_LEFT"), memberName), 1.0, 1.0, 0.0);
+end
+
+function PartyFrame_OnInviteDeclined(self, memberName)
+    ChatFrame:AddMessage(string.format(Localize("PARTY_INVITE_DECLINED"), memberName), 1.0, 1.0, 0.0);
+end
+
+function PartyFrame_OnCommandResult(self, result, memberName)
+    local message = string.format(Localize(PARTY_COMMAND_RESULTS[result]), memberName);
+    if (message) then
+        ChatFrame:AddMessage(string.format(message, memberName), 1.0, 1.0, 0.0);
+    end  
+end
+
+function PartyFrame_OnInviteSent(self, memberName)
+    ChatFrame:AddMessage(string.format(Localize("PARTY_INVITE_SENT"), memberName), 1.0, 1.0, 0.0);
+end
+
+function PartyFrame_OnLeft(self)
+    ChatFrame:AddMessage(Localize("PARTY_LEFT"), 1.0, 1.0, 0.0);
+end
+
+function PartyFrame_OnLoad(self)
+    self:RegisterEvent("PARTY_DISBANDED", PartyFrame_OnDisbanded);
+    self:RegisterEvent("PARTY_MEMBER_JOINED", PartyFrame_OnMemberJoined);
+    self:RegisterEvent("PARTY_MEMBER_LEFT", PartyFrame_OnMemberLeft);
+    self:RegisterEvent("PARTY_INVITE_DECLINED", PartyFrame_OnInviteDeclined);
+    self:RegisterEvent("PARTY_COMMAND_RESULT", PartyFrame_OnCommandResult);
+    self:RegisterEvent("PARTY_INVITE_SENT", PartyFrame_OnInviteSent);
+    self:RegisterEvent("PARTY_LEFT", PartyFrame_OnLeft);
 end
