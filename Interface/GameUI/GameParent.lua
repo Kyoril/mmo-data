@@ -144,14 +144,42 @@ function GameParent_OnPlayerDead()
     StaticDialog_Show("DEATH");
 end
 
+function GameParent_OnHoveredUnitChanged(self)
+	local mouseOverUnit = GetUnit("mouseover");
+	if ( not mouseOverUnit ) then
+		GameTooltip:Hide();
+		return;
+	end
+
+    GameTooltip_Clear();
+	GameTooltip:ClearAnchors();
+    GameTooltip:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.BOTTOM, self, -256.0);
+    GameTooltip:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, self, -32.0);
+
+	local color = "FFFFD100";
+	if (mouseOverUnit:IsFriendly()) then
+		color = "FF00FF00";
+	elseif (mouseOverUnit:IsHostile()) then
+		color = "FFFF0000";
+	end
+
+    GameTooltip_AddLine(mouseOverUnit:GetName(), TOOLTIP_LINE_LEFT, color);
+	if (mouseOverUnit:GetType() == "PLAYER") then
+		GameTooltip_AddLine(Localize("PLAYER"), TOOLTIP_LINE_LEFT, "FFFFFFFF");
+	end
+
+	GameTooltip_AddLine(string.format(Localize("LEVEL_FORMAT"), mouseOverUnit:GetLevel()), TOOLTIP_LINE_LEFT, "FFFFFFFF");
+    GameTooltip:Show();
+end
+
 function GameParent_OnLoad(self)
     self:RegisterEvent("GAME_ERROR", GameParent_OnGameError);
     self:RegisterEvent("PLAYER_SPELL_CAST_FAILED", GameParent_OnSpellError);
     self:RegisterEvent("ATTACK_SWING_ERROR", GameParent_OnAttackSwingError);
     self:RegisterEvent("PLAYER_DEAD", GameParent_OnPlayerDead);
 	self:RegisterEvent("PARTY_INVITE_REQUEST", GameParent_OnPartyInviteRequest);
-
 	self:RegisterEvent("RANDOM_ROLL_RESULT", GameParent_OnRandomRollResult);
+	self:RegisterEvent("HOVERED_UNIT_CHANGED", GameParent_OnHoveredUnitChanged);
 end
 
 function ShowUIPanel(frame, force)

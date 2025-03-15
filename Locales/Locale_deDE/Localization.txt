@@ -313,4 +313,6 @@ strings =
 	(key = "TARGET_IGNORE_YOU", string = "%s ignoriert Euch.")
 	(key = "PARTY_INVITE_SENT", string = "Ihr habt %s eingeladen, sich Eurer Gruppe anzuschließen.")
 	(key = "PARTY_LEFT", string = "Ihr habt die Gruppe verlassen.")
+	
+	(key = "LEVEL_FORMAT", string = "Stufe %d")
 }
