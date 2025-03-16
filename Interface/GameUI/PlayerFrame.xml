@@ -6,12 +6,12 @@
         <Area>
             <Anchor point="LEFT" offset="32" />
             <Anchor point="TOP" offset="32" />
-            <Size><AbsDimension x="512" y="164" /></Size>
+            <Size><AbsDimension x="512" y="174" /></Size>
         </Area>
 
 		<Visual>
 			<ImagerySection name="Background">
-                <BorderComponent texture="Interface/GameUI/fg4_gradientBlackCircle2.htex" borderSize="31" tint="51FFFFFF" />
+                <BorderComponent texture="Interface/GameUI/fg4_gradientBlackCircle2.htex" borderSize="31" tint="81FFFFFF" />
             </ImagerySection>
             <StateImagery name="Enabled">
                 <Layer>
@@ -48,6 +48,20 @@
 				</StateImagery>
 			</Visual>
 
+			<Frame name="PlayerPortraitModel" type="UnitModel" renderer="ModelRenderer">
+				<Property name="Animation" value="Idle" />
+				<Property name="Yaw" value="-90" />
+				<Property name="Zoom" value="0.55" />
+				<Property name="OffsetY" value="1.7" />
+
+				<Area>
+					<Anchor point="TOP" offset="16" />
+					<Anchor point="LEFT" offset="16" />
+					<Anchor point="RIGHT" offset="-16" />
+					<Anchor point="BOTTOM" offset="-16" />
+				</Area>
+			</Frame>
+
 			<Frame name="PlayerPortraitLevel" renderer="DefaultRenderer">
 				<Property name="Font" value="DefaultSmall" />
 				<Property name="Text" value="1" />
@@ -81,6 +95,7 @@
         <Frame name="PlayerName" inherits="TextSmall">
             <Property name="Text" value="Player" />
 			<Property name="Font" value="DefaultSmallOutline" />
+			<Property name="HorzAlign" value="CENTER" />
 
             <Area>
                 <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="PlayerPortrait" offset="10" />
