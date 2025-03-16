@@ -81,5 +81,18 @@
 			<Anchor point="RIGHT" offset="-64" />
 			<Anchor point="BOTTOM" offset="-64" />
 		</Area>
+
+		<Scripts>
+			<OnLoad>
+				return function(self)
+					GameTooltip_OnLoad(self);
+				end
+			</OnLoad>
+			<OnUpdate>
+				return function(self, deltaTime)
+					GameTooltip_OnUpdate(self, deltaTime);
+				end
+			</OnUpdate>
+		</Scripts>
 	</Frame>
 </UiLayout>

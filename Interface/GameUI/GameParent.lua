@@ -147,7 +147,7 @@ end
 function GameParent_OnHoveredUnitChanged(self)
 	local mouseOverUnit = GetUnit("mouseover");
 	if ( not mouseOverUnit ) then
-		GameTooltip:Hide();
+		GameTooltip_FadeOut(1.0, 1.0);
 		return;
 	end
 

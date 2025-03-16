@@ -6,7 +6,8 @@ ResourceBarColors[2] = "FFFFFF00"; -- Energy
 
 function PlayerFrame_Update(self)
     local player = GetUnit("player");
-    PlayerName:SetText(string.format("[%d] %s", player:GetLevel(), player:GetName()));
+    PlayerName:SetText(player:GetName());
+    PlayerPortraitLevel:SetText(tostring(player:GetLevel()));
 
     local health = player:GetHealth();
     local maxHealth = player:GetMaxHealth();
@@ -26,7 +27,7 @@ end
 function PlayerFrame_OnUnitNameUpdate(self, unit)
     if (unit == "player") then
         local player = GetUnit(unit);
-        PlayerName:SetText(string.format("[%d] %s", player:GetLevel(), player:GetName()));
+        PlayerName:SetText(player:GetName());
     end
 end
 
@@ -34,11 +35,9 @@ function PlayerFrame_UpdateLeader(self)
     local name = self:GetChild(0);
     
     if (IsPartyLeader()) then
-        name:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, 32);
-        self:GetChild(3):Show();
+        PartyLeaderIcon:Show();
     else
-        name:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, 0);
-        self:GetChild(3):Hide();
+        PartyLeaderIcon:Hide();
     end
 end
 

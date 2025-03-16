@@ -141,7 +141,7 @@
 		<Frame name="SpellBookBackground" renderer="DefaultRenderer">
 			<Visual>
 				<ImagerySection name="Frame">
-					<BorderComponent texture="Interface/GameUI/QuestFrame_Background.htex" border="96" tint="FFFFFFFF">
+					<BorderComponent texture="Interface/GameUI/QuestFrame_Background.htex" borderSize="96" tint="FFFFFFFF">
 						<Area><Inset right="8" top="8" left="8" bottom="8" /></Area>
 					</BorderComponent>
 					<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" />

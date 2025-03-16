@@ -18,6 +18,9 @@ function GameTooltip_Clear()
 
     TooltipMoneyFrame:Hide(); 
     TooltipMoneyText:Hide();
+
+    GameTooltip.fadeOut = false;
+    GameTooltip:SetOpacity(1.0);
 end
 
 function GameTooltip_AddLine(line, alignment, color)
@@ -301,4 +304,31 @@ function GameTooltip_SetSpell(spell)
 
     -- Line 3: Description
     GameTooltip_AddLine(GetSpellDescription(spell), TOOLTIP_LINE_LEFT, "FFFFD100");
+end
+
+function GameTooltip_FadeOut(delay, fadeTime)
+    GameTooltip.fadeOut = true;
+    GameTooltip.fadeOutDelay = delay;
+    GameTooltip.fadeOutTime = fadeTime;
+end
+
+function GameTooltip_OnLoad(self)
+    GameTooltip.fadeOut = false;
+end
+
+function GameTooltip_OnUpdate(self, deltaTime)
+    if (GameTooltip.fadeOut) then
+        if (GameTooltip.fadeOutDelay and GameTooltip.fadeOutDelay > 0.0) then
+            GameTooltip.fadeOutDelay = GameTooltip.fadeOutDelay - deltaTime;
+            return;
+        end
+
+        local newOpacity = GameTooltip:GetOpacity(false) - deltaTime / GameTooltip.fadeOutTime;
+        if (newOpacity <= 0.0) then
+            GameTooltip:Hide();
+            GameTooltip.fadeOut = false;
+        else
+            GameTooltip:SetOpacity(newOpacity);
+        end
+    end
 end
