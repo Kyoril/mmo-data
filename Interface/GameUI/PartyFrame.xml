@@ -141,13 +141,29 @@
             <Size><AbsDimension x="320" y="512" /></Size>
         </Area>
 
+		<Visual>
+			<ImagerySection name="Background">
+                <BorderComponent texture="Interface/GameUI/fg4_gradientBlackCircle2.htex" borderSize="31" tint="81FFFFFF" />
+            </ImagerySection>
+            <StateImagery name="Enabled">
+                <Layer>
+                    <Section section="Background" />
+                </Layer>
+            </StateImagery>
+            <StateImagery name="Disabled">
+                <Layer>
+                    <Section section="Background" />
+                </Layer>
+            </StateImagery>
+		</Visual>
+
         <Frame name="PartyMember1" inherits="PartyMemberFrameTemplate" id="1">
             <Property name="Visible" value="false" />
 
             <Area>
-                <Anchor point="LEFT" />
-                <Anchor point="RIGHT" />
-                <Anchor point="TOP" />
+                <Anchor point="LEFT" offset="10" />
+                <Anchor point="RIGHT" offset="-10" />
+                <Anchor point="TOP" offset="10" />
             </Area>
 
             <Scripts>
@@ -163,8 +179,8 @@
             <Property name="Visible" value="false" />
 
             <Area>
-                <Anchor point="LEFT" />
-                <Anchor point="RIGHT" />
+                <Anchor point="LEFT" offset="10" />
+                <Anchor point="RIGHT" offset="-10" />
                 <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="PartyMember1" />
             </Area>
 
@@ -181,8 +197,8 @@
             <Property name="Visible" value="false" />
 
             <Area>
-                <Anchor point="LEFT" />
-                <Anchor point="RIGHT" />
+                <Anchor point="LEFT" offset="10" />
+                <Anchor point="RIGHT" offset="-10" />
                 <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="PartyMember2" />
             </Area>
 
@@ -199,8 +215,8 @@
             <Property name="Visible" value="false" />
             
             <Area>
-                <Anchor point="LEFT" />
-                <Anchor point="RIGHT" />
+                <Anchor point="LEFT" offset="10" />
+                <Anchor point="RIGHT" offset="-10" />
                 <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="PartyMember3" />
             </Area>
 

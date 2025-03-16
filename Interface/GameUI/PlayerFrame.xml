@@ -245,8 +245,8 @@
             <Property name="Icon" value="Interface/Icons/fg4_iconsGold_crown_result.htex" />
 
             <Area>
-                <Anchor point="TOP" offset="10" />
-                <Anchor point="LEFT" offset="10" />
+                <Anchor point="TOP" offset="20" />
+                <Anchor point="LEFT" offset="20" />
             </Area>
         </Frame>
 

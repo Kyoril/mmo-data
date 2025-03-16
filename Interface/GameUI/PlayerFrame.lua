@@ -32,12 +32,10 @@ function PlayerFrame_OnUnitNameUpdate(self, unit)
 end
 
 function PlayerFrame_UpdateLeader(self)
-    local name = self:GetChild(0);
-    
     if (IsPartyLeader()) then
-        PartyLeaderIcon:Show();
+        self:GetChild(4):Show();
     else
-        PartyLeaderIcon:Hide();
+        self:GetChild(4):Hide();
     end
 end
 
