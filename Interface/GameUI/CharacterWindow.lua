@@ -53,6 +53,11 @@ end
 function CharacterWindow_OnShow(this)
     CharacterWindow_RefreshStats();
     CharacterFrameModel:SetUnit("player");
+
+    local player = GetUnit("player");
+    if player then
+        CharacterLevelLabel:SetText(string.format(Localize("LEVEL_FORMAT"), player:GetLevel()));
+    end
 end
 
 function CharacterWindow_AddAttributeClicked(this)

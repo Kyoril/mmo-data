@@ -6,7 +6,7 @@ ResourceBarColors[2] = "FFFFFF00"; -- Energy
 
 function PlayerFrame_Update(self)
     local player = GetUnit("player");
-    PlayerName:SetText(player:GetName());
+    PlayerName:SetText(string.format("[%d] %s", player:GetLevel(), player:GetName()));
 
     local health = player:GetHealth();
     local maxHealth = player:GetMaxHealth();
@@ -26,7 +26,7 @@ end
 function PlayerFrame_OnUnitNameUpdate(self, unit)
     if (unit == "player") then
         local player = GetUnit(unit);
-        PlayerName:SetText(player:GetName());
+        PlayerName:SetText(string.format("[%d] %s", player:GetLevel(), player:GetName()));
     end
 end
 

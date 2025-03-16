@@ -262,11 +262,22 @@
 			</Area>
 		</Frame>
 
+		<Frame name="CharacterLevelLabel" inherits="TextSmall">
+			<Property name="Font" value="SmallLabelFont" />
+			<Property name="HorzAlign" value="CENTER" />
+
+			<Area>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterWindowTitle" offset="8" />
+				<Anchor point="LEFT" offset="190" />
+				<Anchor point="RIGHT" offset="-190" />
+			</Area>
+		</Frame>
+
 		<Frame name="CharacterModelFrameBorder" renderer="DefaultRenderer">
 			<Area>
 				<Anchor point="LEFT" offset="160" />
 				<Anchor point="RIGHT" offset="-160" />
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterWindowTitle" offset="8" />
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterLevelLabel" offset="8" />
 				<Anchor point="BOTTOM" offset="-160" />
 			</Area>
 				
