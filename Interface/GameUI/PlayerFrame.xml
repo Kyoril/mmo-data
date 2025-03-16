@@ -64,14 +64,21 @@
 
 			<Frame name="PlayerPortraitLevel" renderer="DefaultRenderer">
 				<Property name="Font" value="DefaultSmall" />
-				<Property name="Text" value="1" />
 				<Property name="TextColor" value="FFFFFFFF" />
+				<Property name="Icon" />
 				
 				<Visual>
 					<ImagerySection name="Background">
 						<ImageComponent texture="Interface/GameUI/fg4_progressbar1.htex" tiling="NONE" tint="FFFF0909" />
 						<TextComponent color="$TextColor" horzAlign="CENTER" vertAlign="CENTER" />
+						<ImageComponent tiling="NONE">
+							<Area>
+								<Inset all="8" />
+							</Area>
+							<PropertyValue property="Icon" />
+						</ImageComponent>
 					</ImagerySection>
+						
 					<StateImagery name="Enabled">
 						<Layer>
 							<Section section="Background" />
@@ -90,10 +97,36 @@
 					<Size><AbsDimension x="72" y="48" /></Size>
 				</Area>
 			</Frame>
+
+			<Frame name="PlayerPortraitCombat" renderer="DefaultRenderer">
+				<Property name="Visible" value="false" />
+
+				<Visual>
+					<ImagerySection name="Background">
+						<ImageComponent texture="Interface/Icons/fg4_icons_daggers_result.htex" tiling="NONE" />
+					</ImagerySection>
+						
+					<StateImagery name="Enabled">
+						<Layer>
+							<Section section="Background" />
+						</Layer>
+					</StateImagery>
+					<StateImagery name="Disabled">
+						<Layer>
+							<Section section="Background" />
+						</Layer>
+					</StateImagery>
+				</Visual>
+
+				<Area>
+					<Anchor point="H_CENTER" />
+					<Anchor point="BOTTOM" offset="24" />
+					<Size><AbsDimension x="48" y="48" /></Size>
+				</Area>
+			</Frame>
 		</Frame>
 
         <Frame name="PlayerName" inherits="TextSmall">
-            <Property name="Text" value="Player" />
 			<Property name="Font" value="DefaultSmallOutline" />
 			<Property name="HorzAlign" value="CENTER" />
 
@@ -124,7 +157,7 @@
 					<BorderComponent texture="Interface/fg4_borders_01_33.htex" borderSize="5" />
 				</ImagerySection>
 				<ImagerySection name="Border">
-					<BorderComponent texture="Interface/GameUI/fg4_borders_01_07_02.htex" borderSize="55" />
+					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" />
 				</ImagerySection>
 				<ImagerySection name="Progress">
 					<ImageComponent texture="Interface/fg4_gradientWhiteV1_result.htex" tiling="HORZ" tint="FF00FF00">

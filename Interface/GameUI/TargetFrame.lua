@@ -64,7 +64,17 @@ function TargetFrame_Update()
     local target = GetUnit("target");
 
     if target then
-        TargetName:SetText("[" .. target:GetLevel() .. "] " .. target:GetName());
+        TargetName:SetText(target:GetName());
+        TargetPortraitLevel:SetText(tostring(target:GetLevel()));
+        TargetPortraitModel:SetUnit("target");
+
+        if (target:IsFriendly()) then
+            TargetName:SetProperty("TextColor", "FF00FF00");
+        elseif (target:IsHostile()) then
+            TargetName:SetProperty("TextColor", "FFFF0000");
+        else
+            TargetName:SetProperty("TextColor", "FFFFFF00");
+        end
 
         -- Update progress bars
         health = target:GetHealth();

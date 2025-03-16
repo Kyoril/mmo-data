@@ -46,8 +46,18 @@ function PlayerFrame_OnEnterWorld(self)
     PlayerPortraitModel:SetUnit("player");
 end
 
+function PlayerFrame_OnCombatModeChanged(self, inCombat)
+    if (inCombat) then
+        PlayerPortraitCombat:Show();
+    else
+        PlayerPortraitCombat:Hide();
+    end
+
+end
+
 function PlayerFrame_OnLoad(self)
     self:RegisterEvent("PLAYER_ENTER_WORLD", PlayerFrame_OnEnterWorld);
+    self:RegisterEvent("COMBAT_MODE_CHANGED", PlayerFrame_OnCombatModeChanged);
     self:RegisterEvent("PLAYER_HEALTH_CHANGED", PlayerFrame_Update);
     self:RegisterEvent("PLAYER_POWER_CHANGED", PlayerFrame_Update);
     self:RegisterEvent("PLAYER_LEVEL_CHANGED", PlayerFrame_Update);
