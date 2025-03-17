@@ -153,6 +153,17 @@ function PartyFrame_OnLeft(self)
     ChatFrame:AddMessage(Localize("PARTY_LEFT"), 1.0, 1.0, 0.0);
 end
 
+function PartyFrame_OnMembersChanged(self)
+    local partySize = GetPartySize();
+    if (not partySize or partySize == 0) then
+        self:Hide();
+        return;
+    end
+
+    self:SetHeight(20 + partySize * 128);
+    self:Show();
+end
+
 function PartyFrame_OnLoad(self)
     self:RegisterEvent("PARTY_DISBANDED", PartyFrame_OnDisbanded);
     self:RegisterEvent("PARTY_MEMBER_JOINED", PartyFrame_OnMemberJoined);
@@ -161,4 +172,5 @@ function PartyFrame_OnLoad(self)
     self:RegisterEvent("PARTY_COMMAND_RESULT", PartyFrame_OnCommandResult);
     self:RegisterEvent("PARTY_INVITE_SENT", PartyFrame_OnInviteSent);
     self:RegisterEvent("PARTY_LEFT", PartyFrame_OnLeft);
+    self:RegisterEvent("PARTY_MEMBERS_CHANGED", PartyFrame_OnMembersChanged);
 end

@@ -135,10 +135,12 @@
     </Frame>
 
     <Frame name="PartyFrame" parent="GameParent" renderer="DefaultRenderer">
+        <Property name="Visible" value="false" />
+
         <Area>
             <Anchor point="LEFT" offset="32" />
             <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="PlayerFrame" offset="32" />
-            <Size><AbsDimension x="320" y="512" /></Size>
+            <Size><AbsDimension x="320" y="532" /></Size>
         </Area>
 
 		<Visual>
