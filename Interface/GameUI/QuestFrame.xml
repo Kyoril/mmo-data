@@ -133,10 +133,8 @@
                     </Area>
                 </Frame>
 
-                <Frame name="QuestFrameAvailableQuests" inherits="TextSmall">
-                    <Property name="Text" value="AVAILABLE_QUESTS" />
-                    <Property name="TextColor" value="FF100500" />
-                    <Property name="Font" value="QuestTitleFont" />
+                <Frame name="AvailableQuestList">
+                    <Property name="ClippedByParent" value="true" />
 
                     <Area>
                         <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="GreetingText" offset="32" />
@@ -144,12 +142,12 @@
                         <Anchor point="RIGHT" relativePoint="LEFT" relativeTo="GreetingPanelScrollBar" offset="-16" />
                     </Area>
                 </Frame>
-                
-                <Frame name="AvailableQuestList">
+
+                <Frame name="GossipActionList">
                     <Property name="ClippedByParent" value="true" />
 
                     <Area>
-                        <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestFrameAvailableQuests" offset="8" />
+                        <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="AvailableQuestList" offset="32" />
                         <Anchor point="LEFT" offset="32" />
                         <Anchor point="RIGHT" relativePoint="LEFT" relativeTo="GreetingPanelScrollBar" offset="-16" />
                         <Anchor point="BOTTOM" offset="-16" />

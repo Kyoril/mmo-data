@@ -39,16 +39,22 @@ QuestListIcons[5] = "Interface/Icons/Icon_QuestAvailable.htex";
 QuestListIcons[4] = "Interface/Icons/Icon_QuestCompleted.htex";
 QuestListIcons[3] = "Interface/Icons/Icon_QuestInProgress.htex";
 
+function GossipActionButton_OnClick(self, mouseButton)
+    GossipAction(self.id);
+end
+
 function QuestFrame_OnQuestGreeting(self)
     -- Ensure the quest frame is visible as in every event
 	ShowUIPanel(QuestFrame);
 
     -- Set up the greeting text
     GreetingText:SetText(GetGreetingText());
+    GreetingText:SetHeight(GreetingText:GetTextHeight());
 
     -- Setup quest buttons
     AvailableQuestList:RemoveAllChildren();
 
+    local prevButton = nil;
     for i = 1, GetNumAvailableQuests() do
         local quest = GetAvailableQuest(i - 1);
         if quest then
@@ -57,18 +63,65 @@ function QuestFrame_OnQuestGreeting(self)
             button:SetText(quest.title);
             button:SetProperty("Icon", QuestListIcons[quest.icon]);
             button:SetClickedHandler(QuestListButton_OnClick);
+
             -- Anchor frame
-            button:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, (i - 1) * 60);
+            if (prevButton) then
+                button:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, prevButton, 0);
+            else
+                button:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, 0);
+            end
             button:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, 16);
             button:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, 0);
             AvailableQuestList:AddChild(button);
+            
+            button:SetHeight(button:GetTextHeight());
+
+            prevButton = button;
         end
     end
 
+    AvailableQuestList:SetHeight(GetNumAvailableQuests() * 60);
+
     if AvailableQuestList:GetChildCount() == 0 then
-        QuestFrameAvailableQuests:Hide();
+        AvailableQuestList:Hide();
     else
-        QuestFrameAvailableQuests:Show();
+        AvailableQuestList:Show();
+    end
+
+    -- Setup gossip buttons
+    GossipActionList:RemoveAllChildren();
+
+    prevButton = nil;
+    for i = 1, GetNumGossipActions() do
+        local action = GetGossipAction(i - 1);
+        if action then
+            local button = QuestMenuButtonTemplate:Clone();
+            button.id = i - 1;
+            button:SetText(action.text);
+            --button:SetProperty("Icon", QuestListIcons[quest.icon]);
+            button:SetClickedHandler(GossipActionButton_OnClick);
+            -- Anchor frame
+            if (prevButton) then
+                button:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, prevButton, 0);
+            else
+                button:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, 0);
+            end
+            button:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, 16);
+            button:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, 0);
+            GossipActionList:AddChild(button);
+
+            button:SetHeight(button:GetTextHeight());
+
+            prevButton = button;
+        end
+    end
+
+    GossipActionList:SetHeight(GetNumGossipActions() * 60);
+
+    if GossipActionList:GetChildCount() == 0 then
+        GossipActionList:Hide();
+    else
+        GossipActionList:Show();
     end
 
     -- Ensure the greeting panel is visible
