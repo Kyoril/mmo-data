@@ -69,6 +69,7 @@ strings =
 	(key = "CHAT_FORMAT_SAY", string = "[%s] dit: %s")
 	(key = "CHAT_FORMAT_YELL", string = "[%s] cris: %s")
 	(key = "CHAT_FORMAT_PARTY", string = "[Partie] %s: %s")
+	(key = "CHAT_FORMAT_GUILD", string = "[Guilde] %s: %s")
 	
 	(key = "NAME", string = "Nom")
 	

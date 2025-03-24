@@ -170,6 +170,10 @@ function ChatFrame_OnLoad(this)
         local info = ChatTypeInfo["PARTY"];
         ChatFrame:AddMessage(string.format(CHAT_FORMAT_PARTY, character, message), info.r, info.g, info.b);
     end);
+    this:RegisterEvent("CHAT_MSG_GUILD", function(this, character, message)
+        local info = ChatTypeInfo["GUILD"];
+        ChatFrame:AddMessage(string.format(CHAT_FORMAT_GUILD, character, message), info.r, info.g, info.b);
+    end);
 
     this:RegisterEvent("PLAYER_LEVEL_UP", ChatFrame_OnPlayerLevelUp);
     this:RegisterEvent("SPELL_LEARNED", ChatFrame_OnSpellLearned);
