@@ -316,4 +316,6 @@ strings =
 	(key = "PARTY_LEFT", string = "Ihr habt die Gruppe verlassen.")
 	
 	(key = "LEVEL_FORMAT", string = "Stufe %d")
+	
+	(key = "GUILD_INVITATION", string = "%s lädt Euch ein, Euch der Gilde '%s' anzuschließen.")
 }

@@ -66,6 +66,39 @@ SlashCmdList["RANDOM"] = function(msg)
     end
 end
 
+SlashCmdList["GUILD_INVITE"] = function(msg)
+	GuildInviteByName(GetSlashCmdTarget(msg));
+end
+
+SlashCmdList["GUILD_UNINVITE"] = function(msg)
+	GuildUninviteByName(GetSlashCmdTarget(msg));
+end
+
+SlashCmdList["GUILD_PROMOTE"] = function(msg)
+	GuildPromoteByName(GetSlashCmdTarget(msg));
+end
+
+SlashCmdList["GUILD_DEMOTE"] = function(msg)
+	GuildDemoteByName(GetSlashCmdTarget(msg));
+end
+
+SlashCmdList["GUILD_LEADER"] = function(msg)
+	GuildSetLeaderByName(GetSlashCmdTarget(msg));
+end
+
+SlashCmdList["GUILD_MOTD"] = function(msg)
+	GuildSetMOTD(msg)
+end
+
+SlashCmdList["GUILD_LEAVE"] = function(msg)
+	GuildLeave();
+end
+
+SlashCmdList["GUILD_DISBAND"] = function(msg)
+	GuildDisband();
+end
+
+
 function rgbToHex(r, g, b)
     -- Ensure values are in range 0-1
     r = math.max(0.0, math.min(1.0, r));

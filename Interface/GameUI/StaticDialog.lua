@@ -28,6 +28,20 @@ StaticDialogs["PARTY_INVITE"] = {
 	whileDead = true
 };
 
+StaticDialogs["GUILD_INVITE"] = {
+	text = Localize("GUILD_INVITATION"),
+	button1 = Localize("ACCEPT"),
+	button2 = Localize("DECLINE"),
+	OnAccept = function()
+		AcceptGuild();
+	end,
+	OnCancel = function()
+		DeclineGuild();
+	end,
+	timeout = 60,
+	whileDead = true
+};
+
 StaticDialogs["DELETE_ITEM"] = {
 	text = Localize("DELETE_ITEM"),
 	button1 = Localize("YES"),
