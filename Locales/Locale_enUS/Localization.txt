@@ -319,4 +319,13 @@ strings =
 	(key = "LEVEL_FORMAT", string = "Level %d")
 
 	(key = "GUILD_INVITATION", string = "%s invites you to guild '%s'.")
+	(key = "GUILD_INVITE_SENT", string = "You invited %s to join your guild.")
+	(key = "GUILD_LEFT", string = "You left the guild.")
+	(key = "GUILD_NOT_IN_GUILD", string = "You are not in a guild.")
+	(key = "GUILD_ALREADY_IN_GUILD", string = "%s is already in your guild.")
+	(key = "GUILD_NOT_ALLOWED", string = "You are not allowed to do that.")
+	(key = "GUILD_PLAYER_NOT_FOUND", string = "Player '%s' not found.")
+	(key = "GUILD_ALREADY_IN_OTHER_GUILD", string = "%s is already in a guild.")
+	(key = "GUILD_INVITE_PENDING", string = "%s has a pending guild invite.")
+	(key = "GUILD_INVITE_DECLINED", string = "%s has declined your guild invitation.")
 }

@@ -318,4 +318,13 @@ strings =
 	(key = "LEVEL_FORMAT", string = "Stufe %d")
 	
 	(key = "GUILD_INVITATION", string = "%s lädt Euch ein, Euch der Gilde '%s' anzuschließen.")
+	(key = "GUILD_INVITE_SENT", string = "Ihr habt %s eingeladen sich Eurer Gilde anzuschließen.")
+	(key = "GUILD_LEFT", string = "Ihr habt Eure Gilde verlassen.")
+	(key = "GUILD_NOT_IN_GUILD", string = "Ihr seid in keiner Gilde.")
+	(key = "GUILD_ALREADY_IN_GUILD", string = "%s ist bereits in Eurer Gilde.")
+	(key = "GUILD_NOT_ALLOWED", string = "Ihr habt nicht die nötigen Berechtigungen das zu tun.")
+	(key = "GUILD_PLAYER_NOT_FOUND", string = "Spieler '%s' konnte nicht gefunden werden.")
+	(key = "GUILD_ALREADY_IN_OTHER_GUILD", string = "%s ist bereits in einer Gilde.")
+	(key = "GUILD_INVITE_PENDING", string = "%s hat bereits eine ausstehende Gildeneinladung.")
+	(key = "GUILD_INVITE_DECLINED", string = "%s hat Eure Gildeneinladung abgelehnt.")
 }

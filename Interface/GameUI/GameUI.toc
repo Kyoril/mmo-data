@@ -22,6 +22,7 @@ TrainerFrame.xml
 VendorFrame.xml
 QuestFrame.xml
 QuestLogFrame.xml
+GuildFrame.xml
 GameMenu.xml
 GameTooltip.xml
 

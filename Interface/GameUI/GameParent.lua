@@ -30,10 +30,12 @@ MAX_ERROR_MESSAGES = 3;
 ERROR_HOLD_TIME = 4;
 
 function GameParent_OnPartyInviteRequest(gameParent, inviterName)
+	ChatFrame:AddMessage(string.format(Localize("INVITATION"), inviterName), 1.0, 1.0, 0.0);
 	StaticDialog_Show("PARTY_INVITE", inviterName);
 end
 
 function GameParent_OnGuildInviteRequest(gameParent, inviterName, guildName)
+	ChatFrame:AddMessage(string.format(Localize("GUILD_INVITATION"), inviterName, guildName), 1.0, 1.0, 0.0);
 	StaticDialog_Show("GUILD_INVITE", inviterName, guildName);
 end
 

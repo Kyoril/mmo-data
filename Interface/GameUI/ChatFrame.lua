@@ -2,7 +2,12 @@
 function GetSlashCmdTarget(msg)
 	local target = string.gsub(msg, "(%s*)([^%s]+)(.*)", "%2", 1);
 	if ( string.len(target) <= 0 ) then
-		target = UnitName("target");
+		local targetUnit = GetUnit("target");
+        if (targetUnit) then
+            target = targetUnit:GetName();
+        else
+            return "";
+        end
 	end
 
 	return target;

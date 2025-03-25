@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="file:\\F:\mmo\data\client\Interface\Ui.xsd">
+	<Script file="GuildFrame.lua" />
+
+    <Frame name="GuildFrame" parent="GameParent" renderer="DefaultRenderer">
+        <Property name="Visible" value="false" />
+
+        <Scripts>
+            <OnLoad>
+                return function(self)
+                    GuildFrame_OnLoad(self);
+                end
+            </OnLoad>
+        </Scripts>
+    </Frame>
+</UiLayout>
