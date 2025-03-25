@@ -43,3 +43,5 @@ SLASH_GUILD_PROMOTE1 = "/gpromote"; -- Guild promote
 SLASH_GUILD_PROMOTE2 = "/guildpromote"; -- Guild promote
 SLASH_GUILD_UNINVITE1 = "/gremove"; -- Guild uninvite
 SLASH_GUILD_UNINVITE2 = "/guildremove"; -- Guild uninvite
+SLASH_GUILD_DISBAND1 = "/gdisband"; -- Guild disband
+SLASH_GUILD_DISBAND2 = "/guilddisband"; -- Guild disband

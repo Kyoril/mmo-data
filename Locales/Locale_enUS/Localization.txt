@@ -328,4 +328,15 @@ strings =
 	(key = "GUILD_ALREADY_IN_OTHER_GUILD", string = "%s is already in a guild.")
 	(key = "GUILD_INVITE_PENDING", string = "%s has a pending guild invite.")
 	(key = "GUILD_INVITE_DECLINED", string = "%s has declined your guild invitation.")
+
+	(key = "GUILD_EVENT_PROMOTION", string = "%s was promoted to rank '%s'.")
+	(key = "GUILD_EVENT_DEMOTION", string = "%s was demoted to rank '%s'.")
+	(key = "GUILD_EVENT_MOTD", string = "Guild message of the day: %s")
+	(key = "GUILD_EVENT_JOINED", string = "%s joined the guild.")
+	(key = "GUILD_EVENT_LEFT", string = "%s left the guild.")
+	(key = "GUILD_EVENT_REMOVED", string = "%s was removed from the guild.")
+	(key = "GUILD_EVENT_LEADER_CHANGED", string = "%s is now the guild leader.")
+	(key = "GUILD_EVENT_DISBANDED", string = "Your guild was disbanded.")
+	(key = "GUILD_EVENT_LOGGED_IN", string = "%s is online.")
+	(key = "GUILD_EVENT_LOGGED_OUT", string = "%s is offline.")
 }
