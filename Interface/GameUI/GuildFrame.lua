@@ -25,6 +25,10 @@ function GuildFrame_OnLeft(self)
     ChatFrame:AddMessage(Localize("GUILD_LEFT"), 1.0, 1.0, 0.0);
 end
 
+function GuildFrame_OnRemoved(self, remover)
+    ChatFrame:AddMessage(string.format(Localize("GUILD_REMOVED"), remover), 1.0, 1.0, 0.0);
+end
+
 function GuildFrame_OnEvent(self, event, arg1, arg2, arg3)
     local color = {1.0, 1.0, 0.0};
     local format = Localize("GUILD_EVENT_"..event);
@@ -43,4 +47,5 @@ function GuildFrame_OnLoad(self)
     self:RegisterEvent("GUILD_LEFT", GuildFrame_OnLeft);
     self:RegisterEvent("GUILD_INVITE_DECLINED", GuildFrame_OnInviteDeclined);
     self:RegisterEvent("GUILD_EVENT", GuildFrame_OnEvent);
+    self:RegisterEvent("GUILD_REMOVED", GuildFrame_OnRemoved);
 end

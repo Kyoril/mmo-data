@@ -327,9 +327,9 @@ strings =
 	(key = "GUILD_ALREADY_IN_OTHER_GUILD", string = "%s ist bereits in einer Gilde.")
 	(key = "GUILD_INVITE_PENDING", string = "%s hat bereits eine ausstehende Gildeneinladung.")
 	(key = "GUILD_INVITE_DECLINED", string = "%s hat Eure Gildeneinladung abgelehnt.")
-	
-	(key = "GUILD_EVENT_PROMOTION", string = "%s wurde auf Rang '%s' befördert.")
-	(key = "GUILD_EVENT_DEMOTION", string = "%s wurde auf Rang '%s' degradiert.")
+
+	(key = "GUILD_EVENT_PROMOTION", string = "%s hat %s auf Rang %s befördert.")
+	(key = "GUILD_EVENT_DEMOTION", string = "%s hat %s auf Rang %s degradiert.")
 	(key = "GUILD_EVENT_MOTD", string = "Gildennachricht des Tages: %s")
 	(key = "GUILD_EVENT_JOINED", string = "%s hat sich der Gilde angeschlossen.")
 	(key = "GUILD_EVENT_LEFT", string = "%s hat die Gilde verlassen.")
@@ -338,4 +338,5 @@ strings =
 	(key = "GUILD_EVENT_DISBANDED", string = "Eure Gilde wurde aufgelöst.")
 	(key = "GUILD_EVENT_LOGGED_IN", string = "%s ist online.")
 	(key = "GUILD_EVENT_LOGGED_OUT", string = "%s ist offline.")
+	(key = "GUILD_REMOVED", string = "Ihr wurdet von %s aus der Gilde entfernt.")
 }
