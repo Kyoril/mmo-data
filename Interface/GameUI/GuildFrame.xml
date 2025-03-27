@@ -2,7 +2,116 @@
 <UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="file:\\F:\mmo\data\client\Interface\Ui.xsd">
 	<Script file="GuildFrame.lua" />
 
-    <Frame name="GuildFrame" parent="GameParent" renderer="DefaultRenderer">
+    <!-- Template for Guild Member List Item -->
+    <Frame name="GuildMemberButtonTemplate" type="Button" renderer="ButtonRenderer">
+        <Property name="Font" value="DefaultSmall" />
+
+        <Visual>
+            <ImagerySection name="NormalFrame">
+                <ImageComponent texture="Interface/GlueUI/CharSelectButtonBackground.htex" />
+            </ImagerySection>
+            <ImagerySection name="HoveredFrame">
+                <ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="FFFF9B38" />
+            </ImagerySection>
+            <ImagerySection name="PushedFrame">
+                <ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="FF9E5E22">
+                    <Area>
+                        <Inset left="8" top="8" />
+                    </Area>
+                </ImageComponent>
+            </ImagerySection>
+            <ImagerySection name="DisabledFrame">
+                <ImageComponent texture="Interface/GlueUI/CharSelectButtonBackground.htex" tint="88404040" />
+            </ImagerySection>
+            <ImagerySection name="Text">
+                <TextComponent color="FFEED37C" horzAlign="LEFT" vertAlign="CENTER">
+                    <Area>
+                        <Inset left="8" />
+                    </Area>
+                </TextComponent>
+            </ImagerySection>
+            <StateImagery name="Normal">
+                <Layer>
+                    <Section section="NormalFrame" />
+                    <Section section="Text" />
+                </Layer>
+            </StateImagery>
+            <StateImagery name="Hovered">
+                <Layer>
+                    <Section section="HoveredFrame" />
+                    <Section section="Text" />
+                </Layer>
+            </StateImagery>
+            <StateImagery name="Pushed">
+                <Layer>
+                    <Section section="PushedFrame" />
+                    <Section section="Text" />
+                </Layer>
+            </StateImagery>
+            <StateImagery name="Disabled">
+                <Layer>
+                    <Section section="DisabledFrame" />
+                    <Section section="Text" color="88404040" />
+                </Layer>
+            </StateImagery>
+        </Visual>
+
+        <Area>
+            <Size><AbsDimension x="0" y="48" /></Size>
+        </Area>
+    </Frame>
+
+    <!-- Template for Column Header Button -->
+    <Frame name="GuildColumnHeaderTemplate" type="Button" renderer="ButtonRenderer">
+        <Property name="Font" value="DefaultSmall" />
+
+        <Visual>
+            <ImagerySection name="NormalFrame">
+                <BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Up_result.htex" borderSize="22" />
+            </ImagerySection>
+            <ImagerySection name="HoveredFrame">
+                <BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Over_result.htex" borderSize="22" />
+            </ImagerySection>
+            <ImagerySection name="PushedFrame">
+                <BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Down_result.htex" borderSize="22" />
+            </ImagerySection>
+            <ImagerySection name="DisabledFrame">
+                <BorderComponent texture="Interface/GameUI/fg4_buttonSmall2_Disabled_result.htex" borderSize="22" />
+            </ImagerySection>
+            <ImagerySection name="Text">
+                <TextComponent color="FFFFD100" horzAlign="CENTER" vertAlign="CENTER" />
+            </ImagerySection>
+            <StateImagery name="Normal">
+                <Layer>
+                    <Section section="NormalFrame" />
+                    <Section section="Text" />
+                </Layer>
+            </StateImagery>
+            <StateImagery name="Hovered">
+                <Layer>
+                    <Section section="HoveredFrame" />
+                    <Section section="Text" />
+                </Layer>
+            </StateImagery>
+            <StateImagery name="Pushed">
+                <Layer>
+                    <Section section="PushedFrame" />
+                    <Section section="Text" />
+                </Layer>
+            </StateImagery>
+            <StateImagery name="Disabled">
+                <Layer>
+                    <Section section="DisabledFrame" />
+                    <Section section="Text" color="88404040" />
+                </Layer>
+            </StateImagery>
+        </Visual>
+        <Area>
+            <Size><AbsDimension x="0" y="48" /></Size>
+        </Area>
+    </Frame>
+
+    <Frame name="GuildFrame" inherits="SidePanelTemplate" parent="GameParent">
         <Property name="Visible" value="false" />
 
         <Scripts>
@@ -11,6 +120,388 @@
                     GuildFrame_OnLoad(self);
                 end
             </OnLoad>
+            <OnShow>
+                return function(self)
+                    GuildFrame_OnShow(self);
+                end
+            </OnShow>
         </Scripts>
+
+        <!-- Guild Info Section -->
+        <Frame name="GuildInfoFrame" renderer="DefaultRenderer">
+            <Visual>
+                <ImagerySection name="Border">
+                    <BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" />
+                </ImagerySection>
+                <StateImagery name="Enabled">
+                    <Layer>
+                        <Section section="Border" />
+                    </Layer>
+                </StateImagery>
+            </Visual>
+
+            <Area>
+                <Anchor point="BOTTOM" offset="-120" />
+                <Anchor point="LEFT" offset="24" />
+                <Anchor point="RIGHT" offset="-24" />
+                <Size><AbsDimension x="0" y="240" /></Size>
+            </Area>
+
+            <Frame name="GuildNameLabel" inherits="TextSmall">
+                <Property name="Text" value="Guild Name" />
+                <Property name="TextColor" value="FFFFD100" />
+
+                <Area>
+                    <Anchor point="TOP" offset="16" />
+                    <Anchor point="LEFT" offset="16" />
+                    <Size><AbsDimension x="0" y="32" /></Size>
+                </Area>
+            </Frame>
+
+            <Frame name="GuildMOTDLabel" inherits="TextSmall">
+                <Property name="Text" value="Message of the Day" />
+                <Property name="TextColor" value="FFFFFFFF" />
+
+                <Area>
+                    <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="GuildNameLabel" offset="8" />
+                    <Anchor point="LEFT" offset="16" />
+                    <Anchor point="RIGHT" offset="-16" />
+                    <Size><AbsDimension x="0" y="48" /></Size>
+                </Area>
+            </Frame>
+        </Frame>
+
+        <!-- Guild Roster Section -->
+        <Frame name="GuildRosterFrame" renderer="DefaultRenderer">
+            <Visual>
+                <ImagerySection name="Border">
+                    <BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" />
+                </ImagerySection>
+                <StateImagery name="Enabled">
+                    <Layer>
+                        <Section section="Border" />
+                    </Layer>
+                </StateImagery>
+            </Visual>
+
+            <Area>
+                <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="GuildFrame_SidePanelTitleBar" offset="16" />
+                <Anchor point="LEFT" offset="24" />
+                <Anchor point="RIGHT" offset="-24" />
+                <Anchor point="BOTTOM" relativePoint="TOP" relativeTo="GuildInfoFrame" offset="-16" />
+            </Area>
+
+            <!-- Column Headers -->
+            <Frame name="GuildRosterColumnHeaders" renderer="DefaultRenderer">
+                <Area>
+                    <Anchor point="TOP" offset="8" />
+                    <Anchor point="LEFT" offset="8" />
+                    <Anchor point="RIGHT" offset="-8" />
+                    <Size><AbsDimension x="0" y="64" /></Size>
+                </Area>
+
+                <Frame name="NameColumnHeader" inherits="GuildColumnHeaderTemplate">
+                    <Property name="Text" value="NAME" />
+                    <Area>
+                        <Anchor point="LEFT" offset="0" />
+                        <Anchor point="TOP" offset="0" />
+                        <Size><AbsDimension x="420" y="64" /></Size>
+                    </Area>
+                    <Scripts>
+                        <OnClick>
+                            return function(self)
+                                GuildRoster_SortByColumn(self, "name");
+                            end
+                        </OnClick>
+                    </Scripts>
+                </Frame>
+
+                <Frame name="LevelColumnHeader" inherits="GuildColumnHeaderTemplate">
+                    <Property name="Text" value="LEVEL" />
+                    <Area>
+                        <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="NameColumnHeader" offset="4" />
+                        <Anchor point="TOP" offset="0" />
+                        <Size><AbsDimension x="160" y="64" /></Size>
+                    </Area>
+                    <Scripts>
+                        <OnClick>
+                            return function(self)
+                                GuildRoster_SortByColumn(self, "level");
+                            end
+                        </OnClick>
+                    </Scripts>
+                </Frame>
+
+                <Frame name="StatusColumnHeader" inherits="GuildColumnHeaderTemplate">
+                    <Property name="Text" value="STATUS" />
+                    <Area>
+                        <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="LevelColumnHeader" offset="4" />
+                        <Anchor point="TOP" offset="0" />
+                        <Size><AbsDimension x="200" y="64" /></Size>
+                    </Area>
+                    <Scripts>
+                        <OnClick>
+                            return function(self)
+                                GuildRoster_SortByColumn(self, "status");
+                            end
+                        </OnClick>
+                    </Scripts>
+                </Frame>
+
+            </Frame>
+
+            <!-- Guild Roster List -->
+            <Frame name="GuildRosterListFrame">
+                <Area>
+                    <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="GuildRosterColumnHeaders" offset="8" />
+                    <Anchor point="LEFT" offset="8" />
+                    <Anchor point="RIGHT" offset="-8" />
+                    <Anchor point="BOTTOM" offset="-8" />
+                </Area>
+
+                <Frame name="GuildRosterListContent">
+                    <Area>
+                        <Anchor point="TOP" offset="0" />
+                        <Anchor point="LEFT" offset="0" />
+                        <Anchor point="RIGHT" offset="-96" />
+                        <Anchor point="BOTTOM" offset="0" />
+                    </Area>
+
+                    <!-- Guild Member Buttons -->
+                    <Frame name="GuildMemberButton1" inherits="GuildMemberButtonTemplate" id="1">
+                        <Area>
+                            <Anchor point="TOP" offset="0" />
+                            <Anchor point="LEFT" offset="0" />
+                            <Anchor point="RIGHT" offset="0" />
+                        </Area>
+                        <Scripts>
+                            <OnClick>
+                                return function(self)
+                                    GuildRoster_SelectMember(self);
+                                end
+                            </OnClick>
+                        </Scripts>
+                    </Frame>
+
+                    <Frame name="GuildMemberButton2" inherits="GuildMemberButtonTemplate" id="2">
+                        <Area>
+                            <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="GuildMemberButton1" />
+                            <Anchor point="LEFT" relativeTo="GuildMemberButton1" />
+                            <Anchor point="RIGHT" relativeTo="GuildMemberButton1" />
+                        </Area>
+                        <Scripts>
+                            <OnClick>
+                                return function(self)
+                                    GuildRoster_SelectMember(self);
+                                end
+                            </OnClick>
+                        </Scripts>
+                    </Frame>
+
+                    <Frame name="GuildMemberButton3" inherits="GuildMemberButtonTemplate" id="3">
+                        <Area>
+                            <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="GuildMemberButton2" />
+                            <Anchor point="LEFT" relativeTo="GuildMemberButton1" />
+                            <Anchor point="RIGHT" relativeTo="GuildMemberButton1" />
+                        </Area>
+                        <Scripts>
+                            <OnClick>
+                                return function(self)
+                                    GuildRoster_SelectMember(self);
+                                end
+                            </OnClick>
+                        </Scripts>
+                    </Frame>
+
+                    <Frame name="GuildMemberButton4" inherits="GuildMemberButtonTemplate" id="4">
+                        <Area>
+                            <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="GuildMemberButton3" />
+                            <Anchor point="LEFT" relativeTo="GuildMemberButton1" />
+                            <Anchor point="RIGHT" relativeTo="GuildMemberButton1" />
+                        </Area>
+                        <Scripts>
+                            <OnClick>
+                                return function(self)
+                                    GuildRoster_SelectMember(self);
+                                end
+                            </OnClick>
+                        </Scripts>
+                    </Frame>
+
+                    <Frame name="GuildMemberButton5" inherits="GuildMemberButtonTemplate" id="5">
+                        <Area>
+                            <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="GuildMemberButton4" />
+                            <Anchor point="LEFT" relativeTo="GuildMemberButton1" />
+                            <Anchor point="RIGHT" relativeTo="GuildMemberButton1" />
+                        </Area>
+                        <Scripts>
+                            <OnClick>
+                                return function(self)
+                                    GuildRoster_SelectMember(self);
+                                end
+                            </OnClick>
+                        </Scripts>
+                    </Frame>
+
+                    <Frame name="GuildMemberButton6" inherits="GuildMemberButtonTemplate" id="6">
+                        <Area>
+                            <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="GuildMemberButton5" />
+                            <Anchor point="LEFT" relativeTo="GuildMemberButton1" />
+                            <Anchor point="RIGHT" relativeTo="GuildMemberButton1" />
+                        </Area>
+                        <Scripts>
+                            <OnClick>
+                                return function(self)
+                                    GuildRoster_SelectMember(self);
+                                end
+                            </OnClick>
+                        </Scripts>
+                    </Frame>
+
+                    <Frame name="GuildMemberButton7" inherits="GuildMemberButtonTemplate" id="7">
+                        <Area>
+                            <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="GuildMemberButton6" />
+                            <Anchor point="LEFT" relativeTo="GuildMemberButton1" />
+                            <Anchor point="RIGHT" relativeTo="GuildMemberButton1" />
+                        </Area>
+                        <Scripts>
+                            <OnClick>
+                                return function(self)
+                                    GuildRoster_SelectMember(self);
+                                end
+                            </OnClick>
+                        </Scripts>
+                    </Frame>
+
+                    <Frame name="GuildMemberButton8" inherits="GuildMemberButtonTemplate" id="8">
+                        <Area>
+                            <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="GuildMemberButton7" />
+                            <Anchor point="LEFT" relativeTo="GuildMemberButton1" />
+                            <Anchor point="RIGHT" relativeTo="GuildMemberButton1" />
+                        </Area>
+                        <Scripts>
+                            <OnClick>
+                                return function(self)
+                                    GuildRoster_SelectMember(self);
+                                end
+                            </OnClick>
+                        </Scripts>
+                    </Frame>
+
+                    <Frame name="GuildMemberButton9" inherits="GuildMemberButtonTemplate" id="9">
+                        <Area>
+                            <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="GuildMemberButton8" />
+                            <Anchor point="LEFT" relativeTo="GuildMemberButton1" />
+                            <Anchor point="RIGHT" relativeTo="GuildMemberButton1" />
+                        </Area>
+                        <Scripts>
+                            <OnClick>
+                                return function(self)
+                                    GuildRoster_SelectMember(self);
+                                end
+                            </OnClick>
+                        </Scripts>
+                    </Frame>
+
+                    <Frame name="GuildMemberButton10" inherits="GuildMemberButtonTemplate" id="10">
+                        <Area>
+                            <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="GuildMemberButton9" />
+                            <Anchor point="LEFT" relativeTo="GuildMemberButton1" />
+                            <Anchor point="RIGHT" relativeTo="GuildMemberButton1" />
+                        </Area>
+                        <Scripts>
+                            <OnClick>
+                                return function(self)
+                                    GuildRoster_SelectMember(self);
+                                end
+                            </OnClick>
+                        </Scripts>
+                    </Frame>
+                </Frame>
+
+                <!-- Scrollbar for Guild Roster -->
+                <Frame name="GuildRosterScrollBar" inherits="VerticalScrollBar">
+                    <Area>
+                        <Anchor point="TOP" offset="0" />
+                        <Anchor point="RIGHT" offset="0" />
+                        <Anchor point="BOTTOM" offset="0" />
+                    </Area>
+                </Frame>
+            </Frame>
+        </Frame>
+
+        <!-- Action Buttons -->
+        <Frame name="GuildActionButtonsFrame" renderer="DefaultRenderer">
+            <Area>
+                <Anchor point="BOTTOM" offset="-16" />
+                <Anchor point="LEFT" offset="24" />
+                <Anchor point="RIGHT" offset="-24" />
+                <Size><AbsDimension x="0" y="80" /></Size>
+            </Area>
+
+            <Frame name="GuildInviteButton" inherits="GlueButton">
+                <Property name="Text" value="INVITE" />
+                <Area>
+                    <Anchor point="LEFT" offset="0" />
+                    <Anchor point="TOP" offset="0" />
+                    <Size><AbsDimension x="222" y="80" /></Size>
+                </Area>
+                <Scripts>
+                    <OnClick>
+                        return function(self)
+                            GuildFrame_InviteClicked(self);
+                        end
+                    </OnClick>
+                </Scripts>
+            </Frame>
+
+            <Frame name="GuildPromoteButton" inherits="GlueButton">
+                <Property name="Text" value="PROMOTE" />
+                <Area>
+                    <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="GuildInviteButton" offset="8" />
+                    <Anchor point="TOP" offset="0" />
+                    <Size><AbsDimension x="222" y="80" /></Size>
+                </Area>
+                <Scripts>
+                    <OnClick>
+                        return function(self)
+                            GuildFrame_PromoteClicked(self);
+                        end
+                    </OnClick>
+                </Scripts>
+            </Frame>
+
+            <Frame name="GuildDemoteButton" inherits="GlueButton">
+                <Property name="Text" value="DEMOTE" />
+                <Area>
+                    <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="GuildPromoteButton" offset="8" />
+                    <Anchor point="TOP" offset="0" />
+                    <Size><AbsDimension x="222" y="80" /></Size>
+                </Area>
+                <Scripts>
+                    <OnClick>
+                        return function(self)
+                            GuildFrame_DemoteClicked(self);
+                        end
+                    </OnClick>
+                </Scripts>
+            </Frame>
+
+            <Frame name="GuildKickButton" inherits="GlueButton">
+                <Property name="Text" value="KICK" />
+                <Area>
+                    <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="GuildDemoteButton" offset="8" />
+                    <Anchor point="TOP" offset="0" />
+                    <Size><AbsDimension x="222" y="80" /></Size>
+                </Area>
+                <Scripts>
+                    <OnClick>
+                        return function(self)
+                            GuildFrame_KickClicked(self);
+                        end
+                    </OnClick>
+                </Scripts>
+            </Frame>
+        </Frame>
     </Frame>
 </UiLayout>
