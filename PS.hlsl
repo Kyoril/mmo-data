@@ -6,15 +6,7 @@ float select(bool expression, float whenTrue, float whenFalse) {
 
 cbuffer ScalarParameters
 {
-	float sTiling01;
-	float sTiling02;
-	float sTiling03;
-	float sTiling04;
-	float sDefaultRoughness;
-	float sStrength01;
-	float sStrength02;
-	float sStrength03;
-	float sStrength04;
+	float sRoughness;
 };
 
 struct VertexOut
@@ -29,41 +21,13 @@ struct VertexOut
 	float3 viewDir : TEXCOORD2;
 };
 
-// Albedo01
+// BaseColor
 Texture2D texparam0;
 SamplerState paramsampler0;
 
-// Splatting
+// Normal
 Texture2D texparam1;
 SamplerState paramsampler1;
-
-// Albedo02
-Texture2D texparam2;
-SamplerState paramsampler2;
-
-// Albedo03
-Texture2D texparam3;
-SamplerState paramsampler3;
-
-// Albedo04
-Texture2D texparam4;
-SamplerState paramsampler4;
-
-// Normal01
-Texture2D texparam5;
-SamplerState paramsampler5;
-
-// Normal02
-Texture2D texparam6;
-SamplerState paramsampler6;
-
-// Normal03
-Texture2D texparam7;
-SamplerState paramsampler7;
-
-// Normal04
-Texture2D texparam8;
-SamplerState paramsampler8;
 
 float3 GetWorldNormal(float3 tangentSpaceNormal, float3 N, float3 T, float3 B)
 {
@@ -122,258 +86,32 @@ float4 main(VertexOut input) : SV_Target
 	float3 B = normalize(input.binormal);
 	float3 T = normalize(input.tangent);
 	float3x3 TBN = float3x3(T, B, N);
-	float4 expr_0 = input.color;
+	float2 expr_0 = input.uv0;
 
-	float3 expr_1 = expr_0.rgb;
+	float4 expr_1 = texparam0.Sample(paramsampler0, expr_0.xy);
 
-	float3 expr_2 = input.worldPos.xyz;
+	float3 expr_2 = expr_1.rgb;
 
-	float2 expr_3 = expr_2.rb;
+	float4 expr_3 = texparam1.Sample(paramsampler1, expr_0.xy);
 
-	float expr_4 = sTiling01;
+	float3 expr_4 = expr_3.rgb;
 
-	float2 expr_5 = expr_3 / expr_4;
+	float expr_5 = sRoughness;
 
-	float4 expr_6 = texparam0.Sample(paramsampler0, expr_5.xy);
-
-	float3 expr_7 = expr_6.rgb;
-
-	float2 expr_8 = input.uv0;
-
-	float4 expr_9 = texparam1.Sample(paramsampler1, expr_8.xy);
-
-	float3 expr_10 = expr_9.rgb;
-
-	float expr_11 = expr_10.r;
-
-	float3 expr_12 = expr_9.rgb;
-
-	float expr_13 = expr_12.g;
-
-	float expr_14 = expr_11 + expr_13;
-
-	float3 expr_15 = expr_9.rgb;
-
-	float expr_16 = expr_15.b;
-
-	float expr_17 = expr_14 + expr_16;
-
-	float expr_18 = expr_9.a;
-
-	float expr_19 = expr_17 + expr_18;
-
-	float4 expr_20 = expr_9 / expr_19;
-
-	float expr_21 = expr_20.r;
-
-	float3 expr_22 = expr_7 * expr_21;
-
-	float3 expr_23 = input.worldPos.xyz;
-
-	float2 expr_24 = expr_23.rb;
-
-	float expr_25 = sTiling02;
-
-	float2 expr_26 = expr_24 / expr_25;
-
-	float4 expr_27 = texparam2.Sample(paramsampler2, expr_26.xy);
-
-	float3 expr_28 = expr_27.rgb;
-
-	float expr_29 = expr_20.g;
-
-	float3 expr_30 = expr_28 * expr_29;
-
-	float3 expr_31 = expr_22 + expr_30;
-
-	float3 expr_32 = input.worldPos.xyz;
-
-	float2 expr_33 = expr_32.rb;
-
-	float expr_34 = sTiling03;
-
-	float2 expr_35 = expr_33 / expr_34;
-
-	float4 expr_36 = texparam3.Sample(paramsampler3, expr_35.xy);
-
-	float3 expr_37 = expr_36.rgb;
-
-	float expr_38 = expr_20.b;
-
-	float3 expr_39 = expr_37 * expr_38;
-
-	float3 expr_40 = expr_31 + expr_39;
-
-	float3 expr_41 = input.worldPos.xyz;
-
-	float2 expr_42 = expr_41.rb;
-
-	float expr_43 = sTiling04;
-
-	float2 expr_44 = expr_42 / expr_43;
-
-	float4 expr_45 = texparam4.Sample(paramsampler4, expr_44.xy);
-
-	float3 expr_46 = expr_45.rgb;
-
-	float expr_47 = expr_20.a;
-
-	float3 expr_48 = expr_46 * expr_47;
-
-	float3 expr_49 = expr_40 + expr_48;
-
-	float3 expr_50 = expr_1 * expr_49;
-
-	float expr_51 = 0.500000;
-
-	float4 expr_52 = texparam5.Sample(paramsampler5, expr_5.xy);
-
-	float3 expr_53 = expr_52.rgb;
-
-	float expr_54 = 2.000000;
-
-	float3 expr_55 = expr_53 * expr_54;
-
-	float expr_56 = 1.000000;
-
-	float3 expr_57 = expr_55 - expr_56;
-
-	float3 expr_58 = expr_57 * expr_21;
-
-	float4 expr_59 = texparam6.Sample(paramsampler6, expr_26.xy);
-
-	float3 expr_60 = expr_59.rgb;
-
-	float expr_61 = 2.000000;
-
-	float3 expr_62 = expr_60 * expr_61;
-
-	float expr_63 = 1.000000;
-
-	float3 expr_64 = expr_62 - expr_63;
-
-	float3 expr_65 = expr_64 * expr_29;
-
-	float3 expr_66 = expr_58 + expr_65;
-
-	float4 expr_67 = texparam7.Sample(paramsampler7, expr_35.xy);
-
-	float3 expr_68 = expr_67.rgb;
-
-	float expr_69 = 2.000000;
-
-	float3 expr_70 = expr_68 * expr_69;
-
-	float expr_71 = 1.000000;
-
-	float3 expr_72 = expr_70 - expr_71;
-
-	float3 expr_73 = expr_72 * expr_38;
-
-	float3 expr_74 = expr_66 + expr_73;
-
-	float4 expr_75 = texparam8.Sample(paramsampler8, expr_44.xy);
-
-	float3 expr_76 = expr_75.rgb;
-
-	float expr_77 = 2.000000;
-
-	float3 expr_78 = expr_76 * expr_77;
-
-	float expr_79 = 1.000000;
-
-	float3 expr_80 = expr_78 - expr_79;
-
-	float3 expr_81 = expr_80 * expr_47;
-
-	float3 expr_82 = expr_74 + expr_81;
-
-	float3 expr_83 = normalize(expr_82);
-
-	float3 expr_84 = expr_51 * expr_83;
-
-	float expr_85 = 0.500000;
-
-	float3 expr_86 = expr_84 + expr_85;
-
-	float expr_87 = 0.500000;
-
-	float expr_88 = sDefaultRoughness;
-
-	float expr_89 = expr_6.a;
-
-	float expr_90 = sStrength01;
-
-	float expr_91 = expr_90 * expr_11;
-
-	float expr_92 = 0.000000;
-
-	float expr_93 = 1.000000;
-
-	float expr_94 = clamp(expr_91, expr_92, expr_93);
-
-	float expr_95 = lerp(expr_88, expr_89, expr_94);
-
-	float expr_96 = expr_27.a;
-
-	float expr_97 = sStrength02;
-
-	float expr_98 = expr_97 * expr_13;
-
-	float expr_99 = 0.000000;
-
-	float expr_100 = 1.000000;
-
-	float expr_101 = clamp(expr_98, expr_99, expr_100);
-
-	float expr_102 = lerp(expr_95, expr_96, expr_101);
-
-	float expr_103 = expr_36.a;
-
-	float expr_104 = sStrength03;
-
-	float expr_105 = expr_104 * expr_16;
-
-	float expr_106 = 0.000000;
-
-	float expr_107 = 1.000000;
-
-	float expr_108 = clamp(expr_105, expr_106, expr_107);
-
-	float expr_109 = lerp(expr_102, expr_103, expr_108);
-
-	float expr_110 = expr_45.a;
-
-	float expr_111 = sStrength04;
-
-	float expr_112 = expr_9.a;
-
-	float expr_113 = expr_111 * expr_112;
-
-	float expr_114 = 0.000000;
-
-	float expr_115 = 1.000000;
-
-	float expr_116 = clamp(expr_113, expr_114, expr_115);
-
-	float expr_117 = lerp(expr_109, expr_110, expr_116);
-
-	float expr_118 = 0.000000;
-
-	N = expr_86;
+	N = expr_4;
 
 	N = GetWorldNormal(N, input.normal, input.tangent, input.binormal);
-	float specular = saturate(expr_87);
+	float specular = 0.5;
 
-	float roughness = saturate(expr_117);
+	float roughness = saturate(expr_5);
 
-	float metallic = saturate(expr_118);
+	float metallic = 0.0;
 
 	float opacity = 1.0;
 
 	float3 baseColor = float3(1.0, 1.0, 1.0);
 
-	baseColor = expr_50;
+	baseColor = expr_2;
 
 	if (opacity <= 0.333) { clip(-1); }
 	baseColor = pow(baseColor, 2.2);
