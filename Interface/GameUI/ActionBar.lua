@@ -54,7 +54,7 @@ function ActionButton_Up(id)
 end
 
 function ActionButton_OnClick(self, button)
-    if (not IsActionButtonUsable(self.id - 1)) or IsShiftKeyDown() then
+    if (IsShiftKeyDown()) then
         PickupActionButton(self.id - 1);
     else
         UseActionButton(self.id - 1);
