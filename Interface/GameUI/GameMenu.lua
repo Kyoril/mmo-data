@@ -36,7 +36,7 @@ function OnMenuItem_Clicked()
 		HideUIPanel(GameMenu)
 	else
 		CloseAllWindows();
-		ShowUIPanel(GameMenu)
+		ShowUIPanel(GameMenu);
 	end
 end
 

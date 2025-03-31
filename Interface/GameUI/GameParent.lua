@@ -438,3 +438,14 @@ function CloseAllWindows(ignoreCenter)
     windowsVisible = CloseWindows(ignoreCenter);
 	return windowsVisible;
 end
+
+function ToggleGameMenu()
+	if ( GameMenu:IsVisible() ) then
+		HideUIPanel(GameMenu);
+	elseif ( SpellStopCasting() ) then
+	elseif ( CloseAllWindows() ) then
+	elseif ( ClearTarget() ) then
+	else
+		ShowUIPanel(GameMenu);
+	end
+end

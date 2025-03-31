@@ -302,4 +302,12 @@
             end
         end
 	</Binding>
+    
+    <Binding name="TOGGLEGAMEMENU" description="Toggle the game menu." category="INTERFACE">
+		return function(key, keystate)
+            if keystate == "DOWN" then
+                ToggleGameMenu();
+            end
+        end
+	</Binding>
 </Bindings>
