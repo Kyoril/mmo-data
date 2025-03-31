@@ -86,6 +86,15 @@ function ActionBar_UpdateButtons(self)
     end
 end
 
+function ActionButton_OnUpdate(self)
+    local usable = IsActionButtonUsable(self.id - 1);
+    if usable then
+        self:SetProperty("Color", "FFFFFFFF");
+    else
+        self:SetProperty("Color", "FF888888");
+    end
+end
+
 function ActionBar_OnLoad(self)
     self:RegisterEvent("SPELL_LEARNED", ActionBar_UpdateButtons);
     self:RegisterEvent("PLAYER_SPELLS_CHANGED", ActionBar_UpdateButtons);
@@ -97,5 +106,10 @@ function ActionBar_OnLoad(self)
         button:SetClickedHandler(ActionButton_OnClick);
         button:SetOnEnterHandler(ActionButton_OnEnter);
         button:SetOnLeaveHandler(ActionButton_OnLeave);
+
+        button:RegisterEvent("PLAYER_POWER_CHANGED", ActionButton_OnUpdate);
+        button:RegisterEvent("ACTION_BAR_CHANGED", ActionButton_OnUpdate);
+
+        ActionButton_OnUpdate(button);
     end
 end
