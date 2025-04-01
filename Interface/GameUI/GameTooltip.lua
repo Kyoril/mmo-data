@@ -135,12 +135,6 @@ function GameTooltip_SetItemTemplate(item)
             break;
         end
     end
-
-    local sellPrice = item.sellPrice;
-    if (sellPrice > 0) then
-        local count = 1;    	-- TODO
-        GameTooltip_SetMoney(sellPrice * count);
-    end
 end
 
 function GameTooltip_SetItem(item)

@@ -2,7 +2,6 @@
 MAX_ACTION_BUTTONS = 12;
 
 function ActionButton_OnEnter(self)
-
     if IsActionButtonSpell(self.id - 1) then
         local spell = GetActionButtonSpell(self.id - 1);
         if (spell ~= nil) then
@@ -15,7 +14,11 @@ function ActionButton_OnEnter(self)
     elseif IsActionButtonItem(self.id - 1) then
         local item = GetActionButtonItem(self.id - 1);
         if (item ~= nil) then
-            GameTooltip:Hide();
+            GameTooltip:ClearAnchors();
+            GameTooltip:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.TOP, self, -16);
+            GameTooltip:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, self, 0);
+            GameTooltip_SetItemTemplate(item);
+            GameTooltip:Show();
         end
     end
 end
@@ -72,16 +75,24 @@ function ActionBar_UpdateButtons(self)
             else
                 button:SetProperty("Icon", "");
             end
+
+            button:SetText("");
         elseif IsActionButtonItem(i - 1) then
             local item = GetActionButtonItem(i - 1);
+
             if (item ~= nil) then
-                button:SetProperty("Icon", item.icon);
+                button:SetProperty("Icon", item.GetIcon(item));
+                
+                local itemCount = GetItemCount(item.id);
+                button:SetText(tostring(itemCount));
             else
                 button:SetProperty("Icon", "");
+                button:SetText("");
             end
         else
             -- Clear icon!
             button:SetProperty("Icon", "");
+            button:SetText("");
         end
     end
 end

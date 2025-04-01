@@ -4,6 +4,7 @@
 
 	<Frame name="ActionBarButtonTemplate" type="Button" renderer="ButtonRenderer">
 		<Property name="Icon" />
+        <Property name="Font" value="SmallLabelFont" />
 
 		<Visual>
 			<ImagerySection name="Image">
@@ -13,6 +14,13 @@
 					</Area>
 					<PropertyValue property="Icon" />
 				</ImageComponent>
+			</ImagerySection>
+			<ImagerySection name="Counter">
+                <TextComponent color="FFFFFFFF" horzAlign="RIGHT" vertAlign="BOTTOM">
+					<Area>
+						<Inset all="16" />
+					</Area>
+                </TextComponent>
 			</ImagerySection>
 			<ImagerySection name="NormalFrame">
 				<BorderComponent texture="Interface/BW_ButtonSmall_Up.htex" borderSize="30" />
@@ -30,18 +38,21 @@
 				<Layer>
 					<Section section="NormalFrame" />
 					<Section section="Image" />
+					<Section section="Counter" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="Hovered">
 				<Layer>
 					<Section section="HoveredFrame" />
 					<Section section="Image" />
+					<Section section="Counter" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="Pushed">
 				<Layer>
 					<Section section="PushedFrame" />
 					<Section section="Image" />
+					<Section section="Counter" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="Disabled">
