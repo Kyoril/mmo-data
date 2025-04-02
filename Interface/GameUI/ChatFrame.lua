@@ -27,10 +27,10 @@ ChatTypeInfo["REPLY"]				= { sticky = 0, r = 1.00, g = 0.50, b = 1.00 };
 ChatTypeInfo["EMOTE"]				= { sticky = 0, r = 1.00, g = 0.50, b = 0.25 };
 ChatTypeInfo["TEXT_EMOTE"]			= { sticky = 0, r = 1.00, g = 0.50, b = 0.25 };
 ChatTypeInfo["SYSTEM"]				= { sticky = 0, r = 1.00, g = 1.00, b = 0.00 };
-ChatTypeInfo["MONSTER_WHISPER"]		= { sticky = 0, r = 1.00, g = 1.00, b = 1.00 };
-ChatTypeInfo["MONSTER_SAY"]			= { sticky = 0, r = 0.70, g = 0.70, b = 0.70 };
-ChatTypeInfo["MONSTER_YELL"]		= { sticky = 0, r = 1.00, g = 0.25, b = 0.25 };
-ChatTypeInfo["MONSTER_EMOTE"]		= { sticky = 0, r = 1.00, g = 0.50, b = 0.25 };
+ChatTypeInfo["UNIT_WHISPER"]		= { sticky = 0, r = 1.00, g = 1.00, b = 1.00 };
+ChatTypeInfo["UNIT_SAY"]			= { sticky = 0, r = 0.70, g = 0.70, b = 0.70 };
+ChatTypeInfo["UNIT_YELL"]		    = { sticky = 0, r = 1.00, g = 0.25, b = 0.25 };
+ChatTypeInfo["UNIT_EMOTE"]		    = { sticky = 0, r = 1.00, g = 0.50, b = 0.25 };
 ChatTypeInfo["CHANNEL"]				= { sticky = 0, r = 1.00, g = 0.75, b = 0.75 };
 
 -- Slash commands
@@ -211,6 +211,14 @@ function ChatFrame_OnLoad(this)
     this:RegisterEvent("CHAT_MSG_GUILD", function(this, character, message)
         local info = ChatTypeInfo["GUILD"];
         ChatFrame:AddMessage(string.format(CHAT_FORMAT_GUILD, character, message), info.r, info.g, info.b);
+    end);
+    this:RegisterEvent("CHAT_MSG_UNIT_SAY", function(this, character, message)
+        local info = ChatTypeInfo["UNIT_SAY"];
+        ChatFrame:AddMessage(string.format(CHAT_FORMAT_SAY, character, message), info.r, info.g, info.b);
+    end);
+    this:RegisterEvent("CHAT_MSG_UNIT_YELL", function(this, character, message)
+        local info = ChatTypeInfo["UNIT_YELL"];
+        ChatFrame:AddMessage(string.format(CHAT_FORMAT_YELL, character, message), info.r, info.g, info.b);
     end);
 
     this:RegisterEvent("PLAYER_LEVEL_UP", ChatFrame_OnPlayerLevelUp);
