@@ -151,7 +151,7 @@ function GameParent_OnPlayerDead()
     StaticDialog_Show("DEATH");
 end
 
-function GameParent_OnHoveredUnitChanged(self)
+function GameParent_OnHoveredObjectChanged(self)
 	local mouseOverUnit = GetUnit("mouseover");
 	if ( not mouseOverUnit ) then
 		GameTooltip_FadeOut(1.0, 1.0);
@@ -186,7 +186,7 @@ function GameParent_OnLoad(self)
     self:RegisterEvent("PLAYER_DEAD", GameParent_OnPlayerDead);
 	self:RegisterEvent("PARTY_INVITE_REQUEST", GameParent_OnPartyInviteRequest);
 	self:RegisterEvent("RANDOM_ROLL_RESULT", GameParent_OnRandomRollResult);
-	self:RegisterEvent("HOVERED_UNIT_CHANGED", GameParent_OnHoveredUnitChanged);
+	self:RegisterEvent("HOVERED_OBJECT_CHANGED", GameParent_OnHoveredObjectChanged);
 	self:RegisterEvent("GUILD_INVITE_REQUEST", GameParent_OnGuildInviteRequest);
 end
 
