@@ -339,4 +339,10 @@ strings =
 	(key = "GUILD_EVENT_LOGGED_IN", string = "%s is online.")
 	(key = "GUILD_EVENT_LOGGED_OUT", string = "%s is offline.")
 	(key = "GUILD_REMOVED", string = "You were removed from the guild by %s.")
+	
+	(key = "LOOT_ITEM", string = "%s receives loot: %s x%d")
+	(key = "LOOT_ITEM_CREATED_SELF", string = "You create: %s x%d")
+	(key = "LOOT_ITEM_PUSHED", string = "%s receives item: %s x%d")
+	(key = "LOOT_ITEM_PUSHED_SELF", string = "You receive item: %s x%d")
+	(key = "LOOT_ITEM_SELF", string = "You receive loot: %s x%d")
 }
