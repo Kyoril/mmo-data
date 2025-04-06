@@ -17,7 +17,7 @@ function QuestLogFrame_OnLoad(self)
     -- Setup quest detail scroll bar
     QuestLogQuestDetailPanelScrollBar:SetMinimum(0);
     QuestLogQuestDetailPanelScrollBar:SetValue(0);
-    QuestLogQuestDetailPanelScrollBar:SetStep(128); -- Scroll 128 "pixels" at a time when clicking the step buttons
+    QuestLogQuestDetailPanelScrollBar:SetStep(32); -- Scroll 32 "pixels" at a time when clicking the step buttons
     QuestLogQuestDetailPanelScrollBar:SetMaximum(0);
     QuestLogQuestDetailPanelScrollBar:SetOnValueChangedHandler(QuestLogQuestDetailPanelScrollBar_OnValueChanged);
     QuestLogQuestDetailPanelScrollBar:Disable();
@@ -25,7 +25,7 @@ function QuestLogFrame_OnLoad(self)
     -- Setup quest list scroll bar
     QuestLogQuestListScrollBar:SetMinimum(0);
     QuestLogQuestListScrollBar:SetValue(0);
-    QuestLogQuestListScrollBar:SetMaximum(0);
+    QuestLogQuestListScrollBar:SetMaximum(5);
     QuestLogQuestListScrollBar:SetOnValueChangedHandler(QuestLogQuestListScrollBar_OnValueChanged);
     QuestLogQuestListScrollBar:Disable();
 
@@ -196,7 +196,7 @@ function QuestLog_Update()
         QuestLogQuestListScrollBar:SetMaximum(questCount - MAX_DISPLAY_QUESTS);
         QuestLogQuestListScrollBar:Enable();
     else
-        QuestLogQuestListScrollBar:SetMaximum(0);
+        QuestLogQuestListScrollBar:SetMaximum(5);
         QuestLogQuestListScrollBar:Disable();
     end
 

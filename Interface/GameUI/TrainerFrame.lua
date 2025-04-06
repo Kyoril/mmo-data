@@ -23,9 +23,14 @@ function TrainerFrame_CanBuySpell(trainerSpellIndex)
     end
 
     -- Get trainer spell cost
-    local spellId, spellName, spellIcon, cost = GetTrainerSpellInfo(trainerSpellIndex);
+    local spellId, spellName, spellIcon, cost, isKnown = GetTrainerSpellInfo(trainerSpellIndex);
     if spellId < 0 then
         -- Can't buy because spell doesn't exist
+        return false;
+    end
+
+    if isKnown then
+        -- Can't buy because already known
         return false;
     end
 
@@ -35,7 +40,23 @@ function TrainerFrame_CanBuySpell(trainerSpellIndex)
         return false;
     end
 
-    -- TODO: Level check
+    -- Level check
+    local player = GetUnit("player");
+    local playerLevel = player:GetLevel();
+    local spell = gameData.spells:GetById(spellId);
+    if not spell then
+        -- Can't buy because spell doesn't exist
+        return false;
+    end
+
+    if spell.level and spell.level > 0 then
+        -- Spell has a level requirement
+        local spellLevel = spell.level;
+        if playerLevel < spellLevel then
+            -- Can't buy because not high enough level
+            return false;
+        end
+    end
 
     return true;
 end
@@ -93,9 +114,12 @@ function TrainerFrame_OnLoad(self)
     self:RegisterEvent("TRAINER_SHOW", TrainerFrame_OnTrainerShow);
     self:RegisterEvent("TRAINER_UPDATE", TrainerFrame_OnTrainerUpdate);
     self:RegisterEvent("TRAINER_CLOSED", TrainerFrame_OnTrainerClosed);
+    self:RegisterEvent("MONEY_CHANGED", TrainerList_Update);
+    self:RegisterEvent("SPELL_LEARNED", TrainerList_Update);
+    self:RegisterEvent("PLAYER_LEVEL_CHANGED", TrainerList_Update);
 end
 
-function TrainerFrame_OnShow(self)
+function TrainerList_Update(self)
     local target = GetUnit("target");
     if target then
         self:GetChild(0):SetText(target:GetName());
@@ -117,8 +141,39 @@ function TrainerFrame_OnShow(self)
         end
 
         if i <= numTrainerSpells then
-            local spellId, spellName, spellIcon, cost = GetTrainerSpellInfo(i - 1);
+            local spellId, spellName, spellIcon, cost, is_known = GetTrainerSpellInfo(i - 1);
             item:SetText(spellName);
+
+            if is_known then
+                item:SetProperty("TextColorNormal", "FF999999");
+                item:SetProperty("TextColorHovered", "FFFFFFFF");
+                item:SetProperty("TextColorNormalChecked", "FF999999");
+                item:SetProperty("TextColorHoveredChecked", "FF999999");
+                item:SetProperty("TextColorPushedChecked", "FF999999");
+                item:SetProperty("BackgroundColorNormalChecked", "888C8C8C");
+                item:SetProperty("BackgroundColorHovered", "888C8C8C");
+            else
+                -- Check if usable
+                local is_usable = TrainerFrame_CanBuySpell(i - 1);
+                if is_usable then
+                    item:SetProperty("TextColorNormal", "FF00FF00");
+                    item:SetProperty("TextColorHovered", "FFFFFFFF");
+                    item:SetProperty("TextColorNormalChecked", "FF00FF00");
+                    item:SetProperty("TextColorHoveredChecked", "FFFFFFFF");
+                    item:SetProperty("TextColorPushedChecked", "FF3F3F3F");
+                    item:SetProperty("BackgroundColorNormalChecked", "FF033F08");
+                    item:SetProperty("BackgroundColorHovered", "FF033F08");
+                else
+                    item:SetProperty("TextColorNormal", "FFFF0000");
+                    item:SetProperty("TextColorHovered", "FFFFFFFF");
+                    item:SetProperty("TextColorNormalChecked", "FFFF0000");
+                    item:SetProperty("TextColorHoveredChecked", "FFFFFFFF");
+                    item:SetProperty("TextColorPushedChecked", "FF3F3F3F");
+                    item:SetProperty("BackgroundColorNormalChecked", "FF8C0A0A");
+                    item:SetProperty("BackgroundColorHovered", "FF8C0A0A");
+                end
+            end
+
             item:Show();
         else
             item:Hide();
@@ -127,6 +182,10 @@ function TrainerFrame_OnShow(self)
 
     local money = UnitMoney("player");
     RefreshMoneyFrame("TrainerPlayerMoneyFrame", money, false, false, true);
+end
+
+function TrainerFrame_OnShow(self)
+    TrainerList_Update(self);
 end
 
 function TrainerFrame_Toggle()

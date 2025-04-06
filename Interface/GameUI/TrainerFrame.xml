@@ -5,16 +5,27 @@
 	<Frame name="TrainerSpellbutton" type="Button" renderer="CheckboxRenderer">
 		<Property name="Font" value="DefaultSmall" />
 		<Property name="Checkable" value="true" />
-
+		<Property name="BackgroundColorNormal" value="FFFFFFFF" />
+		<Property name="BackgroundColorHovered" value="FFFF9B38" />
+		<Property name="BackgroundColorPushed" value="FF9E5E22" />
+		<Property name="BackgroundColorNormalChecked" value="FF033F08" />
+		<Property name="BackgroundColorNormalHovered" value="FF033F08" />
+		<Property name="TextColorNormal" value="FFEED37C" />
+		<Property name="TextColorHovered" value="FFEED37C" />
+		<Property name="TextColorPushed" value="FFEED37C" />
+		<Property name="TextColorNormalChecked" value="FFEED37C" />
+		<Property name="TextColorHoveredChecked" value="FFEED37C" />
+		<Property name="TextColorPushedChecked" value="FFEED37C" />
+		
 		<Visual>
 			<ImagerySection name="FrameNormal">
-				<ImageComponent texture="Interface/GlueUI/CharSelectButtonBackground.htex" />
+				<ImageComponent texture="Interface/GlueUI/CharSelectButtonBackground.htex" tint="$BackgroundColorNormal" />
 			</ImagerySection>
 			<ImagerySection name="FrameHovered">
-				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="FFFF9B38" />
+				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="$BackgroundColorHovered" />
 			</ImagerySection>
 			<ImagerySection name="FramePushed">
-				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="FF9E5E22">
+				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="$BackgroundColorPushed">
 					<Area>
 						<Inset left="16" top="16" />
 					</Area>
@@ -25,17 +36,52 @@
 			</ImagerySection>
 
 			<ImagerySection name="FrameNormalChecked">
-				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="FF033F08" />
+				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="$BackgroundColorNormalChecked" />
 			</ImagerySection>
 			<ImagerySection name="FramePushedChecked">
-				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="FF033F08">
+				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="$BackgroundColorPushedChecked">
 					<Area>
 						<Inset left="16" top="16" />
 					</Area>
 				</ImageComponent>
 			</ImagerySection>
 			<ImagerySection name="Text">
-				<TextComponent color="FFEED37C" horzAlign="LEFT" vertAlign="TOP">
+				<TextComponent color="$TextColorNormal" horzAlign="LEFT" vertAlign="TOP">
+					<Area>
+						<Inset left="16" top="16" />
+					</Area>
+				</TextComponent>
+			</ImagerySection>
+			<ImagerySection name="TextPushed">
+				<TextComponent color="$TextColorPushed" horzAlign="LEFT" vertAlign="TOP">
+					<Area>
+						<Inset left="16" top="16" />
+					</Area>
+				</TextComponent>
+			</ImagerySection>
+			<ImagerySection name="TextHovered">
+				<TextComponent color="$TextColorHovered" horzAlign="LEFT" vertAlign="TOP">
+					<Area>
+						<Inset left="16" top="16" />
+					</Area>
+				</TextComponent>
+			</ImagerySection>
+			<ImagerySection name="TextChecked">
+				<TextComponent color="$TextColorNormalChecked" horzAlign="LEFT" vertAlign="TOP">
+					<Area>
+						<Inset left="16" top="16" />
+					</Area>
+				</TextComponent>
+			</ImagerySection>
+			<ImagerySection name="TextHoveredChecked">
+				<TextComponent color="$TextColorHoveredChecked" horzAlign="LEFT" vertAlign="TOP">
+					<Area>
+						<Inset left="16" top="16" />
+					</Area>
+				</TextComponent>
+			</ImagerySection>
+			<ImagerySection name="TextPushedChecked">
+				<TextComponent color="$TextColorPushedChecked" horzAlign="LEFT" vertAlign="TOP">
 					<Area>
 						<Inset left="16" top="16" />
 					</Area>
@@ -58,13 +104,13 @@
 			<StateImagery name="Hovered">
 				<Layer>
 					<Section section="FrameHovered" />
-					<Section section="Text" />
+					<Section section="TextHovered" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="Pushed">
 				<Layer>
 					<Section section="FramePushed" />
-					<Section section="Text" />
+					<Section section="TextPushed" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="Disabled">
@@ -77,19 +123,19 @@
 			<StateImagery name="NormalChecked">
 				<Layer>
 					<Section section="FrameNormalChecked" />
-					<Section section="Text" />
+					<Section section="TextChecked" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="HoveredChecked">
 				<Layer>
 					<Section section="FrameNormalChecked" />
-					<Section section="Text" />
+					<Section section="TextHoveredChecked" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="PushedChecked">
 				<Layer>
 					<Section section="FramePushedChecked" />
-					<Section section="Text" />
+					<Section section="TextPushedChecked" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="DisabledChecked">
