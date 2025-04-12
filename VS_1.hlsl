@@ -28,6 +28,7 @@ cbuffer Matrices
 	column_major matrix matView;
 	column_major matrix matProj;
 	column_major matrix matInvView;
+	column_major matrix InverseProjection;
 };
 
 cbuffer Bones
