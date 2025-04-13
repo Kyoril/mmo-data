@@ -18,6 +18,7 @@ struct VertexOut
 	float2 uv0 : TEXCOORD0;
 	float3 worldPos : TEXCOORD1;
 	float3 viewDir : TEXCOORD2;
+	float3 viewPos : TEXCOORD3;
 };
 
 cbuffer Matrices
@@ -42,6 +43,7 @@ VertexOut main(VertexIn input)
 	output.worldPos = output.pos.xyz;
 	output.viewDir = normalize(matInvView[3].xyz - output.worldPos);
 	output.pos = mul(output.pos, matView);
+	output.viewPos = output.pos;
 	output.pos = mul(output.pos, matProj);
 	output.color = input.color;
 	output.uv0 = input.uv0;
