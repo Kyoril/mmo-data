@@ -24,20 +24,21 @@ cbuffer CameraParameters : register(b1)
 
 cbuffer ScalarParameters : register(b2)
 {
-	float sScaleUV;
-	float sScaleMaskDirt;
-	float sIntensityMaskDirt;
-	float sDirtContrast;
-	float sDirtPower;
+	float sScaleTextures;
+	float sEdgeContrast;
+	float sEdgePower;
 	float sNormalPower;
-	float sRougness;
+	float sRoughnessEdge;
+	float sRoughnessA;
+	float sRoughnessB;
+	float sRoughnessContrast;
+	float sRoughnessPower;
 };
 
 cbuffer VectorParameters : register(b3)
 {
-	float4 vDirtColor;
+	float4 vEdgeColor;
 	float4 vHueColor;
-	float4 vHueMaskDirt;
 };
 
 struct VertexOut
@@ -53,17 +54,17 @@ struct VertexOut
 	float3 viewPos : TEXCOORD3;
 };
 
-// Textures/T_plaster_Mask.htex
-Texture2D tex0;
-SamplerState sampler0;
-
 // BaseColor
 Texture2D texparam0;
 SamplerState paramsampler0;
 
-// Normal
+// BuildingNormal
 Texture2D texparam1;
 SamplerState paramsampler1;
+
+// Normal
+Texture2D texparam2;
+SamplerState paramsampler2;
 
 float3 GetWorldNormal(float3 tangentSpaceNormal, float3 N, float3 T, float3 B)
 {
@@ -122,272 +123,320 @@ float4 main(VertexOut input) : SV_Target
 	float3 B = normalize(input.binormal);
 	float3 T = normalize(input.tangent);
 	float3x3 TBN = float3x3(T, B, N);
-	float4 expr_0 = vDirtColor;
+	float4 expr_0 = vEdgeColor;
 
 	float3 expr_1 = expr_0.rgb;
 
-	float2 expr_2 = input.uv0;
+	float3 expr_2 = input.worldPos.xyz;
 
-	float expr_3 = sScaleUV;
+	float expr_3 = sScaleTextures;
 
-	float2 expr_4 = expr_2 * expr_3;
+	float3 expr_4 = expr_2 / expr_3;
 
-	float4 expr_5 = texparam0.Sample(paramsampler0, expr_4.xy);
+	float2 expr_5 = expr_4.rb;
 
-	float3 expr_6 = expr_5.rgb;
+	float4 expr_6 = texparam0.Sample(paramsampler0, expr_5.xy);
 
-	float expr_7 = expr_6.r;
+	float3 expr_7 = expr_6.rgb;
 
-	float expr_8 = 0.500000;
+	float3 expr_8 = N;
 
-	float3 expr_9 = expr_5.rgb;
+	float3 expr_9 = abs(expr_8);
 
-	float3 expr_10 = 1.0 - expr_9;
+	float expr_10 = 10.000000;
 
-	float expr_11 = 2.000000;
+	float3 expr_11 = pow(expr_9, expr_10);
 
-	float3 expr_12 = expr_10 * expr_11;
+	float expr_12 = expr_11.r;
 
-	float4 expr_13 = vHueColor;
+	float expr_13 = expr_11.g;
 
-	float3 expr_14 = expr_13.rgb;
+	float expr_14 = expr_12 + expr_13;
 
-	float3 expr_15 = 1.0 - expr_14;
+	float expr_15 = expr_11.b;
 
-	float3 expr_16 = expr_12 * expr_15;
+	float expr_16 = expr_14 + expr_15;
 
-	float3 expr_17 = 1.0 - expr_16;
+	float3 expr_17 = expr_11 / expr_16;
 
-	float expr_18 = expr_17.r;
+	float expr_18 = expr_17.g;
 
-	float3 expr_19 = expr_5.rgb;
+	float3 expr_19 = expr_7 * expr_18;
 
-	float expr_20 = 2.000000;
+	float2 expr_20 = expr_4.rg;
 
-	float3 expr_21 = expr_19 * expr_20;
+	float4 expr_21 = texparam0.Sample(paramsampler0, expr_20.xy);
 
-	float3 expr_22 = expr_13.rgb;
+	float3 expr_22 = expr_21.rgb;
 
-	float3 expr_23 = expr_21 * expr_22;
+	float expr_23 = expr_17.b;
 
-	float expr_24 = expr_23.r;
+	float3 expr_24 = expr_22 * expr_23;
 
-	float expr_25 = select((expr_7 >= expr_8), expr_18, expr_24);
+	float3 expr_25 = expr_19 + expr_24;
 
-	float3 expr_26 = expr_5.rgb;
+	float2 expr_26 = expr_4.gb;
 
-	float expr_27 = expr_26.g;
+	float4 expr_27 = texparam0.Sample(paramsampler0, expr_26.xy);
 
-	float expr_28 = expr_17.g;
+	float3 expr_28 = expr_27.rgb;
 
-	float expr_29 = expr_23.g;
+	float expr_29 = expr_17.r;
 
-	float expr_30 = select((expr_27 >= expr_8), expr_28, expr_29);
+	float3 expr_30 = expr_28 * expr_29;
 
-	float2 expr_31 = float2(expr_25, expr_30);
+	float3 expr_31 = expr_25 + expr_30;
 
-	float3 expr_32 = expr_5.rgb;
+	float expr_32 = expr_31.r;
 
-	float expr_33 = expr_32.b;
+	float expr_33 = 0.500000;
 
-	float expr_34 = expr_17.b;
+	float3 expr_34 = 1.0 - expr_31;
 
-	float expr_35 = expr_23.b;
+	float expr_35 = 2.000000;
 
-	float expr_36 = select((expr_33 >= expr_8), expr_34, expr_35);
+	float3 expr_36 = expr_34 * expr_35;
 
-	float3 expr_37 = float3(expr_31, expr_36);
+	float4 expr_37 = vHueColor;
 
-	float expr_38 = expr_37.r;
+	float3 expr_38 = expr_37.rgb;
 
-	float expr_39 = 0.500000;
+	float3 expr_39 = 1.0 - expr_38;
 
-	float3 expr_40 = 1.0 - expr_37;
+	float3 expr_40 = expr_36 * expr_39;
 
-	float expr_41 = 2.000000;
+	float3 expr_41 = 1.0 - expr_40;
 
-	float3 expr_42 = expr_40 * expr_41;
+	float expr_42 = expr_41.r;
 
-	float4 expr_43 = vHueMaskDirt;
+	float expr_43 = 2.000000;
 
-	float3 expr_44 = expr_43.rgb;
+	float3 expr_44 = expr_31 * expr_43;
 
-	float3 expr_45 = 1.0 - expr_44;
+	float3 expr_45 = expr_37.rgb;
 
-	float3 expr_46 = expr_42 * expr_45;
+	float3 expr_46 = expr_44 * expr_45;
 
-	float3 expr_47 = 1.0 - expr_46;
+	float expr_47 = expr_46.r;
 
-	float expr_48 = expr_47.r;
+	float expr_48 = select((expr_32 >= expr_33), expr_42, expr_47);
 
-	float expr_49 = 2.000000;
+	float expr_49 = expr_31.g;
 
-	float3 expr_50 = expr_37 * expr_49;
+	float expr_50 = expr_41.g;
 
-	float3 expr_51 = expr_43.rgb;
+	float expr_51 = expr_46.g;
 
-	float3 expr_52 = expr_50 * expr_51;
+	float expr_52 = select((expr_49 >= expr_33), expr_50, expr_51);
 
-	float expr_53 = expr_52.r;
+	float2 expr_53 = float2(expr_48, expr_52);
 
-	float expr_54 = select((expr_38 >= expr_39), expr_48, expr_53);
+	float expr_54 = expr_31.b;
 
-	float expr_55 = expr_37.g;
+	float expr_55 = expr_41.b;
 
-	float expr_56 = expr_47.g;
+	float expr_56 = expr_46.b;
 
-	float expr_57 = expr_52.g;
+	float expr_57 = select((expr_54 >= expr_33), expr_55, expr_56);
 
-	float expr_58 = select((expr_55 >= expr_39), expr_56, expr_57);
+	float3 expr_58 = float3(expr_53, expr_57);
 
-	float2 expr_59 = float2(expr_54, expr_58);
+	float expr_59 = 0.000000;
 
-	float expr_60 = expr_37.b;
+	float expr_60 = sEdgeContrast;
 
-	float expr_61 = expr_47.b;
+	float expr_61 = expr_59 - expr_60;
 
-	float expr_62 = expr_52.b;
+	float expr_62 = 1.000000;
 
-	float expr_63 = select((expr_60 >= expr_39), expr_61, expr_62);
+	float expr_63 = expr_60 + expr_62;
 
-	float3 expr_64 = float3(expr_59, expr_63);
+	float2 expr_64 = input.uv0;
 
-	float3 expr_65 = input.worldPos.xyz;
+	float4 expr_65 = (texparam1.Sample(paramsampler1, expr_64.xy) * 2.0 - 1.0);
 
-	float expr_66 = sScaleMaskDirt;
+	float expr_66 = expr_65.b;
 
-	float expr_67 = abs(expr_66);
+	float expr_67 = sEdgePower;
 
-	float expr_68 = -1.000000;
+	float expr_68 = pow(expr_66, expr_67);
 
-	float expr_69 = expr_67 * expr_68;
+	float expr_69 = lerp(expr_61, expr_63, expr_68);
 
-	float3 expr_70 = expr_65 / expr_69;
+	float expr_70 = 0.000000;
 
-	float2 expr_71 = expr_70.rb;
+	float expr_71 = 1.000000;
 
-	float4 expr_72 = tex0.Sample(sampler0, expr_71.xy);
+	float expr_72 = clamp(expr_69, expr_70, expr_71);
 
-	float3 expr_73 = expr_72.rgb;
+	float expr_73 = expr_72.r;
 
-	float2 expr_74 = expr_70.gb;
+	float3 expr_74 = lerp(expr_1, expr_58, expr_73);
 
-	float4 expr_75 = tex0.Sample(sampler0, expr_74.xy);
+	float3 expr_75 = expr_65.rgb;
 
-	float3 expr_76 = expr_75.rgb;
+	float3 expr_76 = expr_65.rgb;
 
-	float expr_77 = 0.000000;
+	float2 expr_77 = expr_76.rg;
 
-	float expr_78 = 1.000000;
+	float3 expr_78 = expr_65.rgb;
 
-	float expr_79 = expr_77 - expr_78;
+	float expr_79 = expr_78.b;
 
 	float expr_80 = 1.000000;
 
-	float expr_81 = expr_78 + expr_80;
+	float expr_81 = expr_79 + expr_80;
 
-	float3 expr_82 = N;
+	float3 expr_82 = float3(expr_77, expr_81);
 
-	float expr_83 = expr_82.r;
+	float3 expr_83 = N;
 
-	float expr_84 = abs(expr_83);
+	float expr_84 = expr_83.r;
 
-	float expr_85 = lerp(expr_79, expr_81, expr_84);
+	float4 expr_85 = (texparam2.Sample(paramsampler2, input.uv0) * 2.0 - 1.0);
 
-	float expr_86 = 0.000000;
+	float expr_86 = expr_85.b;
 
-	float expr_87 = 1.000000;
+	float expr_87 = expr_84 * expr_86;
 
-	float expr_88 = clamp(expr_85, expr_86, expr_87);
+	float expr_88 = expr_83.g;
 
-	float expr_89 = expr_88.r;
+	float expr_89 = expr_85.r;
 
-	float3 expr_90 = lerp(expr_73, expr_76, expr_89);
+	float expr_90 = expr_88 + expr_89;
 
-	float2 expr_91 = expr_70.rg;
+	float2 expr_91 = float2(expr_87, expr_90);
 
-	float4 expr_92 = tex0.Sample(sampler0, expr_91.xy);
+	float expr_92 = expr_83.b;
 
-	float3 expr_93 = expr_92.rgb;
+	float expr_93 = expr_85.g;
 
-	float expr_94 = expr_82.b;
+	float expr_94 = expr_92 + expr_93;
 
-	float expr_95 = abs(expr_94);
+	float3 expr_95 = float3(expr_91, expr_94);
 
-	float expr_96 = lerp(expr_79, expr_81, expr_95);
+	float3 expr_96 = expr_95 * expr_18;
 
-	float expr_97 = 0.000000;
+	float4 expr_97 = (texparam2.Sample(paramsampler2, input.uv0) * 2.0 - 1.0);
 
-	float expr_98 = 1.000000;
+	float expr_98 = expr_97.r;
 
-	float expr_99 = clamp(expr_96, expr_97, expr_98);
+	float expr_99 = expr_84 + expr_98;
 
-	float expr_100 = expr_99.r;
+	float expr_100 = expr_97.b;
 
-	float3 expr_101 = lerp(expr_90, expr_93, expr_100);
+	float expr_101 = expr_88 * expr_100;
 
-	float expr_102 = expr_101.r;
+	float2 expr_102 = float2(expr_99, expr_101);
 
-	float3 expr_103 = lerp(expr_64, expr_37, expr_102);
+	float expr_103 = expr_97.g;
 
-	float expr_104 = sIntensityMaskDirt;
+	float expr_104 = expr_92 + expr_103;
 
-	float3 expr_105 = lerp(expr_37, expr_103, expr_104);
+	float3 expr_105 = float3(expr_102, expr_104);
 
-	float expr_106 = 0.000000;
+	float3 expr_106 = expr_105 * expr_23;
 
-	float expr_107 = sDirtContrast;
+	float3 expr_107 = expr_96 + expr_106;
 
-	float expr_108 = expr_106 - expr_107;
+	float4 expr_108 = (texparam2.Sample(paramsampler2, input.uv0) * 2.0 - 1.0);
 
-	float expr_109 = 1.000000;
+	float expr_109 = expr_108.r;
 
-	float expr_110 = expr_107 + expr_109;
+	float expr_110 = expr_84 + expr_109;
 
-	float4 expr_111 = (texparam1.Sample(paramsampler1, expr_4.xy) * 2.0 - 1.0);
+	float expr_111 = expr_108.g;
 
-	float expr_112 = expr_111.b;
+	float expr_112 = expr_88 + expr_111;
 
-	float expr_113 = sDirtPower;
+	float2 expr_113 = float2(expr_110, expr_112);
 
-	float expr_114 = pow(expr_112, expr_113);
+	float expr_114 = expr_108.b;
 
-	float expr_115 = lerp(expr_108, expr_110, expr_114);
+	float expr_115 = expr_92 * expr_114;
 
-	float expr_116 = 0.000000;
+	float3 expr_116 = float3(expr_113, expr_115);
 
-	float expr_117 = 1.000000;
+	float3 expr_117 = expr_116 * expr_29;
 
-	float expr_118 = clamp(expr_115, expr_116, expr_117);
+	float3 expr_118 = expr_107 + expr_117;
 
-	float expr_119 = expr_118.r;
+	float3 expr_119 = normalize(expr_118);
 
-	float3 expr_120 = lerp(expr_1, expr_105, expr_119);
+	float3 expr_120 = mul(TBN, expr_119);
 
-	float3 expr_121 = expr_111.rgb;
+	float4 expr_121 = float4(0, 0, 1, 1);
 
-	float3 expr_122 = expr_121.rgb;
+	float expr_122 = sNormalPower;
 
-	float4 expr_123 = float4(0, 0, 1, 1);
+	float3 expr_123 = lerp(expr_120, expr_121, expr_122);
 
-	float3 expr_124 = expr_123.rgb;
+	float2 expr_124 = expr_123.rg;
 
-	float expr_125 = sNormalPower;
+	float expr_125 = -1.000000;
 
-	float3 expr_126 = lerp(expr_122, expr_124, expr_125);
+	float2 expr_126 = expr_124 * expr_125;
 
-	float expr_127 = expr_5.a;
+	float expr_127 = expr_123.b;
 
-	float expr_128 = sRougness;
+	float3 expr_128 = float3(expr_126, expr_127);
 
-	float expr_129 = expr_127 * expr_128;
+	float expr_129 = dot(expr_82, expr_128);
 
-	N = expr_126;
+	float3 expr_130 = expr_82 * expr_129;
+
+	float3 expr_131 = expr_81 * expr_128;
+
+	float3 expr_132 = expr_130 - expr_131;
+
+	float3 expr_133 = normalize(expr_132);
+
+	float3 expr_134 = lerp(expr_75, expr_133, expr_73);
+
+	float expr_135 = 0.500000;
+
+	float expr_136 = sRoughnessEdge;
+
+	float expr_137 = sRoughnessA;
+
+	float expr_138 = sRoughnessB;
+
+	float expr_139 = 0.000000;
+
+	float expr_140 = sRoughnessContrast;
+
+	float expr_141 = expr_139 - expr_140;
+
+	float expr_142 = 1.000000;
+
+	float expr_143 = expr_140 + expr_142;
+
+	float expr_144 = expr_31.r;
+
+	float expr_145 = sRoughnessPower;
+
+	float expr_146 = pow(expr_144, expr_145);
+
+	float expr_147 = lerp(expr_141, expr_143, expr_146);
+
+	float expr_148 = 0.000000;
+
+	float expr_149 = 1.000000;
+
+	float expr_150 = clamp(expr_147, expr_148, expr_149);
+
+	float expr_151 = expr_150.r;
+
+	float expr_152 = lerp(expr_137, expr_138, expr_151);
+
+	float expr_153 = lerp(expr_136, expr_152, expr_73);
+
+	N = expr_134;
 
 	N = GetWorldNormal(N, input.normal, input.tangent, input.binormal);
-	float specular = 0.5;
+	float specular = saturate(expr_135);
 
-	float roughness = saturate(expr_129);
+	float roughness = saturate(expr_153);
 
 	float metallic = 0.0;
 
@@ -395,7 +444,7 @@ float4 main(VertexOut input) : SV_Target
 
 	float3 baseColor = float3(1.0, 1.0, 1.0);
 
-	baseColor = expr_120;
+	baseColor = expr_74;
 
 	if (opacity <= 0.333) discard;
 	baseColor = pow(baseColor, 2.2);
