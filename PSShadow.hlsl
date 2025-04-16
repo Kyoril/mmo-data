@@ -31,32 +31,6 @@ struct VertexOut
 	float3 viewPos : TEXCOORD2;
 };
 
-float4 main(VertexOut input) : SV_Target
+void main(VertexOut input)
 {
-	float4 outputColor = float4(1, 1, 1, 1);
-
-	float3 V = normalize(input.viewDir);
-
-	float4 expr_0 = float4(1, 0, 0, 1);
-
-	float3 N = float3(0.0, 0.0, 1.0);
-
-	float specular = 0.5;
-
-	float roughness = 1.0;
-
-	float metallic = 0.0;
-
-	float opacity = 1.0;
-
-	float3 baseColor = float3(1.0, 1.0, 1.0);
-
-	baseColor = expr_0.rgb;
-
-	if (opacity <= 0.333) discard;
-	baseColor = pow(baseColor, 2.2);
-	float3 ao = float3(1.0, 1.0, 1.0);
-
-	outputColor = float4(baseColor, opacity);
-	return outputColor;
 }
