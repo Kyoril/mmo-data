@@ -49,36 +49,78 @@ cbuffer CameraParameters : register(b1)
 	row_major matrix inverseCameraView;	// Inverse view matrix
 };
 
+cbuffer ScalarParameters : register(b2)
+{
+	float sSpecular;
+	float sRoughness;
+	float sOpacity;
+};
+
 struct VertexOut
 {
 	float4 pos : SV_POSITION;
 	float4 color : COLOR;
-	float3 worldPos : TEXCOORD0;
-	float3 viewDir : TEXCOORD1;
-	float3 viewPos : TEXCOORD2;
+	float3 normal : NORMAL;
+	float3 binormal : BINORMAL;
+	float3 tangent : TANGENT;
+	float2 uv0 : TEXCOORD0;
+	float3 worldPos : TEXCOORD1;
+	float3 viewDir : TEXCOORD2;
+	float3 viewPos : TEXCOORD3;
 };
+
+// Textures/FalwynPlains/Trees/T_foliage_BaseColor.htex
+Texture2D tex0;
+SamplerState sampler0;
+
+float3 GetWorldNormal(float3 tangentSpaceNormal, float3 N, float3 T, float3 B)
+{
+	// tangentSpaceNormal is usually in range [0,1]. Convert to [-1,1]
+	float3 n = tangentSpaceNormal /* * 2.0f - 1.0f*/;
+
+	// Re-orient using T, B, N. (Assuming T,B,N are all normalized & orthonormal)
+	float3 worldNormal = normalize(n.x * T + n.y * B + n.z * N);
+	return worldNormal;
+}
 
 GBufferOutput main(VertexOut input)
 {
 	float4 outputColor = float4(1, 1, 1, 1);
 
+	float3 N = normalize(input.normal);
+
 	float3 V = normalize(input.viewDir);
 
-	float4 expr_0 = float4(1, 0, 0, 1);
+	float3 B = normalize(input.binormal);
+	float3 T = normalize(input.tangent);
+	float3x3 TBN = float3x3(T, B, N);
+	float2 expr_0 = input.uv0;
 
-	float3 N = float3(0.0, 0.0, 1.0);
+	float4 expr_1 = tex0.Sample(sampler0, expr_0.xy);
 
-	float specular = 0.5;
+	float3 expr_2 = expr_1.rgb;
 
-	float roughness = 1.0;
+	float expr_3 = sSpecular;
+
+	float expr_4 = sRoughness;
+
+	float expr_5 = expr_1.a;
+
+	float expr_6 = sOpacity;
+
+	float expr_7 = expr_5 * expr_6;
+
+	float specular = saturate(expr_3);
+
+	float roughness = saturate(expr_4);
 
 	float metallic = 0.0;
 
-	float opacity = 1.0;
+	float opacity = saturate(expr_7);
 
 	float3 baseColor = float3(1.0, 1.0, 1.0);
 
-	baseColor = expr_0.rgb;
+	baseColor = expr_2;
 
 	if (opacity < 0.333) discard;
 	float3 ao = float3(1.0, 1.0, 1.0);
@@ -87,9 +129,9 @@ GBufferOutput main(VertexOut input)
 	float3 viewPos = mul(float4(input.worldPos, 1.0), matView).xyz;
 	float linearDepth = length(viewPos);
 	output.viewRay = float4(normalize(input.viewPos), 1.0);
-	output.albedo = float4(0.0, 0.0, 0.0, 1.0);
-	output.normal = float4(0.5, 0.5, 1.0, linearDepth);
+	output.albedo = float4(baseColor, 1.0);
+	output.normal = float4(N * 0.5 + 0.5, linearDepth);
 	output.material = float4(metallic, roughness, specular, 1.0);
-	output.emissive = float4(baseColor, 0.0);
+	output.emissive = float4(0.0, 0.0, 0.0, 0.0);
 	return output;
 }
