@@ -4,3 +4,5 @@
 
 **/.vs
 /Cache
+**/*.pdb
+*.hlsl
