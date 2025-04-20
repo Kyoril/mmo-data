@@ -74,7 +74,7 @@ function QuestFrame_OnQuestGreeting(self)
             button:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, 0);
             AvailableQuestList:AddChild(button);
             
-            button:SetHeight(button:GetTextHeight());
+            button:SetHeight(button:GetTextHeight() + 16);
 
             prevButton = button;
         end
