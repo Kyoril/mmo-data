@@ -1,0 +1,14 @@
+
+Idle
+	Death
+Walk
+Run
+Dead
+WalkBackwards
+	JumpStart
+
+Jump
+JumpEnd
+Fall
+UnarmedReady
+UnarmedAttack01
