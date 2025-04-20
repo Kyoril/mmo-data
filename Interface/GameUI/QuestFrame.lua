@@ -98,7 +98,7 @@ function QuestFrame_OnQuestGreeting(self)
             local button = QuestMenuButtonTemplate:Clone();
             button.id = i - 1;
             button:SetText(action.text);
-            --button:SetProperty("Icon", QuestListIcons[quest.icon]);
+            button:SetProperty("Icon", "Interface/Icons/fg4_iconsFlat_dialogue.htex");
             button:SetClickedHandler(GossipActionButton_OnClick);
             -- Anchor frame
             if (prevButton) then
@@ -110,7 +110,7 @@ function QuestFrame_OnQuestGreeting(self)
             button:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, 0);
             GossipActionList:AddChild(button);
 
-            button:SetHeight(button:GetTextHeight());
+            button:SetHeight(button:GetTextHeight() + 16);
 
             prevButton = button;
         end

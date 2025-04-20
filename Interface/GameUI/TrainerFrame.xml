@@ -8,6 +8,7 @@
 		<Property name="BackgroundColorNormal" value="FFFFFFFF" />
 		<Property name="BackgroundColorHovered" value="FFFF9B38" />
 		<Property name="BackgroundColorPushed" value="FF9E5E22" />
+		<Property name="BackgroundColorPushedChecked" value="FF9E5E22" />
 		<Property name="BackgroundColorNormalChecked" value="FF033F08" />
 		<Property name="BackgroundColorNormalHovered" value="FF033F08" />
 		<Property name="TextColorNormal" value="FFEED37C" />
