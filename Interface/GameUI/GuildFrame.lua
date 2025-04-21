@@ -7,114 +7,17 @@ GUILD_COMMAND_RESULTS[5] = "GUILD_ALREADY_IN_OTHER_GUILD";
 GUILD_COMMAND_RESULTS[6] = "GUILD_INVITE_PENDING";
 
 -- Guild roster data
-local GUILD_ROSTER_MAX_DISPLAY = 10;
+local GUILD_ROSTER_MAX_DISPLAY = 16;
 local GUILD_ROSTER_OFFSET = 0;
 local GUILD_ROSTER_SELECTED_INDEX = nil;
 local GUILD_ROSTER_SORT_COLUMN = "name";
 local GUILD_ROSTER_SORT_ASCENDING = true;
 
 -- Mock guild data for testing
-local MOCK_GUILD_DATA = {
+local GUILD_DATA = {
     name = "Test Guild",
     motd = "Welcome to the Test Guild! This is our message of the day.",
-    members = {
-        {
-            name = "PlayerOne",
-            status = "Online",
-            level = 60,
-            race = "Human",
-            class = "Warrior",
-            rank = "Guild Master"
-        },
-        {
-            name = "PlayerTwo",
-            status = "Online",
-            level = 58,
-            race = "Dwarf",
-            class = "Paladin",
-            rank = "Officer"
-        },
-        {
-            name = "PlayerThree",
-            status = "Offline",
-            level = 45,
-            race = "Night Elf",
-            class = "Druid",
-            rank = "Member"
-        },
-        {
-            name = "PlayerFour",
-            status = "Online",
-            level = 52,
-            race = "Gnome",
-            class = "Mage",
-            rank = "Member"
-        },
-        {
-            name = "PlayerFive",
-            status = "Offline",
-            level = 30,
-            race = "Human",
-            class = "Rogue",
-            rank = "Initiate"
-        },
-        {
-            name = "PlayerSix",
-            status = "Online",
-            level = 60,
-            race = "Dwarf",
-            class = "Hunter",
-            rank = "Officer"
-        },
-        {
-            name = "PlayerSeven",
-            status = "Offline",
-            level = 48,
-            race = "Gnome",
-            class = "Warlock",
-            rank = "Member"
-        },
-        {
-            name = "PlayerEight",
-            status = "Online",
-            level = 55,
-            race = "Night Elf",
-            class = "Priest",
-            rank = "Member"
-        },
-        {
-            name = "PlayerNine",
-            status = "Online",
-            level = 60,
-            race = "Human",
-            class = "Paladin",
-            rank = "Officer"
-        },
-        {
-            name = "PlayerTen",
-            status = "Offline",
-            level = 42,
-            race = "Dwarf",
-            class = "Warrior",
-            rank = "Member"
-        },
-        {
-            name = "PlayerEleven",
-            status = "Online",
-            level = 60,
-            race = "Human",
-            class = "Mage",
-            rank = "Member"
-        },
-        {
-            name = "PlayerTwelve",
-            status = "Offline",
-            level = 37,
-            race = "Gnome",
-            class = "Rogue",
-            rank = "Initiate"
-        }
-    }
+    members = {}
 };
 
 -- Event handlers
@@ -171,11 +74,12 @@ function GuildFrame_OnLoad(self)
     self:RegisterEvent("GUILD_INVITE_DECLINED", GuildFrame_OnInviteDeclined);
     self:RegisterEvent("GUILD_EVENT", GuildFrame_OnEvent);
     self:RegisterEvent("GUILD_REMOVED", GuildFrame_OnRemoved);
+    self:RegisterEvent("GUILD_ROSTER_UPDATE", GuildRoster_Update);
     
     -- Set up the scroll frame
     local scrollBar = GuildRosterScrollBar;
     scrollBar:SetMinimum(0);
-    scrollBar:SetMaximum(math.max(0, #MOCK_GUILD_DATA.members - GUILD_ROSTER_MAX_DISPLAY));
+    scrollBar:SetMaximum(math.max(0, #GUILD_DATA.members - GUILD_ROSTER_MAX_DISPLAY));
     scrollBar:SetValue(0);
     scrollBar:SetOnValueChangedHandler(function(self, value) 
         GUILD_ROSTER_OFFSET = math.floor(value + 0.5);
@@ -183,8 +87,8 @@ function GuildFrame_OnLoad(self)
     end);
     
     -- Initialize the guild info
-    GuildNameLabel:SetText(MOCK_GUILD_DATA.name);
-    GuildMOTDLabel:SetText(MOCK_GUILD_DATA.motd);
+    GuildNameLabel:SetText(GUILD_DATA.name);
+    GuildMOTDLabel:SetText(GUILD_DATA.motd);
     
     -- Set up the action buttons
     GuildInviteButton:SetClickedHandler(GuildFrame_InviteClicked);
@@ -197,10 +101,7 @@ function GuildFrame_OnLoad(self)
 end
 
 function GuildFrame_OnShow(self)
-    -- Request guild roster update from server
-    -- In a real implementation, this would call a C++ function to request data from the server
-    -- For now, we'll just update with our mock data
-    GuildRoster_Update();
+    GuildRoster();
 end
 
 -- Guild roster functions
@@ -209,11 +110,29 @@ function GuildRoster_Update()
     local listContent = GuildRosterListContent;
     local scrollBar = GuildRosterScrollBar;
     
+    -- Update guild member data
+    GUILD_DATA.members = {};
+
+    local numMembers = GetNumGuildMembers();
+    for i = 1, numMembers do
+        local member = GetGuildMemberInfo(i - 1);
+        if (member) then
+            table.insert(GUILD_DATA.members, {
+                name = member.name,
+                rank = member.rank,
+                level = member.level,
+                class = member.className,
+                zone = member.raceName,
+                status = member.online and 1 or 0
+            });
+        end
+    end
+
     -- Sort the guild roster
-    local sortedMembers = GuildRoster_SortMembers();
+    GUILD_DATA.members = GuildRoster_SortMembers();
     
     -- Update the scroll bar
-    local maxValue = math.max(0, #sortedMembers - GUILD_ROSTER_MAX_DISPLAY);
+    local maxValue = math.max(0, #GUILD_DATA.members - GUILD_ROSTER_MAX_DISPLAY);
     scrollBar:SetMaximum(maxValue);
 
     if (GUILD_ROSTER_OFFSET > maxValue) then
@@ -226,16 +145,17 @@ function GuildRoster_Update()
         local button = listContent:GetChild(i - 1);
         local memberIndex = i + GUILD_ROSTER_OFFSET;
         
-        if (memberIndex <= #sortedMembers) then
-            local member = sortedMembers[memberIndex];
+        if (memberIndex <= #GUILD_DATA.members) then
+            local member = GUILD_DATA.members[memberIndex];
             
             -- Format the text to display all the member info
-            local statusColor = member.status == "Online" and "FF00FF00" or "FFFF0000";
+            local statusColor = member.status == 1 and "FF00FF00" or "FF888888";
             local text = string.format(
-                "%s  |  %d  |  %s",
+                "|c%s%s  |  %d  |  %s|r",
+                statusColor,
                 member.name,
                 member.level,
-                member.status
+                member.status and "Online" or "Offline"
             );
             
             button:SetText(text);
@@ -263,7 +183,7 @@ function GuildRoster_SortMembers()
     local members = {};
     
     -- Copy the members table
-    for i, member in ipairs(MOCK_GUILD_DATA.members) do
+    for i, member in ipairs(GUILD_DATA.members) do
         members[i] = {};
         for k, v in pairs(member) do
             members[i][k] = v;
@@ -317,9 +237,9 @@ function GuildFrame_UpdateActionButtons()
     -- Enable/disable buttons based on selection
     local hasSelection = GUILD_ROSTER_SELECTED_INDEX ~= nil;
     
-    GuildPromoteButton:SetEnabled(hasSelection);
-    GuildDemoteButton:SetEnabled(hasSelection);
-    GuildKickButton:SetEnabled(hasSelection);
+    GuildPromoteButton:SetEnabled(CanGuildPromote() and hasSelection);
+    GuildDemoteButton:SetEnabled(CanGuildDemote() and hasSelection);
+    GuildKickButton:SetEnabled(CanGuildRemove() and hasSelection);
     
     -- Invite button is always enabled
     GuildInviteButton:SetEnabled(true);
@@ -333,22 +253,22 @@ end
 
 function GuildFrame_PromoteClicked(self)
     if (GUILD_ROSTER_SELECTED_INDEX) then
-        local member = MOCK_GUILD_DATA.members[GUILD_ROSTER_SELECTED_INDEX];
-        ChatFrame:AddMessage(string.format("Promoted %s", member.name), 1.0, 1.0, 0.0);
+        local member = GUILD_DATA.members[GUILD_ROSTER_SELECTED_INDEX];
+        GuildPromoteByName(member.name);
     end
 end
 
 function GuildFrame_DemoteClicked(self)
     if (GUILD_ROSTER_SELECTED_INDEX) then
-        local member = MOCK_GUILD_DATA.members[GUILD_ROSTER_SELECTED_INDEX];
-        ChatFrame:AddMessage(string.format("Demoted %s", member.name), 1.0, 1.0, 0.0);
+        local member = GUILD_DATA.members[GUILD_ROSTER_SELECTED_INDEX];
+        GuildDemoteByName(member.name);
     end
 end
 
 function GuildFrame_KickClicked(self)
     if (GUILD_ROSTER_SELECTED_INDEX) then
-        local member = MOCK_GUILD_DATA.members[GUILD_ROSTER_SELECTED_INDEX];
-        ChatFrame:AddMessage(string.format("Kicked %s from the guild", member.name), 1.0, 1.0, 0.0);
+        local member = GUILD_DATA.members[GUILD_ROSTER_SELECTED_INDEX];
+        GuildUninviteByName(member.name);
     end
 end
 
@@ -356,6 +276,10 @@ function GuildFrame_Toggle()
     if GuildFrame:IsVisible() then
         HideUIPanel(GuildFrame);
     else
-        ShowUIPanel(GuildFrame);
+        if (IsInGuild()) then
+            ShowUIPanel(GuildFrame);
+        else
+            ChatFrame:AddMessage(Localize("GUILD_NOT_IN_GUILD"), 1.0, 1.0, 0.0);
+        end
     end
 end
