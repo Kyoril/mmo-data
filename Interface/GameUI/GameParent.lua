@@ -202,7 +202,7 @@ function ShowUIPanel(frame, force)
 	end
 
 	local player = GetUnit("player");
-	if ( player:GetHealth() <= 0 and (info.area ~= center) and (frame ~= SuggestFrame) ) then
+	if ( player:GetHealth() <= 0 and (info.area ~= "center") and (frame ~= SuggestFrame) ) then
 		return;
 	end
 
@@ -435,7 +435,13 @@ end
 
 function CloseAllWindows(ignoreCenter)
 	local windowsVisible = nil;
-    windowsVisible = CloseWindows(ignoreCenter);
+	windowsVisible = CloseWindows(ignoreCenter);
+
+	if (InventoryFrame:IsVisible()) then
+		InventoryFrame:Hide();
+		windowsVisible = true;
+	end
+
 	return windowsVisible;
 end
 
