@@ -298,7 +298,7 @@
     <Binding name="TOGGLEGUILD" description="Toggle the guild ui." category="INTERFACE">
 		return function(key, keystate)
             if keystate == "DOWN" then
-                --GuildFrame_Toggle();
+                GuildFrame_Toggle();
             end
         end
 	</Binding>

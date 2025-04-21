@@ -24,10 +24,15 @@ function AddMenuButton(text, callback)
 end
 
 function OnQuitButton_Clicked()
-	RunConsoleCommand("quit")
+	Quit();
 end
 
 function OnCloseButton_Clicked()
+	HideUIPanel(GameMenu);
+end
+
+function OnLogoutButton_Clicked()
+	Logout();
 	HideUIPanel(GameMenu);
 end
 
@@ -41,10 +46,10 @@ function OnMenuItem_Clicked()
 end
 
 function GameMenu_OnLoad(this)
-	
 	MenuTitleBar:GetChild(0):SetClickedHandler(OnCloseButton_Clicked);
 		
 	AddMenuButton("CLOSE", OnCloseButton_Clicked);
+	AddMenuButton("LOGOUT", OnLogoutButton_Clicked);
 	AddMenuButton("QUIT", OnQuitButton_Clicked);
 	
 	AddMenuBarButton("Interface/Icons/fg4_icons_menu_result.htex", OnMenuItem_Clicked);

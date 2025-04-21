@@ -346,4 +346,6 @@ strings =
 	(key = "LOOT_ITEM_PUSHED", string = "%s receives item: %s x%d")
 	(key = "LOOT_ITEM_PUSHED_SELF", string = "You receive item: %s x%d")
 	(key = "LOOT_ITEM_SELF", string = "You receive loot: %s x%d")
+
+	(key = "LOGOUT", string = "Logout")
 }

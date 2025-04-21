@@ -48,6 +48,14 @@ SlashCmdList["UNINVITE"] = function(msg)
 	end
 end
 
+SlashCmdList["LOGOUT"] = function(msg)
+	Logout();
+end
+
+SlashCmdList["QUIT"] = function(msg)
+	Quit();
+end
+
 SlashCmdList["RANDOM"] = function(msg)
     local num1 = string.gsub(msg, "(%s*)(%d+)(.*)", "%2", 1);
     local rest = string.gsub(msg, "(%s*)(%d+)(.*)", "%3", 1);

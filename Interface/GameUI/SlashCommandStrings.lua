@@ -45,3 +45,7 @@ SLASH_GUILD_UNINVITE1 = "/gremove"; -- Guild uninvite
 SLASH_GUILD_UNINVITE2 = "/guildremove"; -- Guild uninvite
 SLASH_GUILD_DISBAND1 = "/gdisband"; -- Guild disband
 SLASH_GUILD_DISBAND2 = "/guilddisband"; -- Guild disband
+SLASH_LOGOUT1 = "/logout"; -- Logout
+SLASH_LOGOUT2 = "/camp"; -- Logout
+SLASH_QUIT1 = "/quit"; -- Quit
+SLASH_QUIT2 = "/exit"; -- Quit
