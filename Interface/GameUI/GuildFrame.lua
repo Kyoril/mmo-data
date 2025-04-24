@@ -15,8 +15,6 @@ local GUILD_ROSTER_SORT_ASCENDING = true;
 
 -- Mock guild data for testing
 local GUILD_DATA = {
-    name = "Test Guild",
-    motd = "Welcome to the Test Guild! This is our message of the day.",
     members = {}
 };
 
@@ -65,9 +63,6 @@ function GuildFrame_OnLoad(self)
     -- Initialize side panel functionality first, like the close button
     SidePanel_OnLoad(self);
     
-    -- Localize quest log text
-    self:GetChild(0):SetText(Localize("GUILD"));
-
     self:RegisterEvent("GUILD_COMMAND_RESULT", GuildFrame_OnGuildCommandResult);
     self:RegisterEvent("GUILD_INVITE_SENT", GuildFrame_OnInviteSent);
     self:RegisterEvent("GUILD_LEFT", GuildFrame_OnLeft);
@@ -87,8 +82,8 @@ function GuildFrame_OnLoad(self)
     end);
     
     -- Initialize the guild info
-    GuildNameLabel:SetText(GUILD_DATA.name);
-    GuildMOTDLabel:SetText(GUILD_DATA.motd);
+    GuildFrame:GetChild(0):SetText(GetGuildName());
+    GuildMOTDLabel:SetText(GetGuildMOTD());
     
     -- Set up the action buttons
     GuildInviteButton:SetClickedHandler(GuildFrame_InviteClicked);
@@ -99,6 +94,8 @@ function GuildFrame_OnLoad(self)
 end
 
 function GuildFrame_OnShow(self)
+    GuildFrame:GetChild(0):SetText(GetGuildName());
+    GuildMOTDLabel:SetText(GetGuildMOTD());
     GuildRoster();
 end
 
@@ -226,6 +223,10 @@ function GuildRoster_SelectMember(self)
     GuildRoster_Update();
 	InfoUserFrame_Toggle();
 	InfoUserFrame_UpdateActionButtons();
+
+    InfoUserFrame:ClearAnchors();
+    InfoUserFrame:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, GuildFrame, 0);
+    InfoUserFrame:SetAnchor(AnchorPoint.LEFT, AnchorPoint.RIGHT, GuildFrame, 0);
 end
 
 -- Guild action button functions
@@ -272,7 +273,7 @@ end
 function GuildFrame_Toggle()
     if GuildFrame:IsVisible() then
         HideUIPanel(GuildFrame);
-		HideUIPanel(InfoUserFrame);
+        InfoUserFrame:Hide();
     else
         if (IsInGuild()) then
             ShowUIPanel(GuildFrame);
@@ -314,8 +315,8 @@ end
 
 function InfoUserFrame_Toggle()
 	if InfoUserFrame:IsVisible() then
-        HideUIPanel(InfoUserFrame);
+        InfoUserFrame:Hide();
     else
-        ShowUIPanel(InfoUserFrame);
+        InfoUserFrame:Show();
     end
 end

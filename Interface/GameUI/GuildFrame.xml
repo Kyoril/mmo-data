@@ -147,8 +147,8 @@
                 <Size><AbsDimension x="0" y="240" /></Size>
             </Area>
 
-            <Frame name="GuildNameLabel" inherits="TextSmall">
-                <Property name="Text" value="Guild Name" />
+            <Frame name="GuildMOTDHeader" inherits="TextSmall">
+                <Property name="Text" value="GUILD_MOTD" />
                 <Property name="TextColor" value="FFFFD100" />
 
                 <Area>
@@ -163,7 +163,7 @@
                 <Property name="TextColor" value="FFFFFFFF" />
 
                 <Area>
-                    <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="GuildNameLabel" offset="8" />
+                    <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="GuildMOTDHeader" offset="8" />
                     <Anchor point="LEFT" offset="16" />
                     <Anchor point="RIGHT" offset="-16" />
                     <Size><AbsDimension x="0" y="48" /></Size>
@@ -561,7 +561,6 @@
                 </Scripts>
             </Frame>
         </Frame>
-		
     </Frame>
 	
 	<Frame name="InfoUserFrame" renderer="DefaultRenderer" inherits="SidePanelTemplate" parent="GameParent">
@@ -582,7 +581,7 @@
 			
 			<Area>
 				<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="GuildFrame" />
-				<Anchor point="TOP" offset="300" />
+				<Anchor point="TOP" relativeTo="GuildFrame" />
 				<Size><AbsDimension x="700" y="800" /></Size>
 			</Area>
 			
