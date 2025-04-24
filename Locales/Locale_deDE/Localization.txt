@@ -347,4 +347,7 @@ strings =
 	(key = "LOOT_ITEM_SELF", string = "Ihr plündert: %s x%d")
 	
 	(key = "LOGOUT", string = "Ausloggen")
+	(key = "GUILD_PLAYER_DESCRIPTION", string = "Stufe %d %s %s")
+	(key = "GUILD_PLAYER_ZONE", string = "Ort: %s")
+	(key = "GUILD_PLAYER_RANK", string = "Rang: %s")
 }

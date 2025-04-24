@@ -92,8 +92,6 @@ function GuildFrame_OnLoad(self)
     
     -- Set up the action buttons
     GuildInviteButton:SetClickedHandler(GuildFrame_InviteClicked);
-    GuildPromoteButton:SetClickedHandler(GuildFrame_PromoteClicked);
-    GuildDemoteButton:SetClickedHandler(GuildFrame_DemoteClicked);
     GuildKickButton:SetClickedHandler(GuildFrame_KickClicked);
     
     -- Disable action buttons initially
@@ -122,7 +120,7 @@ function GuildRoster_Update()
                 rank = member.rank,
                 level = member.level,
                 class = member.className,
-                zone = member.raceName,
+                race = member.raceName,
                 status = member.online and 1 or 0
             });
         end
@@ -147,7 +145,6 @@ function GuildRoster_Update()
         
         if (memberIndex <= #GUILD_DATA.members) then
             local member = GUILD_DATA.members[memberIndex];
-            
             -- Format the text to display all the member info
             local statusColor = member.status == 1 and "FF00FF00" or "FF888888";
             local text = string.format(
@@ -227,6 +224,8 @@ function GuildRoster_SelectMember(self)
     local id = self.id;
     GUILD_ROSTER_SELECTED_INDEX = id + GUILD_ROSTER_OFFSET;
     GuildRoster_Update();
+	InfoUserFrame_Toggle();
+	InfoUserFrame_UpdateActionButtons();
 end
 
 -- Guild action button functions
@@ -237,8 +236,6 @@ function GuildFrame_UpdateActionButtons()
     -- Enable/disable buttons based on selection
     local hasSelection = GUILD_ROSTER_SELECTED_INDEX ~= nil;
     
-    GuildPromoteButton:SetEnabled(CanGuildPromote() and hasSelection);
-    GuildDemoteButton:SetEnabled(CanGuildDemote() and hasSelection);
     GuildKickButton:SetEnabled(CanGuildRemove() and hasSelection);
     
     -- Invite button is always enabled
@@ -275,11 +272,50 @@ end
 function GuildFrame_Toggle()
     if GuildFrame:IsVisible() then
         HideUIPanel(GuildFrame);
+		HideUIPanel(InfoUserFrame);
     else
         if (IsInGuild()) then
             ShowUIPanel(GuildFrame);
         else
             ChatFrame:AddMessage(Localize("GUILD_NOT_IN_GUILD"), 1.0, 1.0, 0.0);
         end
+    end
+end
+
+
+function InfoUserFrame_OnLoad(self)
+	-- Initialize side panel functionality first, like the close button
+    SidePanel_OnLoad(self);
+    
+    -- Localize quest log text
+    self:GetChild(0):SetText(Localize("INFO"));
+	
+	InfoUserFrame_UpdateActionButtons();
+end
+
+function InfoUserFrame_OnShow(self)
+	local user = GUILD_DATA.members[GUILD_ROSTER_SELECTED_INDEX];
+
+	UserName:SetText(user.name);
+	UserDescription:SetText(string.format(Localize("GUILD_PLAYER_DESCRIPTION"), user.level, user.race, user.class));
+	UserZone:SetText(string.format(Localize("GUILD_PLAYER_ZONE"), GetZoneText()));
+	UserRank:SetText(string.format(Localize("GUILD_PLAYER_RANK"), user.rank));
+end
+
+function InfoUserFrame_UpdateActionButtons()
+    local frame = InfoUserFrame;
+    
+    -- Enable/disable buttons based on selection
+    local hasSelection = GUILD_ROSTER_SELECTED_INDEX ~= nil;
+    
+    UserPromoteButton:SetEnabled(CanGuildPromote() and hasSelection);
+    UserKickButton:SetEnabled(CanGuildRemove() and hasSelection);
+end
+
+function InfoUserFrame_Toggle()
+	if InfoUserFrame:IsVisible() then
+        HideUIPanel(InfoUserFrame);
+    else
+        ShowUIPanel(InfoUserFrame);
     end
 end

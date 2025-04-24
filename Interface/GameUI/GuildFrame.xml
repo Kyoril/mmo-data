@@ -258,7 +258,7 @@
                     <Anchor point="RIGHT" offset="-8" />
                     <Anchor point="BOTTOM" offset="-8" />
                 </Area>
-
+				
                 <Frame name="GuildRosterListContent">
                     <Area>
                         <Anchor point="TOP" offset="0" />
@@ -545,42 +545,10 @@
                 </Scripts>
             </Frame>
 
-            <Frame name="GuildPromoteButton" inherits="GlueButton">
-                <Property name="Text" value="PROMOTE" />
-                <Area>
-                    <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="GuildInviteButton" offset="8" />
-                    <Anchor point="TOP" offset="0" />
-                    <Size><AbsDimension x="222" y="80" /></Size>
-                </Area>
-                <Scripts>
-                    <OnClick>
-                        return function(self)
-                            GuildFrame_PromoteClicked(self);
-                        end
-                    </OnClick>
-                </Scripts>
-            </Frame>
-
-            <Frame name="GuildDemoteButton" inherits="GlueButton">
-                <Property name="Text" value="DEMOTE" />
-                <Area>
-                    <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="GuildPromoteButton" offset="8" />
-                    <Anchor point="TOP" offset="0" />
-                    <Size><AbsDimension x="222" y="80" /></Size>
-                </Area>
-                <Scripts>
-                    <OnClick>
-                        return function(self)
-                            GuildFrame_DemoteClicked(self);
-                        end
-                    </OnClick>
-                </Scripts>
-            </Frame>
-
             <Frame name="GuildKickButton" inherits="GlueButton">
                 <Property name="Text" value="KICK" />
                 <Area>
-                    <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="GuildDemoteButton" offset="8" />
+                    <Anchor point="RIGHT" offset="-8" />
                     <Anchor point="TOP" offset="0" />
                     <Size><AbsDimension x="222" y="80" /></Size>
                 </Area>
@@ -593,5 +561,130 @@
                 </Scripts>
             </Frame>
         </Frame>
+		
     </Frame>
+	
+	<Frame name="InfoUserFrame" renderer="DefaultRenderer" inherits="SidePanelTemplate" parent="GameParent">
+			<Property name="Visible" value="false" />
+			
+			<Scripts>
+				<OnLoad>
+					return function(self)
+						InfoUserFrame_OnLoad(self);
+					end
+				</OnLoad>
+				<OnShow>
+					return function(self)
+						InfoUserFrame_OnShow(self);
+					end
+				</OnShow>
+			</Scripts>
+			
+			<Area>
+				<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="GuildFrame" />
+				<Anchor point="TOP" offset="300" />
+				<Size><AbsDimension x="700" y="800" /></Size>
+			</Area>
+			
+			<Frame name="UserKickButton" inherits="GlueButton">
+				<Property name="Text" value="KICK" />
+				<Area>
+					<Anchor point="RIGHT" offset="-25" />
+					<Anchor point="BOTTOM" offset="-20" />
+					<Size><AbsDimension x="222" y="80" /></Size>
+				</Area>
+				<Scripts>
+					<OnClick>
+						return function(self)
+							GuildFrame_KickClicked(self);
+						end
+					</OnClick>
+				</Scripts>
+			</Frame>
+			
+			<Frame name="UserPromoteButton" inherits="GlueButton">
+                <Property name="Text" value="PROMOTE" />
+                <Area>
+					<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="UserKickButton" offset="0" />
+                    <Anchor point="BOTTOM" offset="-20" />
+                    <Size><AbsDimension x="222" y="80" /></Size>
+                </Area>
+                <Scripts>
+                    <OnClick>
+                        return function(self)
+                            GuildFrame_PromoteClicked(self);
+                        end
+                    </OnClick>
+                </Scripts>
+            </Frame>
+
+			<Frame name="FrameInfo" renderer="DefaultRenderer">
+				<Visual>
+					<ImagerySection name="Border">
+						<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" />
+					</ImagerySection>
+					<StateImagery name="Enabled">
+						<Layer>
+							<Section section="Border" />
+						</Layer>
+					</StateImagery>
+				</Visual>
+
+				<Area>
+					<Anchor point="BOTTOM" offset="-100" />
+					<Anchor point="LEFT" offset="24" />
+					<Anchor point="RIGHT" offset="-24" />
+					<Size><AbsDimension x="650" y="550" /></Size>
+				</Area>
+				
+				<Frame name="UserName" inherits="TextSmall">
+					<Property name="Text" value="" />
+					<Property name="TextColor" value="FFFFD100" />
+
+					<Area>
+						<Anchor point="TOP" offset="16" />
+						<Anchor point="LEFT" offset="16" />
+						<Size><AbsDimension x="0" y="32" /></Size>
+					</Area>
+				</Frame>
+				
+				<Frame name="UserDescription" inherits="TextSmall">
+					<Property name="Text" value="" />
+					<Property name="TextColor" value="FFFFFFFF" />
+
+					<Area>
+						<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="UserName" offset="0" />
+						<Anchor point="LEFT" offset="16" />
+						<Anchor point="RIGHT" offset="-16" />
+						<Size><AbsDimension x="0" y="48" /></Size>
+					</Area>
+				</Frame>
+				
+				<Frame name="UserZone" inherits="TextSmall">
+					<Property name="Text" value="" />
+					<Property name="TextColor" value="FFFFD100" />
+
+					<Area>
+						<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="UserDescription" offset="10" />
+						<Anchor point="LEFT" offset="16" />
+						<Anchor point="RIGHT" offset="-16" />
+						<Size><AbsDimension x="0" y="48" /></Size>
+					</Area>
+				</Frame>
+
+				<Frame name="UserRank" inherits="TextSmall">
+					<Property name="Text" value="M" />
+					<Property name="TextColor" value="FFFFD100" />
+
+					<Area>
+						<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="UserZone" offset="0" />
+						<Anchor point="LEFT" offset="16" />
+						<Anchor point="RIGHT" offset="-16" />
+						<Size><AbsDimension x="0" y="48" /></Size>
+					</Area>
+				</Frame>
+				
+			</Frame>
+			
+	</Frame>
 </UiLayout>
