@@ -203,6 +203,10 @@ function ChatFrame_OnSpellLearned(this, spellName)
     ChatFrame:AddMessage(string.format(Localize("NEW_ABILITY_LEARNED"), spellName), 1.0, 1.0, 0.0);
 end
 
+function ChatFrame_OnMOTD(this, motd)
+    ChatFrame:AddMessage(motd, 1.0, 1.0, 0.0);
+end
+
 function ChatFrame_OnLoad(this)
     this:RegisterEvent("CHAT_MSG_SAY", function(this, character, message)
         local info = ChatTypeInfo["SAY"];
@@ -234,8 +238,7 @@ function ChatFrame_OnLoad(this)
     this:RegisterEvent("QUEST_ACCEPTED", ChatFrame_OnQuestAccepted);
     this:RegisterEvent("QUEST_ABANDONED", ChatFrame_OnQuestAbandoned);
     this:RegisterEvent("QUEST_REWARDED", ChatFrame_OnQuestRewarded);
-
-    ChatFrame:AddMessage("Welcome to the game!", 1.0, 1.0, 0.0);
+    this:RegisterEvent("MOTD", ChatFrame_OnMOTD);
 
     ChatType = "SAY";
     ChatEdit_UpdateHeader();
