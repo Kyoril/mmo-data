@@ -102,7 +102,7 @@ strings =
 	(key = "CHAR_CREATE_ERR_ONLY_EXISTING", string = "Impossible de créer de nouveaux personnages sur ce serveur. Veuillez réessayer plus tard.")
 	
 	(key = "CHAR_CREATE_NAME_TOO_SHORT", string = "Merci d'entrer un mon ayant au moins 3 caractères.")
-	(key = "CHAR_CREATE_NAME_TOO_LONG", string = ""Merci d'entrer un mon ayant au plus 12 caractères.")
+	(key = "CHAR_CREATE_NAME_TOO_LONG", string = "Merci d'entrer un mon ayant au plus 12 caractères.")
 	
 	(key = "YOU_DIED", string = "Vous êtes morts !")
 	(key = "DEATH_RELEASE", string = "Réapparaître…")
