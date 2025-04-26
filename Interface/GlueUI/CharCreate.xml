@@ -202,7 +202,7 @@
 					<Anchor point="TOP" offset="24" />
 					<Anchor point="RIGHT" offset="-24" />
 					<Size>
-						<AbsDimension x="720" y="264" />	<!-- 128 px per race button on top of 264px base height -->
+						<AbsDimension x="720" y="392" />	<!-- 128 px per race button on top of 264px base height -->
 					</Size>
 				</Area>
 
@@ -245,6 +245,26 @@
 								<Anchor point="LEFT" offset="4" />
 								<Anchor point="RIGHT" offset="-4" />
 								<Anchor point="TOP" offset="8" />
+							</Area>
+						</Frame>
+
+						<Frame name="RaceOrcButton" inherits="ListCheckButtonBase" id="1">
+							<Property name="Text" value="RACE_ORC" />
+							<Property name="Checkable" value="true" />
+							<Property name="Checked" value="true" />
+
+							<Scripts>
+								<OnClick>
+									return function(this)
+										OnRaceChange_Clicked(this);
+									end
+								</OnClick>
+							</Scripts>
+
+							<Area>
+								<Anchor point="LEFT" offset="4" />
+								<Anchor point="RIGHT" offset="-4" />
+								<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RaceHumanButton" />
 							</Area>
 						</Frame>
 
