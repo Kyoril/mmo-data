@@ -3,6 +3,7 @@
 	<Script file="ZoneText.lua" />
 
     <Font name="ZoneTextFont" file="Fonts/FRIZQT__.TTF" size="64" outline="3" />
+    <Font name="ZoneTextFontSmall" file="Fonts/FRIZQT__.TTF" size="48" outline="3" />
 	
     <Frame name="ZoneText" inherits="TextSmall" parent="GameParent">
         <Property name="Font" value="ZoneTextFont" />
@@ -11,7 +12,7 @@
 
 		<Area>
 			<Size>
-				<AbsDimension y="128" />
+				<AbsDimension y="96" />
 				<Anchor point="LEFT" />
                 <Anchor point="RIGHT" />
 				<Anchor point="V_CENTER" offset="-256" />
@@ -21,12 +22,39 @@
 		<Scripts>
 			<OnLoad>
 				return function(this)
-					ZoneText_OnLoad(this);
+					ZoneText_OnLoad(ZoneText);
 				end
 			</OnLoad>
             <OnUpdate>
                 return function(this, elapsed)
-                    ZoneText_OnUpdate(this, elapsed);
+                    ZoneText_OnUpdate(ZoneText, elapsed);
+                end
+            </OnUpdate>
+		</Scripts>
+    </Frame>
+    <Frame name="ZoneSubText" inherits="TextSmall" parent="GameParent">
+        <Property name="Font" value="ZoneTextFontSmall" />
+		<Property name="HorzAlign" value="CENTER" />
+		<Property name="TextColor" value="FF19FF19" />
+
+		<Area>
+			<Size>
+				<AbsDimension y="64" />
+				<Anchor point="LEFT" />
+                <Anchor point="RIGHT" />
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="ZoneText" />
+			</Size>
+		</Area>
+
+		<Scripts>
+			<OnLoad>
+				return function(this)
+					ZoneText_OnLoad(ZoneSubText);
+				end
+			</OnLoad>
+            <OnUpdate>
+                return function(this, elapsed)
+                    ZoneText_OnUpdate(ZoneSubText, elapsed);
                 end
             </OnUpdate>
 		</Scripts>

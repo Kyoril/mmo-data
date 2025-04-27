@@ -3,25 +3,24 @@ ZoneFadeInDuration = 500;
 ZoneHoldDuration = 1000;
 ZoneFadeOutDuration = 2000;
 
-function ZoneText_OnZoneChanged(this)
-    local text = ZoneText:GetText();
-    local newText = GetZoneText();
+function OnZoneChanged(frame)
+    local newText = GetZoneText() or "";
+    local newSubText = GetSubZoneText() or "";
 
-    if(text ~= newText) then
-        ZoneText:SetText(newText);
-        FadingFrame_Show(ZoneText);
-    end
+    ZoneText:SetText(newText);
+    ZoneSubText:SetText(newSubText);
+    FadingFrame_Show(ZoneText);
+    FadingFrame_Show(ZoneSubText);
 end
 
-function ZoneText_OnLoad(this)
-    FadingFrame_OnLoad(ZoneText);
-    FadingFrame_SetFadeInTime(ZoneText, ZoneFadeInDuration);
-    FadingFrame_SetHoldTime(ZoneText, ZoneHoldDuration);
-    FadingFrame_SetFadeOutTime(ZoneText, ZoneFadeOutDuration);
-    
-    ZoneText:RegisterEvent("ZONE_CHANGED", ZoneText_OnZoneChanged);
+function ZoneText_OnLoad(frame)
+    FadingFrame_OnLoad(frame);
+    FadingFrame_SetFadeInTime(frame, ZoneFadeInDuration);
+    FadingFrame_SetHoldTime(frame, ZoneHoldDuration);
+    FadingFrame_SetFadeOutTime(frame, ZoneFadeOutDuration);
+    frame:RegisterEvent("ZONE_CHANGED", OnZoneChanged);
 end
 
-function ZoneText_OnUpdate(this, elapsed)
-    FadingFrame_OnUpdate(ZoneText);
+function ZoneText_OnUpdate(frame, elapsed)
+    FadingFrame_OnUpdate(frame);
 end
