@@ -78,6 +78,7 @@ strings =
 	(key = "FEMALE", string = "Female")
 
 	(key = "RACE_HUMAN", string = "Human")
+	(key = "RACE_ORC", string = "Orc")
 
 	(key = "CLASS_WARRIOR", string = "Warrior")
 	(key = "CLASS_MAGE", string = "Mage")
