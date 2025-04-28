@@ -2,8 +2,8 @@
 
 <!-- This file contains frame templates that are often used by the GlueUI part. -->
 <UiLayout xmlns="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://mmo-dev.net/ Ui.xsd">
-	<Font name="DefaultSmall" file="Fonts/arbutusslab-regular.ttf" size="28" outline="1" />
-	<Font name="DefaultHeader" file="Fonts/arbutusslab-regular.ttf" size="36" outline="4" />
+	<Font name="DefaultSmall" file="Fonts/FRIZQT__.TTF" size="28" outline="1" />
+	<Font name="DefaultHeader" file="Fonts/FRIZQT__.TTF" size="36" outline="4" />
 	
 	<!-- GlueButton template: Common buttons -->
 	<Frame name="GlueButton" type="Button" renderer="ButtonRenderer">

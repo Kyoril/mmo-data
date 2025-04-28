@@ -2,8 +2,8 @@
 <UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
 	<Script file="SpellBook.lua" />
 
-	<Font name="SpellNameLabelFont" file="Fonts/arbutusslab-regular.ttf" size="22" outline="0" />
-	<Font name="SpellSubLabelFont" file="Fonts/arbutusslab-regular.ttf" size="18" outline="0" />
+	<Font name="SpellNameLabelFont" file="Fonts/FRIZQT__.TTF" size="22" outline="0" />
+	<Font name="SpellSubLabelFont" file="Fonts/FRIZQT__.TTF" size="18" outline="0" />
 
 	<!-- Small label -->
 	<Frame name="SpellNameLabel" renderer="DefaultRenderer">

@@ -1,12 +1,12 @@
 <?xml version="1.0" ?>
 <UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
-	<Font name="DefaultSmall" file="Fonts/arbutusslab-regular.ttf" size="26" outline="0" shadowX="1.0" shadowY="1.0" />	
-	<Font name="DefaultSmallBorder" file="Fonts/arbutusslab-regular.ttf" size="26" outline="0" shadowX="1.0" shadowY="1.0" />
-	<Font name="DefaultHeader" file="Fonts/arbutusslab-regular.ttf" size="42" outline="0" />
-	<Font name="DefaultSmallOutline" file="Fonts/arbutusslab-regular.ttf" size="26" outline="1" shadowX="0.0" shadowY="0.0" />	
+	<Font name="DefaultSmall" file="Fonts/FRIZQT__.TTF" size="26" outline="0" shadowX="1.0" shadowY="1.0" />	
+	<Font name="DefaultSmallBorder" file="Fonts/FRIZQT__.TTF" size="26" outline="0" shadowX="1.0" shadowY="1.0" />
+	<Font name="DefaultHeader" file="Fonts/FRIZQT__.TTF" size="42" outline="0" />
+	<Font name="DefaultSmallOutline" file="Fonts/FRIZQT__.TTF" size="26" outline="1" shadowX="0.0" shadowY="0.0" />	
 
-	<Font name="SmallLabelFont" file="Fonts/arbutusslab-regular.ttf" size="20" outline="0" shadowX="1.0" shadowY="1.0" />
-	<Font name="AuraTimeFont" file="Fonts/arbutusslab-regular.ttf" size="18" outline="0" shadowX="1.0" shadowY="1.0" />
+	<Font name="SmallLabelFont" file="Fonts/FRIZQT__.TTF" size="20" outline="0" shadowX="1.0" shadowY="1.0" />
+	<Font name="AuraTimeFont" file="Fonts/FRIZQT__.TTF" size="18" outline="0" shadowX="1.0" shadowY="1.0" />
 
 	<!-- GlueButton template: Common buttons -->
 	<Frame name="GlueButton" type="Button" renderer="ButtonRenderer">

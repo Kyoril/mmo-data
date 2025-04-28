@@ -2,8 +2,8 @@
 <UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
 	<Script file="QuestFrame.lua" />
 
-	<Font name="QuestTitleFont" file="Fonts/arbutusslab-regular.ttf" size="30" outline="0" />
-	<Font name="QuestFont" file="Fonts/arbutusslab-regular.ttf" size="24" outline="0" />
+	<Font name="QuestTitleFont" file="Fonts/FRIZQT__.TTF" size="30" outline="0" />
+	<Font name="QuestFont" file="Fonts/FRIZQT__.TTF" size="24" outline="0" />
 
     <Frame name="QuestFramePanelTemplate" renderer="DefaultRenderer" setAllPoints="true">
         <Property name="Visible" value="false" />
