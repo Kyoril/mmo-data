@@ -3,7 +3,7 @@
 	<Font name="DefaultSmall" file="Fonts/FRIZQT__.TTF" size="26" outline="0" shadowX="1.0" shadowY="1.0" />	
 	<Font name="DefaultSmallBorder" file="Fonts/FRIZQT__.TTF" size="26" outline="0" shadowX="1.0" shadowY="1.0" />
 	<Font name="DefaultHeader" file="Fonts/FRIZQT__.TTF" size="42" outline="0" />
-	<Font name="DefaultSmallOutline" file="Fonts/FRIZQT__.TTF" size="26" outline="1" shadowX="0.0" shadowY="0.0" />	
+	<Font name="DefaultSmallOutline" file="Fonts/FRIZQT__.TTF" size="26" outline="0" shadowX="1.0" shadowY="1.0" />	
 
 	<Font name="SmallLabelFont" file="Fonts/FRIZQT__.TTF" size="20" outline="0" shadowX="1.0" shadowY="1.0" />
 	<Font name="AuraTimeFont" file="Fonts/FRIZQT__.TTF" size="18" outline="0" shadowX="1.0" shadowY="1.0" />
