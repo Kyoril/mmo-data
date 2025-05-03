@@ -59,6 +59,37 @@
         <Area>
             <Size><AbsDimension x="0" y="48" /></Size>
         </Area>
+
+        <Frame inherits="TextSmall" name="GuildMemberName">
+            <Property name="Clickable" value="false" />
+
+            <Area>
+                <Anchor point="LEFT" offset="8" />
+                <Anchor point="TOP" offset="0" />
+                <Size><AbsDimension x="404" y="48" /></Size>
+            </Area>
+        </Frame>
+        
+        <Frame inherits="TextSmall" name="GuildMemberLevel">
+            <Property name="Clickable" value="false" />
+		    <Property name="HorzAlign" value="CENTER" />
+
+            <Area>
+                <Anchor point="LEFT" offset="16" relativeTo="GuildMemberName" relativePoint="RIGHT" />
+                <Anchor point="TOP" offset="0" />
+                <Size><AbsDimension x="144" y="48" /></Size>
+            </Area>
+        </Frame>
+        
+        <Frame inherits="TextSmall" name="GuildMemberStatus">
+            <Property name="Clickable" value="false" />
+
+            <Area>
+                <Anchor point="LEFT" offset="16" relativeTo="GuildMemberLevel" relativePoint="RIGHT" />
+                <Anchor point="TOP" offset="0" />
+                <Size><AbsDimension x="184" y="48" /></Size>
+            </Area>
+        </Frame>
     </Frame>
 
     <!-- Template for Column Header Button -->
@@ -466,36 +497,6 @@
                     <Frame name="GuildMemberButton14" inherits="GuildMemberButtonTemplate" id="14">
                         <Area>
                             <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="GuildMemberButton13" />
-                            <Anchor point="LEFT" relativeTo="GuildMemberButton1" />
-                            <Anchor point="RIGHT" relativeTo="GuildMemberButton1" />
-                        </Area>
-                        <Scripts>
-                            <OnClick>
-                                return function(self)
-                                    GuildRoster_SelectMember(self);
-                                end
-                            </OnClick>
-                        </Scripts>
-                    </Frame>
-
-                    <Frame name="GuildMemberButton15" inherits="GuildMemberButtonTemplate" id="15">
-                        <Area>
-                            <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="GuildMemberButton14" />
-                            <Anchor point="LEFT" relativeTo="GuildMemberButton1" />
-                            <Anchor point="RIGHT" relativeTo="GuildMemberButton1" />
-                        </Area>
-                        <Scripts>
-                            <OnClick>
-                                return function(self)
-                                    GuildRoster_SelectMember(self);
-                                end
-                            </OnClick>
-                        </Scripts>
-                    </Frame>
-                    
-                    <Frame name="GuildMemberButton16" inherits="GuildMemberButtonTemplate" id="16">
-                        <Area>
-                            <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="GuildMemberButton15" />
                             <Anchor point="LEFT" relativeTo="GuildMemberButton1" />
                             <Anchor point="RIGHT" relativeTo="GuildMemberButton1" />
                         </Area>

@@ -7,7 +7,7 @@ GUILD_COMMAND_RESULTS[5] = "GUILD_ALREADY_IN_OTHER_GUILD";
 GUILD_COMMAND_RESULTS[6] = "GUILD_INVITE_PENDING";
 
 -- Guild roster data
-local GUILD_ROSTER_MAX_DISPLAY = 16;
+local GUILD_ROSTER_MAX_DISPLAY = 14;
 local GUILD_ROSTER_OFFSET = 0;
 local GUILD_ROSTER_SELECTED_INDEX = nil;
 local GUILD_ROSTER_SORT_COLUMN = "name";
@@ -144,15 +144,15 @@ function GuildRoster_Update()
             local member = GUILD_DATA.members[memberIndex];
             -- Format the text to display all the member info
             local statusColor = member.status == 1 and "FF00FF00" or "FF888888";
-            local text = string.format(
-                "|c%s%s  |  %d  |  %s|r",
-                statusColor,
-                member.name,
-                member.level,
-                member.status and "Online" or "Offline"
-            );
-            
-            button:SetText(text);
+
+            --button:SetText(text);
+            button:GetChild(0):SetText(member.name);
+            button:GetChild(0):SetProperty("TextColor", statusColor);
+            button:GetChild(1):SetText(tostring(member.level));
+            button:GetChild(1):SetProperty("TextColor", statusColor);
+            button:GetChild(2):SetText(member.status and "Online" or "Offline");
+            button:GetChild(2):SetProperty("TextColor", statusColor);
+
             button:SetEnabled(true);
             button:Show();
             
@@ -163,7 +163,6 @@ function GuildRoster_Update()
                 button:SetChecked(false);
             end
         else
-            button:SetText("");
             button:SetEnabled(false);
             button:Hide();
         end
