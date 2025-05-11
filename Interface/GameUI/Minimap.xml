@@ -1,0 +1,95 @@
+<?xml version="1.0" ?>
+<UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
+	<Script file="Minimap.lua" />
+	
+    <Frame name="Minimap" parent="GameParent">
+		<Scripts>
+			<OnLoad>
+				return function(self)
+					Minimap_OnLoad(self);
+				end
+			</OnLoad>
+			<OnShow>
+				return function(self)
+					Minimap_OnShow(self);
+				end
+			</OnShow>
+			<OnHide>
+				return function(self)
+					Minimap_OnHide(self);
+				end
+			</OnHide>
+			<OnUpdate>
+				return function(self, elapsed)
+					Minimap_OnUpdate(self, elapsed);
+				end
+			</OnUpdate>
+		</Scripts>
+
+		<Area>
+			<Size><AbsDimension x="384" y="432" /></Size>
+			<Anchor point="RIGHT" offset="-16" />
+			<Anchor point="TOP" offset="16" />
+		</Area>
+
+        <Frame name="MinimapTitleBar" renderer="DefaultRenderer">
+            <Area>
+                <Size><AbsDimension y="64" /></Size>
+                <Anchor point="LEFT" />
+                <Anchor point="RIGHT" />
+            </Area>
+
+            <Visual>
+                <ImagerySection name="Background">
+                    <BorderComponent texture="Interface/GameUI/fg4_borders_01_28_2_result.htex" borderSize="24" />
+                    <TextComponent color="FFFFD100" horzAlign="CENTER">
+                        <Area><Inset all="16" /></Area>
+                    </TextComponent>
+                </ImagerySection>
+                <StateImagery name="Enabled">
+                    <Layer>
+                        <Section section="Background" />
+                    </Layer>
+                </StateImagery>
+            </Visual>
+
+            <Frame name="MinimapCloseButton" inherits="IconButton">
+                <Property name="Icon" value="Interface/Icons/fg4_iconsGold_close_result.htex" />
+
+                <Area>
+                    <Anchor point="TOP" offset="0" />
+                    <Anchor point="RIGHT" offset="0" />
+                    <Anchor point="BOTTOM" offset="0" />
+                    <Size><AbsDimension x="64" y="64" /></Size>
+                </Area>
+                
+                <Scripts>
+                    <OnClick>
+                        return function(self, button)
+                            Minimap_Toggle(self);
+                        end
+                    </OnClick>
+                </Scripts>
+            </Frame>
+        </Frame>
+
+        <Frame name="MinimapBorder" parent="GameParent" renderer="DefaultRenderer">
+            <Visual>
+                <ImagerySection name="Background">
+                    <ImageComponent texture="Interface/GameUI/fg4_glass_border_result.htex" tiling="NONE" />
+                </ImagerySection>
+                <StateImagery name="Enabled">
+                    <Layer>
+                        <Section section="Background" />
+                    </Layer>
+                </StateImagery>
+            </Visual>
+
+            <Area>
+                <Size><AbsDimension x="384" y="384" /></Size>
+                <Anchor point="RIGHT" offset="0" />
+                <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="MinimapTitleBar" />
+            </Area>
+        </Frame>
+	</Frame>
+</UiLayout>

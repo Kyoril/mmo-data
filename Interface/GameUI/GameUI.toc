@@ -23,6 +23,7 @@ VendorFrame.xml
 QuestFrame.xml
 QuestLogFrame.xml
 GuildFrame.xml
+Minimap.xml
 GameMenu.xml
 GameTooltip.xml
 

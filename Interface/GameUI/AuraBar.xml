@@ -5,7 +5,7 @@
     <Frame name="AuraBar" parent="GameParent">
         <Area>
 			<Anchor point="TOP" offset="8" />
-			<Anchor point="RIGHT" offset="-8" />
+			<Anchor point="RIGHT" offset="-416" />
             <Size>
                 <AbsDimension x="1024" y="128" />
             </Size>

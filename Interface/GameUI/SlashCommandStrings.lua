@@ -49,3 +49,4 @@ SLASH_LOGOUT1 = "/logout"; -- Logout
 SLASH_LOGOUT2 = "/camp"; -- Logout
 SLASH_QUIT1 = "/quit"; -- Quit
 SLASH_QUIT2 = "/exit"; -- Quit
+SLASH_TIME1 = "/time"; -- Time

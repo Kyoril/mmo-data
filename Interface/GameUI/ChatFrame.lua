@@ -28,7 +28,7 @@ ChatTypeInfo["EMOTE"]				= { sticky = 0, r = 1.00, g = 0.50, b = 0.25 };
 ChatTypeInfo["TEXT_EMOTE"]			= { sticky = 0, r = 1.00, g = 0.50, b = 0.25 };
 ChatTypeInfo["SYSTEM"]				= { sticky = 0, r = 1.00, g = 1.00, b = 0.00 };
 ChatTypeInfo["UNIT_WHISPER"]		= { sticky = 0, r = 1.00, g = 1.00, b = 1.00 };
-ChatTypeInfo["UNIT_SAY"]			= { sticky = 0, r = 0.70, g = 0.70, b = 0.70 };
+ChatTypeInfo["UNIT_SAY"]			= { sticky = 0, r = 1.00, g = 1.00, b = 0.62 };
 ChatTypeInfo["UNIT_YELL"]		    = { sticky = 0, r = 1.00, g = 0.25, b = 0.25 };
 ChatTypeInfo["UNIT_EMOTE"]		    = { sticky = 0, r = 1.00, g = 0.50, b = 0.25 };
 ChatTypeInfo["CHANNEL"]				= { sticky = 0, r = 1.00, g = 0.75, b = 0.75 };
@@ -54,6 +54,15 @@ end
 
 SlashCmdList["QUIT"] = function(msg)
 	Quit();
+end
+
+SlashCmdList["TIME"] = function(msg)
+    local hour, minute = GetGameTime();
+
+    TIME_TWENTYFOURHOURS = "%d:%02d"; -- %d = hour, %d = minute
+    
+	local info = ChatTypeInfo["SYSTEM"];
+	ChatFrame:AddMessage(string.format(TIME_TWENTYFOURHOURS, hour, minute), info.r, info.g, info.b);
 end
 
 SlashCmdList["RANDOM"] = function(msg)
@@ -226,11 +235,11 @@ function ChatFrame_OnLoad(this)
     end);
     this:RegisterEvent("CHAT_MSG_UNIT_SAY", function(this, character, message)
         local info = ChatTypeInfo["UNIT_SAY"];
-        ChatFrame:AddMessage(string.format(CHAT_FORMAT_SAY, character, message), info.r, info.g, info.b);
+        ChatFrame:AddMessage(string.format(CHAT_FORMAT_CREATURE_SAY, character, message), info.r, info.g, info.b);
     end);
     this:RegisterEvent("CHAT_MSG_UNIT_YELL", function(this, character, message)
         local info = ChatTypeInfo["UNIT_YELL"];
-        ChatFrame:AddMessage(string.format(CHAT_FORMAT_YELL, character, message), info.r, info.g, info.b);
+        ChatFrame:AddMessage(string.format(CHAT_FORMAT_CREATURE_YELL, character, message), info.r, info.g, info.b);
     end);
 
     this:RegisterEvent("PLAYER_LEVEL_UP", ChatFrame_OnPlayerLevelUp);
