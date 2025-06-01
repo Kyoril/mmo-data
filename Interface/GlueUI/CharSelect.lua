@@ -7,7 +7,7 @@ characterButtons = {}
 
 rotationDirection = 0
 
-characterClassNames = {"CLASS_MAGE", "CLASS_WARRIOR", "CLASS_CLERIC", "CLASS_SHADOWMANCER"};
+characterClassNames = {"CLASS_MAGE", "CLASS_WARRIOR", "CLASS_CLERIC", "CLASS_SHADOWMANCER", "CLASS_SCOUT" };
 
 function CharSelect_OnLoad(self)
 	SetCharSelectModelFrame(CharModel);
