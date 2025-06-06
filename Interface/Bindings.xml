@@ -302,6 +302,15 @@
             end
         end
 	</Binding>
+
+    <Binding name="TOGGLETALENTS" description="Toggle the talent ui." category="INTERFACE">
+		return function(key, keystate)
+            if keystate == "DOWN" then
+                TalentFrame_Toggle();
+            end
+        end
+	</Binding>
+    
     
     <Binding name="TOGGLEGAMEMENU" description="Toggle the game menu." category="INTERFACE">
 		return function(key, keystate)

@@ -1,0 +1,509 @@
+<?xml version="1.0" ?>
+<UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
+	<Script file="TalentFrame.lua" />
+	
+	<!-- Fonts -->
+	<Font name="TalentNameFont" file="Fonts/FRIZQT__.TTF" size="22" outline="0" shadowX="1.0" shadowY="1.0" />
+	<Font name="TalentLabelFont" file="Fonts/FRIZQT__.TTF" size="20" outline="0" shadowX="1.0" shadowY="1.0" />
+	<Font name="TalentRankFont" file="Fonts/FRIZQT__.TTF" size="18" outline="0" shadowX="1.0" shadowY="1.0" />
+	
+	<!-- Talent tab buttons template -->
+	<Frame name="TalentFrameTabButtonTemplate" type="Button" renderer="ButtonRenderer">
+		<Property name="Font" value="TalentLabelFont" />
+		<Property name="Icon" />
+		
+		<Visual>
+			<ImagerySection name="NormalFrame">
+				<!--<BorderComponent texture="Interface/GameUI/fg4_tabButton_Up_result.htex" borderSize="25" />-->
+			</ImagerySection>
+			<ImagerySection name="HoveredFrame">
+				<!--<BorderComponent texture="Interface/GameUI/fg4_tabButton_Over_result.htex" borderSize="25" />-->
+			</ImagerySection>
+			<ImagerySection name="PushedFrame">
+				<!--<BorderComponent texture="Interface/GameUI/fg4_tabButton_Down_result.htex" borderSize="25" />-->
+			</ImagerySection>
+			<ImagerySection name="SelectedFrame">
+				<!--<BorderComponent texture="Interface/GameUI/fg4_tabButton_Selected_result.htex" borderSize="25" />-->
+			</ImagerySection>
+			<ImagerySection name="DisabledFrame">
+				<!--<BorderComponent texture="Interface/GameUI/fg4_tabButton_Disabled_result.htex" borderSize="25" />-->
+			</ImagerySection>
+			<ImagerySection name="Caption">
+				<TextComponent color="FFFFD100" horzAlign="CENTER" vertAlign="CENTER" />
+			</ImagerySection>
+			<ImagerySection name="Image">
+				<ImageComponent>
+					<Area>
+						<Inset left="8" right="8" top="8" bottom="8" />
+					</Area>
+					<PropertyValue property="Icon" />
+				</ImageComponent>
+			</ImagerySection>
+			<StateImagery name="Normal">
+				<Layer>
+					<Section section="NormalFrame" />
+					<Section section="Image" />
+					<Section section="Caption" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Hovered">
+				<Layer>
+					<Section section="HoveredFrame" />
+					<Section section="Image" />
+					<Section section="Caption" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Pushed">
+				<Layer>
+					<Section section="PushedFrame" />
+					<Section section="Image" />
+					<Section section="Caption" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Selected">
+				<Layer>
+					<Section section="SelectedFrame" />
+					<Section section="Image" />
+					<Section section="Caption" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="DisabledFrame" />
+					<Section section="Image" />
+					<Section section="Caption" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+		<Area>
+			<Size><AbsDimension x="160" y="60" /></Size>
+		</Area>
+	</Frame>
+	
+	<!-- Individual talent button template -->
+	<Frame name="TalentFrameTalentTemplate" type="Button" renderer="ButtonRenderer">
+		<Property name="Icon" />
+		
+		<Visual>
+			<ImagerySection name="Image">
+				<ImageComponent>
+					<Area>
+						<Inset all="16" />
+					</Area>
+					<PropertyValue property="Icon" />
+				</ImageComponent>
+			</ImagerySection>
+            <ImagerySection name="Text">
+                <TextComponent color="FFFFD100" horzAlign="CENTER" vertAlign="TOP">
+					<Area>
+						<Inset top="128" />
+					</Area>
+				</TextComponent>
+            </ImagerySection>
+			<ImagerySection name="NormalFrame">
+				<BorderComponent texture="Interface/BW_ButtonSmall_Up.htex" borderSize="30" />
+			</ImagerySection>
+			<ImagerySection name="HoveredFrame">
+				<BorderComponent texture="Interface/BW_ButtonSmall_Over.htex" borderSize="30" />
+			</ImagerySection>
+			<ImagerySection name="PushedFrame">
+				<BorderComponent texture="Interface/BW_ButtonSmall_Down.htex" borderSize="30" />
+			</ImagerySection>
+			<ImagerySection name="DisabledFrame">
+				<BorderComponent texture="Interface/BW_ButtonSmall_Up.htex" borderSize="30" />
+			</ImagerySection>
+			<StateImagery name="Normal">
+				<Layer>
+					<Section section="NormalFrame" />
+					<Section section="Image" />
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Hovered">
+				<Layer>
+					<Section section="HoveredFrame" />
+					<Section section="Image" />
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Pushed">
+				<Layer>
+					<Section section="PushedFrame" />
+					<Section section="Image" />
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="DisabledFrame" />
+					<Section section="Image" />
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+
+		<Area>
+			<Size>
+				<AbsDimension x="128" y="128" />
+			</Size>
+		</Area>
+		
+		<Scripts>
+			<OnClick>
+				return function(this)
+					TalentFrameTalent_OnClick(this)
+				end
+			</OnClick>
+			<!--
+			<OnEnter>
+				return function(this)
+					TalentFrameTalent_OnEnter(this)
+				end
+			</OnEnter>
+			<OnLeave>
+				return function(this)
+					TalentFrameTalent_OnLeave(this)
+				end
+			</OnLeave>
+			-->
+		</Scripts>
+		
+		<!-- Talent rank text overlay -->
+		<Frame name="Rank" renderer="DefaultRenderer">
+			<Property name="Font" value="TalentRankFont" />
+			
+			<Visual>
+				<ImagerySection name="Background">
+					<!--<BorderComponent texture="Interface/GameUI/fg4_black_border.htex" borderSize="8" tint="80000000" />-->
+				</ImagerySection>
+				<ImagerySection name="Text">
+					<TextComponent color="FFFFD100" horzAlign="CENTER" vertAlign="CENTER" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Background" />
+						<Section section="Text" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+			<Area>
+				<Size><AbsDimension x="30" y="20" /></Size>
+				<Anchor point="BOTTOM" offset="-2" />
+				<Anchor point="RIGHT" offset="-2" />
+			</Area>
+		</Frame>
+	</Frame>
+	
+	<!-- Arrow branch template for connecting talents -->
+	<Frame name="TalentFrameBranchTemplate" renderer="DefaultRenderer">
+		<Property name="Texture" value="Interface/GameUI/talent_branches.htex" />
+		<Property name="TexCoords" value="0.0, 0.25, 0.0, 0.25" />
+		
+		<Visual>
+			<ImagerySection name="Branch">
+				<!--<ImageComponent>
+					<Area>
+						<Inset left="0" right="0" top="0" bottom="0" />
+					</Area>
+					<PropertyValue property="Texture" />
+					<PropertyValue property="TexCoords" />
+				</ImageComponent>-->
+			</ImagerySection>
+			<StateImagery name="Normal">
+				<Layer>
+					<Section section="Branch" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Active">
+				<Layer>
+					<Section section="Branch" tint="FFFECC3D" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="Branch" tint="FF5A5A5A" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+		<Area>
+			<Size><AbsDimension x="32" y="32" /></Size>
+		</Area>
+	</Frame>
+	
+	<!-- Main talent frame -->
+	<Frame name="TalentFrame" inherits="SidePanelTemplate" parent="GameParent">
+		<Property name="Visible" value="false" />
+		
+		<Scripts>
+			<OnLoad>
+				return function(this)
+					TalentFrame_OnLoad(this)
+				end
+			</OnLoad>
+			<OnShow>
+				return function(this)
+					TalentFrame_OnShow(this)
+				end
+			</OnShow>
+		</Scripts>
+		
+		<!-- Available talent points text -->
+		<Frame name="TalentFramePointsText" renderer="DefaultRenderer">
+			<Property name="Font" value="TalentLabelFont" />
+			
+			<Visual>
+				<ImagerySection name="Text">
+					<TextComponent color="FFFFD100" horzAlign="RIGHT" vertAlign="CENTER" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Text" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+			<Area>
+				<Size><AbsDimension x="240" y="30" /></Size>
+				<Anchor point="TOP" offset="-20" />
+                <Anchor point="RIGHT" offset="-40" />
+			</Area>
+		</Frame>
+		
+		<!-- Tab buttons container -->
+		<Frame name="TalentFrameTabContainer">
+			<Area>
+				<Size><AbsDimension x="900" y="64" /></Size>
+				<Anchor point="TOP" relativeTo="TalentFrame_SidePanelTitleBar" relativePoint="BOTTOM" offset="10" />
+				<Anchor point="LEFT" offset="30" />
+				<Anchor point="RIGHT" offset="-30" />
+			</Area>
+			
+			<!-- Three tab buttons for the different talent specializations -->
+			<Frame name="TalentFrameTab1" inherits="TalentFrameTabButtonTemplate" type="Button" id="1">				
+				<Area>
+					<Anchor point="TOP" />
+                    <Anchor point="LEFT" />
+				</Area>
+				
+				<Scripts>
+					<OnClick>
+						return function(this)
+							TalentFrameTab_OnClick(this)
+						end
+					</OnClick>
+				</Scripts>
+			</Frame>
+			
+			<Frame name="TalentFrameTab2" inherits="TalentFrameTabButtonTemplate" type="Button" id="2">
+				<Area>
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="TalentFrameTab1" offset="10" />
+				</Area>
+				
+				<Scripts>
+					<OnClick>
+						return function(this)
+							TalentFrameTab_OnClick(this)
+						end
+					</OnClick>
+				</Scripts>
+			</Frame>
+			
+			<Frame name="TalentFrameTab3" inherits="TalentFrameTabButtonTemplate" type="Button" id="3">				
+				<Area>
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="TalentFrameTab2" offset="10" />
+				</Area>
+				
+				<Scripts>
+					<OnClick>
+						return function(this)
+							TalentFrameTab_OnClick(this)
+						end
+					</OnClick>
+				</Scripts>
+			</Frame>
+		</Frame>
+		
+		<!-- Main talent tree container -->
+		<Frame name="TalentFrameTalentContainer" renderer="DefaultRenderer">
+			<Visual>
+				<ImagerySection name="Background">
+					<ImageComponent texture="Interface/GameUI/TalentFrameBackground.htex" tiling="NONE">
+						<Area>
+							<Inset all="8" />
+						</Area>
+					</ImageComponent>
+					<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Background" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+
+			<Area>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TalentFrameTabContainer" offset="10" />
+				<Anchor point="LEFT" offset="30" />
+				<Anchor point="RIGHT" offset="-30" />
+				<Anchor point="BOTTOM" offset="-30" />
+			</Area>
+			
+			<!-- Talent buttons - 20 total maximum -->
+			<!-- First row -->
+			<Frame name="TalentFrameTalent1" inherits="TalentFrameTalentTemplate" type="Button">
+				<Area>
+					<Anchor point="TOP" offset="50" />
+                    <Anchor point="LEFT" offset="100" />
+				</Area>
+			</Frame>
+			
+			<Frame name="TalentFrameTalent2" inherits="TalentFrameTalentTemplate" type="Button">
+				<Area>
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="TalentFrameTalent1" offset="80" />
+					<Anchor point="TOP" relativeTo="TalentFrameTalent1" />
+				</Area>
+			</Frame>
+			
+			<Frame name="TalentFrameTalent3" inherits="TalentFrameTalentTemplate" type="Button">
+				<Area>
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="TalentFrameTalent2" offset="80" />
+					<Anchor point="TOP" relativeTo="TalentFrameTalent1" />
+				</Area>
+			</Frame>
+			
+			<Frame name="TalentFrameTalent4" inherits="TalentFrameTalentTemplate" type="Button">
+				<Area>
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="TalentFrameTalent3" offset="80" />
+					<Anchor point="TOP" relativeTo="TalentFrameTalent1" />
+				</Area>
+			</Frame>
+			
+			<!-- Second row -->
+			<Frame name="TalentFrameTalent5" inherits="TalentFrameTalentTemplate" type="Button">
+				<Area>
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TalentFrameTalent1" offset="100" />
+					<Anchor point="LEFT"  relativeTo="TalentFrameTalent1" />
+				</Area>
+			</Frame>
+			
+			<Frame name="TalentFrameTalent6" inherits="TalentFrameTalentTemplate" type="Button">
+				<Area>
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="TalentFrameTalent5" offset="80" />
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TalentFrameTalent1" offset="64" />
+				</Area>
+			</Frame>
+			
+			<Frame name="TalentFrameTalent7" inherits="TalentFrameTalentTemplate" type="Button">
+				<Area>
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="TalentFrameTalent6" offset="80" />
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TalentFrameTalent1" offset="64" />
+				</Area>
+			</Frame>
+			
+			<Frame name="TalentFrameTalent8" inherits="TalentFrameTalentTemplate" type="Button">
+				<Area>
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="TalentFrameTalent7" offset="80" />
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TalentFrameTalent1" offset="64" />
+				</Area>
+			</Frame>
+			
+			<!-- Third row -->
+			<Frame name="TalentFrameTalent9" inherits="TalentFrameTalentTemplate" type="Button">
+				<Area>
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TalentFrameTalent5" offset="64" />
+					<Anchor point="LEFT"  relativeTo="TalentFrameTalent1" />
+				</Area>
+			</Frame>
+			
+			<Frame name="TalentFrameTalent10" inherits="TalentFrameTalentTemplate" type="Button">
+				<Area>
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="TalentFrameTalent9" offset="80" />
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TalentFrameTalent5" offset="64" />
+				</Area>
+			</Frame>
+			
+			<Frame name="TalentFrameTalent11" inherits="TalentFrameTalentTemplate" type="Button">
+				<Area>
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="TalentFrameTalent10" offset="80" />
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TalentFrameTalent5" offset="64" />
+				</Area>
+			</Frame>
+			
+			<Frame name="TalentFrameTalent12" inherits="TalentFrameTalentTemplate" type="Button">
+				<Area>
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="TalentFrameTalent11" offset="80" />
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TalentFrameTalent5" offset="64" />
+				</Area>
+			</Frame>
+			
+			<!-- Fourth row -->
+			<Frame name="TalentFrameTalent13" inherits="TalentFrameTalentTemplate" type="Button">
+				<Area>
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TalentFrameTalent9" offset="64" />
+					<Anchor point="LEFT"  relativeTo="TalentFrameTalent1" />
+				</Area>
+			</Frame>
+			
+			<Frame name="TalentFrameTalent14" inherits="TalentFrameTalentTemplate" type="Button">
+				<Area>
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="TalentFrameTalent13" offset="80" />
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TalentFrameTalent9" offset="64" />
+				</Area>
+			</Frame>
+			
+			<Frame name="TalentFrameTalent15" inherits="TalentFrameTalentTemplate" type="Button">
+				<Area>
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="TalentFrameTalent14" offset="80" />
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TalentFrameTalent9" offset="64" />
+				</Area>
+			</Frame>
+			
+			<Frame name="TalentFrameTalent16" inherits="TalentFrameTalentTemplate" type="Button">
+				<Area>
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="TalentFrameTalent15" offset="80" />
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TalentFrameTalent9" offset="64" />
+				</Area>
+			</Frame>
+			
+			<!-- Fifth row -->
+			<Frame name="TalentFrameTalent17" inherits="TalentFrameTalentTemplate" type="Button">
+				<Area>
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TalentFrameTalent13" offset="64" />
+					<Anchor point="LEFT"  relativeTo="TalentFrameTalent1" />
+				</Area>
+			</Frame>
+			
+			<Frame name="TalentFrameTalent18" inherits="TalentFrameTalentTemplate" type="Button">
+				<Area>
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="TalentFrameTalent17" offset="80" />
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TalentFrameTalent13" offset="64" />
+				</Area>
+			</Frame>
+			
+			<Frame name="TalentFrameTalent19" inherits="TalentFrameTalentTemplate" type="Button">
+				<Area>
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="TalentFrameTalent18" offset="80" />
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TalentFrameTalent13" offset="64" />
+				</Area>
+			</Frame>
+			
+			<Frame name="TalentFrameTalent20" inherits="TalentFrameTalentTemplate" type="Button">
+				<Area>
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="TalentFrameTalent19" offset="80" />
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TalentFrameTalent13" offset="64" />
+				</Area>
+			</Frame>
+			
+			<!-- Branch connections - these would be positioned dynamically in a real implementation -->
+			<Frame name="TalentFrameBranch1" inherits="TalentFrameBranchTemplate" />
+			<Frame name="TalentFrameBranch2" inherits="TalentFrameBranchTemplate" />
+			<Frame name="TalentFrameBranch3" inherits="TalentFrameBranchTemplate" />
+			<Frame name="TalentFrameBranch4" inherits="TalentFrameBranchTemplate" />
+			<Frame name="TalentFrameBranch5" inherits="TalentFrameBranchTemplate" />
+			<Frame name="TalentFrameBranch6" inherits="TalentFrameBranchTemplate" />
+			<Frame name="TalentFrameBranch7" inherits="TalentFrameBranchTemplate" />
+			<Frame name="TalentFrameBranch8" inherits="TalentFrameBranchTemplate" />
+			<Frame name="TalentFrameBranch9" inherits="TalentFrameBranchTemplate" />
+			<Frame name="TalentFrameBranch10" inherits="TalentFrameBranchTemplate" />
+		</Frame>
+	</Frame>
+</UiLayout>
