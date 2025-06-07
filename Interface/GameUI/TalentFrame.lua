@@ -36,6 +36,7 @@ function TalentFrame_OnLoad(self)
         local button = _G["TalentFrameTalent"..i];
         button:SetOnEnterHandler(TalentFrameTalent_OnEnter);
         button:SetOnLeaveHandler(TalentFrameTalent_OnLeave);
+        button:SetClickedHandler(TalentFrameTalent_OnClick);
     end
 
     -- Add button to menu bar
@@ -190,10 +191,10 @@ end
 function TalentFrameTalent_OnClick(self)
     if (playerTalentPoints > 0) then
         local talentID = self.id;
-        local tabID = self.tabID;
+        local tabID = selectedTab;
         
         -- Learn the talent (in a real implementation, this would call server)
-        local result = false;--LearnTalent(talentID)
+        local result = LearnTalent(tabID, talentID - 1)
         
         if (result) then
             -- Update display after learning

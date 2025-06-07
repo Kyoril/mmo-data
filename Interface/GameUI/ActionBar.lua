@@ -23,12 +23,19 @@ function ActionButton_OnEnter(self)
     end
 end
 
+function ActionBarButton_OnDrag(this, button, position)
+    PickupActionButton(this.id - 1);
+end
+
+function ActionBarButton_OnDrop(this, button, position)
+    PickupActionButton(this.id - 1);
+end
+
 function ActionButton_OnLeave(self)
     GameTooltip:Hide();
 end
 
 function ActionButton_Down(id)
-
     if (id == nil) then
         return;
     end

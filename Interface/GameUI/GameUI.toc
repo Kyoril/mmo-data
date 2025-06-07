@@ -3,6 +3,7 @@ GameParent.xml
 ZoneText.xml
 StaticDialog.xml
 GameMenuBar.xml
+ActionBarButton.xml
 ActionBar.xml
 ChatFrame.xml
 PlayerFrame.xml
