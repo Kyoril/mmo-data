@@ -5,6 +5,14 @@ function InventoryItemButton_OnLoad(this)
     this:SetClickedHandler(InventoryItemButton_OnClick);    
 end
 
+function InventoryItemButton_OnDrag(this, button, position)
+    PickupContainerItem(this.id);
+end
+
+function InventoryItemButton_OnDrop(this, button, position)
+    PickupContainerItem(this.id);
+end
+
 function InventoryItemButton_OnEnter(this)
     local item = GetInventorySlotItem("player", this.id);
     if not item then

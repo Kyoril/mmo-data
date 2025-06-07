@@ -5,6 +5,8 @@
 	<Frame name="InventoryItemButtonTemplate" type="Button" renderer="ButtonRenderer">
 		<Property name="Icon" />
 		<Property name="Background" />
+        <Property name="DragEnabled" value="true" />
+        <Property name="DropEnabled" value="true" />
 
 		<Visual>
 			<ImagerySection name="Background">
@@ -93,6 +95,16 @@
                     InventoryItemButton_OnUpdate(this, elapsed);
                 end
             </OnUpdate>
+            <OnDrag>
+                return function(this, button, position)
+                    InventoryItemButton_OnDrag(this, button, position);
+                end
+            </OnDrag>
+            <OnDrop>
+                return function(this, button, position)
+                    InventoryItemButton_OnDrop(this, button, position);
+                end
+            </OnDrop>
         </Scripts>
 	</Frame>
 </UiLayout>
