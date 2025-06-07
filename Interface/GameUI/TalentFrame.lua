@@ -99,7 +99,7 @@ end
 
 function TalentFrame_UpdateTalents()
     -- Get the talents for the selected tab
-    local numTalents = GetNumTalents(selectedTab);
+    local numTalents = GetNumTalents(selectedTab - 1);
     
     -- Clear talent display first
     for i=1, MAX_TALENTS_PER_TAB do
@@ -109,14 +109,14 @@ function TalentFrame_UpdateTalents()
     
     -- Display the talents
     for i=1, numTalents do
-        local talent = GetTalentInfo(selectedTab, i - 1);
+        local talent = GetTalentInfo(selectedTab - 1, i - 1);
 
         -- Calculate button index from tier and column
         local index = (talent.tier * MAX_TALENTS_PER_TIER) + talent.column + 1;
         local button = _G["TalentFrameTalent"..index];
         
         button.id = i;
-        button.tabID = selectedTab;
+        button.tabID = selectedTab - 1;
         button.tier = talent.tier;
         button.column = talent.column;
         button.spell = talent.spell;
@@ -191,7 +191,7 @@ end
 function TalentFrameTalent_OnClick(self)
     if (playerTalentPoints > 0) then
         local talentID = self.id;
-        local tabID = selectedTab;
+        local tabID = selectedTab - 1;
         
         -- Learn the talent (in a real implementation, this would call server)
         local result = LearnTalent(tabID, talentID - 1)
@@ -205,7 +205,7 @@ end
 
 function TalentFrameTalent_OnEnter(self)
     local talentID = self.id;
-    local talent = GetTalentInfo(selectedTab, talentID - 1);
+    local talent = GetTalentInfo(selectedTab - 1, talentID - 1);
 
     if not talent then
         return
