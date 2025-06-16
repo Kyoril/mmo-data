@@ -74,12 +74,11 @@ function TalentFrame_UpdateTabs()
             local tabInfo = GetTalentTabName(i - 1);
             tabButton:SetText(tabInfo);
             tabButton:Show();
-            
-            -- Highlight selected tab
+              -- Highlight selected tab
             if (i == selectedTab) then
-                --tabButton:SetSelected(true)
+                tabButton:SetChecked(true);
             else
-                --tabButton:SetSelected(false)
+                tabButton:SetChecked(false);
             end
         else
             -- Hide unused tabs
@@ -123,9 +122,8 @@ function TalentFrame_UpdateTalents()
         
         -- Set the icon
         button:SetProperty("Icon", talent.icon or "");
-        
-        -- Set the rank overlay
-        local rankFrame = _G["TalentFrameTalent"..i.."_Rank"];
+          -- Set the rank overlay
+        local rankFrame = _G["TalentFrameTalent"..index.."_Rank"];
         if rankFrame then
             rankFrame:SetText(string.format("%d/%d", talent.rank, talent.maxRank));
         end
