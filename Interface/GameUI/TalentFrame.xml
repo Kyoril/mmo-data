@@ -92,6 +92,14 @@
 					<PropertyValue property="Icon" />
 				</ImageComponent>
 			</ImagerySection>
+			<ImagerySection name="DisabledImage">
+				<ImageComponent tint="88888888">
+					<Area>
+						<Inset all="16" />
+					</Area>
+					<PropertyValue property="Icon" />
+				</ImageComponent>
+			</ImagerySection>
             <ImagerySection name="Text">
                 <TextComponent color="FFFFD100" horzAlign="CENTER" vertAlign="TOP">
 					<Area>
@@ -109,7 +117,7 @@
 				<BorderComponent texture="Interface/BW_ButtonSmall_Down.htex" borderSize="30" />
 			</ImagerySection>
 			<ImagerySection name="DisabledFrame">
-				<BorderComponent texture="Interface/BW_ButtonSmall_Up.htex" borderSize="30" />
+				<BorderComponent texture="Interface/BW_ButtonSmall_Up.htex" borderSize="30" tint="FF888888" />
 			</ImagerySection>
 			<StateImagery name="Normal">
 				<Layer>
@@ -135,8 +143,7 @@
 			<StateImagery name="Disabled">
 				<Layer>
 					<Section section="DisabledFrame" />
-					<Section section="Image" />
-					<Section section="Text" />
+					<Section section="DisabledImage" />
 				</Layer>
 			</StateImagery>
 		</Visual>
@@ -189,6 +196,7 @@
 						<Section section="Text" />
 					</Layer>
 				</StateImagery>
+				<StateImagery name="Disabled" />
 			</Visual>
 			<Area>
 				<Size><AbsDimension x="24" y="16" /></Size>

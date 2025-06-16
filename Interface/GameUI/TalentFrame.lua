@@ -103,6 +103,8 @@ function TalentFrame_UpdateTalents()
     TalentFrameScrollBar:SetMinimum(0);
     TalentFrameScrollBar:SetMaximum(0);
 
+    local pointsSpent = GetTalentPointsSpentInTab(selectedTab - 1);
+    
     -- Clear talent display first
     for i=1, MAX_TALENTS_PER_TAB do
         local button = _G["TalentFrameTalent"..i];
@@ -122,6 +124,13 @@ function TalentFrame_UpdateTalents()
         button.tier = talent.tier;
         button.column = talent.column;
         button.spell = talent.spell;
+
+        -- For each tier, 5 points spent are required to unlock the next tier, so disable the button if not enough points spent
+        if (talent.tier > 0 and pointsSpent < (talent.tier * 5)) then
+            button:Disable();
+        else
+            button:Enable();
+        end
         
         -- Set the icon
         button:SetProperty("Icon", talent.icon or "");        -- Set the rank overlay
