@@ -53,7 +53,7 @@ function TalentFrame_Update(self)
     playerTalentPoints = player:GetTalentPoints() or 0;
     
     -- Update talent point display
-    TalentFramePointsText:SetText(Localize("TALENT_POINTS") .. ": " .. playerTalentPoints);
+    TalentFramePointsText:SetText(string.format(Localize("TALENT_POINTS_AVAILABLE"), playerTalentPoints));
     
     -- Update and display tab information
     TalentFrame_UpdateTabs();
@@ -247,7 +247,7 @@ function TalentFrameTalent_OnEnter(self)
     if (talent.rank < talent.maxRank and talent.rank > 0) then
         GameTooltip_AddLine("", TOOLTIP_LINE_LEFT, "FFFFFFFF");
         GameTooltip_AddLine(Localize("TALENT_NEXT_RANK"), TOOLTIP_LINE_LEFT, "FFFFFFFF");
-        GameTooltip_AddLine(GetSpellDescription(talent.spell), TOOLTIP_LINE_LEFT, "FFFFD100");
+        GameTooltip_AddLine(GetSpellDescription(talent.nextRankSpell), TOOLTIP_LINE_LEFT, "FFFFD100");
     end
 
     GameTooltip:Show();

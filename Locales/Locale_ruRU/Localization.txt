@@ -357,4 +357,5 @@ strings =
 	
 	(key = "TALENT_RANK_OF_MAX_RANK", string = "Rank %d/%d")
 	(key = "TALENT_NEXT_RANK", string = "Next rank:")
+	(key = "TALENT_POINTS_AVAILABLE", string = "Available talent points: %d")
 }
