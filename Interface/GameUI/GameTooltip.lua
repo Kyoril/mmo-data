@@ -290,8 +290,6 @@ function GameTooltip_SetSpell(spell)
         end
     end
 
-    
-
     if ((spell.level ~= 0) and (spell.level > player:GetLevel())) then
         GameTooltip_AddLine(string.format(Localize("LEVEL_REQUIREMENT_FORMAT"), spell.level), TOOLTIP_LINE_LEFT, "FFFF2020");
     end

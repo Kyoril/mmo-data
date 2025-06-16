@@ -100,6 +100,9 @@ function TalentFrame_UpdateTalents()
     -- Get the talents for the selected tab
     local numTalents = GetNumTalents(selectedTab - 1);
     
+    TalentFrameScrollBar:SetMinimum(0);
+    TalentFrameScrollBar:SetMaximum(0);
+
     -- Clear talent display first
     for i=1, MAX_TALENTS_PER_TAB do
         local button = _G["TalentFrameTalent"..i];
@@ -121,27 +124,35 @@ function TalentFrame_UpdateTalents()
         button.spell = talent.spell;
         
         -- Set the icon
-        button:SetProperty("Icon", talent.icon or "");
-          -- Set the rank overlay
+        button:SetProperty("Icon", talent.icon or "");        -- Set the rank overlay
         local rankFrame = _G["TalentFrameTalent"..index.."_Rank"];
         if rankFrame then
-            rankFrame:SetText(string.format("%d/%d", talent.rank, talent.maxRank));
-        end
-        
+            -- Show only current rank instead of current/max
+            rankFrame:SetText(string.format("%d", talent.rank));
+            
+            -- Color the rank text based on talent state
+            if (talent.rank == talent.maxRank) then
+                -- Max rank - yellow/orange
+                rankFrame:SetProperty("TextColor", "FFFFD100");  -- Orange/yellow for max rank
+            elseif (playerTalentPoints > 0 and talent.rank < talent.maxRank) then
+                -- Can be trained - green
+                rankFrame:SetProperty("TextColor", "FF33FF33");  -- Green for available
+            else
+                -- Cannot be trained - white/grey
+                rankFrame:SetProperty("TextColor", "FFCCCCCC");  -- Light grey for unavailable
+            end
+        end        
         -- Color the talent based on whether it can be trained
         talentAvailable = false;--CanTrainTalent(talent, playerTalentPoints)
         if (talent.rank == talent.maxRank) then
             -- Max rank, show as normal
             --button:SetState("Normal")
-            --rankFrame:SetTextColor(1.0, 0.82, 0)  -- Yellow for max rank
         elseif (talentAvailable) then
             -- Available to train
             --button:SetState("Highlighted")
-            --rankFrame:SetTextColor(0, 1.0, 0)  -- Green for available
         else
             -- Not available to train
             --button:SetState("Disabled")
-            --rankFrame:SetTextColor(0.5, 0.5, 0.5)  -- Grey for unavailable
         end
         
         -- Show the button
@@ -212,8 +223,25 @@ function TalentFrameTalent_OnEnter(self)
     GameTooltip:ClearAnchors();
     GameTooltip:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, self, 0);
     GameTooltip:SetAnchor(AnchorPoint.LEFT, AnchorPoint.RIGHT, self, 0);
-    GameTooltip_SetSpell(talent.spell);
-    GameTooltip:Show()
+
+    local player = GetUnit("player");
+    GameTooltip_Clear();
+
+    if (talent.spell == nil) then
+        return
+    end
+
+    GameTooltip_AddLine(talent.spell.name, TOOLTIP_LINE_LEFT, "FFFFFFFF");
+    GameTooltip_AddLine(string.format(Localize("TALENT_RANK_OF_MAX_RANK"), talent.rank, talent.maxRank), TOOLTIP_LINE_LEFT, "FFFFFFFF");
+    GameTooltip_AddLine(GetSpellDescription(talent.spell), TOOLTIP_LINE_LEFT, "FFFFD100");
+
+    if (talent.rank < talent.maxRank and talent.rank > 0) then
+        GameTooltip_AddLine("", TOOLTIP_LINE_LEFT, "FFFFFFFF");
+        GameTooltip_AddLine(Localize("TALENT_NEXT_RANK"), TOOLTIP_LINE_LEFT, "FFFFFFFF");
+        GameTooltip_AddLine(GetSpellDescription(talent.spell), TOOLTIP_LINE_LEFT, "FFFFD100");
+    end
+
+    GameTooltip:Show();
 end
 
 function TalentFrameTalent_OnLeave(self)

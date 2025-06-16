@@ -355,4 +355,7 @@ strings =
 	(key = "GUILD_PLAYER_ZONE", string = "Zone: %s")
 	(key = "GUILD_PLAYER_RANK", string = "Rank: %s")
 	(key = "GUILD_MOTD", string = "Guild Message Of The Day")
+	
+	(key = "TALENT_RANK_OF_MAX_RANK", string = "Rank %d/%d")
+	(key = "TALENT_NEXT_RANK", string = "Next rank:")
 }

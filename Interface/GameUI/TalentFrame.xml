@@ -1,11 +1,10 @@
 <?xml version="1.0" ?>
 <UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
 	<Script file="TalentFrame.lua" />
-	
-	<!-- Fonts -->
+		<!-- Fonts -->
 	<Font name="TalentNameFont" file="Fonts/FRIZQT__.TTF" size="22" outline="0" shadowX="1.0" shadowY="1.0" />
 	<Font name="TalentLabelFont" file="Fonts/FRIZQT__.TTF" size="20" outline="0" shadowX="1.0" shadowY="1.0" />
-	<Font name="TalentRankFont" file="Fonts/FRIZQT__.TTF" size="18" outline="0" shadowX="1.0" shadowY="1.0" />
+	<Font name="TalentRankFont" file="Fonts/FRIZQT__.TTF" size="12" outline="1" shadowX="0.5" shadowY="0.5" />
 	
 	<!-- Talent tab buttons template -->
 	<Frame name="TalentFrameTabButtonTemplate" type="Button" renderer="ButtonRenderer">
@@ -73,8 +72,10 @@
 					<Section section="Caption" />
 				</Layer>
 			</StateImagery>
-		</Visual>		<Area>
-			<Size><AbsDimension x="160" y="70" /></Size>
+		</Visual>		
+		
+		<Area>
+			<Size><AbsDimension x="160" y="84" /></Size>
 		</Area>
 	</Frame>
 	
@@ -169,24 +170,30 @@
 		<!-- Talent rank text overlay -->
 		<Frame name="Rank" renderer="DefaultRenderer">
 			<Property name="Font" value="TalentRankFont" />
-					<Visual>
+			<Property name="TextColor" value="FFFFFFFF" />
+			
+			<Visual>
 				<ImagerySection name="Background">
-					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="8" tint="80000000" />
+					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="3" tint="EE000000" />
+				</ImagerySection>
+				<ImagerySection name="Border">
+					<BorderComponent texture="Interface/GameUI/fg4_borders_simple.htex" borderSize="2" tint="FFAAAAAA" />
 				</ImagerySection>
 				<ImagerySection name="Text">
-					<TextComponent color="FFFFD100" horzAlign="CENTER" vertAlign="CENTER" />
+					<TextComponent color="$TextColor" horzAlign="CENTER" vertAlign="CENTER" />
 				</ImagerySection>
 				<StateImagery name="Enabled">
 					<Layer>
 						<Section section="Background" />
+						<Section section="Border" />
 						<Section section="Text" />
 					</Layer>
 				</StateImagery>
 			</Visual>
 			<Area>
-				<Size><AbsDimension x="30" y="20" /></Size>
-				<Anchor point="BOTTOM" offset="-2" />
-				<Anchor point="RIGHT" offset="-2" />
+				<Size><AbsDimension x="24" y="16" /></Size>
+				<Anchor point="BOTTOM" offset="-4" />
+				<Anchor point="RIGHT" offset="-4" />
 			</Area>
 		</Frame>
 	</Frame>
@@ -289,7 +296,8 @@
 					</OnClick>
 				</Scripts>
 			</Frame>
-					<Frame name="TalentFrameTab2" inherits="TalentFrameTabButtonTemplate" type="Button" id="2">
+					
+			<Frame name="TalentFrameTab2" inherits="TalentFrameTabButtonTemplate" type="Button" id="2">
 				<Area>
 					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="TalentFrameTab1" offset="10" />
 					<Anchor point="TOP" relativeTo="TalentFrameTab1" />
@@ -303,7 +311,8 @@
 					</OnClick>
 				</Scripts>
 			</Frame>
-					<Frame name="TalentFrameTab3" inherits="TalentFrameTabButtonTemplate" type="Button" id="3">				
+					
+			<Frame name="TalentFrameTab3" inherits="TalentFrameTabButtonTemplate" type="Button" id="3">				
 				<Area>
 					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="TalentFrameTab2" offset="10" />
 					<Anchor point="TOP" relativeTo="TalentFrameTab1" />
@@ -346,6 +355,7 @@
 			<!-- Scrollbar for talent tree -->
 			<Frame name="TalentFrameScrollBar" inherits="VerticalScrollBar">
 				<Property name="Enabled" value="true" />
+				
 				<Area>
 					<Anchor point="RIGHT" offset="0" />
 					<Anchor point="TOP" offset="0" />
