@@ -48,13 +48,6 @@ function TalentFrame_OnShow(self)
 end
 
 function TalentFrame_Update(self)
-    -- Get player's available talent points
-    local player = GetUnit("player");
-    playerTalentPoints = player:GetTalentPoints() or 0;
-    
-    -- Update talent point display
-    TalentFramePointsText:SetText(string.format(Localize("TALENT_POINTS_AVAILABLE"), playerTalentPoints));
-    
     -- Update and display tab information
     TalentFrame_UpdateTabs();
     
@@ -97,6 +90,11 @@ function TalentFrameTab_OnClick(self)
 end
 
 function TalentFrame_UpdateTalents()
+    -- Update talent point display
+    local player = GetUnit("player");
+    playerTalentPoints = player:GetTalentPoints() or 0;
+    TalentFramePointsText:SetText(string.format(Localize("TALENT_POINTS_AVAILABLE"), playerTalentPoints));
+
     -- Get the talents for the selected tab
     local numTalents = GetNumTalents(selectedTab - 1);
     
