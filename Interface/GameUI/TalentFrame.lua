@@ -121,13 +121,17 @@ function TalentFrame_UpdateTalents()
         button.tabID = selectedTab - 1;
         button.tier = talent.tier;
         button.column = talent.column;
-        button.spell = talent.spell;
-
-        -- For each tier, 5 points spent are required to unlock the next tier, so disable the button if not enough points spent
+        button.spell = talent.spell;        
+        
+        -- For each tier, 5 points spent are required to unlock the next tier, so make the button appear disabled if not enough points spent
         if (talent.tier > 0 and pointsSpent < (talent.tier * 5)) then
-            button:Disable();
+            -- Make button appear disabled but keep it enabled for mouse events
+            button:SetOpacity(0.4);  -- 40% opacity to show as disabled
+            button.isDisabled = true;  -- Track disabled state for click handling
         else
-            button:Enable();
+            -- Button is available
+            button:SetOpacity(1.0);  -- Full opacity
+            button.isDisabled = false;  -- Track enabled state
         end
         
         -- Set the icon
@@ -205,6 +209,11 @@ function TalentFrame_UpdateBranches(button, talent)
 end
 
 function TalentFrameTalent_OnClick(self)
+    -- Check if button is visually disabled
+    if (self.isDisabled) then
+        return; -- Don't allow clicking on disabled talents
+    end
+    
     if (playerTalentPoints > 0) then
         local talentID = self.id;
         local tabID = selectedTab - 1;
@@ -227,6 +236,12 @@ function TalentFrameTalent_OnEnter(self)
         return
     end;
 
+    -- Provide visual feedback for disabled talents
+    if (self.isDisabled) then
+        -- Slightly brighten disabled talents on hover for better feedback
+        self:SetProperty("Alpha", "0.6");  -- Increase from 40% to 60% opacity on hover
+    end
+
     GameTooltip:ClearAnchors();
     GameTooltip:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, self, 0);
     GameTooltip:SetAnchor(AnchorPoint.LEFT, AnchorPoint.RIGHT, self, 0);
@@ -236,16 +251,25 @@ function TalentFrameTalent_OnEnter(self)
 
     if (talent.spell == nil) then
         return
-    end
-
+    end    
+    
     GameTooltip_AddLine(talent.spell.name, TOOLTIP_LINE_LEFT, "FFFFFFFF");
     GameTooltip_AddLine(string.format(Localize("TALENT_RANK_OF_MAX_RANK"), talent.rank, talent.maxRank), TOOLTIP_LINE_LEFT, "FFFFFFFF");
     GameTooltip_AddLine(GetSpellDescription(talent.spell), TOOLTIP_LINE_LEFT, "FFFFD100");
 
-    if (talent.rank < talent.maxRank and talent.rank > 0) then
+    -- Show next rank information if available
+    if (talent.rank < talent.maxRank and talent.rank > 0 and talent.nextRankSpell) then
         GameTooltip_AddLine("", TOOLTIP_LINE_LEFT, "FFFFFFFF");
         GameTooltip_AddLine(Localize("TALENT_NEXT_RANK"), TOOLTIP_LINE_LEFT, "FFFFFFFF");
         GameTooltip_AddLine(GetSpellDescription(talent.nextRankSpell), TOOLTIP_LINE_LEFT, "FFFFD100");
+    end
+
+    -- Show requirement information if talent is disabled
+    if (self.isDisabled) then
+        local pointsSpent = GetTalentPointsSpentInTab(selectedTab - 1);
+        local requiredPoints = talent.tier * 5;
+        GameTooltip_AddLine("", TOOLTIP_LINE_LEFT, "FFFFFFFF");
+        GameTooltip_AddLine(string.format("Requires %d points in this talent tree (%d/%d)", requiredPoints, pointsSpent, requiredPoints), TOOLTIP_LINE_LEFT, "FFFF5555");
     end
 
     GameTooltip:Show();
@@ -253,4 +277,9 @@ end
 
 function TalentFrameTalent_OnLeave(self)
     GameTooltip:Hide();
+    
+    -- Restore original alpha state for disabled talents
+    if (self.isDisabled) then
+        self:SetOpacity(0.4);  -- Restore to 40% opacity when not hovering
+    end
 end
