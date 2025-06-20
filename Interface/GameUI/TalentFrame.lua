@@ -138,21 +138,28 @@ function TalentFrame_UpdateTalents()
         button:SetProperty("Icon", talent.icon or "");        -- Set the rank overlay
         local rankFrame = _G["TalentFrameTalent"..index.."_Rank"];
         if rankFrame then
-            -- Show only current rank instead of current/max
-            rankFrame:SetText(string.format("%d", talent.rank));
-            
-            -- Color the rank text based on talent state
-            if (talent.rank == talent.maxRank) then
-                -- Max rank - yellow/orange
-                rankFrame:SetProperty("TextColor", "FFFFD100");  -- Orange/yellow for max rank
-            elseif (playerTalentPoints > 0 and talent.rank < talent.maxRank) then
-                -- Can be trained - green
-                rankFrame:SetProperty("TextColor", "FF33FF33");  -- Green for available
+            -- Hide rank frame for unavailable talents, show for available ones
+            if (button.isDisabled) then
+                rankFrame:Hide();
             else
-                -- Cannot be trained - white/grey
-                rankFrame:SetProperty("TextColor", "FFCCCCCC");  -- Light grey for unavailable
+                rankFrame:Show();
+                -- Show only current rank instead of current/max
+                rankFrame:SetText(string.format("%d", talent.rank));
+                
+                -- Color the rank text based on talent state
+                if (talent.rank == talent.maxRank) then
+                    -- Max rank - yellow/orange
+                    rankFrame:SetProperty("TextColor", "FFFFD100");  -- Orange/yellow for max rank
+                elseif (playerTalentPoints > 0 and talent.rank < talent.maxRank) then
+                    -- Can be trained - green
+                    rankFrame:SetProperty("TextColor", "FF33FF33");  -- Green for available
+                else
+                    -- Cannot be trained - white/grey
+                    rankFrame:SetProperty("TextColor", "FFCCCCCC");  -- Light grey for unavailable
+                end
             end
-        end        
+        end
+        
         -- Color the talent based on whether it can be trained
         talentAvailable = false;--CanTrainTalent(talent, playerTalentPoints)
         if (talent.rank == talent.maxRank) then
