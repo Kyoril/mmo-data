@@ -134,7 +134,7 @@
 
 		<Frame name="MenuBarButtons" renderer="DefaultRenderer">
 			<Area>
-				<Anchor point="LEFT" relativePoint="H_CENTER" offset="472" />
+				<Anchor point="LEFT" relativePoint="H_CENTER" offset="400" />
 				<Anchor point="TOP" />
 				<Anchor point="BOTTOM" />
 				<Anchor point="RIGHT" offset="-64" />
@@ -197,7 +197,7 @@
 		</Frame>
 
 		<Area>
-			<Size><AbsDimension x="2400" y="140" /></Size>
+			<Size><AbsDimension x="2500" y="140" /></Size>
 			<Anchor point="BOTTOM" offset="0" />
 			<Anchor point="H_CENTER" offset="0" />
 		</Area>

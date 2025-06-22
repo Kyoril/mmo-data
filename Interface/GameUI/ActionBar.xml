@@ -6,7 +6,7 @@
         <Area>
 			<Anchor point="BOTTOM" offset="-8" />
 			<Anchor point="LEFT" offset="72" />
-            <Anchor point="RIGHT" relativePoint="H_CENTER" offset="512" />
+            <Anchor point="RIGHT" relativePoint="H_CENTER" offset="412" />
             <Anchor point="TOP" offset="8" />
         </Area>
 
