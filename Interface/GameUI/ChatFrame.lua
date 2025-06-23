@@ -32,6 +32,7 @@ ChatTypeInfo["UNIT_SAY"]			= { sticky = 0, r = 1.00, g = 1.00, b = 0.62 };
 ChatTypeInfo["UNIT_YELL"]		    = { sticky = 0, r = 1.00, g = 0.25, b = 0.25 };
 ChatTypeInfo["UNIT_EMOTE"]		    = { sticky = 0, r = 1.00, g = 0.50, b = 0.25 };
 ChatTypeInfo["CHANNEL"]				= { sticky = 0, r = 1.00, g = 0.75, b = 0.75 };
+ChatTypeInfo["LOOT"]				= { sticky = 0, r = 0.00, g = 0.75, b = 0.00 };
 
 -- Slash commands
 SlashCmdList = { };
@@ -216,6 +217,54 @@ function ChatFrame_OnMOTD(this, motd)
     ChatFrame:AddMessage(motd, 1.0, 1.0, 0.0);
 end
 
+function ChatFrame_GetItemNameLinkText(itemName, itemId, quality)
+    return string.format("|c%s[%s]|r", ItemQualityColors[quality], itemName);
+end
+
+function ChatFrame_OnLootItemReceived(this, itemName, itemId, quality, amount)
+    local info = ChatTypeInfo["LOOT"];
+
+    local itemLink = ChatFrame_GetItemNameLinkText(itemName, itemId, quality);
+    if amount and amount > 1 then
+        ChatFrame:AddMessage(string.format(Localize("YOU_RECEIVE_LOOT_MULTI"), itemLink, amount), info.r, info.g, info.b);
+    else
+        ChatFrame:AddMessage(string.format(Localize("YOU_RECEIVE_LOOT_SINGLE"), itemLink), info.r, info.g, info.b);
+    end
+end
+
+function ChatFrame_OnItemReceived(this, itemName, itemId, quality, amount)
+    local info = ChatTypeInfo["LOOT"];
+    
+    local itemLink = ChatFrame_GetItemNameLinkText(itemName, itemId, quality);
+    if amount and amount > 1 then
+        ChatFrame:AddMessage(string.format(Localize("YOU_RECEIVE_ITEM_MULTI"), itemLink, amount), info.r, info.g, info.b);
+    else
+        ChatFrame:AddMessage(string.format(Localize("YOU_RECEIVE_ITEM_SINGLE"), itemLink), info.r, info.g, info.b);
+    end
+end
+
+function ChatFrame_OnMemberLootItemReceived(this, memberName, itemName, itemId, quality, amount)
+    local info = ChatTypeInfo["LOOT"];
+    
+    local itemLink = ChatFrame_GetItemNameLinkText(itemName, itemId, quality);
+    if amount and amount > 1 then
+        ChatFrame:AddMessage(string.format(Localize("MEMBER_RECEIVE_LOOT_MULTI"), memberName, itemLink, amount), info.r, info.g, info.b);
+    else
+        ChatFrame:AddMessage(string.format(Localize("MEMBER_RECEIVE_LOOT_SINGLE"), memberName, itemLink), info.r, info.g, info.b);
+    end
+end
+
+function ChatFrame_OnMemberItemReceived(this, memberName, itemName, itemId, quality, amount)
+    local info = ChatTypeInfo["LOOT"];
+    
+    local itemLink = ChatFrame_GetItemNameLinkText(itemName, itemId, quality);
+    if amount and amount > 1 then
+        ChatFrame:AddMessage(string.format(Localize("MEMBER_RECEIVE_ITEM_MULTI"), memberName, itemLink, amount), info.r, info.g, info.b);
+    else
+        ChatFrame:AddMessage(string.format(Localize("MEMBER_RECEIVE_ITEM_SINGLE"), memberName, itemLink), info.r, info.g, info.b);
+    end
+end
+
 function ChatFrame_OnLoad(this)
     this:RegisterEvent("CHAT_MSG_SAY", function(this, character, message)
         local info = ChatTypeInfo["SAY"];
@@ -248,6 +297,12 @@ function ChatFrame_OnLoad(this)
     this:RegisterEvent("QUEST_ABANDONED", ChatFrame_OnQuestAbandoned);
     this:RegisterEvent("QUEST_REWARDED", ChatFrame_OnQuestRewarded);
     this:RegisterEvent("MOTD", ChatFrame_OnMOTD);
+
+    
+    this:RegisterEvent("LOOT_ITEM_RECEIVED", ChatFrame_OnLootItemReceived);
+    this:RegisterEvent("ITEM_RECEIVED", ChatFrame_OnItemReceived);
+    this:RegisterEvent("MEMBER_LOOT_ITEM_RECEIVED", ChatFrame_OnMemberLootItemReceived);
+    this:RegisterEvent("MEMBER_ITEM_RECEIVED", ChatFrame_OnMemberItemReceived);
 
     ChatType = "SAY";
     ChatEdit_UpdateHeader();

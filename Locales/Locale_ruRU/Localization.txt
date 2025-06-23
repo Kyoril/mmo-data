@@ -358,4 +358,13 @@ strings =
 	(key = "TALENT_RANK_OF_MAX_RANK", string = "Rank %d/%d")
 	(key = "TALENT_NEXT_RANK", string = "Next rank:")
 	(key = "TALENT_POINTS_AVAILABLE", string = "Available talent points: %d")
+	
+	(key = "YOU_RECEIVE_LOOT_SINGLE", string = "You receive loot: %s.")
+	(key = "YOU_RECEIVE_LOOT_MULTI", string = "You receive loot: %sx%d.")
+	(key = "YOU_RECEIVE_ITEM_SINGLE", string = "You receive item: %s.")
+	(key = "YOU_RECEIVE_ITEM_MULTI", string = "You receive item: %sx%d.")
+	(key = "MEMBER_RECEIVE_LOOT_SINGLE", string = "%s received loot: %s.")
+	(key = "MEMBER_RECEIVE_LOOT_MULTI", string = "%s received loot: %sx%d.")
+	(key = "MEMBER_RECEIVE_ITEM_SINGLE", string = "%s received item: %s.")
+	(key = "MEMBER_RECEIVE_ITEM_MULTI", string = "%s received item: %sx%d.")
 }
