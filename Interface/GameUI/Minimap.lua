@@ -1,5 +1,20 @@
 function Minimap_OnLoad(self)
     self:RegisterEvent("ZONE_CHANGED", Minimap_OnZoneChanged);
+
+    Minimap_OnZoomChanged();
+end
+
+function Minimap_OnZoomChanged()
+    if (GetMinimapZoomLevel() <= GetMinimapMinZoomLevel()) then
+        MinimapZoomOut:Disable();
+    else
+        MinimapZoomOut:Enable();
+    end
+    if (GetMinimapZoomLevel() >= GetMinimapMaxZoomLevel()) then
+        MinimapZoomIn:Disable();
+    else
+        MinimapZoomIn:Enable();
+    end
 end
 
 function Minimap_OnZoneChanged(self)
@@ -12,10 +27,10 @@ function Minimap_OnZoneChanged(self)
 end
 
 function Minimap_Toggle(self)
-    if MinimapBorder:IsVisible() then
-        MinimapBorder:Hide();
+    if MinimapContent:IsVisible() then
+        MinimapContent:Hide();
     else
-        MinimapBorder:Show();
+        MinimapContent:Show();
     end
 end
 
