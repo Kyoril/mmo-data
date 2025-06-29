@@ -118,6 +118,11 @@ function ActionBar_OnLoad(self)
     self:RegisterEvent("PLAYER_SPELLS_CHANGED", ActionBar_UpdateButtons);
     self:RegisterEvent("PLAYER_ENTER_WORLD", ActionBar_UpdateButtons);
     self:RegisterEvent("ACTION_BAR_CHANGED", ActionBar_UpdateButtons);
+    
+    self:RegisterEvent("LOOT_ITEM_RECEIVED", ActionBar_UpdateButtons);
+    self:RegisterEvent("ITEM_RECEIVED", ActionBar_UpdateButtons);
+    self:RegisterEvent("MEMBER_LOOT_ITEM_RECEIVED", ActionBar_UpdateButtons);
+    self:RegisterEvent("MEMBER_ITEM_RECEIVED", ActionBar_UpdateButtons);
 
     for i = 1, MAX_ACTION_BUTTONS do
         local button = _G["ActionButton"..i];

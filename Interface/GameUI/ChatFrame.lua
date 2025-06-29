@@ -298,7 +298,6 @@ function ChatFrame_OnLoad(this)
     this:RegisterEvent("QUEST_REWARDED", ChatFrame_OnQuestRewarded);
     this:RegisterEvent("MOTD", ChatFrame_OnMOTD);
 
-    
     this:RegisterEvent("LOOT_ITEM_RECEIVED", ChatFrame_OnLootItemReceived);
     this:RegisterEvent("ITEM_RECEIVED", ChatFrame_OnItemReceived);
     this:RegisterEvent("MEMBER_LOOT_ITEM_RECEIVED", ChatFrame_OnMemberLootItemReceived);
