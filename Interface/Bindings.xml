@@ -323,6 +323,7 @@
 		return function(key, keystate)
             if keystate == "DOWN" then
                 SetMinimapZoomLevel(GetMinimapZoomLevel() + 1);
+                Minimap_OnZoomChanged();
             end
         end
 	</Binding>
@@ -331,6 +332,7 @@
 		return function(key, keystate)
             if keystate == "DOWN" then
                 SetMinimapZoomLevel(GetMinimapZoomLevel() - 1);
+                Minimap_OnZoomChanged();
             end
         end
 	</Binding>
