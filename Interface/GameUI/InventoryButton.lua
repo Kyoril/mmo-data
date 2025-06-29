@@ -38,6 +38,9 @@ function InventoryItemButton_OnClick(this, button)
         PickupContainerItem(this.id);
     elseif (button == "RIGHT") then
         UseContainerItem(this.id);
+        
+        -- TODO: If is vendor item, sell it
+        PlaySound("Sound/Interface/Coins_1.wav");
     end
 end
 
