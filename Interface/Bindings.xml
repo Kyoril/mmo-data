@@ -311,6 +311,29 @@
         end
 	</Binding>
     
+    <Binding name="TOGGLEMINIMAP" description="Toggle the talent ui." category="INTERFACE">
+		return function(key, keystate)
+            if keystate == "DOWN" then
+                Minimap_Toggle();
+            end
+        end
+	</Binding>
+    
+    <Binding name="MINIMAPZOOMIN" description="Increases the zoom level of the minimap." category="INTERFACE">
+		return function(key, keystate)
+            if keystate == "DOWN" then
+                SetMinimapZoomLevel(GetMinimapZoomLevel() + 1);
+            end
+        end
+	</Binding>
+    
+    <Binding name="MINIMAPZOOMOUT" description="Decreases the zoom level of the minimap." category="INTERFACE">
+		return function(key, keystate)
+            if keystate == "DOWN" then
+                SetMinimapZoomLevel(GetMinimapZoomLevel() - 1);
+            end
+        end
+	</Binding>
     
     <Binding name="TOGGLEGAMEMENU" description="Toggle the game menu." category="INTERFACE">
 		return function(key, keystate)
