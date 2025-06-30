@@ -303,6 +303,24 @@ function ChatFrame_OnLoad(this)
     this:RegisterEvent("MEMBER_LOOT_ITEM_RECEIVED", ChatFrame_OnMemberLootItemReceived);
     this:RegisterEvent("MEMBER_ITEM_RECEIVED", ChatFrame_OnMemberItemReceived);
 
+    this:RegisterEvent("HYPERLINK_CLICKED", function(self, type, payload)
+        if not type or not payload then
+            return;
+        end
+
+        if type == "channel" then
+            -- Handle channel hyperlink click
+            ChatType = payload;
+            ChatEdit_UpdateHeader();
+
+            if not ChatInput:IsVisible() then
+                ChatFrame_OpenChat();
+            end
+        end
+
+        print("Clicked hyperlink of type: " .. type .. " with payload: " .. payload);
+    end);
+
     ChatType = "SAY";
     ChatEdit_UpdateHeader();
 end

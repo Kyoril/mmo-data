@@ -69,8 +69,8 @@ strings =
 
 	(key = "CHAT_FORMAT_SAY", string = "[%s] says: %s")
 	(key = "CHAT_FORMAT_YELL", string = "[%s] yells: %s")
-	(key = "CHAT_FORMAT_PARTY", string = "[Party] %s: %s")
-	(key = "CHAT_FORMAT_GUILD", string = "[Guild] %s: %s")
+	(key = "CHAT_FORMAT_PARTY", string = "|Hchannel:PARTY|h[Party]|h %s: %s")
+	(key = "CHAT_FORMAT_GUILD", string = "|Hchannel:GUILD|h[Guild]|h %s: %s")
 
 	(key = "NAME", string = "Name")
 	

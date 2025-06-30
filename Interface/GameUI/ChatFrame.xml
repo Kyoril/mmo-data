@@ -193,22 +193,6 @@
 	<Frame name="ChatFrame" parent="GameParent" type="ScrollingMessageFrame">
 		<Property name="Font" value="ChatFont" />
 
-		<Visual>
-			<ImagerySection name="Text">
-				<TextComponent color="ffffd200" horzAlign="LEFT" />
-			</ImagerySection>
-			<StateImagery name="Enabled">
-				<Layer>
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer>
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-		</Visual>
-		
 		<Area>
 			<Anchor point="LEFT" relativeTo="ChatScrollEndButton" relativePoint="RIGHT" offset="8" />
 			<Anchor point="BOTTOM" relativeTo="ChatScrollEndButton" />
