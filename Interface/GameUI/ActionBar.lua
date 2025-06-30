@@ -123,6 +123,9 @@ function ActionBar_OnLoad(self)
     self:RegisterEvent("ITEM_RECEIVED", ActionBar_UpdateButtons);
     self:RegisterEvent("MEMBER_LOOT_ITEM_RECEIVED", ActionBar_UpdateButtons);
     self:RegisterEvent("MEMBER_ITEM_RECEIVED", ActionBar_UpdateButtons);
+    
+    -- Register for item count changes
+    self:RegisterEvent("ITEM_COUNT_CHANGED", ActionBar_UpdateButtons);
 
     for i = 1, MAX_ACTION_BUTTONS do
         local button = _G["ActionButton"..i];
