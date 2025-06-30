@@ -1,7 +1,8 @@
 LOOTFRAME_NUMBUTTONS = 4;
 
 function LootFrame_OnLootOpened(self)
-    LootFrame.page = 1;
+    self.page = 1;
+    LootFrame.page = 1; -- Keep global reference for button handlers
     ShowUIPanel(self);
 
     if not self:IsVisible() then
@@ -10,18 +11,22 @@ function LootFrame_OnLootOpened(self)
 end
 
 function LootFrame_OnLootSlotCleared(self, absoluteSlot)
-    local numLootToShow = LOOTFRAME_NUMBUTTONS;
-    if self.numLootItems > LOOTFRAME_NUMBUTTONS then
-        numLootToShow = numLootToShow - 1;
+    -- Ensure numLootItems is set, if not get it from the API
+    if not self.numLootItems then
+        self.numLootItems = GetNumLootItems();
     end
-
-    local slot = absoluteSlot - ((self.page - 1) * numLootToShow);
-    if (slot > 0) and (slot < (nummLootToShow + 1)) then
-        local button = getglobal["LootButton"..slot];
-        if button then
-            button:Hide();
-        end
+    
+    -- Ensure page is set, default to 1
+    if not self.page then
+        self.page = 1;
+        LootFrame.page = 1; -- Keep global reference for button handlers
     end
+    
+    -- Update the numLootItems to reflect current state
+    self.numLootItems = GetNumLootItems();
+    
+    -- Trigger a UI update to refresh the display
+    LootFrame_OnUpdate(self, 0);
 end
 
 function LootFrame_OnLootClosed(self)
@@ -70,10 +75,10 @@ function LootFrame_OnLoad(self)
 end
 
 function LootFrame_OnShow(self)
-	LootFrame.numLootItems = GetNumLootItems();
-	LootFrame_OnUpdate(LootFrame, 0);
+	self.numLootItems = GetNumLootItems();
+	LootFrame_OnUpdate(self, 0);
 
-	if ( LootFrame.numLootItems == 0 ) then
+	if ( self.numLootItems == 0 ) then
 		-- TODO: Play sound of empty loot window opening
 	else
 		-- TODO: Play sound of loot window opening
@@ -89,7 +94,20 @@ function LootButton_OnClick(button)
 end
 
 function LootFrame_OnUpdate(self, elapsed)
-	local numLootItems = LootFrame.numLootItems;
+	local numLootItems = self.numLootItems;
+	
+	-- Safety check in case numLootItems is nil
+	if not numLootItems then
+		numLootItems = GetNumLootItems();
+		self.numLootItems = numLootItems;
+	end
+	
+	-- Safety check in case page is nil
+	if not self.page then
+		self.page = 1;
+		LootFrame.page = 1; -- Keep global reference for button handlers
+	end
+	
     local numLootToShow = LOOTFRAME_NUMBUTTONS;
 	
 	if ( numLootItems > LOOTFRAME_NUMBUTTONS ) then
@@ -100,7 +118,7 @@ function LootFrame_OnUpdate(self, elapsed)
 		local button = getglobal("LootButton"..index);
 		local text = getglobal("LootText"..index);
 		local border = getglobal("LootButton"..index.."Border");
-		local slot = (numLootToShow * (LootFrame.page - 1)) + index;
+		local slot = (numLootToShow * (self.page - 1)) + index;
 
 		if ( slot <= numLootItems ) then	
 			if ( (LootSlotIsItem(slot) or LootSlotIsCoin(slot)) and index <= numLootToShow ) then
@@ -123,11 +141,14 @@ function LootFrame_OnUpdate(self, elapsed)
 				else
 					button:SetText("");
 				end
+				button:Show(); -- Ensure button is visible
 				border:Show();
 			else
+				button:Hide(); -- Hide button when no valid item
 				border:Hide();
 			end
 		else
+			button:Hide(); -- Hide button when slot is beyond available items
 			border:Hide();
 		end
 	end
