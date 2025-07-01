@@ -34,8 +34,21 @@ end
 
 function InventoryItemButton_OnClick(this, button)
     if (button == "LEFT") then
-        -- Activate item swap action
-        PickupContainerItem(this.id);
+        if (IsShiftKeyDown()) then
+            if (ChatInputFrame:IsVisible()) then
+                local item = GetInventorySlotItem("player", this.id);
+                if not item then
+                    return;
+                end
+
+                local hyperlink = "|c" .. ItemQualityColors[item:GetQuality()] .. "|Hitem:" .. item:GetId() .. "|h[" .. item:GetName() .. "]|h|r";
+                ChatInput:SetText(ChatInput:GetText() .. hyperlink);
+                ChatInput:CaptureInput();
+            end
+        else
+            -- Activate item swap action
+            PickupContainerItem(this.id);
+        end
     elseif (button == "RIGHT") then
         UseContainerItem(this.id);
         
