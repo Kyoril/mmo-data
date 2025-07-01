@@ -313,7 +313,7 @@ function ChatFrame_OnLoad(this)
             ChatType = payload;
             ChatEdit_UpdateHeader();
 
-            if not ChatInput:IsVisible() then
+            if not ChatInputFrame:IsVisible() then
                 ChatFrame_OpenChat();
             end
         end
@@ -330,7 +330,7 @@ function ChatFrame_OpenChat(input)
         ChatInput:SetText(input);
     end
 
-    ChatInput:Show();
+    ChatInputFrame:Show();
     ChatInput:CaptureInput();
 end
 
@@ -346,10 +346,6 @@ function ChatEdit_UpdateHeader()
     ChatInputHeader:SetProperty("TextColor", textColor)
     ChatInputHeader:SetText(Localize("CHAT_TYPE_"..ChatType) .. ":");
     ChatInputHeader:SetWidth(ChatInputHeader:GetTextWidth());
-
-    local offset = ChatInput:GetTextAreaOffset();
-    offset = Rect(ChatInputHeader:GetWidth() + 16.0, offset.top, offset.right, offset.bottom);
-    ChatInput:SetTextAreaOffset(offset);
 
 	ChatInput:SetProperty("EnabledTextColor", textColor);
 end
@@ -434,7 +430,7 @@ end
 
 function ChatInput_OnEscapePressed()
 	ChatInput:SetText("");
-	ChatInput:Hide();
+	ChatInputFrame:Hide();
     ChatInput:ReleaseInput();
 end
 

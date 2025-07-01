@@ -61,11 +61,8 @@
 		</Area>
 	</Frame>
 
-	<Frame name="ChatInput" parent="GameParent" type="TextField" renderer="TextFieldRenderer">
-		<Property name="TextSection" value="Text" />
+	<Frame name="ChatInputFrame" parent="GameParent" renderer="DefaultRenderer">
 		<Property name="Font" value="ChatFont" />
-		<Property name="HorzAlign" value="LEFT" />
-		<Property name="VertAlign" value="CENTER" />
 		<Property name="Visible" value="False" />
 	
 		<Visual>
@@ -73,9 +70,6 @@
 				<BorderComponent texture="Interface/GlueUI/TextFieldBorder.htex" borderSize="40">
 					<Area></Area>
 				</BorderComponent>
-			</ImagerySection>
-			<ImagerySection name="Caret">
-				<ImageComponent texture="Interface/GlueUI/Caret.htex" />
 			</ImagerySection>
 			
 			<StateImagery name="Enabled">
@@ -88,12 +82,8 @@
 					<Section section="Frame" />
 				</Layer>
 			</StateImagery>
-			<StateImagery name="Caret">
-				<Layer>
-					<Section section="Caret" />
-				</Layer>
-			</StateImagery>
 		</Visual>
+
 		<Area>
 			<Anchor point="BOTTOM" relativePoint="TOP" offset="-24" relativeTo="GameMenuBar" />
 			<Anchor point="LEFT" offset="64" />
@@ -111,23 +101,54 @@
 			</Area>
 		</Frame>
 
-		<Scripts>
-			<OnEnterPressed>
-				return function(this)
-					ChatFrame_SendMessage(this);
-				end
-			</OnEnterPressed>
-			<OnEscapePressed>
-				return function(this)
-					ChatInput_OnEscapePressed();
-				end
-			</OnEscapePressed>
-			<OnSpacePressed>
-				return function(this)
-					ChatFrame_ParseText(false);
-				end
-			</OnSpacePressed>
-		</Scripts>
+		<Frame name="ChatInputClipper">
+			<Area>
+				<Anchor point="BOTTOM" />
+				<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="ChatInputHeader" />
+				<Anchor point="RIGHT" />
+				<Anchor point="TOP" />
+			</Area>
+
+			<Frame name="ChatInput" type="TextField" renderer="TextFieldRenderer" setAllPoints="true">
+				<Property name="TextSection" value="Text" />
+				<Property name="HorzAlign" value="LEFT" />
+				<Property name="VertAlign" value="CENTER" />
+				<Property name="ClippedByParent" value="true" />
+			
+				<Visual>
+					<ImagerySection name="Caret">
+						<ImageComponent texture="Interface/GlueUI/Caret.htex" />
+					</ImagerySection>
+					
+					<StateImagery name="Enabled" />
+					<StateImagery name="Disabled" />
+					<StateImagery name="Caret">
+						<Layer>
+							<Section section="Caret" />
+						</Layer>
+					</StateImagery>
+				</Visual>
+				
+
+				<Scripts>
+					<OnEnterPressed>
+						return function(this)
+							ChatFrame_SendMessage(this);
+						end
+					</OnEnterPressed>
+					<OnEscapePressed>
+						return function(this)
+							ChatInput_OnEscapePressed();
+						end
+					</OnEscapePressed>
+					<OnSpacePressed>
+						return function(this)
+							ChatFrame_ParseText(false);
+						end
+					</OnSpacePressed>
+				</Scripts>
+			</Frame>
+		</Frame>
 	</Frame>
 
 	<Frame name="ChatScrollEndButton" parent="GameParent" inherits="ChatButton">
