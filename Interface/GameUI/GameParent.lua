@@ -101,7 +101,11 @@ function UIErrorFrame_OnInfoMessage(this, msg)
 end
 
 function UIErrorFrame_OnErrorMessage(this, msg)
-	UIErrorFrame_AddMessage(msg, "FFFF1900");
+	if not msg or msg == "" then
+		return;
+	end
+
+	UIErrorFrame_AddMessage(Localize(msg), "FFFF1900");
 end
 
 function UIErrorFrame_OnUpdate(this, elapsed)
