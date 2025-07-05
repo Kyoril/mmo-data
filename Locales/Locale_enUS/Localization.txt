@@ -249,6 +249,15 @@ strings =
 
 	(key = "ARMOR_DESCRIPTION", string = "Reduces incoming physical damage by %.2f%%.")
 	
+	(key = "STAMINA_HEALTH_BONUS", string = "Increases your maximum health.")
+	(key = "STRENGTH_ATTACK_BONUS", string = "Increases your melee attack power.")
+	(key = "AGILITY_ATTACK_BONUS", string = "Increases your melee attack power.")
+	(key = "AGILITY_CRIT_BONUS", string = "Increases your critical strike chance with melee attacks.")
+	(key = "INTELLECT_MANA_BONUS", string = "Increases your maximum mana.")
+	(key = "SPIRIT_DESCRIPTION", string = "Increases health regeneration while out of combat. Increases mana regeneration while not casting.")
+	(key = "STAT_HEALTH_INCREASE", string = "Increases your maximum health by %d.")
+	(key = "STAT_MANA_INCREASE", string = "Increases your maximum mana by %d.")
+	(key = "STAT_ATTACKPOWER_INCREASE", string = "Increases your melee attack power by %d.")
 	(key = "SELL_PRICE", string = "Sell Price")
 
 	(key = "TRAINER_SPELL_COST", string = "Cost:")

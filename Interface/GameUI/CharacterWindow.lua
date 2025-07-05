@@ -25,8 +25,18 @@ function CharacterWindow_OnLoad(self)
     -- Register the character window in the menu bar as a button
 	AddMenuBarButton("Interface/Icons/fg4_icons_helmet_result.htex", CharacterWindow_Toggle);
 
+    -- Setup tooltips for armor stat
     CharacterArmorStat:SetOnEnterHandler(CharacterWindow_ArmorLabel_OnEnter);
     CharacterArmorStat:SetOnLeaveHandler(CharacterWindow_HideTooltip);
+
+    -- Setup tooltips for attribute stats
+    for i = 0, 4 do
+        local statFrame = _G["CharacterStat" .. i];
+        if statFrame then
+            statFrame:SetOnEnterHandler(function(self) CharacterWindow_StatLabel_OnEnter(self, i); end);
+            statFrame:SetOnLeaveHandler(CharacterWindow_HideTooltip);
+        end
+    end
 end
 
 function CharacterWindow_ArmorLabel_OnEnter(self)
@@ -48,6 +58,58 @@ end
 
 function CharacterWindow_HideTooltip()
     GameTooltip:Hide();
+end
+
+function CharacterWindow_StatLabel_OnEnter(self, statId)
+    local unit = GetUnit("player");
+    if not unit then
+        return;
+    end
+
+    -- Get player class for class-specific tooltips
+    local playerClass = unit:GetClass();
+    if not playerClass then
+        return;
+    end
+    
+    playerClass = playerClass:upper();
+
+    GameTooltip_Clear();
+    GameTooltip:ClearAnchors();
+    GameTooltip:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, self, 0);
+    GameTooltip:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, self, 0);
+
+    local statNames = {"STAMINA", "STRENGTH", "AGILITY", "INTELLECT", "SPIRIT"};
+    local statName = statNames[statId + 1];
+    
+    if not statName then
+        return;
+    end
+
+    -- Add stat name as header
+    GameTooltip_AddLine(Localize(statName), TOOLTIP_LINE_LEFT, "FFFFD100");
+
+    -- Gather increments from stats
+    local healthIncrease = unit:GetHealthFromStat(statId);
+    local manaIncrease = unit:GetManaFromStat(statId);
+    local attackPowerIncrease = unit:GetAttackPowerFromStat(statId);
+
+    -- Class-specific descriptions based on stat type
+    if statId == 4 then -- Stamina
+        GameTooltip_AddLine(Localize("SPIRIT_DESCRIPTION"), TOOLTIP_LINE_LEFT, "FFFFD100");
+    end
+
+    if healthIncrease > 0 then
+        GameTooltip_AddLine(string.format(Localize("STAT_HEALTH_INCREASE"), healthIncrease), TOOLTIP_LINE_LEFT, "FFFFD100");
+    end
+    if manaIncrease > 0 then
+        GameTooltip_AddLine(string.format(Localize("STAT_MANA_INCREASE"), manaIncrease), TOOLTIP_LINE_LEFT, "FFFFD100");
+    end
+    if attackPowerIncrease > 0 then
+        GameTooltip_AddLine(string.format(Localize("STAT_ATTACKPOWER_INCREASE"), attackPowerIncrease), TOOLTIP_LINE_LEFT, "FFFFD100");
+    end
+
+    GameTooltip:Show();
 end
 
 function CharacterWindow_OnShow(this)
