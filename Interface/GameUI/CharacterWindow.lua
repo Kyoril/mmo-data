@@ -14,11 +14,31 @@ function CharacterWindow_Toggle()
     end
 end
 
+function CharacterWindow_OnAttributeChanged(self)
+    CharacterWindow_RefreshStats(self);
+
+    if GameTooltip:IsVisible() then
+        for i = 0, 4 do
+            local statFrame = _G["CharacterStatAdd" .. i];
+            if statFrame and statFrame:IsHovered() then
+                -- If the mouse is over a stat frame, we need to update the tooltip for that stat
+                CharacterWindow_AddAttributeButton_OnEnter(statFrame);
+            end
+
+            statFrame = _G["CharacterStat" .. i];
+            if statFrame and statFrame:IsHovered() then
+                -- If the mouse is over a stat frame, we need to update the tooltip for that stat
+                CharacterWindow_StatLabel_OnEnter(statFrame, i);
+            end
+        end
+    end
+end
+
 function CharacterWindow_OnLoad(self)
 	-- Subscribe for title bar close handler (HACKY! Order of items is important which sucks)
 	CharacterWindow:GetChild(0):GetChild(0):SetClickedHandler(CharacterWindow_Toggle);
 
-    self:RegisterEvent("PLAYER_ATTRIBUTES_CHANGED", CharacterWindow_RefreshStats);
+    self:RegisterEvent("PLAYER_ATTRIBUTES_CHANGED", CharacterWindow_OnAttributeChanged);
     self:RegisterEvent("PLAYER_ENTER_WORLD", CharacterWindow_OnEnterWorld);
     self:RegisterEvent("PLAYER_MODEL_CHANGED", CharacterWindow_OnPlayerModelChanged);
 
@@ -36,7 +56,29 @@ function CharacterWindow_OnLoad(self)
             statFrame:SetOnEnterHandler(function(self) CharacterWindow_StatLabel_OnEnter(self, i); end);
             statFrame:SetOnLeaveHandler(CharacterWindow_HideTooltip);
         end
+
+        local statFrame = _G["CharacterStatAdd" .. i];
+        if statFrame then
+            statFrame:SetOnEnterHandler(CharacterWindow_AddAttributeButton_OnEnter);
+            statFrame:SetOnLeaveHandler(CharacterWindow_HideTooltip);
+        end
     end
+end
+
+function CharacterWindow_AddAttributeButton_OnEnter(self)
+    local unit = GetUnit("player");
+    if not unit then
+        return;
+    end
+
+    GameTooltip_Clear();
+    GameTooltip:ClearAnchors();
+    GameTooltip:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, self, 0);
+    GameTooltip:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, self, 0);
+
+    GameTooltip_AddLine(string.format("Attribute point cost: %d", unit:GetAttributeCost(self.id)), TOOLTIP_LINE_LEFT, "FFFFD100");
+
+    GameTooltip:Show();
 end
 
 function CharacterWindow_ArmorLabel_OnEnter(self)
@@ -124,6 +166,7 @@ end
 
 function CharacterWindow_AddAttributeClicked(this)
     AddAttributePoint(this.id);
+    CharacterWindow_AddAttributeButton_OnEnter(this);
 end
 
 function CharacterWindow_OnEnterWorld(this)
