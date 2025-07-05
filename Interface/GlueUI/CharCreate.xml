@@ -532,6 +532,7 @@
 								CharCreatePage2:Show();
 								CharCreateModel:SetProperty("Zoom", "1.0");
 								CharCreateModel:SetProperty("OffsetY", "1.7");
+								NewCharacterNameBox:CaptureInput();
 							end
 						</OnClick>
 					</Scripts>

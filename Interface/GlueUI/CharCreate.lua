@@ -101,8 +101,13 @@ function CharCreate_Show()
 
 	-- Hide character selection
 	CharSelect:Hide();
+	NewCharacterNameBox:SetText("");
+	CharCreateModel:SetProperty("Zoom", "4.0");
+	CharCreateModel:SetProperty("OffsetY", "1.0");
 
 	-- Show the character creation screen
+	CharCreatePage2:Hide();
+	CharCreatePage1:Show();
 	CharCreate:Show();
 end
 
