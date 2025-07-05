@@ -187,6 +187,8 @@ function GlueDialog_Show(which, text, data)
 	else
 		-- TODO
 	end
+
+	GlueDialog:SetHeight(GlueDialogLabel:GetTextHeight() + 128 + 128);
 	
 	-- Change button text
 	GlueButton01:SetText(Localize(GlueDialogs[which].button1))
