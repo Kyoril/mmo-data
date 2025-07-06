@@ -99,6 +99,32 @@ function GameTooltip_SetItemTemplate(item)
         GameTooltip_AddLine(string.format(Localize("BLOCK_VALUE"), block) , TOOLTIP_LINE_LEFT);
     end
 
+    -- Check for missing proficiencies
+    local player = GetUnit("player");
+    if (player) then
+        local missingProficiencies = {};
+        
+        -- Check armor proficiency for armor items
+        if (class == "ARMOR") then
+            if (not player:HasProficiency(1, item.proficiency)) then
+                table.insert(missingProficiencies, Localize(item.subClass));
+            end
+        end
+        
+        -- Check weapon proficiency for weapon items
+        if (class == "WEAPON") then
+            if (not player:HasProficiency(0, item.proficiency)) then
+                table.insert(missingProficiencies, Localize(item.subClass));
+            end
+        end
+        
+        -- Display missing proficiencies
+        if (#missingProficiencies > 0) then
+            local requiresText = Localize("REQUIRES") .. ": " .. table.concat(missingProficiencies, ", ");
+            GameTooltip_AddLine(requiresText, TOOLTIP_LINE_LEFT, "FFFF2020");
+        end
+    end
+
     -- Line 3: Description
     local description = item.description;
     if (description and description:len() > 0) then
@@ -177,6 +203,32 @@ function GameTooltip_SetItem(item)
     local block = item:GetBlock();
     if (block > 0) then
         GameTooltip_AddLine(string.format(Localize("BLOCK_VALUE"), block) , TOOLTIP_LINE_LEFT);
+    end
+
+    -- Check for missing proficiencies
+    local player = GetUnit("player");
+    if (player) then
+        local missingProficiencies = {};
+        
+        -- Check armor proficiency for armor items
+        if (class == "ARMOR") then
+            if (not player:HasProficiency(1, item:GetProficiency())) then
+                table.insert(missingProficiencies, Localize(subclass));
+            end
+        end
+        
+        -- Check weapon proficiency for weapon items
+        if (class == "WEAPON") then
+            if (not player:HasProficiency(0, item:GetProficiency())) then
+                table.insert(missingProficiencies, Localize(subclass));
+            end
+        end
+        
+        -- Display missing proficiencies
+        if (#missingProficiencies > 0) then
+            local requiresText = Localize("REQUIRES") .. ": " .. table.concat(missingProficiencies, ", ");
+            GameTooltip_AddLine(requiresText, TOOLTIP_LINE_LEFT, "FFFF2020");
+        end
     end
 
     -- Line 3: Description

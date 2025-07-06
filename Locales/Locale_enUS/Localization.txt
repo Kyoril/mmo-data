@@ -459,4 +459,6 @@ strings =
 	(key = "EQUIP_ERR_NOT_DURING_ARENA_MATCH", string = "Cannot do that during an arena match.")
 	(key = "EQUIP_ERR_CANNOT_TRADE_THAT", string = "Cannot trade that item.")
 	(key = "EQUIP_ERR_PERSONAL_ARENA_RATING_TOO_LOW", string = "Your personal arena rating is too low.")
+
+	(key = "REQUIRES", string = "Requires")
 }

@@ -449,4 +449,6 @@ strings =
 	(key = "EQUIP_ERR_NOT_DURING_ARENA_MATCH", string = "Das könnt Ihr nicht während eines Arenakampfes tun.")
 	(key = "EQUIP_ERR_CANNOT_TRADE_THAT", string = "Dieser Gegenstand kann nicht gehandelt werden.")
 	(key = "EQUIP_ERR_PERSONAL_ARENA_RATING_TOO_LOW", string = "Eure persönliche Arenawertung ist zu niedrig.")
+
+	(key = "REQUIRES", string = "Erfordert")
 }

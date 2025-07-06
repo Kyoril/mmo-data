@@ -449,4 +449,6 @@ strings =
 	(key = "EQUIP_ERR_NOT_DURING_ARENA_MATCH", string = "Impossible de faire cela pendant un combat d'arène.")
 	(key = "EQUIP_ERR_CANNOT_TRADE_THAT", string = "Impossible d'échanger cet objet.")
 	(key = "EQUIP_ERR_PERSONAL_ARENA_RATING_TOO_LOW", string = "Votre cote d'arène personnelle est trop basse.")
+
+	(key = "REQUIRES", string = "Nécessite")
 }
