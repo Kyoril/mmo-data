@@ -134,6 +134,37 @@
                     </OnClick>
                 </Scripts>
             </Frame>
+            
+            <Frame name="MinimapDayNight" inherits="RoundIconButton">
+                <Property name="Icon" />
+
+                <Area>
+                    <Size>
+                        <Anchor point="RIGHT" offset="0" />
+                        <Anchor point="TOP" offset="0" />
+                        <AbsDimension x="96" y="96" />
+                    </Size>
+                </Area>
+            </Frame>
+            
+            <Frame name="MinimapTime" inherits="TextSmall">
+                <Property name="HorzAlign" value="CENTER" />
+
+                <Area>
+                    <Anchor point="H_CENTER" offset="0" />
+                    <Anchor point="BOTTOM" offset="8" />
+                    <Size x="128" y="64" />
+                </Area>
+
+                <Scripts>
+                    <OnUpdate>
+                        return function(self, delta)
+                            Minimap_UpdateTime();
+                        end
+                    </OnUpdate>
+                </Scripts>
+            </Frame>
+
         </Frame>
 	</Frame>
 </UiLayout>
