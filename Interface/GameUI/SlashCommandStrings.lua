@@ -50,3 +50,5 @@ SLASH_LOGOUT2 = "/camp"; -- Logout
 SLASH_QUIT1 = "/quit"; -- Quit
 SLASH_QUIT2 = "/exit"; -- Quit
 SLASH_TIME1 = "/time"; -- Time
+SLASH_PLAYED1 = "/played"; -- Played time
+SLASH_PLAYED2 = "/playtime"; -- Played time

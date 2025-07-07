@@ -66,6 +66,10 @@ SlashCmdList["TIME"] = function(msg)
 	ChatFrame:AddMessage(string.format(TIME_TWENTYFOURHOURS, hour, minute), info.r, info.g, info.b);
 end
 
+SlashCmdList["PLAYED"] = function(msg)
+    RequestTimePlayed();
+end
+
 SlashCmdList["RANDOM"] = function(msg)
     local num1 = string.gsub(msg, "(%s*)(%d+)(.*)", "%2", 1);
     local rest = string.gsub(msg, "(%s*)(%d+)(.*)", "%3", 1);
@@ -265,6 +269,24 @@ function ChatFrame_OnMemberItemReceived(this, memberName, itemName, itemId, qual
     end
 end
 
+function ChatFrame_OnTimePlayedUpdated(this, timePlayedSeconds)
+    -- Calculate days, hours, minutes, and seconds
+    local days = math.floor(timePlayedSeconds / 86400);
+    local hours = math.floor((timePlayedSeconds % 86400) / 3600);
+    local minutes = math.floor((timePlayedSeconds % 3600) / 60);
+    local seconds = timePlayedSeconds % 60;
+
+    -- Format the time played string
+    if days > 0 then
+        timePlayedString = string.format(Localize("TIME_PLAYED_DAYS"), days, hours, minutes, seconds);
+    else
+        timePlayedString = string.format(Localize("TIME_PLAYED_HOURS"), hours, minutes, seconds);
+    end
+
+    local info = ChatTypeInfo["SYSTEM"];
+    ChatFrame:AddMessage(timePlayedString, info.r, info.g, info.b);
+end
+
 function ChatFrame_OnLoad(this)
     this:RegisterEvent("CHAT_MSG_SAY", function(this, character, message)
         local info = ChatTypeInfo["SAY"];
@@ -302,6 +324,8 @@ function ChatFrame_OnLoad(this)
     this:RegisterEvent("ITEM_RECEIVED", ChatFrame_OnItemReceived);
     this:RegisterEvent("MEMBER_LOOT_ITEM_RECEIVED", ChatFrame_OnMemberLootItemReceived);
     this:RegisterEvent("MEMBER_ITEM_RECEIVED", ChatFrame_OnMemberItemReceived);
+    
+    this:RegisterEvent("TIME_PLAYED_UPDATED", ChatFrame_OnTimePlayedUpdated);
 
     this:RegisterEvent("HYPERLINK_CLICKED", function(self, type, payload)
         if not type or not payload then

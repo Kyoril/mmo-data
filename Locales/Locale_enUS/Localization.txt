@@ -461,4 +461,6 @@ strings =
 	(key = "EQUIP_ERR_PERSONAL_ARENA_RATING_TOO_LOW", string = "Your personal arena rating is too low.")
 
 	(key = "REQUIRES", string = "Requires")
+	(key = "TIME_PLAYED_DAYS", string = "Total time played: %d days, %d hours, %d minutes, %02d seconds")
+	(key = "TIME_PLAYED_HOURS", string = "Total time played: %d hours, %d minutes, %d seconds")
 }
