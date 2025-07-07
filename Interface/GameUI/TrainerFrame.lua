@@ -98,7 +98,7 @@ function TrainerFrame_OnLoad(self)
     -- Initialize side panel functionality first, like the close button
     SidePanel_OnLoad(self);
 
-    TrainerSpellCostLabel:SetWidth(TrainerSpellCostLabel:GetTextWidth());
+    TrainerSpellCostLabel:SetWidth(TrainerSpellCostLabel:GetTextWidth() + 16);
     TrainerSpellPreviewButton:SetOnEnterHandler(function(button)
         GameTooltip:ClearAnchors();
         GameTooltip:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, button, 0);
