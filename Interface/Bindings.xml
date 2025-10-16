@@ -58,6 +58,8 @@
 		return function(key, keystate)
             if keystate == "DOWN" then
 		        Jump();
+            elseif keystate == "UP" then
+                StopJump();
             end
         end
 	</Binding>

@@ -4,8 +4,8 @@
 
     <Frame name="PlayerFrame" parent="GameParent" renderer="DefaultRenderer">
         <Area>
-            <Anchor point="LEFT" offset="32" />
-            <Anchor point="TOP" offset="32" />
+            <Anchor point="RIGHT" relativePoint="H_CENTER" offset="-384" />
+            <Anchor point="BOTTOM" offset="-320" />
             <Size><AbsDimension x="512" y="174" /></Size>
         </Area>
 

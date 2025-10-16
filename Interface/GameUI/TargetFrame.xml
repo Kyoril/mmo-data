@@ -6,7 +6,7 @@
 		<Area>
 			<Size>
 				<AbsDimension x="512" y="174" />
-				<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="PlayerFrame" offset="64" />
+				<Anchor point="LEFT" relativePoint="H_CENTER" offset="384" />
 				<Anchor point="TOP" relativeTo="PlayerFrame" />
 			</Size>
 		</Area>

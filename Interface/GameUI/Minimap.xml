@@ -28,8 +28,8 @@
 
 		<Area>
 			<Size><AbsDimension x="384" y="432" /></Size>
-			<Anchor point="RIGHT" offset="-16" />
-			<Anchor point="TOP" offset="16" />
+			<Anchor point="RIGHT" offset="0" />
+			<Anchor point="TOP" offset="0" />
 		</Area>
 
         <Frame name="MinimapTitleBar" renderer="DefaultRenderer">
