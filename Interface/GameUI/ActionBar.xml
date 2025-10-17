@@ -4,10 +4,10 @@
 
     <Frame name="ActionBar" parent="GameMenuBar">
         <Area>
-			<Anchor point="BOTTOM" offset="-8" />
-			<Anchor point="LEFT" offset="72" />
-            <Anchor point="RIGHT" relativePoint="H_CENTER" offset="412" />
+			<Anchor point="LEFT" offset="16" />
+            <Anchor point="RIGHT" offset="-16" />
             <Anchor point="TOP" offset="8" />
+            <Size><AbsDimension y="128"/></Size>
         </Area>
 
         <Frame name="ActionButton1" inherits="ActionBarButtonTemplate" id="1">

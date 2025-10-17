@@ -12,7 +12,7 @@ InventoryButton.xml
 CharacterWindow.xml
 SpellBook.xml
 CastBar.xml
-CombatLog.xml
+#CombatLog.xml
 AuraButton.xml
 AuraBar.xml
 TargetFrame.xml

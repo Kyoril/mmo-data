@@ -75,6 +75,8 @@ function ActionBar_UpdateButtons(self)
     for i = 1, MAX_ACTION_BUTTONS do
         local button = _G["ActionButton"..i];
 
+        button:SetOpacity(1.0);
+        
         if IsActionButtonSpell(i - 1) then
             local spell = GetActionButtonSpell(i - 1);
             if (spell ~= nil) then
@@ -100,6 +102,7 @@ function ActionBar_UpdateButtons(self)
             -- Clear icon!
             button:SetProperty("Icon", "");
             button:SetText("");
+            button:SetOpacity(0.5);
         end
     end
 end

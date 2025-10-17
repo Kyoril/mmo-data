@@ -53,7 +53,7 @@
 		</Visual>
 		<Area>
 			<Size>
-				<AbsDimension x="128" y="128" />
+				<AbsDimension x="96" y="96" />
 			</Size>
 		</Area>
 	</Frame>
@@ -75,7 +75,7 @@
 			</ImagerySection>
 			<StateImagery name="Enabled">
 				<Layer>
-					<Section section="Background" />
+					<!--<Section section="Background" />-->
 				</Layer>
 			</StateImagery>
 		</Visual>
@@ -86,9 +86,9 @@
 			<Property name="Font" value="DefaultSmall" />
 
 			<Area>
-				<Anchor point="LEFT" />
-				<Anchor point="RIGHT" />
-				<Anchor point="BOTTOM" relativePoint="TOP" />
+				<Anchor point="LEFT" offset="8" />
+				<Anchor point="RIGHT" offset="-8" />
+				<Anchor point="BOTTOM" offset="0" />
 				<Size><AbsDimension y="48" /></Size>
 			</Area>
 
@@ -132,29 +132,7 @@
 			</Visual>
 		</Frame>
 
-		<Frame name="MenuBarButtons" renderer="DefaultRenderer">
-			<Area>
-				<Anchor point="LEFT" relativePoint="H_CENTER" offset="400" />
-				<Anchor point="TOP" />
-				<Anchor point="BOTTOM" />
-				<Anchor point="RIGHT" offset="-64" />
-			</Area>
-			
-			<Visual>
-				<ImagerySection name="Background">
-					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlack.htex" borderSize="30">
-						<Area><Inset bottom="8" left="0" top="8" right="8" /></Area>
-					</BorderComponent>
-				</ImagerySection>
-
-				<StateImagery name="Enabled">
-					<Layer>
-						<Section section="Background" />
-					</Layer>
-				</StateImagery>
-			</Visual>
-		</Frame>
-
+<!--
 		<Frame name="LeftSideDecoration" renderer="DefaultRenderer">
 			<Area>
 				<Anchor point="LEFT" relativePoint="LEFT" offset="64" />
@@ -175,7 +153,6 @@
 			</Visual>
 		</Frame>
 
-		
 		<Frame name="RightSideDecoration" renderer="DefaultRenderer">
 			<Area>
 				<Anchor point="LEFT" relativePoint="RIGHT" offset="-64" />
@@ -195,9 +172,9 @@
 				</StateImagery>
 			</Visual>
 		</Frame>
-
+-->
 		<Area>
-			<Size><AbsDimension x="2500" y="140" /></Size>
+			<Size><AbsDimension x="1580" y="200" /></Size>
 			<Anchor point="BOTTOM" offset="0" />
 			<Anchor point="H_CENTER" offset="0" />
 		</Area>
@@ -210,4 +187,27 @@
 			</OnLoad>
 		</Scripts>
 	</Frame>
+	
+		<Frame name="MenuBarButtons" parent="GameParent">
+			<Area>
+				<Anchor point="RIGHT" />
+				<Anchor point="BOTTOM" />
+				<Size><AbsDimension x="640" y="96" /></Size>
+			</Area>
+			
+			<Visual>
+				<ImagerySection name="Background">
+					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlack.htex" borderSize="30">
+						<Area><Inset bottom="8" left="0" top="8" right="8" /></Area>
+					</BorderComponent>
+				</ImagerySection>
+
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Background" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+		</Frame>
+
 </UiLayout>

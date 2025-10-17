@@ -28,21 +28,21 @@ function GameMenuBar_OnLoad(self)
 end
 
 function AddMenuBarButton(text, callback)
-	local childCount = GameMenu:GetChildCount()
-
 	-- Create a new button from the template and add it to the window
-	local button = GameMenuBarImageButton:Clone()
-	button:SetText(Localize(text))
-	button:SetProperty("Icon", text)
-	button:SetClickedHandler(callback)
-	MenuBarButtons:AddChild(button)
-
-	-- Setup anchor points
-	button:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.BOTTOM, nil, -MENUBAR_V_PADDING)
-	button:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, menuBarOffset)
+	local button = GameMenuBarImageButton:Clone();
+	button:SetText(Localize(text));
+	button:SetProperty("Icon", text);
+	button:SetClickedHandler(callback);
+	MenuBarButtons:AddChild(button);
 
 	-- Increase offset
-	menuBarOffset = menuBarOffset + button:GetWidth() + MENUBAR_H_PADDING
+	menuBarOffset = menuBarOffset + button:GetWidth() + MENUBAR_H_PADDING;
+	
+	local childCount = MenuBarButtons:GetChildCount();
+	for i = 0, childCount - 1 do
+		local child = MenuBarButtons:GetChild(i);
+		child:ClearAnchors();
+		child:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.BOTTOM, nil, 0);
+		child:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, (childCount - i - 1) * child:GetWidth() * -1);
+	end
 end
-
-
