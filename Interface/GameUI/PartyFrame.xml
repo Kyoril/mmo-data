@@ -139,7 +139,7 @@
 
         <Area>
             <Anchor point="LEFT" offset="32" />
-            <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="PlayerFrame" offset="32" />
+            <Anchor point="TOP" offset="32" />
             <Size><AbsDimension x="320" y="532" /></Size>
         </Area>
 
