@@ -73,6 +73,19 @@ function CharacterWindow_OnLoad(self)
     CharacterStatsScrollBar:SetMaximum(0);
     CharacterStatsScrollBar:SetOnValueChangedHandler(CharacterStatsScrollBar_OnValueChanged);
     CharacterStatsScrollBar:Disable();  -- Will enable when content overflows
+
+    -- Setup tooltips for secondary stats
+    CharacterArmorStat:SetOnEnterHandler(CharacterWindow_ArmorLabel_OnEnter);
+    CharacterArmorStat:SetOnLeaveHandler(CharacterWindow_HideTooltip);
+
+    CharacterDamageStat:SetOnEnterHandler(CharacterWindow_DamageLabel_OnEnter);
+    CharacterDamageStat:SetOnLeaveHandler(CharacterWindow_HideTooltip);
+
+    CharacterAttackPowerStat:SetOnEnterHandler(CharacterWindow_AttackPowerLabel_OnEnter);
+    CharacterAttackPowerStat:SetOnLeaveHandler(CharacterWindow_HideTooltip);
+
+    CharacterAttackTimeStat:SetOnEnterHandler(CharacterWindow_AttackSpeedLabel_OnEnter);
+    CharacterAttackTimeStat:SetOnLeaveHandler(CharacterWindow_HideTooltip);
 end
 
 function CharacterStatsScrollBar_OnValueChanged(self, value)
@@ -114,6 +127,57 @@ end
 
 function CharacterWindow_HideTooltip()
     GameTooltip:Hide();
+end
+
+function CharacterWindow_DamageLabel_OnEnter(self)
+    local unit = GetUnit("player");
+    if not unit then
+        return;
+    end
+
+    GameTooltip_Clear();
+    GameTooltip:ClearAnchors();
+    GameTooltip:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, self, 0);
+    GameTooltip:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, self, 0);
+
+    GameTooltip_AddLine(Localize("DAMAGE"), TOOLTIP_LINE_LEFT, "FFFFD100");
+    GameTooltip_AddLine("Weapon damage range per hit", TOOLTIP_LINE_LEFT, "FFFFFFFF");
+
+    GameTooltip:Show();
+end
+
+function CharacterWindow_AttackPowerLabel_OnEnter(self)
+    local unit = GetUnit("player");
+    if not unit then
+        return;
+    end
+
+    GameTooltip_Clear();
+    GameTooltip:ClearAnchors();
+    GameTooltip:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, self, 0);
+    GameTooltip:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, self, 0);
+
+    GameTooltip_AddLine(Localize("ATTACK_POWER"), TOOLTIP_LINE_LEFT, "FFFFD100");
+    GameTooltip_AddLine("Increases weapon damage", TOOLTIP_LINE_LEFT, "FFFFFFFF");
+
+    GameTooltip:Show();
+end
+
+function CharacterWindow_AttackSpeedLabel_OnEnter(self)
+    local unit = GetUnit("player");
+    if not unit then
+        return;
+    end
+
+    GameTooltip_Clear();
+    GameTooltip:ClearAnchors();
+    GameTooltip:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, self, 0);
+    GameTooltip:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, self, 0);
+
+    GameTooltip_AddLine(Localize("ATTACK_SPEED"), TOOLTIP_LINE_LEFT, "FFFFD100");
+    GameTooltip_AddLine("Time between melee attacks in seconds", TOOLTIP_LINE_LEFT, "FFFFFFFF");
+
+    GameTooltip:Show();
 end
 
 function CharacterWindow_StatLabel_OnEnter(self, statId)

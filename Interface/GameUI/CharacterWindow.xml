@@ -343,7 +343,7 @@
 					<Anchor point="TOP" offset="8" />
 					<Anchor point="LEFT" offset="8" />
 					<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CharacterStatsScrollBar" offset="-8" />
-					<Size><AbsDimension y="680" /></Size>
+					<Size><AbsDimension y="720" /></Size>
 				</Area>
 
 				<Frame name="CharacterWindowAttributePointsHeader" inherits="StatSectionHeaderTemplate">
@@ -366,13 +366,33 @@
 					</Area>
 				</Frame>
 
+				<!-- Primary Stats Bordered Container -->
+				<Frame name="CharacterWindowPrimaryStatsFrame" renderer="DefaultRenderer">
+					<Visual>
+						<ImagerySection name="Border">
+							<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" />
+						</ImagerySection>
+						<StateImagery name="Enabled">
+							<Layer>
+								<Section section="Border" />
+							</Layer>
+						</StateImagery>
+					</Visual>
+
+					<Area>
+						<Anchor point="TOP" offset="88" />
+						<Anchor point="LEFT" offset="16" />
+						<Anchor point="RIGHT" offset="-16" />
+						<Size><AbsDimension y="310" /></Size>
+					</Area>
+
 				<Frame name="CharacterWindowPrimaryStatsHeader" inherits="StatSectionHeaderTemplate">
 					<Property name="Text" value="PRIMARY ATTRIBUTES" />
 
 					<Area>
-						<Anchor point="TOP" offset="96" />
-						<Anchor point="LEFT" offset="24" />
-						<Anchor point="RIGHT" offset="-24" />
+						<Anchor point="TOP" offset="8" />
+						<Anchor point="LEFT" offset="8" />
+						<Anchor point="RIGHT" offset="-8" />
 					</Area>
 				</Frame>
 
@@ -381,9 +401,9 @@
 					<Property name="Text" value="STAMINA" />
 
 					<Area>
-						<Anchor point="TOP" offset="144" />
-						<Anchor point="LEFT" offset="32" />
-						<Anchor point="RIGHT" offset="-100" />
+						<Anchor point="TOP" offset="56" />
+						<Anchor point="LEFT" offset="16" />
+						<Anchor point="RIGHT" offset="-84" />
 					</Area>
 				</Frame>
 
@@ -391,9 +411,9 @@
 					<Property name="Text" value="0" />
 
 					<Area>
-						<Anchor point="TOP" offset="144" />
-						<Anchor point="LEFT" offset="32" />
-						<Anchor point="RIGHT" offset="-100" />
+						<Anchor point="TOP" offset="56" />
+						<Anchor point="LEFT" offset="16" />
+						<Anchor point="RIGHT" offset="-84" />
 					</Area>
 				</Frame>
 
@@ -402,8 +422,8 @@
 
 					<Area>
 						<Size><AbsDimension x="64" y="64" /></Size>
-						<Anchor point="TOP" offset="132" />
-						<Anchor point="RIGHT" offset="-24" />
+						<Anchor point="TOP" offset="44" />
+						<Anchor point="RIGHT" offset="-8" />
 					</Area>
 
 					<Scripts>
@@ -420,9 +440,9 @@
 					<Property name="Text" value="STRENGTH" />
 
 					<Area>
-						<Anchor point="TOP" offset="196" />
-						<Anchor point="LEFT" offset="32" />
-						<Anchor point="RIGHT" offset="-100" />
+						<Anchor point="TOP" offset="108" />
+						<Anchor point="LEFT" offset="16" />
+						<Anchor point="RIGHT" offset="-84" />
 					</Area>
 				</Frame>
 
@@ -430,9 +450,9 @@
 					<Property name="Text" value="0" />
 
 					<Area>
-						<Anchor point="TOP" offset="196" />
-						<Anchor point="LEFT" offset="32" />
-						<Anchor point="RIGHT" offset="-100" />
+						<Anchor point="TOP" offset="108" />
+						<Anchor point="LEFT" offset="16" />
+						<Anchor point="RIGHT" offset="-84" />
 					</Area>
 				</Frame>
 
@@ -441,8 +461,8 @@
 
 					<Area>
 						<Size><AbsDimension x="64" y="64" /></Size>
-						<Anchor point="TOP" offset="184" />
-						<Anchor point="RIGHT" offset="-24" />
+						<Anchor point="TOP" offset="96" />
+						<Anchor point="RIGHT" offset="-8" />
 					</Area>
 
 					<Scripts>
@@ -459,9 +479,9 @@
 					<Property name="Text" value="AGILITY" />
 
 					<Area>
-						<Anchor point="TOP" offset="248" />
-						<Anchor point="LEFT" offset="32" />
-						<Anchor point="RIGHT" offset="-100" />
+						<Anchor point="TOP" offset="160" />
+						<Anchor point="LEFT" offset="16" />
+						<Anchor point="RIGHT" offset="-84" />
 					</Area>
 				</Frame>
 
@@ -469,9 +489,9 @@
 					<Property name="Text" value="0" />
 
 					<Area>
-						<Anchor point="TOP" offset="248" />
-						<Anchor point="LEFT" offset="32" />
-						<Anchor point="RIGHT" offset="-100" />
+						<Anchor point="TOP" offset="160" />
+						<Anchor point="LEFT" offset="16" />
+						<Anchor point="RIGHT" offset="-84" />
 					</Area>
 				</Frame>
 
@@ -480,8 +500,8 @@
 
 					<Area>
 						<Size><AbsDimension x="64" y="64" /></Size>
-						<Anchor point="TOP" offset="236" />
-						<Anchor point="RIGHT" offset="-24" />
+						<Anchor point="TOP" offset="148" />
+						<Anchor point="RIGHT" offset="-8" />
 					</Area>
 
 					<Scripts>
@@ -498,9 +518,9 @@
 					<Property name="Text" value="INTELLECT" />
 
 					<Area>
-						<Anchor point="TOP" offset="300" />
-						<Anchor point="LEFT" offset="32" />
-						<Anchor point="RIGHT" offset="-100" />
+						<Anchor point="TOP" offset="212" />
+						<Anchor point="LEFT" offset="16" />
+						<Anchor point="RIGHT" offset="-84" />
 					</Area>
 				</Frame>
 
@@ -508,9 +528,9 @@
 					<Property name="Text" value="0" />
 
 					<Area>
-						<Anchor point="TOP" offset="300" />
-						<Anchor point="LEFT" offset="32" />
-						<Anchor point="RIGHT" offset="-100" />
+						<Anchor point="TOP" offset="212" />
+						<Anchor point="LEFT" offset="16" />
+						<Anchor point="RIGHT" offset="-84" />
 					</Area>
 				</Frame>
 
@@ -519,8 +539,8 @@
 
 					<Area>
 						<Size><AbsDimension x="64" y="64" /></Size>
-						<Anchor point="TOP" offset="288" />
-						<Anchor point="RIGHT" offset="-24" />
+						<Anchor point="TOP" offset="200" />
+						<Anchor point="RIGHT" offset="-8" />
 					</Area>
 
 					<Scripts>
@@ -537,9 +557,9 @@
 					<Property name="Text" value="SPIRIT" />
 
 					<Area>
-						<Anchor point="TOP" offset="352" />
-						<Anchor point="LEFT" offset="32" />
-						<Anchor point="RIGHT" offset="-100" />
+						<Anchor point="TOP" offset="264" />
+						<Anchor point="LEFT" offset="16" />
+						<Anchor point="RIGHT" offset="-84" />
 					</Area>
 				</Frame>
 
@@ -547,9 +567,9 @@
 					<Property name="Text" value="0" />
 
 					<Area>
-						<Anchor point="TOP" offset="352" />
-						<Anchor point="LEFT" offset="32" />
-						<Anchor point="RIGHT" offset="-100" />
+						<Anchor point="TOP" offset="264" />
+						<Anchor point="LEFT" offset="16" />
+						<Anchor point="RIGHT" offset="-84" />
 					</Area>
 				</Frame>
 
@@ -558,8 +578,8 @@
 
 					<Area>
 						<Size><AbsDimension x="64" y="64" /></Size>
-						<Anchor point="TOP" offset="340" />
-						<Anchor point="RIGHT" offset="-24" />
+						<Anchor point="TOP" offset="252" />
+						<Anchor point="RIGHT" offset="-8" />
 					</Area>
 
 					<Scripts>
@@ -570,15 +590,36 @@
 						</OnClick>
 					</Scripts>
 				</Frame>
+				</Frame> <!-- End Primary Stats Frame -->
+
+				<!-- Secondary Stats Bordered Container -->
+				<Frame name="CharacterWindowSecondaryStatsFrame" renderer="DefaultRenderer">
+					<Visual>
+						<ImagerySection name="Border">
+							<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" />
+						</ImagerySection>
+						<StateImagery name="Enabled">
+							<Layer>
+								<Section section="Border" />
+							</Layer>
+						</StateImagery>
+					</Visual>
+
+					<Area>
+						<Anchor point="TOP" offset="410" />
+						<Anchor point="LEFT" offset="16" />
+						<Anchor point="RIGHT" offset="-16" />
+						<Size><AbsDimension y="240" /></Size>
+					</Area>
 
 				<!-- Secondary Stats Section -->
 				<Frame name="CharacterWindowSecondaryStatsHeader" inherits="StatSectionHeaderTemplate">
 					<Property name="Text" value="SECONDARY STATS" />
 
 					<Area>
-						<Anchor point="TOP" offset="460" />
-						<Anchor point="LEFT" offset="24" />
-						<Anchor point="RIGHT" offset="-24" />
+						<Anchor point="TOP" offset="8" />
+						<Anchor point="LEFT" offset="8" />
+						<Anchor point="RIGHT" offset="-8" />
 					</Area>
 				</Frame>
 
@@ -587,9 +628,9 @@
 					<Property name="Text" value="ARMOR" />
 
 					<Area>
-						<Anchor point="TOP" offset="508" />
-						<Anchor point="LEFT" offset="32" />
-						<Anchor point="RIGHT" offset="-24" />
+						<Anchor point="TOP" offset="56" />
+						<Anchor point="LEFT" offset="16" />
+						<Anchor point="RIGHT" offset="-8" />
 					</Area>
 				</Frame>
 
@@ -597,9 +638,9 @@
 					<Property name="Text" value="0" />
 
 					<Area>
-						<Anchor point="TOP" offset="508" />
-						<Anchor point="LEFT" offset="32" />
-						<Anchor point="RIGHT" offset="-24" />
+						<Anchor point="TOP" offset="56" />
+						<Anchor point="LEFT" offset="16" />
+						<Anchor point="RIGHT" offset="-8" />
 					</Area>
 				</Frame>
 
@@ -608,9 +649,9 @@
 					<Property name="Text" value="DAMAGE" />
 
 					<Area>
-						<Anchor point="TOP" offset="552" />
-						<Anchor point="LEFT" offset="32" />
-						<Anchor point="RIGHT" offset="-24" />
+						<Anchor point="TOP" offset="100" />
+						<Anchor point="LEFT" offset="16" />
+						<Anchor point="RIGHT" offset="-8" />
 					</Area>
 				</Frame>
 
@@ -618,9 +659,9 @@
 					<Property name="Text" value="0" />
 
 					<Area>
-						<Anchor point="TOP" offset="552" />
-						<Anchor point="LEFT" offset="32" />
-						<Anchor point="RIGHT" offset="-24" />
+						<Anchor point="TOP" offset="100" />
+						<Anchor point="LEFT" offset="16" />
+						<Anchor point="RIGHT" offset="-8" />
 					</Area>
 				</Frame>
 
@@ -629,9 +670,9 @@
 					<Property name="Text" value="ATTACK_POWER" />
 
 					<Area>
-						<Anchor point="TOP" offset="596" />
-						<Anchor point="LEFT" offset="32" />
-						<Anchor point="RIGHT" offset="-24" />
+						<Anchor point="TOP" offset="144" />
+						<Anchor point="LEFT" offset="16" />
+						<Anchor point="RIGHT" offset="-8" />
 					</Area>
 				</Frame>
 
@@ -639,9 +680,9 @@
 					<Property name="Text" value="0" />
 
 					<Area>
-						<Anchor point="TOP" offset="596" />
-						<Anchor point="LEFT" offset="32" />
-						<Anchor point="RIGHT" offset="-24" />
+						<Anchor point="TOP" offset="144" />
+						<Anchor point="LEFT" offset="16" />
+						<Anchor point="RIGHT" offset="-8" />
 					</Area>
 				</Frame>
 
@@ -650,9 +691,9 @@
 					<Property name="Text" value="ATTACK_SPEED" />
 
 					<Area>
-						<Anchor point="TOP" offset="640" />
-						<Anchor point="LEFT" offset="32" />
-						<Anchor point="RIGHT" offset="-24" />
+						<Anchor point="TOP" offset="188" />
+						<Anchor point="LEFT" offset="16" />
+						<Anchor point="RIGHT" offset="-8" />
 					</Area>
 				</Frame>
 
@@ -660,11 +701,12 @@
 					<Property name="Text" value="0" />
 
 					<Area>
-						<Anchor point="TOP" offset="640" />
-						<Anchor point="LEFT" offset="32" />
-						<Anchor point="RIGHT" offset="-24" />
+						<Anchor point="TOP" offset="188" />
+						<Anchor point="LEFT" offset="16" />
+						<Anchor point="RIGHT" offset="-8" />
 					</Area>
 				</Frame>
+				</Frame> <!-- End Secondary Stats Frame -->
 			</Frame>
 		</Frame>
 
