@@ -45,9 +45,11 @@ function CharacterWindow_OnLoad(self)
     -- Register the character window in the menu bar as a button
 	AddMenuBarButton("Interface/Icons/fg4_icons_helmet_result.htex", CharacterWindow_Toggle);
 
-    -- Setup tooltips for armor stat
-    CharacterArmorStat:SetOnEnterHandler(CharacterWindow_ArmorLabel_OnEnter);
-    CharacterArmorStat:SetOnLeaveHandler(CharacterWindow_HideTooltip);
+    -- Setup tooltips for armor stat (will be added in Task 6)
+    if CharacterArmorStat then
+        CharacterArmorStat:SetOnEnterHandler(CharacterWindow_ArmorLabel_OnEnter);
+        CharacterArmorStat:SetOnLeaveHandler(CharacterWindow_HideTooltip);
+    end
 
     -- Setup tooltips for attribute stats
     for i = 0, 4 do
@@ -210,27 +212,36 @@ function CharacterWindow_RefreshStats()
         end
     end
 
-    local attackTimeSeconds = player:GetAttackTime() / 1000.0;
-    CharacterAttackTimeStat:SetText(string.format("%.2f", attackTimeSeconds));
-    CharacterAttackPowerStat:SetText(string.format("%.0f", player:GetAttackPower()));
-
-    local minDamage = player:GetMinDamage();
-    local maxDamage = player:GetMaxDamage();
-    if minDamage == maxDamage then
-        CharacterDamageStat:SetText(string.format("%.0f", minDamage));
-    else
-        CharacterDamageStat:SetText(string.format("%.0f - %.0f", minDamage, maxDamage));
+    -- Secondary stats (will be added in Task 6)
+    if CharacterAttackTimeStat then
+        local attackTimeSeconds = player:GetAttackTime() / 1000.0;
+        CharacterAttackTimeStat:SetText(string.format("%.2f", attackTimeSeconds));
     end
     
+    if CharacterAttackPowerStat then
+        CharacterAttackPowerStat:SetText(string.format("%.0f", player:GetAttackPower()));
+    end
 
-    local baseArmor, modifierArmor = UnitArmor("player");
-    CharacterArmorStat:SetText(tostring(baseArmor + modifierArmor));
-    if (modifierArmor > 0) then
-        CharacterArmorStat:SetProperty("Color", "FF20FF20")
-    elseif (modifierArmor < 0) then
-        CharacterArmorStat:SetProperty("Color", "FFFF2020")
-    else
-        CharacterArmorStat:SetProperty("Color", "FFFFFFFF")
+    if CharacterDamageStat then
+        local minDamage = player:GetMinDamage();
+        local maxDamage = player:GetMaxDamage();
+        if minDamage == maxDamage then
+            CharacterDamageStat:SetText(string.format("%.0f", minDamage));
+        else
+            CharacterDamageStat:SetText(string.format("%.0f - %.0f", minDamage, maxDamage));
+        end
+    end
+    
+    if CharacterArmorStat then
+        local baseArmor, modifierArmor = UnitArmor("player");
+        CharacterArmorStat:SetText(tostring(baseArmor + modifierArmor));
+        if (modifierArmor > 0) then
+            CharacterArmorStat:SetProperty("Color", "FF20FF20")
+        elseif (modifierArmor < 0) then
+            CharacterArmorStat:SetProperty("Color", "FFFF2020")
+        else
+            CharacterArmorStat:SetProperty("Color", "FFFFFFFF")
+        end
     end
 
 end
