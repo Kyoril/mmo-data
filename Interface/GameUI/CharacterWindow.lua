@@ -65,6 +65,18 @@ function CharacterWindow_OnLoad(self)
             statFrame:SetOnLeaveHandler(CharacterWindow_HideTooltip);
         end
     end
+
+    -- Setup stats scrollbar
+    CharacterStatsScrollBar:SetMinimum(0);
+    CharacterStatsScrollBar:SetValue(0);
+    CharacterStatsScrollBar:SetStep(44);  -- Scroll 44 pixels at a time (one stat row)
+    CharacterStatsScrollBar:SetMaximum(0);
+    CharacterStatsScrollBar:SetOnValueChangedHandler(CharacterStatsScrollBar_OnValueChanged);
+    CharacterStatsScrollBar:Disable();  -- Will enable when content overflows
+end
+
+function CharacterStatsScrollBar_OnValueChanged(self, value)
+    CharacterStatsScrollContent:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, -value);
 end
 
 function CharacterWindow_AddAttributeButton_OnEnter(self)
@@ -244,4 +256,15 @@ function CharacterWindow_RefreshStats()
         end
     end
 
+    -- Update scrollbar based on content height
+    local contentHeight = CharacterStatsScrollContent:GetHeight();
+    local clipHeight = CharacterStatsScrollClip:GetHeight();
+
+    if contentHeight > clipHeight then
+        CharacterStatsScrollBar:SetMaximum(contentHeight - clipHeight);
+        CharacterStatsScrollBar:Enable();
+    else
+        CharacterStatsScrollBar:SetMaximum(0);
+        CharacterStatsScrollBar:Disable();
+    end
 end
