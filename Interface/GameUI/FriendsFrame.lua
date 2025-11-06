@@ -146,9 +146,7 @@ function FriendsFrame_UpdateActionButtons()
 end
 
 function FriendsFrame_InviteClicked(self)
-    -- TODO: Open name input dialog
-    -- For now, show message
-    ChatFrame:AddMessage(Localize("FRIEND_INVITE_DIALOG_PLACEHOLDER"), 1.0, 1.0, 0.0)
+    StaticDialog_Show("FRIEND_INVITE");
 end
 
 function FriendsFrame_RemoveClicked(self)

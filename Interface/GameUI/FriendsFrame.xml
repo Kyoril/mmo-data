@@ -92,10 +92,41 @@
     </Frame>
     <Frame name="FriendsFrame" inherits="SidePanelTemplate" parent="GameParent">
         <Property name="Visible" value="false" />
+        <Property name="Title" value="FRIENDS" />
         <Scripts>
             <OnLoad>return function(self) FriendsFrame_OnLoad(self) end</OnLoad>
             <OnShow>return function(self) FriendsFrame_OnShow(self) end</OnShow>
         </Scripts>
+        <Frame name="FriendActionButtonsFrame" renderer="DefaultRenderer">
+            <Area>
+                <Anchor point="BOTTOM" offset="-16" />
+                <Anchor point="LEFT" offset="24" />
+                <Anchor point="RIGHT" offset="-24" />
+                <Size>
+                    <AbsDimension x="0" y="80" />
+                </Size>
+            </Area>
+            <Frame name="FriendInviteButton" inherits="GlueButton">
+                <Property name="Text" value="FRIEND_INVITE" />
+                <Area>
+                    <Anchor point="LEFT" offset="0" />
+                    <Anchor point="TOP" offset="0" />
+                    <Size>
+                        <AbsDimension x="222" y="80" />
+                    </Size>
+                </Area>
+            </Frame>
+            <Frame name="FriendRemoveButton" inherits="GlueButton">
+                <Property name="Text" value="FRIEND_REMOVE" />
+                <Area>
+                    <Anchor point="RIGHT" offset="-8" />
+                    <Anchor point="TOP" offset="0" />
+                    <Size>
+                        <AbsDimension x="222" y="80" />
+                    </Size>
+                </Area>
+            </Frame>
+        </Frame>
         <Frame name="FriendListFrame" renderer="DefaultRenderer">
             <Visual>
                 <ImagerySection name="Border">
@@ -266,36 +297,6 @@
                     <Anchor point="TOP" offset="8" />
                     <Anchor point="RIGHT" offset="-8" />
                     <Anchor point="BOTTOM" offset="-8" />
-                </Area>
-            </Frame>
-        </Frame>
-        <Frame name="FriendActionButtonsFrame" renderer="DefaultRenderer">
-            <Area>
-                <Anchor point="BOTTOM" offset="-16" />
-                <Anchor point="LEFT" offset="24" />
-                <Anchor point="RIGHT" offset="-24" />
-                <Size>
-                    <AbsDimension x="0" y="80" />
-                </Size>
-            </Area>
-            <Frame name="FriendInviteButton" inherits="GlueButton">
-                <Property name="Text" value="INVITE" />
-                <Area>
-                    <Anchor point="LEFT" offset="0" />
-                    <Anchor point="TOP" offset="0" />
-                    <Size>
-                        <AbsDimension x="222" y="80" />
-                    </Size>
-                </Area>
-            </Frame>
-            <Frame name="FriendRemoveButton" inherits="GlueButton">
-                <Property name="Text" value="REMOVE" />
-                <Area>
-                    <Anchor point="RIGHT" offset="-8" />
-                    <Anchor point="TOP" offset="0" />
-                    <Size>
-                        <AbsDimension x="222" y="80" />
-                    </Size>
                 </Area>
             </Frame>
         </Frame>

@@ -22,6 +22,19 @@
 			</Area>
 		</Frame>
 		
+		<Frame name="StaticDialogEditBox" inherits="GameTextField">
+			<Property name="Visible" value="false" />
+			
+			<Area>
+				<Anchor point="LEFT" offset="32" />
+				<Anchor point="RIGHT" offset="-32" />
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="StaticDialogLabel" offset="16" />
+				<Size>
+					<AbsDimension x="0" y="64" />
+				</Size>
+			</Area>
+		</Frame>
+		
 		<Frame name="StaticDialogButton1" inherits="GlueButton">
 			<Property name="Text" value="CANCEL" />
 			

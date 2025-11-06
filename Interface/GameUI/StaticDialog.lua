@@ -42,6 +42,21 @@ StaticDialogs["GUILD_INVITE"] = {
 	whileDead = true
 };
 
+StaticDialogs["FRIEND_INVITE"] = {
+	text = Localize("FRIEND_INVITE_WHO"),
+	button1 = Localize("ACCEPT"),
+	button2 = Localize("CANCEL"),
+	hasEditBox = true,
+	OnAccept = function()
+		local text = StaticDialog.editBox:GetText();
+		if (text and text ~= "") then
+			FriendInviteByName(text);
+		end
+	end,
+	timeout = 0,
+	exclusive = false
+};
+
 StaticDialogs["DELETE_ITEM"] = {
 	text = Localize("DELETE_ITEM"),
 	button1 = Localize("YES"),
@@ -127,16 +142,30 @@ function StaticDialog_Show(which, text_arg1, text_arg2)
 	local text = _G[dialog:GetName().."Label"];
 	text:SetText(string.format(StaticDialogs[which].text, text_arg1, text_arg2));
 
+	-- Handle edit box if needed
+	local editBox = _G[dialog:GetName().."EditBox"];
+	if (StaticDialogs[which].hasEditBox) then
+		editBox:SetText("");
+		editBox:Show();
+		dialog.editBox = editBox;
+	else
+		editBox:Hide();
+		dialog.editBox = nil;
+	end
+
 	-- Set the buttons of the dialog
 	local button1 = _G[dialog:GetName().."Button1"];
 	local button2 = _G[dialog:GetName().."Button2"];
+	
+	local lastElement = StaticDialogs[which].hasEditBox and editBox or text;
+	print("lastElement: " .. lastElement:GetName());
 
 	if ( StaticDialogs[which].button2 and
 	   ( not StaticDialogs[which].DisplayButton2 or StaticDialogs[which].DisplayButton2() ) ) then
 		button1:ClearAnchors();
 		button2:ClearAnchors();
-		button1:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, text, 8);
-		button1:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.H_CENTER, text, -6);
+		button1:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, lastElement, 8);
+		button1:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.H_CENTER, lastElement, -6);
 		button2:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, button1, 0);
 		button2:SetAnchor(AnchorPoint.LEFT, AnchorPoint.RIGHT, button1, 16);
 		button2:SetText(StaticDialogs[which].button2);
@@ -149,8 +178,8 @@ function StaticDialog_Show(which, text_arg1, text_arg2)
 		button2:Show();
 	else
 		button1:ClearAnchors();
-		button1:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, text, 8);
-		button1:SetAnchor(AnchorPoint.H_CENTER, AnchorPoint.H_CENTER, text, 0);
+		button1:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, lastElement, 8);
+		button1:SetAnchor(AnchorPoint.H_CENTER, AnchorPoint.H_CENTER, lastElement, 0);
 		button2:Hide();
 	end
 
@@ -181,7 +210,13 @@ function StaticDialog_Show(which, text_arg1, text_arg2)
 		button1:Enable();
 	end
 
-	dialog:SetHeight(32 + text:GetTextHeight() + 8 + button1:GetHeight() + 32);
+	-- Calculate dialog height based on contents
+	local dialogHeight = 32 + text:GetTextHeight() + 8;
+	if (dialog.editBox) then
+		dialogHeight = dialogHeight + dialog.editBox:GetHeight() + 16;
+	end
+	dialogHeight = dialogHeight + 8 + button1:GetHeight() + 32;
+	dialog:SetHeight(dialogHeight);
 
 	-- Show the glue dialog
 	StaticDialog:Show();
