@@ -158,7 +158,6 @@ function StaticDialog_Show(which, text_arg1, text_arg2)
 	local button2 = _G[dialog:GetName().."Button2"];
 	
 	local lastElement = StaticDialogs[which].hasEditBox and editBox or text;
-	print("lastElement: " .. lastElement:GetName());
 
 	if ( StaticDialogs[which].button2 and
 	   ( not StaticDialogs[which].DisplayButton2 or StaticDialogs[which].DisplayButton2() ) ) then
