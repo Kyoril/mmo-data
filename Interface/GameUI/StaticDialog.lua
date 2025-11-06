@@ -221,6 +221,11 @@ function StaticDialog_Show(which, text_arg1, text_arg2)
 	-- Show the glue dialog
 	StaticDialog:Show();
 
+	-- Ensure we have the focus on the edit box if there is one
+	if (dialog.editBox) then
+		dialog.editBox:CaptureInput();
+	end
+
 	return dialog;
 end
 
