@@ -50,8 +50,8 @@ function GameParent_OnFriendCommandResult(gameParent, result, playerName)
 	local info = ChatTypeInfo["SYSTEM"];
 	
 	if result == 0 then
-		-- Success
-		ChatFrame:AddMessage(string.format(Localize("FRIEND_ADDED"), playerName), info.r, info.g, info.b);
+		-- Success - don't show a message, the friend list update is clear enough
+		return;
 	elseif result == 1 then
 		-- Already friends
 		ChatFrame:AddMessage(string.format(Localize("FRIEND_ALREADY_FRIENDS"), playerName), info.r, info.g, info.b);

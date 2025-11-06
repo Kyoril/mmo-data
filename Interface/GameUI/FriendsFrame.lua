@@ -19,13 +19,6 @@ local FRIEND_DATA = {
 }
 
 -- Event handlers
-function FriendsFrame_OnCommandResult(self, result, playername)
-    local message = string.format(Localize(FRIEND_COMMAND_RESULTS[result]), playername);
-    if (message) then
-        ChatFrame:AddMessage(message, 1.0, 1.0, 0.0);
-    end
-end
-
 function FriendsFrame_OnInvite(self, inviterName)
     ChatFrame:AddMessage(string.format(Localize("FRIEND_INVITE_RECEIVED"), inviterName), 1.0, 1.0, 0.0);
 end
@@ -44,7 +37,6 @@ function FriendsFrame_OnLoad(self)
     self:RegisterEvent("FRIEND_INVITE", FriendsFrame_OnInvite);
     self:RegisterEvent("FRIEND_LIST_UPDATE", FriendsList_Update);
     self:RegisterEvent("FRIEND_STATUS_CHANGE", FriendsList_OnStatusChange);
-    self:RegisterEvent("FRIEND_COMMAND_RESULT", FriendsFrame_OnCommandResult);
     
     -- Set up the scroll bar
     local scrollBar = FriendListScrollBar;
