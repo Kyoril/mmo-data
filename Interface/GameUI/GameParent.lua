@@ -42,6 +42,50 @@ function GameParent_OnGuildInviteRequest(gameParent, inviterName, guildName)
 	StaticDialog_Show("GUILD_INVITE", inviterName, guildName);
 end
 
+function GameParent_OnFriendInviteRequest(gameParent, inviterName)
+	ChatFrame:AddMessage(string.format(Localize("FRIEND_INVITATION"), inviterName), 1.0, 1.0, 0.0);
+end
+
+function GameParent_OnFriendCommandResult(gameParent, result, playerName)
+	local info = ChatTypeInfo["SYSTEM"];
+	
+	if result == 0 then
+		-- Success
+		ChatFrame:AddMessage(string.format(Localize("FRIEND_ADDED"), playerName), info.r, info.g, info.b);
+	elseif result == 1 then
+		-- Already friends
+		ChatFrame:AddMessage(string.format(Localize("FRIEND_ALREADY_FRIENDS"), playerName), info.r, info.g, info.b);
+	elseif result == 2 then
+		-- Friend list full
+		ChatFrame:AddMessage(Localize("FRIEND_LIST_FULL"), info.r, info.g, info.b);
+	elseif result == 3 then
+		-- Target friend list full
+		ChatFrame:AddMessage(string.format(Localize("FRIEND_TARGET_LIST_FULL"), playerName), info.r, info.g, info.b);
+	elseif result == 4 then
+		-- Player not found
+		ChatFrame:AddMessage(string.format(Localize("FRIEND_NOT_FOUND"), playerName), info.r, info.g, info.b);
+	elseif result == 5 then
+		-- Cannot add self
+		ChatFrame:AddMessage(Localize("FRIEND_CANNOT_ADD_SELF"), info.r, info.g, info.b);
+	elseif result == 6 then
+		-- Invite pending
+		ChatFrame:AddMessage(string.format(Localize("FRIEND_INVITE_PENDING"), playerName), info.r, info.g, info.b);
+	elseif result == 7 then
+		-- Not friends
+		ChatFrame:AddMessage(string.format(Localize("FRIEND_NOT_FRIENDS"), playerName), info.r, info.g, info.b);
+	end
+end
+
+function GameParent_OnFriendStatusChange(gameParent, friendName, isOnline)
+	local info = ChatTypeInfo["SYSTEM"];
+	
+	if isOnline then
+		ChatFrame:AddMessage(string.format(Localize("FRIEND_LOGGED_IN"), friendName), info.r, info.g, info.b);
+	else
+		ChatFrame:AddMessage(string.format(Localize("FRIEND_LOGGED_OUT"), friendName), info.r, info.g, info.b);
+	end
+end
+
 function GameParent_OnRandomRollResult(self, playerName, min, max, result)
 	ChatFrame:AddMessage(string.format(Localize("RANDOM_ROLL_RESULT"), playerName, result, min, max), 1.0, 1.0, 0.0);
 end
@@ -194,6 +238,9 @@ function GameParent_OnLoad(self)
 	self:RegisterEvent("RANDOM_ROLL_RESULT", GameParent_OnRandomRollResult);
 	self:RegisterEvent("HOVERED_OBJECT_CHANGED", GameParent_OnHoveredObjectChanged);
 	self:RegisterEvent("GUILD_INVITE_REQUEST", GameParent_OnGuildInviteRequest);
+	self:RegisterEvent("FRIEND_INVITE", GameParent_OnFriendInviteRequest);
+	self:RegisterEvent("FRIEND_COMMAND_RESULT", GameParent_OnFriendCommandResult);
+	self:RegisterEvent("FRIEND_STATUS_CHANGE", GameParent_OnFriendStatusChange);
 end
 
 function ShowUIPanel(frame, force)

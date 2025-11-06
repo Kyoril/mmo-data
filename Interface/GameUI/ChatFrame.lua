@@ -125,6 +125,22 @@ SlashCmdList["GUILD_DISBAND"] = function(msg)
 	GuildDisband();
 end
 
+SlashCmdList["FRIENDINVITE"] = function(msg)
+	if ( GetSlashCmdTarget(msg) ) then
+		FriendInviteByName(GetSlashCmdTarget(msg));
+	end
+end
+
+SlashCmdList["FRIENDREMOVE"] = function(msg)
+	if ( GetSlashCmdTarget(msg) ) then
+		RemoveFriendByName(GetSlashCmdTarget(msg));
+	end
+end
+
+SlashCmdList["FRIENDLIST"] = function(msg)
+	FriendsFrame_Toggle();
+end
+
 
 function rgbToHex(r, g, b)
     -- Ensure values are in range 0-1

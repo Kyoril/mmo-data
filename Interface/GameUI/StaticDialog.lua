@@ -141,6 +141,7 @@ function StaticDialog_Show(which, text_arg1, text_arg2)
 
 	local text = _G[dialog:GetName().."Label"];
 	text:SetText(string.format(StaticDialogs[which].text, text_arg1, text_arg2));
+	text:SetHeight(text:GetTextHeight());
 
 	-- Handle edit box if needed
 	local editBox = _G[dialog:GetName().."EditBox"];
