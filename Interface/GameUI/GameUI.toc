@@ -24,6 +24,7 @@ VendorFrame.xml
 QuestFrame.xml
 QuestLogFrame.xml
 GuildFrame.xml
+FriendsFrame.xml
 TalentFrame.xml
 Minimap.xml
 GameMenu.xml

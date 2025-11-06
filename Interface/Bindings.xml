@@ -305,6 +305,14 @@
         end
 	</Binding>
 
+    <Binding name="TOGGLEFRIENDS" description="Toggle the friends ui." category="INTERFACE">
+		return function(key, keystate)
+            if keystate == "DOWN" then
+                FriendsFrame_Toggle();
+            end
+        end
+	</Binding>
+
     <Binding name="TOGGLETALENTS" description="Toggle the talent ui." category="INTERFACE">
 		return function(key, keystate)
             if keystate == "DOWN" then
