@@ -32,8 +32,15 @@ function FriendsFrame_OnInvite(self, inviterName)
 end
 
 function FriendsList_OnStatusChange(self, friendName, online)
-    local status = online and "online" or "offline"
-    ChatFrame:AddMessage(string.format(Localize("FRIEND_STATUS_CHANGED"), friendName, status), 1.0, 1.0, 0.0)
+    -- Show notification message based on online status
+    if online then
+        local message = string.format(Localize("FRIEND_ONLINE_NOTIFICATION"), friendName)
+        ChatFrame:AddMessage(message, 1.0, 1.0, 0.0)
+    else
+        local message = string.format(Localize("FRIEND_OFFLINE_NOTIFICATION"), friendName)
+        ChatFrame:AddMessage(message, 1.0, 1.0, 0.0)
+    end
+    
     FriendsList_Update()
 end
 
