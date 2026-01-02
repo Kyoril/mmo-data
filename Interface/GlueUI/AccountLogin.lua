@@ -34,6 +34,13 @@ function AccountLogin_OnCharList()
 end
 
 function AccountLogin_AuthError(frame, errorCode)
+	-- Hide the connecting dialog first
+	GlueDialog_Hide();
+	
+	-- Re-enable the login button so user can try again
+	LoginButton:Enable();
+	
+	-- Show the error dialog
 	GlueDialog_Show("AUTH_ERROR", AUTH_ERROR_STRING[errorCode]);
 end
 
@@ -53,9 +60,23 @@ function AccountLogin_OnLoad()
 		GlueDialog_Show("RETRIEVE_CHAR_LIST");
 	end);
 	AccountLogin:RegisterEvent("REALM_AUTH_FAILED", function(errorCode)
+		-- Hide any existing dialog first
+		GlueDialog_Hide();
+		
+		-- Re-enable the login button
+		LoginButton:Enable();
+		
+		-- Show the realm auth error
 		GlueDialog_Show("REALM_AUTH_ERROR", AUTH_ERROR_STRING[errorCode]);
 	end);
 	AccountLogin:RegisterEvent("REALM_DISCONNECTED", function(errorCode)
+		-- Hide any existing dialog first
+		GlueDialog_Hide();
+		
+		-- Re-enable the login button
+		LoginButton:Enable();
+		
+		-- Show disconnection error
 		GlueDialog_Show("REALM_AUTH_ERROR", "DISCONNECTED");
 	end);
 	
