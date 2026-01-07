@@ -1,198 +1,257 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <xs:schema targetNamespace="http://www.w3schools.com/Ui"
     elementFormDefault="qualified"
     xmlns="http://www.w3schools.com/Ui"
-    xmlns:mstns="http://www.w3schools.com/Ui.xsd"
-    xmlns:xs="http://www.w3.org/2001/XMLSchema"
->
-	<xs:simpleType name="FrameRendererType">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="DefaultRenderer" />
-			<xs:enumeration value="ButtonRenderer" />
-			<xs:enumeration value="TextfieldRenderer" />
-			<xs:enumeration value="ModelRenderer" />
-			<xs:enumeration value="WorldRenderer" />
-		</xs:restriction>
-	</xs:simpleType>
-	
-	<xs:simpleType name="AnchorPointType">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="LEFT" />
-			<xs:enumeration value="TOP" />
-			<xs:enumeration value="RIGHT" />
-			<xs:enumeration value="BOTTOM" />
-			<xs:enumeration value="H_CENTER" />
-			<xs:enumeration value="V_CENTER" />
-		</xs:restriction>
-	</xs:simpleType>
-	
-	<xs:simpleType name="TilingType">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="NONE" />
-			<xs:enumeration value="HORZ" />
-			<xs:enumeration value="VERT" />
-			<xs:enumeration value="BOTH" />
-		</xs:restriction>
-	</xs:simpleType>
+    xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
-	<xs:simpleType name="HorzAlignType">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="LEFT" />
-			<xs:enumeration value="CENTER" />
-			<xs:enumeration value="RIGHT" />
-		</xs:restriction>
-	</xs:simpleType>
-	
-	<xs:simpleType name="VertAlignType">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="TOP" />
-			<xs:enumeration value="CENTER" />
-			<xs:enumeration value="BOTTOM" />
-		</xs:restriction>
-	</xs:simpleType>
+  <xs:simpleType name="FrameRendererType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="DefaultRenderer" />
+      <xs:enumeration value="ButtonRenderer" />
+      <xs:enumeration value="CheckboxRenderer" />
+      <xs:enumeration value="TextFieldRenderer" />
+      <xs:enumeration value="ModelRenderer" />
+      <xs:enumeration value="WorldRenderer" />
+    </xs:restriction>
+  </xs:simpleType>
 
-	<xs:complexType name="PropertyType">
-		<xs:attribute name="name" use="required" type="xs:string" />
-		<xs:attribute name="value" use="optional" type="xs:string" />
-	</xs:complexType>
+  <xs:simpleType name="AnchorPointType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="LEFT" />
+      <xs:enumeration value="TOP" />
+      <xs:enumeration value="RIGHT" />
+      <xs:enumeration value="BOTTOM" />
+      <xs:enumeration value="H_CENTER" />
+      <xs:enumeration value="V_CENTER" />
+    </xs:restriction>
+  </xs:simpleType>
 
-	<xs:complexType name="BorderComponentType">
-		<xs:sequence minOccurs="0" maxOccurs="1">
-			<xs:element name="Area" type="AreaComponentType" maxOccurs="1" />
-		</xs:sequence>
+  <xs:simpleType name="TilingType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="NONE" />
+      <xs:enumeration value="HORZ" />
+      <xs:enumeration value="VERT" />
+      <xs:enumeration value="BOTH" />
+    </xs:restriction>
+  </xs:simpleType>
 
-		<xs:attribute name="texture" use="optional" type="xs:string" />
-		<xs:attribute name="borderSize" use="required" type="xs:decimal" />
-	</xs:complexType>
+  <xs:simpleType name="HorzAlignType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="LEFT" />
+      <xs:enumeration value="CENTER" />
+      <xs:enumeration value="RIGHT" />
+    </xs:restriction>
+  </xs:simpleType>
 
-	<xs:complexType name="ImageComponentType">
-		<xs:sequence minOccurs="0" maxOccurs="1">
-			<xs:element name="Area" type="AreaComponentType" maxOccurs="1" />
-		</xs:sequence>
+  <xs:simpleType name="VertAlignType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="TOP" />
+      <xs:enumeration value="CENTER" />
+      <xs:enumeration value="BOTTOM" />
+    </xs:restriction>
+  </xs:simpleType>
 
-		<xs:attribute name="texture" use="optional" type="xs:string" />
-		<xs:attribute name="tint" use="optional" type="xs:string" default="ffffffff" />
-		<xs:attribute name="tiling" use="optional" type="TilingType" default="NONE" />
-	</xs:complexType>
+  <xs:complexType name="ScriptFileType">
+    <xs:attribute name="file" use="required" type="xs:string" />
+  </xs:complexType>
 
-	<xs:complexType name="TextComponentType">
-		<xs:sequence minOccurs="0" maxOccurs="1">
-			<xs:element name="Area" type="AreaComponentType" maxOccurs="1" />
-		</xs:sequence>
+  <xs:complexType name="ScriptBlockType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string" />
+    </xs:simpleContent>
+  </xs:complexType>
 
-		<xs:attribute name="color" use="optional" type="xs:string" default="ffffffff" />
-		<xs:attribute name="horzAlign" use="optional" type="HorzAlignType" default="LEFT" />
-		<xs:attribute name="vertAlign" use="optional" type="VertAlignType" default="TOP" />
-	</xs:complexType>
+  <xs:complexType name="FontType">
+    <xs:attribute name="name" use="required" type="xs:string" />
+    <xs:attribute name="file" use="required" type="xs:string" />
+    <xs:attribute name="size" use="required" type="xs:decimal" />
+    <xs:attribute name="outline" use="optional" type="xs:decimal" />
+    <xs:attribute name="shadowX" use="optional" type="xs:decimal" />
+    <xs:attribute name="shadowY" use="optional" type="xs:decimal" />
+  </xs:complexType>
 
-	<xs:complexType name="ImagerySectionType">
-		<xs:sequence>
-			<xs:choice maxOccurs="unbounded">
-				<xs:element name="BorderComponent" type="BorderComponentType" />
-				<xs:element name="ImageComponent" type="ImageComponentType" />
-				<xs:element name="TextComponent" type="TextComponentType" />
-			</xs:choice>
-		</xs:sequence>
-		<xs:attribute name="name" use="required" type="xs:string" />
-	</xs:complexType>
-	
-	<xs:complexType name="SectionType">
-		<xs:attribute name="section" use="required" type="xs:string" />
-	</xs:complexType>
-	
-	<xs:complexType name="LayerType">
-		<xs:sequence>
-			<xs:element name="Section" maxOccurs="unbounded" minOccurs="1" type="SectionType" />
-		</xs:sequence>
-	</xs:complexType>
-	
-	<xs:complexType name="StateImageryType">
-		<xs:sequence maxOccurs="unbounded">
-			<xs:element name="Layer" type="LayerType" minOccurs="1" maxOccurs="unbounded" />
-		</xs:sequence>
+  <xs:complexType name="PropertyType">
+    <xs:attribute name="name" use="required" type="xs:string" />
+    <xs:attribute name="value" use="optional" type="xs:string" />
+  </xs:complexType>
 
-		<xs:attribute name="name" use="required" type="xs:string" />
-	</xs:complexType>
+  <xs:complexType name="PropertyValueType">
+    <xs:attribute name="property" use="required" type="xs:string" />
+  </xs:complexType>
 
-	<xs:complexType name="VisualType">
-		<xs:sequence minOccurs="0">
-			<xs:choice maxOccurs="unbounded">
-				<xs:element name="ImagerySection" maxOccurs="unbounded" type="ImagerySectionType" />
-				<xs:element name="StateImagery" maxOccurs="unbounded" type="StateImageryType" />
-			</xs:choice>
-		</xs:sequence>
-	</xs:complexType>
+  <xs:complexType name="InsetType">
+    <xs:attribute name="all" use="optional" type="xs:decimal" />
+    <xs:attribute name="left" use="optional" type="xs:decimal" />
+    <xs:attribute name="top" use="optional" type="xs:decimal" />
+    <xs:attribute name="right" use="optional" type="xs:decimal" />
+    <xs:attribute name="bottom" use="optional" type="xs:decimal" />
+  </xs:complexType>
 
-	<xs:complexType name="SizeType">
-		<xs:sequence>
-			<xs:element name="AbsDimension">
-				<xs:complexType>
-					<xs:attribute name="x" use="optional" type="xs:decimal" />
-					<xs:attribute name="y" use="optional" type="xs:decimal" />
-				</xs:complexType>
-			</xs:element>
-		</xs:sequence>
-	</xs:complexType>
-	
-	<xs:complexType name="AnchorType">
-		<xs:attribute name="point" use="required" type="AnchorPointType" />
-		<xs:attribute name="targetPoint" use="optional" type="AnchorPointType" />
-		<xs:attribute name="relativeTo" use="optional" type="xs:string" />
-	</xs:complexType>
+  <xs:complexType name="AreaComponentType">
+    <xs:sequence minOccurs="0" maxOccurs="1">
+      <xs:element name="Inset" type="InsetType" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+  </xs:complexType>
 
-	<xs:complexType name="InsetType">
-		<xs:attribute name="all" use="optional" type="xs:decimal" />
-		<xs:attribute name="left" use="optional" type="xs:decimal" />
-		<xs:attribute name="top" use="optional" type="xs:decimal" />
-		<xs:attribute name="right" use="optional" type="xs:decimal" />
-		<xs:attribute name="bottom" use="optional" type="xs:decimal" />
-	</xs:complexType>
+  <xs:complexType name="BorderComponentType">
+    <xs:sequence minOccurs="0" maxOccurs="1">
+      <xs:element name="Area" type="AreaComponentType" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+    <xs:attribute name="texture" use="required" type="xs:string" />
+    <xs:attribute name="borderSize" use="optional" type="xs:decimal" />
+    <xs:attribute name="topSize" use="optional" type="xs:decimal" />
+    <xs:attribute name="leftSize" use="optional" type="xs:decimal" />
+    <xs:attribute name="rightSize" use="optional" type="xs:decimal" />
+    <xs:attribute name="bottomSize" use="optional" type="xs:decimal" />
+    <xs:attribute name="tint" use="optional" type="xs:string" />
+  </xs:complexType>
 
-	<xs:complexType name="AreaComponentType">
-		<xs:sequence>
-			<xs:choice minOccurs="0">
-				<xs:element name="Inset" type="InsetType" />
-			</xs:choice>
-		</xs:sequence>
-	</xs:complexType>
+  <xs:complexType name="ImageComponentType">
+    <xs:sequence minOccurs="0" maxOccurs="2">
+      <xs:choice>
+        <xs:element name="Area" type="AreaComponentType" minOccurs="0" maxOccurs="1" />
+        <xs:element name="PropertyValue" type="PropertyValueType" minOccurs="0" maxOccurs="1" />
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="texture" use="optional" type="xs:string" />
+    <xs:attribute name="tint" use="optional" type="xs:string" />
+    <xs:attribute name="tiling" use="optional" type="TilingType" />
+  </xs:complexType>
 
-	<xs:complexType name="AreaType">
-		<xs:sequence>
-			<xs:choice>
-				<xs:element name="Size" type="SizeType" maxOccurs="1" />
-				<xs:element name="Anchor" type="AnchorType" maxOccurs="6" />
-			</xs:choice>
-		</xs:sequence>
-	</xs:complexType>
+  <xs:complexType name="TextComponentType">
+    <xs:sequence minOccurs="0" maxOccurs="1">
+      <xs:element name="Area" type="AreaComponentType" minOccurs="0" maxOccurs="1" />
+    </xs:sequence>
+    <xs:attribute name="color" use="optional" type="xs:string" />
+    <xs:attribute name="horzAlign" use="optional" type="HorzAlignType" />
+    <xs:attribute name="vertAlign" use="optional" type="VertAlignType" />
+  </xs:complexType>
 
-	<xs:complexType name="FrameType">
-		<xs:sequence>
-			<xs:choice minOccurs="0" maxOccurs="unbounded">
-				<xs:element name="Property" type="PropertyType" maxOccurs="unbounded" />
-				<xs:element name="Visual" type="VisualType" maxOccurs="1" />
-				<xs:element name="Area" maxOccurs="1" type="AreaType" />
-				<xs:element name="Events" maxOccurs="1"  />
-			</xs:choice>
-		</xs:sequence>
+  <xs:complexType name="ImagerySectionType">
+    <xs:sequence>
+      <xs:choice maxOccurs="unbounded">
+        <xs:element name="BorderComponent" type="BorderComponentType" />
+        <xs:element name="ImageComponent" type="ImageComponentType" />
+        <xs:element name="TextComponent" type="TextComponentType" />
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="name" use="required" type="xs:string" />
+  </xs:complexType>
 
-		<xs:attribute name="name" type="xs:string" use="required" />
-		<xs:attribute name="renderer" type="FrameRendererType" use="optional" />
-		<xs:attribute name="inherits" type="xs:string" use="optional" />
-		<xs:attribute name="parent" type="xs:string" use="optional" />
-	</xs:complexType>
+  <xs:complexType name="SectionType">
+    <xs:attribute name="section" use="required" type="xs:string" />
+    <xs:attribute name="color" use="optional" type="xs:string" />
+  </xs:complexType>
 
-	<xs:element name="Frame" type="FrameType" />
+  <xs:complexType name="LayerType">
+    <xs:sequence>
+      <xs:element name="Section" maxOccurs="unbounded" minOccurs="1" type="SectionType" />
+    </xs:sequence>
+  </xs:complexType>
 
-	<xs:element name="UiLayout">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element name="Script" minOccurs="0" maxOccurs="unbounded">
-					<xs:complexType>
-						<xs:attribute name="file" type="xs:string" use="required" />
-					</xs:complexType>
-				</xs:element>
-				<xs:element ref="Frame" minOccurs="0" maxOccurs="unbounded" />
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
+  <xs:complexType name="StateImageryType">
+    <xs:sequence>
+      <xs:element name="Layer" type="LayerType" minOccurs="1" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="name" use="required" type="xs:string" />
+  </xs:complexType>
+
+  <xs:complexType name="VisualType">
+    <xs:sequence minOccurs="0">
+      <xs:choice maxOccurs="unbounded">
+        <xs:element name="ImagerySection" type="ImagerySectionType" />
+        <xs:element name="StateImagery" type="StateImageryType" />
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="AbsDimensionType">
+    <xs:attribute name="x" use="optional" type="xs:decimal" />
+    <xs:attribute name="y" use="optional" type="xs:decimal" />
+  </xs:complexType>
+
+  <xs:complexType name="SizeType">
+    <xs:sequence>
+      <xs:element name="AbsDimension" type="AbsDimensionType" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="PositionType">
+    <xs:sequence>
+      <xs:element name="AbsDimension" type="AbsDimensionType" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="AnchorType">
+    <xs:attribute name="point" use="required" type="AnchorPointType" />
+    <xs:attribute name="relativePoint" use="optional" type="AnchorPointType" />
+    <xs:attribute name="relativeTo" use="optional" type="xs:string" />
+    <xs:attribute name="offset" use="optional" type="xs:decimal" />
+  </xs:complexType>
+
+  <xs:complexType name="AreaType">
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Size" type="SizeType" />
+        <xs:element name="Position" type="PositionType" />
+        <xs:element name="Anchor" type="AnchorType" />
+      </xs:choice>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="EventsType">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:any processContents="lax" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="ScriptsType">
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="OnClick" type="ScriptBlockType" />
+      <xs:element name="OnLoad" type="ScriptBlockType" />
+      <xs:element name="OnUpdate" type="ScriptBlockType" />
+      <xs:element name="OnTabPressed" type="ScriptBlockType" />
+      <xs:element name="OnEnterPressed" type="ScriptBlockType" />
+      <xs:element name="OnSpacePressed" type="ScriptBlockType" />
+      <xs:element name="OnEscapePressed" type="ScriptBlockType" />
+      <xs:element name="OnShow" type="ScriptBlockType" />
+      <xs:element name="OnHide" type="ScriptBlockType" />
+      <xs:element name="OnEnter" type="ScriptBlockType" />
+      <xs:element name="OnLeave" type="ScriptBlockType" />
+      <xs:element name="OnDrag" type="ScriptBlockType" />
+      <xs:element name="OnDrop" type="ScriptBlockType" />
+    </xs:choice>
+  </xs:complexType>
+
+  <xs:complexType name="FrameType">
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Property" type="PropertyType" />
+        <xs:element name="Visual" type="VisualType" />
+        <xs:element name="Area" type="AreaType" />
+        <xs:element name="Events" type="EventsType" />
+        <xs:element name="Scripts" type="ScriptsType" />
+        <xs:element name="Frame" type="FrameType" />
+      </xs:choice>
+    </xs:sequence>
+    <xs:attribute name="name" type="xs:string" use="required" />
+    <xs:attribute name="type" type="xs:string" use="optional" />
+    <xs:attribute name="renderer" type="FrameRendererType" use="optional" />
+    <xs:attribute name="inherits" type="xs:string" use="optional" />
+    <xs:attribute name="parent" type="xs:string" use="optional" />
+    <xs:attribute name="setAllPoints" type="xs:boolean" use="optional" />
+    <xs:attribute name="id" type="xs:int" use="optional" />
+  </xs:complexType>
+
+  <xs:element name="Frame" type="FrameType" />
+
+  <xs:element name="UiLayout">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Script" minOccurs="0" maxOccurs="unbounded" type="ScriptFileType" />
+        <xs:element name="Font" minOccurs="0" maxOccurs="unbounded" type="FontType" />
+        <xs:element ref="Frame" minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>
