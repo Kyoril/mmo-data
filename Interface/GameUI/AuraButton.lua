@@ -101,6 +101,19 @@ function AuraButton_OnLoad(self)
 
 	self:SetOnEnterHandler(AuraButton_OnEnter);
 	self:SetOnLeaveHandler(AuraButton_OnLeave);
+	self:SetClickedHandler(AuraButton_OnClick);
+end
+
+function AuraButton_OnClick(self, button)
+	if button == "RIGHT" then
+		local aura = _G[self:GetName()].aura;
+		if aura and not aura:IsNegative() then
+			local spell = aura:GetSpell();
+			if spell then
+				CancelAura(spell.id);
+			end
+		end
+	end
 end
 
 function AuraButton_OnUpdate(self, elapsed)

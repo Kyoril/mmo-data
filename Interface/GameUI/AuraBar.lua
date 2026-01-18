@@ -37,9 +37,6 @@ function AuraBar_OnUpdate(self)
         end
     end
     
-    -- Debug output
-    print("Total auras: " .. auraCount .. ", Buffs: " .. #buffs .. ", Debuffs: " .. #debuffs);
-    
     -- Update buff buttons
     for i = 1, 8 do
         local button = _G["BuffButton"..i];
