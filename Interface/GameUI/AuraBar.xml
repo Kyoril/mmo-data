@@ -7,63 +7,121 @@
 			<Anchor point="TOP" offset="8" />
 			<Anchor point="RIGHT" offset="-416" />
             <Size>
-                <AbsDimension x="1024" y="128" />
+                <AbsDimension x="1024" y="256" />
             </Size>
         </Area>
 
-        <Frame name="AuraButton1" inherits="AuraBarButtonTemplate" id="1">
+        <!-- Buff (Positive Aura) Row -->
+        <Frame name="BuffButton1" inherits="AuraBarButtonTemplate" id="1">
             <Area>
                 <Anchor point="RIGHT" offset="0" />
                 <Anchor point="TOP" offset="0" />
             </Area>
         </Frame>
         
-        <Frame name="AuraButton2" inherits="AuraBarButtonTemplate" id="2">
+        <Frame name="BuffButton2" inherits="AuraBarButtonTemplate" id="2">
             <Area>
-                <Anchor point="RIGHT" relativeTo="AuraButton1" relativePoint="LEFT" offset="0" />
+                <Anchor point="RIGHT" relativeTo="BuffButton1" relativePoint="LEFT" offset="0" />
                 <Anchor point="TOP" offset="0" />
             </Area>
         </Frame>
         
-        <Frame name="AuraButton3" inherits="AuraBarButtonTemplate" id="3">
+        <Frame name="BuffButton3" inherits="AuraBarButtonTemplate" id="3">
             <Area>
-                <Anchor point="RIGHT" relativeTo="AuraButton2" relativePoint="LEFT" offset="0" />
+                <Anchor point="RIGHT" relativeTo="BuffButton2" relativePoint="LEFT" offset="0" />
                 <Anchor point="TOP" offset="0" />
             </Area>
         </Frame>
         
-        <Frame name="AuraButton4" inherits="AuraBarButtonTemplate" id="4">
+        <Frame name="BuffButton4" inherits="AuraBarButtonTemplate" id="4">
             <Area>
-                <Anchor point="RIGHT" relativeTo="AuraButton3" relativePoint="LEFT" offset="0" />
+                <Anchor point="RIGHT" relativeTo="BuffButton3" relativePoint="LEFT" offset="0" />
                 <Anchor point="TOP" offset="0" />
             </Area>
         </Frame>
         
-        <Frame name="AuraButton5" inherits="AuraBarButtonTemplate" id="5">
+        <Frame name="BuffButton5" inherits="AuraBarButtonTemplate" id="5">
             <Area>
-                <Anchor point="RIGHT" relativeTo="AuraButton4" relativePoint="LEFT" offset="0" />
+                <Anchor point="RIGHT" relativeTo="BuffButton4" relativePoint="LEFT" offset="0" />
                 <Anchor point="TOP" offset="0" />
             </Area>
         </Frame>
         
-        <Frame name="AuraButton6" inherits="AuraBarButtonTemplate" id="6">
+        <Frame name="BuffButton6" inherits="AuraBarButtonTemplate" id="6">
             <Area>
-                <Anchor point="RIGHT" relativeTo="AuraButton5" relativePoint="LEFT" offset="0" />
+                <Anchor point="RIGHT" relativeTo="BuffButton5" relativePoint="LEFT" offset="0" />
                 <Anchor point="TOP" offset="0" />
             </Area>
         </Frame>
         
-        <Frame name="AuraButton7" inherits="AuraBarButtonTemplate" id="7">
+        <Frame name="BuffButton7" inherits="AuraBarButtonTemplate" id="7">
             <Area>
-                <Anchor point="RIGHT" relativeTo="AuraButton6" relativePoint="LEFT" offset="0" />
+                <Anchor point="RIGHT" relativeTo="BuffButton6" relativePoint="LEFT" offset="0" />
                 <Anchor point="TOP" offset="0" />
             </Area>
         </Frame>
         
-        <Frame name="AuraButton8" inherits="AuraBarButtonTemplate" id="8">
+        <Frame name="BuffButton8" inherits="AuraBarButtonTemplate" id="8">
             <Area>
-                <Anchor point="RIGHT" relativeTo="AuraButton7" relativePoint="LEFT" offset="0" />
+                <Anchor point="RIGHT" relativeTo="BuffButton7" relativePoint="LEFT" offset="0" />
                 <Anchor point="TOP" offset="0" />
+            </Area>
+        </Frame>
+
+        <!-- Debuff (Negative Aura) Row -->
+        <Frame name="DebuffButton1" inherits="AuraBarButtonTemplate" id="9">
+            <Area>
+                <Anchor point="RIGHT" offset="0" />
+                <Anchor point="TOP" offset="164" />
+            </Area>
+        </Frame>
+        
+        <Frame name="DebuffButton2" inherits="AuraBarButtonTemplate" id="10">
+            <Area>
+                <Anchor point="RIGHT" relativeTo="DebuffButton1" relativePoint="LEFT" offset="0" />
+                <Anchor point="TOP" offset="164" />
+            </Area>
+        </Frame>
+        
+        <Frame name="DebuffButton3" inherits="AuraBarButtonTemplate" id="11">
+            <Area>
+                <Anchor point="RIGHT" relativeTo="DebuffButton2" relativePoint="LEFT" offset="0" />
+                <Anchor point="TOP" offset="164" />
+            </Area>
+        </Frame>
+        
+        <Frame name="DebuffButton4" inherits="AuraBarButtonTemplate" id="12">
+            <Area>
+                <Anchor point="RIGHT" relativeTo="DebuffButton3" relativePoint="LEFT" offset="0" />
+                <Anchor point="TOP" offset="164" />
+            </Area>
+        </Frame>
+        
+        <Frame name="DebuffButton5" inherits="AuraBarButtonTemplate" id="13">
+            <Area>
+                <Anchor point="RIGHT" relativeTo="DebuffButton4" relativePoint="LEFT" offset="0" />
+                <Anchor point="TOP" offset="164" />
+            </Area>
+        </Frame>
+        
+        <Frame name="DebuffButton6" inherits="AuraBarButtonTemplate" id="14">
+            <Area>
+                <Anchor point="RIGHT" relativeTo="DebuffButton5" relativePoint="LEFT" offset="0" />
+                <Anchor point="TOP" offset="164" />
+            </Area>
+        </Frame>
+        
+        <Frame name="DebuffButton7" inherits="AuraBarButtonTemplate" id="15">
+            <Area>
+                <Anchor point="RIGHT" relativeTo="DebuffButton6" relativePoint="LEFT" offset="0" />
+                <Anchor point="TOP" offset="164" />
+            </Area>
+        </Frame>
+        
+        <Frame name="DebuffButton8" inherits="AuraBarButtonTemplate" id="16">
+            <Area>
+                <Anchor point="RIGHT" relativeTo="DebuffButton7" relativePoint="LEFT" offset="0" />
+                <Anchor point="TOP" offset="164" />
             </Area>
         </Frame>
 
