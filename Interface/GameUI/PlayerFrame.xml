@@ -253,8 +253,9 @@
 		<Frame name="PlayerFrameClick" setAllPoints="true">
 			<Scripts>
 				<OnClick>
-					return function(self)
-						PlayerFrame_OnClick(PlayerFrame);
+					return function(self, button)
+						local pos = GetCursorPosition()
+						PlayerFrame_OnClick(PlayerFrame, button, pos.x, pos.y)
 					end
 				</OnClick>
 			</Scripts>

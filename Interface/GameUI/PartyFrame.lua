@@ -50,15 +50,15 @@ function PartyMemberFrame_UpdateLeader(self)
     end
 end
 
-function PartyMemberFrame_OnClick(self, button)
+function PartyMemberFrame_OnClick(self, button, x, y)
     local index = self:GetParent().id;
     local unit = "party"..index;
 
     if (button == "LEFT") then
         TargetUnit(unit);
     elseif (button == "RIGHT") then
-        -- TODO: Show party member context menu here!
-        print("TODO: Implement other button");
+        local pos = GetCursorPosition();
+        ContextMenu_Show("PARTY_MEMBER", pos.x, pos.y, index);
     end
 end
 

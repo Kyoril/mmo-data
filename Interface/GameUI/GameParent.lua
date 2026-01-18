@@ -523,6 +523,12 @@ function CloseAllWindows(ignoreCenter)
 		windowsVisible = true;
 	end
 
+	-- Close context menu if visible
+	if (ContextMenu_IsShown and ContextMenu_IsShown()) then
+		ContextMenu_Hide();
+		windowsVisible = true;
+	end
+
 	return windowsVisible;
 end
 

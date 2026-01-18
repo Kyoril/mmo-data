@@ -1,0 +1,128 @@
+<?xml version="1.0" ?>
+<UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
+	<Script file="ContextMenu.lua" />
+	
+	<!-- Context Menu Button Template -->
+	<Frame name="ContextMenuButtonTemplate" type="Button" renderer="ButtonRenderer">
+		<Property name="Font" value="DefaultSmall" />
+
+		<Visual>
+			<ImagerySection name="NormalFrame">
+				<ImageComponent texture="Interface/GlueUI/CharSelectButtonBackground.htex" tiling="VERT" />
+			</ImagerySection>
+			<ImagerySection name="HoveredFrame">
+				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tiling="VERT" tint="FFFFD100" />
+			</ImagerySection>
+			<ImagerySection name="PushedFrame">
+				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tiling="VERT" />
+			</ImagerySection>
+			<ImagerySection name="DisabledFrame">
+				<ImageComponent texture="Interface/GlueUI/CharSelectButtonBackground.htex" tiling="VERT" />
+			</ImagerySection>
+			<ImagerySection name="Caption">
+				<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="CENTER">
+					<Area><Inset left="16" right="16" /></Area>
+				</TextComponent>
+			</ImagerySection>
+			<ImagerySection name="HoveredCaption">
+				<TextComponent color="FFFFFFFF" horzAlign="LEFT" vertAlign="CENTER">
+					<Area><Inset left="16" right="16" /></Area>
+				</TextComponent>
+			</ImagerySection>
+			<ImagerySection name="DisabledCaption">
+				<TextComponent color="AE888888" horzAlign="LEFT" vertAlign="CENTER">
+					<Area><Inset left="16" right="16" /></Area>
+				</TextComponent>
+			</ImagerySection>
+			<StateImagery name="Normal">
+				<Layer>
+					<Section section="NormalFrame" />
+					<Section section="Caption" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Hovered">
+				<Layer>
+					<Section section="HoveredFrame" color="FFA0D700" />
+					<Section section="HoveredCaption" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Pushed">
+				<Layer>
+					<Section section="PushedFrame" />
+					<Section section="Caption" color="FFAAAAAA" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="DisabledFrame" />
+					<Section section="DisabledCaption" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+		<Area>
+			<Size>
+				<AbsDimension x="200" y="48" />
+			</Size>
+		</Area>
+	</Frame>
+
+	<!-- Invisible backdrop to capture clicks outside the context menu -->
+	<Frame name="ContextMenuBackdrop" parent="GameParent">
+		<Property name="Visible" value="false" />
+		
+		<Area>
+			<Anchor point="TOP" />
+			<Anchor point="LEFT" />
+			<Anchor point="RIGHT" />
+			<Anchor point="BOTTOM" />
+		</Area>
+		
+		<Scripts>
+			<OnClick>
+				return function(self, button)
+					ContextMenu_Hide()
+					return true
+				end
+			</OnClick>
+		</Scripts>
+	</Frame>
+
+	<!-- Main Context Menu Frame -->
+	<Frame name="ContextMenu" renderer="DefaultRenderer" parent="GameParent">
+		<Property name="Visible" value="false" />
+
+		<Visual>
+			<ImagerySection name="Background">
+				<BorderComponent texture="Interface/GameUI/fg4_borders_tooltip.htex" borderSize="64" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Background" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+
+		<Area>
+			<Size><AbsDimension x="480" y="100" /></Size>
+			<Anchor point="LEFT" offset="100" />
+			<Anchor point="TOP" offset="100" />
+		</Area>
+
+		<Frame name="ContextMenuButtonContainer" renderer="DefaultRenderer">
+			<Area>
+				<Anchor point="TOP" offset="16" />
+				<Anchor point="LEFT" offset="16" />
+				<Anchor point="RIGHT" offset="-16" />
+				<Anchor point="BOTTOM" offset="-16" />
+			</Area>
+		</Frame>
+		
+		<Scripts>
+			<OnLoad>
+				return function(self)
+					ContextMenu_OnLoad(self);
+				end
+			</OnLoad>
+		</Scripts>
+	</Frame>
+</UiLayout>

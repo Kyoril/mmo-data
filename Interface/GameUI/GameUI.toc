@@ -28,6 +28,7 @@ FriendsFrame.xml
 TalentFrame.xml
 Minimap.xml
 GameMenu.xml
+ContextMenu.xml
 GameTooltip.xml
 
 #DebugUI.xml

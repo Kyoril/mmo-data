@@ -64,6 +64,10 @@ function PlayerFrame_OnLoad(self)
     self:RegisterEvent("PARTY_LEADER_CHANGED", PlayerFrame_UpdateLeader);
 end
 
-function PlayerFrame_OnClick(self)
-    TargetUnit("player");
+function PlayerFrame_OnClick(self, button, x, y)
+    if button == "LEFT" then
+        TargetUnit("player")
+    elseif button == "RIGHT" then
+        ContextMenu_Show("PLAYER_FRAME", x, y, nil)
+    end
 end

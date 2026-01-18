@@ -319,6 +319,10 @@ strings =
 	(key = "PARTY_INVITE_SENT", string = "You invited %s to join your group.")
 	(key = "PARTY_LEFT", string = "You left the group.")
 	
+	(key = "LEAVE_PARTY", string = "Leave Party")
+	(key = "KICK_FROM_PARTY", string = "Remove from Group")
+	(key = "PROMOTE_TO_LEADER", string = "Make Group Leader")
+	
 	(key = "LEVEL_FORMAT", string = "Level %d")
 
 	(key = "GUILD_INVITATION", string = "%s invites you to guild '%s'.")
