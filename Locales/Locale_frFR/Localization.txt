@@ -227,6 +227,7 @@ strings =
 	(key = "YES", string = "Oui")
 	(key = "NO", string = "Non")
 	(key = "INVENTORY", string = "Inventaire")
+	(key = "DESTROY_ITEM", string = "Êtes-vous sûr de vouloir détruire %s ?")
 	
 	(key = "LEVEL_UP", string = "Félicitations, vous avez atteint le niveau %d!")
 	(key = "LEVEL_UP_CHAR_POINTS", string = "Vous avez gagné %d points de talent.")

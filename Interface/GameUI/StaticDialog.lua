@@ -69,7 +69,7 @@ StaticDialogs["DELETE_ITEM"] = {
 };
 
 StaticDialogs["DESTROY_ITEM"] = {
-	text = "Are you sure you want to destroy %s?",
+	text = Localize("DESTROY_ITEM"),
 	button1 = Localize("YES"),
 	button2 = Localize("NO"),
 	OnAccept = function()
