@@ -103,6 +103,14 @@
 					InventoryFrame_OnShow(this);
 				end
 			</OnShow>
+			<OnClick>
+				return function(this, button)
+					-- If clicking on inventory frame background (not a button), handle as invalid drop
+					if CursorHasItem() then
+						HandleInvalidItemDrop();
+					end
+				end
+			</OnClick>
 		</Scripts>
 	</Frame>
 </UiLayout>

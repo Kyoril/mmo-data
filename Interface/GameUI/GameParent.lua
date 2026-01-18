@@ -178,6 +178,24 @@ function UIErrorFrame_OnUpdate(this, elapsed)
 	end
 end
 
+function HandleInvalidItemDrop()
+	if not CursorHasItem() then
+		return;
+	end
+	
+	-- Get the item info for the confirmation dialog
+	local slotId = GetCursorItemSlot();
+	local item = GetInventorySlotItem("player", slotId);
+	
+	if not item then
+		ClearCursorItem();
+		return;
+	end
+	
+	-- Show confirmation dialog
+	StaticDialog_Show("DESTROY_ITEM", item:GetName());
+end
+
 function SidePanel_OnLoad(self)
 	self.titleBar = self:GetChild(0);
 	self.titleBar.closeButton = self.titleBar:GetChild(0);
@@ -241,6 +259,17 @@ function GameParent_OnLoad(self)
 	self:RegisterEvent("FRIEND_INVITE", GameParent_OnFriendInviteRequest);
 	self:RegisterEvent("FRIEND_COMMAND_RESULT", GameParent_OnFriendCommandResult);
 	self:RegisterEvent("FRIEND_STATUS_CHANGE", GameParent_OnFriendStatusChange);
+	
+	-- Set up click handler for WorldFrame to detect invalid item drops
+	WorldFrame:SetClickedHandler(WorldFrame_OnClick);
+end
+
+function WorldFrame_OnClick(this, button)
+	-- If user clicks on world while dragging an item, handle as invalid drop
+	if CursorHasItem() then
+		HandleInvalidItemDrop();
+		return;
+	end
 end
 
 function ShowUIPanel(frame, force)

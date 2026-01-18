@@ -7,6 +7,14 @@
 		<Property name="Font" value="DefaultSmall" />
 
 		<Frame name="WorldFrame" type="World" renderer="WorldRenderer" setAllPoints="true">
+			<Scripts>
+				<OnClick>
+					return function(this, button)
+						WorldFrame_OnClick(this, button);
+					end
+				</OnClick>
+			</Scripts>
+			
 			<Frame name="ErrorFrame">
 				<Area>
 					<Anchor point="H_CENTER" />

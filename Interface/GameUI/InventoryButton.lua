@@ -6,10 +6,13 @@ function InventoryItemButton_OnLoad(this)
 end
 
 function InventoryItemButton_OnDrag(this, button, position)
+    SetCursorItem(this.id);
     PickupContainerItem(this.id);
 end
 
 function InventoryItemButton_OnDrop(this, button, position)
+    -- Clear cursor tracking when successfully dropping on a valid slot
+    ClearCursorItem();
     PickupContainerItem(this.id);
 end
 

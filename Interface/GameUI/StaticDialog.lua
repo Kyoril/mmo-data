@@ -68,6 +68,31 @@ StaticDialogs["DELETE_ITEM"] = {
 	exclusive = false
 };
 
+StaticDialogs["DESTROY_ITEM"] = {
+	text = "Are you sure you want to destroy %s?",
+	button1 = Localize("YES"),
+	button2 = Localize("NO"),
+	OnAccept = function()
+		-- This will be called when user confirms destruction
+		local slotId = GetCursorItemSlot();
+		if slotId then
+			local item = GetInventorySlotItem("player", slotId);
+			if item then
+				-- Destroy the entire stack
+				local count = item:GetStackCount();
+				DestroyItem(slotId, count);
+			end
+		end
+		ClearCursorItem();
+	end,
+	OnCancel = function()
+		-- User cancelled, just clear the cursor
+		ClearCursorItem();
+	end,
+	timeout = 0,
+	exclusive = false
+};
+
 function StaticDialog_OnLoad(self)
 
 end
