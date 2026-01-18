@@ -103,14 +103,17 @@
 					InventoryFrame_OnShow(this);
 				end
 			</OnShow>
-			<OnClick>
+			<OnMouseDown>
 				return function(this, button)
 					-- If clicking on inventory frame background (not a button), handle as invalid drop
 					if CursorHasItem() then
 						HandleInvalidItemDrop();
+						return true;  -- Event consumed
 					end
+					-- Inventory frame should consume clicks on its background (not bubble to world)
+					return true;
 				end
-			</OnClick>
+			</OnMouseDown>
 		</Scripts>
 	</Frame>
 </UiLayout>

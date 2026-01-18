@@ -8,11 +8,11 @@
 
 		<Frame name="WorldFrame" type="World" renderer="WorldRenderer" setAllPoints="true">
 			<Scripts>
-				<OnClick>
+				<OnMouseDown>
 					return function(this, button)
-						WorldFrame_OnClick(this, button);
+						return WorldFrame_OnMouseDown(this, button);
 					end
-				</OnClick>
+				</OnMouseDown>
 			</Scripts>
 			
 			<Frame name="ErrorFrame">

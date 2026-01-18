@@ -259,17 +259,16 @@ function GameParent_OnLoad(self)
 	self:RegisterEvent("FRIEND_INVITE", GameParent_OnFriendInviteRequest);
 	self:RegisterEvent("FRIEND_COMMAND_RESULT", GameParent_OnFriendCommandResult);
 	self:RegisterEvent("FRIEND_STATUS_CHANGE", GameParent_OnFriendStatusChange);
-	
-	-- Set up click handler for WorldFrame to detect invalid item drops
-	WorldFrame:SetClickedHandler(WorldFrame_OnClick);
 end
 
-function WorldFrame_OnClick(this, button)
+function WorldFrame_OnMouseDown(this, button)
 	-- If user clicks on world while dragging an item, handle as invalid drop
 	if CursorHasItem() then
 		HandleInvalidItemDrop();
-		return;
+		return true;  -- Event consumed, prevent camera rotation
 	end
+	
+	return false;  -- Let the event bubble up to player controller for camera rotation
 end
 
 function ShowUIPanel(frame, force)
