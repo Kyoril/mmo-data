@@ -111,3 +111,8 @@ function TargetFrame_Update()
     end
 end
 
+function TargetFrame_OnClick(self, button, x, y)
+    if button == "RIGHT" then
+        ContextMenu_Show("TARGET", x, y, nil)
+    end
+end

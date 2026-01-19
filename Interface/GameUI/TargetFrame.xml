@@ -297,6 +297,17 @@
 			</Scripts>
         </Frame>
 
+		<Frame name="TargetFrameClick" setAllPoints="true">
+			<Scripts>
+				<OnClick>
+					return function(self, button)
+						local pos = GetCursorPosition()
+						TargetFrame_OnClick(TargetFrame, button, pos.x, pos.y)
+					end
+				</OnClick>
+			</Scripts>
+		</Frame>
+
 		<Scripts>
 			<OnLoad>
 				return function(this)

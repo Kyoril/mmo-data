@@ -212,7 +212,7 @@ RegisterContextMenu("PARTY_MEMBER", {
                     end,
                     enabled = true
                 })
-                
+
                 -- Promote to leader
                 table.insert(items, {
                     text = Localize("PROMOTE_TO_LEADER"),
@@ -225,6 +225,28 @@ RegisterContextMenu("PARTY_MEMBER", {
                     enabled = true
                 })
             end
+        end
+        
+        return items
+    end
+})
+
+
+RegisterContextMenu("TARGET", {
+    items = function(data)
+        local items = {}
+        local targetUnit = GetUnit("target")
+        local isPlayer = targetUnit and (targetUnit:GetType() == "PLAYER")
+        local isSelf = isPlayer and (targetUnit == GetUnit("player"))
+        
+        if isPlayer and not isSelf then
+            table.insert(items, {
+                text = Localize("INVITE_TO_PARTY"),
+                callback = function()
+                    InviteByName(targetUnit:GetName());
+                end,
+                enabled = true
+            })
         end
         
         return items

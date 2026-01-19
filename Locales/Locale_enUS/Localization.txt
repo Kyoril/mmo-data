@@ -334,6 +334,7 @@ strings =
 	(key = "DISBAND_PARTY", string = "Disband Group")
 	(key = "KICK_FROM_PARTY", string = "Remove from Group")
 	(key = "PROMOTE_TO_LEADER", string = "Make Group Leader")
+	(key = "INVITE_TO_PARTY", string = "Invite")
 	
 	(key = "LEVEL_FORMAT", string = "Level %d")
 
