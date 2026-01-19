@@ -162,6 +162,16 @@ RegisterContextMenu("PLAYER_FRAME", {
                 end,
                 enabled = true
             })
+
+            if IsPartyLeader() then
+                table.insert(items, {
+                    text = Localize("DISBAND_PARTY"),
+                    callback = function()
+                        DisbandParty()
+                    end,
+                    enabled = true
+                })
+            end
         end
         
         -- Add more player frame options here in the future
@@ -182,6 +192,14 @@ RegisterContextMenu("PARTY_MEMBER", {
         local memberIndex = data
         
         if memberIndex then
+            table.insert(items, {
+                text = Localize("LEAVE_PARTY"),
+                callback = function()
+                    LeaveParty()
+                end,
+                enabled = true
+            })
+
             -- Kick from party (leader only)
             if isLeader then
                 table.insert(items, {

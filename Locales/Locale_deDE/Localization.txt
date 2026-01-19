@@ -321,6 +321,7 @@ strings =
 	(key = "PARTY_LEFT", string = "Ihr habt die Gruppe verlassen.")
 	
 	(key = "LEAVE_PARTY", string = "Gruppe verlassen")
+	(key = "DISBAND_PARTY", string = "Gruppe auflösen")
 	(key = "KICK_FROM_PARTY", string = "Aus Gruppe entfernen")
 	(key = "PROMOTE_TO_LEADER", string = "Zum Gruppenleiter befördern")
 	
