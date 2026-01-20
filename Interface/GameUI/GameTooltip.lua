@@ -137,9 +137,9 @@ function GameTooltip_SetItemTemplate(item)
         GameTooltip_AddLine(string.format(Localize("WEAPON_DPS"), dps), TOOLTIP_LINE_LEFT);
     end
 
-    -- Show bag slots if > 0
+    -- Show bag slots if > 0 and item is actually a bag type
     local bagSlots = item.bagSlots;
-    if (bagSlots and bagSlots > 0) then
+    if (bagSlots and bagSlots > 0 and inventoryType == "BAG") then
         GameTooltip_AddLine(string.format(Localize("CONTAINER_SLOTS"), bagSlots), TOOLTIP_LINE_LEFT);
     end
 
