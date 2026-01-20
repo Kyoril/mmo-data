@@ -28,6 +28,30 @@
             <Size><AbsDimension x="512" y="32" /></Size>
         </Area>
     </Frame>
+
+    <Frame name="GameTooltipLineRightTemplate" renderer="DefaultRenderer">
+		<Property name="Font" value="TooltipFont" />
+
+        <Visual>
+			<ImagerySection name="Text">
+				<TextComponent color="FFFFFFFF" horzAlign="RIGHT" vertAlign="TOP" />
+            </ImagerySection>
+
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+        </Visual>
+        <Area>
+            <Size><AbsDimension x="512" y="32" /></Size>
+        </Area>
+    </Frame>
     
     <Frame name="GameTooltip" renderer="DefaultRenderer" parent="GameParent">
 		<Property name="Visible" value="False" />

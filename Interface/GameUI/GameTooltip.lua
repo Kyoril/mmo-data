@@ -49,6 +49,54 @@ function GameTooltip_AddLine(line, alignment, color)
     GameTooltip:SetHeight(TooltipHeight);
 end
 
+function GameTooltip_AddDualLine(leftText, rightText, leftColor, rightColor)
+	-- Create left-aligned text frame
+	local leftFrame = GameTooltipLineTemplate:Clone();
+	leftFrame:SetText(leftText);
+	GameTooltipLines:AddChild(leftFrame);
+
+    if (GameTooltipLines:GetChildCount() > 1) then
+        leftFrame:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, GameTooltipLines:GetChild(GameTooltipLines:GetChildCount() - 2), 8);
+    else
+        leftFrame:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, 8);
+    end
+    
+    -- Left frame spans full width, text is left-aligned
+    leftFrame:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, 8);
+    leftFrame:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, -8);
+
+    if ( leftColor ~= nil ) then
+        leftFrame:SetProperty("Color", leftColor);
+    end
+
+    local leftHeight = leftFrame:GetTextHeight();
+    leftFrame:SetHeight(leftHeight);
+
+    -- Create right-aligned text frame on the same row
+    local rightFrame = GameTooltipLineRightTemplate:Clone();
+    rightFrame:SetText(rightText);
+    GameTooltipLines:AddChild(rightFrame);
+
+    -- Anchor to the same position as the left frame (same row)
+    -- Right frame also spans full width, but text is right-aligned
+    rightFrame:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, leftFrame, 0);
+    rightFrame:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, 8);
+    rightFrame:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, -8);
+
+    if ( rightColor ~= nil ) then
+        rightFrame:SetProperty("Color", rightColor);
+    end
+
+    local rightHeight = rightFrame:GetTextHeight();
+    rightFrame:SetHeight(rightHeight);
+
+    -- Use the taller of the two text heights for the row
+    local textHeight = math.max(leftHeight, rightHeight);
+    TooltipHeight = TooltipHeight + textHeight + 8;
+
+    GameTooltip:SetHeight(TooltipHeight);
+end
+
 function GameTooltip_SetMoney(money)
     TooltipHeight = TooltipHeight + TooltipMoneyFrame:GetHeight() + 8;
     
@@ -79,11 +127,14 @@ function GameTooltip_SetItemTemplate(item)
     local maxDamage = item.maxDamage;
     if (minDamage > 0 or maxDamage > 0) then
         local dps = item.dps;
-        GameTooltip_AddLine(string.format(Localize("WEAPON_DAMAGE_MIN_MAX"), minDamage, maxDamage), TOOLTIP_LINE_LEFT);
-        GameTooltip_AddLine(string.format(Localize("WEAPON_DPS"), dps), TOOLTIP_LINE_LEFT);
-        
         local speed = item.attackSpeed;
-        GameTooltip_AddLine(string.format(Localize("WEAPON_ATTACK_SPEED"), speed), TOOLTIP_LINE_LEFT);
+        
+        -- Display damage on the left and attack speed on the right
+        GameTooltip_AddDualLine(
+            string.format(Localize("WEAPON_DAMAGE_MIN_MAX"), minDamage, maxDamage),
+            string.format(Localize("WEAPON_ATTACK_SPEED"), speed)
+        );
+        GameTooltip_AddLine(string.format(Localize("WEAPON_DPS"), dps), TOOLTIP_LINE_LEFT);
     end
 
     -- Show bag slots if > 0
@@ -178,11 +229,14 @@ function GameTooltip_SetItem(item)
     local maxDamage = item:GetMaxDamage();
     if (minDamage > 0 or maxDamage > 0) then
         local dps = item:GetDps();
-        GameTooltip_AddLine(string.format(Localize("WEAPON_DAMAGE_MIN_MAX"), minDamage, maxDamage), TOOLTIP_LINE_LEFT);
-        GameTooltip_AddLine(string.format(Localize("WEAPON_DPS"), dps), TOOLTIP_LINE_LEFT);
-        
         local speed = item:GetAttackSpeed();
-        GameTooltip_AddLine(string.format(Localize("WEAPON_ATTACK_SPEED"), speed), TOOLTIP_LINE_LEFT);
+        
+        -- Display damage on the left and attack speed on the right
+        GameTooltip_AddDualLine(
+            string.format(Localize("WEAPON_DAMAGE_MIN_MAX"), minDamage, maxDamage),
+            string.format(Localize("WEAPON_ATTACK_SPEED"), speed)
+        );
+        GameTooltip_AddLine(string.format(Localize("WEAPON_DPS"), dps), TOOLTIP_LINE_LEFT);
     end
 
     -- Show bag slots if > 0
@@ -290,10 +344,16 @@ function GameTooltip_SetSpell(spell)
         return
     end
 
-    GameTooltip_AddLine(spell.name, TOOLTIP_LINE_LEFT, "FFFFD100");
-
     if (spell.rank ~= nil and spell.rank > 0) then
-        GameTooltip_AddLine(string.format(Localize("SPELL_RANK_FORMAT"), spell.rank), TOOLTIP_LINE_LEFT, "FF808080");
+        -- Display spell name on the left and rank on the right
+        GameTooltip_AddDualLine(
+            spell.name,
+            string.format(Localize("SPELL_RANK_FORMAT"), spell.rank),
+            "FFFFD100",
+            "FF808080"
+        );
+    else
+        GameTooltip_AddLine(spell.name, TOOLTIP_LINE_LEFT, "FFFFD100");
     end
     
     -- Line 1: Cost
