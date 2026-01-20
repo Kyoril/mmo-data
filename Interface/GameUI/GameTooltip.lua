@@ -67,30 +67,34 @@ function GameTooltip_SetItemTemplate(item)
     GameTooltip_Clear();
     GameTooltip_AddLine(item.name, TOOLTIP_LINE_LEFT, ItemQualityColors[item.quality]);
 
-    local class = item.class;
-    local subclass = item.subClass;
     local inventoryType = item.inventoryType;
 
-    if (class == "WEAPON") then
+    -- Show inventory type for equippable items
+    if (inventoryType ~= INVENTORY_TYPE_NONEQUIP) then
         GameTooltip_AddLine(Localize(inventoryType), TOOLTIP_LINE_LEFT);
+    end
 
-        local minDamage = item.minDamage;
-        local maxDamage = item.maxDamage;
+    -- Show weapon damage if min/max damage > 0
+    local minDamage = item.minDamage;
+    local maxDamage = item.maxDamage;
+    if (minDamage > 0 or maxDamage > 0) then
         local dps = item.dps;
         GameTooltip_AddLine(string.format(Localize("WEAPON_DAMAGE_MIN_MAX"), minDamage, maxDamage), TOOLTIP_LINE_LEFT);
         GameTooltip_AddLine(string.format(Localize("WEAPON_DPS"), dps), TOOLTIP_LINE_LEFT);
         
         local speed = item.attackSpeed;
         GameTooltip_AddLine(string.format(Localize("WEAPON_ATTACK_SPEED"), speed), TOOLTIP_LINE_LEFT);
-    elseif (class == "ARMOR") then
-        GameTooltip_AddLine(Localize(inventoryType), TOOLTIP_LINE_LEFT);
-    elseif (class == "CONTAINER") then
-        local slots = item.bagSlots;
-        GameTooltip_AddLine(string.format(Localize("CONTAINER_SLOTS"), slots), TOOLTIP_LINE_LEFT);
     end
 
+    -- Show bag slots if > 0
+    local bagSlots = item.bagSlots;
+    if (bagSlots and bagSlots > 0) then
+        GameTooltip_AddLine(string.format(Localize("CONTAINER_SLOTS"), bagSlots), TOOLTIP_LINE_LEFT);
+    end
+
+    -- Always show armor if > 0
     local armor = item.armor;
-    if (class == "ARMOR" and armor > 0) then
+    if (armor > 0) then
         GameTooltip_AddLine(string.format(Localize("ARMOR_VALUE"), armor) , TOOLTIP_LINE_LEFT);
     end
 
@@ -102,26 +106,15 @@ function GameTooltip_SetItemTemplate(item)
     -- Check for missing proficiencies
     local player = GetUnit("player");
     if (player) then
-        local missingProficiencies = {};
-        
-        -- Check armor proficiency for armor items
-        if (class == "ARMOR") then
-            if (not player:HasProficiency(1, item.proficiency)) then
-                table.insert(missingProficiencies, Localize(item.subClass));
+        local requiredProficiency = item.proficiency;
+        if (requiredProficiency and requiredProficiency > 0) then
+            if (not player:HasProficiency(requiredProficiency)) then
+                local proficiencyEntry = gameData.proficiencies:GetById(requiredProficiency);
+                if (proficiencyEntry) then
+                    local requiresText = Localize("REQUIRES") .. ": " .. proficiencyEntry.name;
+                    GameTooltip_AddLine(requiresText, TOOLTIP_LINE_LEFT, "FFFF2020");
+                end
             end
-        end
-        
-        -- Check weapon proficiency for weapon items
-        if (class == "WEAPON") then
-            if (not player:HasProficiency(0, item.proficiency)) then
-                table.insert(missingProficiencies, Localize(item.subClass));
-            end
-        end
-        
-        -- Display missing proficiencies
-        if (#missingProficiencies > 0) then
-            local requiresText = Localize("REQUIRES") .. ": " .. table.concat(missingProficiencies, ", ");
-            GameTooltip_AddLine(requiresText, TOOLTIP_LINE_LEFT, "FFFF2020");
         end
     end
 
@@ -173,30 +166,34 @@ function GameTooltip_SetItem(item)
     GameTooltip_Clear();
     GameTooltip_AddLine(item:GetName(), TOOLTIP_LINE_LEFT, ItemQualityColors[item:GetQuality()]);
 
-    local class = item:GetClass();
-    local subclass = item:GetSubClass();
     local inventoryType = item:GetInventoryType();
 
-    if (class == "WEAPON") then
+    -- Show inventory type for equippable items
+    if (inventoryType ~= INVENTORY_TYPE_NONEQUIP) then
         GameTooltip_AddLine(Localize(inventoryType), TOOLTIP_LINE_LEFT);
+    end
 
-        local minDamage = item:GetMinDamage();
-        local maxDamage = item:GetMaxDamage();
+    -- Show weapon damage if min/max damage > 0
+    local minDamage = item:GetMinDamage();
+    local maxDamage = item:GetMaxDamage();
+    if (minDamage > 0 or maxDamage > 0) then
         local dps = item:GetDps();
         GameTooltip_AddLine(string.format(Localize("WEAPON_DAMAGE_MIN_MAX"), minDamage, maxDamage), TOOLTIP_LINE_LEFT);
         GameTooltip_AddLine(string.format(Localize("WEAPON_DPS"), dps), TOOLTIP_LINE_LEFT);
         
         local speed = item:GetAttackSpeed();
         GameTooltip_AddLine(string.format(Localize("WEAPON_ATTACK_SPEED"), speed), TOOLTIP_LINE_LEFT);
-    elseif (class == "ARMOR") then
-        GameTooltip_AddLine(Localize(inventoryType), TOOLTIP_LINE_LEFT);
-    elseif (class == "CONTAINER") then
-        local slots = item:GetBagSlots();
-        GameTooltip_AddLine(string.format(Localize("CONTAINER_SLOTS"), slots), TOOLTIP_LINE_LEFT);
     end
 
+    -- Show bag slots if > 0
+    local bagSlots = item:GetBagSlots();
+    if (bagSlots and bagSlots > 0) then
+        GameTooltip_AddLine(string.format(Localize("CONTAINER_SLOTS"), bagSlots), TOOLTIP_LINE_LEFT);
+    end
+
+    -- Always show armor if > 0
     local armor = item:GetArmor();
-    if (class == "ARMOR" and armor > 0) then
+    if (armor > 0) then
         GameTooltip_AddLine(string.format(Localize("ARMOR_VALUE"), armor) , TOOLTIP_LINE_LEFT);
     end
 
@@ -208,26 +205,15 @@ function GameTooltip_SetItem(item)
     -- Check for missing proficiencies
     local player = GetUnit("player");
     if (player) then
-        local missingProficiencies = {};
-        
-        -- Check armor proficiency for armor items
-        if (class == "ARMOR") then
-            if (not player:HasProficiency(1, item:GetProficiency())) then
-                table.insert(missingProficiencies, Localize(subclass));
+        local requiredProficiency = item:GetProficiency();
+        if (requiredProficiency and requiredProficiency > 0) then
+            if (not player:HasProficiency(requiredProficiency)) then
+                local proficiencyEntry = gameData.proficiencies:GetById(requiredProficiency);
+                if (proficiencyEntry) then
+                    local requiresText = Localize("REQUIRES") .. ": " .. proficiencyEntry.name;
+                    GameTooltip_AddLine(requiresText, TOOLTIP_LINE_LEFT, "FFFF2020");
+                end
             end
-        end
-        
-        -- Check weapon proficiency for weapon items
-        if (class == "WEAPON") then
-            if (not player:HasProficiency(0, item:GetProficiency())) then
-                table.insert(missingProficiencies, Localize(subclass));
-            end
-        end
-        
-        -- Display missing proficiencies
-        if (#missingProficiencies > 0) then
-            local requiresText = Localize("REQUIRES") .. ": " .. table.concat(missingProficiencies, ", ");
-            GameTooltip_AddLine(requiresText, TOOLTIP_LINE_LEFT, "FFFF2020");
         end
     end
 
