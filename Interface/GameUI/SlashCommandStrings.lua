@@ -60,3 +60,5 @@ SLASH_FRIENDREMOVE2 = "/fremove"; -- Friend remove
 SLASH_FRIENDREMOVE3 = "/fr"; -- Friend remove
 SLASH_FRIENDLIST1 = "/friendlist"; -- Friend list
 SLASH_FRIENDLIST2 = "/friends"; -- Friend list
+SLASH_TRADE1 = "/trade"; -- Trade with target
+SLASH_TRADE2 = "/tr"; -- Trade with target

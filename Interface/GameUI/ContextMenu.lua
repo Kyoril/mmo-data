@@ -247,6 +247,18 @@ RegisterContextMenu("TARGET", {
                 end,
                 enabled = true
             })
+            
+            -- Trade option
+            table.insert(items, {
+                text = "Trade",
+                callback = function()
+                    local targetGuid = targetUnit:GetGuid();
+                    if targetGuid then
+                        InitiateTrade(targetGuid);
+                    end
+                end,
+                enabled = not IsTrading()
+            })
         end
         
         return items

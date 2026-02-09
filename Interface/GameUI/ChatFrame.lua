@@ -141,6 +141,28 @@ SlashCmdList["FRIENDLIST"] = function(msg)
 	FriendsFrame_Toggle();
 end
 
+SlashCmdList["TRADE"] = function(msg)
+	-- If a target name is provided, try to initiate trade by name
+	
+    --[[local target = GetSlashCmdTarget(msg);
+	if target and target ~= "" then
+		-- TODO: Implement trade by name lookup
+		ChatFrame:AddMessage("Trade by name not yet implemented. Target a player and use /trade. Target: '" .. target .. "'", 1.0, 1.0, 0.0);
+		return;
+	end]]
+	
+	-- Otherwise, try to trade with current target
+    local target = GetUnit("target");
+	if target --[[and UnitIsPlayer("target") and not UnitIsUnit("target", "player")]] then
+		local targetGuid = target:GetGuid();
+		if targetGuid then
+			InitiateTrade(targetGuid);
+		end
+	else
+		ChatFrame:AddMessage("Select a player to trade with.", 1.0, 1.0, 0.0);
+	end
+end
+
 
 function rgbToHex(r, g, b)
     -- Ensure values are in range 0-1

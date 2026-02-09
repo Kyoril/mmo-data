@@ -1,0 +1,426 @@
+<?xml version="1.0" ?>
+<UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
+	<Script file="TradeFrame.lua" />
+
+	<!-- Trade slot button template -->
+	<Frame name="TradeSlotButtonTemplate" type="Button" renderer="ButtonRenderer">
+		<Property name="Icon" />
+
+		<Visual>
+			<ImagerySection name="Image">
+				<ImageComponent>
+					<Area>
+						<Inset all="16" />
+					</Area>
+					<PropertyValue property="Icon" />
+				</ImageComponent>
+			</ImagerySection>
+			<ImagerySection name="Text">
+				<TextComponent horzAlign="RIGHT" vertAlign="BOTTOM">
+					<Area>
+						<Inset all="8" />
+					</Area>
+				</TextComponent>
+			</ImagerySection>
+			<ImagerySection name="NormalFrame">
+				<BorderComponent texture="Interface/BW_ButtonSmall_Up.htex" borderSize="30" />
+			</ImagerySection>
+			<ImagerySection name="HoveredFrame">
+				<BorderComponent texture="Interface/BW_ButtonSmall_Over.htex" borderSize="30" />
+			</ImagerySection>
+			<ImagerySection name="PushedFrame">
+				<BorderComponent texture="Interface/BW_ButtonSmall_Down.htex" borderSize="30" />
+			</ImagerySection>
+			<ImagerySection name="DisabledFrame">
+				<BorderComponent texture="Interface/BW_ButtonSmall_Up.htex" borderSize="30" tint="80808080" />
+			</ImagerySection>
+			<StateImagery name="Normal">
+				<Layer>
+					<Section section="NormalFrame" />
+					<Section section="Image" />
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Hovered">
+				<Layer>
+					<Section section="HoveredFrame" />
+					<Section section="Image" />
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Pushed">
+				<Layer>
+					<Section section="PushedFrame" />
+					<Section section="Image" />
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="DisabledFrame" />
+					<Section section="Image" />
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+
+		<Area>
+			<Size><AbsDimension x="64" y="64" /></Size>
+		</Area>
+	</Frame>
+
+	<!-- Trade slot border template -->
+	<Frame name="TradeSlotBorderTemplate" renderer="DefaultRenderer">
+		<Area>
+			<Size><AbsDimension x="80" y="80" /></Size>
+		</Area>
+
+		<Visual>
+			<ImagerySection name="Background">
+				<BorderComponent texture="Interface/GameUI/fg4_iconsSlot.htex" borderSize="32" />
+			</ImagerySection>
+			<ImagerySection name="DisabledBackground">
+				<BorderComponent texture="Interface/GameUI/fg4_iconsSlot.htex" borderSize="32" tint="80303030" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Background" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="DisabledBackground" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+	</Frame>
+
+	<!-- Main Trade Frame -->
+	<Frame name="TradeFrame" renderer="DefaultRenderer" parent="GameParent">
+		<Property name="Visible" value="false" />
+
+		<Visual>
+			<ImagerySection name="Background">
+				<BorderComponent texture="Interface/GameUI/fg4_borders_simple.htex" borderSize="250" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Background" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+
+		<Area>
+			<Size><AbsDimension x="550" y="450" /></Size>
+			<Anchor point="H_CENTER" offset="0" />
+			<Anchor point="V_CENTER" offset="0" />
+		</Area>
+
+		<!-- Title Bar -->
+		<Frame name="TradeTitleBar" inherits="TitleBar">
+			<Property name="Text" value="TRADE" />
+
+			<Area>
+				<Anchor point="TOP" offset="24" />
+				<Anchor point="LEFT" offset="24" />
+				<Anchor point="RIGHT" offset="-24" />
+			</Area>
+		</Frame>
+
+		<!-- My Offer Section Header -->
+		<Frame name="TradeMyOfferHeader" renderer="DefaultRenderer">
+			<Property name="Font" value="DefaultSmall" />
+
+			<Visual>
+				<ImagerySection name="Text">
+					<TextComponent color="FFFFD100" horzAlign="CENTER" vertAlign="CENTER" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Text" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+
+			<Area>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeTitleBar" offset="8" />
+				<Anchor point="LEFT" offset="24" />
+				<Size><AbsDimension x="200" y="32" /></Size>
+			</Area>
+
+			<Scripts>
+				<OnLoad>
+					return function(self)
+						self:SetText("Your Offer");
+					end
+				</OnLoad>
+			</Scripts>
+		</Frame>
+
+		<!-- Their Offer Section Header -->
+		<Frame name="TradeTheirOfferHeader" renderer="DefaultRenderer">
+			<Property name="Font" value="DefaultSmall" />
+
+			<Visual>
+				<ImagerySection name="Text">
+					<TextComponent color="FFFFD100" horzAlign="CENTER" vertAlign="CENTER" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Text" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+
+			<Area>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeTitleBar" offset="8" />
+				<Anchor point="RIGHT" offset="-24" />
+				<Size><AbsDimension x="200" y="32" /></Size>
+			</Area>
+
+			<Scripts>
+				<OnLoad>
+					return function(self)
+						self:SetText("Their Offer");
+					end
+				</OnLoad>
+			</Scripts>
+		</Frame>
+
+		<!-- My Trade Slots Container -->
+		<Frame name="TradeMySlotContainer">
+			<Area>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeMyOfferHeader" offset="8" />
+				<Anchor point="LEFT" offset="24" />
+				<Size><AbsDimension x="200" y="280" /></Size>
+			</Area>
+
+			<!-- Row 1 -->
+			<Frame name="TradeMySlot1Border" inherits="TradeSlotBorderTemplate">
+				<Area>
+					<Anchor point="TOP" offset="0" />
+					<Anchor point="LEFT" offset="0" />
+				</Area>
+
+				<Frame name="TradeMySlot1" inherits="TradeSlotButtonTemplate" id="1">
+					<Area>
+						<Anchor point="LEFT" offset="8" />
+						<Anchor point="TOP" offset="8" />
+					</Area>
+				</Frame>
+			</Frame>
+
+			<Frame name="TradeMySlot2Border" inherits="TradeSlotBorderTemplate">
+				<Area>
+					<Anchor point="TOP" offset="0" />
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="TradeMySlot1Border" offset="8" />
+				</Area>
+
+				<Frame name="TradeMySlot2" inherits="TradeSlotButtonTemplate" id="2">
+					<Area>
+						<Anchor point="LEFT" offset="8" />
+						<Anchor point="TOP" offset="8" />
+					</Area>
+				</Frame>
+			</Frame>
+
+			<!-- Row 2 -->
+			<Frame name="TradeMySlot3Border" inherits="TradeSlotBorderTemplate">
+				<Area>
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeMySlot1Border" offset="8" />
+					<Anchor point="LEFT" offset="0" />
+				</Area>
+
+				<Frame name="TradeMySlot3" inherits="TradeSlotButtonTemplate" id="3">
+					<Area>
+						<Anchor point="LEFT" offset="8" />
+						<Anchor point="TOP" offset="8" />
+					</Area>
+				</Frame>
+			</Frame>
+
+			<Frame name="TradeMySlot4Border" inherits="TradeSlotBorderTemplate">
+				<Area>
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeMySlot2Border" offset="8" />
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="TradeMySlot3Border" offset="8" />
+				</Area>
+
+				<Frame name="TradeMySlot4" inherits="TradeSlotButtonTemplate" id="4">
+					<Area>
+						<Anchor point="LEFT" offset="8" />
+						<Anchor point="TOP" offset="8" />
+					</Area>
+				</Frame>
+			</Frame>
+
+			<!-- Row 3 -->
+			<Frame name="TradeMySlot5Border" inherits="TradeSlotBorderTemplate">
+				<Area>
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeMySlot3Border" offset="8" />
+					<Anchor point="LEFT" offset="0" />
+				</Area>
+
+				<Frame name="TradeMySlot5" inherits="TradeSlotButtonTemplate" id="5">
+					<Area>
+						<Anchor point="LEFT" offset="8" />
+						<Anchor point="TOP" offset="8" />
+					</Area>
+				</Frame>
+			</Frame>
+
+			<Frame name="TradeMySlot6Border" inherits="TradeSlotBorderTemplate">
+				<Area>
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeMySlot4Border" offset="8" />
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="TradeMySlot5Border" offset="8" />
+				</Area>
+
+				<Frame name="TradeMySlot6" inherits="TradeSlotButtonTemplate" id="6">
+					<Area>
+						<Anchor point="LEFT" offset="8" />
+						<Anchor point="TOP" offset="8" />
+					</Area>
+				</Frame>
+			</Frame>
+		</Frame>
+
+		<!-- Other Player's Trade Slots Container -->
+		<Frame name="TradeOtherSlotContainer">
+			<Area>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeTheirOfferHeader" offset="8" />
+				<Anchor point="RIGHT" offset="-24" />
+				<Size><AbsDimension x="200" y="280" /></Size>
+			</Area>
+
+			<!-- Row 1 -->
+			<Frame name="TradeOtherSlot1Border" inherits="TradeSlotBorderTemplate">
+				<Area>
+					<Anchor point="TOP" offset="0" />
+					<Anchor point="LEFT" offset="0" />
+				</Area>
+
+				<Frame name="TradeOtherSlot1" inherits="TradeSlotButtonTemplate" id="1">
+					<Property name="Enabled" value="false" />
+					<Area>
+						<Anchor point="LEFT" offset="8" />
+						<Anchor point="TOP" offset="8" />
+					</Area>
+				</Frame>
+			</Frame>
+
+			<Frame name="TradeOtherSlot2Border" inherits="TradeSlotBorderTemplate">
+				<Area>
+					<Anchor point="TOP" offset="0" />
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="TradeOtherSlot1Border" offset="8" />
+				</Area>
+
+				<Frame name="TradeOtherSlot2" inherits="TradeSlotButtonTemplate" id="2">
+					<Property name="Enabled" value="false" />
+					<Area>
+						<Anchor point="LEFT" offset="8" />
+						<Anchor point="TOP" offset="8" />
+					</Area>
+				</Frame>
+			</Frame>
+
+			<!-- Row 2 -->
+			<Frame name="TradeOtherSlot3Border" inherits="TradeSlotBorderTemplate">
+				<Area>
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeOtherSlot1Border" offset="8" />
+					<Anchor point="LEFT" offset="0" />
+				</Area>
+
+				<Frame name="TradeOtherSlot3" inherits="TradeSlotButtonTemplate" id="3">
+					<Property name="Enabled" value="false" />
+					<Area>
+						<Anchor point="LEFT" offset="8" />
+						<Anchor point="TOP" offset="8" />
+					</Area>
+				</Frame>
+			</Frame>
+
+			<Frame name="TradeOtherSlot4Border" inherits="TradeSlotBorderTemplate">
+				<Area>
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeOtherSlot2Border" offset="8" />
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="TradeOtherSlot3Border" offset="8" />
+				</Area>
+
+				<Frame name="TradeOtherSlot4" inherits="TradeSlotButtonTemplate" id="4">
+					<Property name="Enabled" value="false" />
+					<Area>
+						<Anchor point="LEFT" offset="8" />
+						<Anchor point="TOP" offset="8" />
+					</Area>
+				</Frame>
+			</Frame>
+
+			<!-- Row 3 -->
+			<Frame name="TradeOtherSlot5Border" inherits="TradeSlotBorderTemplate">
+				<Area>
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeOtherSlot3Border" offset="8" />
+					<Anchor point="LEFT" offset="0" />
+				</Area>
+
+				<Frame name="TradeOtherSlot5" inherits="TradeSlotButtonTemplate" id="5">
+					<Property name="Enabled" value="false" />
+					<Area>
+						<Anchor point="LEFT" offset="8" />
+						<Anchor point="TOP" offset="8" />
+					</Area>
+				</Frame>
+			</Frame>
+
+			<Frame name="TradeOtherSlot6Border" inherits="TradeSlotBorderTemplate">
+				<Area>
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeOtherSlot4Border" offset="8" />
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="TradeOtherSlot5Border" offset="8" />
+				</Area>
+
+				<Frame name="TradeOtherSlot6" inherits="TradeSlotButtonTemplate" id="6">
+					<Property name="Enabled" value="false" />
+					<Area>
+						<Anchor point="LEFT" offset="8" />
+						<Anchor point="TOP" offset="8" />
+					</Area>
+				</Frame>
+			</Frame>
+		</Frame>
+
+		<!-- Accept Button -->
+		<Frame name="TradeAcceptButton" inherits="GlueButton">
+			<Property name="Text" value="Accept" />
+			<Area>
+				<Anchor point="BOTTOM" offset="-24" />
+				<Anchor point="LEFT" offset="100" />
+				<Size><AbsDimension x="120" y="40" /></Size>
+			</Area>
+		</Frame>
+
+		<!-- Cancel Button -->
+		<Frame name="TradeCancelButton" inherits="GlueButton">
+			<Property name="Text" value="Cancel" />
+			<Area>
+				<Anchor point="BOTTOM" offset="-24" />
+				<Anchor point="RIGHT" offset="-100" />
+				<Size><AbsDimension x="120" y="40" /></Size>
+			</Area>
+		</Frame>
+
+		<Scripts>
+			<OnLoad>
+				return function(self)
+					TradeFrame_OnLoad(self);
+				end
+			</OnLoad>
+			<OnShow>
+				return function(self)
+					TradeFrame_OnShow(self);
+				end
+			</OnShow>
+			<OnHide>
+				return function(self)
+					TradeFrame_OnHide(self);
+				end
+			</OnHide>
+		</Scripts>
+	</Frame>
+</UiLayout>
