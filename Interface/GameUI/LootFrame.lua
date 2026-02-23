@@ -89,8 +89,28 @@ function LootFrame_OnHide()
 	CloseLoot();
 end
 
+-- Loot slot type constants (mirrors loot_slot_type enum)
+LOOT_SLOT_ALLOW_LOOT = 0;
+LOOT_SLOT_ROLL_ONGOING = 1;
+LOOT_SLOT_MASTER = 2;
+LOOT_SLOT_LOCKED = 3;
+
 function LootButton_OnClick(button)
-	LootSlot(((LOOTFRAME_NUMBUTTONS - 1) * (LootFrame.page - 1)) + button.id, false);
+	local numLootToShow = LOOTFRAME_NUMBUTTONS;
+	local numLootItems = LootFrame.numLootItems or GetNumLootItems();
+	if numLootItems > LOOTFRAME_NUMBUTTONS then
+		numLootToShow = numLootToShow - 1;
+	end
+
+	local slot = (numLootToShow * ((LootFrame.page or 1) - 1)) + button.id;
+
+	-- Don't allow looting items that are locked or being rolled on
+	local slotType = GetLootSlotType(slot);
+	if slotType == LOOT_SLOT_ROLL_ONGOING or slotType == LOOT_SLOT_LOCKED or slotType == LOOT_SLOT_MASTER then
+		return;
+	end
+
+	LootSlot(slot, false);
 end
 
 function LootFrame_OnUpdate(self, elapsed)
@@ -127,12 +147,22 @@ function LootFrame_OnUpdate(self, elapsed)
 				local quantity = 1;
 				texture, item, quantity = GetLootSlotInfo(slot);
 				button:SetProperty("Icon", texture);
-				text:SetText(item);
+
+				-- Check slot type for roll-ongoing or locked items
+				local slotType = GetLootSlotType(slot);
+				local isLocked = (slotType == LOOT_SLOT_ROLL_ONGOING or slotType == LOOT_SLOT_LOCKED or slotType == LOOT_SLOT_MASTER);
 
 				if LootSlotIsItem(slot) then
 					local entry = GetLootSlotItem(slot);
-					text:SetProperty("Color", ItemQualityColors[entry.quality]);
+					if isLocked then
+						text:SetText(item .. " (Rolling)");
+						text:SetProperty("Color", "FF808080");
+					else
+						text:SetText(item);
+						text:SetProperty("Color", ItemQualityColors[entry.quality]);
+					end
 				else
+					text:SetText(item);
 					text:SetProperty("Color", "FFFFFFFF");
 				end
 
@@ -141,7 +171,15 @@ function LootFrame_OnUpdate(self, elapsed)
 				else
 					button:SetText("");
 				end
-				button:Show(); -- Ensure button is visible
+
+				-- Visually dim button for locked/rolling items but keep enabled for tooltip
+				if isLocked then
+					button:SetOpacity(0.5);
+				else
+					button:SetOpacity(1.0);
+				end
+				border:SetEnabled(not isLocked);
+				button:Show();
 				border:Show();
 			else
 				button:Hide(); -- Hide button when no valid item

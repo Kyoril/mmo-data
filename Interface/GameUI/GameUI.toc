@@ -19,6 +19,7 @@ TargetFrame.xml
 MoneyFrame.xml
 InventoryFrame.xml
 LootFrame.xml
+LootRollFrame.xml
 TrainerFrame.xml
 VendorFrame.xml
 QuestFrame.xml

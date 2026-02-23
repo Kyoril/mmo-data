@@ -1,0 +1,181 @@
+<?xml version="1.0" ?>
+<UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
+	<Script file="LootRollFrame.lua" />
+
+	<!-- Template for a single roll item row -->
+	<Frame name="LootRollItemTemplate" renderer="DefaultRenderer">
+		<Area>
+			<Size><AbsDimension x="500" y="64" /></Size>
+		</Area>
+
+		<Visual>
+			<ImagerySection name="Background">
+				<BorderComponent texture="Interface/GameUI/fg4_borders_simple.htex" borderSize="250" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Background" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+
+		<!-- Item name text -->
+		<Frame name="Name" renderer="DefaultRenderer">
+			<Property name="Font" value="DefaultSmall" />
+
+			<Area>
+				<Anchor point="LEFT" offset="16" />
+				<Anchor point="TOP" offset="4" />
+				<Size><AbsDimension x="200" y="24" /></Size>
+			</Area>
+
+			<Visual>
+				<ImagerySection name="Text">
+					<TextComponent color="FFFFFFFF" horzAlign="LEFT" vertAlign="CENTER" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer><Section section="Text" /></Layer>
+				</StateImagery>
+				<StateImagery name="Disabled">
+					<Layer><Section section="Text" /></Layer>
+				</StateImagery>
+			</Visual>
+		</Frame>
+
+		<!-- Timer text -->
+		<Frame name="Timer" renderer="DefaultRenderer">
+			<Property name="Font" value="DefaultSmall" />
+
+			<Area>
+				<Anchor point="LEFT" offset="220" />
+				<Anchor point="TOP" offset="4" />
+				<Size><AbsDimension x="60" y="24" /></Size>
+			</Area>
+
+			<Visual>
+				<ImagerySection name="Text">
+					<TextComponent color="FFFFFF00" horzAlign="CENTER" vertAlign="CENTER" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer><Section section="Text" /></Layer>
+				</StateImagery>
+				<StateImagery name="Disabled">
+					<Layer><Section section="Text" /></Layer>
+				</StateImagery>
+			</Visual>
+		</Frame>
+
+		<!-- Need button -->
+		<Frame name="NeedButton" type="Button" inherits="GlueButton">
+			<Property name="Text" value="Need" />
+
+			<Area>
+				<Anchor point="LEFT" offset="16" />
+				<Anchor point="BOTTOM" offset="-4" />
+				<Size><AbsDimension x="140" y="28" /></Size>
+			</Area>
+
+			<Scripts>
+				<OnClick>
+					return function(self)
+						LootRollNeedButton_OnClick(self);
+					end
+				</OnClick>
+			</Scripts>
+		</Frame>
+
+		<!-- Greed button -->
+		<Frame name="GreedButton" type="Button" inherits="GlueButton">
+			<Property name="Text" value="Greed" />
+
+			<Area>
+				<Anchor point="LEFT" offset="170" />
+				<Anchor point="BOTTOM" offset="-4" />
+				<Size><AbsDimension x="140" y="28" /></Size>
+			</Area>
+
+			<Scripts>
+				<OnClick>
+					return function(self)
+						LootRollGreedButton_OnClick(self);
+					end
+				</OnClick>
+			</Scripts>
+		</Frame>
+
+		<!-- Pass button -->
+		<Frame name="PassButton" type="Button" inherits="GlueButton">
+			<Property name="Text" value="Pass" />
+
+			<Area>
+				<Anchor point="LEFT" offset="324" />
+				<Anchor point="BOTTOM" offset="-4" />
+				<Size><AbsDimension x="140" y="28" /></Size>
+			</Area>
+
+			<Scripts>
+				<OnClick>
+					return function(self)
+						LootRollPassButton_OnClick(self);
+					end
+				</OnClick>
+			</Scripts>
+		</Frame>
+	</Frame>
+
+	<!-- Main loot roll frame, anchored at top-center -->
+	<Frame name="LootRollFrame" parent="GameParent" renderer="DefaultRenderer">
+		<Property name="Visible" value="false" />
+
+		<Scripts>
+			<OnLoad>
+				return function(self)
+					LootRollFrame_OnLoad(self);
+				end
+			</OnLoad>
+			<OnUpdate>
+				return function(self, elapsed)
+					LootRollFrame_OnUpdate(self, elapsed);
+				end
+			</OnUpdate>
+		</Scripts>
+
+		<Area>
+			<Size><AbsDimension x="520" y="300" /></Size>
+			<Anchor point="TOP" offset="100" />
+			<Anchor point="H_CENTER" />
+		</Area>
+
+		<Frame name="LootRollItem1" inherits="LootRollItemTemplate">
+			<Area>
+				<Anchor point="LEFT" offset="10" />
+				<Anchor point="RIGHT" offset="-10" />
+				<Anchor point="TOP" offset="10" />
+			</Area>
+		</Frame>
+
+		<Frame name="LootRollItem2" inherits="LootRollItemTemplate">
+			<Area>
+				<Anchor point="LEFT" offset="10" />
+				<Anchor point="RIGHT" offset="-10" />
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="LootRollItem1" offset="8" />
+			</Area>
+		</Frame>
+
+		<Frame name="LootRollItem3" inherits="LootRollItemTemplate">
+			<Area>
+				<Anchor point="LEFT" offset="10" />
+				<Anchor point="RIGHT" offset="-10" />
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="LootRollItem2" offset="8" />
+			</Area>
+		</Frame>
+
+		<Frame name="LootRollItem4" inherits="LootRollItemTemplate">
+			<Area>
+				<Anchor point="LEFT" offset="10" />
+				<Anchor point="RIGHT" offset="-10" />
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="LootRollItem3" offset="8" />
+			</Area>
+		</Frame>
+	</Frame>
+</UiLayout>
