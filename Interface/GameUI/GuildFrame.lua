@@ -47,6 +47,8 @@ function GuildFrame_OnEvent(self, event, arg1, arg2, arg3)
     local format = Localize("GUILD_EVENT_"..event);
     if (event == "MOTD") then
         color = {0.0, 1.0, 0.0};
+        -- Refresh the MOTD label immediately when a live MOTD broadcast arrives
+        GuildMOTDLabel:SetText(GetGuildMOTD());
     end
 
     if (format) then
@@ -104,6 +106,9 @@ function GuildRoster_Update()
     local frame = GuildFrame;
     local listContent = GuildRosterListContent;
     local scrollBar = GuildRosterScrollBar;
+
+    -- Refresh the MOTD label from the latest data
+    GuildMOTDLabel:SetText(GetGuildMOTD());
     
     -- Update guild member data
     GUILD_DATA.members = {};
