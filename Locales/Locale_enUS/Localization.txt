@@ -339,6 +339,13 @@ strings =
 	(key = "PROMOTE_TO_LEADER", string = "Make Group Leader")
 	(key = "INVITE_TO_PARTY", string = "Invite")
 	
+	(key = "LOOT_FREE_FOR_ALL", string = "Free For All")
+	(key = "LOOT_ROUND_ROBIN", string = "Round Robin")
+	(key = "LOOT_MASTER_LOOT", string = "Master Loot")
+	(key = "LOOT_GROUP_LOOT", string = "Group Loot")
+	(key = "SET_LOOT_METHOD", string = "Set Loot Method")
+	(key = "LOOTMETHOD_USAGE", string = "Usage: /lootmethod [freeforall|roundrobin|masterloot|grouploot]")
+	
 	(key = "LEVEL_FORMAT", string = "Level %d")
 
 	(key = "GUILD_INVITATION", string = "%s invites you to guild '%s'.")

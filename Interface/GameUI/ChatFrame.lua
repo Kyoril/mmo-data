@@ -128,6 +128,24 @@ SlashCmdList["GUILD_DISBAND"] = function(msg)
 	GuildDisband();
 end
 
+SlashCmdList["LOOTMETHOD"] = function(msg)
+	local method = string.lower(msg or "");
+	local methodId;
+	if (method == "freeforall" or method == "ffa") then
+		methodId = 0;
+	elseif (method == "roundrobin" or method == "rr") then
+		methodId = 1;
+	elseif (method == "masterloot" or method == "ml") then
+		methodId = 2;
+	elseif (method == "grouploot" or method == "gl") then
+		methodId = 3;
+	else
+		ChatFrame:AddMessage(Localize("LOOTMETHOD_USAGE"), 1.0, 0.5, 0.5);
+		return;
+	end
+	SetLootMethod(methodId, "");
+end
+
 SlashCmdList["FRIENDINVITE"] = function(msg)
 	if ( GetSlashCmdTarget(msg) ) then
 		FriendInviteByName(GetSlashCmdTarget(msg));

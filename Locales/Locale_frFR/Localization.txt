@@ -330,6 +330,13 @@ strings =
 	(key = "KICK_FROM_PARTY", string = "Exclure du groupe")
 	(key = "PROMOTE_TO_LEADER", string = "Promouvoir chef de groupe")
 	(key = "INVITE_TO_PARTY", string = "Inviter")
+	
+	(key = "LOOT_FREE_FOR_ALL", string = "Libre service")
+	(key = "LOOT_ROUND_ROBIN", string = "Tour à tour")
+	(key = "LOOT_MASTER_LOOT", string = "Maître du butin")
+	(key = "LOOT_GROUP_LOOT", string = "Butin de groupe")
+	(key = "SET_LOOT_METHOD", string = "Définir la méthode de butin")
+	(key = "LOOTMETHOD_USAGE", string = "Utilisation : /lootmethod [freeforall|roundrobin|masterloot|grouploot]")
 
 	(key = "LEVEL_FORMAT", string = "Niveau %d")
 	

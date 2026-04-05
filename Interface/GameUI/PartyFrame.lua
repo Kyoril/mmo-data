@@ -102,7 +102,17 @@ function PartyMemberFrame_OnMemberDisable(self)
 end
 
 function PartyMemberFrame_OnLootMethodChanged(self)
-
+	-- Update loot method display if a label widget exists in the party frame
+	local method = GetLootMethod();
+	local methodNames = {
+		[0] = Localize("LOOT_FREE_FOR_ALL"),
+		[1] = Localize("LOOT_ROUND_ROBIN"),
+		[2] = Localize("LOOT_MASTER_LOOT"),
+		[3] = Localize("LOOT_GROUP_LOOT"),
+	};
+	-- PartyLootMethodText widget not present in current PartyFrame.xml;
+	-- refresh member display so tooltip/name area reflects the current method
+	PartyMemberFrame_UpdateMember(self);
 end
 
 function PartyMemberFrame_OnLoad(self)

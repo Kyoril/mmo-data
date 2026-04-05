@@ -64,3 +64,6 @@ SLASH_TRADE1 = "/trade"; -- Trade with target
 SLASH_TRADE2 = "/tr"; -- Trade with target
 SLASH_RAID1 = "/raid"; -- Raid chat
 SLASH_RAID2 = "/ra";   -- Raid chat
+
+SLASH_LOOTMETHOD1 = "/lootmethod"; -- Set group loot method
+SLASH_LOOTMETHOD2 = "/lm";         -- Set group loot method (short)

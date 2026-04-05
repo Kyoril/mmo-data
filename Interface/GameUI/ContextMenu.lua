@@ -224,10 +224,48 @@ RegisterContextMenu("PARTY_MEMBER", {
                     end,
                     enabled = true
                 })
+
+                -- Set Loot Method submenu (leader only)
+                table.insert(items, {
+                    text = Localize("SET_LOOT_METHOD"),
+                    callback = function(menuData)
+                        local pos = GetCursorPosition();
+                        ContextMenu_Show("LOOT_METHOD", pos.x, pos.y, nil);
+                    end,
+                    enabled = true
+                })
             end
         end
         
         return items
+    end
+})
+
+
+RegisterContextMenu("LOOT_METHOD", {
+    items = function(data)
+        return {
+            {
+                text = Localize("LOOT_FREE_FOR_ALL"),
+                callback = function() SetLootMethod(0, ""); end,
+                enabled = true
+            },
+            {
+                text = Localize("LOOT_ROUND_ROBIN"),
+                callback = function() SetLootMethod(1, ""); end,
+                enabled = true
+            },
+            {
+                text = Localize("LOOT_MASTER_LOOT"),
+                callback = function() SetLootMethod(2, ""); end,
+                enabled = true
+            },
+            {
+                text = Localize("LOOT_GROUP_LOOT"),
+                callback = function() SetLootMethod(3, ""); end,
+                enabled = true
+            },
+        };
     end
 })
 
