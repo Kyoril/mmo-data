@@ -44,7 +44,13 @@ function GossipActionButton_OnClick(self, mouseButton)
 end
 
 function QuestFrame_OnQuestGreeting(self)
-    -- Ensure the quest frame is visible as in every event
+	-- Show NPC name in title bar (per CONTEXT.md locked decision: NPC name/portrait header)
+	local target = GetUnit("target");
+	if target then
+		self:GetChild(0):SetText(target:GetName());
+	end
+
+	-- Ensure the quest frame is visible as in every event
 	ShowUIPanel(QuestFrame);
 
     -- Set up the greeting text
