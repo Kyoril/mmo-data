@@ -328,6 +328,11 @@ function ChatFrame_OnMemberItemReceived(this, memberName, itemName, itemId, qual
     end
 end
 
+function ChatFrame_OnLootMoneyNotify(this, goldAmount)
+    local info = ChatTypeInfo["LOOT"];
+    ChatFrame:AddMessage(string.format(Localize("LOOT_MONEY_NOTIFY"), goldAmount), info.r, info.g, info.b);
+end
+
 function ChatFrame_OnTimePlayedUpdated(this, timePlayedSeconds)
     -- Calculate days, hours, minutes, and seconds
     local days = math.floor(timePlayedSeconds / 86400);
@@ -383,6 +388,7 @@ function ChatFrame_OnLoad(this)
     this:RegisterEvent("ITEM_RECEIVED", ChatFrame_OnItemReceived);
     this:RegisterEvent("MEMBER_LOOT_ITEM_RECEIVED", ChatFrame_OnMemberLootItemReceived);
     this:RegisterEvent("MEMBER_ITEM_RECEIVED", ChatFrame_OnMemberItemReceived);
+    this:RegisterEvent("LOOT_MONEY_NOTIFY", ChatFrame_OnLootMoneyNotify);
     
     this:RegisterEvent("TIME_PLAYED_UPDATED", ChatFrame_OnTimePlayedUpdated);
 

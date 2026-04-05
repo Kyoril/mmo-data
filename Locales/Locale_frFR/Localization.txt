@@ -404,6 +404,7 @@ strings =
 	(key = "YOU_RECEIVE_ITEM_MULTI", string = "Vous recevez l'objet : %sx%d.")
 	(key = "MEMBER_RECEIVE_LOOT_SINGLE", string = "%s a reçu le butin : %s.")
 	(key = "MEMBER_RECEIVE_LOOT_MULTI", string = "%s a reçu le butin : %sx%d.")
+	(key = "LOOT_MONEY_NOTIFY", string = "Vous recevez votre part du butin : %d cuivres.")
 	(key = "MEMBER_RECEIVE_ITEM_SINGLE", string = "%s a reçu l'objet : %s.")
 	(key = "MEMBER_RECEIVE_ITEM_MULTI", string = "%s a reçu l'objet : %sx%d.")
 

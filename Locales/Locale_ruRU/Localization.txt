@@ -403,6 +403,7 @@ strings =
 	(key = "YOU_RECEIVE_ITEM_MULTI", string = "You receive item: %sx%d.")
 	(key = "MEMBER_RECEIVE_LOOT_SINGLE", string = "%s received loot: %s.")
 	(key = "MEMBER_RECEIVE_LOOT_MULTI", string = "%s received loot: %sx%d.")
+	(key = "LOOT_MONEY_NOTIFY", string = "Вы получаете свою долю добычи: %d меди.")
 	(key = "MEMBER_RECEIVE_ITEM_SINGLE", string = "%s received item: %s.")
 	(key = "MEMBER_RECEIVE_ITEM_MULTI", string = "%s received item: %sx%d.")
 }
