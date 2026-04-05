@@ -14,6 +14,8 @@ function GetSlashCmdTarget(msg)
 end
 
 ChatType = "SAY";
+ChatFrame_WhisperTarget = nil;   -- target name for the active /w whisper command
+ChatFrame_ReplyTarget = nil;     -- sticky: name of last player who whispered you
 
 ChatTypeInfo = { };
 ChatTypeInfo["SAY"]				    = { sticky = 1, r = 1.00, g = 1.00, b = 1.00 };
@@ -33,6 +35,7 @@ ChatTypeInfo["UNIT_YELL"]		    = { sticky = 0, r = 1.00, g = 0.25, b = 0.25 };
 ChatTypeInfo["UNIT_EMOTE"]		    = { sticky = 0, r = 1.00, g = 0.50, b = 0.25 };
 ChatTypeInfo["CHANNEL"]				= { sticky = 0, r = 1.00, g = 0.75, b = 0.75 };
 ChatTypeInfo["LOOT"]				= { sticky = 0, r = 0.00, g = 0.75, b = 0.00 };
+ChatTypeInfo["RAID"]				= { sticky = 1, r = 0.41, g = 0.80, b = 0.94 };  -- light blue
 
 -- Slash commands
 SlashCmdList = { };
@@ -365,6 +368,27 @@ function ChatFrame_OnLoad(this)
     
     this:RegisterEvent("TIME_PLAYED_UPDATED", ChatFrame_OnTimePlayedUpdated);
 
+    this:RegisterEvent("CHAT_MSG_WHISPER", function(this, senderName, message)
+        ChatFrame_ReplyTarget = senderName;
+        local info = ChatTypeInfo["WHISPER"];
+        ChatFrame:AddMessage(string.format(Localize("CHAT_FORMAT_WHISPER_FROM"), senderName, message), info.r, info.g, info.b);
+    end);
+
+    this:RegisterEvent("CHAT_MSG_WHISPER_INFORM", function(this, targetName, message)
+        local info = ChatTypeInfo["WHISPER_INFORM"];
+        ChatFrame:AddMessage(string.format(Localize("CHAT_FORMAT_WHISPER_TO"), targetName, message), info.r, info.g, info.b);
+    end);
+
+    this:RegisterEvent("CHAT_MSG_RAID", function(this, character, message)
+        local info = ChatTypeInfo["RAID"];
+        ChatFrame:AddMessage(string.format(Localize("CHAT_FORMAT_RAID"), character, message), info.r, info.g, info.b);
+    end);
+
+    this:RegisterEvent("CHAT_MSG_SYSTEM", function(this, message)
+        local info = ChatTypeInfo["SYSTEM"];
+        ChatFrame:AddMessage(message, info.r, info.g, info.b);
+    end);
+
     this:RegisterEvent("HYPERLINK_CLICKED", function(self, type, payload)
         if not type or not payload then
             return;
@@ -388,6 +412,11 @@ function ChatFrame_OnLoad(this)
 end
 
 function ChatFrame_OpenChat(input)
+    if ( ChatFrame_ReplyTarget and not input ) then
+        ChatType = "WHISPER";
+        ChatFrame_WhisperTarget = ChatFrame_ReplyTarget;
+        ChatEdit_UpdateHeader();
+    end
     if (input) then
         ChatInput:SetText(input);
     end
@@ -441,7 +470,15 @@ function ChatFrame_ParseText(send)
             cmdString = string.upper(cmdString);
             if ( cmdString == command ) then
                 if ( index == "WHISPER" ) then
-                    --ChatEdit_ExtractTellTarget(editBox, msg);
+                    local target = string.match(msg, "^(%S+)");
+                    local body = string.match(msg, "^%S+%s+(.*)") or "";
+                    if target and string.len(target) > 0 then
+                        ChatFrame_WhisperTarget = target;
+                        ChatType = "WHISPER";
+                        ChatInput:SetText(body);
+                        ChatEdit_UpdateHeader();
+                    end
+                    return;
                 else
                     ChatType = index;
                     ChatInput:SetText(msg);
@@ -501,7 +538,14 @@ function ChatFrame_SendMessage(this)
 
 	local text = ChatInput:GetText();
 	if ( string.len(string.gsub(text, "%s*(.*)", "%1")) > 0 ) then
-        SendChatMessage(text, ChatType);
+        if ( ChatType == "WHISPER" ) then
+            local target = ChatFrame_WhisperTarget or ChatFrame_ReplyTarget;
+            if target then
+                SendChatMessage(text, ChatType, target);
+            end
+        else
+            SendChatMessage(text, ChatType);
+        end
 	end
 
     ChatInput_OnEscapePressed();
