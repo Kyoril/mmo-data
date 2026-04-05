@@ -1,10 +1,15 @@
 
 function TrainerFrame_OnTrainerShow(self)
-    ShowUIPanel(self);
+	-- Show trainer entry title in frame header (per CONTEXT.md locked decision: TrainerType enum + title field)
+	local trainerTitle = GetTrainerTitle();
+	if trainerTitle and trainerTitle ~= "" then
+		self:GetChild(0):SetText(trainerTitle);
+	end
+	ShowUIPanel(self);
 end
 
 function TrainerFrame_OnTrainerUpdate(self)
-    
+	TrainerList_Update(TrainerFrame);
 end
 
 function TrainerFrame_OnTrainerClosed(self)
