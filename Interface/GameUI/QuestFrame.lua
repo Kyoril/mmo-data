@@ -149,20 +149,33 @@ function QuestFrame_OnQuestDetail(self)
     QuestDetailObjectives:SetText(questDetails.objectives);
     QuestDetailObjectives:SetHeight(QuestDetailObjectives:GetTextHeight());
 
-    if questDetails.rewardedMoney > 0 then
+    if questDetails.rewardedMoney > 0 or questDetails.rewardedXp > 0 then
     
         QuestDetailRewards:Show();
         QuestDetailRewardMoneyLabel:SetWidth(QuestDetailRewardMoneyLabel:GetTextWidth());
-        QuestDetailRewardMoneyLabel:Show();
 
-        RefreshMoneyFrame("QuestDetailRewardMoney", questDetails.rewardedMoney, false, false, true);
-        QuestDetailRewardMoney:Show();
+        if questDetails.rewardedMoney > 0 then
+            QuestDetailRewardMoneyLabel:Show();
+            RefreshMoneyFrame("QuestDetailRewardMoney", questDetails.rewardedMoney, false, false, true);
+            QuestDetailRewardMoney:Show();
+        else
+            QuestDetailRewardMoneyLabel:Hide();
+            QuestDetailRewardMoney:Hide();
+        end
+
+        if questDetails.rewardedXp > 0 then
+            QuestDetailRewardXpLabel:SetText(string.format(Localize("QUEST_REWARDED_XP"), questDetails.rewardedXp));
+            QuestDetailRewardXpLabel:Show();
+        else
+            QuestDetailRewardXpLabel:Hide();
+        end
         
     else
 
         QuestDetailRewards:Hide();
         QuestDetailRewardMoneyLabel:Hide();
         QuestDetailRewardMoney:Hide();
+        QuestDetailRewardXpLabel:Hide();
 
     end
 

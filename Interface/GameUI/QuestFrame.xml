@@ -258,6 +258,17 @@
                             <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="QuestDetailRewardMoneyLabel" offset="8" />
                         </Area>
                     </Frame>
+
+                    <Frame name="QuestDetailRewardXpLabel" inherits="TextSmall">
+                        <Property name="TextColor" value="FF100500" />
+                        <Property name="Font" value="QuestFont" />
+                        <Property name="ClippedByParent" value="true" />
+
+                        <Area>
+                            <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestDetailRewardMoneyLabel" offset="4" />
+                            <Anchor point="LEFT" offset="32" />
+                        </Area>
+                    </Frame>
                 </Frame>
 
                 <Frame name="QuestDetailAcceptButton" inherits="GlueButton">
