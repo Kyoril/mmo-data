@@ -62,3 +62,5 @@ SLASH_FRIENDLIST1 = "/friendlist"; -- Friend list
 SLASH_FRIENDLIST2 = "/friends"; -- Friend list
 SLASH_TRADE1 = "/trade"; -- Trade with target
 SLASH_TRADE2 = "/tr"; -- Trade with target
+SLASH_RAID1 = "/raid"; -- Raid chat
+SLASH_RAID2 = "/ra";   -- Raid chat

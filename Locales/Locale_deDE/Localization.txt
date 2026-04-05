@@ -72,6 +72,9 @@ strings =
 	(key = "CHAT_FORMAT_GUILD", string = "|Hchannel:GUILD|h[Gilde]|h %s: %s")
 	(key = "CHAT_FORMAT_CREATURE_SAY", string = "%s sagt: %s")
 	(key = "CHAT_FORMAT_CREATURE_YELL", string = "%s schreit: %s")
+	(key = "CHAT_FORMAT_WHISPER_FROM", string = "Von [%s]: %s")
+	(key = "CHAT_FORMAT_WHISPER_TO", string = "An [%s]: %s")
+	(key = "CHAT_FORMAT_RAID", string = "|Hchannel:RAID|h[Schlachtzug]|h %s: %s")
 	
 	(key = "NAME", string = "Name")
 
@@ -298,6 +301,8 @@ strings =
 	(key = "CHAT_TYPE_YELL", string = "Schreien")
 	(key = "CHAT_TYPE_CHANNEL", string = "%s")
 	(key = "CHAT_TYPE_GUILD", string = "Gilde")
+	(key = "CHAT_TYPE_WHISPER", string = "Flüstern")
+	(key = "CHAT_TYPE_RAID", string = "Schlachtzug")
 
 	(key = "BACK", string = "Zurück")
 	(key = "CUSTOMIZE", string = "Anpassen")

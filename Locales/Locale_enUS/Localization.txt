@@ -73,6 +73,9 @@ strings =
 	(key = "CHAT_FORMAT_GUILD", string = "|Hchannel:GUILD|h[Guild]|h %s: %s")
 	(key = "CHAT_FORMAT_CREATURE_SAY", string = "%s says: %s")
 	(key = "CHAT_FORMAT_CREATURE_YELL", string = "%s yells: %s")
+	(key = "CHAT_FORMAT_WHISPER_FROM", string = "From [%s]: %s")
+	(key = "CHAT_FORMAT_WHISPER_TO", string = "To [%s]: %s")
+	(key = "CHAT_FORMAT_RAID", string = "|Hchannel:RAID|h[Raid]|h %s: %s")
 
 	(key = "NAME", string = "Name")
 	
@@ -308,8 +311,8 @@ strings =
 	(key = "CHAT_TYPE_YELL", string = "Yell")
 	(key = "CHAT_TYPE_CHANNEL", string = "%s")
 	(key = "CHAT_TYPE_GUILD", string = "Guild")
-	
-	(key = "BACK", string = "Back")
+	(key = "CHAT_TYPE_WHISPER", string = "Whisper")
+	(key = "CHAT_TYPE_RAID", string = "Raid")
 	(key = "CUSTOMIZE", string = "Customize")
 	(key = "CUSTOMIZATION", string = "Customization")
 
