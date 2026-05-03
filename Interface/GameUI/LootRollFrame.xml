@@ -2,15 +2,16 @@
 <UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
 	<Script file="LootRollFrame.lua" />
 
-	<Frame name="LootRollChoiceButtonTemplate" inherits="GlueButton">
+	<Frame name="LootRollChoiceButtonTemplate" type="Button" inherits="GlueButton">
+		<Property name="Font" value="SmallLabelFont" />
 		<Area>
-			<Size><AbsDimension x="64" y="32" /></Size>
+			<Size><AbsDimension x="92" y="40" /></Size>
 		</Area>
 	</Frame>
 
 	<Frame name="LootRollItemTemplate" renderer="DefaultRenderer">
 		<Area>
-			<Size><AbsDimension x="500" y="64" /></Size>
+			<Size><AbsDimension x="520" y="72" /></Size>
 		</Area>
 
 		<Visual>
@@ -28,36 +29,36 @@
 			<Property name="Font" value="DefaultSmall" />
 			<Area>
 				<Position><AbsDimension x="16" y="10" /></Position>
-				<Size><AbsDimension x="240" y="20" /></Size>
+				<Size><AbsDimension x="250" y="20" /></Size>
 			</Area>
 		</Frame>
 
 		<Frame name="Timer" renderer="DefaultRenderer">
-			<Property name="Font" value="DefaultSmall" />
+			<Property name="Font" value="SmallLabelFont" />
 			<Area>
-				<Position><AbsDimension x="16" y="34" /></Position>
-				<Size><AbsDimension x="80" y="20" /></Size>
+				<Position><AbsDimension x="16" y="40" /></Position>
+				<Size><AbsDimension x="120" y="20" /></Size>
 			</Area>
 		</Frame>
 
 		<Frame name="NeedButton" inherits="LootRollChoiceButtonTemplate">
 			<Property name="Text" value="Need" />
 			<Area>
-				<Position><AbsDimension x="270" y="14" /></Position>
+				<Position><AbsDimension x="230" y="16" /></Position>
 			</Area>
 		</Frame>
 
 		<Frame name="GreedButton" inherits="LootRollChoiceButtonTemplate">
 			<Property name="Text" value="Greed" />
 			<Area>
-				<Position><AbsDimension x="344" y="14" /></Position>
+				<Position><AbsDimension x="326" y="16" /></Position>
 			</Area>
 		</Frame>
 
 		<Frame name="PassButton" inherits="LootRollChoiceButtonTemplate">
 			<Property name="Text" value="Pass" />
 			<Area>
-				<Position><AbsDimension x="418" y="14" /></Position>
+				<Position><AbsDimension x="422" y="16" /></Position>
 			</Area>
 		</Frame>
 	</Frame>
@@ -66,8 +67,9 @@
 		<Property name="Visible" value="false" />
 
 		<Area>
-			<Position><AbsDimension x="740" y="160" /></Position>
-			<Size><AbsDimension x="520" y="320" /></Size>
+			<Size><AbsDimension x="540" y="360" /></Size>
+			<Anchor point="RIGHT" offset="-40" />
+			<Anchor point="TOP" offset="180" />
 		</Area>
 
 		<Visual>
@@ -94,27 +96,41 @@
 			</OnUpdate>
 		</Scripts>
 
+		<Frame name="LootRollTitleBar" inherits="TitleBar">
+			<Property name="Text" value="ROLL" />
+
+			<Area>
+				<Anchor point="TOP" offset="24" />
+				<Anchor point="LEFT" offset="24" />
+				<Anchor point="RIGHT" offset="-24" />
+			</Area>
+		</Frame>
+
 		<Frame name="LootRollItem1" inherits="LootRollItemTemplate">
 			<Area>
-				<Position><AbsDimension x="10" y="10" /></Position>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="LootRollTitleBar" offset="8" />
+				<Anchor point="LEFT" offset="10" />
 			</Area>
 		</Frame>
 
 		<Frame name="LootRollItem2" inherits="LootRollItemTemplate">
 			<Area>
-				<Position><AbsDimension x="10" y="86" /></Position>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="LootRollItem1" offset="8" />
+				<Anchor point="LEFT" offset="10" />
 			</Area>
 		</Frame>
 
 		<Frame name="LootRollItem3" inherits="LootRollItemTemplate">
 			<Area>
-				<Position><AbsDimension x="10" y="162" /></Position>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="LootRollItem2" offset="8" />
+				<Anchor point="LEFT" offset="10" />
 			</Area>
 		</Frame>
 
 		<Frame name="LootRollItem4" inherits="LootRollItemTemplate">
 			<Area>
-				<Position><AbsDimension x="10" y="238" /></Position>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="LootRollItem3" offset="8" />
+				<Anchor point="LEFT" offset="10" />
 			</Area>
 		</Frame>
 	</Frame>

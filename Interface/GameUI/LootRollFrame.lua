@@ -3,17 +3,27 @@ LOOT_ROLL_MAX_ITEMS = 4;
 LootRoll_ActiveRolls = {};
 LootRoll_RollOrder = {};
 
+function LootRollFrame_GetItemFrame(index)
+	return getglobal("LootRollItem" .. index);
+end
+
+function LootRollFrame_GetItemWidgets(frame)
+	if not frame then
+		return nil, nil, nil, nil, nil;
+	end
+
+	return frame:GetChild(0), frame:GetChild(1), frame:GetChild(2), frame:GetChild(3), frame:GetChild(4);
+end
+
 function LootRollFrame_OnLoad(self)
 	self:RegisterEvent("START_LOOT_ROLL", LootRollFrame_OnStartRoll);
 	self:RegisterEvent("LOOT_ROLL_WON", LootRollFrame_OnRollWon);
 	self:RegisterEvent("LOOT_ROLL_ALL_PASSED", LootRollFrame_OnAllPassed);
 
 	for i = 1, LOOT_ROLL_MAX_ITEMS, 1 do
-		local frame = getglobal("LootRollItem" .. i);
+		local frame = LootRollFrame_GetItemFrame(i);
 		if frame then
-			local needButton = getglobal("LootRollItem" .. i .. "NeedButton");
-			local greedButton = getglobal("LootRollItem" .. i .. "GreedButton");
-			local passButton = getglobal("LootRollItem" .. i .. "PassButton");
+			local _, _, needButton, greedButton, passButton = LootRollFrame_GetItemWidgets(frame);
 
 			if needButton then
 				needButton:SetClickedHandler(LootRollNeedButton_OnClick);
@@ -85,9 +95,7 @@ function LootRollFrame_OnAllPassed(self, lootGuid, slot, itemId)
 end
 
 function LootRollFrame_SetChoiceButtonsVisible(frame, visible)
-	local needButton = getglobal(frame:GetName() .. "NeedButton");
-	local greedButton = getglobal(frame:GetName() .. "GreedButton");
-	local passButton = getglobal(frame:GetName() .. "PassButton");
+	local _, _, needButton, greedButton, passButton = LootRollFrame_GetItemWidgets(frame);
 
 	if needButton then
 		if visible then
@@ -111,7 +119,7 @@ function LootRollFrame_SetChoiceButtonsVisible(frame, visible)
 		else
 			passButton:Hide();
 		end
-		end
+	end
 end
 
 function LootRollFrame_RemoveKey(key)
@@ -156,12 +164,8 @@ function LootRollFrame_Update(self)
 	for _, key in ipairs(LootRoll_RollOrder) do
 		local rollInfo = LootRoll_ActiveRolls[key];
 		if rollInfo and visibleIndex <= LOOT_ROLL_MAX_ITEMS then
-			local frame = getglobal("LootRollItem" .. visibleIndex);
-			local nameText = getglobal("LootRollItem" .. visibleIndex .. "_Name");
-			local timerText = getglobal("LootRollItem" .. visibleIndex .. "_Timer");
-			local needButton = getglobal("LootRollItem" .. visibleIndex .. "_NeedButton");
-			local greedButton = getglobal("LootRollItem" .. visibleIndex .. "_GreedButton");
-			local passButton = getglobal("LootRollItem" .. visibleIndex .. "_PassButton");
+			local frame = LootRollFrame_GetItemFrame(visibleIndex);
+			local nameText, timerText = LootRollFrame_GetItemWidgets(frame);
 
 			if nameText then
 				local color = ItemQualityColors[rollInfo.quality] or "FFFFFFFF";
@@ -181,9 +185,10 @@ function LootRollFrame_Update(self)
 	end
 
 	for index = visibleIndex, LOOT_ROLL_MAX_ITEMS, 1 do
-		local frame = getglobal("LootRollItem" .. index);
+		local frame = LootRollFrame_GetItemFrame(index);
 		if frame then
 			frame.rollInfo = nil;
+			LootRollFrame_SetChoiceButtonsVisible(frame, true);
 			frame:Hide();
 		end
 	end
