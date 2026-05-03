@@ -337,6 +337,15 @@ strings =
 	(key = "LOOT_GROUP_LOOT", string = "Butin de groupe")
 	(key = "SET_LOOT_METHOD", string = "Définir la méthode de butin")
 	(key = "LOOTMETHOD_USAGE", string = "Utilisation : /lootmethod [freeforall|roundrobin|masterloot|grouploot]")
+	(key = "LOOT_METHOD_SET", string = "Méthode de butin : %s")
+	(key = "LOOT_METHOD_SET_THRESHOLD", string = "Méthode de butin : %s (Seuil : %s)")
+	
+	(key = "QUALITY_POOR", string = "Médiocre")
+	(key = "QUALITY_COMMON", string = "Commun")
+	(key = "QUALITY_UNCOMMON", string = "Inhabituel")
+	(key = "QUALITY_RARE", string = "Rare")
+	(key = "QUALITY_EPIC", string = "Épique")
+	(key = "QUALITY_LEGENDARY", string = "Légendaire")
 
 	(key = "LEVEL_FORMAT", string = "Niveau %d")
 	

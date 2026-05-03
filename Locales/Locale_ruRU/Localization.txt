@@ -336,6 +336,15 @@ strings =
 	(key = "LOOT_GROUP_LOOT", string = "Group Loot")
 	(key = "SET_LOOT_METHOD", string = "Set Loot Method")
 	(key = "LOOTMETHOD_USAGE", string = "Usage: /lootmethod [freeforall|roundrobin|masterloot|grouploot]")
+	(key = "LOOT_METHOD_SET", string = "Loot method set to: %s")
+	(key = "LOOT_METHOD_SET_THRESHOLD", string = "Loot method set to: %s (Threshold: %s)")
+	
+	(key = "QUALITY_POOR", string = "Poor")
+	(key = "QUALITY_COMMON", string = "Common")
+	(key = "QUALITY_UNCOMMON", string = "Uncommon")
+	(key = "QUALITY_RARE", string = "Rare")
+	(key = "QUALITY_EPIC", string = "Epic")
+	(key = "QUALITY_LEGENDARY", string = "Legendary")
 	
 	(key = "LEVEL_FORMAT", string = "Level %d")
 

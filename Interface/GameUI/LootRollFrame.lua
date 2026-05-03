@@ -303,17 +303,16 @@ function LootRollItem_OnLeave(frameIndex)
 	GameTooltip:Hide();
 end
 
-function LootRollFrame_OnRollResult(self, vote, playerName, itemName, quality)
-	local voteStr = "passed on";
-	if vote == 1 then
-		voteStr = "rolled Need on";
-	elseif vote == 2 then
-		voteStr = "rolled Greed on";
-	end
-
+function LootRollFrame_OnRollResult(self, vote, rollValue, playerName, itemName, quality)
 	local color = ItemQualityColors[quality] or "FFFFFFFF";
 	local itemLink = "|c" .. color .. "[" .. (itemName or "Unknown") .. "]|r";
 	local name = playerName or "Unknown";
 
-	ChatFrame:AddMessage(name .. " " .. voteStr .. " " .. itemLink, 0.0, 0.75, 0.0);
+	if vote == 0 then
+		ChatFrame:AddMessage(name .. " passed on " .. itemLink, 0.0, 0.75, 0.0);
+	elseif vote == 1 then
+		ChatFrame:AddMessage(name .. " rolled Need - " .. rollValue .. " on " .. itemLink, 0.0, 0.75, 0.0);
+	elseif vote == 2 then
+		ChatFrame:AddMessage(name .. " rolled Greed - " .. rollValue .. " on " .. itemLink, 0.0, 0.75, 0.0);
+	end
 end

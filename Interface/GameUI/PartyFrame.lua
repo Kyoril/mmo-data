@@ -102,16 +102,7 @@ function PartyMemberFrame_OnMemberDisable(self)
 end
 
 function PartyMemberFrame_OnLootMethodChanged(self)
-	-- Update loot method display if a label widget exists in the party frame
-	local method = GetLootMethod();
-	local methodNames = {
-		[0] = Localize("LOOT_FREE_FOR_ALL"),
-		[1] = Localize("LOOT_ROUND_ROBIN"),
-		[2] = Localize("LOOT_MASTER_LOOT"),
-		[3] = Localize("LOOT_GROUP_LOOT"),
-	};
-	-- PartyLootMethodText widget not present in current PartyFrame.xml;
-	-- refresh member display so tooltip/name area reflects the current method
+	-- Refresh member display so tooltip/name area reflects the current method
 	PartyMemberFrame_UpdateMember(self);
 end
 
@@ -174,6 +165,35 @@ function PartyFrame_OnMembersChanged(self)
     self:Show();
 end
 
+function PartyFrame_OnLootMethodChanged(self)
+	local method = GetLootMethod();
+	local threshold = GetLootThreshold();
+	local methodNames = {
+		[0] = Localize("LOOT_FREE_FOR_ALL"),
+		[1] = Localize("LOOT_ROUND_ROBIN"),
+		[2] = Localize("LOOT_MASTER_LOOT"),
+		[3] = Localize("LOOT_GROUP_LOOT"),
+	};
+
+	local qualityNames = {
+		[0] = Localize("QUALITY_POOR"),
+		[1] = Localize("QUALITY_COMMON"),
+		[2] = Localize("QUALITY_UNCOMMON"),
+		[3] = Localize("QUALITY_RARE"),
+		[4] = Localize("QUALITY_EPIC"),
+		[5] = Localize("QUALITY_LEGENDARY"),
+	};
+
+	local methodName = methodNames[method] or "Unknown";
+	local thresholdName = qualityNames[threshold] or "Unknown";
+
+	if method == 3 then
+		ChatFrame:AddMessage(string.format(Localize("LOOT_METHOD_SET_THRESHOLD"), methodName, thresholdName), 1.0, 1.0, 0.0);
+	else
+		ChatFrame:AddMessage(string.format(Localize("LOOT_METHOD_SET"), methodName), 1.0, 1.0, 0.0);
+	end
+end
+
 function PartyFrame_OnLoad(self)
     self:RegisterEvent("PARTY_DISBANDED", PartyFrame_OnDisbanded);
     self:RegisterEvent("PARTY_MEMBER_JOINED", PartyFrame_OnMemberJoined);
@@ -183,4 +203,5 @@ function PartyFrame_OnLoad(self)
     self:RegisterEvent("PARTY_INVITE_SENT", PartyFrame_OnInviteSent);
     self:RegisterEvent("PARTY_LEFT", PartyFrame_OnLeft);
     self:RegisterEvent("PARTY_MEMBERS_CHANGED", PartyFrame_OnMembersChanged);
+    self:RegisterEvent("PARTY_LOOT_METHOD_CHANGED", PartyFrame_OnLootMethodChanged);
 end

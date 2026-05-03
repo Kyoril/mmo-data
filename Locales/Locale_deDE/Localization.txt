@@ -337,6 +337,15 @@ strings =
 	(key = "LOOT_GROUP_LOOT", string = "Gruppenbeute")
 	(key = "SET_LOOT_METHOD", string = "Beutemethode festlegen")
 	(key = "LOOTMETHOD_USAGE", string = "Verwendung: /lootmethod [freeforall|roundrobin|masterloot|grouploot]")
+	(key = "LOOT_METHOD_SET", string = "Beutemethode: %s")
+	(key = "LOOT_METHOD_SET_THRESHOLD", string = "Beutemethode: %s (Schwellenwert: %s)")
+	
+	(key = "QUALITY_POOR", string = "Schlecht")
+	(key = "QUALITY_COMMON", string = "Gewöhnlich")
+	(key = "QUALITY_UNCOMMON", string = "Ungewöhnlich")
+	(key = "QUALITY_RARE", string = "Selten")
+	(key = "QUALITY_EPIC", string = "Episch")
+	(key = "QUALITY_LEGENDARY", string = "Legendär")
 	
 	(key = "LEVEL_FORMAT", string = "Stufe %d")
 	
