@@ -1,0 +1,121 @@
+<?xml version="1.0" ?>
+<UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
+	<Script file="LootRollFrame.lua" />
+
+	<Frame name="LootRollChoiceButtonTemplate" inherits="GlueButton">
+		<Area>
+			<Size><AbsDimension x="64" y="32" /></Size>
+		</Area>
+	</Frame>
+
+	<Frame name="LootRollItemTemplate" renderer="DefaultRenderer">
+		<Area>
+			<Size><AbsDimension x="500" y="64" /></Size>
+		</Area>
+
+		<Visual>
+			<ImagerySection name="Background">
+				<BorderComponent texture="Interface/GameUI/fg4_borders_simple.htex" borderSize="250" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Background" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+
+		<Frame name="Name" renderer="DefaultRenderer">
+			<Property name="Font" value="DefaultSmall" />
+			<Area>
+				<Position><AbsDimension x="16" y="10" /></Position>
+				<Size><AbsDimension x="240" y="20" /></Size>
+			</Area>
+		</Frame>
+
+		<Frame name="Timer" renderer="DefaultRenderer">
+			<Property name="Font" value="DefaultSmall" />
+			<Area>
+				<Position><AbsDimension x="16" y="34" /></Position>
+				<Size><AbsDimension x="80" y="20" /></Size>
+			</Area>
+		</Frame>
+
+		<Frame name="NeedButton" inherits="LootRollChoiceButtonTemplate">
+			<Property name="Text" value="Need" />
+			<Area>
+				<Position><AbsDimension x="270" y="14" /></Position>
+			</Area>
+		</Frame>
+
+		<Frame name="GreedButton" inherits="LootRollChoiceButtonTemplate">
+			<Property name="Text" value="Greed" />
+			<Area>
+				<Position><AbsDimension x="344" y="14" /></Position>
+			</Area>
+		</Frame>
+
+		<Frame name="PassButton" inherits="LootRollChoiceButtonTemplate">
+			<Property name="Text" value="Pass" />
+			<Area>
+				<Position><AbsDimension x="418" y="14" /></Position>
+			</Area>
+		</Frame>
+	</Frame>
+
+	<Frame name="LootRollFrame" parent="GameParent" renderer="DefaultRenderer">
+		<Property name="Visible" value="false" />
+
+		<Area>
+			<Position><AbsDimension x="740" y="160" /></Position>
+			<Size><AbsDimension x="520" y="320" /></Size>
+		</Area>
+
+		<Visual>
+			<ImagerySection name="Background">
+				<BorderComponent texture="Interface/GameUI/fg4_borders_simple.htex" borderSize="250" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Background" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+
+		<Scripts>
+			<OnLoad>
+				return function(self)
+					LootRollFrame_OnLoad(self);
+				end
+			</OnLoad>
+			<OnUpdate>
+				return function(self, elapsed)
+					LootRollFrame_OnUpdate(self, elapsed);
+				end
+			</OnUpdate>
+		</Scripts>
+
+		<Frame name="LootRollItem1" inherits="LootRollItemTemplate">
+			<Area>
+				<Position><AbsDimension x="10" y="10" /></Position>
+			</Area>
+		</Frame>
+
+		<Frame name="LootRollItem2" inherits="LootRollItemTemplate">
+			<Area>
+				<Position><AbsDimension x="10" y="86" /></Position>
+			</Area>
+		</Frame>
+
+		<Frame name="LootRollItem3" inherits="LootRollItemTemplate">
+			<Area>
+				<Position><AbsDimension x="10" y="162" /></Position>
+			</Area>
+		</Frame>
+
+		<Frame name="LootRollItem4" inherits="LootRollItemTemplate">
+			<Area>
+				<Position><AbsDimension x="10" y="238" /></Position>
+			</Area>
+		</Frame>
+	</Frame>
+</UiLayout>
