@@ -60,7 +60,7 @@
 	<!-- Children order: 0=Icon, 1=Name, 2=Timer, 3=NeedButton, 4=GreedButton, 5=PassButton -->
 	<Frame name="LootRollItemTemplate" renderer="DefaultRenderer">
 		<Area>
-			<Size><AbsDimension x="480" y="68" /></Size>
+			<Size><AbsDimension x="540" y="80" /></Size>
 		</Area>
 
 		<Visual>
@@ -79,8 +79,8 @@
 			<Property name="Icon" value="" />
 
 			<Area>
-				<Position><AbsDimension x="10" y="10" /></Position>
-				<Size><AbsDimension x="48" y="48" /></Size>
+				<Position><AbsDimension x="14" y="14" /></Position>
+				<Size><AbsDimension x="52" y="52" /></Size>
 			</Area>
 
 			<Visual>
@@ -107,8 +107,8 @@
 			<Property name="Font" value="SmallLabelFont" />
 
 			<Area>
-				<Position><AbsDimension x="66" y="8" /></Position>
-				<Size><AbsDimension x="144" y="28" /></Size>
+				<Position><AbsDimension x="74" y="12" /></Position>
+				<Size><AbsDimension x="180" y="28" /></Size>
 			</Area>
 
 			<Visual>
@@ -130,16 +130,16 @@
 
 		<!-- Child 2: Timer text -->
 		<Frame name="Timer" renderer="DefaultRenderer">
-			<Property name="Font" value="AuraTimeFont" />
+			<Property name="Font" value="SmallLabelFont" />
 
 			<Area>
-				<Position><AbsDimension x="66" y="38" /></Position>
-				<Size><AbsDimension x="100" y="22" /></Size>
+				<Position><AbsDimension x="74" y="42" /></Position>
+				<Size><AbsDimension x="100" y="24" /></Size>
 			</Area>
 
 			<Visual>
 				<ImagerySection name="Text">
-					<TextComponent color="FFAAAAAA" horzAlign="LEFT" vertAlign="CENTER" />
+					<TextComponent color="FFFFCC00" horzAlign="LEFT" vertAlign="CENTER" />
 				</ImagerySection>
 				<StateImagery name="Enabled">
 					<Layer>
@@ -158,7 +158,7 @@
 		<Frame name="NeedButton" type="Button" inherits="LootRollChoiceButtonTemplate">
 			<Property name="Text" value="Need" />
 			<Area>
-				<Position><AbsDimension x="216" y="10" /></Position>
+				<Position><AbsDimension x="262" y="16" /></Position>
 			</Area>
 		</Frame>
 
@@ -166,7 +166,7 @@
 		<Frame name="GreedButton" type="Button" inherits="LootRollChoiceButtonTemplate">
 			<Property name="Text" value="Greed" />
 			<Area>
-				<Position><AbsDimension x="308" y="10" /></Position>
+				<Position><AbsDimension x="354" y="16" /></Position>
 			</Area>
 		</Frame>
 
@@ -174,7 +174,7 @@
 		<Frame name="PassButton" type="Button" inherits="LootRollChoiceButtonTemplate">
 			<Property name="Text" value="Pass" />
 			<Area>
-				<Position><AbsDimension x="400" y="10" /></Position>
+				<Position><AbsDimension x="446" y="16" /></Position>
 			</Area>
 		</Frame>
 	</Frame>
@@ -184,9 +184,9 @@
 		<Property name="Visible" value="false" />
 
 		<Area>
-			<Size><AbsDimension x="500" y="296" /></Size>
+			<Size><AbsDimension x="560" y="348" /></Size>
 			<Anchor point="H_CENTER" />
-			<Anchor point="TOP" offset="120" />
+			<Anchor point="TOP" offset="100" />
 		</Area>
 
 		<Scripts>

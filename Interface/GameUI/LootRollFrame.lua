@@ -2,6 +2,7 @@ LOOT_ROLL_MAX_ITEMS = 4;
 
 LootRoll_ActiveRolls = {};
 LootRoll_RollOrder = {};
+LootRoll_FrameRollInfo = {};  -- [frameIndex] -> rollInfo
 
 function LootRollFrame_GetItemFrame(index)
 	return getglobal("LootRollItem" .. index);
@@ -26,16 +27,33 @@ function LootRollFrame_OnLoad(self)
 			local _, _, _, needButton, greedButton, passButton = LootRollFrame_GetItemWidgets(frame);
 
 			if needButton then
-				needButton:SetClickedHandler(LootRollNeedButton_OnClick);
+				local idx = i;
+				needButton:SetClickedHandler(function(btn)
+					LootRollButton_OnClick(idx, 1);
+				end);
 			end
 
 			if greedButton then
-				greedButton:SetClickedHandler(LootRollGreedButton_OnClick);
+				local idx = i;
+				greedButton:SetClickedHandler(function(btn)
+					LootRollButton_OnClick(idx, 2);
+				end);
 			end
 
 			if passButton then
-				passButton:SetClickedHandler(LootRollPassButton_OnClick);
+				local idx = i;
+				passButton:SetClickedHandler(function(btn)
+					LootRollButton_OnClick(idx, 0);
+				end);
 			end
+
+			local idx = i;
+			frame:SetOnEnterHandler(function(f)
+				LootRollItem_OnEnter(idx, f);
+			end);
+			frame:SetOnLeaveHandler(function(f)
+				LootRollItem_OnLeave(idx);
+			end);
 
 			frame:Hide();
 		end
@@ -186,7 +204,7 @@ function LootRollFrame_Update(self)
 				timerText:SetText(string.format("%ds", math.ceil(rollInfo.timeLeft)));
 			end
 
-			frame.rollInfo = rollInfo;
+			LootRoll_FrameRollInfo[visibleIndex] = rollInfo;
 			LootRollFrame_SetChoiceButtonsVisible(frame, not rollInfo.voted);
 
 			frame:Show();
@@ -197,36 +215,36 @@ function LootRollFrame_Update(self)
 	for index = visibleIndex, LOOT_ROLL_MAX_ITEMS, 1 do
 		local frame = LootRollFrame_GetItemFrame(index);
 		if frame then
-			frame.rollInfo = nil;
+			LootRoll_FrameRollInfo[index] = nil;
 			LootRollFrame_SetChoiceButtonsVisible(frame, true);
 			frame:Hide();
 		end
 	end
 end
 
-function LootRollNeedButton_OnClick(self)
-	local parent = self:GetParent();
-	if parent and parent.rollInfo and not parent.rollInfo.voted then
-		ConfirmLootRoll(parent.rollInfo.lootGuid, parent.rollInfo.slot, 1);
-		parent.rollInfo.voted = true;
+function LootRollButton_OnClick(frameIndex, vote)
+	local rollInfo = LootRoll_FrameRollInfo[frameIndex];
+	if rollInfo and not rollInfo.voted then
+		ConfirmLootRoll(rollInfo.lootGuid, rollInfo.slot, vote);
+		rollInfo.voted = true;
 		LootRollFrame_Update(LootRollFrame);
 	end
 end
 
-function LootRollGreedButton_OnClick(self)
-	local parent = self:GetParent();
-	if parent and parent.rollInfo and not parent.rollInfo.voted then
-		ConfirmLootRoll(parent.rollInfo.lootGuid, parent.rollInfo.slot, 2);
-		parent.rollInfo.voted = true;
-		LootRollFrame_Update(LootRollFrame);
+function LootRollItem_OnEnter(frameIndex, frame)
+	local rollInfo = LootRoll_FrameRollInfo[frameIndex];
+	if rollInfo and rollInfo.itemId then
+		local item = GetCachedItemInfo(rollInfo.itemId);
+		if item then
+			GameTooltip:ClearAnchors();
+			GameTooltip:SetAnchor(AnchorPoint.LEFT, AnchorPoint.RIGHT, frame, 8);
+			GameTooltip:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, frame, 0);
+			GameTooltip_SetItemTemplate(item);
+			GameTooltip:Show();
+		end
 	end
 end
 
-function LootRollPassButton_OnClick(self)
-	local parent = self:GetParent();
-	if parent and parent.rollInfo and not parent.rollInfo.voted then
-		ConfirmLootRoll(parent.rollInfo.lootGuid, parent.rollInfo.slot, 0);
-		parent.rollInfo.voted = true;
-		LootRollFrame_Update(LootRollFrame);
-	end
+function LootRollItem_OnLeave(frameIndex)
+	GameTooltip:Hide();
 end
