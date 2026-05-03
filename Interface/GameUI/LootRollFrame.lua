@@ -9,10 +9,10 @@ end
 
 function LootRollFrame_GetItemWidgets(frame)
 	if not frame then
-		return nil, nil, nil, nil, nil;
+		return nil, nil, nil, nil, nil, nil;
 	end
 
-	return frame:GetChild(0), frame:GetChild(1), frame:GetChild(2), frame:GetChild(3), frame:GetChild(4);
+	return frame:GetChild(0), frame:GetChild(1), frame:GetChild(2), frame:GetChild(3), frame:GetChild(4), frame:GetChild(5);
 end
 
 function LootRollFrame_OnLoad(self)
@@ -23,7 +23,7 @@ function LootRollFrame_OnLoad(self)
 	for i = 1, LOOT_ROLL_MAX_ITEMS, 1 do
 		local frame = LootRollFrame_GetItemFrame(i);
 		if frame then
-			local _, _, needButton, greedButton, passButton = LootRollFrame_GetItemWidgets(frame);
+			local _, _, _, needButton, greedButton, passButton = LootRollFrame_GetItemWidgets(frame);
 
 			if needButton then
 				needButton:SetClickedHandler(LootRollNeedButton_OnClick);
@@ -44,14 +44,20 @@ function LootRollFrame_OnLoad(self)
 	self:Hide();
 end
 
-function LootRollFrame_OnStartRoll(self, lootGuid, slot, itemId, rollTime, itemName, quality)
+function LootRollFrame_OnStartRoll(self, lootGuid, slot, itemId, rollTime, itemName, quality, displayId)
 	local key = tostring(lootGuid) .. "_" .. tostring(slot);
+	local icon = "";
+	if displayId and displayId > 0 then
+		icon = GetItemDisplayIcon(displayId);
+	end
+
 	LootRoll_ActiveRolls[key] = {
 		lootGuid = lootGuid,
 		slot = slot,
 		itemId = itemId,
 		itemName = itemName or "Unknown Item",
 		quality = quality or 1,
+		icon = icon or "",
 		timeLeft = (rollTime or 60000) / 1000,
 		voted = false,
 	};
@@ -95,7 +101,7 @@ function LootRollFrame_OnAllPassed(self, lootGuid, slot, itemId)
 end
 
 function LootRollFrame_SetChoiceButtonsVisible(frame, visible)
-	local _, _, needButton, greedButton, passButton = LootRollFrame_GetItemWidgets(frame);
+	local _, _, _, needButton, greedButton, passButton = LootRollFrame_GetItemWidgets(frame);
 
 	if needButton then
 		if visible then
@@ -165,7 +171,11 @@ function LootRollFrame_Update(self)
 		local rollInfo = LootRoll_ActiveRolls[key];
 		if rollInfo and visibleIndex <= LOOT_ROLL_MAX_ITEMS then
 			local frame = LootRollFrame_GetItemFrame(visibleIndex);
-			local nameText, timerText = LootRollFrame_GetItemWidgets(frame);
+			local iconFrame, nameText, timerText = LootRollFrame_GetItemWidgets(frame);
+
+			if iconFrame and rollInfo.icon and rollInfo.icon ~= "" then
+				iconFrame:SetProperty("Icon", rollInfo.icon);
+			end
 
 			if nameText then
 				local color = ItemQualityColors[rollInfo.quality] or "FFFFFFFF";

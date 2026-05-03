@@ -2,21 +2,70 @@
 <UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
 	<Script file="LootRollFrame.lua" />
 
-	<Frame name="LootRollChoiceButtonTemplate" type="Button" inherits="GlueButton">
+	<!-- Compact text button using small border textures (borderSize=22, safe at 48px height) -->
+	<Frame name="LootRollChoiceButtonTemplate" type="Button" renderer="ButtonRenderer">
 		<Property name="Font" value="SmallLabelFont" />
+
+		<Visual>
+			<ImagerySection name="NormalFrame">
+				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Up_result.htex" borderSize="22" />
+			</ImagerySection>
+			<ImagerySection name="HoveredFrame">
+				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Over_result.htex" borderSize="22" />
+			</ImagerySection>
+			<ImagerySection name="PushedFrame">
+				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Down_result.htex" borderSize="22" />
+			</ImagerySection>
+			<ImagerySection name="DisabledFrame">
+				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall2_Disabled_result.htex" borderSize="22" />
+			</ImagerySection>
+			<ImagerySection name="Caption">
+				<TextComponent color="FFFFD100" horzAlign="CENTER" vertAlign="CENTER" />
+			</ImagerySection>
+			<ImagerySection name="HoveredCaption">
+				<TextComponent color="FFFFFFFF" horzAlign="CENTER" vertAlign="CENTER" />
+			</ImagerySection>
+			<StateImagery name="Normal">
+				<Layer>
+					<Section section="NormalFrame" />
+					<Section section="Caption" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Hovered">
+				<Layer>
+					<Section section="HoveredFrame" />
+					<Section section="HoveredCaption" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Pushed">
+				<Layer>
+					<Section section="PushedFrame" />
+					<Section section="Caption" color="FFAAAAAA" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="DisabledFrame" />
+					<Section section="Caption" color="AE888888" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+
 		<Area>
-			<Size><AbsDimension x="92" y="40" /></Size>
+			<Size><AbsDimension x="88" y="48" /></Size>
 		</Area>
 	</Frame>
 
+	<!-- Roll item row: [Icon] [ItemName / Timer] [Need] [Greed] [Pass] -->
+	<!-- Children order: 0=Icon, 1=Name, 2=Timer, 3=NeedButton, 4=GreedButton, 5=PassButton -->
 	<Frame name="LootRollItemTemplate" renderer="DefaultRenderer">
 		<Area>
-			<Size><AbsDimension x="520" y="72" /></Size>
+			<Size><AbsDimension x="480" y="68" /></Size>
 		</Area>
 
 		<Visual>
 			<ImagerySection name="Background">
-				<BorderComponent texture="Interface/GameUI/fg4_borders_simple.htex" borderSize="250" />
+				<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" />
 			</ImagerySection>
 			<StateImagery name="Enabled">
 				<Layer>
@@ -25,63 +74,120 @@
 			</StateImagery>
 		</Visual>
 
+		<!-- Child 0: Item icon -->
+		<Frame name="Icon" renderer="DefaultRenderer">
+			<Property name="Icon" value="" />
+
+			<Area>
+				<Position><AbsDimension x="10" y="10" /></Position>
+				<Size><AbsDimension x="48" y="48" /></Size>
+			</Area>
+
+			<Visual>
+				<ImagerySection name="Image">
+					<ImageComponent tiling="NONE">
+						<PropertyValue property="Icon" />
+					</ImageComponent>
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Image" color="FFFFFFFF" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="Disabled">
+					<Layer>
+						<Section section="Image" color="AE888888" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+		</Frame>
+
+		<!-- Child 1: Item name -->
 		<Frame name="Name" renderer="DefaultRenderer">
-			<Property name="Font" value="DefaultSmall" />
-			<Area>
-				<Position><AbsDimension x="16" y="10" /></Position>
-				<Size><AbsDimension x="250" y="20" /></Size>
-			</Area>
-		</Frame>
-
-		<Frame name="Timer" renderer="DefaultRenderer">
 			<Property name="Font" value="SmallLabelFont" />
+
 			<Area>
-				<Position><AbsDimension x="16" y="40" /></Position>
-				<Size><AbsDimension x="120" y="20" /></Size>
+				<Position><AbsDimension x="66" y="8" /></Position>
+				<Size><AbsDimension x="144" y="28" /></Size>
 			</Area>
+
+			<Visual>
+				<ImagerySection name="Text">
+					<TextComponent color="FFFFFFFF" horzAlign="LEFT" vertAlign="CENTER" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Text" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="Disabled">
+					<Layer>
+						<Section section="Text" />
+					</Layer>
+				</StateImagery>
+			</Visual>
 		</Frame>
 
-		<Frame name="NeedButton" inherits="LootRollChoiceButtonTemplate">
+		<!-- Child 2: Timer text -->
+		<Frame name="Timer" renderer="DefaultRenderer">
+			<Property name="Font" value="AuraTimeFont" />
+
+			<Area>
+				<Position><AbsDimension x="66" y="38" /></Position>
+				<Size><AbsDimension x="100" y="22" /></Size>
+			</Area>
+
+			<Visual>
+				<ImagerySection name="Text">
+					<TextComponent color="FFAAAAAA" horzAlign="LEFT" vertAlign="CENTER" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Text" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="Disabled">
+					<Layer>
+						<Section section="Text" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+		</Frame>
+
+		<!-- Child 3: Need button -->
+		<Frame name="NeedButton" type="Button" inherits="LootRollChoiceButtonTemplate">
 			<Property name="Text" value="Need" />
 			<Area>
-				<Position><AbsDimension x="230" y="16" /></Position>
+				<Position><AbsDimension x="216" y="10" /></Position>
 			</Area>
 		</Frame>
 
-		<Frame name="GreedButton" inherits="LootRollChoiceButtonTemplate">
+		<!-- Child 4: Greed button -->
+		<Frame name="GreedButton" type="Button" inherits="LootRollChoiceButtonTemplate">
 			<Property name="Text" value="Greed" />
 			<Area>
-				<Position><AbsDimension x="326" y="16" /></Position>
+				<Position><AbsDimension x="308" y="10" /></Position>
 			</Area>
 		</Frame>
 
-		<Frame name="PassButton" inherits="LootRollChoiceButtonTemplate">
+		<!-- Child 5: Pass button -->
+		<Frame name="PassButton" type="Button" inherits="LootRollChoiceButtonTemplate">
 			<Property name="Text" value="Pass" />
 			<Area>
-				<Position><AbsDimension x="422" y="16" /></Position>
+				<Position><AbsDimension x="400" y="10" /></Position>
 			</Area>
 		</Frame>
 	</Frame>
 
+	<!-- Invisible container: no background, positioned top-center -->
 	<Frame name="LootRollFrame" parent="GameParent" renderer="DefaultRenderer">
 		<Property name="Visible" value="false" />
 
 		<Area>
-			<Size><AbsDimension x="540" y="360" /></Size>
-			<Anchor point="RIGHT" offset="-40" />
-			<Anchor point="TOP" offset="180" />
+			<Size><AbsDimension x="500" y="296" /></Size>
+			<Anchor point="H_CENTER" />
+			<Anchor point="TOP" offset="120" />
 		</Area>
-
-		<Visual>
-			<ImagerySection name="Background">
-				<BorderComponent texture="Interface/GameUI/fg4_borders_simple.htex" borderSize="250" />
-			</ImagerySection>
-			<StateImagery name="Enabled">
-				<Layer>
-					<Section section="Background" />
-				</Layer>
-			</StateImagery>
-		</Visual>
 
 		<Scripts>
 			<OnLoad>
@@ -96,41 +202,31 @@
 			</OnUpdate>
 		</Scripts>
 
-		<Frame name="LootRollTitleBar" inherits="TitleBar">
-			<Property name="Text" value="ROLL" />
-
-			<Area>
-				<Anchor point="TOP" offset="24" />
-				<Anchor point="LEFT" offset="24" />
-				<Anchor point="RIGHT" offset="-24" />
-			</Area>
-		</Frame>
-
 		<Frame name="LootRollItem1" inherits="LootRollItemTemplate">
 			<Area>
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="LootRollTitleBar" offset="8" />
-				<Anchor point="LEFT" offset="10" />
+				<Anchor point="TOP" offset="4" />
+				<Anchor point="H_CENTER" />
 			</Area>
 		</Frame>
 
 		<Frame name="LootRollItem2" inherits="LootRollItemTemplate">
 			<Area>
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="LootRollItem1" offset="8" />
-				<Anchor point="LEFT" offset="10" />
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="LootRollItem1" offset="4" />
+				<Anchor point="H_CENTER" />
 			</Area>
 		</Frame>
 
 		<Frame name="LootRollItem3" inherits="LootRollItemTemplate">
 			<Area>
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="LootRollItem2" offset="8" />
-				<Anchor point="LEFT" offset="10" />
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="LootRollItem2" offset="4" />
+				<Anchor point="H_CENTER" />
 			</Area>
 		</Frame>
 
 		<Frame name="LootRollItem4" inherits="LootRollItemTemplate">
 			<Area>
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="LootRollItem3" offset="8" />
-				<Anchor point="LEFT" offset="10" />
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="LootRollItem3" offset="4" />
+				<Anchor point="H_CENTER" />
 			</Area>
 		</Frame>
 	</Frame>

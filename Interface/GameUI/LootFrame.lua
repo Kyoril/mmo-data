@@ -168,10 +168,11 @@ function LootFrame_OnUpdate(self, elapsed)
 				end
 				if isLocked then
 					button:SetOpacity(0.5);
+					border:SetOpacity(0.6);
 				else
 					button:SetOpacity(1.0);
+					border:SetOpacity(1.0);
 				end
-				border:SetEnabled(not isLocked);
 				button:Show(); -- Ensure button is visible
 				border:Show();
 			else
