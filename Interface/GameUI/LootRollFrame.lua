@@ -20,6 +20,7 @@ function LootRollFrame_OnLoad(self)
 	self:RegisterEvent("START_LOOT_ROLL", LootRollFrame_OnStartRoll);
 	self:RegisterEvent("LOOT_ROLL_WON", LootRollFrame_OnRollWon);
 	self:RegisterEvent("LOOT_ROLL_ALL_PASSED", LootRollFrame_OnAllPassed);
+	self:RegisterEvent("LOOT_ROLL_RESULT", LootRollFrame_OnRollResult);
 
 	for i = 1, LOOT_ROLL_MAX_ITEMS, 1 do
 		local frame = LootRollFrame_GetItemFrame(i);
@@ -49,11 +50,38 @@ function LootRollFrame_OnLoad(self)
 
 			local idx = i;
 			frame:SetOnEnterHandler(function(f)
-				LootRollItem_OnEnter(idx, f);
+				LootRollItem_OnEnter(idx, frame);
 			end);
 			frame:SetOnLeaveHandler(function(f)
 				LootRollItem_OnLeave(idx);
 			end);
+
+			-- Also set hover handlers on child frames (Icon, Name, Timer) so they don't block the tooltip
+			local iconFrame, nameText, timerText = LootRollFrame_GetItemWidgets(frame);
+			if iconFrame then
+				iconFrame:SetOnEnterHandler(function(f)
+					LootRollItem_OnEnter(idx, frame);
+				end);
+				iconFrame:SetOnLeaveHandler(function(f)
+					LootRollItem_OnLeave(idx);
+				end);
+			end
+			if nameText then
+				nameText:SetOnEnterHandler(function(f)
+					LootRollItem_OnEnter(idx, frame);
+				end);
+				nameText:SetOnLeaveHandler(function(f)
+					LootRollItem_OnLeave(idx);
+				end);
+			end
+			if timerText then
+				timerText:SetOnEnterHandler(function(f)
+					LootRollItem_OnEnter(idx, frame);
+				end);
+				timerText:SetOnLeaveHandler(function(f)
+					LootRollItem_OnLeave(idx);
+				end);
+			end
 
 			frame:Hide();
 		end
@@ -62,16 +90,15 @@ function LootRollFrame_OnLoad(self)
 	self:Hide();
 end
 
-function LootRollFrame_OnStartRoll(self, lootGuid, slot, itemId, rollTime, itemName, quality, displayId)
-	local key = tostring(lootGuid) .. "_" .. tostring(slot);
+function LootRollFrame_OnStartRoll(self, rollId, itemId, rollTime, itemName, quality, displayId)
+	local key = tostring(rollId);
 	local icon = "";
 	if displayId and displayId > 0 then
 		icon = GetItemDisplayIcon(displayId);
 	end
 
 	LootRoll_ActiveRolls[key] = {
-		lootGuid = lootGuid,
-		slot = slot,
+		rollId = rollId,
 		itemId = itemId,
 		itemName = itemName or "Unknown Item",
 		quality = quality or 1,
@@ -96,19 +123,46 @@ function LootRollFrame_OnStartRoll(self, lootGuid, slot, itemId, rollTime, itemN
 	self:Show();
 end
 
-function LootRollFrame_OnRollWon(self, lootGuid, slot, itemId, winnerGuid, winningRoll, winningVote, itemName, quality)
-	local key = tostring(lootGuid) .. "_" .. tostring(slot);
+function LootRollFrame_OnRollWon(self, rollId, itemId, winningRoll, winningVote, itemName, quality, winnerName)
+	local key = tostring(rollId);
 	LootRoll_ActiveRolls[key] = nil;
 	LootRollFrame_RemoveKey(key);
 	LootRollFrame_Update(self);
+
+	-- Print chat message about the winner
+	local voteStr = "Pass";
+	if winningVote == 1 then
+		voteStr = "Need";
+	elseif winningVote == 2 then
+		voteStr = "Greed";
+	end
+
+	local color = ItemQualityColors[quality] or "FFFFFFFF";
+	local itemLink = "|c" .. color .. "[" .. (itemName or "Unknown") .. "]|r";
+	local name = winnerName or "Unknown";
+
+	if winningRoll and winningRoll > 0 then
+		ChatFrame:AddMessage(name .. " won " .. itemLink .. " (" .. voteStr .. " - " .. tostring(winningRoll) .. ")", 0.0, 0.75, 0.0);
+	else
+		ChatFrame:AddMessage(name .. " won " .. itemLink .. " (" .. voteStr .. ")", 0.0, 0.75, 0.0);
+	end
 
 	if #LootRoll_RollOrder == 0 then
 		self:Hide();
 	end
 end
 
-function LootRollFrame_OnAllPassed(self, lootGuid, slot, itemId)
-	local key = tostring(lootGuid) .. "_" .. tostring(slot);
+function LootRollFrame_OnAllPassed(self, rollId, itemId)
+	local key = tostring(rollId);
+
+	-- Print chat message
+	local rollInfo = LootRoll_ActiveRolls[key];
+	if rollInfo then
+		local color = ItemQualityColors[rollInfo.quality] or "FFFFFFFF";
+		local itemLink = "|c" .. color .. "[" .. (rollInfo.itemName or "Unknown") .. "]|r";
+		ChatFrame:AddMessage("Everyone passed on " .. itemLink, 0.0, 0.75, 0.0);
+	end
+
 	LootRoll_ActiveRolls[key] = nil;
 	LootRollFrame_RemoveKey(key);
 	LootRollFrame_Update(self);
@@ -225,7 +279,7 @@ end
 function LootRollButton_OnClick(frameIndex, vote)
 	local rollInfo = LootRoll_FrameRollInfo[frameIndex];
 	if rollInfo and not rollInfo.voted then
-		ConfirmLootRoll(rollInfo.lootGuid, rollInfo.slot, vote);
+		ConfirmLootRoll(rollInfo.rollId, vote);
 		rollInfo.voted = true;
 		LootRollFrame_Update(LootRollFrame);
 	end
@@ -247,4 +301,19 @@ end
 
 function LootRollItem_OnLeave(frameIndex)
 	GameTooltip:Hide();
+end
+
+function LootRollFrame_OnRollResult(self, vote, playerName, itemName, quality)
+	local voteStr = "passed on";
+	if vote == 1 then
+		voteStr = "rolled Need on";
+	elseif vote == 2 then
+		voteStr = "rolled Greed on";
+	end
+
+	local color = ItemQualityColors[quality] or "FFFFFFFF";
+	local itemLink = "|c" .. color .. "[" .. (itemName or "Unknown") .. "]|r";
+	local name = playerName or "Unknown";
+
+	ChatFrame:AddMessage(name .. " " .. voteStr .. " " .. itemLink, 0.0, 0.75, 0.0);
 end
