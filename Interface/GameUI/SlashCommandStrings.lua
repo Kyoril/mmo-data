@@ -67,3 +67,5 @@ SLASH_RAID2 = "/ra";   -- Raid chat
 
 SLASH_LOOTMETHOD1 = "/lootmethod"; -- Set group loot method
 SLASH_LOOTMETHOD2 = "/lm";         -- Set group loot method (short)
+SLASH_REPLY1 = "/r";          -- Reply to last whisper
+SLASH_REPLY2 = "/reply";      -- Reply to last whisper

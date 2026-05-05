@@ -226,6 +226,11 @@
 					ChatFrame_OnLoad(this);
 				end
 			</OnLoad>
+			<OnUpdate>
+				return function(this, elapsed)
+					ChatFrame_OnUpdate(this, elapsed);
+				end
+			</OnUpdate>
 		</Scripts>
 	</Frame>
 	

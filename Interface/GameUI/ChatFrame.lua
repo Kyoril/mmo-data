@@ -16,6 +16,9 @@ end
 ChatType = "SAY";
 ChatFrame_WhisperTarget = nil;   -- target name for the active /w whisper command
 ChatFrame_ReplyTarget = nil;     -- sticky: name of last player who whispered you
+ChatFrame_LastActivityTime = 0;
+ChatFrame_FadeDelay = 30;    -- seconds idle before fade starts
+ChatFrame_FadeDuration = 2;  -- seconds to fade opaque → transparent
 
 ChatTypeInfo = { };
 ChatTypeInfo["SAY"]				    = { sticky = 1, r = 1.00, g = 1.00, b = 1.00 };
@@ -182,6 +185,43 @@ SlashCmdList["TRADE"] = function(msg)
 	else
 		ChatFrame:AddMessage("Select a player to trade with.", 1.0, 1.0, 0.0);
 	end
+end
+
+SlashCmdList["REPLY"] = function(msg)
+    if not ChatFrame_ReplyTarget then
+        local info = ChatTypeInfo["SYSTEM"];
+        ChatFrame:AddMessage("No reply target.", info.r, info.g, info.b);
+        return;
+    end
+    if msg and string.len(msg) > 0 then
+        SendChatMessage(msg, "WHISPER", ChatFrame_ReplyTarget);
+    end
+end
+
+function ChatFrame_ResetActivity()
+    ChatFrame_LastActivityTime = 0;
+    ChatFrame:SetOpacity(1);
+    ChatScrollEndButton:SetOpacity(1);
+    ChatScrollDownButton:SetOpacity(1);
+    ChatScrollUpButton:SetOpacity(1);
+    ChatBubbleButton:SetOpacity(1);
+end
+
+function ChatFrame_OnUpdate(this, elapsed)
+    if ChatInputFrame:IsVisible() then
+        ChatFrame_ResetActivity();
+        return;
+    end
+    ChatFrame_LastActivityTime = ChatFrame_LastActivityTime + elapsed;
+    if ChatFrame_LastActivityTime > ChatFrame_FadeDelay then
+        local fadeProgress = (ChatFrame_LastActivityTime - ChatFrame_FadeDelay) / ChatFrame_FadeDuration;
+        local opacity = math.max(0, 1 - fadeProgress);
+        ChatFrame:SetOpacity(opacity);
+        ChatScrollEndButton:SetOpacity(opacity);
+        ChatScrollDownButton:SetOpacity(opacity);
+        ChatScrollUpButton:SetOpacity(opacity);
+        ChatBubbleButton:SetOpacity(opacity);
+    end
 end
 
 
@@ -396,6 +436,7 @@ function ChatFrame_OnLoad(this)
         ChatFrame_ReplyTarget = senderName;
         local info = ChatTypeInfo["WHISPER"];
         ChatFrame:AddMessage(string.format(Localize("CHAT_FORMAT_WHISPER_FROM"), senderName, message), info.r, info.g, info.b);
+        ChatFrame_ResetActivity();
     end);
 
     this:RegisterEvent("CHAT_MSG_WHISPER_INFORM", function(this, targetName, message)
@@ -436,6 +477,7 @@ function ChatFrame_OnLoad(this)
 end
 
 function ChatFrame_OpenChat(input)
+    ChatFrame_ResetActivity();
     if ( ChatFrame_ReplyTarget and not input ) then
         ChatType = "WHISPER";
         ChatFrame_WhisperTarget = ChatFrame_ReplyTarget;
