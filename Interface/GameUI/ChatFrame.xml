@@ -145,6 +145,11 @@
 							ChatFrame_ParseText(false);
 						end
 					</OnSpacePressed>
+					<OnTabPressed>
+						return function(this)
+							ChatInput_OnTabPressed();
+						end
+					</OnTabPressed>
 				</Scripts>
 			</Frame>
 		</Frame>

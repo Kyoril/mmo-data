@@ -20,6 +20,10 @@ ChatFrame_LastActivityTime = 0;
 ChatFrame_FadeDelay = 30;    -- seconds idle before fade starts
 ChatFrame_FadeDuration = 2;  -- seconds to fade opaque → transparent
 
+ChatFrame_TabCompletionNames = nil;
+ChatFrame_TabCompletionIndex = 0;
+ChatFrame_TabCompletionPrefix = nil;
+
 ChatTypeInfo = { };
 ChatTypeInfo["SAY"]				    = { sticky = 1, r = 1.00, g = 1.00, b = 1.00 };
 ChatTypeInfo["PARTY"]				= { sticky = 1, r = 0.67, g = 0.67, b = 1.00 };
@@ -222,6 +226,32 @@ function ChatFrame_OnUpdate(this, elapsed)
         ChatScrollUpButton:SetOpacity(opacity);
         ChatBubbleButton:SetOpacity(opacity);
     end
+end
+
+function ChatInput_OnTabPressed()
+    local text = ChatInput:GetText();
+    local prefix = string.match(text, "(%S+)$") or "";
+    if string.len(prefix) == 0 then return; end
+
+    if prefix ~= ChatFrame_TabCompletionPrefix then
+        local names = GetKnownPlayerNames();
+        ChatFrame_TabCompletionNames = {};
+        local lowerPrefix = string.lower(prefix);
+        for _, name in ipairs(names) do
+            if string.lower(string.sub(name, 1, string.len(prefix))) == lowerPrefix then
+                table.insert(ChatFrame_TabCompletionNames, name);
+            end
+        end
+        ChatFrame_TabCompletionPrefix = prefix;
+        ChatFrame_TabCompletionIndex = 0;
+    end
+
+    if not ChatFrame_TabCompletionNames or #ChatFrame_TabCompletionNames == 0 then return; end
+
+    ChatFrame_TabCompletionIndex = (ChatFrame_TabCompletionIndex % #ChatFrame_TabCompletionNames) + 1;
+    local completion = ChatFrame_TabCompletionNames[ChatFrame_TabCompletionIndex];
+    local newText = string.gsub(text, "%S+$", completion);
+    ChatInput:SetText(newText);
 end
 
 
