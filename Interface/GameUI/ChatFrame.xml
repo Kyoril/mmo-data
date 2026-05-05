@@ -97,7 +97,6 @@
 				<Anchor point="LEFT" offset="10" />
 				<Anchor point="TOP" offset="10" />
 				<Anchor point="BOTTOM" offset="-10" />
-				<Size><AbsDimension x="32" /></Size>
 			</Area>
 		</Frame>
 
