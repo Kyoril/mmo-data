@@ -170,15 +170,6 @@ SlashCmdList["FRIENDLIST"] = function(msg)
 end
 
 SlashCmdList["TRADE"] = function(msg)
-	-- If a target name is provided, try to initiate trade by name
-	
-    --[[local target = GetSlashCmdTarget(msg);
-	if target and target ~= "" then
-		-- TODO: Implement trade by name lookup
-		ChatFrame:AddMessage("Trade by name not yet implemented. Target a player and use /trade. Target: '" .. target .. "'", 1.0, 1.0, 0.0);
-		return;
-	end]]
-	
 	-- Otherwise, try to trade with current target
     local target = GetUnit("target");
 	if target --[[and UnitIsPlayer("target") and not UnitIsUnit("target", "player")]] then
@@ -191,16 +182,6 @@ SlashCmdList["TRADE"] = function(msg)
 	end
 end
 
-SlashCmdList["REPLY"] = function(msg)
-    if not ChatFrame_ReplyTarget then
-        local info = ChatTypeInfo["SYSTEM"];
-        ChatFrame:AddMessage("No reply target.", info.r, info.g, info.b);
-        return;
-    end
-    if msg and string.len(msg) > 0 then
-        SendChatMessage(msg, "WHISPER", ChatFrame_ReplyTarget);
-    end
-end
 
 function ChatFrame_ResetActivity()
     ChatFrame_LastActivityTime = 0;
@@ -530,8 +511,16 @@ function ChatEdit_UpdateHeader()
 	local info = ChatTypeInfo[type];
     local textColor = rgbToHex(info.r, info.g, info.b);
 
+    local headerText;
+    if type == "WHISPER" then
+        local target = ChatFrame_WhisperTarget or ChatFrame_ReplyTarget or "?";
+        headerText = "To " .. target .. ":";
+    else
+        headerText = Localize("CHAT_TYPE_"..ChatType) .. ":";
+    end
+
     ChatInputHeader:SetProperty("TextColor", textColor)
-    ChatInputHeader:SetText(Localize("CHAT_TYPE_"..ChatType) .. ":");
+    ChatInputHeader:SetText(headerText);
     ChatInputHeader:SetWidth(ChatInputHeader:GetTextWidth());
 
 	ChatInput:SetProperty("EnabledTextColor", textColor);
@@ -573,6 +562,18 @@ function ChatFrame_ParseText(send)
                         ChatType = "WHISPER";
                         ChatInput:SetText(body);
                         ChatEdit_UpdateHeader();
+                    end
+                    return;
+                elseif ( index == "REPLY" ) then
+                    if ChatFrame_ReplyTarget then
+                        ChatFrame_WhisperTarget = ChatFrame_ReplyTarget;
+                        ChatType = "WHISPER";
+                        ChatInput:SetText(msg);
+                        ChatEdit_UpdateHeader();
+                    else
+                        local info = ChatTypeInfo["SYSTEM"];
+                        ChatFrame:AddMessage("No reply target.", info.r, info.g, info.b);
+                        ChatInput_OnEscapePressed();
                     end
                     return;
                 else

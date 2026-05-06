@@ -92,6 +92,7 @@
 
 		<Frame name="ChatInputHeader" inherits="TextSmall">
 			<Property name="Font" value="ChatFont" />
+			<Property name="VertAlign" value="CENTER" />
 
 			<Area>
 				<Anchor point="LEFT" offset="10" />
