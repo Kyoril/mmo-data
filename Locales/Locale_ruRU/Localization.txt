@@ -74,6 +74,8 @@ strings =
 	(key = "CHAT_FORMAT_WHISPER_FROM", string = "От [%s]: %s")
 	(key = "CHAT_FORMAT_WHISPER_TO", string = "Кому [%s]: %s")
 	(key = "CHAT_FORMAT_RAID", string = "|Hchannel:RAID|h[Рейд]|h %s: %s")
+	(key = "CHAT_FORMAT_EMOTE", string = "%s %s")
+	(key = "CHAT_FORMAT_CREATURE_EMOTE", string = "%s %s")
 
 	(key = "NAME", string = "Name")
 	
@@ -298,6 +300,7 @@ strings =
 	(key = "CHAT_TYPE_SAY", string = "Say")
 	(key = "CHAT_TYPE_PARTY", string = "Party")
 	(key = "CHAT_TYPE_YELL", string = "Yell")
+	(key = "CHAT_TYPE_EMOTE", string = "Emote")
 	(key = "CHAT_TYPE_CHANNEL", string = "%s")
 	(key = "CHAT_TYPE_GUILD", string = "Guild")
 	(key = "CHAT_TYPE_WHISPER", string = "Шёпот")

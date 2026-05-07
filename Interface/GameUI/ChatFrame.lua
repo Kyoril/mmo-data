@@ -427,6 +427,14 @@ function ChatFrame_OnLoad(this)
         local info = ChatTypeInfo["UNIT_YELL"];
         ChatFrame:AddMessage(string.format(CHAT_FORMAT_CREATURE_YELL, character, message), info.r, info.g, info.b);
     end);
+    this:RegisterEvent("CHAT_MSG_EMOTE", function(this, character, message)
+        local info = ChatTypeInfo["EMOTE"];
+        ChatFrame:AddMessage(string.format(CHAT_FORMAT_EMOTE, character, message), info.r, info.g, info.b);
+    end);
+    this:RegisterEvent("CHAT_MSG_UNIT_EMOTE", function(this, character, message)
+        local info = ChatTypeInfo["UNIT_EMOTE"];
+        ChatFrame:AddMessage(string.format(CHAT_FORMAT_CREATURE_EMOTE, character, message), info.r, info.g, info.b);
+    end);
 
     this:RegisterEvent("PLAYER_LEVEL_UP", ChatFrame_OnPlayerLevelUp);
     this:RegisterEvent("SPELL_LEARNED", ChatFrame_OnSpellLearned);
