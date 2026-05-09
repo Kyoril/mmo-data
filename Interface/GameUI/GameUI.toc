@@ -28,6 +28,7 @@ FriendsFrame.xml
 TalentFrame.xml
 TradeFrame.xml
 Minimap.xml
+QuestTracker.xml
 LootRollFrame.xml
 GameMenu.xml
 ContextMenu.xml
