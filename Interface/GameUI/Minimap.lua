@@ -82,12 +82,22 @@ function Minimap_OnUpdate(self, elapsed)
     local u = (cursor.x - fx) / fw;
     local v = (cursor.y - fy) / fh;
 
+    -- DEBUG: log every second so we can see this fires and what coords look like
+    if not Minimap_debugTimer then Minimap_debugTimer = 0; end
+    Minimap_debugTimer = Minimap_debugTimer + elapsed;
+    if Minimap_debugTimer >= 1.0 then
+        Minimap_debugTimer = 0;
+        print(string.format("MinimapUpdate: cursor=(%.0f,%.0f) frame=(%.0f,%.0f,%.0f,%.0f) uv=(%.2f,%.2f)",
+            cursor.x, cursor.y, fx, fy, fw, fh, u, v));
+    end
+
     if u < 0 or u > 1 or v < 0 or v > 1 then
         GameTooltip:Hide();
         return;
     end
 
     local objects = GetMinimapObjectsAt(u, v);
+    print(string.format("MinimapObjectsAt(%.2f,%.2f) returned %d objects", u, v, objects ~= nil and #objects or -1));
     if objects == nil or #objects == 0 then
         GameTooltip:Hide();
         return;
