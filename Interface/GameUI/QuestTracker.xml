@@ -7,31 +7,36 @@
 		<Property name="Font" value="DefaultSmall" />
 		<Property name="HorzAlign" value="CENTER" />
 		<Property name="VertAlign" value="MIDDLE" />
-		<Property name="TextColor" value="FFCCCCCC" />
 		<Visual>
 			<ImagerySection name="FrameNormal">
 				<ImageComponent color="66333333" />
 			</ImagerySection>
 			<ImagerySection name="FrameHovered">
-				<ImageComponent color="88555555" />
+				<ImageComponent color="AA555555" />
 			</ImagerySection>
 			<ImagerySection name="FramePushed">
-				<ImageComponent color="AA222222" />
+				<ImageComponent color="CC222222" />
 			</ImagerySection>
-			<ImagerySection name="Text">
-				<TextComponent color="$TextColor" horzAlign="$HorzAlign" vertAlign="$VertAlign" />
+			<ImagerySection name="TextNormal">
+				<TextComponent color="FFCCCCCC" horzAlign="CENTER" vertAlign="MIDDLE" />
+			</ImagerySection>
+			<ImagerySection name="TextHovered">
+				<TextComponent color="FFFFFFFF" horzAlign="CENTER" vertAlign="MIDDLE" />
+			</ImagerySection>
+			<ImagerySection name="TextPushed">
+				<TextComponent color="FFAAAAAA" horzAlign="CENTER" vertAlign="MIDDLE" />
 			</ImagerySection>
 			<StateImagery name="Normal">
 				<Layer><Section section="FrameNormal" /></Layer>
-				<Layer><Section section="Text" /></Layer>
+				<Layer><Section section="TextNormal" /></Layer>
 			</StateImagery>
 			<StateImagery name="Hovered">
 				<Layer><Section section="FrameHovered" /></Layer>
-				<Layer><Section section="Text" /></Layer>
+				<Layer><Section section="TextHovered" /></Layer>
 			</StateImagery>
 			<StateImagery name="Pushed">
 				<Layer><Section section="FramePushed" /></Layer>
-				<Layer><Section section="Text" /></Layer>
+				<Layer><Section section="TextPushed" /></Layer>
 			</StateImagery>
 		</Visual>
 		<Area><Size><AbsDimension x="24" y="24" /></Size></Area>
@@ -48,7 +53,7 @@
 				<ImageComponent color="00000000" />
 			</ImagerySection>
 			<ImagerySection name="FrameHovered">
-				<ImageComponent color="33FFFFFF" />
+				<ImageComponent color="44FFFFFF" />
 			</ImagerySection>
 			<ImagerySection name="FramePushed">
 				<ImageComponent color="22FFFFFF" />
@@ -109,7 +114,7 @@
 		<Area>
 			<Size><AbsDimension x="384" y="64" /></Size>
 			<Anchor point="RIGHT" offset="0" />
-			<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="Minimap" />
+			<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="Minimap" offset="8" />
 		</Area>
 
 		<!-- Slot 1 -->
