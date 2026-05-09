@@ -73,10 +73,11 @@ MinimapContent_mouseOver = false;
 
 function Minimap_OnUpdate(self, elapsed)
     local cursor = GetCursorPosition();
-    local fx = MinimapContent:GetX();
-    local fy = MinimapContent:GetY();
-    local fw = MinimapContent:GetWidth();
-    local fh = MinimapContent:GetHeight();
+    local scale = GetUIScale();
+    local fx = MinimapContent:GetX() / scale.x;
+    local fy = MinimapContent:GetY() / scale.y;
+    local fw = MinimapContent:GetWidth() / scale.x;
+    local fh = MinimapContent:GetHeight() / scale.y;
 
     -- Normalised UV within the minimap frame [0,1]
     local u = (cursor.x - fx) / fw;
