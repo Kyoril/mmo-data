@@ -354,4 +354,12 @@
             end
         end
 	</Binding>
+
+	<Binding name="PING" description="Places a ping marker at your location, visible to party members." category="INTERFACE">
+		return function(key, keystate)
+            if keystate == "DOWN" then
+                SendPing();
+            end
+        end
+	</Binding>
 </Bindings>
