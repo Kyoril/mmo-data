@@ -80,6 +80,25 @@
                 <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="MinimapTitleBar" />
             </Area>
 
+            <Scripts>
+                <OnEnter>
+                    return function(self)
+                        MinimapContent_mouseOver = true;
+                    end
+                </OnEnter>
+                <OnLeave>
+                    return function(self)
+                        MinimapContent_mouseOver = false;
+                        GameTooltip:Hide();
+                    end
+                </OnLeave>
+                <OnUpdate>
+                    return function(self, delta)
+                        Minimap_OnUpdate(self, delta);
+                    end
+                </OnUpdate>
+            </Scripts>
+
             <Frame name="MinimapBorder" renderer="DefaultRenderer">
                 <Visual>
                     <ImagerySection name="Background">

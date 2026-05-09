@@ -68,6 +68,47 @@ function Minimap_OnHide(self)
     
 end
 
+-- Track whether the mouse is over the minimap
+MinimapContent_mouseOver = false;
+
 function Minimap_OnUpdate(self, elapsed)
-    
+    if not MinimapContent_mouseOver then
+        return;
+    end
+
+    local cursor = GetCursorPosition();
+    local fx = MinimapContent:GetX();
+    local fy = MinimapContent:GetY();
+    local fw = MinimapContent:GetWidth();
+    local fh = MinimapContent:GetHeight();
+
+    -- Normalised UV within the minimap frame [0,1]
+    local u = (cursor.x - fx) / fw;
+    local v = (cursor.y - fy) / fh;
+
+    if u < 0 or u > 1 or v < 0 or v > 1 then
+        GameTooltip:Hide();
+        return;
+    end
+
+    local objects = GetMinimapObjectsAt(u, v);
+    if objects == nil or #objects == 0 then
+        GameTooltip:Hide();
+        return;
+    end
+
+    GameTooltip_Clear();
+
+    for i, obj in ipairs(objects) do
+        if obj.type == "party" then
+            GameTooltip_AddLine(obj.name, TOOLTIP_LINE_LEFT, "FF00CCFF");
+        elseif obj.type == "questgiver" then
+            GameTooltip_AddLine(obj.name, TOOLTIP_LINE_LEFT, "FFFFFF00");
+        end
+    end
+
+    GameTooltip:ClearAnchors();
+    GameTooltip:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.LEFT, MinimapContent, 0);
+    GameTooltip:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, MinimapContent, 0);
+    GameTooltip:Show();
 end
