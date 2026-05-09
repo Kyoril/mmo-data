@@ -141,8 +141,14 @@ function CharCreate_Submit()
 		return;
 	end
 
-	-- Ensure that the character name only consists of digits
-	if (string.match(NewCharacterNameBox:GetText(), "%d+")) then
+	-- Reject names containing any whitespace
+	if (string.match(NewCharacterNameBox:GetText(), "%s")) then
+		GlueDialog_Show("CHAR_CREATE_ERR_INVALID_NAME");
+		return;
+	end
+
+	-- Reject names containing any digits
+	if (string.match(NewCharacterNameBox:GetText(), "%d")) then
 		GlueDialog_Show("CHAR_CREATE_ERR_INVALID_NAME");
 		return;
 	end
