@@ -4,8 +4,15 @@ lastMinimapTimeMinute = -1;
 
 function Minimap_OnLoad(self)
     self:RegisterEvent("ZONE_CHANGED", Minimap_OnZoneChanged);
+    self:RegisterEvent("PARTY_PING", Minimap_OnPartyPing);
+    self:RegisterEvent("PARTY_PING_UNIT", Minimap_OnPartyPing);
 
     Minimap_OnZoomChanged();
+end
+
+function Minimap_OnPartyPing()
+    -- Play ping sound when a ping is placed (add sound file to Interface/Sounds/Ping.ogg to enable)
+    -- PlaySound("Interface/Sounds/Ping.ogg");
 end
 
 function Minimap_UpdateTime()
