@@ -587,6 +587,7 @@ strings =
 	(key = "SPELL_CAST_FAILED_NOT_WHILE_GHOST", string = "You can't do that while a ghost.")
 	(key = "SPELL_CAST_FAILED_NO_AMMO", string = "You don't have ammo.")
 	(key = "SPELL_CAST_FAILED_NO_CHARGES_REMAIN", string = "No charges remain.")
+	(key = "SPELL_CAST_FAILED_NO_CHAMPION", string = "No champion available.")
 	(key = "SPELL_CAST_FAILED_NO_COMBO_POINTS", string = "You have no combo points.")
 	(key = "SPELL_CAST_FAILED_NO_DUELING", string = "Dueling is not allowed in this area.")
 	(key = "SPELL_CAST_FAILED_NO_ENDURANCE", string = "Not enough endurance.")
