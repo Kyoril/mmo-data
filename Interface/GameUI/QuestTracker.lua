@@ -56,6 +56,7 @@ local function OpenQuestInLog(questId)
     if not QuestLogFrame:IsVisible() then
         ShowUIPanel(QuestLogFrame)
     end
+    QuestLog_Update()
     QuestLogFrame_UpdateQuestDetails()
 end
 
