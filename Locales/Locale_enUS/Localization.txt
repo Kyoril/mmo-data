@@ -515,7 +515,6 @@ strings =
 	(key = "TIME_PLAYED_DAYS", string = "Total time played: %d days, %d hours, %d minutes, %02d seconds")
 	(key = "TIME_PLAYED_HOURS", string = "Total time played: %d hours, %d minutes, %d seconds")
 
-	-- Spell cast failure messages
 	(key = "SPELL_CAST_FAILED_AFFECTING_COMBAT", string = "You are in combat.")
 	(key = "SPELL_CAST_FAILED_ALREADY_AT_FULL_HEALTH", string = "You are already at full health.")
 	(key = "SPELL_CAST_FAILED_ALREADY_AT_FULL_MANA", string = "You are already at full mana.")
