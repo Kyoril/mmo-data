@@ -309,7 +309,7 @@ RegisterContextMenu("TARGET", {
                         InitiateTrade(targetGuid);
                     end
                 end,
-                enabled = not IsTrading()
+                enabled = true
             })
         end
         

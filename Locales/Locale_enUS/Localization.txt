@@ -628,7 +628,7 @@ strings =
 	(key = "SPELL_CAST_FAILED_TARGET_IN_COMBAT", string = "Target is in combat.")
 	(key = "SPELL_CAST_FAILED_TARGET_IS_PLAYER", string = "Target is a player.")
 	(key = "SPELL_CAST_FAILED_TARGET_IS_PLAYER_CONTROLLED", string = "Target is player-controlled.")
-	(key = "SPELL_CAST_FAILED_TARGET_NOT_DEAD", string = "Target is not dead.")
+	(key = "SPELL_CAST_FAILED_TARGET_NOT_DEAD", string = "Target must be alive.")
 	(key = "SPELL_CAST_FAILED_TARGET_NOT_IN_PARTY", string = "Target must be in your party.")
 	(key = "SPELL_CAST_FAILED_TARGET_NOT_LOOTED", string = "Target has not been looted.")
 	(key = "SPELL_CAST_FAILED_TARGET_NOT_PLAYER", string = "Target must be a player.")

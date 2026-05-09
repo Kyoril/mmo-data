@@ -403,8 +403,9 @@ function ChatFrame_OnTimePlayedUpdated(this, timePlayedSeconds)
 end
 
 -- Returns a clickable player hyperlink: clicking it opens whisper mode.
+-- No brackets in the display text — format strings like "[%s] says:" supply them.
 function ChatFrame_MakePlayerLink(name)
-    return "|Hplayer:" .. name .. "|h[" .. name .. "]|h";
+    return "|Hplayer:" .. name .. "|h" .. name .. "|h";
 end
 
 function ChatFrame_OnLoad(this)
