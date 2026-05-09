@@ -2,7 +2,86 @@
 <UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3.org/2001/XMLSchema-instance http://www.w3schools.com/Ui.xsd">
 	<Script file="QuestTracker.lua" />
 
-	<!-- Quest Tracker: compact panel anchored below the minimap -->
+	<!-- Toggle button template -->
+	<Frame name="QuestTrackerToggleTemplate" type="Button" renderer="ButtonRenderer">
+		<Property name="Font" value="DefaultSmall" />
+		<Property name="HorzAlign" value="CENTER" />
+		<Property name="VertAlign" value="MIDDLE" />
+		<Property name="TextColor" value="FFCCCCCC" />
+		<Visual>
+			<ImagerySection name="FrameNormal">
+				<ImageComponent color="66333333" />
+			</ImagerySection>
+			<ImagerySection name="FrameHovered">
+				<ImageComponent color="88555555" />
+			</ImagerySection>
+			<ImagerySection name="FramePushed">
+				<ImageComponent color="AA222222" />
+			</ImagerySection>
+			<ImagerySection name="Text">
+				<TextComponent color="" horzAlign="" vertAlign="" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer><Section section="FrameNormal" /></Layer>
+				<Layer><Section section="Text" /></Layer>
+			</StateImagery>
+			<StateImagery name="Hovered">
+				<Layer><Section section="FrameHovered" /></Layer>
+				<Layer><Section section="Text" /></Layer>
+			</StateImagery>
+			<StateImagery name="Pushed">
+				<Layer><Section section="FramePushed" /></Layer>
+				<Layer><Section section="Text" /></Layer>
+			</StateImagery>
+		</Visual>
+		<Area><Size><AbsDimension x="24" y="24" /></Size></Area>
+	</Frame>
+
+	<!-- Title text template -->
+	<Frame name="QuestTrackerTitleTemplate" type="Button" renderer="ButtonRenderer">
+		<Property name="Font" value="QuestTitleFont" />
+		<Property name="HorzAlign" value="LEFT" />
+		<Property name="VertAlign" value="TOP" />
+		<Property name="TextColor" value="FFFFD100" />
+		<Visual>
+			<ImagerySection name="FrameNormal"><ImageComponent color="00000000" /></ImagerySection>
+			<ImagerySection name="FrameHovered"><ImageComponent color="33FFFFFF" /></ImagerySection>
+			<ImagerySection name="FramePushed"><ImageComponent color="22FFFFFF" /></ImagerySection>
+			<ImagerySection name="Text">
+				<TextComponent color="" horzAlign="" vertAlign="" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer><Section section="FrameNormal" /></Layer>
+				<Layer><Section section="Text" /></Layer>
+			</StateImagery>
+			<StateImagery name="Hovered">
+				<Layer><Section section="FrameHovered" /></Layer>
+				<Layer><Section section="Text" /></Layer>
+			</StateImagery>
+			<StateImagery name="Pushed">
+				<Layer><Section section="FramePushed" /></Layer>
+				<Layer><Section section="Text" /></Layer>
+			</StateImagery>
+		</Visual>
+		<Area><Size><AbsDimension x="352" y="32" /></Size></Area>
+	</Frame>
+
+	<!-- Objective text template -->
+	<Frame name="QuestTrackerObjTemplate" renderer="DefaultRenderer">
+		<Property name="Font" value="QuestFont" />
+		<Property name="HorzAlign" value="LEFT" />
+		<Property name="VertAlign" value="TOP" />
+		<Property name="TextColor" value="FFAAAAAA" />
+		<Visual>
+			<ImagerySection name="Text">
+				<TextComponent color="" horzAlign="" vertAlign="" />
+			</ImagerySection>
+			<StateImagery name="Enabled"><Layer><Section section="Text" /></Layer></StateImagery>
+		</Visual>
+		<Area><Size><AbsDimension x="352" y="28" /></Size></Area>
+	</Frame>
+
+	<!-- Quest Tracker panel -->
 	<Frame name="QuestTrackerFrame" parent="GameParent" renderer="DefaultRenderer">
 		<Scripts>
 			<OnLoad>
@@ -11,476 +90,132 @@
 				end
 			</OnLoad>
 		</Scripts>
-
 		<Visual>
 			<ImagerySection name="Background">
 				<ImageComponent color="BB000000" />
 			</ImagerySection>
-			<StateImagery name="Enabled">
-				<Layer><Section section="Background" /></Layer>
-			</StateImagery>
+			<StateImagery name="Enabled"><Layer><Section section="Background" /></Layer></StateImagery>
 		</Visual>
-
 		<Area>
 			<Size><AbsDimension x="384" y="64" /></Size>
 			<Anchor point="RIGHT" offset="0" />
 			<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="Minimap" />
 		</Area>
 
-		<!-- Quest slot 1 -->
-		<Frame name="QuestTrackerTitle1" renderer="DefaultRenderer">
-			<Property name="Font" value="DefaultSmall" />
-			<Property name="HorzAlign" value="LEFT" />
-			<Property name="VertAlign" value="TOP" />
-			<Property name="TextColor" value="FFFFD100" />
-			<Visual>
-				<ImagerySection name="Text">
-					<TextComponent color="" horzAlign="" vertAlign="" />
-				</ImagerySection>
-				<StateImagery name="Enabled"><Layer><Section section="Text" /></Layer></StateImagery>
-			</Visual>
-			<Area>
-				<Size><AbsDimension x="368" y="40" /></Size>
-				<Anchor point="LEFT" offset="8" />
-				<Anchor point="TOP" offset="8" />
-			</Area>
+		<!-- Slot 1 -->
+		<Frame name="QuestTrackerToggle1" inherits="QuestTrackerToggleTemplate" id="1">
+			<Scripts>
+				<OnClick>
+					return function(self, button)
+						QuestTracker_ToggleCollapse(1);
+					end
+				</OnClick>
+			</Scripts>
 		</Frame>
+		<Frame name="QuestTrackerTitle1" inherits="QuestTrackerTitleTemplate" id="1">
+			<Scripts>
+				<OnClick>
+					return function(self, button)
+						QuestTracker_TitleClick(1);
+					end
+			</Scripts>
+		</Frame>
+		<Frame name="QuestTrackerObj1_1" inherits="QuestTrackerObjTemplate" />
+		<Frame name="QuestTrackerObj1_2" inherits="QuestTrackerObjTemplate" />
+		<Frame name="QuestTrackerObj1_3" inherits="QuestTrackerObjTemplate" />
+		<Frame name="QuestTrackerObj1_4" inherits="QuestTrackerObjTemplate" />
 
-		<Frame name="QuestTrackerObj1_1" renderer="DefaultRenderer">
-			<Property name="Font" value="DefaultSmall" />
-			<Property name="HorzAlign" value="LEFT" />
-			<Property name="VertAlign" value="TOP" />
-			<Property name="TextColor" value="FFAAAAAA" />
-			<Visual>
-				<ImagerySection name="Text">
-					<TextComponent color="" horzAlign="" vertAlign="" />
-				</ImagerySection>
-				<StateImagery name="Enabled"><Layer><Section section="Text" /></Layer></StateImagery>
-			</Visual>
-			<Area>
-				<Size><AbsDimension x="360" y="36" /></Size>
-				<Anchor point="LEFT" offset="16" />
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestTrackerTitle1" />
-			</Area>
+		<!-- Slot 2 -->
+		<Frame name="QuestTrackerToggle2" inherits="QuestTrackerToggleTemplate" id="2">
+			<Scripts>
+				<OnClick>
+					return function(self, button)
+						QuestTracker_ToggleCollapse(2);
+					end
+				</OnClick>
+			</Scripts>
 		</Frame>
+		<Frame name="QuestTrackerTitle2" inherits="QuestTrackerTitleTemplate" id="2">
+			<Scripts>
+				<OnClick>
+					return function(self, button)
+						QuestTracker_TitleClick(2);
+					end
+			</Scripts>
+		</Frame>
+		<Frame name="QuestTrackerObj2_1" inherits="QuestTrackerObjTemplate" />
+		<Frame name="QuestTrackerObj2_2" inherits="QuestTrackerObjTemplate" />
+		<Frame name="QuestTrackerObj2_3" inherits="QuestTrackerObjTemplate" />
+		<Frame name="QuestTrackerObj2_4" inherits="QuestTrackerObjTemplate" />
 
-		<Frame name="QuestTrackerObj1_2" renderer="DefaultRenderer">
-			<Property name="Font" value="DefaultSmall" />
-			<Property name="HorzAlign" value="LEFT" />
-			<Property name="VertAlign" value="TOP" />
-			<Property name="TextColor" value="FFAAAAAA" />
-			<Visual>
-				<ImagerySection name="Text">
-					<TextComponent color="" horzAlign="" vertAlign="" />
-				</ImagerySection>
-				<StateImagery name="Enabled"><Layer><Section section="Text" /></Layer></StateImagery>
-			</Visual>
-			<Area>
-				<Size><AbsDimension x="360" y="36" /></Size>
-				<Anchor point="LEFT" offset="16" />
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestTrackerObj1_1" />
-			</Area>
+		<!-- Slot 3 -->
+		<Frame name="QuestTrackerToggle3" inherits="QuestTrackerToggleTemplate" id="3">
+			<Scripts>
+				<OnClick>
+					return function(self, button)
+						QuestTracker_ToggleCollapse(3);
+					end
+				</OnClick>
+			</Scripts>
 		</Frame>
+		<Frame name="QuestTrackerTitle3" inherits="QuestTrackerTitleTemplate" id="3">
+			<Scripts>
+				<OnClick>
+					return function(self, button)
+						QuestTracker_TitleClick(3);
+					end
+			</Scripts>
+		</Frame>
+		<Frame name="QuestTrackerObj3_1" inherits="QuestTrackerObjTemplate" />
+		<Frame name="QuestTrackerObj3_2" inherits="QuestTrackerObjTemplate" />
+		<Frame name="QuestTrackerObj3_3" inherits="QuestTrackerObjTemplate" />
+		<Frame name="QuestTrackerObj3_4" inherits="QuestTrackerObjTemplate" />
 
-		<Frame name="QuestTrackerObj1_3" renderer="DefaultRenderer">
-			<Property name="Font" value="DefaultSmall" />
-			<Property name="HorzAlign" value="LEFT" />
-			<Property name="VertAlign" value="TOP" />
-			<Property name="TextColor" value="FFAAAAAA" />
-			<Visual>
-				<ImagerySection name="Text">
-					<TextComponent color="" horzAlign="" vertAlign="" />
-				</ImagerySection>
-				<StateImagery name="Enabled"><Layer><Section section="Text" /></Layer></StateImagery>
-			</Visual>
-			<Area>
-				<Size><AbsDimension x="360" y="36" /></Size>
-				<Anchor point="LEFT" offset="16" />
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestTrackerObj1_2" />
-			</Area>
+		<!-- Slot 4 -->
+		<Frame name="QuestTrackerToggle4" inherits="QuestTrackerToggleTemplate" id="4">
+			<Scripts>
+				<OnClick>
+					return function(self, button)
+						QuestTracker_ToggleCollapse(4);
+					end
+				</OnClick>
+			</Scripts>
 		</Frame>
+		<Frame name="QuestTrackerTitle4" inherits="QuestTrackerTitleTemplate" id="4">
+			<Scripts>
+				<OnClick>
+					return function(self, button)
+						QuestTracker_TitleClick(4);
+					end
+			</Scripts>
+		</Frame>
+		<Frame name="QuestTrackerObj4_1" inherits="QuestTrackerObjTemplate" />
+		<Frame name="QuestTrackerObj4_2" inherits="QuestTrackerObjTemplate" />
+		<Frame name="QuestTrackerObj4_3" inherits="QuestTrackerObjTemplate" />
+		<Frame name="QuestTrackerObj4_4" inherits="QuestTrackerObjTemplate" />
 
-		<Frame name="QuestTrackerObj1_4" renderer="DefaultRenderer">
-			<Property name="Font" value="DefaultSmall" />
-			<Property name="HorzAlign" value="LEFT" />
-			<Property name="VertAlign" value="TOP" />
-			<Property name="TextColor" value="FFAAAAAA" />
-			<Visual>
-				<ImagerySection name="Text">
-					<TextComponent color="" horzAlign="" vertAlign="" />
-				</ImagerySection>
-				<StateImagery name="Enabled"><Layer><Section section="Text" /></Layer></StateImagery>
-			</Visual>
-			<Area>
-				<Size><AbsDimension x="360" y="36" /></Size>
-				<Anchor point="LEFT" offset="16" />
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestTrackerObj1_3" />
-			</Area>
+		<!-- Slot 5 -->
+		<Frame name="QuestTrackerToggle5" inherits="QuestTrackerToggleTemplate" id="5">
+			<Scripts>
+				<OnClick>
+					return function(self, button)
+						QuestTracker_ToggleCollapse(5);
+					end
+				</OnClick>
+			</Scripts>
 		</Frame>
-
-		<!-- Quest slot 2 -->
-		<Frame name="QuestTrackerTitle2" renderer="DefaultRenderer">
-			<Property name="Font" value="DefaultSmall" />
-			<Property name="HorzAlign" value="LEFT" />
-			<Property name="VertAlign" value="TOP" />
-			<Property name="TextColor" value="FFFFD100" />
-			<Visual>
-				<ImagerySection name="Text">
-					<TextComponent color="" horzAlign="" vertAlign="" />
-				</ImagerySection>
-				<StateImagery name="Enabled"><Layer><Section section="Text" /></Layer></StateImagery>
-			</Visual>
-			<Area>
-				<Size><AbsDimension x="368" y="40" /></Size>
-				<Anchor point="LEFT" offset="8" />
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestTrackerObj1_4" />
-			</Area>
+		<Frame name="QuestTrackerTitle5" inherits="QuestTrackerTitleTemplate" id="5">
+			<Scripts>
+				<OnClick>
+					return function(self, button)
+						QuestTracker_TitleClick(5);
+					end
+			</Scripts>
 		</Frame>
-
-		<Frame name="QuestTrackerObj2_1" renderer="DefaultRenderer">
-			<Property name="Font" value="DefaultSmall" />
-			<Property name="HorzAlign" value="LEFT" />
-			<Property name="VertAlign" value="TOP" />
-			<Property name="TextColor" value="FFAAAAAA" />
-			<Visual>
-				<ImagerySection name="Text">
-					<TextComponent color="" horzAlign="" vertAlign="" />
-				</ImagerySection>
-				<StateImagery name="Enabled"><Layer><Section section="Text" /></Layer></StateImagery>
-			</Visual>
-			<Area>
-				<Size><AbsDimension x="360" y="36" /></Size>
-				<Anchor point="LEFT" offset="16" />
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestTrackerTitle2" />
-			</Area>
-		</Frame>
-
-		<Frame name="QuestTrackerObj2_2" renderer="DefaultRenderer">
-			<Property name="Font" value="DefaultSmall" />
-			<Property name="HorzAlign" value="LEFT" />
-			<Property name="VertAlign" value="TOP" />
-			<Property name="TextColor" value="FFAAAAAA" />
-			<Visual>
-				<ImagerySection name="Text">
-					<TextComponent color="" horzAlign="" vertAlign="" />
-				</ImagerySection>
-				<StateImagery name="Enabled"><Layer><Section section="Text" /></Layer></StateImagery>
-			</Visual>
-			<Area>
-				<Size><AbsDimension x="360" y="36" /></Size>
-				<Anchor point="LEFT" offset="16" />
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestTrackerObj2_1" />
-			</Area>
-		</Frame>
-
-		<Frame name="QuestTrackerObj2_3" renderer="DefaultRenderer">
-			<Property name="Font" value="DefaultSmall" />
-			<Property name="HorzAlign" value="LEFT" />
-			<Property name="VertAlign" value="TOP" />
-			<Property name="TextColor" value="FFAAAAAA" />
-			<Visual>
-				<ImagerySection name="Text">
-					<TextComponent color="" horzAlign="" vertAlign="" />
-				</ImagerySection>
-				<StateImagery name="Enabled"><Layer><Section section="Text" /></Layer></StateImagery>
-			</Visual>
-			<Area>
-				<Size><AbsDimension x="360" y="36" /></Size>
-				<Anchor point="LEFT" offset="16" />
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestTrackerObj2_2" />
-			</Area>
-		</Frame>
-
-		<Frame name="QuestTrackerObj2_4" renderer="DefaultRenderer">
-			<Property name="Font" value="DefaultSmall" />
-			<Property name="HorzAlign" value="LEFT" />
-			<Property name="VertAlign" value="TOP" />
-			<Property name="TextColor" value="FFAAAAAA" />
-			<Visual>
-				<ImagerySection name="Text">
-					<TextComponent color="" horzAlign="" vertAlign="" />
-				</ImagerySection>
-				<StateImagery name="Enabled"><Layer><Section section="Text" /></Layer></StateImagery>
-			</Visual>
-			<Area>
-				<Size><AbsDimension x="360" y="36" /></Size>
-				<Anchor point="LEFT" offset="16" />
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestTrackerObj2_3" />
-			</Area>
-		</Frame>
-
-		<!-- Quest slot 3 -->
-		<Frame name="QuestTrackerTitle3" renderer="DefaultRenderer">
-			<Property name="Font" value="DefaultSmall" />
-			<Property name="HorzAlign" value="LEFT" />
-			<Property name="VertAlign" value="TOP" />
-			<Property name="TextColor" value="FFFFD100" />
-			<Visual>
-				<ImagerySection name="Text">
-					<TextComponent color="" horzAlign="" vertAlign="" />
-				</ImagerySection>
-				<StateImagery name="Enabled"><Layer><Section section="Text" /></Layer></StateImagery>
-			</Visual>
-			<Area>
-				<Size><AbsDimension x="368" y="40" /></Size>
-				<Anchor point="LEFT" offset="8" />
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestTrackerObj2_4" />
-			</Area>
-		</Frame>
-
-		<Frame name="QuestTrackerObj3_1" renderer="DefaultRenderer">
-			<Property name="Font" value="DefaultSmall" />
-			<Property name="HorzAlign" value="LEFT" />
-			<Property name="VertAlign" value="TOP" />
-			<Property name="TextColor" value="FFAAAAAA" />
-			<Visual>
-				<ImagerySection name="Text">
-					<TextComponent color="" horzAlign="" vertAlign="" />
-				</ImagerySection>
-				<StateImagery name="Enabled"><Layer><Section section="Text" /></Layer></StateImagery>
-			</Visual>
-			<Area>
-				<Size><AbsDimension x="360" y="36" /></Size>
-				<Anchor point="LEFT" offset="16" />
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestTrackerTitle3" />
-			</Area>
-		</Frame>
-
-		<Frame name="QuestTrackerObj3_2" renderer="DefaultRenderer">
-			<Property name="Font" value="DefaultSmall" />
-			<Property name="HorzAlign" value="LEFT" />
-			<Property name="VertAlign" value="TOP" />
-			<Property name="TextColor" value="FFAAAAAA" />
-			<Visual>
-				<ImagerySection name="Text">
-					<TextComponent color="" horzAlign="" vertAlign="" />
-				</ImagerySection>
-				<StateImagery name="Enabled"><Layer><Section section="Text" /></Layer></StateImagery>
-			</Visual>
-			<Area>
-				<Size><AbsDimension x="360" y="36" /></Size>
-				<Anchor point="LEFT" offset="16" />
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestTrackerObj3_1" />
-			</Area>
-		</Frame>
-
-		<Frame name="QuestTrackerObj3_3" renderer="DefaultRenderer">
-			<Property name="Font" value="DefaultSmall" />
-			<Property name="HorzAlign" value="LEFT" />
-			<Property name="VertAlign" value="TOP" />
-			<Property name="TextColor" value="FFAAAAAA" />
-			<Visual>
-				<ImagerySection name="Text">
-					<TextComponent color="" horzAlign="" vertAlign="" />
-				</ImagerySection>
-				<StateImagery name="Enabled"><Layer><Section section="Text" /></Layer></StateImagery>
-			</Visual>
-			<Area>
-				<Size><AbsDimension x="360" y="36" /></Size>
-				<Anchor point="LEFT" offset="16" />
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestTrackerObj3_2" />
-			</Area>
-		</Frame>
-
-		<Frame name="QuestTrackerObj3_4" renderer="DefaultRenderer">
-			<Property name="Font" value="DefaultSmall" />
-			<Property name="HorzAlign" value="LEFT" />
-			<Property name="VertAlign" value="TOP" />
-			<Property name="TextColor" value="FFAAAAAA" />
-			<Visual>
-				<ImagerySection name="Text">
-					<TextComponent color="" horzAlign="" vertAlign="" />
-				</ImagerySection>
-				<StateImagery name="Enabled"><Layer><Section section="Text" /></Layer></StateImagery>
-			</Visual>
-			<Area>
-				<Size><AbsDimension x="360" y="36" /></Size>
-				<Anchor point="LEFT" offset="16" />
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestTrackerObj3_3" />
-			</Area>
-		</Frame>
-
-		<!-- Quest slot 4 -->
-		<Frame name="QuestTrackerTitle4" renderer="DefaultRenderer">
-			<Property name="Font" value="DefaultSmall" />
-			<Property name="HorzAlign" value="LEFT" />
-			<Property name="VertAlign" value="TOP" />
-			<Property name="TextColor" value="FFFFD100" />
-			<Visual>
-				<ImagerySection name="Text">
-					<TextComponent color="" horzAlign="" vertAlign="" />
-				</ImagerySection>
-				<StateImagery name="Enabled"><Layer><Section section="Text" /></Layer></StateImagery>
-			</Visual>
-			<Area>
-				<Size><AbsDimension x="368" y="40" /></Size>
-				<Anchor point="LEFT" offset="8" />
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestTrackerObj3_4" />
-			</Area>
-		</Frame>
-
-		<Frame name="QuestTrackerObj4_1" renderer="DefaultRenderer">
-			<Property name="Font" value="DefaultSmall" />
-			<Property name="HorzAlign" value="LEFT" />
-			<Property name="VertAlign" value="TOP" />
-			<Property name="TextColor" value="FFAAAAAA" />
-			<Visual>
-				<ImagerySection name="Text">
-					<TextComponent color="" horzAlign="" vertAlign="" />
-				</ImagerySection>
-				<StateImagery name="Enabled"><Layer><Section section="Text" /></Layer></StateImagery>
-			</Visual>
-			<Area>
-				<Size><AbsDimension x="360" y="36" /></Size>
-				<Anchor point="LEFT" offset="16" />
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestTrackerTitle4" />
-			</Area>
-		</Frame>
-
-		<Frame name="QuestTrackerObj4_2" renderer="DefaultRenderer">
-			<Property name="Font" value="DefaultSmall" />
-			<Property name="HorzAlign" value="LEFT" />
-			<Property name="VertAlign" value="TOP" />
-			<Property name="TextColor" value="FFAAAAAA" />
-			<Visual>
-				<ImagerySection name="Text">
-					<TextComponent color="" horzAlign="" vertAlign="" />
-				</ImagerySection>
-				<StateImagery name="Enabled"><Layer><Section section="Text" /></Layer></StateImagery>
-			</Visual>
-			<Area>
-				<Size><AbsDimension x="360" y="36" /></Size>
-				<Anchor point="LEFT" offset="16" />
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestTrackerObj4_1" />
-			</Area>
-		</Frame>
-
-		<Frame name="QuestTrackerObj4_3" renderer="DefaultRenderer">
-			<Property name="Font" value="DefaultSmall" />
-			<Property name="HorzAlign" value="LEFT" />
-			<Property name="VertAlign" value="TOP" />
-			<Property name="TextColor" value="FFAAAAAA" />
-			<Visual>
-				<ImagerySection name="Text">
-					<TextComponent color="" horzAlign="" vertAlign="" />
-				</ImagerySection>
-				<StateImagery name="Enabled"><Layer><Section section="Text" /></Layer></StateImagery>
-			</Visual>
-			<Area>
-				<Size><AbsDimension x="360" y="36" /></Size>
-				<Anchor point="LEFT" offset="16" />
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestTrackerObj4_2" />
-			</Area>
-		</Frame>
-
-		<Frame name="QuestTrackerObj4_4" renderer="DefaultRenderer">
-			<Property name="Font" value="DefaultSmall" />
-			<Property name="HorzAlign" value="LEFT" />
-			<Property name="VertAlign" value="TOP" />
-			<Property name="TextColor" value="FFAAAAAA" />
-			<Visual>
-				<ImagerySection name="Text">
-					<TextComponent color="" horzAlign="" vertAlign="" />
-				</ImagerySection>
-				<StateImagery name="Enabled"><Layer><Section section="Text" /></Layer></StateImagery>
-			</Visual>
-			<Area>
-				<Size><AbsDimension x="360" y="36" /></Size>
-				<Anchor point="LEFT" offset="16" />
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestTrackerObj4_3" />
-			</Area>
-		</Frame>
-
-		<!-- Quest slot 5 -->
-		<Frame name="QuestTrackerTitle5" renderer="DefaultRenderer">
-			<Property name="Font" value="DefaultSmall" />
-			<Property name="HorzAlign" value="LEFT" />
-			<Property name="VertAlign" value="TOP" />
-			<Property name="TextColor" value="FFFFD100" />
-			<Visual>
-				<ImagerySection name="Text">
-					<TextComponent color="" horzAlign="" vertAlign="" />
-				</ImagerySection>
-				<StateImagery name="Enabled"><Layer><Section section="Text" /></Layer></StateImagery>
-			</Visual>
-			<Area>
-				<Size><AbsDimension x="368" y="40" /></Size>
-				<Anchor point="LEFT" offset="8" />
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestTrackerObj4_4" />
-			</Area>
-		</Frame>
-
-		<Frame name="QuestTrackerObj5_1" renderer="DefaultRenderer">
-			<Property name="Font" value="DefaultSmall" />
-			<Property name="HorzAlign" value="LEFT" />
-			<Property name="VertAlign" value="TOP" />
-			<Property name="TextColor" value="FFAAAAAA" />
-			<Visual>
-				<ImagerySection name="Text">
-					<TextComponent color="" horzAlign="" vertAlign="" />
-				</ImagerySection>
-				<StateImagery name="Enabled"><Layer><Section section="Text" /></Layer></StateImagery>
-			</Visual>
-			<Area>
-				<Size><AbsDimension x="360" y="36" /></Size>
-				<Anchor point="LEFT" offset="16" />
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestTrackerTitle5" />
-			</Area>
-		</Frame>
-
-		<Frame name="QuestTrackerObj5_2" renderer="DefaultRenderer">
-			<Property name="Font" value="DefaultSmall" />
-			<Property name="HorzAlign" value="LEFT" />
-			<Property name="VertAlign" value="TOP" />
-			<Property name="TextColor" value="FFAAAAAA" />
-			<Visual>
-				<ImagerySection name="Text">
-					<TextComponent color="" horzAlign="" vertAlign="" />
-				</ImagerySection>
-				<StateImagery name="Enabled"><Layer><Section section="Text" /></Layer></StateImagery>
-			</Visual>
-			<Area>
-				<Size><AbsDimension x="360" y="36" /></Size>
-				<Anchor point="LEFT" offset="16" />
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestTrackerObj5_1" />
-			</Area>
-		</Frame>
-
-		<Frame name="QuestTrackerObj5_3" renderer="DefaultRenderer">
-			<Property name="Font" value="DefaultSmall" />
-			<Property name="HorzAlign" value="LEFT" />
-			<Property name="VertAlign" value="TOP" />
-			<Property name="TextColor" value="FFAAAAAA" />
-			<Visual>
-				<ImagerySection name="Text">
-					<TextComponent color="" horzAlign="" vertAlign="" />
-				</ImagerySection>
-				<StateImagery name="Enabled"><Layer><Section section="Text" /></Layer></StateImagery>
-			</Visual>
-			<Area>
-				<Size><AbsDimension x="360" y="36" /></Size>
-				<Anchor point="LEFT" offset="16" />
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestTrackerObj5_2" />
-			</Area>
-		</Frame>
-
-		<Frame name="QuestTrackerObj5_4" renderer="DefaultRenderer">
-			<Property name="Font" value="DefaultSmall" />
-			<Property name="HorzAlign" value="LEFT" />
-			<Property name="VertAlign" value="TOP" />
-			<Property name="TextColor" value="FFAAAAAA" />
-			<Visual>
-				<ImagerySection name="Text">
-					<TextComponent color="" horzAlign="" vertAlign="" />
-				</ImagerySection>
-				<StateImagery name="Enabled"><Layer><Section section="Text" /></Layer></StateImagery>
-			</Visual>
-			<Area>
-				<Size><AbsDimension x="360" y="36" /></Size>
-				<Anchor point="LEFT" offset="16" />
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestTrackerObj5_3" />
-			</Area>
-		</Frame>
+		<Frame name="QuestTrackerObj5_1" inherits="QuestTrackerObjTemplate" />
+		<Frame name="QuestTrackerObj5_2" inherits="QuestTrackerObjTemplate" />
+		<Frame name="QuestTrackerObj5_3" inherits="QuestTrackerObjTemplate" />
+		<Frame name="QuestTrackerObj5_4" inherits="QuestTrackerObjTemplate" />
 
 	</Frame>
 </UiLayout>
