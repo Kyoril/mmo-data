@@ -72,10 +72,6 @@ end
 MinimapContent_mouseOver = false;
 
 function Minimap_OnUpdate(self, elapsed)
-    if not MinimapContent_mouseOver then
-        return;
-    end
-
     local cursor = GetCursorPosition();
     local fx = MinimapContent:GetX();
     local fy = MinimapContent:GetY();
