@@ -402,22 +402,27 @@ function ChatFrame_OnTimePlayedUpdated(this, timePlayedSeconds)
     ChatFrame:AddMessage(timePlayedString, info.r, info.g, info.b);
 end
 
+-- Returns a clickable player hyperlink: clicking it opens whisper mode.
+function ChatFrame_MakePlayerLink(name)
+    return "|Hplayer:" .. name .. "|h[" .. name .. "]|h";
+end
+
 function ChatFrame_OnLoad(this)
     this:RegisterEvent("CHAT_MSG_SAY", function(this, character, message)
         local info = ChatTypeInfo["SAY"];
-        ChatFrame:AddMessage(string.format(CHAT_FORMAT_SAY, character, message), info.r, info.g, info.b);
+        ChatFrame:AddMessage(string.format(CHAT_FORMAT_SAY, ChatFrame_MakePlayerLink(character), message), info.r, info.g, info.b);
     end);
     this:RegisterEvent("CHAT_MSG_YELL", function(this, character, message)
         local info = ChatTypeInfo["YELL"];
-        ChatFrame:AddMessage(string.format(CHAT_FORMAT_YELL, character, message), info.r, info.g, info.b);
+        ChatFrame:AddMessage(string.format(CHAT_FORMAT_YELL, ChatFrame_MakePlayerLink(character), message), info.r, info.g, info.b);
     end);
     this:RegisterEvent("CHAT_MSG_PARTY", function(this, character, message)
         local info = ChatTypeInfo["PARTY"];
-        ChatFrame:AddMessage(string.format(CHAT_FORMAT_PARTY, character, message), info.r, info.g, info.b);
+        ChatFrame:AddMessage(string.format(CHAT_FORMAT_PARTY, ChatFrame_MakePlayerLink(character), message), info.r, info.g, info.b);
     end);
     this:RegisterEvent("CHAT_MSG_GUILD", function(this, character, message)
         local info = ChatTypeInfo["GUILD"];
-        ChatFrame:AddMessage(string.format(CHAT_FORMAT_GUILD, character, message), info.r, info.g, info.b);
+        ChatFrame:AddMessage(string.format(CHAT_FORMAT_GUILD, ChatFrame_MakePlayerLink(character), message), info.r, info.g, info.b);
     end);
     this:RegisterEvent("CHAT_MSG_UNIT_SAY", function(this, character, message)
         local info = ChatTypeInfo["UNIT_SAY"];
@@ -429,7 +434,7 @@ function ChatFrame_OnLoad(this)
     end);
     this:RegisterEvent("CHAT_MSG_EMOTE", function(this, character, message)
         local info = ChatTypeInfo["EMOTE"];
-        ChatFrame:AddMessage(string.format(CHAT_FORMAT_EMOTE, character, message), info.r, info.g, info.b);
+        ChatFrame:AddMessage(string.format(CHAT_FORMAT_EMOTE, ChatFrame_MakePlayerLink(character), message), info.r, info.g, info.b);
     end);
     this:RegisterEvent("CHAT_MSG_UNIT_EMOTE", function(this, character, message)
         local info = ChatTypeInfo["UNIT_EMOTE"];
@@ -454,7 +459,7 @@ function ChatFrame_OnLoad(this)
     this:RegisterEvent("CHAT_MSG_WHISPER", function(this, senderName, message)
         ChatFrame_ReplyTarget = senderName;
         local info = ChatTypeInfo["WHISPER"];
-        ChatFrame:AddMessage(string.format(Localize("CHAT_FORMAT_WHISPER_FROM"), senderName, message), info.r, info.g, info.b);
+        ChatFrame:AddMessage(string.format(Localize("CHAT_FORMAT_WHISPER_FROM"), ChatFrame_MakePlayerLink(senderName), message), info.r, info.g, info.b);
         ChatFrame_ResetActivity();
     end);
 
@@ -486,9 +491,16 @@ function ChatFrame_OnLoad(this)
             if not ChatInputFrame:IsVisible() then
                 ChatFrame_OpenChat();
             end
-        end
+        elseif type == "player" then
+            -- Click on a player name: switch to whisper mode addressed to that player
+            ChatFrame_WhisperTarget = payload;
+            ChatType = "WHISPER";
+            ChatEdit_UpdateHeader();
 
-        print("Clicked hyperlink of type: " .. type .. " with payload: " .. payload);
+            if not ChatInputFrame:IsVisible() then
+                ChatFrame_OpenChat();
+            end
+        end
     end);
 
     ChatType = "SAY";

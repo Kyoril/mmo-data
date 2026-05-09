@@ -278,6 +278,20 @@ RegisterContextMenu("TARGET", {
         local isSelf = isPlayer and (targetUnit == GetUnit("player"))
         
         if isPlayer and not isSelf then
+            -- Whisper option
+            table.insert(items, {
+                text = Localize("WHISPER"),
+                callback = function()
+                    ChatFrame_WhisperTarget = targetUnit:GetName();
+                    ChatType = "WHISPER";
+                    ChatEdit_UpdateHeader();
+                    if not ChatInputFrame:IsVisible() then
+                        ChatFrame_OpenChat();
+                    end
+                end,
+                enabled = true
+            })
+
             table.insert(items, {
                 text = Localize("INVITE_TO_PARTY"),
                 callback = function()
@@ -288,7 +302,7 @@ RegisterContextMenu("TARGET", {
             
             -- Trade option
             table.insert(items, {
-                text = "Trade",
+                text = Localize("TRADE"),
                 callback = function()
                     local targetGuid = targetUnit:GetGuid();
                     if targetGuid then
