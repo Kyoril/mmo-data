@@ -21,7 +21,7 @@
 			<ImagerySection name="Text">
 				<TextComponent color="$TextColor" horzAlign="$HorzAlign" vertAlign="$VertAlign" />
 			</ImagerySection>
-			<StateImagery name="Enabled">
+			<StateImagery name="Normal">
 				<Layer><Section section="FrameNormal" /></Layer>
 				<Layer><Section section="Text" /></Layer>
 			</StateImagery>
@@ -39,7 +39,7 @@
 
 	<!-- Title button template (clickable to open quest log) -->
 	<Frame name="QuestTrackerTitleTemplate" type="Button" renderer="ButtonRenderer">
-		<Property name="Font" value="QuestTitleFont" />
+		<Property name="Font" value="DefaultSmall" />
 		<Property name="HorzAlign" value="LEFT" />
 		<Property name="VertAlign" value="TOP" />
 		<Property name="TextColor" value="FFFFD100" />
@@ -56,7 +56,7 @@
 			<ImagerySection name="Text">
 				<TextComponent color="$TextColor" horzAlign="$HorzAlign" vertAlign="$VertAlign" />
 			</ImagerySection>
-			<StateImagery name="Enabled">
+			<StateImagery name="Normal">
 				<Layer><Section section="FrameNormal" /></Layer>
 				<Layer><Section section="Text" /></Layer>
 			</StateImagery>
@@ -74,7 +74,7 @@
 
 	<!-- Objective text template -->
 	<Frame name="QuestTrackerObjTemplate" renderer="DefaultRenderer">
-		<Property name="Font" value="QuestFont" />
+		<Property name="Font" value="SmallLabelFont" />
 		<Property name="HorzAlign" value="LEFT" />
 		<Property name="VertAlign" value="TOP" />
 		<Property name="TextColor" value="FFAAAAAA" />
