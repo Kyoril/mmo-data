@@ -48,6 +48,8 @@
 		<Property name="HorzAlign" value="LEFT" />
 		<Property name="VertAlign" value="TOP" />
 		<Property name="TextColor" value="FFFFD100" />
+		<Property name="TextColorHover" value="FFFFFFFF" />
+		<Property name="TextColorPush" value="FFCCCC88" />
 		<Visual>
 			<ImagerySection name="FrameNormal">
 				<ImageComponent color="00000000" />
@@ -58,20 +60,26 @@
 			<ImagerySection name="FramePushed">
 				<ImageComponent color="22FFFFFF" />
 			</ImagerySection>
-			<ImagerySection name="Text">
+			<ImagerySection name="TextNormal">
 				<TextComponent color="$TextColor" horzAlign="$HorzAlign" vertAlign="$VertAlign" />
+			</ImagerySection>
+			<ImagerySection name="TextHovered">
+				<TextComponent color="$TextColorHover" horzAlign="$HorzAlign" vertAlign="$VertAlign" />
+			</ImagerySection>
+			<ImagerySection name="TextPushed">
+				<TextComponent color="$TextColorPush" horzAlign="$HorzAlign" vertAlign="$VertAlign" />
 			</ImagerySection>
 			<StateImagery name="Normal">
 				<Layer><Section section="FrameNormal" /></Layer>
-				<Layer><Section section="Text" /></Layer>
+				<Layer><Section section="TextNormal" /></Layer>
 			</StateImagery>
 			<StateImagery name="Hovered">
 				<Layer><Section section="FrameHovered" /></Layer>
-				<Layer><Section section="Text" /></Layer>
+				<Layer><Section section="TextHovered" /></Layer>
 			</StateImagery>
 			<StateImagery name="Pushed">
 				<Layer><Section section="FramePushed" /></Layer>
-				<Layer><Section section="Text" /></Layer>
+				<Layer><Section section="TextPushed" /></Layer>
 			</StateImagery>
 		</Visual>
 		<Area><Size><AbsDimension x="352" y="32" /></Size></Area>
