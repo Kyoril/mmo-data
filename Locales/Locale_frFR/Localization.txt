@@ -338,6 +338,7 @@ strings =
 	(key = "LOOT_ROUND_ROBIN", string = "Tour à tour")
 	(key = "LOOT_MASTER_LOOT", string = "Maître du butin")
 	(key = "LOOT_GROUP_LOOT", string = "Butin de groupe")
+	(key = "LOOT_EMPTY", string = "Aucun butin")
 	(key = "SET_LOOT_METHOD", string = "Définir la méthode de butin")
 	(key = "LOOTMETHOD_USAGE", string = "Utilisation : /lootmethod [freeforall|roundrobin|masterloot|grouploot]")
 	(key = "LOOT_METHOD_SET", string = "Méthode de butin : %s")

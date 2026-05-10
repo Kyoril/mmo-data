@@ -24,6 +24,17 @@ function LootFrame_OnLootSlotCleared(self, absoluteSlot)
     
     -- Update the numLootItems to reflect current state
     self.numLootItems = GetNumLootItems();
+
+	-- Update the empty label visibility
+	local emptyLabel = LootEmptyLabel;
+	if emptyLabel then
+		if self.numLootItems == 0 then
+			emptyLabel:SetText(Localize("LOOT_EMPTY"));
+			emptyLabel:Show();
+		else
+			emptyLabel:Hide();
+		end
+	end
     
     -- Trigger a UI update to refresh the display
     LootFrame_OnUpdate(self, 0);
@@ -77,6 +88,17 @@ end
 function LootFrame_OnShow(self)
 	self.numLootItems = GetNumLootItems();
 	LootFrame_OnUpdate(self, 0);
+
+	-- Show "No loot" label when loot window is empty
+	local emptyLabel = LootEmptyLabel;
+	if emptyLabel then
+		if self.numLootItems == 0 then
+			emptyLabel:SetText(Localize("LOOT_EMPTY"));
+			emptyLabel:Show();
+		else
+			emptyLabel:Hide();
+		end
+	end
 
 	if ( self.numLootItems == 0 ) then
 		-- TODO: Play sound of empty loot window opening

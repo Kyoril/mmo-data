@@ -337,6 +337,7 @@ strings =
 	(key = "LOOT_ROUND_ROBIN", string = "Round Robin")
 	(key = "LOOT_MASTER_LOOT", string = "Master Loot")
 	(key = "LOOT_GROUP_LOOT", string = "Group Loot")
+	(key = "LOOT_EMPTY", string = "Нет добычи")
 	(key = "SET_LOOT_METHOD", string = "Set Loot Method")
 	(key = "LOOTMETHOD_USAGE", string = "Usage: /lootmethod [freeforall|roundrobin|masterloot|grouploot]")
 	(key = "LOOT_METHOD_SET", string = "Loot method set to: %s")
