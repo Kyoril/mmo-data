@@ -70,12 +70,12 @@ function QuestLogFrame_OnShow(self)
 end
 
 function QuestLogFrame_UpdateQuestDetails()
-    local selectedQuestId = GetQuestLogSelection();
+    local currentSelection = GetQuestLogSelection();
     local questLogEntry = nil;
 
     for i = 1, MAX_QUESTLOG_SIZE do
         local entry = GetQuestLogEntry(i - 1);
-        if entry and entry.quest and entry.quest.id == selectedQuestId then
+        if entry and entry.quest and entry.quest.id == currentSelection then
             questLogEntry = entry;
             break;
         end
@@ -86,6 +86,10 @@ function QuestLogFrame_UpdateQuestDetails()
         QuestLogQuestDetailPanelScrollBar:Disable();
         return;
     end
+
+    -- Keep the module-level selectedQuestId in sync so the abandon button works
+    -- regardless of how the detail view was opened (quest list click or quest tracker).
+    selectedQuestId = currentSelection;
 
     -- Scroll up
     QuestLogQuestDetailPanelScrollBar:SetValue(0);

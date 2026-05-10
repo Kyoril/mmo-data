@@ -113,8 +113,38 @@ function Minimap_OnUpdate(self, elapsed)
         end
     end
 
+    -- Position tooltip at cursor with a small offset, flipping sides if it would
+    -- overflow the right or bottom edge of the 4K logical screen (3840×2160).
+    local TIP_OFFSET = 20;
+    local SCREEN_W   = 3840;
+    local SCREEN_H   = 2160;
+
+    local tipW = GameTooltip:GetWidth();
+    local tipH = GameTooltip:GetHeight();
+
+    local anchorH, anchorV;   -- horizontal / vertical anchor points on the tooltip
+    local offsetX, offsetY;
+
+    -- Flip left if tooltip would overflow the right edge
+    if cursor.x + TIP_OFFSET + tipW > SCREEN_W then
+        anchorH  = AnchorPoint.RIGHT;
+        offsetX  = cursor.x - TIP_OFFSET;
+    else
+        anchorH  = AnchorPoint.LEFT;
+        offsetX  = cursor.x + TIP_OFFSET;
+    end
+
+    -- Flip up if tooltip would overflow the bottom edge
+    if cursor.y + TIP_OFFSET + tipH > SCREEN_H then
+        anchorV  = AnchorPoint.BOTTOM;
+        offsetY  = cursor.y - TIP_OFFSET;
+    else
+        anchorV  = AnchorPoint.TOP;
+        offsetY  = cursor.y + TIP_OFFSET;
+    end
+
     GameTooltip:ClearAnchors();
-    GameTooltip:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.LEFT, MinimapContent, 0);
-    GameTooltip:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, MinimapContent, 0);
+    GameTooltip:SetAnchor(anchorH, AnchorPoint.LEFT, nil, offsetX);
+    GameTooltip:SetAnchor(anchorV, AnchorPoint.TOP,  nil, offsetY);
     GameTooltip:Show();
 end
