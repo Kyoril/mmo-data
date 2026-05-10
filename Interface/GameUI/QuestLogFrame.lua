@@ -75,7 +75,7 @@ function QuestLogFrame_UpdateQuestDetails()
 
     for i = 1, MAX_QUESTLOG_SIZE do
         local entry = GetQuestLogEntry(i - 1);
-        if entry and entry.quest.id == selectedQuestId then
+        if entry and entry.quest and entry.quest.id == selectedQuestId then
             questLogEntry = entry;
             break;
         end
@@ -211,14 +211,18 @@ function QuestLog_Update()
 
             button.userData = questLogEntry;
 
-            if questLogEntry.status == 1 then
+            if not questLogEntry.quest then
+                -- Quest data not yet loaded from server; skip rendering this slot.
+                button:Hide();
+            elseif questLogEntry.status == 1 then
                 button:SetText(string.format(Localize("QUEST_COMPLETED_FORMAT"), questLogEntry.quest.title));
+                button:SetChecked(questLogEntry.quest.id == GetQuestLogSelection());
+                button:Show();
             else
                 button:SetText(questLogEntry.quest.title);
+                button:SetChecked(questLogEntry.quest.id == GetQuestLogSelection());
+                button:Show();
             end
-
-            button:SetChecked(questLogEntry.quest ~= nil and questLogEntry.quest.id == GetQuestLogSelection());
-            button:Show();
         else
             button.userData = nil;
             button:Hide();

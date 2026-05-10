@@ -19,11 +19,6 @@
 					Minimap_OnHide(self);
 				end
 			</OnHide>
-			<OnUpdate>
-				return function(self, elapsed)
-					Minimap_OnUpdate(self, elapsed);
-				end
-			</OnUpdate>
 		</Scripts>
 
 		<Area>

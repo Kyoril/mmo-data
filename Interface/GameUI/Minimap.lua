@@ -76,6 +76,9 @@ function Minimap_OnHide(self)
 end
 
 
+-- Called from MinimapBorder's OnUpdate.
+-- Hides the tooltip only when hovering over empty minimap space (so moving off a dot hides it),
+-- but never hides it when the cursor is outside the minimap (that would clobber other tooltips).
 function Minimap_OnUpdate(self, elapsed)
     local cursor = GetCursorPosition();
     local scale = GetUIScale();
@@ -88,13 +91,14 @@ function Minimap_OnUpdate(self, elapsed)
     local u = (cursor.x - fx) / fw;
     local v = (cursor.y - fy) / fh;
 
+    -- Cursor is outside the minimap — don't touch the tooltip.
     if u < 0 or u > 1 or v < 0 or v > 1 then
-        GameTooltip:Hide();
         return;
     end
 
     local objects = GetMinimapObjectsAt(u, v);
     if objects == nil or #objects == 0 then
+        -- Hovering over empty minimap space: hide any minimap tooltip we may have shown.
         GameTooltip:Hide();
         return;
     end
