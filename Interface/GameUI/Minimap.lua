@@ -8,11 +8,23 @@ function Minimap_OnLoad(self)
     self:RegisterEvent("PARTY_PING_UNIT", Minimap_OnPartyPing);
 
     Minimap_OnZoomChanged();
+
+    -- Set the correct day/night icon immediately on load
+    local hour, _ = GetGameTime();
+    Minimap_UpdateDayNightIcon(hour);
 end
 
 function Minimap_OnPartyPing()
     -- Play ping sound when a ping is placed (add sound file to Interface/Sounds/Ping.ogg to enable)
     -- PlaySound("Interface/Sounds/Ping.ogg");
+end
+
+function Minimap_UpdateDayNightIcon(hour)
+    if hour >= 21 or hour < 5 then
+        MinimapDayNight:SetProperty("Icon", "Interface/Icons/MinimapNight.htex");
+    else
+        MinimapDayNight:SetProperty("Icon", "Interface/Icons/MinimapDay.htex");
+    end
 end
 
 function Minimap_UpdateTime()
@@ -25,10 +37,10 @@ function Minimap_UpdateTime()
         if hour >= 21 and lastMinimapTimeHour < 21 then
             -- If hour just passed 21, it's sunset
             -- TODO: Play night sound
-            MinimapDayNight:SetProperty("Icon", "Interface/Icons/MinimapNight.htex");
+            Minimap_UpdateDayNightIcon(hour);
         elseif hour >= 5 and lastMinimapTimeHour < 5 then
             -- TODO: Play sunrise sound
-            MinimapDayNight:SetProperty("Icon", "Interface/Icons/MinimapDay.htex");
+            Minimap_UpdateDayNightIcon(hour);
         end
 
         lastMinimapTimeHour = hour;

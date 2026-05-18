@@ -153,11 +153,9 @@
                 <Property name="Icon" />
 
                 <Area>
-                    <Size>
-                        <Anchor point="RIGHT" offset="0" />
-                        <Anchor point="TOP" offset="0" />
-                        <AbsDimension x="96" y="96" />
-                    </Size>
+                    <Anchor point="RIGHT" offset="0" />
+                    <Anchor point="TOP" offset="0" />
+                    <Size><AbsDimension x="96" y="96" /></Size>
                 </Area>
             </Frame>
             
