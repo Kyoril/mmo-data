@@ -356,14 +356,15 @@ function GameTooltip_SetSpell(spell)
         GameTooltip_AddLine(spell.name, TOOLTIP_LINE_LEFT, "FFFFD100");
     end
     
-    -- Line 1: Cost
+    -- Line 1: Cost (use mod-adjusted cost so talents/auras are reflected)
     if ( spell.cost ~= 0 ) then
+        local effectiveCost = GetSpellEffectiveCost(spell.id);
         local costColor = nil;
-        if (player:GetPower(spell.powertype) < spell.cost) then
+        if (player:GetPower(spell.powertype) < effectiveCost) then
             costColor = "FFFF2020";
         end
 
-        GameTooltip_AddLine(string.format("%d", spell.cost) .. " " .. Localize(PowerTypeNames[spell.powertype]), TOOLTIP_LINE_LEFT, costColor);
+        GameTooltip_AddLine(string.format("%d", effectiveCost) .. " " .. Localize(PowerTypeNames[spell.powertype]), TOOLTIP_LINE_LEFT, costColor);
     end
 
     -- Line 2: Cast time and cooldown
