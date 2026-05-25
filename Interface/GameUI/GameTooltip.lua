@@ -367,23 +367,25 @@ function GameTooltip_SetSpell(spell)
         GameTooltip_AddLine(string.format("%d", effectiveCost) .. " " .. Localize(PowerTypeNames[spell.powertype]), TOOLTIP_LINE_LEFT, costColor);
     end
 
-    -- Line 2: Cast time and cooldown
+    -- Line 2: Cast time and cooldown (use mod-adjusted values)
     if (IsPassiveSpell(spell)) then
         GameTooltip_AddLine(Localize("PASSIVE"), TOOLTIP_LINE_LEFT, "FF888888");
     else
-        if (spell.casttime == 0) then
+        local effectiveCastTime = GetSpellEffectiveCastTime(spell.id);
+        if (effectiveCastTime == 0) then
             GameTooltip_AddLine(Localize("INSTANT"), TOOLTIP_LINE_LEFT);
         else
             local castFormat = Localize("CAST_FORMAT");
-            GameTooltip_AddLine(string.format(castFormat, string.format("%.1f", spell.casttime / 1000.0) .. " " .. Localize("SECONDS")), TOOLTIP_LINE_LEFT);
+            GameTooltip_AddLine(string.format(castFormat, string.format("%.1f", effectiveCastTime / 1000.0) .. " " .. Localize("SECONDS")), TOOLTIP_LINE_LEFT);
         end
-    
-        if (spell.cooldown ~= 0) then
+
+        local effectiveCooldown = GetSpellEffectiveCooldown(spell.id);
+        if (effectiveCooldown ~= 0) then
             local cooldownText = "";
-            if (spell.cooldown >= 60000) then
-                cooldownText = string.format("%.1f", spell.cooldown / 60000.0) .. " " .. Localize("MINUTES");
+            if (effectiveCooldown >= 60000) then
+                cooldownText = string.format("%.1f", effectiveCooldown / 60000.0) .. " " .. Localize("MINUTES");
             else
-                cooldownText = string.format("%.1f", spell.cooldown / 1000.0) .. " " .. Localize("SECONDS");
+                cooldownText = string.format("%.1f", effectiveCooldown / 1000.0) .. " " .. Localize("SECONDS");
             end
             GameTooltip_AddLine(cooldownText .. Localize("COOLDOWN"), TOOLTIP_LINE_LEFT);
         end
