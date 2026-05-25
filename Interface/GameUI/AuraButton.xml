@@ -15,10 +15,11 @@
 					<PropertyValue property="Icon" />
 				</ImageComponent>
 			</ImagerySection>
+			<!-- Stack count badge: white text rendered in the bottom-right corner of the button icon -->
             <ImagerySection name="Text">
-                <TextComponent color="FFFFD100" horzAlign="CENTER" vertAlign="TOP">
+                <TextComponent color="FFFFFFFF" horzAlign="RIGHT" vertAlign="BOTTOM">
 					<Area>
-						<Inset top="128" />
+						<Inset all="8" />
 					</Area>
 				</TextComponent>
             </ImagerySection>
@@ -69,6 +70,21 @@
 				<AbsDimension x="128" y="128" />
 			</Size>
 		</Area>
+
+		<!-- Duration label: child frame rendered beneath the button icon -->
+		<Frame name="DurationLabel" inherits="TextSmall">
+			<Property name="Clickable" value="false" />
+			<Property name="HorzAlign" value="CENTER" />
+			<Property name="VertAlign" value="TOP" />
+			<Area>
+				<Anchor point="TOP" relativePoint="BOTTOM" offset="4" />
+				<Anchor point="LEFT" offset="0" />
+				<Anchor point="RIGHT" offset="0" />
+				<Size>
+					<AbsDimension x="128" y="32" />
+				</Size>
+			</Area>
+		</Frame>
         
         <Scripts>
             <OnLoad>

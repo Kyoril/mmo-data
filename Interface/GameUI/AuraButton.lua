@@ -1,4 +1,33 @@
 
+function AuraButton_SetDuration(self, aura, hasDuration)
+	local durationLabel = self:GetChild(0);
+	if aura:CanExpire() and hasDuration then
+		local durationSeconds = aura:GetDuration() / 1000.0;
+		if durationSeconds < 60 then
+			durationLabel:SetText(string.format("%.0fs", durationSeconds));
+		else
+			local durationMinutes = durationSeconds / 60.0;
+			if durationMinutes < 60 then
+				durationLabel:SetText(string.format("%.0fm", durationMinutes));
+			else
+				local durationHours = durationMinutes / 60.0;
+				durationLabel:SetText(string.format("%.0fh", durationHours));
+			end
+		end
+	else
+		durationLabel:SetText("");
+	end
+end
+
+function AuraButton_SetStackCount(self, aura)
+	local stackCount = aura:GetStackCount();
+	if stackCount and stackCount > 1 then
+		self:SetText(tostring(stackCount));
+	else
+		self:SetText("");
+	end
+end
+
 function AuraButton_RefreshWithAura(self, aura, hasDuration)
 	if not aura then
 		self:Hide();
@@ -24,22 +53,8 @@ function AuraButton_RefreshWithAura(self, aura, hasDuration)
 
 	_G[self:GetName()].spell = spell;
 
-	if aura:CanExpire() and hasDuration then
-		local durationSeconds = aura:GetDuration() / 1000.0;
-		if durationSeconds < 60 then
-			self:SetText(string.format("%.0fs", durationSeconds));
-		else
-			local durationMinutes = durationSeconds / 60.0;
-			if durationMinutes < 60 then
-				self:SetText(string.format("%.0fm", durationMinutes));
-			else
-				local durationHours = durationMinutes / 60.0;
-				self:SetText(string.format("%.0fh", durationHours));
-			end
-		end
-	else
-		self:SetText("");
-	end
+	AuraButton_SetDuration(self, aura, hasDuration);
+	AuraButton_SetStackCount(self, aura);
 end
 
 function AuraButton_Refresh(self, hasDuration)
@@ -77,22 +92,8 @@ function AuraButton_Refresh(self, hasDuration)
 
 	_G[self:GetName()].spell = spell;
 
-	if aura:CanExpire() and hasDuration then
-		local durationSeconds = aura:GetDuration() / 1000.0;
-		if durationSeconds < 60 then
-			self:SetText(string.format("%.0fs", durationSeconds));
-		else
-			local durationMinutes = durationSeconds / 60.0;
-			if durationMinutes < 60 then
-				self:SetText(string.format("%.0fm", durationMinutes));
-			else
-				local durationHours = durationMinutes / 60.0;
-				self:SetText(string.format("%.0fh", durationHours));
-			end
-		end
-	else
-		self:SetText("");
-	end
+	AuraButton_SetDuration(self, aura, hasDuration);
+	AuraButton_SetStackCount(self, aura);
 end
 
 function AuraButton_OnLoad(self)
