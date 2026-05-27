@@ -134,6 +134,10 @@ function QuestFrame_OnQuestGreeting(self)
     QuestFrame_ShowPanel(QuestFrameGreetingPanel);
 end
 
+function QuestDetailPanelScrollBar_OnValueChanged(self, value)
+    QuestDetailScrollContent:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, -value);
+end
+
 function QuestFrame_OnQuestDetail(self)
     local questDetails = GetQuestDetails();
     if not questDetails then
@@ -143,14 +147,31 @@ function QuestFrame_OnQuestDetail(self)
     -- Ensure the quest frame is visible as in every event
 	ShowUIPanel(QuestFrame);
 
+    -- Reset scroll to top
+    QuestDetailPanelScrollBar:SetValue(0);
+
     QuestDetailTitle:SetText(questDetails.title);
+    QuestDetailTitle:SetHeight(QuestDetailTitle:GetTextHeight());
     QuestDetailDetails:SetText(questDetails.details);
     QuestDetailDetails:SetHeight(QuestDetailDetails:GetTextHeight());
+    QuestDetailObjectivesHeader:SetHeight(QuestDetailObjectivesHeader:GetTextHeight());
     QuestDetailObjectives:SetText(questDetails.objectives);
     QuestDetailObjectives:SetHeight(QuestDetailObjectives:GetTextHeight());
 
+    -- Compute content height as an explicit sum of element heights and fixed gaps.
+    -- Avoid GetY() which is unreliable before layout evaluation.
+    local contentHeight = 32  -- title top offset
+        + QuestDetailTitle:GetHeight()
+        + 8   -- details top offset from title bottom
+        + QuestDetailDetails:GetHeight()
+        + 32  -- objectives header top offset from details bottom
+        + QuestDetailObjectivesHeader:GetHeight()
+        + 8   -- objectives top offset from header bottom
+        + QuestDetailObjectives:GetHeight()
+        + 32; -- bottom padding
+
     if questDetails.rewardedMoney > 0 or questDetails.rewardedXp > 0 then
-    
+
         QuestDetailRewards:Show();
         QuestDetailRewardMoneyLabel:SetWidth(QuestDetailRewardMoneyLabel:GetTextWidth());
 
@@ -169,7 +190,9 @@ function QuestFrame_OnQuestDetail(self)
         else
             QuestDetailRewardXpLabel:Hide();
         end
-        
+
+        contentHeight = contentHeight + 120; -- reward header + money/xp rows + extra padding
+
     else
 
         QuestDetailRewards:Hide();
@@ -179,7 +202,17 @@ function QuestFrame_OnQuestDetail(self)
 
     end
 
-    -- Ensure the greeting panel is visible
+    QuestDetailScrollContent:SetHeight(contentHeight);
+
+    if QuestDetailScrollContent:GetHeight() > QuestDetailScrollClip:GetHeight() then
+        QuestDetailPanelScrollBar:SetMaximum(QuestDetailScrollContent:GetHeight() - QuestDetailScrollClip:GetHeight());
+        QuestDetailPanelScrollBar:Enable();
+    else
+        QuestDetailPanelScrollBar:SetMaximum(0);
+        QuestDetailPanelScrollBar:Disable();
+    end
+
+    -- Ensure the detail panel is visible
     QuestFrame_ShowPanel(QuestFrameDetailPanel);
 end
 
@@ -231,7 +264,7 @@ end
 function QuestFrame_OnLoad(self)
     -- Initialize side panel functionality first, like the close button
     SidePanel_OnLoad(self);
-    
+
     -- Localize quest log text
     self:GetChild(0):SetText(Localize("QUESTS"));
 
@@ -243,6 +276,14 @@ function QuestFrame_OnLoad(self)
     self:RegisterEvent("QUEST_FINISHED", QuestFrame_OnQuestFinished);
 
     QuestDetailAcceptButton:SetWidth(QuestDetailAcceptButton:GetTextWidth() + 64);
+
+    -- Setup quest detail scroll bar
+    QuestDetailPanelScrollBar:SetMinimum(0);
+    QuestDetailPanelScrollBar:SetValue(0);
+    QuestDetailPanelScrollBar:SetStep(32);
+    QuestDetailPanelScrollBar:SetMaximum(0);
+    QuestDetailPanelScrollBar:SetOnValueChangedHandler(QuestDetailPanelScrollBar_OnValueChanged);
+    QuestDetailPanelScrollBar:Disable();
 end
 
 function QuestFrame_OnShow(self)

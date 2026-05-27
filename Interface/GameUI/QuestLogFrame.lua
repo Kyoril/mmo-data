@@ -95,6 +95,7 @@ function QuestLogFrame_UpdateQuestDetails()
     QuestLogQuestDetailPanelScrollBar:SetValue(0);
 
     QuestLogQuestDetailTitle:SetText(questLogEntry.quest.title);
+    QuestLogQuestDetailTitle:SetHeight(QuestLogQuestDetailTitle:GetTextHeight());
     QuestLogQuestDetailDetails:SetText(GetQuestDetailsText(questLogEntry.quest));
     QuestLogQuestDetailDetails:SetHeight(QuestLogQuestDetailDetails:GetTextHeight());
 
@@ -120,8 +121,23 @@ function QuestLogFrame_UpdateQuestDetails()
     QuestLogObjectiveList:SetHeight(count * 32);
     
     QuestLogQuestDetailObjectivesHeader:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, QuestLogObjectiveList, 32);
+    QuestLogQuestDetailObjectivesHeader:SetHeight(QuestLogQuestDetailObjectivesHeader:GetTextHeight());
     QuestLogQuestDetailObjectives:SetText(GetQuestObjectivesText(questLogEntry.quest));
     QuestLogQuestDetailObjectives:SetHeight(QuestLogQuestDetailObjectives:GetTextHeight());
+
+    -- Compute content height as an explicit sum of element heights and fixed gaps.
+    -- Avoid GetY() which is unreliable before the layout system evaluates positions.
+    local contentHeight = 32  -- title top offset (Anchor TOP offset="32")
+        + QuestLogQuestDetailTitle:GetHeight()
+        + 8   -- details top offset from title bottom (Anchor offset="8")
+        + QuestLogQuestDetailDetails:GetHeight()
+        + 16  -- objective list top offset from details bottom (Anchor offset="16")
+        + QuestLogObjectiveList:GetHeight()
+        + 32  -- objectives header top offset from objective list bottom
+        + QuestLogQuestDetailObjectivesHeader:GetHeight()
+        + 8   -- objectives text top offset from header bottom (Anchor offset="8")
+        + QuestLogQuestDetailObjectives:GetHeight()
+        + 32; -- bottom padding
 
     local rewardMoney = questLogEntry.quest.rewardMoney;
     if rewardMoney > 0 then
@@ -134,14 +150,14 @@ function QuestLogFrame_UpdateQuestDetails()
         RefreshMoneyFrame("QuestLogDetailRewardMoney", rewardMoney, false, false, true);
         QuestLogDetailRewardMoney:Show();
 
-        QuestLogQuestDetailScrollContent:SetHeight(QuestLogQuestDetailObjectives:GetY() - QuestLogQuestDetailScrollContent:GetY() + QuestLogQuestDetailObjectives:GetHeight() + 80);
+        contentHeight = contentHeight + 80; -- reward header + money row + bottom padding
     else
         QuestLogQuestDetailRewards:Hide();
         QuestLogDetailRewardMoney:Hide();
         QuestLogDetailRewardMoneyLabel:Hide();
-
-        QuestLogQuestDetailScrollContent:SetHeight(QuestLogQuestDetailObjectives:GetY() - QuestLogQuestDetailScrollContent:GetY() + QuestLogQuestDetailObjectives:GetHeight());
     end
+
+    QuestLogQuestDetailScrollContent:SetHeight(contentHeight);
 
     QuestLogQuestDetailScrollContent:Show();
     QuestLogAbandonButton:Enable();

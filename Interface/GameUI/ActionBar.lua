@@ -173,6 +173,8 @@ function ActionBar_OnLoad(self)
         button:SetClickedHandler(ActionButton_OnClick);
         button:SetOnEnterHandler(ActionButton_OnEnter);
         button:SetOnLeaveHandler(ActionButton_OnLeave);
+        button:SetOnDragHandler(ActionBarButton_OnDrag);
+        button:SetOnDropHandler(ActionBarButton_OnDrop);
 
         button:RegisterEvent("PLAYER_POWER_CHANGED", ActionButton_OnUpdate);
         button:RegisterEvent("ACTION_BAR_CHANGED", ActionButton_OnUpdate);

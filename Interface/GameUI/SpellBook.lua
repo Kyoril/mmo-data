@@ -66,6 +66,23 @@ function SpellButton_OnLeave(self)
     GameTooltip:Hide()
 end
 
+function SpellButton_OnDrag(self)
+    local id = tonumber(self.userData);
+    if (id == nil) then
+        return;
+    end
+
+    local spellIndex = id + (SpellBookPage - 1) * SPELLS_PER_PAGE;
+    local spell = GetSpell(spellIndex);
+    if (spell == nil) then
+        return;
+    end
+
+    -- Pick up a copy of the spell for drag-and-drop onto the action bar.
+    -- This does not remove the spell from the spellbook.
+    PickupSpell(spell.id);
+end
+
 function SpellButton_Update(button)
     
     local id = tonumber(button.userData);
@@ -135,6 +152,7 @@ function SpellBook_OnLoad(self)
         button:SetClickedHandler(SpellButton_OnClick);
         button:SetOnEnterHandler(SpellButton_OnEnter);
         button:SetOnLeaveHandler(SpellButton_OnLeave);
+        button:SetOnDragHandler(SpellButton_OnDrag);
     end
 
 	SpellBookTitleBar:GetChild(0):SetClickedHandler(SpellBook_Toggle);

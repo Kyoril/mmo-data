@@ -31,6 +31,7 @@
 	
 	<Frame name="SpellBookButtonTemplate" type="Button" renderer="ButtonRenderer">
 		<Property name="Icon" />
+		<Property name="DragEnabled" value="true" />
 
 		<Visual>
 			<ImagerySection name="Image">
@@ -81,6 +82,7 @@
 
         <Frame name="NameLabel" inherits="SpellNameLabel">
             <Property name="Color" value="FF4A3620" />
+            <Property name="Clickable" value="false" />
                 
             <Area>
                 <Anchor point="TOP" />
@@ -92,6 +94,7 @@
         <Frame name="SubLabel" inherits="SpellNameLabel">
             <Property name="Text" value="" />
             <Property name="Color" value="FF656565" />
+            <Property name="Clickable" value="false" />
 		    <Property name="Font" value="SpellSubLabelFont" />
             
             <Area>
@@ -106,6 +109,14 @@
 				<AbsDimension x="128" y="128" />
 			</Size>
 		</Area>
+
+		<Scripts>
+			<OnDrag>
+				return function(this)
+					SpellButton_OnDrag(this);
+				end
+			</OnDrag>
+		</Scripts>
 	</Frame>
 
     <Frame name="SpellBook" renderer="DefaultRenderer" parent="GameParent">
