@@ -115,6 +115,14 @@ function GameTooltip_SetItemTemplate(item)
     GameTooltip_Clear();
     GameTooltip_AddLine(item.name, TOOLTIP_LINE_LEFT, ItemQualityColors[item.quality]);
 
+    -- Binding line from static entry data
+    local bonding = item.bonding;
+    if (bonding == 1) then
+        GameTooltip_AddLine(Localize("ITEM_BINDS_WHEN_PICKED_UP"), TOOLTIP_LINE_LEFT);
+    elseif (bonding == 2) then
+        GameTooltip_AddLine(Localize("ITEM_BINDS_WHEN_EQUIPPED"), TOOLTIP_LINE_LEFT);
+    end
+
     local inventoryType = item.inventoryType;
 
     -- Show inventory type for equippable items
@@ -216,6 +224,18 @@ function GameTooltip_SetItem(item)
 
     GameTooltip_Clear();
     GameTooltip_AddLine(item:GetName(), TOOLTIP_LINE_LEFT, ItemQualityColors[item:GetQuality()]);
+
+    -- Binding line: bound instance takes priority, otherwise fall back to entry hint
+    if (item:IsBound()) then
+        GameTooltip_AddLine(Localize("ITEM_SOULBOUND"), TOOLTIP_LINE_LEFT);
+    else
+        local bonding = item:GetBonding();
+        if (bonding == 1) then
+            GameTooltip_AddLine(Localize("ITEM_BINDS_WHEN_PICKED_UP"), TOOLTIP_LINE_LEFT);
+        elseif (bonding == 2) then
+            GameTooltip_AddLine(Localize("ITEM_BINDS_WHEN_EQUIPPED"), TOOLTIP_LINE_LEFT);
+        end
+    end
 
     local inventoryType = item:GetInventoryType();
 

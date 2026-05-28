@@ -514,6 +514,10 @@ strings =
 	(key = "EQUIP_ERR_CANNOT_TRADE_THAT", string = "Cannot trade that item.")
 	(key = "EQUIP_ERR_PERSONAL_ARENA_RATING_TOO_LOW", string = "Your personal arena rating is too low.")
 
+	(key = "ITEM_SOULBOUND", string = "Soulbound")
+	(key = "ITEM_BINDS_WHEN_PICKED_UP", string = "Binds when picked up")
+	(key = "ITEM_BINDS_WHEN_EQUIPPED", string = "Binds when equipped")
+
 	(key = "REQUIRES", string = "Requires")
 	(key = "TIME_PLAYED_DAYS", string = "Total time played: %d days, %d hours, %d minutes, %02d seconds")
 	(key = "TIME_PLAYED_HOURS", string = "Total time played: %d hours, %d minutes, %d seconds")
@@ -567,4 +571,5 @@ strings =
 	(key = "TRADE_ERR_FAILED", string = "Trade failed.")
 	(key = "TRADE_SLOTS_FULL", string = "Trade slots are full.")
 	(key = "TRADE_ITEM_ALREADY_OFFERED", string = "That item is already being offered.")
+	(key = "TRADE_ERR_SOULBOUND", string = "You cannot trade soulbound items.")
 }

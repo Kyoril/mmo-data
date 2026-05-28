@@ -504,6 +504,10 @@ strings =
 	(key = "EQUIP_ERR_CANNOT_TRADE_THAT", string = "Dieser Gegenstand kann nicht gehandelt werden.")
 	(key = "EQUIP_ERR_PERSONAL_ARENA_RATING_TOO_LOW", string = "Eure persönliche Arenawertung ist zu niedrig.")
 
+	(key = "ITEM_SOULBOUND", string = "Seelengebunden")
+	(key = "ITEM_BINDS_WHEN_PICKED_UP", string = "Bindet beim Aufheben")
+	(key = "ITEM_BINDS_WHEN_EQUIPPED", string = "Bindet beim Anlegen")
+
 	(key = "REQUIRES", string = "Erfordert")
 	(key = "TIME_PLAYED_DAYS", string = "Gesamte Spielzeit: %d Tage, %d Stunden, %d Minuten, %d Sekunden")
 	(key = "TIME_PLAYED_HOURS", string = "Gesamte Spielzeit: %d Stunden, %d Minuten, %d Sekunden")
@@ -536,4 +540,5 @@ strings =
 	(key = "TRADE_ERR_FAILED", string = "Handel fehlgeschlagen.")
 	(key = "TRADE_SLOTS_FULL", string = "Alle Handelsplätze sind belegt.")
 	(key = "TRADE_ITEM_ALREADY_OFFERED", string = "Dieser Gegenstand wird bereits angeboten.")
+	(key = "TRADE_ERR_SOULBOUND", string = "Seelengebundene Gegenstände können nicht gehandelt werden.")
 }

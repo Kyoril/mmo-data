@@ -450,4 +450,9 @@ strings =
 	(key = "TRADE_ERR_FAILED", string = "Торговля не удалась.")
 	(key = "TRADE_SLOTS_FULL", string = "Все ячейки торговли заняты.")
 	(key = "TRADE_ITEM_ALREADY_OFFERED", string = "Этот предмет уже предложен для обмена.")
+	(key = "TRADE_ERR_SOULBOUND", string = "Нельзя обменять привязанные предметы.")
+
+	(key = "ITEM_SOULBOUND", string = "Привязан к душе")
+	(key = "ITEM_BINDS_WHEN_PICKED_UP", string = "Привязывается при подборе")
+	(key = "ITEM_BINDS_WHEN_EQUIPPED", string = "Привязывается при надевании")
 }

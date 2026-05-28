@@ -74,6 +74,11 @@ function TradeFrame_AddFromInventory(inventorySlot)
 		return;
 	end
 
+	if item:IsBound() then
+		UIErrorFrame_AddMessage(Localize("TRADE_ERR_SOULBOUND"), "FFFF1900");
+		return;
+	end
+
 	if TradeFrame_IsInventorySlotOffered(inventorySlot) then
 		local info = ChatTypeInfo["SYSTEM"];
 		ChatFrame:AddMessage(Localize("TRADE_ITEM_ALREADY_OFFERED"), info.r, info.g, info.b);
@@ -357,6 +362,12 @@ function TradeMySlot_OnClick(button)
 			if not IsTradeableSlot(inventorySlot) then
 				local info = ChatTypeInfo["SYSTEM"];
 				ChatFrame:AddMessage(Localize("EQUIP_ERR_CANT_TRADE_EQUIP_BAGS"), info.r, info.g, info.b);
+				return;
+			end
+
+			local cursorItem = GetInventorySlotItem("player", inventorySlot);
+			if cursorItem and cursorItem:IsBound() then
+				UIErrorFrame_AddMessage(Localize("TRADE_ERR_SOULBOUND"), "FFFF1900");
 				return;
 			end
 

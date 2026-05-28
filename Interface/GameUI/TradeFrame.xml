@@ -112,8 +112,6 @@
 
 		<Area>
 			<Size><AbsDimension x="720" y="860" /></Size>
-			<Anchor point="H_CENTER" offset="0" />
-			<Anchor point="V_CENTER" offset="0" />
 		</Area>
 
 		<!-- Title Bar -->
