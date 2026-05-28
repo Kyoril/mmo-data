@@ -1,24 +1,4 @@
 
-RACE_HUMAN = 0
-RACE_ORC = 1
-
-CLASS_MAGE = 0
-CLASS_WARRIOR = 1
-CLASS_CLERIC = 2
-CLASS_SHADOWMANCER = 3
-CLASS_SCOUT = 4
-
-GENDER_MALE = 0
-GENDER_FEMALE = 1
-
-DisplayIds = {}
-DisplayIds[RACE_HUMAN] = {}
-DisplayIds[RACE_HUMAN][GENDER_MALE] = 4
-DisplayIds[RACE_HUMAN][GENDER_FEMALE] = 3
-DisplayIds[RACE_ORC] = {}
-DisplayIds[RACE_ORC][GENDER_MALE] = 12
-DisplayIds[RACE_ORC][GENDER_FEMALE] = 12
-
 CHAR_CREATION_ERROR_STRING = {}
 CHAR_CREATION_ERROR_STRING[1] = "CHAR_CREATE_ERR_ERROR"
 CHAR_CREATION_ERROR_STRING[2] = "CHAR_CREATE_ERR_NAME_IN_USE"
@@ -90,46 +70,82 @@ function OnGenderChanged()
 	end
 end
 
--- Show/hide race buttons based on availability and auto-correct selection if needed.
+-- Dynamically populate race buttons from server data and resize the frame accordingly.
 function SetupRaceButtons()
-	local raceBtnCount = CharRaceList:GetChildCount();
-	local firstAvailableRace = -1;
-	for i = 0, raceBtnCount - 1 do
-		local btn = CharRaceList:GetChild(i);
-		if IsRaceAvailable(btn.id) then
-			btn:Show();
-			if firstAvailableRace == -1 then
-				firstAvailableRace = btn.id;
+	CharRaceList:RemoveAllChildren();
+
+	local numRaces = GetNumRaces();
+	local count = 0;
+	local firstAvailableRaceId = -1;
+
+	for i = 0, numRaces - 1 do
+		local raceId = GetRaceId(i);
+		if IsRaceAvailable(raceId) then
+			local btn = ListCheckButtonBase:Clone();
+			btn:SetText(GetRaceName(i));
+			btn:SetCheckable(true);
+			btn.id = raceId;
+
+			CharRaceList:AddChild(btn);
+			btn:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, 8 + count * 128);
+			btn:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, 4);
+			btn:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, -4);
+
+			btn:SetClickedHandler(function(self)
+				OnRaceChange_Clicked(self);
+			end);
+
+			count = count + 1;
+			if firstAvailableRaceId == -1 then
+				firstAvailableRaceId = raceId;
 			end
-		else
-			btn:Hide();
 		end
 	end
-	-- If the currently selected race is not available, switch to the first available one
-	if firstAvailableRace ~= -1 and not IsRaceAvailable(GetCharacterRace()) then
-		SetCharacterRace(firstAvailableRace);
+
+	CharRaceFrame:SetHeight(136 + count * 128);
+
+	if firstAvailableRaceId ~= -1 and not IsRaceAvailable(GetCharacterRace()) then
+		SetCharacterRace(firstAvailableRaceId);
 		SetupCustomization();
 	end
 end
 
--- Show/hide class buttons based on availability and auto-correct selection if needed.
+-- Dynamically populate class buttons from server data and resize the frame accordingly.
 function SetupClassButtons()
-	local classBtnCount = CharClassList:GetChildCount();
-	local firstAvailableClass = -1;
-	for i = 0, classBtnCount - 1 do
-		local btn = CharClassList:GetChild(i);
-		if IsClassAvailable(btn.id) then
-			btn:Show();
-			if firstAvailableClass == -1 then
-				firstAvailableClass = btn.id;
+	CharClassList:RemoveAllChildren();
+
+	local numClasses = GetNumClasses();
+	local count = 0;
+	local firstAvailableClassId = -1;
+
+	for i = 0, numClasses - 1 do
+		local classId = GetClassId(i);
+		if IsClassAvailable(classId) then
+			local btn = ListCheckButtonBase:Clone();
+			btn:SetText(GetClassName(i));
+			btn:SetCheckable(true);
+			btn.id = classId;
+
+			CharClassList:AddChild(btn);
+			btn:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, 8 + count * 128);
+			btn:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, 4);
+			btn:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, -4);
+
+			btn:SetClickedHandler(function(self)
+				OnClassChange_Clicked(self);
+			end);
+
+			count = count + 1;
+			if firstAvailableClassId == -1 then
+				firstAvailableClassId = classId;
 			end
-		else
-			btn:Hide();
 		end
 	end
-	-- If the currently selected class is not available, switch to the first available one
-	if firstAvailableClass ~= -1 and not IsClassAvailable(GetCharacterClass()) then
-		SetCharacterClass(firstAvailableClass);
+
+	CharClassFrame:SetHeight(136 + count * 128);
+
+	if firstAvailableClassId ~= -1 and not IsClassAvailable(GetCharacterClass()) then
+		SetCharacterClass(firstAvailableClassId);
 	end
 end
 

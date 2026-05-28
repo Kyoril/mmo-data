@@ -202,7 +202,7 @@
 					<Anchor point="TOP" offset="24" />
 					<Anchor point="RIGHT" offset="-24" />
 					<Size>
-						<AbsDimension x="720" y="392" />	<!-- 128 px per race button on top of 264px base height -->
+						<AbsDimension x="720" y="0" />
 					</Size>
 				</Area>
 
@@ -228,46 +228,6 @@
 						</StateImagery>
 					</Visual>
 
-						<Frame name="RaceHumanButton" inherits="ListCheckButtonBase" id="0">
-							<Property name="Text" value="RACE_HUMAN" />
-							<Property name="Checkable" value="true" />
-							<Property name="Checked" value="true" />
-
-							<Scripts>
-								<OnClick>
-									return function(this)
-										OnRaceChange_Clicked(this);
-									end
-								</OnClick>
-							</Scripts>
-
-							<Area>
-								<Anchor point="LEFT" offset="4" />
-								<Anchor point="RIGHT" offset="-4" />
-								<Anchor point="TOP" offset="8" />
-							</Area>
-						</Frame>
-
-						<Frame name="RaceOrcButton" inherits="ListCheckButtonBase" id="1">
-							<Property name="Text" value="RACE_ORC" />
-							<Property name="Checkable" value="true" />
-							<Property name="Checked" value="true" />
-
-							<Scripts>
-								<OnClick>
-									return function(this)
-										OnRaceChange_Clicked(this);
-									end
-								</OnClick>
-							</Scripts>
-
-							<Area>
-								<Anchor point="LEFT" offset="4" />
-								<Anchor point="RIGHT" offset="-4" />
-								<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RaceHumanButton" />
-							</Area>
-						</Frame>
-
 					<Area>
 						<Anchor point="LEFT" offset="16" />
 						<Anchor point="RIGHT" offset="-16" />
@@ -284,7 +244,7 @@
 					<Anchor point="TOP" offset="24" relativePoint="BOTTOM" relativeTo="CharRaceFrame" />
 					<Anchor point="RIGHT" offset="-24" />
 					<Size>
-						<AbsDimension x="720" y="776" />	<!-- 128 px per race button on top of 264px base height -->
+						<AbsDimension x="720" y="0" />
 					</Size>
 				</Area>
 
@@ -310,102 +270,6 @@
 						</StateImagery>
 					</Visual>
 
-					<Frame name="ClassWarriorButton" inherits="ListCheckButtonBase" id="1">
-						<Property name="Text" value="CLASS_WARRIOR" />
-						<Property name="Checkable" value="true" />
-						<Property name="Checked" value="true" />
-
-						<Scripts>
-							<OnClick>
-								return function(this)
-									OnClassChange_Clicked(this);
-								end
-							</OnClick>
-						</Scripts>
-
-						<Area>
-							<Anchor point="LEFT" offset="4" />
-							<Anchor point="RIGHT" offset="-4" />
-							<Anchor point="TOP" offset="8" />
-						</Area>
-					</Frame>
-					
-					<Frame name="ClassMageButton" inherits="ListCheckButtonBase" id="0">
-						<Property name="Text" value="CLASS_MAGE" />
-						<Property name="Checkable" value="true" />
-
-						<Scripts>
-							<OnClick>
-								return function(this)
-									OnClassChange_Clicked(this);
-								end
-							</OnClick>
-						</Scripts>
-
-						<Area>
-							<Anchor point="LEFT" offset="4" />
-							<Anchor point="RIGHT" offset="-4" />
-							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="ClassWarriorButton" />
-						</Area>
-					</Frame>
-
-					<Frame name="ClassClericButton" inherits="ListCheckButtonBase" id="2">
-						<Property name="Text" value="CLASS_CLERIC" />
-						<Property name="Checkable" value="true" />
-
-						<Scripts>
-							<OnClick>
-								return function(this)
-									OnClassChange_Clicked(this);
-								end
-							</OnClick>
-						</Scripts>
-
-						<Area>
-							<Anchor point="LEFT" offset="4" />
-							<Anchor point="RIGHT" offset="-4" />
-							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="ClassMageButton" />
-						</Area>
-					</Frame>
-
-					<Frame name="ClassShadowmancerButton" inherits="ListCheckButtonBase" id="3">
-						<Property name="Text" value="CLASS_SHADOWMANCER" />
-						<Property name="Checkable" value="true" />
-
-						<Scripts>
-							<OnClick>
-								return function(this)
-									OnClassChange_Clicked(this);
-								end
-							</OnClick>
-						</Scripts>
-
-						<Area>
-							<Anchor point="LEFT" offset="4" />
-							<Anchor point="RIGHT" offset="-4" />
-							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="ClassClericButton" />
-						</Area>
-					</Frame>
-					
-					<Frame name="ClassScoutButton" inherits="ListCheckButtonBase" id="4">
-						<Property name="Text" value="CLASS_SCOUT" />
-						<Property name="Checkable" value="true" />
-
-						<Scripts>
-							<OnClick>
-								return function(this)
-									OnClassChange_Clicked(this);
-								end
-							</OnClick>
-						</Scripts>
-
-						<Area>
-							<Anchor point="LEFT" offset="4" />
-							<Anchor point="RIGHT" offset="-4" />
-							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="ClassShadowmancerButton" />
-						</Area>
-					</Frame>
-					
 					<Area>
 						<Anchor point="LEFT" offset="16" />
 						<Anchor point="RIGHT" offset="-16" />

@@ -7,7 +7,6 @@ characterButtons = {}
 
 rotationDirection = 0
 
-characterClassNames = {"CLASS_MAGE", "CLASS_WARRIOR", "CLASS_CLERIC", "CLASS_SHADOWMANCER", "CLASS_SCOUT" };
 
 function CharSelect_OnLoad(self)
 	SetCharSelectModelFrame(CharModel);
@@ -76,15 +75,12 @@ function CharList_Show()
 		local charListItem = CharButton:Clone();
 		CharListContent:AddChild(charListItem);
 		
-		local characterClass = "UNKNOWN";
-		if character.classId >= 0 and character.classId < #characterClassNames then
-			characterClass = characterClassNames[character.classId + 1];
-		end
+		local characterClass = GetClassNameById(character.classId) or "Unknown";
 
 		-- Assign realm data
 		local isDisabled = IsCharacterDisabled(characterIndex);
 		charListItem:SetText(character.name);
-		charListItem:GetChild(0):SetText("Level " .. character.level .. " " .. Localize(characterClass) .. (isDisabled and " (Disabled)" or ""));
+		charListItem:GetChild(0):SetText("Level " .. character.level .. " " .. characterClass .. (isDisabled and " (Disabled)" or ""));
 		charListItem.userData = character;
 		charListItem.id = characterIndex;
 		
