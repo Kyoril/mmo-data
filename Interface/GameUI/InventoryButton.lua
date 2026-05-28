@@ -45,10 +45,14 @@ function InventoryItemButton_OnClick(this, button)
             PickupContainerItem(this.id);
         end
     elseif (button == "RIGHT") then
-        UseContainerItem(this.id);
-        
-        -- TODO: If is vendor item, sell it
-        PlaySound("Sound/Interface/Coins_1.wav");
+        if IsTrading() then
+            -- Trade window is open: put the item into the next free trade slot
+            TradeFrame_AddFromInventory(this.id);
+        else
+            UseContainerItem(this.id);
+            -- TODO: If is vendor item, sell it
+            PlaySound("Sound/Interface/Coins_1.wav");
+        end
     end
 end
 

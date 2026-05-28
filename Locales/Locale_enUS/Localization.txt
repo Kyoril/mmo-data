@@ -565,4 +565,6 @@ strings =
 	(key = "TRADE_ERR_TARGET_IN_COMBAT", string = "That player is in combat.")
 	(key = "TRADE_ERR_DECLINED", string = "Trade request declined.")
 	(key = "TRADE_ERR_FAILED", string = "Trade failed.")
+	(key = "TRADE_SLOTS_FULL", string = "Trade slots are full.")
+	(key = "TRADE_ITEM_ALREADY_OFFERED", string = "That item is already being offered.")
 }

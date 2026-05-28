@@ -534,4 +534,6 @@ strings =
 	(key = "TRADE_ERR_TARGET_IN_COMBAT", string = "Ce joueur est en combat.")
 	(key = "TRADE_ERR_DECLINED", string = "Demande d'échange refusée.")
 	(key = "TRADE_ERR_FAILED", string = "Échange échoué.")
+	(key = "TRADE_SLOTS_FULL", string = "Les emplacements d'échange sont pleins.")
+	(key = "TRADE_ITEM_ALREADY_OFFERED", string = "Cet objet est déjà proposé à l'échange.")
 }

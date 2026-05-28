@@ -534,4 +534,6 @@ strings =
 	(key = "TRADE_ERR_TARGET_IN_COMBAT", string = "Dieser Spieler kämpft.")
 	(key = "TRADE_ERR_DECLINED", string = "Handelsanfrage abgelehnt.")
 	(key = "TRADE_ERR_FAILED", string = "Handel fehlgeschlagen.")
+	(key = "TRADE_SLOTS_FULL", string = "Alle Handelsplätze sind belegt.")
+	(key = "TRADE_ITEM_ALREADY_OFFERED", string = "Dieser Gegenstand wird bereits angeboten.")
 }

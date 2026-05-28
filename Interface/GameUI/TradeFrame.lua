@@ -16,6 +16,82 @@ local tradePartnerName = nil;
 -- Whether the inventory frame was already open when trade started
 local inventoryWasOpenBeforeTrade = false;
 
+-- Maps trade slot index (0-5) to the inventory slot currently in it.
+-- Used to detect duplicate offers and to clean up when a slot is cleared.
+local myTradeToInv = {};
+
+-- -------------------------------------------------------------------------
+-- Slot tracking helpers (global so TradeFrame_AddFromInventory is callable
+-- from InventoryButton.lua via right-click).
+-- -------------------------------------------------------------------------
+
+function TradeFrame_TradeSlotInfo_Set(tradeSlot, inventorySlot)
+	myTradeToInv[tradeSlot] = inventorySlot;
+end
+
+function TradeFrame_TradeSlotInfo_Clear(tradeSlot)
+	myTradeToInv[tradeSlot] = nil;
+end
+
+function TradeFrame_IsInventorySlotOffered(inventorySlot)
+	for _, invSlot in pairs(myTradeToInv) do
+		if invSlot == inventorySlot then return true; end
+	end
+	return false;
+end
+
+--- Returns the index (0-5) of the first empty trade slot, or -1 if all full.
+function TradeFrame_FindFirstFreeSlot()
+	for i = 0, TRADE_NUM_SLOTS - 1 do
+		local entry = GetTradeItemEntry(i, true);
+		if not entry or entry == 0 then
+			return i;
+		end
+	end
+	return -1;
+end
+
+--- Returns true if the inventory slot is tradeable (not equipment or bag-pack).
+--- Bag_0 = 255 (0xFF); slots 0-22 are equipment and bag containers.
+function IsTradeableSlot(inventorySlot)
+	local bagByte  = math.floor(inventorySlot / 256);
+	local slotByte = inventorySlot % 256;
+	if bagByte == 255 and slotByte <= 22 then
+		return false;
+	end
+	return true;
+end
+
+--- Called by InventoryButton right-click when a trade session is open.
+--- Puts the item at inventorySlot into the next free trade slot.
+function TradeFrame_AddFromInventory(inventorySlot)
+	local item = GetInventorySlotItem("player", inventorySlot);
+	if not item then return; end
+
+	if not IsTradeableSlot(inventorySlot) then
+		local info = ChatTypeInfo["SYSTEM"];
+		ChatFrame:AddMessage(Localize("EQUIP_ERR_CANT_TRADE_EQUIP_BAGS"), info.r, info.g, info.b);
+		return;
+	end
+
+	if TradeFrame_IsInventorySlotOffered(inventorySlot) then
+		local info = ChatTypeInfo["SYSTEM"];
+		ChatFrame:AddMessage(Localize("TRADE_ITEM_ALREADY_OFFERED"), info.r, info.g, info.b);
+		return;
+	end
+
+	local freeSlot = TradeFrame_FindFirstFreeSlot();
+	if freeSlot == -1 then
+		local info = ChatTypeInfo["SYSTEM"];
+		ChatFrame:AddMessage(Localize("TRADE_SLOTS_FULL"), info.r, info.g, info.b);
+		return;
+	end
+
+	TradeAddItem(freeSlot, inventorySlot);
+	TradeFrame_TradeSlotInfo_Set(freeSlot, inventorySlot);
+	TradeFrame_UpdateMySlotFromInventory(freeSlot, inventorySlot);
+end
+
 -- -------------------------------------------------------------------------
 -- Frame lifecycle
 -- -------------------------------------------------------------------------
@@ -32,9 +108,7 @@ function TradeFrame_OnLoad(self)
 		end
 	end
 
-	-- Initialize hover on the border frames for other player's slots.
-	-- The inner buttons are disabled and may not fire mouse events, so
-	-- attach to the always-enabled border frames instead.
+	-- Other player's slot borders (buttons are disabled and may not fire events)
 	for index = 1, TRADE_NUM_SLOTS, 1 do
 		local border = getglobal("TradeOtherSlot"..index.."Border");
 		if border then
@@ -44,7 +118,6 @@ function TradeFrame_OnLoad(self)
 		end
 	end
 
-	-- Accept / cancel buttons
 	local acceptButton = getglobal("TradeAcceptButton");
 	if acceptButton then
 		acceptButton:SetClickedHandler(TradeFrame_AcceptTrade);
@@ -55,13 +128,11 @@ function TradeFrame_OnLoad(self)
 		cancelButton:SetClickedHandler(TradeFrame_CancelTrade);
 	end
 
-	-- Close button (first child of the title bar)
 	local closeButton = TradeFrame:GetChild(0):GetChild(0);
 	if closeButton then
 		closeButton:SetClickedHandler(TradeFrame_OnClose);
 	end
 
-	-- Register events
 	self:RegisterEvent("TRADE_REQUEST", TradeFrame_OnTradeRequest);
 	self:RegisterEvent("TRADE_REQUEST_RESULT", TradeFrame_OnTradeRequestResult);
 	self:RegisterEvent("TRADE_SESSION_OPENED", TradeFrame_OnTradeSessionOpened);
@@ -73,12 +144,12 @@ end
 function TradeFrame_OnShow(self)
 	myAccepted = false;
 	otherAccepted = false;
+	myTradeToInv = {};
 	TradeFrame_UpdateDisplay();
-	TradeFrame_UpdateAcceptStatus(); -- reset green "Accepted" labels from previous session
+	TradeFrame_UpdateAcceptStatus();
 end
 
 function TradeFrame_OnHide(self)
-	-- Dismiss the money input dialog if it is still open on top
 	if StaticDialog:IsVisible() and StaticDialog.which == "TRADE_SET_MONEY" then
 		StaticDialog:Hide();
 	end
@@ -127,20 +198,19 @@ function TradeFrame_OnTradeRequestResult(self, result)
 		[11] = "TRADE_ERR_TARGET_IN_COMBAT",
 		[12] = "TRADE_ERR_DECLINED",
 	};
-
 	local key = keyMap[result] or "TRADE_ERR_FAILED";
 	ChatFrame:AddMessage(Localize(key), info.r, info.g, info.b);
 end
 
 function TradeFrame_OnTradeSessionOpened(self, otherPlayerName)
 	tradePartnerName = otherPlayerName;
+	myTradeToInv = {};
 
 	TradeFrameTitle:SetText(string.format(Localize("TRADE_FRAME_TITLE"), otherPlayerName));
 
 	local info = ChatTypeInfo["SYSTEM"];
 	ChatFrame:AddMessage(string.format(Localize("TRADE_SESSION_STARTED"), otherPlayerName), info.r, info.g, info.b);
 
-	-- Open inventory automatically; remember whether we opened it so we can close it on trade end
 	inventoryWasOpenBeforeTrade = InventoryFrame:IsVisible();
 	if not inventoryWasOpenBeforeTrade then
 		ShowUIPanel(InventoryFrame);
@@ -150,15 +220,14 @@ function TradeFrame_OnTradeSessionOpened(self, otherPlayerName)
 end
 
 function TradeFrame_OnTradeSessionClosed(self, reason)
-	-- Dismiss the money input dialog if it was open
 	if StaticDialog:IsVisible() and StaticDialog.which == "TRADE_SET_MONEY" then
 		StaticDialog:Hide();
 	end
 
 	HideUIPanel(TradeFrame);
 	tradePartnerName = nil;
+	myTradeToInv = {};
 
-	-- Close inventory if we opened it at trade start
 	if not inventoryWasOpenBeforeTrade then
 		HideUIPanel(InventoryFrame);
 	end
@@ -178,14 +247,12 @@ function TradeFrame_OnTradeSessionClosed(self, reason)
 end
 
 function TradeFrame_OnTradeUpdate(self)
-	-- Pre-cache item info for all slots so tooltips are ready on hover
 	for i = 0, TRADE_NUM_SLOTS - 1 do
 		local entry = GetTradeItemEntry(i, false);
 		if entry and entry > 0 then GetCachedItemInfo(entry); end
 		local myEntry = GetTradeItemEntry(i, true);
 		if myEntry and myEntry > 0 then GetCachedItemInfo(myEntry); end
 	end
-
 	TradeFrame_UpdateDisplay();
 end
 
@@ -250,7 +317,6 @@ function TradeFrame_UpdateMoneyDisplay()
 	if myMoneyFrame then
 		RefreshMoneyFrame("TradeMyMoneyFrame", GetTradeMoney(true), 1, 0, nil);
 	end
-
 	local otherMoneyFrame = getglobal("TradeOtherMoneyFrame");
 	if otherMoneyFrame then
 		RefreshMoneyFrame("TradeOtherMoneyFrame", GetTradeMoney(false), 1, 0, nil);
@@ -262,12 +328,10 @@ function TradeFrame_UpdateAcceptStatus()
 	if myCheckMark then
 		if myAccepted then myCheckMark:Show(); else myCheckMark:Hide(); end
 	end
-
 	local otherCheckMark = getglobal("TradeOtherAcceptCheck");
 	if otherCheckMark then
 		if otherAccepted then otherCheckMark:Show(); else otherCheckMark:Hide(); end
 	end
-
 	local acceptButton = getglobal("TradeAcceptButton");
 	if acceptButton then
 		if myAccepted then
@@ -281,26 +345,8 @@ function TradeFrame_UpdateAcceptStatus()
 end
 
 -- -------------------------------------------------------------------------
--- Slot interaction
+-- Trade slot interaction (drag-and-drop from inventory onto trade slots)
 -- -------------------------------------------------------------------------
-
--- Returns true if the given absolute inventory slot is from a tradeable location.
--- Blocks: equipment (Bag_0 slots 0-18) and bag-pack slots (Bag_0 slots 19-22).
-local function IsTradeableSlot(inventorySlot)
-	-- Absolute encoding: upper byte = bag index, lower byte = slot within bag.
-	-- Bag_0 (player_inventory_slots::Bag_0) = 255 = 0xFF
-	local bagByte  = math.floor(inventorySlot / 256);
-	local slotByte = inventorySlot % 256;
-
-	if bagByte == 255 then
-		-- Bag_0: slots 0-22 are equipment and bag-pack containers — not tradeable
-		if slotByte <= 22 then
-			return false;
-		end
-	end
-
-	return true;
-end
 
 function TradeMySlot_OnClick(button)
 	local slotIndex = button.id - 1;
@@ -308,14 +354,20 @@ function TradeMySlot_OnClick(button)
 	if CursorHasItem() then
 		local inventorySlot = GetCursorItemSlot();
 		if inventorySlot then
-			-- Client-side guard: block equipment and equipped-bag slots immediately
 			if not IsTradeableSlot(inventorySlot) then
 				local info = ChatTypeInfo["SYSTEM"];
 				ChatFrame:AddMessage(Localize("EQUIP_ERR_CANT_TRADE_EQUIP_BAGS"), info.r, info.g, info.b);
 				return;
 			end
 
+			if TradeFrame_IsInventorySlotOffered(inventorySlot) then
+				local info = ChatTypeInfo["SYSTEM"];
+				ChatFrame:AddMessage(Localize("TRADE_ITEM_ALREADY_OFFERED"), info.r, info.g, info.b);
+				return;
+			end
+
 			TradeAddItem(slotIndex, inventorySlot);
+			TradeFrame_TradeSlotInfo_Set(slotIndex, inventorySlot);
 			ClearCursorItem();
 			TradeFrame_UpdateMySlotFromInventory(slotIndex, inventorySlot);
 		end
@@ -323,6 +375,7 @@ function TradeMySlot_OnClick(button)
 		local entry = GetTradeItemEntry(slotIndex, true);
 		if entry and entry > 0 then
 			ClearTradeItem(slotIndex);
+			TradeFrame_TradeSlotInfo_Clear(slotIndex);
 			TradeFrame_UpdateDisplay();
 		end
 	end
@@ -384,9 +437,7 @@ end
 -- -------------------------------------------------------------------------
 
 function TradeFrame_AcceptTrade(button)
-	if not myAccepted then
-		AcceptTrade();
-	end
+	if not myAccepted then AcceptTrade(); end
 end
 
 function TradeFrame_CancelTrade(button)

@@ -448,4 +448,6 @@ strings =
 	(key = "TRADE_ERR_TARGET_IN_COMBAT", string = "Этот игрок в бою.")
 	(key = "TRADE_ERR_DECLINED", string = "Запрос на торговлю отклонён.")
 	(key = "TRADE_ERR_FAILED", string = "Торговля не удалась.")
+	(key = "TRADE_SLOTS_FULL", string = "Все ячейки торговли заняты.")
+	(key = "TRADE_ITEM_ALREADY_OFFERED", string = "Этот предмет уже предложен для обмена.")
 }
