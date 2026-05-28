@@ -2,7 +2,7 @@
 <UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
 	<Script file="TradeFrame.lua" />
 
-	<!-- Trade slot button template -->
+	<!-- Trade slot button template: 96x96 inner button (112x112 border, 8px inset each side) -->
 	<Frame name="TradeSlotButtonTemplate" type="Button" renderer="ButtonRenderer">
 		<Property name="Icon" />
 
@@ -65,14 +65,14 @@
 		</Visual>
 
 		<Area>
-			<Size><AbsDimension x="64" y="64" /></Size>
+			<Size><AbsDimension x="96" y="96" /></Size>
 		</Area>
 	</Frame>
 
-	<!-- Trade slot border template -->
+	<!-- Trade slot border template: 112x112 -->
 	<Frame name="TradeSlotBorderTemplate" renderer="DefaultRenderer">
 		<Area>
-			<Size><AbsDimension x="80" y="80" /></Size>
+			<Size><AbsDimension x="112" y="112" /></Size>
 		</Area>
 
 		<Visual>
@@ -95,7 +95,7 @@
 		</Visual>
 	</Frame>
 
-	<!-- Main Trade Frame -->
+	<!-- Main Trade Frame: 720x860 at 4K = 360x430 at 1080p -->
 	<Frame name="TradeFrame" renderer="DefaultRenderer" parent="GameParent">
 		<Property name="Visible" value="false" />
 
@@ -111,7 +111,7 @@
 		</Visual>
 
 		<Area>
-			<Size><AbsDimension x="550" y="450" /></Size>
+			<Size><AbsDimension x="720" y="860" /></Size>
 			<Anchor point="H_CENTER" offset="0" />
 			<Anchor point="V_CENTER" offset="0" />
 		</Area>
@@ -127,7 +127,29 @@
 			</Area>
 		</Frame>
 
-		<!-- My Offer Section Header -->
+		<!-- Dynamic subtitle: updated to "Trade: PlayerName" when session opens -->
+		<Frame name="TradeFrameTitle" renderer="DefaultRenderer">
+			<Property name="Font" value="DefaultSmall" />
+
+			<Visual>
+				<ImagerySection name="Text">
+					<TextComponent color="FFFFD100" horzAlign="CENTER" vertAlign="CENTER" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Text" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+
+			<Area>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeTitleBar" offset="8" />
+				<Anchor point="H_CENTER" offset="0" />
+				<Size><AbsDimension x="560" y="48" /></Size>
+			</Area>
+		</Frame>
+
+		<!-- My Offer Section Header — anchored below TradeFrameTitle -->
 		<Frame name="TradeMyOfferHeader" renderer="DefaultRenderer">
 			<Property name="Font" value="DefaultSmall" />
 
@@ -143,9 +165,9 @@
 			</Visual>
 
 			<Area>
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeTitleBar" offset="8" />
-				<Anchor point="LEFT" offset="24" />
-				<Size><AbsDimension x="200" y="32" /></Size>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeFrameTitle" offset="8" />
+				<Anchor point="LEFT" offset="48" />
+				<Size><AbsDimension x="232" y="44" /></Size>
 			</Area>
 
 			<Scripts>
@@ -157,7 +179,7 @@
 			</Scripts>
 		</Frame>
 
-		<!-- Their Offer Section Header -->
+		<!-- Their Offer Section Header — anchored below TradeFrameTitle -->
 		<Frame name="TradeTheirOfferHeader" renderer="DefaultRenderer">
 			<Property name="Font" value="DefaultSmall" />
 
@@ -173,9 +195,9 @@
 			</Visual>
 
 			<Area>
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeTitleBar" offset="8" />
-				<Anchor point="RIGHT" offset="-24" />
-				<Size><AbsDimension x="200" y="32" /></Size>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeFrameTitle" offset="8" />
+				<Anchor point="RIGHT" offset="-48" />
+				<Size><AbsDimension x="232" y="44" /></Size>
 			</Area>
 
 			<Scripts>
@@ -187,12 +209,12 @@
 			</Scripts>
 		</Frame>
 
-		<!-- My Trade Slots Container -->
+		<!-- My Trade Slots Container: 2 cols x 3 rows of 112px slots with 8px gaps = 232x352 -->
 		<Frame name="TradeMySlotContainer">
 			<Area>
 				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeMyOfferHeader" offset="8" />
-				<Anchor point="LEFT" offset="24" />
-				<Size><AbsDimension x="200" y="280" /></Size>
+				<Anchor point="LEFT" offset="48" />
+				<Size><AbsDimension x="232" y="352" /></Size>
 			</Area>
 
 			<!-- Row 1 -->
@@ -283,12 +305,12 @@
 			</Frame>
 		</Frame>
 
-		<!-- Other Player's Trade Slots Container -->
+		<!-- Other Player's Trade Slots Container: 2 cols x 3 rows = 232x352 -->
 		<Frame name="TradeOtherSlotContainer">
 			<Area>
 				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeTheirOfferHeader" offset="8" />
-				<Anchor point="RIGHT" offset="-24" />
-				<Size><AbsDimension x="200" y="280" /></Size>
+				<Anchor point="RIGHT" offset="-48" />
+				<Size><AbsDimension x="232" y="352" /></Size>
 			</Area>
 
 			<!-- Row 1 -->
@@ -385,13 +407,104 @@
 			</Frame>
 		</Frame>
 
+		<!-- My Money Display: explicit 232x44 so it stays within column width -->
+		<Frame name="TradeMyMoneyFrame" inherits="MoneyFrameTemplate">
+			<Area>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeMySlotContainer" offset="16" />
+				<Anchor point="LEFT" offset="48" />
+				<Size><AbsDimension x="232" y="44" /></Size>
+			</Area>
+		</Frame>
+
+		<!-- Other Player Money Display: explicit 232x44 -->
+		<Frame name="TradeOtherMoneyFrame" inherits="MoneyFrameTemplate">
+			<Area>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeOtherSlotContainer" offset="16" />
+				<Anchor point="RIGHT" offset="-48" />
+				<Size><AbsDimension x="232" y="44" /></Size>
+			</Area>
+		</Frame>
+
+		<!-- My Accept Check (shown when I have accepted) -->
+		<Frame name="TradeMyAcceptCheck" renderer="DefaultRenderer">
+			<Property name="Visible" value="false" />
+			<Visual>
+				<ImagerySection name="Image">
+					<TextComponent color="FF00FF00" horzAlign="CENTER" vertAlign="CENTER" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Image" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+			<Area>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeMyMoneyFrame" offset="12" />
+				<Anchor point="LEFT" offset="48" />
+				<Size><AbsDimension x="232" y="48" /></Size>
+			</Area>
+			<Scripts>
+				<OnLoad>
+					return function(self)
+						self:SetText("Accepted");
+					end
+				</OnLoad>
+			</Scripts>
+		</Frame>
+
+		<!-- Set Gold Button — centered between the two columns, same row as accepted checks -->
+		<Frame name="TradeSetMoneyButton" inherits="GlueButton">
+			<Property name="Text" value="Set Gold" />
+			<Area>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeMyMoneyFrame" offset="12" />
+				<Anchor point="H_CENTER" offset="0" />
+				<Size><AbsDimension x="180" y="48" /></Size>
+			</Area>
+			<Scripts>
+				<OnLoad>
+					return function(self)
+						self:SetClickedHandler(function()
+							TradeFrame_ShowMoneyInput();
+						end);
+					end
+				</OnLoad>
+			</Scripts>
+		</Frame>
+
+		<!-- Other Accept Check (shown when they have accepted) -->
+		<Frame name="TradeOtherAcceptCheck" renderer="DefaultRenderer">
+			<Property name="Visible" value="false" />
+			<Visual>
+				<ImagerySection name="Image">
+					<TextComponent color="FF00FF00" horzAlign="CENTER" vertAlign="CENTER" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Image" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+			<Area>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeOtherMoneyFrame" offset="12" />
+				<Anchor point="RIGHT" offset="-48" />
+				<Size><AbsDimension x="232" y="48" /></Size>
+			</Area>
+			<Scripts>
+				<OnLoad>
+					return function(self)
+						self:SetText("Accepted");
+					end
+				</OnLoad>
+			</Scripts>
+		</Frame>
+
 		<!-- Accept Button -->
 		<Frame name="TradeAcceptButton" inherits="GlueButton">
 			<Property name="Text" value="Accept" />
 			<Area>
-				<Anchor point="BOTTOM" offset="-24" />
-				<Anchor point="LEFT" offset="100" />
-				<Size><AbsDimension x="120" y="40" /></Size>
+				<Anchor point="BOTTOM" offset="-32" />
+				<Anchor point="LEFT" offset="130" />
+				<Size><AbsDimension x="200" y="72" /></Size>
 			</Area>
 		</Frame>
 
@@ -399,9 +512,9 @@
 		<Frame name="TradeCancelButton" inherits="GlueButton">
 			<Property name="Text" value="Cancel" />
 			<Area>
-				<Anchor point="BOTTOM" offset="-24" />
-				<Anchor point="RIGHT" offset="-100" />
-				<Size><AbsDimension x="120" y="40" /></Size>
+				<Anchor point="BOTTOM" offset="-32" />
+				<Anchor point="RIGHT" offset="-130" />
+				<Size><AbsDimension x="200" y="72" /></Size>
 			</Area>
 		</Frame>
 

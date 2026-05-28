@@ -93,6 +93,39 @@ StaticDialogs["DESTROY_ITEM"] = {
 	exclusive = false
 };
 
+StaticDialogs["TRADE_SET_MONEY"] = {
+	text = "Enter gold amount to offer:",
+	button1 = "Set",
+	button2 = "Cancel",
+	hasEditBox = true,
+	OnAccept = function()
+		local text = StaticDialog.editBox:GetText();
+		local gold = tonumber(text) or 0;
+		local amount = math.floor(gold) * COPPER_PER_GOLD;
+		local playerMoney = UnitMoney("player");
+		if amount < 0 then amount = 0; end
+		if amount > playerMoney then amount = playerMoney; end
+		SetTradeMoney(amount);
+	end,
+	timeout = 0,
+	exclusive = false
+};
+
+StaticDialogs["TRADE_REQUEST"] = {
+	text = "%s wants to trade with you.",
+	button1 = "Accept",
+	button2 = "Decline",
+	OnAccept = function()
+		AcceptTradeInvite();
+	end,
+	OnCancel = function()
+		DeclineTradeInvite();
+	end,
+	timeout = 60,
+	exclusive = true,
+	whileDead = false
+};
+
 function StaticDialog_OnLoad(self)
 
 end

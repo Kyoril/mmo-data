@@ -85,19 +85,19 @@ end
 function TradeFrame_OnTradeRequest(self, requesterName)
 	-- Store the pending request
 	pendingTradeRequest = requesterName;
-	
-	-- Show confirmation dialog
-	StaticDialogFrame_Show("TRADE_REQUEST", requesterName.." wants to trade with you.");
+
+	-- Show confirmation dialog (text_arg1 = requesterName)
+	StaticDialog_Show("TRADE_REQUEST", requesterName);
 end
 
 function TradeFrame_OnTradeRequestResult(self, result)
 	if result == 0 then
-		-- Success - window will open when session is established
+		-- Success - trade invite was sent, wait for session to open
 		return;
 	end
 
-	-- Show error message based on result
-	local errorMsg = "Trade failed.";
+	-- Show error message based on result code (matches game::trade_result enum)
+	local errorMsg;
 	if result == 1 then
 		errorMsg = "That player is busy.";
 	elseif result == 2 then
@@ -111,13 +111,23 @@ function TradeFrame_OnTradeRequestResult(self, result)
 	elseif result == 6 then
 		errorMsg = "You are already trading.";
 	elseif result == 7 then
-		errorMsg = "Cannot trade with hostile players.";
+		errorMsg = "Target is already trading.";
 	elseif result == 8 then
+		errorMsg = "You cannot trade with hostile players.";
+	elseif result == 9 then
 		errorMsg = "Target is logging out.";
+	elseif result == 10 then
+		errorMsg = "You cannot trade while in combat.";
+	elseif result == 11 then
+		errorMsg = "Target is in combat.";
+	elseif result == 12 then
+		errorMsg = "Trade request was declined.";
+	else
+		errorMsg = "Trade failed.";
 	end
 
-	-- Show error in chat or UI message
-	ChatFrame:AddMessage(errorMsg, 1.0, 0.0, 0.0);
+	local info = ChatTypeInfo["SYSTEM"];
+	ChatFrame:AddMessage(errorMsg, info.r, info.g, info.b);
 end
 
 function TradeFrame_OnTradeSessionOpened(self, otherPlayerName)
@@ -166,33 +176,40 @@ function TradeFrame_OnTradeAcceptUpdate(self, meAccepted, theyAccepted)
 	TradeFrame_UpdateAcceptStatus();
 end
 
+function TradeFrame_GetSlotIcon(entry)
+	if not entry or entry == 0 then return ""; end
+	local itemInfo = GetCachedItemInfo(entry);
+	if itemInfo then
+		local icon = itemInfo:GetIcon();
+		if icon and icon ~= "" then
+			return icon;
+		end
+	end
+	return "Interface/Icons/Spells/S_Attack.htex";
+end
+
 function TradeFrame_UpdateDisplay()
 	-- Update my slots
 	for index = 1, TRADE_NUM_SLOTS, 1 do
 		local button = getglobal("TradeMySlot"..index);
 		local border = getglobal("TradeMySlot"..index.."Border");
-		
+
 		if button then
-			local entry, name, icon, count = GetTradeItemInfo(index - 1, true);
+			local entry = GetTradeItemEntry(index - 1, true);
+			local count = GetTradeItemCount(index - 1, true);
 			if entry and entry > 0 then
-				button:SetProperty("Icon", icon);
+				button:SetProperty("Icon", TradeFrame_GetSlotIcon(entry));
 				if count and count > 1 then
 					button:SetText(tostring(count));
 				else
 					button:SetText("");
 				end
-				button:Show();
-				if border then
-					border:Show();
-				end
 			else
 				button:SetProperty("Icon", "");
 				button:SetText("");
-				button:Show();
-				if border then
-					border:Show();
-				end
 			end
+			button:Show();
+			if border then border:Show(); end
 		end
 	end
 
@@ -200,28 +217,23 @@ function TradeFrame_UpdateDisplay()
 	for index = 1, TRADE_NUM_SLOTS, 1 do
 		local button = getglobal("TradeOtherSlot"..index);
 		local border = getglobal("TradeOtherSlot"..index.."Border");
-		
+
 		if button then
-			local entry, name, icon, count = GetTradeItemInfo(index - 1, false);
+			local entry = GetTradeItemEntry(index - 1, false);
+			local count = GetTradeItemCount(index - 1, false);
 			if entry and entry > 0 then
-				button:SetProperty("Icon", icon);
+				button:SetProperty("Icon", TradeFrame_GetSlotIcon(entry));
 				if count and count > 1 then
 					button:SetText(tostring(count));
 				else
 					button:SetText("");
 				end
-				button:Show();
-				if border then
-					border:Show();
-				end
 			else
 				button:SetProperty("Icon", "");
 				button:SetText("");
-				button:Show();
-				if border then
-					border:Show();
-				end
 			end
+			button:Show();
+			if border then border:Show(); end
 		end
 	end
 
@@ -282,27 +294,56 @@ end
 
 function TradeMySlot_OnClick(button)
 	local slotIndex = button.id - 1;
-	
-	-- If there's an item in this slot, clear it
-	local entry, name, icon, count = GetTradeItemInfo(slotIndex, true);
-	if entry and entry > 0 then
-		ClearTradeItem(slotIndex);
+
+	if CursorHasItem() then
+		-- Place the cursor item into this trade slot
+		local inventorySlot = GetCursorItemSlot();
+		if inventorySlot then
+			TradeAddItem(slotIndex, inventorySlot);
+			ClearCursorItem();
+			-- Update the display immediately
+			TradeFrame_UpdateMySlotFromInventory(slotIndex, inventorySlot);
+		end
 	else
-		-- Check if we have a picked up item on cursor
-		-- TODO: Implement cursor item placement
+		-- If there's an item in this slot, clear it
+		local entry = GetTradeItemEntry(slotIndex, true);
+		if entry and entry > 0 then
+			ClearTradeItem(slotIndex);
+			TradeFrame_UpdateDisplay();
+		end
+	end
+end
+
+-- Updates a single "my slot" immediately from inventory data (before server confirmation).
+function TradeFrame_UpdateMySlotFromInventory(slotIndex, inventorySlot)
+	local button = getglobal("TradeMySlot"..(slotIndex + 1));
+	if not button then return; end
+
+	local item = GetInventorySlotItem("player", inventorySlot);
+	if item then
+		button:SetProperty("Icon", item:GetIcon());
+		local count = item:GetStackCount();
+		if count and count > 1 then
+			button:SetText(tostring(count));
+		else
+			button:SetText("");
+		end
 	end
 end
 
 function TradeSlot_OnEnter(button)
 	local isMine = string.find(button:GetName(), "TradeMySlot");
 	local slotIndex = button.id - 1;
-	
-	local entry, name, icon, count = GetTradeItemInfo(slotIndex, isMine ~= nil);
+
+	local entry = GetTradeItemEntry(slotIndex, isMine ~= nil);
 	if entry and entry > 0 then
 		GameTooltip:ClearAnchors();
 		GameTooltip:SetAnchor(AnchorPoint.LEFT, AnchorPoint.RIGHT, button, 16);
 		GameTooltip:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.TOP, button, -16);
-		-- TODO: Set tooltip with item info
+		local itemInfo = GetCachedItemInfo(entry);
+		if itemInfo then
+			GameTooltip_SetItemTemplate(itemInfo);
+		end
 		GameTooltip:Show();
 	end
 end
@@ -326,25 +367,8 @@ function TradeFrame_SetMoney(amount)
 	SetTradeMoney(amount);
 end
 
--- Static dialog configuration for trade requests
-StaticDialogConfig = StaticDialogConfig or {};
-StaticDialogConfig["TRADE_REQUEST"] = {
-	text = "",
-	button1 = "Accept",
-	button2 = "Decline",
-	OnAccept = function()
-		-- Accept the trade request
-		if pendingTradeRequest then
-			-- The accept is handled by responding to the trade request
-			-- which should already be done server-side
-		end
-		pendingTradeRequest = nil;
-	end,
-	OnCancel = function()
-		-- Decline - close the dialog, the server will timeout
-		pendingTradeRequest = nil;
-	end,
-	timeout = 60,
-	exclusive = 1,
-	showAlert = 1,
-};
+-- Opens the money input dialog
+function TradeFrame_ShowMoneyInput()
+	StaticDialog_Show("TRADE_SET_MONEY");
+end
+
