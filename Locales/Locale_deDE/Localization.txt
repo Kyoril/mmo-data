@@ -508,6 +508,7 @@ strings =
 	(key = "TIME_PLAYED_DAYS", string = "Gesamte Spielzeit: %d Tage, %d Stunden, %d Minuten, %d Sekunden")
 	(key = "TIME_PLAYED_HOURS", string = "Gesamte Spielzeit: %d Stunden, %d Minuten, %d Sekunden")
 
+	(key = "TRADE_SET_MONEY_PROMPT", string = "Betrag eingeben (z.B. 1g 50s 25k):")
 	(key = "TRADE_FRAME_TITLE", string = "Handel: %s")
 	(key = "TRADE_ACCEPT", string = "Annehmen")
 	(key = "TRADE_ACCEPTED", string = "Angenommen")

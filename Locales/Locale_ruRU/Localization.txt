@@ -422,6 +422,7 @@ strings =
 	(key = "MEMBER_RECEIVE_ITEM_SINGLE", string = "%s received item: %s.")
 	(key = "MEMBER_RECEIVE_ITEM_MULTI", string = "%s received item: %sx%d.")
 
+	(key = "TRADE_SET_MONEY_PROMPT", string = "Введите сумму (напр. 1g 50s 25c):")
 	(key = "TRADE_FRAME_TITLE", string = "Торговля: %s")
 	(key = "TRADE_ACCEPT", string = "Принять")
 	(key = "TRADE_ACCEPTED", string = "Принято")

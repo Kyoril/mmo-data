@@ -539,6 +539,7 @@ strings =
 	(key = "SPELL_CAST_FAILED_UNIT_NOT_BEHIND", string = "You must be behind your target.")
 	(key = "SPELL_CAST_FAILED_UNIT_NOT_INFRONT", string = "Target must be in front of you.")
 
+	(key = "TRADE_SET_MONEY_PROMPT", string = "Enter amount (e.g. 1g 50s 25c):")
 	(key = "TRADE_FRAME_TITLE", string = "Trade: %s")
 	(key = "TRADE_ACCEPT", string = "Accept")
 	(key = "TRADE_ACCEPTED", string = "Accepted")
