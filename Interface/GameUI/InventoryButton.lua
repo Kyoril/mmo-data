@@ -6,13 +6,10 @@ function InventoryItemButton_OnLoad(this)
 end
 
 function InventoryItemButton_OnDrag(this, button, position)
-    SetCursorItem(this.id);
     PickupContainerItem(this.id);
 end
 
 function InventoryItemButton_OnDrop(this, button, position)
-    -- Clear cursor tracking when successfully dropping on a valid slot
-    ClearCursorItem();
     PickupContainerItem(this.id);
 end
 
@@ -36,14 +33,9 @@ function InventoryItemButton_OnEnter(this)
 end
 
 function InventoryItemButton_OnClick(this, button)
-    if (button == "LEFT") then
+    if (button == "LEFT") then        
         if (IsShiftKeyDown()) then
             if (ChatInputFrame:IsVisible()) then
-                local item = GetInventorySlotItem("player", this.id);
-                if not item then
-                    return;
-                end
-
                 local hyperlink = "|c" .. ItemQualityColors[item:GetQuality()] .. "|Hitem:" .. item:GetId() .. "|h[" .. item:GetName() .. "]|h|r";
                 ChatInput:SetText(ChatInput:GetText() .. hyperlink);
                 ChatInput:CaptureInput();
