@@ -90,11 +90,62 @@ function OnGenderChanged()
 	end
 end
 
+-- Show/hide race buttons based on availability and auto-correct selection if needed.
+function SetupRaceButtons()
+	local raceBtnCount = CharRaceList:GetChildCount();
+	local firstAvailableRace = -1;
+	for i = 0, raceBtnCount - 1 do
+		local btn = CharRaceList:GetChild(i);
+		if IsRaceAvailable(btn.id) then
+			btn:Show();
+			if firstAvailableRace == -1 then
+				firstAvailableRace = btn.id;
+			end
+		else
+			btn:Hide();
+		end
+	end
+	-- If the currently selected race is not available, switch to the first available one
+	if firstAvailableRace ~= -1 and not IsRaceAvailable(GetCharacterRace()) then
+		SetCharacterRace(firstAvailableRace);
+		SetupCustomization();
+	end
+end
+
+-- Show/hide class buttons based on availability and auto-correct selection if needed.
+function SetupClassButtons()
+	local classBtnCount = CharClassList:GetChildCount();
+	local firstAvailableClass = -1;
+	for i = 0, classBtnCount - 1 do
+		local btn = CharClassList:GetChild(i);
+		if IsClassAvailable(btn.id) then
+			btn:Show();
+			if firstAvailableClass == -1 then
+				firstAvailableClass = btn.id;
+			end
+		else
+			btn:Hide();
+		end
+	end
+	-- If the currently selected class is not available, switch to the first available one
+	if firstAvailableClass ~= -1 and not IsClassAvailable(GetCharacterClass()) then
+		SetCharacterClass(firstAvailableClass);
+	end
+end
+
 function CharCreate_Show()
+	-- If no race or class is available, character creation is entirely disabled
+	if not IsCharacterCreationAvailable() then
+		GlueDialog_Show("CHAR_CREATE_ERR_DISABLED");
+		return;
+	end
+
 	ResetCharCustomize();
 	SetupCustomization();
-	
-	-- Adjust the selected race
+	SetupRaceButtons();
+	SetupClassButtons();
+
+	-- Adjust the selected race/class/gender indicators
 	OnRaceChanged();
 	OnClassChanged();
 	OnGenderChanged();
@@ -112,12 +163,18 @@ function CharCreate_Show()
 end
 
 function OnRaceChange_Clicked(this)
+	if not IsRaceAvailable(this.id) then
+		return;
+	end
 	SetCharacterRace(this.id);
 	SetupCustomization();
 	OnRaceChanged();
 end
 
 function OnClassChange_Clicked(this)
+	if not IsClassAvailable(this.id) then
+		return;
+	end
 	SetCharacterClass(this.id);
 	OnClassChanged();
 end

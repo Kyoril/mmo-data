@@ -30,8 +30,13 @@ function SelectedCharacter_Changed()
 	SelectCharacter(selectedCharacterIndex);
 
 	if (selectedCharacter ~= nil) then
-		CharSelectEnterButton:Enable();
+		-- Allow deletion regardless of disabled status, but block world entry for disabled characters
 		CharDeleteButton:Enable();
+		if IsCharacterDisabled(selectedCharacterIndex) then
+			CharSelectEnterButton:Disable();
+		else
+			CharSelectEnterButton:Enable();
+		end
 	else
 		CharSelectEnterButton:Disable();
 		CharDeleteButton:Disable();
@@ -77,8 +82,9 @@ function CharList_Show()
 		end
 
 		-- Assign realm data
+		local isDisabled = IsCharacterDisabled(characterIndex);
 		charListItem:SetText(character.name);
-		charListItem:GetChild(0):SetText("Level " .. character.level .. " " .. Localize(characterClass));
+		charListItem:GetChild(0):SetText("Level " .. character.level .. " " .. Localize(characterClass) .. (isDisabled and " (Disabled)" or ""));
 		charListItem.userData = character;
 		charListItem.id = characterIndex;
 		
@@ -120,6 +126,10 @@ function CharSelect_EnterWorld()
 end
 
 function CharSelect_CreateCharacter()
+	if not IsCharacterCreationAvailable() then
+		GlueDialog_Show("CHAR_CREATE_ERR_DISABLED");
+		return;
+	end
 	CharCreate_Show()
 end
 
