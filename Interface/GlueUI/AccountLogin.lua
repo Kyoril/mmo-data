@@ -1,46 +1,40 @@
--- This script handles all the logic for the AccountLogin frame defined in the 
+-- This script handles all the logic for the AccountLogin frame defined in the
 -- AccountLogin.xml file.
 
 
--- This function updates the UI, shows the message box dialog and initiates
--- the login at the login server.
+-- Initiates a login attempt using the values from the name and password fields.
 function AccountLogin_Login()
-	-- Copy the text values so we don't care if somehow the control text is 
-	-- changed after this command
 	local username = AccountNameField:GetText();
 	local password = AccountPasswordField:GetText();
 
-	-- Disbale the login button
 	LoginButton:Disable();
-	
-	-- Update the dialog label and show the dialog
+
 	GlueDialog_Show("CONNECTING");
-	
-	-- Do the login
+
 	RunConsoleCommand("login " .. username .. " " .. password);
 end
 
--- Called when the realm list was received
+-- Called when the realm list was received — move on to realm selection.
 function AccountLogin_OnRealmList()
 	GlueDialog_Hide();
 	AccountLogin:Hide();
 	RealmList_Show();
 end
 
+-- Called when the character list is ready — move on to character select.
 function AccountLogin_OnCharList()
 	GlueDialog_Hide();
-	CharCreate:Hide();
 	CharList_Show();
+	-- Show a deferred error dialog if one was queued (e.g. world server was down).
+	if pendingCharListError then
+		GlueDialog_Show("ENTER_WORLD_FAILED", pendingCharListError);
+		pendingCharListError = nil;
+	end
 end
 
 function AccountLogin_AuthError(frame, errorCode)
-	-- Hide the connecting dialog first
 	GlueDialog_Hide();
-	
-	-- Re-enable the login button so user can try again
 	LoginButton:Enable();
-	
-	-- Show the error dialog
 	GlueDialog_Show("AUTH_ERROR", AUTH_ERROR_STRING[errorCode]);
 end
 
@@ -48,44 +42,39 @@ function AccountLogin_OnConnect()
 	GlueDialog_Show("CONNECTING");
 end
 
--- This function is called when the AccountLogin frame is loaded
+-- Called when the AccountLogin frame is loaded.
 function AccountLogin_OnLoad()
-	-- Register the frame to receive events
 	AccountLogin:RegisterEvent("AUTH_SUCCESS", function()
 		GlueDialog_Show("RETRIEVE_REALM_LIST");
 	end);
 	AccountLogin:RegisterEvent("AUTH_FAILED", AccountLogin_AuthError);
-	
+
 	AccountLogin:RegisterEvent("REALM_AUTH_SUCCESS", function()
 		GlueDialog_Show("RETRIEVE_CHAR_LIST");
 	end);
-	AccountLogin:RegisterEvent("REALM_AUTH_FAILED", function(errorCode)
-		-- Hide any existing dialog first
+	AccountLogin:RegisterEvent("REALM_AUTH_FAILED", function(frame, errorCode)
 		GlueDialog_Hide();
-		
-		-- Re-enable the login button
 		LoginButton:Enable();
-		
-		-- Show the realm auth error
 		GlueDialog_Show("REALM_AUTH_ERROR", AUTH_ERROR_STRING[errorCode]);
 	end);
-	AccountLogin:RegisterEvent("REALM_DISCONNECTED", function(errorCode)
-		-- Hide any existing dialog first
+
+	-- Realm dropped while still in the GlueUI (e.g. connection failed or
+	-- realm kicked us during char select). Return to login screen with error.
+	AccountLogin:RegisterEvent("REALM_DISCONNECTED", function()
 		GlueDialog_Hide();
-		
-		-- Re-enable the login button
+		RealmListFrame:Hide();
+		CharSelect:Hide();
+		CharCreate:Hide();
+		AccountLogin:Show();
 		LoginButton:Enable();
-		
-		-- Show disconnection error
-		GlueDialog_Show("REALM_AUTH_ERROR", "DISCONNECTED");
+		GlueDialog_Show("REALM_DISCONNECTED_ERROR");
 	end);
-	
-	-- Register realm list event
+
 	AccountLogin:RegisterEvent("REALM_LIST", AccountLogin_OnRealmList);
 	AccountLogin:RegisterEvent("CHAR_LIST", AccountLogin_OnCharList);
 	AccountLogin:RegisterEvent("LOGIN_CONNECT", AccountLogin_OnConnect);
-	
-	if (not realmConnector:IsConnected()) then
+
+	if not realmConnector:IsConnected() then
 		AccountNameField:CaptureInput();
 	end
 end

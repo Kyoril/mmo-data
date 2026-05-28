@@ -46,6 +46,8 @@ strings =
 	(key = "CONFIRM_CHAR_DELETE", string = "Do you really want to delete your character?\n\nYou will loose any progress you made!")
 
 	(key = "WORLD_SERVER_DOWN", string = "World server is down.")
+	(key = "REALM_DISCONNECTED", string = "Соединение с игровым миром было потеряно.")
+	(key = "CHAR_DISABLED", string = "Отключён")
 	
 	(key = "CLOSE", string = "Close")
 	(key = "MENU", string = "Menu")

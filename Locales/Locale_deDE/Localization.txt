@@ -46,6 +46,8 @@ strings =
 	(key = "CONFIRM_CHAR_DELETE", string = "Möchtet Ihr den Charakter wirklich löschen?\n\nJeglicher Fortschritt wird dabei verloren gehen!")
 	
 	(key = "WORLD_SERVER_DOWN", string = "Der Welt-Server ist nicht verfügbar.")
+	(key = "REALM_DISCONNECTED", string = "Die Verbindung zum Realm-Server wurde getrennt.")
+	(key = "CHAR_DISABLED", string = "Deaktiviert")
 
 	(key = "CLOSE", string = "Schließen")
 	(key = "MENU", string = "Menü")

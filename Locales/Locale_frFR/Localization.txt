@@ -46,6 +46,8 @@ strings =
 	(key = "CONFIRM_CHAR_DELETE", string = "Êtes-vous sûr de vouloir supprimer le personnage?\n\nVotre avancement sera perdu!")
 
 	(key = "WORLD_SERVER_DOWN", string = "Le serveur de ce monde est fermé.")
+	(key = "REALM_DISCONNECTED", string = "Vous avez été déconnecté du royaume.")
+	(key = "CHAR_DISABLED", string = "Désactivé")
 
 	(key = "CLOSE", string = "Fermer")
 	(key = "MENU", string = "Menu")

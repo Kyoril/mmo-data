@@ -17,7 +17,6 @@ GlueDialogs["CONNECTING_TO_REALM"] = {
 	button1 = "CANCEL",
 	button2 = nil,
 	OnAccept = function()
-		-- Show realm list again
 		RealmList_Show()
 	end,
 	OnCancel = function()
@@ -46,8 +45,31 @@ GlueDialogs["REALM_AUTH_ERROR"] = {
 	end
 }
 
+-- Shown when the realm connection drops while the player is in the GlueUI
+-- (e.g. connecting to realm failed, or realm dropped during char select).
+GlueDialogs["REALM_DISCONNECTED_ERROR"] = {
+	text = "REALM_DISCONNECTED",
+	button1 = "OKAY",
+	button2 = nil,
+	OnAccept = function()
+		LoginButton:Enable()
+	end,
+	OnCancel = function()
+	end
+}
+
 GlueDialogs["CHAR_CREATION_ERROR"] = {
 	text = "",
+	button1 = "OKAY",
+	button2 = nil,
+	OnAccept = function()
+	end,
+	OnCancel = function()
+	end
+}
+
+GlueDialogs["CHAR_CREATE_ERR_DISABLED"] = {
+	text = "CHAR_CREATE_ERR_DISABLED",
 	button1 = "OKAY",
 	button2 = nil,
 	OnAccept = function()
@@ -169,54 +191,64 @@ AUTH_ERROR_STRING[13] = "AUTH_STATUS_FAIL_TRIAL"
 AUTH_ERROR_STRING[14] = "AUTH_STATUS_FAIL_INTERNAL_ERROR"
 
 function GlueDialog_Show(which, text, data)
-	-- Hide the previous dialog using the cancel button
-	if (GlueDialog:IsVisible()) then
-		GlueDialogs[GlueDialog.which].OnCancel()
+	-- Dismiss any currently-visible dialog (without firing its callbacks).
+	if GlueDialogBackground:IsVisible() then
+		GlueDialogBackground:Hide()
+		GlueDialog.which = nil
 	end
-	
+
 	-- Setup the dialog text
-	if (text ~= nil) then
+	if text ~= nil then
 		GlueDialogLabel:SetText(Localize(text))
 	else
 		GlueDialogLabel:SetText(Localize(GlueDialogs[which].text))
 	end
 
 	-- Check if there is a second button requested
-	if (GlueDialogs[which].button2) then
+	if GlueDialogs[which].button2 then
 		-- TODO
 	else
 		-- TODO
 	end
 
 	GlueDialog:SetHeight(GlueDialogLabel:GetTextHeight() + 128 + 128);
-	
+
 	-- Change button text
 	GlueButton01:SetText(Localize(GlueDialogs[which].button1))
 
 	-- Save parameters
 	GlueDialog.which = which
 	GlueDialog.data = data
-	
+
 	-- Show the glue dialog
 	GlueDialogBackground:Show()
 end
 
+-- Programmatically hide the dialog without firing any callbacks.
 function GlueDialog_Hide()
-	GlueDialog_Button2Clicked()
+	if GlueDialog.which == nil then
+		return
+	end
+	GlueDialogBackground:Hide()
+	GlueDialog.which = nil
 end
 
 function GlueDialog_Button1Clicked()
+	local which = GlueDialog.which
+	GlueDialog.which = nil
 	GlueDialogBackground:Hide()
-	
-	if (GlueDialogs[GlueDialog.which].OnAccept) then
-		GlueDialogs[GlueDialog.which].OnAccept()
+
+	if which ~= nil and GlueDialogs[which] ~= nil and GlueDialogs[which].OnAccept then
+		GlueDialogs[which].OnAccept()
 	end
 end
 
 function GlueDialog_Button2Clicked()
+	local which = GlueDialog.which
+	GlueDialog.which = nil
 	GlueDialogBackground:Hide()
-	
-	if (GlueDialogs[GlueDialog.which].OnCancel) then
-		GlueDialogs[GlueDialog.which].OnCancel()
+
+	if which ~= nil and GlueDialogs[which] ~= nil and GlueDialogs[which].OnCancel then
+		GlueDialogs[which].OnCancel()
 	end
 end
