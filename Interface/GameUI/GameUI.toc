@@ -1,7 +1,6 @@
 GameTemplates.xml
 GameParent.xml
 ZoneText.xml
-StaticDialog.xml
 GameMenuBar.xml
 ActionBarButton.xml
 ActionBar.xml
@@ -27,6 +26,7 @@ GuildFrame.xml
 FriendsFrame.xml
 TalentFrame.xml
 TradeFrame.xml
+StaticDialog.xml
 Minimap.xml
 QuestTracker.xml
 LootRollFrame.xml

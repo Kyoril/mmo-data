@@ -7,11 +7,11 @@ TRADE_NUM_SLOTS = 6;
 local myAccepted = false;
 local otherAccepted = false;
 
--- Trade money values
-local myMoney = 0;
-
 -- Store pending trade request
 local pendingTradeRequest = nil;
+
+-- Name of the other player in the current session (set on TradeSessionOpened).
+local tradePartnerName = nil;
 
 function TradeFrame_OnLoad(self)
 	-- Initialize slot buttons for my items
@@ -25,13 +25,15 @@ function TradeFrame_OnLoad(self)
 		end
 	end
 
-	-- Initialize slot buttons for other player's items
+	-- Initialize slot borders for other player's items.
+	-- The inner buttons are disabled so they may not fire mouse events; attach
+	-- hover handlers to the always-enabled border frames instead.
 	for index = 1, TRADE_NUM_SLOTS, 1 do
-		local button = getglobal("TradeOtherSlot"..index);
-		if button then
-			button.id = index;
-			button:SetOnEnterHandler(TradeSlot_OnEnter);
-			button:SetOnLeaveHandler(TradeSlot_OnLeave);
+		local border = getglobal("TradeOtherSlot"..index.."Border");
+		if border then
+			border.id = index;
+			border:SetOnEnterHandler(TradeOtherSlot_OnEnter);
+			border:SetOnLeaveHandler(TradeSlot_OnLeave);
 		end
 	end
 
@@ -46,7 +48,7 @@ function TradeFrame_OnLoad(self)
 		cancelButton:SetClickedHandler(TradeFrame_CancelTrade);
 	end
 
-	-- Close button handler
+	-- Close button handler (first child of first child = title bar close button)
 	local closeButton = TradeFrame:GetChild(0):GetChild(0);
 	if closeButton then
 		closeButton:SetClickedHandler(TradeFrame_OnClose);
@@ -62,17 +64,12 @@ function TradeFrame_OnLoad(self)
 end
 
 function TradeFrame_OnShow(self)
-	-- Reset state
 	myAccepted = false;
 	otherAccepted = false;
-	myMoney = 0;
-
-	-- Update display
 	TradeFrame_UpdateDisplay();
 end
 
 function TradeFrame_OnHide(self)
-	-- Cancel trade when window is closed
 	if IsTrading() then
 		CancelTrade();
 	end
@@ -82,99 +79,125 @@ function TradeFrame_OnClose(button)
 	HideUIPanel(TradeFrame);
 end
 
+-- -------------------------------------------------------------------------
+-- Event handlers — all chat messages use Localize() for proper i18n
+-- -------------------------------------------------------------------------
+
 function TradeFrame_OnTradeRequest(self, requesterName)
-	-- Store the pending request
 	pendingTradeRequest = requesterName;
 
-	-- Show confirmation dialog (text_arg1 = requesterName)
+	-- Show a system chat message so the player can see the notification in chat too
+	local info = ChatTypeInfo["SYSTEM"];
+	ChatFrame:AddMessage(string.format(Localize("TRADE_REQUEST_INCOMING"), requesterName), info.r, info.g, info.b);
+
+	-- Show the accept/decline dialog
 	StaticDialog_Show("TRADE_REQUEST", requesterName);
 end
 
 function TradeFrame_OnTradeRequestResult(self, result)
+	local info = ChatTypeInfo["SYSTEM"];
+
 	if result == 0 then
-		-- Success - trade invite was sent, wait for session to open
+		-- Success: the invite was sent
+		ChatFrame:AddMessage(Localize("TRADE_REQUEST_SENT"), info.r, info.g, info.b);
 		return;
 	end
 
-	-- Show error message based on result code (matches game::trade_result enum)
-	local errorMsg;
+	local key;
 	if result == 1 then
-		errorMsg = "That player is busy.";
+		key = "TRADE_ERR_TARGET_BUSY";
 	elseif result == 2 then
-		errorMsg = "That player is too far away.";
+		key = "TRADE_ERR_TOO_FAR_AWAY";
 	elseif result == 3 then
-		errorMsg = "Player not found.";
+		key = "TRADE_ERR_PLAYER_NOT_FOUND";
 	elseif result == 4 then
-		errorMsg = "You cannot trade while dead.";
+		key = "TRADE_ERR_YOU_ARE_DEAD";
 	elseif result == 5 then
-		errorMsg = "Target is dead.";
+		key = "TRADE_ERR_TARGET_IS_DEAD";
 	elseif result == 6 then
-		errorMsg = "You are already trading.";
+		key = "TRADE_ERR_ALREADY_TRADING";
 	elseif result == 7 then
-		errorMsg = "Target is already trading.";
+		key = "TRADE_ERR_TARGET_ALREADY_TRADING";
 	elseif result == 8 then
-		errorMsg = "You cannot trade with hostile players.";
+		key = "TRADE_ERR_HOSTILE";
 	elseif result == 9 then
-		errorMsg = "Target is logging out.";
+		key = "TRADE_ERR_TARGET_LOGGING_OUT";
 	elseif result == 10 then
-		errorMsg = "You cannot trade while in combat.";
+		key = "TRADE_ERR_YOU_IN_COMBAT";
 	elseif result == 11 then
-		errorMsg = "Target is in combat.";
+		key = "TRADE_ERR_TARGET_IN_COMBAT";
 	elseif result == 12 then
-		errorMsg = "Trade request was declined.";
+		key = "TRADE_ERR_DECLINED";
 	else
-		errorMsg = "Trade failed.";
+		key = "TRADE_ERR_FAILED";
 	end
 
-	local info = ChatTypeInfo["SYSTEM"];
-	ChatFrame:AddMessage(errorMsg, info.r, info.g, info.b);
+	ChatFrame:AddMessage(Localize(key), info.r, info.g, info.b);
 end
 
 function TradeFrame_OnTradeSessionOpened(self, otherPlayerName)
-	-- Update frame title
-	TradeFrameTitle:SetText("Trade: "..otherPlayerName);
-	
-	-- Show the trade window
+	tradePartnerName = otherPlayerName;
+
+	-- Update the dynamic subtitle in the trade frame
+	TradeFrameTitle:SetText(string.format(Localize("TRADE_FRAME_TITLE"), otherPlayerName));
+
+	-- System chat notification
+	local info = ChatTypeInfo["SYSTEM"];
+	ChatFrame:AddMessage(string.format(Localize("TRADE_SESSION_STARTED"), otherPlayerName), info.r, info.g, info.b);
+
 	ShowUIPanel(TradeFrame);
 end
 
 function TradeFrame_OnTradeSessionClosed(self, reason)
 	HideUIPanel(TradeFrame);
+	tradePartnerName = nil;
 
-	-- Show message based on close reason
-	local msg = nil;
+	local info = ChatTypeInfo["SYSTEM"];
+	local key;
 	if reason == 0 then
-		msg = "Trade completed successfully.";
+		key = "TRADE_CLOSED_COMPLETE";
 	elseif reason == 1 then
-		msg = "Trade cancelled.";
+		key = "TRADE_CLOSED_CANCELLED";
 	elseif reason == 2 then
-		msg = "Trade cancelled: Too far away.";
+		key = "TRADE_CLOSED_TOO_FAR";
 	elseif reason == 3 then
-		msg = "Trade cancelled: A player died.";
+		key = "TRADE_CLOSED_DEATH";
 	elseif reason == 4 then
-		msg = "Trade cancelled: Became hostile.";
+		key = "TRADE_CLOSED_HOSTILE";
 	elseif reason == 5 then
-		msg = "Trade cancelled: Player disconnected.";
+		key = "TRADE_CLOSED_DISCONNECT";
 	else
-		msg = "Trade ended.";
+		key = "TRADE_CLOSED_CANCELLED";
 	end
 
-	if msg then
-		ChatFrame:AddMessage(msg, 1.0, 1.0, 0.0);
-	end
+	ChatFrame:AddMessage(Localize(key), info.r, info.g, info.b);
 end
 
 function TradeFrame_OnTradeUpdate(self)
+	-- Pre-cache item info for all trade slots so tooltips are ready on hover
+	for i = 0, TRADE_NUM_SLOTS - 1 do
+		local entry = GetTradeItemEntry(i, false);
+		if entry and entry > 0 then
+			GetCachedItemInfo(entry);
+		end
+		local myEntry = GetTradeItemEntry(i, true);
+		if myEntry and myEntry > 0 then
+			GetCachedItemInfo(myEntry);
+		end
+	end
+
 	TradeFrame_UpdateDisplay();
 end
 
 function TradeFrame_OnTradeAcceptUpdate(self, meAccepted, theyAccepted)
 	myAccepted = meAccepted;
 	otherAccepted = theyAccepted;
-
-	-- Update accept button appearance
 	TradeFrame_UpdateAcceptStatus();
 end
+
+-- -------------------------------------------------------------------------
+-- Display helpers
+-- -------------------------------------------------------------------------
 
 function TradeFrame_GetSlotIcon(entry)
 	if not entry or entry == 0 then return ""; end
@@ -189,123 +212,93 @@ function TradeFrame_GetSlotIcon(entry)
 end
 
 function TradeFrame_UpdateDisplay()
-	-- Update my slots
+	-- My slots
 	for index = 1, TRADE_NUM_SLOTS, 1 do
 		local button = getglobal("TradeMySlot"..index);
-		local border = getglobal("TradeMySlot"..index.."Border");
-
 		if button then
 			local entry = GetTradeItemEntry(index - 1, true);
 			local count = GetTradeItemCount(index - 1, true);
 			if entry and entry > 0 then
 				button:SetProperty("Icon", TradeFrame_GetSlotIcon(entry));
-				if count and count > 1 then
-					button:SetText(tostring(count));
-				else
-					button:SetText("");
-				end
+				button:SetText((count and count > 1) and tostring(count) or "");
 			else
 				button:SetProperty("Icon", "");
 				button:SetText("");
 			end
 			button:Show();
-			if border then border:Show(); end
 		end
 	end
 
-	-- Update other player's slots
+	-- Other player's slots
 	for index = 1, TRADE_NUM_SLOTS, 1 do
 		local button = getglobal("TradeOtherSlot"..index);
-		local border = getglobal("TradeOtherSlot"..index.."Border");
-
 		if button then
 			local entry = GetTradeItemEntry(index - 1, false);
 			local count = GetTradeItemCount(index - 1, false);
 			if entry and entry > 0 then
 				button:SetProperty("Icon", TradeFrame_GetSlotIcon(entry));
-				if count and count > 1 then
-					button:SetText(tostring(count));
-				else
-					button:SetText("");
-				end
+				button:SetText((count and count > 1) and tostring(count) or "");
 			else
 				button:SetProperty("Icon", "");
 				button:SetText("");
 			end
 			button:Show();
-			if border then border:Show(); end
 		end
 	end
 
-	-- Update money display
 	TradeFrame_UpdateMoneyDisplay();
 end
 
 function TradeFrame_UpdateMoneyDisplay()
-	local myTradeMoney = GetTradeMoney(true);
-	local otherTradeMoney = GetTradeMoney(false);
-
-	-- Update my money frame (if it exists)
 	local myMoneyFrame = getglobal("TradeMyMoneyFrame");
 	if myMoneyFrame then
-		RefreshMoneyFrame("TradeMyMoneyFrame", myTradeMoney, 1, 0, nil);
+		RefreshMoneyFrame("TradeMyMoneyFrame", GetTradeMoney(true), 1, 0, nil);
 	end
 
-	-- Update other's money frame
 	local otherMoneyFrame = getglobal("TradeOtherMoneyFrame");
 	if otherMoneyFrame then
-		RefreshMoneyFrame("TradeOtherMoneyFrame", otherTradeMoney, 1, 0, nil);
+		RefreshMoneyFrame("TradeOtherMoneyFrame", GetTradeMoney(false), 1, 0, nil);
 	end
 end
 
 function TradeFrame_UpdateAcceptStatus()
-	-- Update visual indicators for acceptance
 	local myCheckMark = getglobal("TradeMyAcceptCheck");
-	local otherCheckMark = getglobal("TradeOtherAcceptCheck");
-
 	if myCheckMark then
-		if myAccepted then
-			myCheckMark:Show();
-		else
-			myCheckMark:Hide();
-		end
+		if myAccepted then myCheckMark:Show(); else myCheckMark:Hide(); end
 	end
 
+	local otherCheckMark = getglobal("TradeOtherAcceptCheck");
 	if otherCheckMark then
-		if otherAccepted then
-			otherCheckMark:Show();
-		else
-			otherCheckMark:Hide();
-		end
+		if otherAccepted then otherCheckMark:Show(); else otherCheckMark:Hide(); end
 	end
 
-	-- Update accept button text
 	local acceptButton = getglobal("TradeAcceptButton");
 	if acceptButton then
 		if myAccepted then
-			acceptButton:SetText("Accepted");
+			acceptButton:SetText(Localize("TRADE_ACCEPTED"));
 			acceptButton:Disable();
 		else
-			acceptButton:SetText("Accept");
+			acceptButton:SetText(Localize("TRADE_ACCEPT"));
 			acceptButton:Enable();
 		end
 	end
 end
 
+-- -------------------------------------------------------------------------
+-- Slot interaction
+-- -------------------------------------------------------------------------
+
 function TradeMySlot_OnClick(button)
 	local slotIndex = button.id - 1;
 
 	if CursorHasItem() then
-		-- Place the cursor item into this trade slot
 		local inventorySlot = GetCursorItemSlot();
 		if inventorySlot then
 			TradeAddItem(slotIndex, inventorySlot);
 			ClearCursorItem();
-			-- Update the display immediately
 			TradeFrame_UpdateMySlotFromInventory(slotIndex, inventorySlot);
 		end
 	else
-		-- If there's an item in this slot, clear it
 		local entry = GetTradeItemEntry(slotIndex, true);
 		if entry and entry > 0 then
 			ClearTradeItem(slotIndex);
@@ -314,7 +307,7 @@ function TradeMySlot_OnClick(button)
 	end
 end
 
--- Updates a single "my slot" immediately from inventory data (before server confirmation).
+-- Optimistic local update before server echo arrives
 function TradeFrame_UpdateMySlotFromInventory(slotIndex, inventorySlot)
 	local button = getglobal("TradeMySlot"..(slotIndex + 1));
 	if not button then return; end
@@ -323,34 +316,53 @@ function TradeFrame_UpdateMySlotFromInventory(slotIndex, inventorySlot)
 	if item then
 		button:SetProperty("Icon", item:GetIcon());
 		local count = item:GetStackCount();
-		if count and count > 1 then
-			button:SetText(tostring(count));
-		else
-			button:SetText("");
+		button:SetText((count and count > 1) and tostring(count) or "");
+	end
+end
+
+-- -------------------------------------------------------------------------
+-- Tooltips
+-- My own slots: hover on the (enabled) button — fires TradeSlot_OnEnter.
+-- Other player's slots: hover on the border frame — fires TradeOtherSlot_OnEnter.
+-- -------------------------------------------------------------------------
+
+function TradeSlot_OnEnter(button)
+	local slotIndex = button.id - 1;
+	local entry = GetTradeItemEntry(slotIndex, true); -- my offer
+	if entry and entry > 0 then
+		local itemInfo = GetCachedItemInfo(entry);
+		if itemInfo then
+			GameTooltip:ClearAnchors();
+			GameTooltip:SetAnchor(AnchorPoint.LEFT, AnchorPoint.RIGHT, button, 16);
+			GameTooltip:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, button, 0);
+			GameTooltip_SetItemTemplate(itemInfo);
+			GameTooltip:Show();
 		end
 	end
 end
 
-function TradeSlot_OnEnter(button)
-	local isMine = string.find(button:GetName(), "TradeMySlot");
-	local slotIndex = button.id - 1;
-
-	local entry = GetTradeItemEntry(slotIndex, isMine ~= nil);
+function TradeOtherSlot_OnEnter(border)
+	local slotIndex = border.id - 1;
+	local entry = GetTradeItemEntry(slotIndex, false); -- other player's offer
 	if entry and entry > 0 then
-		GameTooltip:ClearAnchors();
-		GameTooltip:SetAnchor(AnchorPoint.LEFT, AnchorPoint.RIGHT, button, 16);
-		GameTooltip:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.TOP, button, -16);
 		local itemInfo = GetCachedItemInfo(entry);
 		if itemInfo then
+			GameTooltip:ClearAnchors();
+			GameTooltip:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.LEFT, border, -16);
+			GameTooltip:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, border, 0);
 			GameTooltip_SetItemTemplate(itemInfo);
+			GameTooltip:Show();
 		end
-		GameTooltip:Show();
 	end
 end
 
 function TradeSlot_OnLeave(button)
 	GameTooltip:Hide();
 end
+
+-- -------------------------------------------------------------------------
+-- Button actions
+-- -------------------------------------------------------------------------
 
 function TradeFrame_AcceptTrade(button)
 	if not myAccepted then
@@ -362,13 +374,6 @@ function TradeFrame_CancelTrade(button)
 	CancelTrade();
 end
 
--- Function to set money in trade
-function TradeFrame_SetMoney(amount)
-	SetTradeMoney(amount);
-end
-
--- Opens the money input dialog
 function TradeFrame_ShowMoneyInput()
 	StaticDialog_Show("TRADE_SET_MONEY");
 end
-
