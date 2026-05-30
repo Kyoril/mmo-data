@@ -1,0 +1,95 @@
+<?xml version="1.0" ?>
+<UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
+	<Script file="ComboBoxDropdown.lua" />
+
+	<!-- Template for a single item inside the dropdown list. No parent = template only. -->
+	<!-- TextColor property lets Lua tint individual items (e.g. item quality colors). -->
+	<Frame name="ComboBoxItemTemplate" type="Button" renderer="ButtonRenderer">
+		<Property name="Font" value="DefaultSmall" />
+		<Property name="TextColor" value="FFFFD100" />
+
+		<Visual>
+			<ImagerySection name="NormalBg">
+				<ImageComponent texture="Interface/GlueUI/CharSelectButtonBackground.htex" tint="D0000000" tiling="NONE" />
+			</ImagerySection>
+			<ImagerySection name="HoveredBg">
+				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="FFFACC12" tiling="VERTICAL">
+					<Area><Inset all="2" /></Area>
+				</ImageComponent>
+			</ImagerySection>
+			<ImagerySection name="CaptionNormal">
+				<TextComponent color="$TextColor" horzAlign="LEFT" vertAlign="CENTER">
+					<Area><Inset left="16" right="8" /></Area>
+				</TextComponent>
+			</ImagerySection>
+			<ImagerySection name="CaptionHovered">
+				<TextComponent color="FF100500" horzAlign="LEFT" vertAlign="CENTER">
+					<Area><Inset left="16" right="8" /></Area>
+				</TextComponent>
+			</ImagerySection>
+			<StateImagery name="Normal">
+				<Layer>
+					<Section section="NormalBg" />
+					<Section section="CaptionNormal" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Hovered">
+				<Layer>
+					<Section section="HoveredBg" />
+					<Section section="CaptionHovered" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Pushed">
+				<Layer>
+					<Section section="HoveredBg" />
+					<Section section="CaptionHovered" color="FFAAAAAA" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+
+		<Area>
+			<Size><AbsDimension x="300" y="60" /></Size>
+		</Area>
+	</Frame>
+
+	<!--
+		Global dropdown popup frame.
+		parent="GameParent" ensures it renders above all other game UI frames.
+		Positioned and sized in Lua (ComboBox_Open) based on the clicked ComboBox.
+	-->
+	<Frame name="ComboBoxDropdownFrame" parent="GameParent" renderer="DefaultRenderer">
+		<Property name="Visible" value="false" />
+
+		<Visual>
+			<ImagerySection name="Background">
+				<BorderComponent texture="Interface/GameUI/fg4_borders_tooltip.htex" borderSize="64" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer><Section section="Background" /></Layer>
+			</StateImagery>
+		</Visual>
+
+		<Scripts>
+			<OnLoad>
+				return function(self)
+					ComboBoxDropdown_OnLoad(self);
+				end
+			</OnLoad>
+		</Scripts>
+
+		<Area>
+			<Size><AbsDimension x="400" y="60" /></Size>
+		</Area>
+
+		<!-- Container holds the cloned item buttons -->
+		<Frame name="ComboBoxDropdownContainer" renderer="DefaultRenderer">
+			<Area>
+				<Anchor point="TOP" offset="8" />
+				<Anchor point="LEFT" offset="8" />
+				<Anchor point="RIGHT" offset="-8" />
+				<Anchor point="BOTTOM" offset="-8" />
+			</Area>
+		</Frame>
+	</Frame>
+
+</UiLayout>

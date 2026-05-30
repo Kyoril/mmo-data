@@ -1,5 +1,6 @@
 GameTemplates.xml
 GameParent.xml
+ComboBoxDropdown.xml
 ZoneText.xml
 GameMenuBar.xml
 ActionBarButton.xml
@@ -31,6 +32,7 @@ Minimap.xml
 QuestTracker.xml
 LootRollFrame.xml
 GameMenu.xml
+LootMethodFrame.xml
 ContextMenu.xml
 GameTooltip.xml
 

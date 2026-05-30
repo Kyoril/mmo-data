@@ -229,8 +229,8 @@ RegisterContextMenu("PARTY_MEMBER", {
                 table.insert(items, {
                     text = Localize("SET_LOOT_METHOD"),
                     callback = function(menuData)
-                        local pos = GetCursorPosition();
-                        ContextMenu_Show("LOOT_METHOD", pos.x, pos.y, nil);
+                        ContextMenu_Hide();
+                        LootMethodFrame_Toggle();
                     end,
                     enabled = true
                 })
