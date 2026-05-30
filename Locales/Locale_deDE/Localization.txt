@@ -349,7 +349,7 @@ strings =
 	(key = "LOOT_FREE_FOR_ALL_DESC", string = "Jeder in der Gruppe kann berechtigte Gegenstände frei aufheben. Es gibt keine Einschränkungen, wer was plündert.")
 	(key = "LOOT_ROUND_ROBIN_DESC", string = "Die Plünderberechtigung rotiert der Reihe nach durch die Gruppenmitglieder. Jedes Mitglied ist abwechselnd dran.")
 	(key = "LOOT_GROUP_LOOT_DESC", string = "Gegenstände ab dem Beuteschwellenwert werden per Gruppenabstimmung verteilt. Berechtigte Spieler wählen Bedarf, Gier oder Passen.")
-	(key = "LOOT_MASTER_LOOT_DESC", string = "Der Gruppenführer sammelt die gesamte Beute ab dem Schwellenwert und verteilt Gegenstände manuell.")
+	(key = "LOOT_MASTER_LOOT_DESC", string = "Der Plündermeister sammelt die gesamte Beute ab dem Schwellenwert und verteilt Gegenstände manuell.")
 	(key = "LOOTMETHOD_USAGE", string = "Verwendung: /lootmethod [freeforall|roundrobin|masterloot|grouploot]")
 	(key = "LOOT_METHOD_SET", string = "Beutemethode: %s")
 	(key = "LOOT_METHOD_SET_THRESHOLD", string = "Beutemethode: %s (Schwellenwert: %s)")
