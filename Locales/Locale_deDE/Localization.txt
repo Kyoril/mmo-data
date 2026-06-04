@@ -67,8 +67,6 @@ strings =
 	(key = "OPTIONS_SOUND_ENABLED", string = "Soundeffekte")
 	(key = "OPTIONS_MUSIC_ENABLED", string = "Musik")
 
-	(key = "OPTIONS_ON", string = "An")
-	(key = "OPTIONS_OFF", string = "Aus")
 	(key = "OPTIONS_DEFAULTS", string = "Standard")
 	(key = "OPTIONS_QUALITY_LOW", string = "Niedrig")
 	(key = "OPTIONS_QUALITY_MEDIUM", string = "Mittel")

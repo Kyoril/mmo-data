@@ -143,18 +143,16 @@ local function BuildToggleRow(opt, yOffset)
 		label:SetText(text);
 	end
 
-	-- Child 1 = toggle button
+	-- Child 1 = toggle button (icon-style checkbox)
 	local toggle = row:GetChild(1);
 	if toggle then
 		local val = GetCVar(opt.cvar);
 		local state = IsCvarOn(val);
 		toggle:SetChecked(state);
-		toggle:SetText(Localize(state and "OPTIONS_ON" or "OPTIONS_OFF"));
 
 		toggle:SetClickedHandler(function()
 			state = not state;
 			toggle:SetChecked(state);
-			toggle:SetText(Localize(state and "OPTIONS_ON" or "OPTIONS_OFF"));
 			SetCVar(opt.cvar, state and "1" or "0");
 		end);
 	end

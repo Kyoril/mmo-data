@@ -71,7 +71,11 @@
 		</Area>
 	</Frame>
 
-	<!-- Toggle row template: label (child 0) + on/off button (child 1) -->
+	<!--
+		Toggle row template.
+		Child 0 = label text frame.
+		Child 1 = checkbox button (icon-button style: frame border + icon when checked).
+	-->
 	<Frame name="OptionsToggleRowTemplate">
 		<Area>
 			<Size><AbsDimension x="0" y="96" /></Size>
@@ -97,75 +101,81 @@
 				<Anchor point="LEFT" offset="16" />
 				<Anchor point="TOP" />
 				<Anchor point="BOTTOM" />
-				<Size><AbsDimension x="800" /></Size>
+				<Size><AbsDimension x="900" /></Size>
 			</Area>
 		</Frame>
 
-		<!-- Child 1: toggle (On/Off) button -->
+		<!--
+			Child 1: icon-style checkbox button.
+			Unchecked states: frame border only (empty inside).
+			Checked states: frame border + Icon_QuestCompleted checkmark icon.
+		-->
 		<Frame name="OptionsToggleButton" type="Button" renderer="CheckboxRenderer">
-			<Property name="Font" value="DefaultSmall" />
 			<Property name="Checkable" value="true" />
 
 			<Visual>
-				<ImagerySection name="BgOff">
-					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="A0000000" />
+				<!-- Button frame borders (same texture set as IconButton) -->
+				<ImagerySection name="FrameNormal">
+					<BorderComponent texture="Interface/GlueUI/CharButtonUp.htex" borderSize="22" />
 				</ImagerySection>
-				<ImagerySection name="BgOn">
-					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="A0332200" />
+				<ImagerySection name="FrameHovered">
+					<BorderComponent texture="Interface/GlueUI/CharButtonHovered.htex" borderSize="22" />
 				</ImagerySection>
-				<ImagerySection name="BgHover">
-					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="A0553300" />
-				</ImagerySection>
-				<ImagerySection name="TextOff">
-					<TextComponent color="FF888888" horzAlign="CENTER" vertAlign="CENTER" />
-				</ImagerySection>
-				<ImagerySection name="TextOn">
-					<TextComponent color="FFFFD100" horzAlign="CENTER" vertAlign="CENTER" />
+				<ImagerySection name="FramePushed">
+					<BorderComponent texture="Interface/GlueUI/CharButtonPushed.htex" borderSize="22" />
 				</ImagerySection>
 
+				<!-- Checkmark icon shown only in checked states -->
+				<ImagerySection name="CheckIcon">
+					<ImageComponent texture="Interface/Icons/fg4_iconsGold_checkMark_result.htex" tiling="NONE">
+						<Area><Inset all="12" /></Area>
+					</ImageComponent>
+				</ImagerySection>
+
+				<!-- Unchecked: frame only, no icon -->
 				<StateImagery name="Normal">
 					<Layer>
-						<Section section="BgOff" />
-						<Section section="TextOff" />
+						<Section section="FrameNormal" />
 					</Layer>
 				</StateImagery>
 				<StateImagery name="Hovered">
 					<Layer>
-						<Section section="BgHover" />
-						<Section section="TextOff" />
+						<Section section="FrameHovered" />
 					</Layer>
 				</StateImagery>
 				<StateImagery name="Pushed">
 					<Layer>
-						<Section section="BgOn" />
-						<Section section="TextOff" color="FFAAAAAA" />
+						<Section section="FramePushed" />
 					</Layer>
 				</StateImagery>
+
+				<!-- Checked: frame + checkmark icon -->
 				<StateImagery name="NormalChecked">
 					<Layer>
-						<Section section="BgOn" />
-						<Section section="TextOn" />
+						<Section section="FramePushed" />
+						<Section section="CheckIcon" />
 					</Layer>
 				</StateImagery>
 				<StateImagery name="HoveredChecked">
 					<Layer>
-						<Section section="BgHover" />
-						<Section section="TextOn" />
+						<Section section="FrameHovered" />
+						<Section section="CheckIcon" />
 					</Layer>
 				</StateImagery>
 				<StateImagery name="PushedChecked">
 					<Layer>
-						<Section section="BgOn" />
-						<Section section="TextOn" color="FFAAAAAA" />
+						<Section section="FramePushed" />
+						<Section section="CheckIcon" color="FFAAAAAA" />
 					</Layer>
 				</StateImagery>
 			</Visual>
 
+			<!-- Square checkbox, centered vertically in the 96px row -->
 			<Area>
-				<Anchor point="RIGHT" offset="-16" />
-				<Anchor point="TOP" offset="12" />
-				<Anchor point="BOTTOM" offset="-12" />
-				<Size><AbsDimension x="160" /></Size>
+				<Anchor point="RIGHT" offset="-24" />
+				<Anchor point="TOP" offset="8" />
+				<Anchor point="BOTTOM" offset="-8" />
+				<Size><AbsDimension x="80" /></Size>
 			</Area>
 		</Frame>
 	</Frame>
@@ -268,7 +278,7 @@
 			</Scripts>
 
 			<Area>
-				<Anchor point="RIGHT" offset="-16" />
+				<Anchor point="RIGHT" offset="-24" />
 				<Anchor point="TOP" offset="12" />
 				<Anchor point="BOTTOM" offset="-12" />
 				<Size><AbsDimension x="400" /></Size>
@@ -295,14 +305,14 @@
 	</Frame>
 
 	<!-- ══════════════════════════════════════════════════════════
-	     Main Options Frame
+	     Main Options Frame — same border style as TalentFrame / LootMethodFrame
 	     ══════════════════════════════════════════════════════════ -->
 	<Frame name="OptionsFrame" parent="GameParent" renderer="DefaultRenderer">
 		<Property name="Visible" value="false" />
 
 		<Visual>
 			<ImagerySection name="Background">
-				<BorderComponent texture="Interface/GameUI/fg4_borders_01_03.htex" borderSize="250" />
+				<BorderComponent texture="Interface/GameUI/fg4_borders_simple.htex" borderSize="250" />
 			</ImagerySection>
 			<StateImagery name="Enabled">
 				<Layer><Section section="Background" /></Layer>
@@ -315,13 +325,13 @@
 			<Anchor point="V_CENTER" />
 		</Area>
 
-		<!-- Title bar -->
+		<!-- Title bar — matches TalentFrame/LootMethodFrame padding -->
 		<Frame name="OptionsTitleBar" inherits="TitleBar">
 			<Property name="Text" value="OPTIONS" />
 			<Area>
 				<Anchor point="TOP" offset="24" />
-				<Anchor point="LEFT" offset="48" />
-				<Anchor point="RIGHT" offset="-48" />
+				<Anchor point="LEFT" offset="24" />
+				<Anchor point="RIGHT" offset="-24" />
 			</Area>
 		</Frame>
 
@@ -336,10 +346,14 @@
 				</StateImagery>
 			</Visual>
 
+			<!--
+				Bottom offset accounts for: 48px bottom padding + 96px button height + 16px gap = 160px.
+				This leaves the buttons fully visible below the panel with clear space.
+			-->
 			<Area>
 				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="OptionsTitleBar" offset="16" />
-				<Anchor point="LEFT" offset="48" />
-				<Anchor point="BOTTOM" offset="-136" />
+				<Anchor point="LEFT" offset="24" />
+				<Anchor point="BOTTOM" offset="-160" />
 				<Size><AbsDimension x="380" /></Size>
 			</Area>
 		</Frame>
@@ -378,10 +392,10 @@
 				<Anchor point="TOP" relativePoint="TOP" relativeTo="OptionsCategoryPanel" />
 				<Anchor point="BOTTOM" relativePoint="BOTTOM" relativeTo="OptionsCategoryPanel" />
 				<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="OptionsSeparator" offset="12" />
-				<Anchor point="RIGHT" offset="-48" />
+				<Anchor point="RIGHT" offset="-24" />
 			</Area>
 
-			<!-- Scrollbar on the right -->
+			<!-- Scrollbar on the right edge -->
 			<Frame name="OptionsContentScrollBar" inherits="VerticalScrollBar">
 				<Area>
 					<Anchor point="RIGHT" offset="-8" />
@@ -390,7 +404,7 @@
 				</Area>
 			</Frame>
 
-			<!-- Clipping frame -->
+			<!-- Clipping frame (hides content that scrolls out of view) -->
 			<Frame name="OptionsScrollClip">
 				<Area>
 					<Anchor point="TOP" offset="16" />
@@ -399,7 +413,7 @@
 					<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="OptionsContentScrollBar" offset="-8" />
 				</Area>
 
-				<!-- Scrollable content container (child frames added here by Lua) -->
+				<!-- Scrollable content — child frames added dynamically by Lua -->
 				<Frame name="OptionsScrollContent" renderer="DefaultRenderer">
 					<Property name="ClippedByParent" value="true" />
 
@@ -413,14 +427,17 @@
 			</Frame>
 		</Frame>
 
-		<!-- ── Bottom button row ── -->
+		<!-- ── Bottom button row ──
+		     48px bottom offset keeps buttons clear of the frame border.
+		     Button height 96px matches GlueButton override.
+		-->
 
-		<!-- Defaults: resets current category to defaults -->
+		<!-- Defaults: reset current category to defaults -->
 		<Frame name="OptionsDefaultsButton" inherits="GlueButton">
 			<Property name="Text" value="OPTIONS_DEFAULTS" />
 			<Area>
-				<Anchor point="BOTTOM" offset="-24" />
-				<Anchor point="LEFT" offset="48" />
+				<Anchor point="BOTTOM" offset="-48" />
+				<Anchor point="LEFT" offset="24" />
 				<Size><AbsDimension x="300" y="96" /></Size>
 			</Area>
 			<Scripts>
@@ -432,12 +449,12 @@
 			</Scripts>
 		</Frame>
 
-		<!-- Cancel: discard changes and close -->
+		<!-- Cancel: revert all changes and close -->
 		<Frame name="OptionsCancelButton" inherits="GlueButton">
 			<Property name="Text" value="CANCEL" />
 			<Area>
-				<Anchor point="BOTTOM" offset="-24" />
-				<Anchor point="RIGHT" offset="-48" />
+				<Anchor point="BOTTOM" offset="-48" />
+				<Anchor point="RIGHT" offset="-24" />
 				<Size><AbsDimension x="300" y="96" /></Size>
 			</Area>
 			<Scripts>
@@ -449,11 +466,11 @@
 			</Scripts>
 		</Frame>
 
-		<!-- Okay: save config and close -->
+		<!-- Okay: apply + save config and close -->
 		<Frame name="OptionsOkayButton" inherits="GlueButton">
 			<Property name="Text" value="OKAY" />
 			<Area>
-				<Anchor point="BOTTOM" offset="-24" />
+				<Anchor point="BOTTOM" offset="-48" />
 				<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="OptionsCancelButton" offset="-16" />
 				<Size><AbsDimension x="300" y="96" /></Size>
 			</Area>
