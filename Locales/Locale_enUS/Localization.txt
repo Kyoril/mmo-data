@@ -51,6 +51,29 @@ strings =
 	
 	(key = "CLOSE", string = "Close")
 	(key = "MENU", string = "Menu")
+	(key = "OPTIONS", string = "Options")
+
+	(key = "OPTIONS_GRAPHICS", string = "Graphics")
+	(key = "OPTIONS_SOUND", string = "Sound")
+
+	(key = "OPTIONS_VSYNC", string = "VSync")
+	(key = "OPTIONS_WINDOWED", string = "Windowed Mode")
+	(key = "OPTIONS_SHADOWS", string = "Render Shadows")
+	(key = "OPTIONS_SHADOW_QUALITY", string = "Shadow Quality")
+	(key = "OPTIONS_FOLIAGE", string = "Foliage")
+	(key = "OPTIONS_FOLIAGE_DENSITY", string = "Foliage Density")
+	(key = "OPTIONS_TERRAIN_LOD", string = "Terrain Level of Detail")
+	(key = "OPTIONS_TERRAIN_OCCLUSION", string = "Terrain Occlusion Culling")
+	(key = "OPTIONS_SOUND_ENABLED", string = "Sound Effects")
+	(key = "OPTIONS_MUSIC_ENABLED", string = "Music")
+
+	(key = "OPTIONS_ON", string = "On")
+	(key = "OPTIONS_OFF", string = "Off")
+	(key = "OPTIONS_DEFAULTS", string = "Defaults")
+	(key = "OPTIONS_QUALITY_LOW", string = "Low")
+	(key = "OPTIONS_QUALITY_MEDIUM", string = "Medium")
+	(key = "OPTIONS_QUALITY_HIGH", string = "High")
+	(key = "OPTIONS_QUALITY_ULTRA", string = "Ultra")
 
 	(key = "SECONDS", string = "sec")
 	(key = "MINUTES", string = "min")

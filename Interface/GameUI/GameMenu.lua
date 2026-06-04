@@ -36,6 +36,10 @@ function OnLogoutButton_Clicked()
 	HideUIPanel(GameMenu);
 end
 
+function OnOptionsButton_Clicked()
+	ShowUIPanel(OptionsFrame);
+end
+
 function OnMenuItem_Clicked()
 	if (GameMenu:IsVisible()) then
 		HideUIPanel(GameMenu)
@@ -47,11 +51,12 @@ end
 
 function GameMenu_OnLoad(this)
 	MenuTitleBar:GetChild(0):SetClickedHandler(OnCloseButton_Clicked);
-		
+
 	AddMenuButton("CLOSE", OnCloseButton_Clicked);
+	AddMenuButton("OPTIONS", OnOptionsButton_Clicked);
 	AddMenuButton("LOGOUT", OnLogoutButton_Clicked);
 	AddMenuButton("QUIT", OnQuitButton_Clicked);
-	
+
 	AddMenuBarButton("Interface/Icons/fg4_icons_menu_result.htex", OnMenuItem_Clicked);
 end
 

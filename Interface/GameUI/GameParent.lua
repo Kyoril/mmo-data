@@ -43,6 +43,7 @@ INVENTORY_TYPE_RELIC = 28;
 
 UIPanelWindows = {};
 UIPanelWindows["GameMenu"] = { area = "center", pushable = 0 };
+UIPanelWindows["OptionsFrame"] = { area = "center", pushable = 0 };
 UIPanelWindows["SpellBook"] = { area = "left", pushable = 0 };
 UIPanelWindows["CharacterWindow"] = { area = "left", pushable = 2 };
 UIPanelWindows["TrainerFrame"] = { area = "left", pushable = 0 };

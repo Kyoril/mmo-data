@@ -1,0 +1,483 @@
+<?xml version="1.0" ?>
+<UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
+	<Script file="OptionsFrame.lua" />
+
+	<!-- Category button template (radio-style: checked = selected) -->
+	<Frame name="OptionsCatButtonTemplate" type="Button" renderer="CheckboxRenderer">
+		<Property name="Font" value="DefaultSmall" />
+		<Property name="Checkable" value="true" />
+
+		<Visual>
+			<ImagerySection name="NormalBg">
+				<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="30000000" />
+			</ImagerySection>
+			<ImagerySection name="HoveredBg">
+				<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="60332200" />
+			</ImagerySection>
+			<ImagerySection name="SelectedBg">
+				<BorderComponent texture="Interface/GameUI/fg4_borders_01_28_2_result.htex" borderSize="24" />
+			</ImagerySection>
+			<ImagerySection name="CaptionNormal">
+				<TextComponent color="FFD0D0D0" horzAlign="LEFT" vertAlign="CENTER">
+					<Area><Inset left="20" /></Area>
+				</TextComponent>
+			</ImagerySection>
+			<ImagerySection name="CaptionSelected">
+				<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="CENTER">
+					<Area><Inset left="20" /></Area>
+				</TextComponent>
+			</ImagerySection>
+
+			<StateImagery name="Normal">
+				<Layer>
+					<Section section="NormalBg" />
+					<Section section="CaptionNormal" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Hovered">
+				<Layer>
+					<Section section="HoveredBg" />
+					<Section section="CaptionNormal" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Pushed">
+				<Layer>
+					<Section section="HoveredBg" />
+					<Section section="CaptionNormal" color="FFAAAAAA" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="NormalChecked">
+				<Layer>
+					<Section section="SelectedBg" />
+					<Section section="CaptionSelected" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="HoveredChecked">
+				<Layer>
+					<Section section="SelectedBg" />
+					<Section section="CaptionSelected" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="PushedChecked">
+				<Layer>
+					<Section section="SelectedBg" />
+					<Section section="CaptionSelected" color="FFAAAAAA" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+
+		<Area>
+			<Size><AbsDimension x="0" y="90" /></Size>
+		</Area>
+	</Frame>
+
+	<!-- Toggle row template: label (child 0) + on/off button (child 1) -->
+	<Frame name="OptionsToggleRowTemplate">
+		<Area>
+			<Size><AbsDimension x="0" y="96" /></Size>
+		</Area>
+
+		<!-- Child 0: row label -->
+		<Frame name="OptionsToggleRowLabel" renderer="DefaultRenderer">
+			<Property name="Font" value="DefaultSmall" />
+
+			<Visual>
+				<ImagerySection name="Text">
+					<TextComponent color="FFD0D0D0" horzAlign="LEFT" vertAlign="CENTER" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer><Section section="Text" /></Layer>
+				</StateImagery>
+				<StateImagery name="Disabled">
+					<Layer><Section section="Text" /></Layer>
+				</StateImagery>
+			</Visual>
+
+			<Area>
+				<Anchor point="LEFT" offset="16" />
+				<Anchor point="TOP" />
+				<Anchor point="BOTTOM" />
+				<Size><AbsDimension x="800" /></Size>
+			</Area>
+		</Frame>
+
+		<!-- Child 1: toggle (On/Off) button -->
+		<Frame name="OptionsToggleButton" type="Button" renderer="CheckboxRenderer">
+			<Property name="Font" value="DefaultSmall" />
+			<Property name="Checkable" value="true" />
+
+			<Visual>
+				<ImagerySection name="BgOff">
+					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="A0000000" />
+				</ImagerySection>
+				<ImagerySection name="BgOn">
+					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="A0332200" />
+				</ImagerySection>
+				<ImagerySection name="BgHover">
+					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="A0553300" />
+				</ImagerySection>
+				<ImagerySection name="TextOff">
+					<TextComponent color="FF888888" horzAlign="CENTER" vertAlign="CENTER" />
+				</ImagerySection>
+				<ImagerySection name="TextOn">
+					<TextComponent color="FFFFD100" horzAlign="CENTER" vertAlign="CENTER" />
+				</ImagerySection>
+
+				<StateImagery name="Normal">
+					<Layer>
+						<Section section="BgOff" />
+						<Section section="TextOff" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="Hovered">
+					<Layer>
+						<Section section="BgHover" />
+						<Section section="TextOff" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="Pushed">
+					<Layer>
+						<Section section="BgOn" />
+						<Section section="TextOff" color="FFAAAAAA" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="NormalChecked">
+					<Layer>
+						<Section section="BgOn" />
+						<Section section="TextOn" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="HoveredChecked">
+					<Layer>
+						<Section section="BgHover" />
+						<Section section="TextOn" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="PushedChecked">
+					<Layer>
+						<Section section="BgOn" />
+						<Section section="TextOn" color="FFAAAAAA" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+
+			<Area>
+				<Anchor point="RIGHT" offset="-16" />
+				<Anchor point="TOP" offset="12" />
+				<Anchor point="BOTTOM" offset="-12" />
+				<Size><AbsDimension x="160" /></Size>
+			</Area>
+		</Frame>
+	</Frame>
+
+	<!-- Dropdown row template: label (child 0) + combo box (child 1) -->
+	<Frame name="OptionsComboRowTemplate">
+		<Area>
+			<Size><AbsDimension x="0" y="96" /></Size>
+		</Area>
+
+		<!-- Child 0: row label -->
+		<Frame name="OptionsComboRowLabel" renderer="DefaultRenderer">
+			<Property name="Font" value="DefaultSmall" />
+
+			<Visual>
+				<ImagerySection name="Text">
+					<TextComponent color="FFD0D0D0" horzAlign="LEFT" vertAlign="CENTER" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer><Section section="Text" /></Layer>
+				</StateImagery>
+				<StateImagery name="Disabled">
+					<Layer><Section section="Text" /></Layer>
+				</StateImagery>
+			</Visual>
+
+			<Area>
+				<Anchor point="LEFT" offset="16" />
+				<Anchor point="TOP" />
+				<Anchor point="BOTTOM" />
+				<Size><AbsDimension x="700" /></Size>
+			</Area>
+		</Frame>
+
+		<!-- Child 1: combo box -->
+		<Frame name="OptionsComboBoxWidget" type="ComboBox" renderer="ComboBoxRenderer">
+			<Property name="Font" value="DefaultSmall" />
+
+			<Visual>
+				<ImagerySection name="NormalBg">
+					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" />
+				</ImagerySection>
+				<ImagerySection name="HoveredBg">
+					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFB07030" />
+				</ImagerySection>
+				<ImagerySection name="OpenBg">
+					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFFFD100" />
+				</ImagerySection>
+				<ImagerySection name="DisabledBg">
+					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="80404040" />
+				</ImagerySection>
+				<ImagerySection name="CaptionNormal">
+					<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="CENTER">
+						<Area><Inset left="16" right="64" /></Area>
+					</TextComponent>
+				</ImagerySection>
+				<ImagerySection name="CaptionHovered">
+					<TextComponent color="FFFFFFFF" horzAlign="LEFT" vertAlign="CENTER">
+						<Area><Inset left="16" right="64" /></Area>
+					</TextComponent>
+				</ImagerySection>
+				<ImagerySection name="CaptionDisabled">
+					<TextComponent color="AE888888" horzAlign="LEFT" vertAlign="CENTER">
+						<Area><Inset left="16" right="64" /></Area>
+					</TextComponent>
+				</ImagerySection>
+
+				<StateImagery name="Normal">
+					<Layer>
+						<Section section="NormalBg" />
+						<Section section="CaptionNormal" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="Hovered">
+					<Layer>
+						<Section section="HoveredBg" />
+						<Section section="CaptionHovered" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="Open">
+					<Layer>
+						<Section section="OpenBg" />
+						<Section section="CaptionHovered" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="Disabled">
+					<Layer>
+						<Section section="DisabledBg" />
+						<Section section="CaptionDisabled" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+
+			<Scripts>
+				<OnClick>
+					return function(self)
+						ComboBox_Toggle(self);
+					end
+				</OnClick>
+			</Scripts>
+
+			<Area>
+				<Anchor point="RIGHT" offset="-16" />
+				<Anchor point="TOP" offset="12" />
+				<Anchor point="BOTTOM" offset="-12" />
+				<Size><AbsDimension x="400" /></Size>
+			</Area>
+
+			<!-- Arrow indicator child -->
+			<Frame name="OptionsComboArrowIcon" renderer="DefaultRenderer">
+				<Area>
+					<Anchor point="TOP" offset="12" />
+					<Anchor point="BOTTOM" offset="-12" />
+					<Anchor point="RIGHT" offset="-12" />
+					<Size><AbsDimension x="44" /></Size>
+				</Area>
+				<Visual>
+					<ImagerySection name="Image">
+						<ImageComponent texture="Interface/Icons/IconGold_ArrowDown.htex" tiling="NONE" />
+					</ImagerySection>
+					<StateImagery name="Enabled">
+						<Layer><Section section="Image" /></Layer>
+					</StateImagery>
+				</Visual>
+			</Frame>
+		</Frame>
+	</Frame>
+
+	<!-- ══════════════════════════════════════════════════════════
+	     Main Options Frame
+	     ══════════════════════════════════════════════════════════ -->
+	<Frame name="OptionsFrame" parent="GameParent" renderer="DefaultRenderer">
+		<Property name="Visible" value="false" />
+
+		<Visual>
+			<ImagerySection name="Background">
+				<BorderComponent texture="Interface/GameUI/fg4_borders_01_03.htex" borderSize="250" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer><Section section="Background" /></Layer>
+			</StateImagery>
+		</Visual>
+
+		<Area>
+			<Size><AbsDimension x="2200" y="1400" /></Size>
+			<Anchor point="H_CENTER" />
+			<Anchor point="V_CENTER" />
+		</Area>
+
+		<!-- Title bar -->
+		<Frame name="OptionsTitleBar" inherits="TitleBar">
+			<Property name="Text" value="OPTIONS" />
+			<Area>
+				<Anchor point="TOP" offset="24" />
+				<Anchor point="LEFT" offset="48" />
+				<Anchor point="RIGHT" offset="-48" />
+			</Area>
+		</Frame>
+
+		<!-- ── Left panel: category list ── -->
+		<Frame name="OptionsCategoryPanel" renderer="DefaultRenderer">
+			<Visual>
+				<ImagerySection name="Background">
+					<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="50000000" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer><Section section="Background" /></Layer>
+				</StateImagery>
+			</Visual>
+
+			<Area>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="OptionsTitleBar" offset="16" />
+				<Anchor point="LEFT" offset="48" />
+				<Anchor point="BOTTOM" offset="-136" />
+				<Size><AbsDimension x="380" /></Size>
+			</Area>
+		</Frame>
+
+		<!-- Vertical separator -->
+		<Frame name="OptionsSeparator" renderer="DefaultRenderer">
+			<Visual>
+				<ImagerySection name="Line">
+					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer><Section section="Line" /></Layer>
+				</StateImagery>
+			</Visual>
+
+			<Area>
+				<Anchor point="TOP" relativePoint="TOP" relativeTo="OptionsCategoryPanel" />
+				<Anchor point="BOTTOM" relativePoint="BOTTOM" relativeTo="OptionsCategoryPanel" />
+				<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="OptionsCategoryPanel" offset="12" />
+				<Size><AbsDimension x="4" /></Size>
+			</Area>
+		</Frame>
+
+		<!-- ── Right panel: scrollable settings content ── -->
+		<Frame name="OptionsContentPanel" renderer="DefaultRenderer">
+			<Visual>
+				<ImagerySection name="Background">
+					<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="30000000" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer><Section section="Background" /></Layer>
+				</StateImagery>
+			</Visual>
+
+			<Area>
+				<Anchor point="TOP" relativePoint="TOP" relativeTo="OptionsCategoryPanel" />
+				<Anchor point="BOTTOM" relativePoint="BOTTOM" relativeTo="OptionsCategoryPanel" />
+				<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="OptionsSeparator" offset="12" />
+				<Anchor point="RIGHT" offset="-48" />
+			</Area>
+
+			<!-- Scrollbar on the right -->
+			<Frame name="OptionsContentScrollBar" inherits="VerticalScrollBar">
+				<Area>
+					<Anchor point="RIGHT" offset="-8" />
+					<Anchor point="TOP" offset="8" />
+					<Anchor point="BOTTOM" offset="-8" />
+				</Area>
+			</Frame>
+
+			<!-- Clipping frame -->
+			<Frame name="OptionsScrollClip">
+				<Area>
+					<Anchor point="TOP" offset="16" />
+					<Anchor point="LEFT" offset="16" />
+					<Anchor point="BOTTOM" offset="-16" />
+					<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="OptionsContentScrollBar" offset="-8" />
+				</Area>
+
+				<!-- Scrollable content container (child frames added here by Lua) -->
+				<Frame name="OptionsScrollContent" renderer="DefaultRenderer">
+					<Property name="ClippedByParent" value="true" />
+
+					<Area>
+						<Anchor point="TOP" offset="0" />
+						<Anchor point="LEFT" offset="0" />
+						<Anchor point="RIGHT" offset="0" />
+						<Size><AbsDimension y="800" /></Size>
+					</Area>
+				</Frame>
+			</Frame>
+		</Frame>
+
+		<!-- ── Bottom button row ── -->
+
+		<!-- Defaults: resets current category to defaults -->
+		<Frame name="OptionsDefaultsButton" inherits="GlueButton">
+			<Property name="Text" value="OPTIONS_DEFAULTS" />
+			<Area>
+				<Anchor point="BOTTOM" offset="-24" />
+				<Anchor point="LEFT" offset="48" />
+				<Size><AbsDimension x="300" y="96" /></Size>
+			</Area>
+			<Scripts>
+				<OnClick>
+					return function(self)
+						OptionsFrame_Defaults();
+					end
+				</OnClick>
+			</Scripts>
+		</Frame>
+
+		<!-- Cancel: discard changes and close -->
+		<Frame name="OptionsCancelButton" inherits="GlueButton">
+			<Property name="Text" value="CANCEL" />
+			<Area>
+				<Anchor point="BOTTOM" offset="-24" />
+				<Anchor point="RIGHT" offset="-48" />
+				<Size><AbsDimension x="300" y="96" /></Size>
+			</Area>
+			<Scripts>
+				<OnClick>
+					return function(self)
+						OptionsFrame_Cancel();
+					end
+				</OnClick>
+			</Scripts>
+		</Frame>
+
+		<!-- Okay: save config and close -->
+		<Frame name="OptionsOkayButton" inherits="GlueButton">
+			<Property name="Text" value="OKAY" />
+			<Area>
+				<Anchor point="BOTTOM" offset="-24" />
+				<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="OptionsCancelButton" offset="-16" />
+				<Size><AbsDimension x="300" y="96" /></Size>
+			</Area>
+			<Scripts>
+				<OnClick>
+					return function(self)
+						OptionsFrame_Okay();
+					end
+				</OnClick>
+			</Scripts>
+		</Frame>
+
+		<Scripts>
+			<OnLoad>
+				return function(self)
+					OptionsFrame_OnLoad(self);
+				end
+			</OnLoad>
+			<OnShow>
+				return function(self)
+					OptionsFrame_OnShow(self);
+				end
+			</OnShow>
+		</Scripts>
+	</Frame>
+
+</UiLayout>
