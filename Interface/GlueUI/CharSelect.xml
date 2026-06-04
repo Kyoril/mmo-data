@@ -280,6 +280,16 @@
 					<Anchor point="TOP" offset="48" />
 				</Area>
 			</Frame>
+			<Frame name="CharCountLabel" inherits="GlueTextSmall">
+				<Property name="Text" value="" />
+				<Property name="HorzAlign" value="CENTER" />
+				<Property name="TextColor" value="FFA0A0A0" />
+				<Area>
+					<Anchor point="LEFT" offset="48" />
+					<Anchor point="RIGHT" offset="-48" />
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmNameLabel" offset="4" />
+				</Area>
+			</Frame>
 
 			<Frame name="CharList" renderer="DefaultRenderer">
 				<Visual>

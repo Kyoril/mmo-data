@@ -2,12 +2,12 @@
 <UiLayout>
 	<!-- Reference lua script file here -->
 	<Script file="AccountLogin.lua" />
-	
+
 	<!-- Account login frame -->
 	<Frame name="AccountLogin" parent="GlueParent" setAllPoints="true" renderer="DefaultRenderer">
 		<Property name="Focusable" value="true" />
 		<!--<Property name="ModelFile" value="Models/Cube/Cube.mesh" />-->
-		
+
 		<!-- For now, only a placeholder image is rendered in the background -->
 		<Visual>
 			<ImagerySection name="Background">
@@ -25,7 +25,7 @@
 				<Anchor point="LEFT"/>
 				<Anchor point="RIGHT"/>
 				<Anchor point="BOTTOM"/>
-				<Size><AbsDimension y="400" /></Size>
+				<Size><AbsDimension y="500" /></Size>
 			</Area>
 			<Visual>
 				<ImagerySection name="Background">
@@ -39,11 +39,39 @@
 				</StateImagery>
 			</Visual>
 		</Frame>
-		
+
+		<!-- Dark backdrop centered on logo + form area -->
+		<Frame name="LoginFormBackdrop" inherits="GlueBorderFrame">
+			<Area>
+				<Anchor point="H_CENTER" />
+				<Anchor point="V_CENTER" offset="16" />
+				<Size><AbsDimension x="740" y="620" /></Size>
+			</Area>
+		</Frame>
+
+		<!-- Game logo, always anchored near the top of the screen -->
+		<Frame name="LoginLogoFrame" renderer="DefaultRenderer">
+			<Area>
+				<Anchor point="TOP" offset="32" />
+				<Anchor point="H_CENTER" />
+				<Size><AbsDimension x="971" y="512" /></Size>
+			</Area>
+			<Visual>
+				<ImagerySection name="Background">
+					<ImageComponent texture="Interface/Logo.htex" tiling="NONE" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Background" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+		</Frame>
+
 		<Frame name="AccountPasswordField" inherits="GlueTextField">
 			<Property name="Masked" value="true" />
 			<Area>
-				<Anchor point="BOTTOM" relativePoint="V_CENTER" />
+				<Anchor point="BOTTOM" relativePoint="V_CENTER" offset="100" />
 				<Anchor point="H_CENTER" />
 				<Size><AbsDimension x="600" y="90" /></Size>
 			</Area>
@@ -93,11 +121,11 @@
 				<Anchor point="H_CENTER" />
 			</Area>
 		</Frame>
-		
+
 		<Frame name="LoginButton" inherits="GlueButtonPrimary">
 			<Property name="Text" value="LOGIN" />
 			<Area>
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="AccountPasswordField" offset="64" />
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="AccountPasswordField" offset="56" />
 				<Anchor point="H_CENTER" />
 				<Size><AbsDimension x="600" y="128"/></Size>
 			</Area>
@@ -109,14 +137,14 @@
 				</OnClick>
 			</Scripts>
 		</Frame>
-		
+
 		<Frame name="QuitButton" inherits="GlueButton">
 			<Property name="Text" value="QUIT" />
 			<Area>
 				<Anchor point="RIGHT" offset="-24" />
 				<Anchor point="BOTTOM" offset="-24"/>
 			</Area>
-			
+
 			<Scripts>
 				<OnClick>
 					return function(this)
@@ -125,7 +153,7 @@
 				</OnClick>
 			</Scripts>
 		</Frame>
-		
+
 		<Frame name="CopyrightLabel" inherits="GlueTextSmall">
 			<Property name="Text" value="COPYRIGHT_TEXT" />
 			<Property name="HorzAlign" value="CENTER" />
@@ -136,7 +164,7 @@
 				<Anchor point="BOTTOM" offset="-24" />
 			</Area>
 		</Frame>
-		
+
 		<Frame name="LoginSettingsButton" inherits="GlueButton">
 			<Property name="Text" value="SETTINGS" />
 			<Property name="Enabled" value="False" />
@@ -145,7 +173,7 @@
 				<Anchor point="BOTTOM" offset="-24"/>
 			</Area>
 		</Frame>
-		
+
 		<Scripts>
 			<OnLoad>
 				return function(this)

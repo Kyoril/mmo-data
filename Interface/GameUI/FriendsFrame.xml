@@ -2,6 +2,18 @@
 <UiLayout xmlns="http://www.w3schools.com/Ui"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="file:\\F:\mmo\data\client\Interface\Ui.xsd">
     <Script file="FriendsFrame.lua" />
+
+    <!--
+        FriendButtonTemplate — each row is 60px tall.
+        Child layout (GetChild index):
+          0: FriendStatusDot        — colored ● indicator (left edge)
+          1: FriendName             — player name, top half
+          2: FriendLevel            — "Level X" label, bottom half, smaller font
+          3: FriendInviteGroupButton — small "+" button, far right, online friends only
+          4: FriendStatus           — "Online" / "Offline" text, right of centre
+        Note: FriendInviteGroupButton is defined before FriendStatus so that
+        FriendStatus can anchor its right edge to the button's left edge.
+    -->
     <Frame name="FriendButtonTemplate" type="Button" renderer="ButtonRenderer">
         <Property name="Font" value="DefaultSmall" />
         <Visual>
@@ -21,75 +33,148 @@
             <ImagerySection name="DisabledFrame">
                 <ImageComponent texture="Interface/GlueUI/CharSelectButtonBackground.htex" tint="88404040" />
             </ImagerySection>
-            <ImagerySection name="Text">
-                <TextComponent color="FFEED37C" horzAlign="LEFT" vertAlign="CENTER">
-                    <Area>
-                        <Inset left="8" />
-                    </Area>
-                </TextComponent>
-            </ImagerySection>
             <StateImagery name="Normal">
                 <Layer>
                     <Section section="NormalFrame" />
-                    <Section section="Text" />
                 </Layer>
             </StateImagery>
             <StateImagery name="Hovered">
                 <Layer>
                     <Section section="HoveredFrame" />
-                    <Section section="Text" />
                 </Layer>
             </StateImagery>
             <StateImagery name="Pushed">
                 <Layer>
                     <Section section="PushedFrame" />
-                    <Section section="Text" />
                 </Layer>
             </StateImagery>
             <StateImagery name="Disabled">
                 <Layer>
                     <Section section="DisabledFrame" />
-                    <Section section="Text" color="88404040" />
                 </Layer>
             </StateImagery>
         </Visual>
         <Area>
             <Size>
-                <AbsDimension x="0" y="48" />
+                <AbsDimension x="0" y="60" />
             </Size>
         </Area>
-        <Frame inherits="TextSmall" name="FriendName">
-            <Property name="Clickable" value="false" />
-            <Area>
-                <Anchor point="LEFT" offset="8" />
-                <Anchor point="TOP" offset="0" />
-                <Size>
-                    <AbsDimension x="404" y="48" />
-                </Size>
-            </Area>
-        </Frame>
-        <Frame inherits="TextSmall" name="FriendLevel">
+
+        <!-- Child 0: Status dot — large ● character colored by online state -->
+        <Frame inherits="TextSmall" name="FriendStatusDot">
             <Property name="Clickable" value="false" />
             <Property name="HorzAlign" value="CENTER" />
+            <Property name="VertAlign" value="CENTER" />
             <Area>
-                <Anchor point="LEFT" offset="16" relativeTo="FriendName" relativePoint="RIGHT" />
+                <Anchor point="LEFT" offset="6" />
                 <Anchor point="TOP" offset="0" />
+                <Anchor point="BOTTOM" offset="0" />
                 <Size>
-                    <AbsDimension x="144" y="48" />
+                    <AbsDimension x="28" y="0" />
                 </Size>
             </Area>
         </Frame>
+
+        <!-- Child 1: Player name — top half of the row -->
+        <Frame inherits="TextSmall" name="FriendName">
+            <Property name="Clickable" value="false" />
+            <Property name="VertAlign" value="BOTTOM" />
+            <Area>
+                <Anchor point="LEFT" offset="4" relativeTo="FriendStatusDot" relativePoint="RIGHT" />
+                <Anchor point="TOP" offset="4" />
+                <Anchor point="RIGHT" offset="-210" />
+                <Size>
+                    <AbsDimension x="0" y="30" />
+                </Size>
+            </Area>
+        </Frame>
+
+        <!-- Child 2: Level label — bottom half, smaller greyed font -->
+        <Frame inherits="TextSmall" name="FriendLevel">
+            <Property name="Clickable" value="false" />
+            <Property name="Font" value="SmallLabelFont" />
+            <Property name="TextColor" value="FFAAAAAA" />
+            <Property name="VertAlign" value="TOP" />
+            <Area>
+                <Anchor point="LEFT" offset="4" relativeTo="FriendStatusDot" relativePoint="RIGHT" />
+                <Anchor point="TOP" offset="1" relativeTo="FriendName" relativePoint="BOTTOM" />
+                <Anchor point="RIGHT" offset="-210" />
+                <Anchor point="BOTTOM" offset="-5" />
+            </Area>
+        </Frame>
+
+        <!-- Child 3: Per-row group invite button — only shown for online friends.
+             Defined here (before FriendStatus) so FriendStatus can anchor to its left edge. -->
+        <Frame name="FriendInviteGroupButton" type="Button" renderer="ButtonRenderer">
+            <Property name="Font" value="DefaultSmall" />
+            <Property name="Text" value="+" />
+            <Visual>
+                <ImagerySection name="NormalFrame">
+                    <BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Up_result.htex" borderSize="16" />
+                </ImagerySection>
+                <ImagerySection name="HoveredFrame">
+                    <BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Over_result.htex" borderSize="16" />
+                </ImagerySection>
+                <ImagerySection name="PushedFrame">
+                    <BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Down_result.htex" borderSize="16" />
+                </ImagerySection>
+                <ImagerySection name="DisabledFrame">
+                    <BorderComponent texture="Interface/GameUI/fg4_buttonSmall2_Disabled_result.htex" borderSize="16" />
+                </ImagerySection>
+                <ImagerySection name="Caption">
+                    <TextComponent color="FFFFD100" horzAlign="CENTER" vertAlign="CENTER" />
+                </ImagerySection>
+                <StateImagery name="Normal">
+                    <Layer>
+                        <Section section="NormalFrame" />
+                        <Section section="Caption" />
+                    </Layer>
+                </StateImagery>
+                <StateImagery name="Hovered">
+                    <Layer>
+                        <Section section="HoveredFrame" />
+                        <Section section="Caption" />
+                    </Layer>
+                </StateImagery>
+                <StateImagery name="Pushed">
+                    <Layer>
+                        <Section section="PushedFrame" />
+                        <Section section="Caption" />
+                    </Layer>
+                </StateImagery>
+                <StateImagery name="Disabled">
+                    <Layer>
+                        <Section section="DisabledFrame" />
+                        <Section section="Caption" />
+                    </Layer>
+                </StateImagery>
+            </Visual>
+            <Area>
+                <Anchor point="RIGHT" offset="-4" />
+                <Anchor point="TOP" offset="6" />
+                <Anchor point="BOTTOM" offset="-6" />
+                <Size>
+                    <AbsDimension x="72" y="0" />
+                </Size>
+            </Area>
+        </Frame>
+
+        <!-- Child 4: Online / Offline status text — right-aligned, anchored to the left of the invite button -->
         <Frame inherits="TextSmall" name="FriendStatus">
             <Property name="Clickable" value="false" />
+            <Property name="HorzAlign" value="RIGHT" />
+            <Property name="VertAlign" value="CENTER" />
             <Area>
-                <Anchor point="LEFT" offset="16" relativeTo="FriendLevel" relativePoint="RIGHT" />
+                <Anchor point="RIGHT" offset="-8" relativeTo="FriendInviteGroupButton" relativePoint="LEFT" />
                 <Anchor point="TOP" offset="0" />
+                <Anchor point="BOTTOM" offset="0" />
                 <Size>
-                    <AbsDimension x="184" y="48" />
+                    <AbsDimension x="130" y="0" />
                 </Size>
             </Area>
         </Frame>
     </Frame>
+
     <Frame name="FriendsFrame" inherits="SidePanelTemplate" parent="GameParent">
         <Property name="Visible" value="false" />
         <Property name="Title" value="FRIENDS" />
@@ -97,36 +182,54 @@
             <OnLoad>return function(self) FriendsFrame_OnLoad(self) end</OnLoad>
             <OnShow>return function(self) FriendsFrame_OnShow(self) end</OnShow>
         </Scripts>
+
+        <!-- Bottom action buttons: Add Friend | Send Message | Remove Friend -->
         <Frame name="FriendActionButtonsFrame" renderer="DefaultRenderer">
             <Area>
                 <Anchor point="BOTTOM" offset="-16" />
                 <Anchor point="LEFT" offset="24" />
                 <Anchor point="RIGHT" offset="-24" />
                 <Size>
-                    <AbsDimension x="0" y="80" />
+                    <AbsDimension x="0" y="100" />
                 </Size>
             </Area>
+            <!-- FriendInviteButton and FriendRemoveButton are defined first so that
+                 FriendWhisperButton (which fills the gap between them) can anchor
+                 to both without any forward-reference issues. -->
             <Frame name="FriendInviteButton" inherits="GlueButton">
                 <Property name="Text" value="FRIEND_INVITE" />
                 <Area>
                     <Anchor point="LEFT" offset="0" />
-                    <Anchor point="TOP" offset="0" />
+                    <Anchor point="TOP" offset="8" />
+                    <Anchor point="BOTTOM" offset="0" />
                     <Size>
-                        <AbsDimension x="222" y="80" />
+                        <AbsDimension x="290" y="0" />
                     </Size>
                 </Area>
             </Frame>
             <Frame name="FriendRemoveButton" inherits="GlueButton">
                 <Property name="Text" value="FRIEND_REMOVE" />
                 <Area>
-                    <Anchor point="RIGHT" offset="-8" />
-                    <Anchor point="TOP" offset="0" />
+                    <Anchor point="RIGHT" offset="0" />
+                    <Anchor point="TOP" offset="8" />
+                    <Anchor point="BOTTOM" offset="0" />
                     <Size>
-                        <AbsDimension x="222" y="80" />
+                        <AbsDimension x="290" y="0" />
                     </Size>
                 </Area>
             </Frame>
+            <Frame name="FriendWhisperButton" inherits="GlueButton">
+                <Property name="Text" value="FRIEND_WHISPER" />
+                <Area>
+                    <Anchor point="LEFT" offset="8" relativeTo="FriendInviteButton" relativePoint="RIGHT" />
+                    <Anchor point="TOP" offset="8" />
+                    <Anchor point="BOTTOM" offset="0" />
+                    <Anchor point="RIGHT" offset="-8" relativeTo="FriendRemoveButton" relativePoint="LEFT" />
+                </Area>
+            </Frame>
         </Frame>
+
+        <!-- Scrollable friend list -->
         <Frame name="FriendListFrame" renderer="DefaultRenderer">
             <Visual>
                 <ImagerySection name="Border">
@@ -163,7 +266,7 @@
                 </Frame>
                 <Frame name="FriendButton2" inherits="FriendButtonTemplate" id="2">
                     <Area>
-                        <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="FriendButton1" />
+                        <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="FriendButton1" offset="2" />
                         <Anchor point="LEFT" relativeTo="FriendButton1" />
                         <Anchor point="RIGHT" relativeTo="FriendButton1" />
                     </Area>
@@ -173,7 +276,7 @@
                 </Frame>
                 <Frame name="FriendButton3" inherits="FriendButtonTemplate" id="3">
                     <Area>
-                        <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="FriendButton2" />
+                        <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="FriendButton2" offset="2" />
                         <Anchor point="LEFT" relativeTo="FriendButton1" />
                         <Anchor point="RIGHT" relativeTo="FriendButton1" />
                     </Area>
@@ -183,7 +286,7 @@
                 </Frame>
                 <Frame name="FriendButton4" inherits="FriendButtonTemplate" id="4">
                     <Area>
-                        <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="FriendButton3" />
+                        <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="FriendButton3" offset="2" />
                         <Anchor point="LEFT" relativeTo="FriendButton1" />
                         <Anchor point="RIGHT" relativeTo="FriendButton1" />
                     </Area>
@@ -193,7 +296,7 @@
                 </Frame>
                 <Frame name="FriendButton5" inherits="FriendButtonTemplate" id="5">
                     <Area>
-                        <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="FriendButton4" />
+                        <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="FriendButton4" offset="2" />
                         <Anchor point="LEFT" relativeTo="FriendButton1" />
                         <Anchor point="RIGHT" relativeTo="FriendButton1" />
                     </Area>
@@ -203,7 +306,7 @@
                 </Frame>
                 <Frame name="FriendButton6" inherits="FriendButtonTemplate" id="6">
                     <Area>
-                        <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="FriendButton5" />
+                        <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="FriendButton5" offset="2" />
                         <Anchor point="LEFT" relativeTo="FriendButton1" />
                         <Anchor point="RIGHT" relativeTo="FriendButton1" />
                     </Area>
@@ -213,7 +316,7 @@
                 </Frame>
                 <Frame name="FriendButton7" inherits="FriendButtonTemplate" id="7">
                     <Area>
-                        <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="FriendButton6" />
+                        <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="FriendButton6" offset="2" />
                         <Anchor point="LEFT" relativeTo="FriendButton1" />
                         <Anchor point="RIGHT" relativeTo="FriendButton1" />
                     </Area>
@@ -223,7 +326,7 @@
                 </Frame>
                 <Frame name="FriendButton8" inherits="FriendButtonTemplate" id="8">
                     <Area>
-                        <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="FriendButton7" />
+                        <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="FriendButton7" offset="2" />
                         <Anchor point="LEFT" relativeTo="FriendButton1" />
                         <Anchor point="RIGHT" relativeTo="FriendButton1" />
                     </Area>
@@ -233,7 +336,7 @@
                 </Frame>
                 <Frame name="FriendButton9" inherits="FriendButtonTemplate" id="9">
                     <Area>
-                        <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="FriendButton8" />
+                        <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="FriendButton8" offset="2" />
                         <Anchor point="LEFT" relativeTo="FriendButton1" />
                         <Anchor point="RIGHT" relativeTo="FriendButton1" />
                     </Area>
@@ -243,47 +346,7 @@
                 </Frame>
                 <Frame name="FriendButton10" inherits="FriendButtonTemplate" id="10">
                     <Area>
-                        <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="FriendButton9" />
-                        <Anchor point="LEFT" relativeTo="FriendButton1" />
-                        <Anchor point="RIGHT" relativeTo="FriendButton1" />
-                    </Area>
-                    <Scripts>
-                        <OnClick>return function(self) FriendsList_SelectFriend(self) end</OnClick>
-                    </Scripts>
-                </Frame>
-                <Frame name="FriendButton11" inherits="FriendButtonTemplate" id="11">
-                    <Area>
-                        <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="FriendButton10" />
-                        <Anchor point="LEFT" relativeTo="FriendButton1" />
-                        <Anchor point="RIGHT" relativeTo="FriendButton1" />
-                    </Area>
-                    <Scripts>
-                        <OnClick>return function(self) FriendsList_SelectFriend(self) end</OnClick>
-                    </Scripts>
-                </Frame>
-                <Frame name="FriendButton12" inherits="FriendButtonTemplate" id="12">
-                    <Area>
-                        <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="FriendButton11" />
-                        <Anchor point="LEFT" relativeTo="FriendButton1" />
-                        <Anchor point="RIGHT" relativeTo="FriendButton1" />
-                    </Area>
-                    <Scripts>
-                        <OnClick>return function(self) FriendsList_SelectFriend(self) end</OnClick>
-                    </Scripts>
-                </Frame>
-                <Frame name="FriendButton13" inherits="FriendButtonTemplate" id="13">
-                    <Area>
-                        <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="FriendButton12" />
-                        <Anchor point="LEFT" relativeTo="FriendButton1" />
-                        <Anchor point="RIGHT" relativeTo="FriendButton1" />
-                    </Area>
-                    <Scripts>
-                        <OnClick>return function(self) FriendsList_SelectFriend(self) end</OnClick>
-                    </Scripts>
-                </Frame>
-                <Frame name="FriendButton14" inherits="FriendButtonTemplate" id="14">
-                    <Area>
-                        <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="FriendButton13" />
+                        <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="FriendButton9" offset="2" />
                         <Anchor point="LEFT" relativeTo="FriendButton1" />
                         <Anchor point="RIGHT" relativeTo="FriendButton1" />
                     </Area>

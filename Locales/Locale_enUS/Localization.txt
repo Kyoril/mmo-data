@@ -1,5 +1,7 @@
 strings = 
 {
+	(key = "GAME_TITLE", string = "MMORPG")
+
 	(key = "OKAY", string = "Okay")
 	(key = "CANCEL", string = "Cancel")
 	
@@ -436,6 +438,7 @@ strings =
 	(key = "FRIEND_INVITE_WHO", string = "Enter the name of the player you want to add as a friend:")
 	(key = "FRIEND_INVITE", string = "Add Friend")
 	(key = "FRIEND_REMOVE", string = "Remove Friend")
+	(key = "FRIEND_WHISPER", string = "Send Message")
 	(key = "FRIEND_INVITATION", string = "%s has invited you to be friends.")
 	(key = "FRIEND_INVITE_SENT", string = "Friend invite sent to %s.")
 	(key = "FRIEND_ADDED", string = "%s is now your friend.")

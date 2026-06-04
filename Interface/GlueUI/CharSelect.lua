@@ -70,6 +70,7 @@ function CharList_Show()
 	selectedCharacter = nil
 
 	local numCharacters = GetNumCharacters();
+	CharCountLabel:SetText(numCharacters .. " Character" .. (numCharacters ~= 1 and "s" or ""));
 
 	for characterIndex = 0, numCharacters - 1 do
 		local character = GetCharacterInfo(characterIndex);

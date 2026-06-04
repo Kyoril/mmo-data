@@ -14,18 +14,17 @@ function AccountLogin_Login()
 	RunConsoleCommand("login " .. username .. " " .. password);
 end
 
--- Called when the realm list was received — move on to realm selection.
+-- Called when the realm list was received — fade out, then show realm selection.
 function AccountLogin_OnRealmList()
 	GlueDialog_Hide();
 	AccountLogin:Hide();
 	RealmList_Show();
 end
 
--- Called when the character list is ready — move on to character select.
+-- Called when the character list is ready — fade out, then show character select.
 function AccountLogin_OnCharList()
 	GlueDialog_Hide();
 	CharList_Show();
-	-- Show a deferred error dialog if one was queued (e.g. world server was down).
 	if pendingCharListError then
 		GlueDialog_Show("ENTER_WORLD_FAILED", pendingCharListError);
 		pendingCharListError = nil;
@@ -58,8 +57,7 @@ function AccountLogin_OnLoad()
 		GlueDialog_Show("REALM_AUTH_ERROR", AUTH_ERROR_STRING[errorCode]);
 	end);
 
-	-- Realm dropped while still in the GlueUI (e.g. connection failed or
-	-- realm kicked us during char select). Return to login screen with error.
+	-- Realm dropped while still in the GlueUI: fade to black, land on login with error.
 	AccountLogin:RegisterEvent("REALM_DISCONNECTED", function()
 		GlueDialog_Hide();
 		RealmListFrame:Hide();
