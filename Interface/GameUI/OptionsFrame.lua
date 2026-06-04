@@ -3,13 +3,19 @@
 local ROW_HEIGHT = 96
 local ROW_SPACING = 8
 
+local BIND_ROW_HEIGHT = 72
+local BIND_CAT_HEIGHT = 52
+local BIND_ROW_SPACING = 4
+
 -- Category and option definitions.
--- type="toggle"   -> boolean cvar, renders an On/Off button
--- type="dropdown" -> cvar with a fixed set of choices, renders a ComboBox
+-- type="toggle"    -> boolean cvar, renders an On/Off icon button
+-- type="dropdown"  -> cvar with a fixed set of choices, renders a ComboBox
+-- type="keybinding"-> special: right panel populated from GetBindings() API
 local OPTIONS_CATEGORIES = {
 	{
 		id = "Graphics",
 		labelKey = "OPTIONS_GRAPHICS",
+		type = "settings",
 		options = {
 			{
 				type = "toggle",
@@ -78,6 +84,7 @@ local OPTIONS_CATEGORIES = {
 	{
 		id = "Sound",
 		labelKey = "OPTIONS_SOUND",
+		type = "settings",
 		options = {
 			{
 				type = "toggle",
@@ -93,15 +100,26 @@ local OPTIONS_CATEGORIES = {
 			},
 		},
 	},
+	{
+		id = "KeyBindings",
+		labelKey = "OPTIONS_KEYBINDINGS",
+		type = "keybinding",
+	},
 }
 
 local currentCategoryIndex = 1
 local categoryButtons = {}
 local originalValues = {}
+local originalKeyBindings = {}
+
+-- Per-action row data: { actionName -> { row, slot1Key, slot2Key } }
+local bindRowData = {}
 
 -- ─────────────────────────────────────────────────────────────
 -- Helpers
 -- ─────────────────────────────────────────────────────────────
+
+local UpdateScrollClipTop;  -- forward declared; defined in warning section
 
 local function IsCvarOn(val)
 	return val ~= nil and val ~= "0" and val ~= "" and val ~= "false"
@@ -122,7 +140,7 @@ local function RebuildScrollBar(contentHeight)
 end
 
 -- ─────────────────────────────────────────────────────────────
--- Content building
+-- Settings content (toggle / dropdown rows)
 -- ─────────────────────────────────────────────────────────────
 
 local function BuildToggleRow(opt, yOffset)
@@ -133,7 +151,6 @@ local function BuildToggleRow(opt, yOffset)
 	row:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, 0);
 	OptionsScrollContent:AddChild(row);
 
-	-- Child 0 = label
 	local label = row:GetChild(0);
 	if label then
 		local text = Localize(opt.labelKey);
@@ -143,7 +160,6 @@ local function BuildToggleRow(opt, yOffset)
 		label:SetText(text);
 	end
 
-	-- Child 1 = toggle button (icon-style checkbox)
 	local toggle = row:GetChild(1);
 	if toggle then
 		local val = GetCVar(opt.cvar);
@@ -166,13 +182,11 @@ local function BuildComboRow(opt, yOffset)
 	row:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, 0);
 	OptionsScrollContent:AddChild(row);
 
-	-- Child 0 = label
 	local label = row:GetChild(0);
 	if label then
 		label:SetText(Localize(opt.labelKey));
 	end
 
-	-- Child 1 = combo box
 	local combo = row:GetChild(1);
 	if combo then
 		combo:ClearItems();
@@ -223,19 +237,200 @@ local function BuildContent(options)
 end
 
 -- ─────────────────────────────────────────────────────────────
+-- Key-binding content
+-- ─────────────────────────────────────────────────────────────
+
+local captureActiveRow = nil;
+local captureActiveSlot = 0;
+
+local function GetKeyDisplayText(keyName)
+	if keyName and keyName ~= "" then
+		return keyName;
+	end
+	return Localize("KEYBINDING_NONE");
+end
+
+local function RefreshBindRow(data)
+	local keys = GetKeysForBinding(data.actionName);
+	data.slot1Key = keys[1] or nil;
+	data.slot2Key = keys[2] or nil;
+
+	local btn1 = data.row:GetChild(1);
+	local btn2 = data.row:GetChild(2);
+	if btn1 then btn1:SetText(GetKeyDisplayText(data.slot1Key)); end
+	if btn2 then btn2:SetText(GetKeyDisplayText(data.slot2Key)); end
+end
+
+local function CancelCurrentCapture()
+	if captureActiveRow then
+		StopKeyCapture();
+		local data = captureActiveRow;
+		captureActiveRow = nil;
+		captureActiveSlot = 0;
+		RefreshBindRow(data);
+	end
+end
+
+local function StartBindCapture(data, slotIndex)
+	CancelCurrentCapture();
+
+	captureActiveRow = data;
+	captureActiveSlot = slotIndex;
+
+	local btn = data.row:GetChild(slotIndex);
+	if btn then
+		btn:SetText(Localize("KEYBINDING_PRESS"));
+	end
+
+	StartKeyCapture(function(keyName)
+		captureActiveRow = nil;
+		captureActiveSlot = 0;
+
+		if keyName == "ESCAPE" then
+			-- Cancelled — restore display.
+			RefreshBindRow(data);
+			return;
+		end
+
+		-- Which key occupied this slot before?
+		local oldSlotKey = (slotIndex == 1) and data.slot1Key or data.slot2Key;
+
+		-- Which action does the new key currently belong to?
+		local prevAction = SetBinding(keyName, data.actionName);
+
+		-- Unbind the key that was previously in this slot.
+		if oldSlotKey and oldSlotKey ~= keyName then
+			UnbindKey(oldSlotKey);
+		end
+
+		-- If the key was stolen from another action, refresh that row and show warning.
+		if prevAction and prevAction ~= data.actionName then
+			local prevData = bindRowData[prevAction];
+			if prevData then
+				RefreshBindRow(prevData);
+			end
+			OptionsKeyWarning_Show(prevAction, keyName);
+		else
+			OptionsKeyWarningFrame:Hide();
+			UpdateScrollClipTop();
+		end
+
+		RefreshBindRow(data);
+	end);
+end
+
+local function BuildKeyBindingContent()
+	ComboBox_Close();
+	OptionsScrollContent:RemoveAllChildren();
+	bindRowData = {};
+
+	local allBindings = GetBindings();
+	if not allBindings then
+		OptionsScrollContent:SetHeight(80);
+		RebuildScrollBar(80);
+		return;
+	end
+
+	-- Group bindings by category while preserving insertion order.
+	local categories = {};
+	local categoryOrder = {};
+	for _, b in ipairs(allBindings) do
+		local cat = b.category or "OTHER";
+		if not categories[cat] then
+			categories[cat] = {};
+			categoryOrder[#categoryOrder + 1] = cat;
+		end
+		categories[cat][#categories[cat] + 1] = b;
+	end
+
+	local yOff = 0;
+
+	for _, cat in ipairs(categoryOrder) do
+		-- Category header row.
+		local catRow = KeyBindCatRowTemplate:Clone();
+		catRow:ClearAnchors();
+		catRow:SetAnchor(AnchorPoint.TOP,   AnchorPoint.TOP,   nil, yOff);
+		catRow:SetAnchor(AnchorPoint.LEFT,  AnchorPoint.LEFT,  nil, 0);
+		catRow:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, 0);
+		OptionsScrollContent:AddChild(catRow);
+
+		local catLabel = catRow:GetChild(0);
+		if catLabel then
+			catLabel:SetText(Localize("KEYBINDING_CAT_" .. cat));
+		end
+
+		yOff = yOff + BIND_CAT_HEIGHT + BIND_ROW_SPACING;
+
+		for _, b in ipairs(categories[cat]) do
+			local keys  = GetKeysForBinding(b.name);
+			local data  = {
+				actionName = b.name,
+				row        = nil,
+				slot1Key   = keys[1] or nil,
+				slot2Key   = keys[2] or nil,
+			};
+
+			local row = KeyBindRowTemplate:Clone();
+			row:ClearAnchors();
+			row:SetAnchor(AnchorPoint.TOP,   AnchorPoint.TOP,   nil, yOff);
+			row:SetAnchor(AnchorPoint.LEFT,  AnchorPoint.LEFT,  nil, 0);
+			row:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, 0);
+			OptionsScrollContent:AddChild(row);
+
+			data.row = row;
+			bindRowData[b.name] = data;
+
+			local lbl  = row:GetChild(0);
+			local btn1 = row:GetChild(1);
+			local btn2 = row:GetChild(2);
+
+			if lbl  then lbl:SetText(b.description); end
+			if btn1 then
+				btn1:SetText(GetKeyDisplayText(data.slot1Key));
+				local capturedData = data;
+				btn1:SetClickedHandler(function()
+					StartBindCapture(capturedData, 1);
+				end);
+			end
+			if btn2 then
+				btn2:SetText(GetKeyDisplayText(data.slot2Key));
+				local capturedData = data;
+				btn2:SetClickedHandler(function()
+					StartBindCapture(capturedData, 2);
+				end);
+			end
+
+			yOff = yOff + BIND_ROW_HEIGHT + BIND_ROW_SPACING;
+		end
+	end
+
+	local totalHeight = yOff + BIND_ROW_SPACING;
+	OptionsScrollContent:SetHeight(totalHeight);
+	RebuildScrollBar(totalHeight);
+end
+
+-- ─────────────────────────────────────────────────────────────
 -- Category selection
 -- ─────────────────────────────────────────────────────────────
 
 function OptionsFrame_SelectCategory(index)
+	CancelCurrentCapture();
 	currentCategoryIndex = index;
 
 	for i, btn in ipairs(categoryButtons) do
 		btn:SetChecked(i == index);
 	end
 
+	OptionsKeyWarningFrame:Hide();
+	UpdateScrollClipTop();
+
 	local cat = OPTIONS_CATEGORIES[index];
 	if cat then
-		BuildContent(cat.options);
+		if cat.type == "keybinding" then
+			BuildKeyBindingContent();
+		else
+			BuildContent(cat.options);
+		end
 	end
 end
 
@@ -264,16 +459,35 @@ local function BuildCategoryButtons()
 end
 
 -- ─────────────────────────────────────────────────────────────
+-- Warning label helpers
+-- ─────────────────────────────────────────────────────────────
+
+UpdateScrollClipTop = function()
+	if OptionsKeyWarningFrame:IsVisible() then
+		OptionsScrollClip:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, 96);
+	else
+		OptionsScrollClip:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, 16);
+	end
+end
+
+function OptionsKeyWarning_Show(actionName, keyName)
+	local text = Localize("KEYBINDING_CONFLICT_WARNING");
+	text = string.gsub(text, "{key}",    keyName    or "");
+	text = string.gsub(text, "{action}", actionName or "");
+	OptionsKeyWarningText:SetText(text);
+	OptionsKeyWarningFrame:Show();
+	UpdateScrollClipTop();
+end
+
+-- ─────────────────────────────────────────────────────────────
 -- Frame lifecycle
 -- ─────────────────────────────────────────────────────────────
 
 function OptionsFrame_OnLoad(self)
-	-- Wire up title bar close button
 	OptionsTitleBar:GetChild(0):SetClickedHandler(function()
 		OptionsFrame_Cancel();
 	end);
 
-	-- Set up the scrollbar
 	OptionsContentScrollBar:SetMinimum(0);
 	OptionsContentScrollBar:SetMaximum(0);
 	OptionsContentScrollBar:SetValue(0);
@@ -287,16 +501,23 @@ function OptionsFrame_OnLoad(self)
 end
 
 function OptionsFrame_OnShow(self)
-	-- Snapshot original values so Cancel can revert them
+	-- Snapshot original cvar values so Cancel can revert them.
 	originalValues = {};
 	for _, cat in ipairs(OPTIONS_CATEGORIES) do
-		for _, opt in ipairs(cat.options) do
-			if opt.cvar then
-				originalValues[opt.cvar] = GetCVar(opt.cvar) or opt.defaultValue or "";
+		if cat.options then
+			for _, opt in ipairs(cat.options) do
+				if opt.cvar then
+					originalValues[opt.cvar] = GetCVar(opt.cvar) or opt.defaultValue or "";
+				end
 			end
 		end
 	end
 
+	-- Snapshot key bindings.
+	originalKeyBindings = GetKeyBindings() or {};
+
+	OptionsKeyWarningFrame:Hide();
+	UpdateScrollClipTop();
 	OptionsFrame_SelectCategory(currentCategoryIndex);
 end
 
@@ -313,16 +534,30 @@ function OptionsFrame_Toggle()
 end
 
 function OptionsFrame_Okay()
+	CancelCurrentCapture();
 	RunConsoleCommand("saveconfig");
+	SaveBindings();
 	ComboBox_Close();
 	HideUIPanel(OptionsFrame);
 end
 
 function OptionsFrame_Cancel()
-	-- Revert all cvars to their pre-open values
+	CancelCurrentCapture();
+
+	-- Revert cvars.
 	for cvar, val in pairs(originalValues) do
 		SetCVar(cvar, val);
 	end
+
+	-- Revert key bindings: wipe all current bindings, re-apply originals.
+	local currentBindings = GetKeyBindings() or {};
+	for key, _ in pairs(currentBindings) do
+		UnbindKey(key);
+	end
+	for key, action in pairs(originalKeyBindings) do
+		SetBinding(key, action);
+	end
+
 	ComboBox_Close();
 	HideUIPanel(OptionsFrame);
 end
@@ -331,12 +566,16 @@ function OptionsFrame_Defaults()
 	local cat = OPTIONS_CATEGORIES[currentCategoryIndex];
 	if not cat then return; end
 
+	if cat.type == "keybinding" then
+		-- Key binding defaults are not trivially resettable from here; do nothing.
+		return;
+	end
+
 	for _, opt in ipairs(cat.options) do
 		if opt.cvar and opt.defaultValue then
 			SetCVar(opt.cvar, opt.defaultValue);
 		end
 	end
 
-	-- Rebuild content to reflect the reset values
 	BuildContent(cat.options);
 end

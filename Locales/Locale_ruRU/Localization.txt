@@ -73,6 +73,20 @@ strings =
 	(key = "OPTIONS_QUALITY_HIGH", string = "Высокое")
 	(key = "OPTIONS_QUALITY_ULTRA", string = "Ультра")
 
+	(key = "OPTIONS_KEYBINDINGS", string = "Управление")
+
+	(key = "KEYBINDING_NONE", string = "<Нет>")
+	(key = "KEYBINDING_PRESS", string = "Нажмите клавишу...")
+	(key = "KEYBINDING_CONFLICT_WARNING", string = "Клавиша '{key}' удалена из действия '{action}'.")
+
+	(key = "KEYBINDING_CAT_MOVEMENT", string = "Движение")
+	(key = "KEYBINDING_CAT_CHAT", string = "Чат")
+	(key = "KEYBINDING_CAT_INTERFACE", string = "Интерфейс")
+	(key = "KEYBINDING_CAT_ACTIONBAR", string = "Панель действий")
+	(key = "KEYBINDING_CAT_TARGET", string = "Цель")
+	(key = "KEYBINDING_CAT_OTHER", string = "Прочее")
+	(key = "KEYBINDING_CAT_Uncategorized", string = "Прочее")
+
 	(key = "SECONDS", string = "sec")
 	(key = "MINUTES", string = "min")
 	(key = "COOLDOWN", string = "cooldown")

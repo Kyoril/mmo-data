@@ -72,7 +72,21 @@ strings =
 	(key = "OPTIONS_QUALITY_MEDIUM", string = "Mittel")
 	(key = "OPTIONS_QUALITY_HIGH", string = "Hoch")
 	(key = "OPTIONS_QUALITY_ULTRA", string = "Ultra")
-	
+
+	(key = "OPTIONS_KEYBINDINGS", string = "Tastenbelegung")
+
+	(key = "KEYBINDING_NONE", string = "<Keine>")
+	(key = "KEYBINDING_PRESS", string = "Taste drücken...")
+	(key = "KEYBINDING_CONFLICT_WARNING", string = "Taste '{key}' wurde von Aktion '{action}' entfernt.")
+
+	(key = "KEYBINDING_CAT_MOVEMENT", string = "Bewegung")
+	(key = "KEYBINDING_CAT_CHAT", string = "Chat")
+	(key = "KEYBINDING_CAT_INTERFACE", string = "Benutzeroberfläche")
+	(key = "KEYBINDING_CAT_ACTIONBAR", string = "Aktionsleiste")
+	(key = "KEYBINDING_CAT_TARGET", string = "Ziel")
+	(key = "KEYBINDING_CAT_OTHER", string = "Sonstige")
+	(key = "KEYBINDING_CAT_Uncategorized", string = "Sonstige")
+
 	(key = "SECONDS", string = "Sek.")
 	(key = "MINUTES", string = "Min.")
 	(key = "COOLDOWN", string = "Abklingzeit")

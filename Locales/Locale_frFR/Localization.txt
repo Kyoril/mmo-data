@@ -73,6 +73,20 @@ strings =
 	(key = "OPTIONS_QUALITY_HIGH", string = "Élevé")
 	(key = "OPTIONS_QUALITY_ULTRA", string = "Ultra")
 
+	(key = "OPTIONS_KEYBINDINGS", string = "Touches")
+
+	(key = "KEYBINDING_NONE", string = "<Aucune>")
+	(key = "KEYBINDING_PRESS", string = "Appuyez sur une touche...")
+	(key = "KEYBINDING_CONFLICT_WARNING", string = "La touche '{key}' a été retirée de l'action '{action}'.")
+
+	(key = "KEYBINDING_CAT_MOVEMENT", string = "Déplacement")
+	(key = "KEYBINDING_CAT_CHAT", string = "Chat")
+	(key = "KEYBINDING_CAT_INTERFACE", string = "Interface")
+	(key = "KEYBINDING_CAT_ACTIONBAR", string = "Barre d'action")
+	(key = "KEYBINDING_CAT_TARGET", string = "Cible")
+	(key = "KEYBINDING_CAT_OTHER", string = "Autre")
+	(key = "KEYBINDING_CAT_Uncategorized", string = "Autre")
+
 	(key = "SECONDS", string = "sec.")
 	(key = "MINUTES", string = "min.")
 	(key = "COOLDOWN", string = "Temps de recharge")

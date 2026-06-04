@@ -73,6 +73,20 @@ strings =
 	(key = "OPTIONS_QUALITY_HIGH", string = "High")
 	(key = "OPTIONS_QUALITY_ULTRA", string = "Ultra")
 
+	(key = "OPTIONS_KEYBINDINGS", string = "Key Bindings")
+
+	(key = "KEYBINDING_NONE", string = "<None>")
+	(key = "KEYBINDING_PRESS", string = "Press a key...")
+	(key = "KEYBINDING_CONFLICT_WARNING", string = "Key '{key}' was unbound from action '{action}'.")
+
+	(key = "KEYBINDING_CAT_MOVEMENT", string = "Movement")
+	(key = "KEYBINDING_CAT_CHAT", string = "Chat")
+	(key = "KEYBINDING_CAT_INTERFACE", string = "Interface")
+	(key = "KEYBINDING_CAT_ACTIONBAR", string = "Action Bar")
+	(key = "KEYBINDING_CAT_TARGET", string = "Targeting")
+	(key = "KEYBINDING_CAT_OTHER", string = "Other")
+	(key = "KEYBINDING_CAT_Uncategorized", string = "Other")
+
 	(key = "SECONDS", string = "sec")
 	(key = "MINUTES", string = "min")
 	(key = "COOLDOWN", string = "cooldown")

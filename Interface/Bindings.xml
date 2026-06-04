@@ -91,7 +91,7 @@
             end
         end
 	</Binding>
-	<Binding name="CHATBOTTOM" description="Scroll chat pane down one page" category="CHAT">
+	<Binding name="CHATBOTTOM" description="Scroll to chat bottom" category="CHAT">
         return function(key, keystate)
             if keystate == "DOWN" or keystate == "REPEAT" then
 		        ChatFrame_ScrollToBottom();

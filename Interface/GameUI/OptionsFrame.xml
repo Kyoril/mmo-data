@@ -304,6 +304,202 @@
 		</Frame>
 	</Frame>
 
+	<!--
+		Key-binding category header row (full-width label with gold title text).
+	-->
+	<Frame name="KeyBindCatRowTemplate">
+		<Area>
+			<Size><AbsDimension x="0" y="52" /></Size>
+		</Area>
+
+		<Frame name="KeyBindCatLabel" renderer="DefaultRenderer">
+			<Property name="Font" value="Default" />
+
+			<Visual>
+				<ImagerySection name="Bg">
+					<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="60331100" />
+				</ImagerySection>
+				<ImagerySection name="Text">
+					<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="CENTER">
+						<Area><Inset left="20" /></Area>
+					</TextComponent>
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Bg" />
+						<Section section="Text" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="Disabled">
+					<Layer>
+						<Section section="Bg" />
+						<Section section="Text" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+
+			<Area>
+				<Anchor point="TOP" offset="4" />
+				<Anchor point="BOTTOM" offset="-4" />
+				<Anchor point="LEFT" />
+				<Anchor point="RIGHT" />
+			</Area>
+		</Frame>
+	</Frame>
+
+	<!--
+		Key-binding action row.
+		Child 0: action name label (left side).
+		Child 1: binding slot-1 button (right side, second from right).
+		Child 2: binding slot-2 button (rightmost).
+	-->
+	<Frame name="KeyBindRowTemplate">
+		<Area>
+			<Size><AbsDimension x="0" y="72" /></Size>
+		</Area>
+
+		<!-- Child 0: Action label -->
+		<Frame name="KeyBindRowLabel" renderer="DefaultRenderer">
+			<Property name="Font" value="DefaultSmall" />
+
+			<Visual>
+				<ImagerySection name="Text">
+					<TextComponent color="FFD0D0D0" horzAlign="LEFT" vertAlign="CENTER" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer><Section section="Text" /></Layer>
+				</StateImagery>
+				<StateImagery name="Disabled">
+					<Layer><Section section="Text" /></Layer>
+				</StateImagery>
+			</Visual>
+
+			<!-- Leave 448px on the right for the two 216px buttons + gaps -->
+			<Area>
+				<Anchor point="LEFT" offset="16" />
+				<Anchor point="TOP" />
+				<Anchor point="BOTTOM" />
+				<Anchor point="RIGHT" offset="-456" />
+			</Area>
+		</Frame>
+
+		<!-- Child 1: Slot-1 key button -->
+		<Frame name="KeyBindSlot1Button" type="Button" renderer="ButtonRenderer">
+			<Property name="Font" value="DefaultSmall" />
+
+			<Visual>
+				<ImagerySection name="NormalBg">
+					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" />
+				</ImagerySection>
+				<ImagerySection name="HoveredBg">
+					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFB07030" />
+				</ImagerySection>
+				<ImagerySection name="PushedBg">
+					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFFFD100" />
+				</ImagerySection>
+				<ImagerySection name="Caption">
+					<TextComponent color="FFFFD100" horzAlign="CENTER" vertAlign="CENTER" />
+				</ImagerySection>
+				<ImagerySection name="CaptionHovered">
+					<TextComponent color="FFFFFFFF" horzAlign="CENTER" vertAlign="CENTER" />
+				</ImagerySection>
+				<ImagerySection name="CaptionPushed">
+					<TextComponent color="FFAAAAAA" horzAlign="CENTER" vertAlign="CENTER" />
+				</ImagerySection>
+
+				<StateImagery name="Normal">
+					<Layer>
+						<Section section="NormalBg" />
+						<Section section="Caption" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="Hovered">
+					<Layer>
+						<Section section="HoveredBg" />
+						<Section section="CaptionHovered" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="Pushed">
+					<Layer>
+						<Section section="PushedBg" />
+						<Section section="CaptionPushed" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="Disabled">
+					<Layer>
+						<Section section="NormalBg" />
+						<Section section="Caption" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+
+			<Area>
+				<Anchor point="RIGHT" relativePoint="RIGHT" offset="-232" />
+				<Anchor point="TOP" offset="8" />
+				<Anchor point="BOTTOM" offset="-8" />
+				<Size><AbsDimension x="216" /></Size>
+			</Area>
+		</Frame>
+
+		<!-- Child 2: Slot-2 key button -->
+		<Frame name="KeyBindSlot2Button" type="Button" renderer="ButtonRenderer">
+			<Property name="Font" value="DefaultSmall" />
+
+			<Visual>
+				<ImagerySection name="NormalBg">
+					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" />
+				</ImagerySection>
+				<ImagerySection name="HoveredBg">
+					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFB07030" />
+				</ImagerySection>
+				<ImagerySection name="PushedBg">
+					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFFFD100" />
+				</ImagerySection>
+				<ImagerySection name="Caption">
+					<TextComponent color="FFFFD100" horzAlign="CENTER" vertAlign="CENTER" />
+				</ImagerySection>
+				<ImagerySection name="CaptionHovered">
+					<TextComponent color="FFFFFFFF" horzAlign="CENTER" vertAlign="CENTER" />
+				</ImagerySection>
+				<ImagerySection name="CaptionPushed">
+					<TextComponent color="FFAAAAAA" horzAlign="CENTER" vertAlign="CENTER" />
+				</ImagerySection>
+
+				<StateImagery name="Normal">
+					<Layer>
+						<Section section="NormalBg" />
+						<Section section="Caption" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="Hovered">
+					<Layer>
+						<Section section="HoveredBg" />
+						<Section section="CaptionHovered" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="Pushed">
+					<Layer>
+						<Section section="PushedBg" />
+						<Section section="CaptionPushed" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="Disabled">
+					<Layer>
+						<Section section="NormalBg" />
+						<Section section="Caption" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+
+			<Area>
+				<Anchor point="RIGHT" offset="-8" />
+				<Anchor point="TOP" offset="8" />
+				<Anchor point="BOTTOM" offset="-8" />
+				<Size><AbsDimension x="216" /></Size>
+			</Area>
+		</Frame>
+	</Frame>
+
 	<!-- ══════════════════════════════════════════════════════════
 	     Main Options Frame — same border style as TalentFrame / LootMethodFrame
 	     ══════════════════════════════════════════════════════════ -->
@@ -394,6 +590,50 @@
 				<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="OptionsSeparator" offset="12" />
 				<Anchor point="RIGHT" offset="-24" />
 			</Area>
+
+			<!-- Warning strip shown when a key conflict is detected while binding -->
+			<Frame name="OptionsKeyWarningFrame" renderer="DefaultRenderer">
+				<Property name="Visible" value="false" />
+
+				<Visual>
+					<ImagerySection name="Bg">
+						<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="CC550000" />
+					</ImagerySection>
+					<StateImagery name="Enabled">
+						<Layer><Section section="Bg" /></Layer>
+					</StateImagery>
+				</Visual>
+
+				<Area>
+					<Anchor point="TOP" offset="8" />
+					<Anchor point="LEFT" offset="8" />
+					<Anchor point="RIGHT" offset="-8" />
+					<Size><AbsDimension y="72" /></Size>
+				</Area>
+
+				<Frame name="OptionsKeyWarningText" renderer="DefaultRenderer">
+					<Property name="Font" value="DefaultSmall" />
+
+					<Visual>
+						<ImagerySection name="Text">
+							<TextComponent color="FFFF4444" horzAlign="CENTER" vertAlign="CENTER" />
+						</ImagerySection>
+						<StateImagery name="Enabled">
+							<Layer><Section section="Text" /></Layer>
+						</StateImagery>
+						<StateImagery name="Disabled">
+							<Layer><Section section="Text" /></Layer>
+						</StateImagery>
+					</Visual>
+
+					<Area>
+						<Anchor point="TOP" />
+						<Anchor point="BOTTOM" />
+						<Anchor point="LEFT" offset="12" />
+						<Anchor point="RIGHT" offset="-12" />
+					</Area>
+				</Frame>
+			</Frame>
 
 			<!-- Scrollbar on the right edge -->
 			<Frame name="OptionsContentScrollBar" inherits="VerticalScrollBar">
