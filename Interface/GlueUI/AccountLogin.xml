@@ -6,8 +6,7 @@
 	<!-- Account login frame -->
 	<Frame name="AccountLogin" parent="GlueParent" setAllPoints="true" renderer="DefaultRenderer">
 		<Property name="Focusable" value="true" />
-		<!--<Property name="ModelFile" value="Models/Cube/Cube.mesh" />-->
-
+		
 		<Animations>
 			<Animation name="FadeIn" duration="0.5" loop="false">
 				<Track property="Opacity" target="AccountLoginContent">
