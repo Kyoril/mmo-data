@@ -84,6 +84,11 @@ function ComboBox_Open(comboBox)
 	ComboBoxDropdownFrame:BringToFront();
 	ComboBoxDropdownFrame:Show();
 
+	-- Tell the C++ library which frame is the popup and what to call on outside-click dismiss.
+	-- This is what allows FrameManager to automatically close the combo when the user clicks elsewhere.
+	comboBox:SetPopupFrame(ComboBoxDropdownFrame);
+	comboBox:SetOnDismissHandler(ComboBox_Close);
+
 	comboBox:Open();
 end
 

@@ -54,7 +54,6 @@
 		<Property name="Visible" value="false" />
 		<Property name="Focusable" value="true" />
 
-		
 		<!-- For now, only a placeholder image is rendered in the background -->
 		<Visual>
 			<ImagerySection name="Background">
@@ -67,6 +66,21 @@
 			</StateImagery>
 		</Visual>
 		
+		<Animations>
+			<Animation name="FadeIn" duration="0.5" loop="false">
+				<Track property="Opacity" target="RealmListBorder">
+					<Keyframe time="0" value="0"/>
+					<Keyframe time="0.5" value="1"/>
+				</Track>
+			</Animation>
+			<Animation name="FadeOut" duration="0.5" loop="false">
+				<Track property="Opacity" target="RealmListBorder">
+					<Keyframe time="0" value="1"/>
+					<Keyframe time="0.5" value="0"/>
+				</Track>
+			</Animation>
+		</Animations>
+
 		<Frame name="RealmListBorder" inherits="GlueBorderFrame">
 			<Area>
 				<Size><AbsDimension x="1440" y="1120" /></Size>

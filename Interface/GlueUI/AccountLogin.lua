@@ -17,8 +17,16 @@ end
 -- Called when the realm list was received — fade out, then show realm selection.
 function AccountLogin_OnRealmList()
 	GlueDialog_Hide();
-	AccountLogin:Hide();
-	RealmList_Show();
+	local anim = AccountLogin:GetAnimation("FadeOut")
+	if anim and not anim:IsPlaying() then
+		anim:SetOnFinish(function(a)
+			a:SetOnFinish(nil);
+			AccountLogin:Hide();
+			RealmList_Show();
+		end);
+
+		AccountLogin:PlayAnimation("FadeOut");
+	end
 end
 
 -- Called when the character list is ready — fade out, then show character select.
@@ -66,6 +74,8 @@ function AccountLogin_OnLoad()
 		AccountLogin:Show();
 		LoginButton:Enable();
 		GlueDialog_Show("REALM_DISCONNECTED_ERROR");
+
+		AccountLogin:PlayAnimation("FadeIn");
 	end);
 
 	AccountLogin:RegisterEvent("REALM_LIST", AccountLogin_OnRealmList);
@@ -75,4 +85,6 @@ function AccountLogin_OnLoad()
 	if not realmConnector:IsConnected() then
 		AccountNameField:CaptureInput();
 	end
+
+	AccountLogin:PlayAnimation("FadeIn");
 end

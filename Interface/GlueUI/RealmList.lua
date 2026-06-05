@@ -48,20 +48,32 @@ function RealmList_Show()
 		-- Remember realm list item
 		lastRealmListItem = realmListItem
 	end
+
+	RealmListFrame:PlayAnimation("FadeIn");
 end
 
 function RealmList_Hide()
-	RealmListFrame:Hide()
+	RealmListFrame:Hide();
 end
 
 function RealmList_Accept()
-	RealmList_Hide()
+	RealmList_Hide();
 	GlueDialog_Show("CONNECTING_TO_REALM")
 	realmConnector:ConnectToRealm(selectedRealm)
 end
 
 function RealmList_Cancel()
-	RealmList_Hide()
-	AccountLogin:Show()
-	LoginButton:Enable()
+	local anim = RealmListFrame:GetAnimation("FadeOut");
+	if anim and not anim:IsPlaying() then
+		anim:SetOnFinish(function(a)
+			a:SetOnFinish(nil);
+
+			RealmList_Hide();
+			AccountLogin:Show();
+			AccountLogin:PlayAnimation("FadeIn");
+			LoginButton:Enable();
+		end);
+
+		RealmListFrame:PlayAnimation("FadeOut");
+	end
 end
