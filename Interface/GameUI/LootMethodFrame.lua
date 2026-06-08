@@ -96,12 +96,14 @@ local QUALITY_COLORS = {
 
 local function SetupThresholdCombo()
 	LootThresholdComboBox:ClearItems();
-	for _, q in ipairs(QUALITY_ITEMS) do
+	for i, q in ipairs(QUALITY_ITEMS) do
 		LootThresholdComboBox:AddItem(Localize(q.key), tostring(q.id));
-	end
 
-	-- Register per-item colors so the dropdown tints each entry by quality
-	ComboBoxItemColors["LootThresholdComboBox"] = QUALITY_COLORS;
+		-- Tint each entry by its quality color (handled by the C++ dropdown).
+		if QUALITY_COLORS[i] then
+			LootThresholdComboBox:SetItemColor(i, QUALITY_COLORS[i]);
+		end
+	end
 
 	LootThresholdComboBox:SetOnSelectionChanged(function(combo, index, text, userData)
 		-- Nothing to do live; value is read on Apply
