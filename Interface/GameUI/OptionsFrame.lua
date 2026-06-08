@@ -18,6 +18,12 @@ local OPTIONS_CATEGORIES = {
 		type = "settings",
 		options = {
 			{
+				type = "resolution",
+				labelKey = "OPTIONS_RESOLUTION",
+				cvar = "gxResolution",
+				needsRestart = true,
+			},
+			{
 				type = "toggle",
 				labelKey = "OPTIONS_VSYNC",
 				cvar = "gxVSync",
@@ -208,6 +214,57 @@ local function BuildComboRow(opt, yOffset)
 	end
 end
 
+-- Resolution combo row: items are populated dynamically from the graphics API
+-- rather than from a fixed list. The cvar stores the resolution as a "WxH" string.
+local function BuildResolutionRow(opt, yOffset)
+	local row = OptionsComboRowTemplate:Clone();
+	row:ClearAnchors();
+	row:SetAnchor(AnchorPoint.TOP,   AnchorPoint.TOP,   nil, yOffset);
+	row:SetAnchor(AnchorPoint.LEFT,  AnchorPoint.LEFT,  nil, 0);
+	row:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, 0);
+	OptionsScrollContent:AddChild(row);
+
+	local label = row:GetChild(0);
+	if label then
+		local text = Localize(opt.labelKey);
+		if opt.needsRestart then
+			text = text .. " *";
+		end
+		label:SetText(text);
+	end
+
+	local combo = row:GetChild(1);
+	if combo then
+		combo:ClearItems();
+
+		local currentVal = GetCVar(opt.cvar) or "";
+		local resolutions = GetScreenResolutions();
+		local selectedIdx = 1;
+		local matched = false;
+
+		for i, res in ipairs(resolutions) do
+			combo:AddItem(res.label, res.label);
+			if res.label == currentVal then
+				selectedIdx = i;
+				matched = true;
+			end
+		end
+
+		-- If the current cvar value is not part of the enumerated list, add it so the
+		-- user does not lose their custom resolution.
+		if not matched and currentVal ~= "" then
+			combo:AddItem(currentVal, currentVal);
+			selectedIdx = #resolutions + 1;
+		end
+
+		combo:SetSelectedIndex(selectedIdx);
+
+		combo:SetOnSelectionChanged(function(c, idx, text, userData)
+			SetCVar(opt.cvar, userData);
+		end);
+	end
+end
+
 local function BuildContent(options)
 	ComboBox_Close();
 	OptionsScrollContent:RemoveAllChildren();
@@ -226,6 +283,8 @@ local function BuildContent(options)
 			BuildToggleRow(opt, yOff);
 		elseif opt.type == "dropdown" then
 			BuildComboRow(opt, yOff);
+		elseif opt.type == "resolution" then
+			BuildResolutionRow(opt, yOff);
 		end
 
 		totalHeight = yOff + ROW_HEIGHT;

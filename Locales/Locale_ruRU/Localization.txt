@@ -58,6 +58,7 @@ strings =
 	(key = "OPTIONS_GRAPHICS", string = "Графика")
 	(key = "OPTIONS_SOUND", string = "Звук")
 
+	(key = "OPTIONS_RESOLUTION", string = "Разрешение экрана")
 	(key = "OPTIONS_VSYNC", string = "Вертикальная синхронизация")
 	(key = "OPTIONS_WINDOWED", string = "Оконный режим")
 	(key = "OPTIONS_SHADOWS", string = "Тени")

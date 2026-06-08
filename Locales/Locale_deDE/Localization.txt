@@ -58,6 +58,7 @@ strings =
 	(key = "OPTIONS_GRAPHICS", string = "Grafik")
 	(key = "OPTIONS_SOUND", string = "Sound")
 
+	(key = "OPTIONS_RESOLUTION", string = "Auflösung")
 	(key = "OPTIONS_VSYNC", string = "VSync")
 	(key = "OPTIONS_WINDOWED", string = "Fenstermodus")
 	(key = "OPTIONS_SHADOWS", string = "Schatten rendern")
