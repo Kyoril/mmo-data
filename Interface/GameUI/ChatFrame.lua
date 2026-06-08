@@ -17,8 +17,10 @@ ChatType = "SAY";
 ChatFrame_WhisperTarget = nil;   -- target name for the active /w whisper command
 ChatFrame_ReplyTarget = nil;     -- sticky: name of last player who whispered you
 ChatFrame_LastActivityTime = 0;
-ChatFrame_FadeDelay = 30;    -- seconds idle before fade starts
-ChatFrame_FadeDuration = 2;  -- seconds to fade opaque → transparent
+ChatFrame_FadeDelay = 30;        -- seconds idle before fade starts
+ChatFrame_FadeDuration = 2;      -- seconds to fade opaque → transparent
+ChatFrame_FadeInDuration = 0.2;  -- seconds to fade transparent → opaque on hover
+ChatFrame_CurrentOpacity = 1;    -- smoothed opacity currently applied to the chat cluster
 
 ChatFrame_TabCompletionNames = nil;
 ChatFrame_TabCompletionIndex = 0;
@@ -183,30 +185,60 @@ SlashCmdList["TRADE"] = function(msg)
 end
 
 
+-- Applies an opacity value to every frame that makes up the chat cluster (the message
+-- text plus the scroll/bubble buttons).
+function ChatFrame_ApplyOpacity(opacity)
+    ChatFrame:SetOpacity(opacity);
+    ChatScrollEndButton:SetOpacity(opacity);
+    ChatScrollDownButton:SetOpacity(opacity);
+    ChatScrollUpButton:SetOpacity(opacity);
+    ChatBubbleButton:SetOpacity(opacity);
+end
+
+-- Returns true while the mouse hovers any part of the chat cluster.
+function ChatFrame_IsClusterHovered()
+    return ChatFrame:IsHovered()
+        or ChatScrollEndButton:IsHovered()
+        or ChatScrollDownButton:IsHovered()
+        or ChatScrollUpButton:IsHovered()
+        or ChatBubbleButton:IsHovered();
+end
+
 function ChatFrame_ResetActivity()
     ChatFrame_LastActivityTime = 0;
-    ChatFrame:SetOpacity(1);
-    ChatScrollEndButton:SetOpacity(1);
-    ChatScrollDownButton:SetOpacity(1);
-    ChatScrollUpButton:SetOpacity(1);
-    ChatBubbleButton:SetOpacity(1);
+    ChatFrame_CurrentOpacity = 1;
+    ChatFrame_ApplyOpacity(1);
 end
 
 function ChatFrame_OnUpdate(this, elapsed)
-    if ChatInputFrame:IsVisible() then
-        ChatFrame_ResetActivity();
-        return;
+    -- The chat is fully visible while typing, while the mouse hovers it, or for a short
+    -- "readable" window after the most recent activity (e.g. a new message arriving).
+    -- Hovering fades it in; moving the mouse away lets it fade back out.
+    local engaged = ChatInputFrame:IsVisible() or ChatFrame_IsClusterHovered();
+
+    local target;
+    if engaged then
+        ChatFrame_LastActivityTime = 0;
+        target = 1;
+    else
+        ChatFrame_LastActivityTime = ChatFrame_LastActivityTime + elapsed;
+        if ChatFrame_LastActivityTime > ChatFrame_FadeDelay then
+            target = 0;
+        else
+            target = 1;
+        end
     end
-    ChatFrame_LastActivityTime = ChatFrame_LastActivityTime + elapsed;
-    if ChatFrame_LastActivityTime > ChatFrame_FadeDelay then
-        local fadeProgress = (ChatFrame_LastActivityTime - ChatFrame_FadeDelay) / ChatFrame_FadeDuration;
-        local opacity = math.max(0, 1 - fadeProgress);
-        ChatFrame:SetOpacity(opacity);
-        ChatScrollEndButton:SetOpacity(opacity);
-        ChatScrollDownButton:SetOpacity(opacity);
-        ChatScrollUpButton:SetOpacity(opacity);
-        ChatBubbleButton:SetOpacity(opacity);
+
+    -- Smoothly approach the target opacity (fast fade in, slower fade out).
+    if target > ChatFrame_CurrentOpacity then
+        local step = elapsed / ChatFrame_FadeInDuration;
+        ChatFrame_CurrentOpacity = math.min(target, ChatFrame_CurrentOpacity + step);
+    elseif target < ChatFrame_CurrentOpacity then
+        local step = elapsed / ChatFrame_FadeDuration;
+        ChatFrame_CurrentOpacity = math.max(target, ChatFrame_CurrentOpacity - step);
     end
+
+    ChatFrame_ApplyOpacity(ChatFrame_CurrentOpacity);
 end
 
 function ChatInput_OnTabPressed()
