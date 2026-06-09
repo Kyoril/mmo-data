@@ -45,6 +45,17 @@ local OPTIONS_CATEGORIES = {
 			},
 			{
 				type = "dropdown",
+				labelKey = "OPTIONS_RENDER_SCALE",
+				cvar = "gxRenderScale",
+				defaultValue = "1.0",
+				items = {
+					{ labelKey = "OPTIONS_SCALE_50",  value = "0.5" },
+					{ labelKey = "OPTIONS_SCALE_75",  value = "0.75" },
+					{ labelKey = "OPTIONS_SCALE_100", value = "1.0" },
+				},
+			},
+			{
+				type = "dropdown",
 				labelKey = "OPTIONS_SHADOW_QUALITY",
 				cvar = "ShadowTextureSize",
 				defaultValue = "1",
@@ -53,6 +64,17 @@ local OPTIONS_CATEGORIES = {
 					{ labelKey = "OPTIONS_QUALITY_MEDIUM", value = "1" },
 					{ labelKey = "OPTIONS_QUALITY_HIGH",   value = "2" },
 					{ labelKey = "OPTIONS_QUALITY_ULTRA",  value = "3" },
+				},
+			},
+			{
+				type = "dropdown",
+				labelKey = "OPTIONS_SHADOW_DETAIL",
+				cvar = "ShadowQuality",
+				defaultValue = "2",
+				items = {
+					{ labelKey = "OPTIONS_QUALITY_LOW",    value = "0" },
+					{ labelKey = "OPTIONS_QUALITY_MEDIUM", value = "1" },
+					{ labelKey = "OPTIONS_QUALITY_HIGH",   value = "2" },
 				},
 			},
 			{
