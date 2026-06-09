@@ -289,6 +289,14 @@
         end
 	</Binding>
 
+    <Binding name="TOGGLEWALKRUN" description="Toggle between walk and run mode" category="MOVEMENT">
+        return function(key, keystate)
+            if keystate == "DOWN" then
+                ToggleWalkRun();
+            end
+        end
+	</Binding>
+
     <Binding name="TARGETNEARESTENEMY" description="Target the nearest enemy, repeat to cycle" category="TARGET">
 		return function(key, keystate)
             if keystate == "DOWN" then
