@@ -596,4 +596,10 @@ strings =
 	(key = "TRADE_ERR_SOULBOUND", string = "Vous ne pouvez pas échanger des objets liés à l'âme.")
 
 	(key = "COMBAT_IMMUNE", string = "Immunisé")
+
+	(key = "ATTACK_SWING_CANT_ATTACK", string = "Vous ne pouvez pas attaquer cette cible.")
+	(key = "ATTACK_SWING_TARGET_DEAD", string = "Votre cible est morte.")
+	(key = "ATTACK_SWING_WRONG_FACING", string = "Vous n'êtes pas face à votre cible.")
+	(key = "ATTACK_SWING_NOT_STANDING", string = "Vous devez être debout pour attaquer.")
+	(key = "ATTACK_SWING_OUT_OF_RANGE", string = "Votre cible est hors de portée.")
 }

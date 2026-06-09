@@ -596,4 +596,10 @@ strings =
 	(key = "TRADE_ERR_SOULBOUND", string = "Seelengebundene Gegenstände können nicht gehandelt werden.")
 
 	(key = "COMBAT_IMMUNE", string = "Immun")
+
+	(key = "ATTACK_SWING_CANT_ATTACK", string = "Du kannst dieses Ziel nicht angreifen.")
+	(key = "ATTACK_SWING_TARGET_DEAD", string = "Dein Ziel ist tot.")
+	(key = "ATTACK_SWING_WRONG_FACING", string = "Du blickst nicht in Richtung deines Ziels.")
+	(key = "ATTACK_SWING_NOT_STANDING", string = "Du musst stehen, um angreifen zu können.")
+	(key = "ATTACK_SWING_OUT_OF_RANGE", string = "Dein Ziel ist außer Reichweite.")
 }

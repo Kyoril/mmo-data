@@ -510,4 +510,10 @@ strings =
 	(key = "ITEM_BINDS_WHEN_EQUIPPED", string = "Привязывается при надевании")
 
 	(key = "COMBAT_IMMUNE", string = "Иммунитет")
+
+	(key = "ATTACK_SWING_CANT_ATTACK", string = "Вы не можете атаковать эту цель.")
+	(key = "ATTACK_SWING_TARGET_DEAD", string = "Ваша цель мертва.")
+	(key = "ATTACK_SWING_WRONG_FACING", string = "Вы не смотрите на свою цель.")
+	(key = "ATTACK_SWING_NOT_STANDING", string = "Вы должны стоять, чтобы атаковать.")
+	(key = "ATTACK_SWING_OUT_OF_RANGE", string = "Ваша цель вне досягаемости.")
 }

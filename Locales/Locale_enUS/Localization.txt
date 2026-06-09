@@ -628,4 +628,10 @@ strings =
 	(key = "TRADE_ERR_SOULBOUND", string = "You cannot trade soulbound items.")
 
 	(key = "COMBAT_IMMUNE", string = "Immune")
+
+	(key = "ATTACK_SWING_CANT_ATTACK", string = "You can't attack that target.")
+	(key = "ATTACK_SWING_TARGET_DEAD", string = "Your target is dead.")
+	(key = "ATTACK_SWING_WRONG_FACING", string = "You are not facing your target.")
+	(key = "ATTACK_SWING_NOT_STANDING", string = "You must be standing to attack.")
+	(key = "ATTACK_SWING_OUT_OF_RANGE", string = "Your target is out of range.")
 }
