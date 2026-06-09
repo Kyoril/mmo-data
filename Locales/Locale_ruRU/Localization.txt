@@ -508,4 +508,6 @@ strings =
 	(key = "ITEM_SOULBOUND", string = "Привязан к душе")
 	(key = "ITEM_BINDS_WHEN_PICKED_UP", string = "Привязывается при подборе")
 	(key = "ITEM_BINDS_WHEN_EQUIPPED", string = "Привязывается при надевании")
+
+	(key = "COMBAT_IMMUNE", string = "Иммунитет")
 }

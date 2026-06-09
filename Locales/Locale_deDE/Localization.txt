@@ -594,4 +594,6 @@ strings =
 	(key = "TRADE_SLOTS_FULL", string = "Alle Handelsplätze sind belegt.")
 	(key = "TRADE_ITEM_ALREADY_OFFERED", string = "Dieser Gegenstand wird bereits angeboten.")
 	(key = "TRADE_ERR_SOULBOUND", string = "Seelengebundene Gegenstände können nicht gehandelt werden.")
+
+	(key = "COMBAT_IMMUNE", string = "Immun")
 }

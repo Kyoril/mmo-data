@@ -626,4 +626,6 @@ strings =
 	(key = "TRADE_SLOTS_FULL", string = "Trade slots are full.")
 	(key = "TRADE_ITEM_ALREADY_OFFERED", string = "That item is already being offered.")
 	(key = "TRADE_ERR_SOULBOUND", string = "You cannot trade soulbound items.")
+
+	(key = "COMBAT_IMMUNE", string = "Immune")
 }

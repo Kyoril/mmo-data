@@ -594,4 +594,6 @@ strings =
 	(key = "TRADE_SLOTS_FULL", string = "Les emplacements d'échange sont pleins.")
 	(key = "TRADE_ITEM_ALREADY_OFFERED", string = "Cet objet est déjà proposé à l'échange.")
 	(key = "TRADE_ERR_SOULBOUND", string = "Vous ne pouvez pas échanger des objets liés à l'âme.")
+
+	(key = "COMBAT_IMMUNE", string = "Immunisé")
 }
