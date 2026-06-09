@@ -141,6 +141,26 @@ local OPTIONS_CATEGORIES = {
 		},
 	},
 	{
+		id = "Interface",
+		labelKey = "OPTIONS_INTERFACE",
+		type = "settings",
+		options = {
+			{
+				type = "dropdown",
+				labelKey = "OPTIONS_LANGUAGE",
+				cvar = "locale",
+				defaultValue = "enUS",
+				needsRestart = true,
+				items = {
+					{ labelKey = "OPTIONS_LOCALE_ENUS", value = "enUS" },
+					{ labelKey = "OPTIONS_LOCALE_DEDE", value = "deDE" },
+					{ labelKey = "OPTIONS_LOCALE_FRFR", value = "frFR" },
+					{ labelKey = "OPTIONS_LOCALE_RURU", value = "ruRU" },
+				},
+			},
+		},
+	},
+	{
 		id = "KeyBindings",
 		labelKey = "OPTIONS_KEYBINDINGS",
 		type = "keybinding",
@@ -224,7 +244,11 @@ local function BuildComboRow(opt, yOffset)
 
 	local label = row:GetChild(0);
 	if label then
-		label:SetText(Localize(opt.labelKey));
+		local text = Localize(opt.labelKey);
+		if opt.needsRestart then
+			text = text .. " *";
+		end
+		label:SetText(text);
 	end
 
 	local combo = row:GetChild(1);
@@ -628,10 +652,33 @@ end
 
 function OptionsFrame_Okay()
 	CancelCurrentCapture();
+
+	-- Check whether any option that requires a client restart was modified.
+	local restartNeeded = false;
+	for _, cat in ipairs(OPTIONS_CATEGORIES) do
+		if cat.options then
+			for _, opt in ipairs(cat.options) do
+				if opt.needsRestart and opt.cvar then
+					local current  = GetCVar(opt.cvar) or opt.defaultValue or "";
+					local original = originalValues[opt.cvar] or opt.defaultValue or "";
+					if current ~= original then
+						restartNeeded = true;
+						break;
+					end
+				end
+			end
+		end
+		if restartNeeded then break; end
+	end
+
 	RunConsoleCommand("saveconfig");
 	SaveBindings();
 	ComboBox_Close();
 	HideUIPanel(OptionsFrame);
+
+	if restartNeeded then
+		StaticDialog_Show("RESTART_REQUIRED");
+	end
 end
 
 function OptionsFrame_Cancel()

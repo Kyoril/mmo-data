@@ -93,6 +93,15 @@ StaticDialogs["DESTROY_ITEM"] = {
 	exclusive = false
 };
 
+StaticDialogs["RESTART_REQUIRED"] = {
+	text = Localize("OPTIONS_RESTART_REQUIRED"),
+	button1 = Localize("OKAY"),
+	button2 = nil,
+	timeout = 0,
+	whileDead = true,
+	exclusive = false
+};
+
 -- Parses a money string into copper.
 -- Accepts:  "1g 50s 25c"  or  "50s"  or  "25c"  or just a plain number (treated as gold).
 function ParseMoneyString(s)

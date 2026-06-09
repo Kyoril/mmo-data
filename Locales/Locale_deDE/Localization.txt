@@ -82,6 +82,14 @@ strings =
 	(key = "OPTIONS_QUALITY_HIGH", string = "Hoch")
 	(key = "OPTIONS_QUALITY_ULTRA", string = "Ultra")
 
+	(key = "OPTIONS_INTERFACE", string = "Benutzeroberfläche")
+	(key = "OPTIONS_LANGUAGE", string = "Sprache")
+	(key = "OPTIONS_LOCALE_ENUS", string = "English")
+	(key = "OPTIONS_LOCALE_DEDE", string = "Deutsch")
+	(key = "OPTIONS_LOCALE_FRFR", string = "Français")
+	(key = "OPTIONS_LOCALE_RURU", string = "Русский")
+	(key = "OPTIONS_RESTART_REQUIRED", string = "Einige der geänderten Optionen erfordern einen Neustart des Clients.")
+
 	(key = "OPTIONS_KEYBINDINGS", string = "Tastenbelegung")
 
 	(key = "KEYBINDING_NONE", string = "<Keine>")

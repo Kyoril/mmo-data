@@ -82,6 +82,14 @@ strings =
 	(key = "OPTIONS_QUALITY_HIGH", string = "Élevé")
 	(key = "OPTIONS_QUALITY_ULTRA", string = "Ultra")
 
+	(key = "OPTIONS_INTERFACE", string = "Interface")
+	(key = "OPTIONS_LANGUAGE", string = "Langue")
+	(key = "OPTIONS_LOCALE_ENUS", string = "English")
+	(key = "OPTIONS_LOCALE_DEDE", string = "Deutsch")
+	(key = "OPTIONS_LOCALE_FRFR", string = "Français")
+	(key = "OPTIONS_LOCALE_RURU", string = "Русский")
+	(key = "OPTIONS_RESTART_REQUIRED", string = "Certaines des options modifiées nécessitent un redémarrage du client pour prendre effet.")
+
 	(key = "OPTIONS_KEYBINDINGS", string = "Touches")
 
 	(key = "KEYBINDING_NONE", string = "<Aucune>")

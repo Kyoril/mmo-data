@@ -82,6 +82,14 @@ strings =
 	(key = "OPTIONS_QUALITY_HIGH", string = "Высокое")
 	(key = "OPTIONS_QUALITY_ULTRA", string = "Ультра")
 
+	(key = "OPTIONS_INTERFACE", string = "Интерфейс")
+	(key = "OPTIONS_LANGUAGE", string = "Язык")
+	(key = "OPTIONS_LOCALE_ENUS", string = "English")
+	(key = "OPTIONS_LOCALE_DEDE", string = "Deutsch")
+	(key = "OPTIONS_LOCALE_FRFR", string = "Français")
+	(key = "OPTIONS_LOCALE_RURU", string = "Русский")
+	(key = "OPTIONS_RESTART_REQUIRED", string = "Некоторые из изменённых параметров требуют перезапуска клиента.")
+
 	(key = "OPTIONS_KEYBINDINGS", string = "Управление")
 
 	(key = "KEYBINDING_NONE", string = "<Нет>")
