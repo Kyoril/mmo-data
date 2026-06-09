@@ -68,6 +68,7 @@ strings =
 	(key = "OPTIONS_SCALE_50", string = "50%")
 	(key = "OPTIONS_SCALE_75", string = "75%")
 	(key = "OPTIONS_SCALE_100", string = "100%")
+	(key = "OPTIONS_VIEW_DISTANCE", string = "View Distance")
 	(key = "OPTIONS_FOLIAGE", string = "Foliage")
 	(key = "OPTIONS_FOLIAGE_DENSITY", string = "Foliage Density")
 	(key = "OPTIONS_TERRAIN_LOD", string = "Terrain Level of Detail")

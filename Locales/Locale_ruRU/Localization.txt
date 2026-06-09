@@ -68,6 +68,7 @@ strings =
 	(key = "OPTIONS_SCALE_50", string = "50%")
 	(key = "OPTIONS_SCALE_75", string = "75%")
 	(key = "OPTIONS_SCALE_100", string = "100%")
+	(key = "OPTIONS_VIEW_DISTANCE", string = "Дальность видимости")
 	(key = "OPTIONS_FOLIAGE", string = "Растительность")
 	(key = "OPTIONS_FOLIAGE_DENSITY", string = "Плотность растительности")
 	(key = "OPTIONS_TERRAIN_LOD", string = "Детализация рельефа")

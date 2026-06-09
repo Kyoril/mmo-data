@@ -68,6 +68,7 @@ strings =
 	(key = "OPTIONS_SCALE_50", string = "50%")
 	(key = "OPTIONS_SCALE_75", string = "75%")
 	(key = "OPTIONS_SCALE_100", string = "100%")
+	(key = "OPTIONS_VIEW_DISTANCE", string = "Sichtweite")
 	(key = "OPTIONS_FOLIAGE", string = "Vegetation")
 	(key = "OPTIONS_FOLIAGE_DENSITY", string = "Vegetationsdichte")
 	(key = "OPTIONS_TERRAIN_LOD", string = "Terrain-Detailstufen")

@@ -85,6 +85,18 @@ local OPTIONS_CATEGORIES = {
 			},
 			{
 				type = "dropdown",
+				labelKey = "OPTIONS_VIEW_DISTANCE",
+				cvar = "ViewDistance",
+				defaultValue = "600",
+				items = {
+					{ labelKey = "OPTIONS_QUALITY_LOW",    value = "250" },
+					{ labelKey = "OPTIONS_QUALITY_MEDIUM", value = "400" },
+					{ labelKey = "OPTIONS_QUALITY_HIGH",   value = "600" },
+					{ labelKey = "OPTIONS_QUALITY_ULTRA",  value = "100000" },
+				},
+			},
+			{
+				type = "dropdown",
 				labelKey = "OPTIONS_FOLIAGE_DENSITY",
 				cvar = "FoliageDensity",
 				defaultValue = "1.0",
