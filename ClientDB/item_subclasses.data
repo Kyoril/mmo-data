@@ -1,13 +1,13 @@
 
-4One-Handed Sword *Attack_1H_01*Attack_1H_02
-Two-Handed Sword 
-3One-Handed Mace *Attack_1H_01*Attack_1H_02
-Two-Handed Mace 	
-2One-Handed Axe 
-*Attack_1H_01*Attack_1H_02
-Two-Handed Axe 
-*Dagger *Attack_1H_01*Attack_1H_02
-Stave 
+=One-Handed Sword *Attack_1H_01*Attack_1H_0221HReady
+!Two-Handed Sword 22HReady
+<One-Handed Mace *Attack_1H_01*Attack_1H_0221HReady
+ Two-Handed Mace 	22HReady
+;One-Handed Axe 
+*Attack_1H_01*Attack_1H_0221HReady
+Two-Handed Axe 22HReady
+3Dagger *Attack_1H_01*Attack_1H_0221HReady
+Stave 22HLReady
 	Shield 
 
 Cloth 
