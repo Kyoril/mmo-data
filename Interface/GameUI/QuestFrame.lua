@@ -167,13 +167,17 @@ function QuestFrame_OnQuestDetail(self)
         + 32  -- objectives header top offset from details bottom
         + QuestDetailObjectivesHeader:GetHeight()
         + 8   -- objectives top offset from header bottom
-        + QuestDetailObjectives:GetHeight()
-        + 32; -- bottom padding
+        + QuestDetailObjectives:GetHeight();
 
     if questDetails.rewardedMoney > 0 or questDetails.rewardedXp > 0 then
 
         QuestDetailRewards:Show();
+        QuestDetailRewards:SetHeight(QuestDetailRewards:GetTextHeight());
+
+        -- The money label always participates in layout (the XP label is anchored
+        -- below it), so its height must be measured even when no money is rewarded.
         QuestDetailRewardMoneyLabel:SetWidth(QuestDetailRewardMoneyLabel:GetTextWidth());
+        QuestDetailRewardMoneyLabel:SetHeight(QuestDetailRewardMoneyLabel:GetTextHeight());
 
         if questDetails.rewardedMoney > 0 then
             QuestDetailRewardMoneyLabel:Show();
@@ -184,14 +188,29 @@ function QuestFrame_OnQuestDetail(self)
             QuestDetailRewardMoney:Hide();
         end
 
+        -- Rewards header sits 32 below the objectives, money label 8 below the header.
+        contentHeight = contentHeight
+            + 32
+            + QuestDetailRewards:GetHeight()
+            + 8
+            + QuestDetailRewardMoneyLabel:GetHeight();
+
         if questDetails.rewardedXp > 0 then
             QuestDetailRewardXpLabel:SetText(string.format(Localize("QUEST_REWARDED_XP"), questDetails.rewardedXp));
+            -- The XP label has no RIGHT anchor, so it has no constrained width.
+            -- Give it an explicit width before measuring height, otherwise the text
+            -- layout cannot fit a word and word-wrap loops forever (client freeze).
+            QuestDetailRewardXpLabel:SetWidth(QuestDetailRewardXpLabel:GetTextWidth());
+            QuestDetailRewardXpLabel:SetHeight(QuestDetailRewardXpLabel:GetTextHeight());
             QuestDetailRewardXpLabel:Show();
+
+            -- XP label is anchored 4px below the money label.
+            contentHeight = contentHeight + 4 + QuestDetailRewardXpLabel:GetHeight();
         else
             QuestDetailRewardXpLabel:Hide();
         end
 
-        contentHeight = contentHeight + 120; -- reward header + money/xp rows + extra padding
+        contentHeight = contentHeight + 32; -- bottom padding
 
     else
 
@@ -199,6 +218,8 @@ function QuestFrame_OnQuestDetail(self)
         QuestDetailRewardMoneyLabel:Hide();
         QuestDetailRewardMoney:Hide();
         QuestDetailRewardXpLabel:Hide();
+
+        contentHeight = contentHeight + 32; -- bottom padding
 
     end
 

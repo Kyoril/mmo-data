@@ -396,6 +396,7 @@ strings =
 	(key = "LOOT_MASTER_LOOT", string = "Maître du butin")
 	(key = "LOOT_GROUP_LOOT", string = "Butin de groupe")
 	(key = "LOOT_EMPTY", string = "Aucun butin")
+	(key = "ERR_TOO_FAR_AWAY_TO_LOOT", string = "Vous êtes trop loin pour ramasser cela.")
 	(key = "SET_LOOT_METHOD", string = "Définir la méthode de butin")
 	(key = "LOOT_METHOD_TITLE", string = "Règles de butin de groupe")
 	(key = "LOOT_OPTIONS_HEADER", string = "Options de butin")
@@ -613,4 +614,10 @@ strings =
 	(key = "ATTACK_SWING_WRONG_FACING", string = "Vous n'êtes pas face à votre cible.")
 	(key = "ATTACK_SWING_NOT_STANDING", string = "Vous devez être debout pour attaquer.")
 	(key = "ATTACK_SWING_OUT_OF_RANGE", string = "Votre cible est hors de portée.")
+
+	(key = "SPELL_CAST_FAILED_NO_POWER", string = "Pas assez de mana.")
+	(key = "SPELL_CAST_FAILED_NO_POWER_MANA", string = "Pas assez de mana.")
+	(key = "SPELL_CAST_FAILED_NO_POWER_RAGE", string = "Pas assez de rage.")
+	(key = "SPELL_CAST_FAILED_NO_POWER_ENERGY", string = "Pas assez d'énergie.")
+	(key = "SPELL_CAST_FAILED_NO_POWER_HEALTH", string = "Pas assez de santé.")
 }
