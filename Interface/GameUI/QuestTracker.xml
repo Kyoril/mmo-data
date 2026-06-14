@@ -110,6 +110,11 @@
 					QuestTracker_OnLoad(self);
 				end
 			</OnLoad>
+			<OnUpdate>
+				return function(self, elapsed)
+					QuestTracker_OnUpdate(self, elapsed);
+				end
+			</OnUpdate>
 		</Scripts>
 		<Visual>
 			<ImagerySection name="Background">

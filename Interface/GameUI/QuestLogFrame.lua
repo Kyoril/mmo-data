@@ -2,7 +2,23 @@
 MAX_DISPLAY_QUESTS = 6;
 MAX_QUESTLOG_SIZE = 20;
 
+-- Quest status values (from shared/game/quest.h)
+local QS_COMPLETE = 1;
+local QS_FAILED   = 5;
+
 local selectedQuestId = nil;
+
+-- Formats a remaining-seconds value as "M:SS" (or "H:MM:SS" for long timers).
+local function FormatQuestTime(seconds)
+    seconds = math.floor(seconds);
+    local h = math.floor(seconds / 3600);
+    local m = math.floor((seconds % 3600) / 60);
+    local s = seconds % 60;
+    if h > 0 then
+        return string.format("%d:%02d:%02d", h, m, s);
+    end
+    return string.format("%d:%02d", m, s);
+end
 
 function QuestLogFrame_OnLoad(self)
     -- Initialize side panel functionality first, like the close button
@@ -94,7 +110,17 @@ function QuestLogFrame_UpdateQuestDetails()
     -- Scroll up
     QuestLogQuestDetailPanelScrollBar:SetValue(0);
 
-    QuestLogQuestDetailTitle:SetText(questLogEntry.quest.title);
+    -- Annotate the title with the failed state or a remaining timer where appropriate.
+    local titleText = questLogEntry.quest.title;
+    if questLogEntry.status == QS_FAILED then
+        titleText = titleText .. "  (" .. Localize("QUEST_FAILED") .. ")";
+    elseif questLogEntry.status ~= QS_COMPLETE then
+        local timeLeft = GetQuestLogTimeLeft(questLogEntry.quest.id);
+        if timeLeft and timeLeft > 0 then
+            titleText = titleText .. "  (" .. string.format(Localize("QUEST_TIME_REMAINING"), FormatQuestTime(timeLeft)) .. ")";
+        end
+    end
+    QuestLogQuestDetailTitle:SetText(titleText);
     QuestLogQuestDetailTitle:SetHeight(QuestLogQuestDetailTitle:GetTextHeight());
     QuestLogQuestDetailDetails:SetText(GetQuestDetailsText(questLogEntry.quest));
     QuestLogQuestDetailDetails:SetHeight(QuestLogQuestDetailDetails:GetTextHeight());
@@ -234,8 +260,12 @@ function QuestLog_Update()
             if not questLogEntry.quest then
                 -- Quest data not yet loaded from server; skip rendering this slot.
                 button:Hide();
-            elseif questLogEntry.status == 1 then
+            elseif questLogEntry.status == QS_COMPLETE then
                 button:SetText(string.format(Localize("QUEST_COMPLETED_FORMAT"), questLogEntry.quest.title));
+                button:SetChecked(questLogEntry.quest.id == GetQuestLogSelection());
+                button:Show();
+            elseif questLogEntry.status == QS_FAILED then
+                button:SetText(string.format(Localize("QUEST_FAILED_FORMAT"), questLogEntry.quest.title));
                 button:SetChecked(questLogEntry.quest.id == GetQuestLogSelection());
                 button:Show();
             else

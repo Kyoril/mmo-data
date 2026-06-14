@@ -27,6 +27,21 @@ local MAX_OBJS     = 4
 -- Per-quest collapse state: questId -> bool (true = collapsed)
 local collapsed = {}
 
+-- Accumulator used to throttle the live timer refresh (seconds).
+local timerAccum = 0
+
+-- Formats a remaining-seconds value as "M:SS" (or "H:MM:SS" for long timers).
+local function FormatQuestTime(seconds)
+    seconds = math.floor(seconds)
+    local h = math.floor(seconds / 3600)
+    local m = math.floor((seconds % 3600) / 60)
+    local s = seconds % 60
+    if h > 0 then
+        return string.format("%d:%02d:%02d", h, m, s)
+    end
+    return string.format("%d:%02d", m, s)
+end
+
 -- Pool of pre-built slot data (filled in OnLoad)
 local slots = {}   -- slots[i] = { toggle, title, objs = {o1..o4} }
 
@@ -138,9 +153,20 @@ function QuestTracker_Refresh()
 
         -- Title frame
         local titleLeft = showToggle and (PAD + TITLE_H) or PAD
+        -- Build the title text, optionally annotated with a failed marker or a live countdown.
+        local titleText = entry.quest.title
+        if isFailed then
+            titleText = titleText .. "  (" .. Localize("QUEST_FAILED") .. ")"
+        elseif not isComplete then
+            local timeLeft = GetQuestLogTimeLeft(entry.id)
+            if timeLeft and timeLeft > 0 then
+                titleText = titleText .. "  (" .. FormatQuestTime(timeLeft) .. ")"
+            end
+        end
+
         s.title:SetProperty("TextColor", titleColor)
         s.title:SetWidth(titleW)
-        s.title:SetText(entry.quest.title)
+        s.title:SetText(titleText)
         -- Measure actual wrapped height and set it
         local titleH = math.max(TITLE_H, s.title:GetTextHeight() + 4)
         s.title:SetHeight(titleH)
@@ -196,4 +222,17 @@ function QuestTracker_Refresh()
     -- Resize panel and show
     QuestTrackerFrame:SetHeight(offsetY + PAD)
     QuestTrackerFrame:Show()
+end
+
+-- Periodically refreshes the tracker so active quest timers count down live.
+function QuestTracker_OnUpdate(self, elapsed)
+    timerAccum = timerAccum + elapsed
+    if timerAccum < 1.0 then
+        return
+    end
+    timerAccum = 0
+
+    if QuestTrackerFrame:IsVisible() then
+        QuestTracker_Refresh()
+    end
 end
