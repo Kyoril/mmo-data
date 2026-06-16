@@ -62,11 +62,24 @@ function AccountLogin_OnLoad()
 	AccountLogin:RegisterEvent("REALM_AUTH_FAILED", function(frame, errorCode)
 		GlueDialog_Hide();
 		LoginButton:Enable();
-		GlueDialog_Show("REALM_AUTH_ERROR", AUTH_ERROR_STRING[errorCode]);
+		GlueDialog_Show("REALM_AUTH_ERROR", REALM_AUTH_ERROR_STRING[errorCode]);
+	end);
+
+	-- Shown while connecting to a realm (e.g. auto-connecting to the last used realm right after the
+	-- realm list arrives). On cancel/confirm it returns to the realm list.
+	AccountLogin:RegisterEvent("CONNECTING_TO_REALM", function()
+		GlueDialog_Show("CONNECTING_TO_REALM");
 	end);
 
 	-- Realm dropped while still in the GlueUI: fade to black, land on login with error.
 	AccountLogin:RegisterEvent("REALM_DISCONNECTED", function()
+		-- If the realm just rejected our auth session (e.g. not allowed to connect), the
+		-- REALM_AUTH_ERROR dialog is already showing and sends the player back to the realm list on
+		-- confirm. The connection close that follows must not replace it.
+		if GlueDialog.which == "REALM_AUTH_ERROR" then
+			return;
+		end
+
 		GlueDialog_Hide();
 		RealmListFrame:Hide();
 		CharSelect:Hide();

@@ -33,6 +33,7 @@ strings =
 	(key = "AUTH_STATUS_FAIL_INVALID_SERVER", string = "Unable to connect.")
 	(key = "AUTH_STATUS_FAIL_SUSPENDED", string = "This account has been temporarily suspended.\nPlease go to https://mmo-dev.net/banned.html for further information.")
 	(key = "AUTH_STATUS_FAIL_NO_ACCESS", string = "Unable to connect.")
+	(key = "REALM_STATUS_FAIL_NO_ACCESS", string = "You are not allowed to connect to this realm.")
 	(key = "AUTH_STATUS_FAIL_PARENTAL_CONTROL", string = "Access to this account has been blocked by parental controls.\nYour settings may be changed in your account preferences at https://mmo-dev.net.")
 	(key = "AUTH_STATUS_FAIL_LOCKED", string = "You have applied a lock to your account. You can change your locked status at https://mmo-dev.net.")
 	(key = "AUTH_STATUS_FAIL_TRIAL", string = "Your trial subscription has expired. Please visit https://mmo-dev.net to upgrade your account.")

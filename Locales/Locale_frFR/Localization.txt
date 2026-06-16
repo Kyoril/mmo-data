@@ -33,6 +33,7 @@ strings =
 	(key = "AUTH_STATUS_FAIL_INVALID_SERVER", string = "Impossible de se connecter.")
 	(key = "AUTH_STATUS_FAIL_SUSPENDED", string = "Ce compte a été temporairement bloqué.\nVeuillez visiter https://mmo-dev.net/banned.html pour plus d'informations.")
 	(key = "AUTH_STATUS_FAIL_NO_ACCESS", string = "Impossible de se connecter.")
+	(key = "REALM_STATUS_FAIL_NO_ACCESS", string = "Vous n'êtes pas autorisé à vous connecter à ce royaume.")
 	(key = "AUTH_STATUS_FAIL_PARENTAL_CONTROL", string = "L'accès à ce compte a été bloqué par le contrôle parental.\nCela peut être modifié dans les paramètres du compte sur https://mmo-dev.net.")
 	(key = "AUTH_STATUS_FAIL_LOCKED", string = "Vous avez bloqué ce compte. Débloquez-le sur https://mmo-dev.net.")
 	(key = "AUTH_STATUS_FAIL_TRIAL", string = "Votre essai gratuit est fini. Allez sur https://mmo-dev.net pour mettre à jour votre compte.")
