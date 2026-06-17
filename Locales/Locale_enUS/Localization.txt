@@ -646,6 +646,15 @@ strings =
 
 	(key = "COMBAT_IMMUNE", string = "Immune")
 
+	(key = "DAMAGE_METER_TITLE", string = "Damage Meter")
+	(key = "DAMAGE_METER_VIEW_CURRENT", string = "Current data")
+	(key = "DAMAGE_METER_VIEW_FIGHT", string = "Fight %d: %s")
+	(key = "DAMAGE_METER_CURRENT_FIGHT", string = "Current fight")
+	(key = "DAMAGE_METER_FIGHT_NAME", string = "Fight %d")
+	(key = "DAMAGE_METER_SUMMARY", string = "%d damage over %.1fs")
+	(key = "DAMAGE_METER_ROW", string = "%d. %s - %d (%.1f DPS)")
+	(key = "DAMAGE_METER_NO_DATA", string = "No damage recorded.")
+
 	(key = "ATTACK_SWING_CANT_ATTACK", string = "You can't attack that target.")
 	(key = "ATTACK_SWING_TARGET_DEAD", string = "Your target is dead.")
 	(key = "ATTACK_SWING_WRONG_FACING", string = "You are not facing your target.")

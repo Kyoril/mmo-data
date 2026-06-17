@@ -523,6 +523,15 @@ strings =
 
 	(key = "COMBAT_IMMUNE", string = "Иммунитет")
 
+	(key = "DAMAGE_METER_TITLE", string = "Damage Meter")
+	(key = "DAMAGE_METER_VIEW_CURRENT", string = "Текущие данные")
+	(key = "DAMAGE_METER_VIEW_FIGHT", string = "Бой %d: %s")
+	(key = "DAMAGE_METER_CURRENT_FIGHT", string = "Текущий бой")
+	(key = "DAMAGE_METER_FIGHT_NAME", string = "Бой %d")
+	(key = "DAMAGE_METER_SUMMARY", string = "%d урона за %.1fс")
+	(key = "DAMAGE_METER_ROW", string = "%d. %s - %d (%.1f DPS)")
+	(key = "DAMAGE_METER_NO_DATA", string = "Урон не записан.")
+
 	(key = "ATTACK_SWING_CANT_ATTACK", string = "Вы не можете атаковать эту цель.")
 	(key = "ATTACK_SWING_TARGET_DEAD", string = "Ваша цель мертва.")
 	(key = "ATTACK_SWING_WRONG_FACING", string = "Вы не смотрите на свою цель.")

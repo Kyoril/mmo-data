@@ -31,6 +31,9 @@ StaticDialog.xml
 Minimap.xml
 QuestTracker.xml
 LootRollFrame.xml
+
+DamageMeter.xml
+
 GameMenu.xml
 OptionsFrame.xml
 LootMethodFrame.xml
