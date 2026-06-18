@@ -519,6 +519,10 @@ strings =
 
 	(key = "COMBAT_IMMUNE", string = "Иммунитет")
 
+	(key = "COMBAT_BLOCKED", string = "Блок")
+
+	(key = "COMBAT_BLOCKED_SUFFIX", string = "заблокировано")
+
 	(key = "ATTACK_SWING_CANT_ATTACK", string = "Вы не можете атаковать эту цель.")
 	(key = "ATTACK_SWING_TARGET_DEAD", string = "Ваша цель мертва.")
 	(key = "ATTACK_SWING_WRONG_FACING", string = "Вы не смотрите на свою цель.")

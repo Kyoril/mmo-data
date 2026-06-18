@@ -605,6 +605,10 @@ strings =
 
 	(key = "COMBAT_IMMUNE", string = "Immun")
 
+	(key = "COMBAT_BLOCKED", string = "Geblockt")
+
+	(key = "COMBAT_BLOCKED_SUFFIX", string = "geblockt")
+
 	(key = "ATTACK_SWING_CANT_ATTACK", string = "Du kannst dieses Ziel nicht angreifen.")
 	(key = "ATTACK_SWING_TARGET_DEAD", string = "Dein Ziel ist tot.")
 	(key = "ATTACK_SWING_WRONG_FACING", string = "Du blickst nicht in Richtung deines Ziels.")
