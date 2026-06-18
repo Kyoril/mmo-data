@@ -15,6 +15,7 @@ end
 
 ChatType = "SAY";
 ChatFrame_WhisperTarget = nil;   -- target name for the active /w whisper command
+ChatFrame_ChannelTarget = nil;   -- global channel id for the active CHANNEL chat mode
 ChatFrame_ReplyTarget = nil;     -- sticky: name of last player who whispered you
 ChatFrame_LastActivityTime = 0;
 ChatFrame_FadeDelay = 30;        -- seconds idle before fade starts
@@ -169,6 +170,41 @@ end
 
 SlashCmdList["FRIENDLIST"] = function(msg)
 	FriendsFrame_Toggle();
+end
+
+SlashCmdList["JOIN"] = function(msg)
+	local name = string.match(msg or "", "^%s*(.-)%s*$");
+	if ( name and string.len(name) > 0 ) then
+		JoinChannel(name);
+	else
+		ChatFrame:AddMessage(Localize("CHANNEL_JOIN_USAGE"), 1.0, 0.5, 0.5);
+	end
+end
+
+SlashCmdList["LEAVE"] = function(msg)
+	local id = tonumber(string.match(msg or "", "^%s*(%d+)"));
+	if ( id ) then
+		LeaveChannel(id);
+	else
+		ChatFrame:AddMessage(Localize("CHANNEL_LEAVE_USAGE"), 1.0, 0.5, 0.5);
+	end
+end
+
+SlashCmdList["CHATLIST"] = function(msg)
+	local info = ChatTypeInfo["SYSTEM"];
+	local count = GetNumChannels();
+	if ( count <= 0 ) then
+		ChatFrame:AddMessage(Localize("CHANNEL_LIST_EMPTY"), info.r, info.g, info.b);
+		return;
+	end
+
+	ChatFrame:AddMessage(Localize("CHANNEL_LIST_HEADER"), info.r, info.g, info.b);
+	for i = 1, count do
+		local channel = GetChannelInfo(i);
+		if ( channel ) then
+			ChatFrame:AddMessage(string.format(Localize("CHANNEL_LIST_ENTRY"), i, Localize(channel.name)), info.r, info.g, info.b);
+		end
+	end
 end
 
 SlashCmdList["TRADE"] = function(msg)
@@ -440,6 +476,12 @@ function ChatFrame_MakePlayerLink(name)
     return "|Hplayer:" .. name .. "|h" .. name .. "|h";
 end
 
+-- Returns a clickable channel hyperlink rendered as "[id. Name]"; clicking it opens chat input
+-- addressed to that channel. The payload is the local channel id used by the chat commands.
+function ChatFrame_MakeChannelLink(localId, channelName)
+    return "|Hchatchannel:" .. localId .. "|h[" .. localId .. ". " .. channelName .. "]|h";
+end
+
 function ChatFrame_OnLoad(this)
     this:RegisterEvent("CHAT_MSG_SAY", function(this, character, message)
         local info = ChatTypeInfo["SAY"];
@@ -511,18 +553,56 @@ function ChatFrame_OnLoad(this)
         ChatFrame:AddMessage(message, info.r, info.g, info.b);
     end);
 
+    this:RegisterEvent("CHAT_MSG_CHANNEL", function(this, localId, channelName, sender, message)
+        local info = ChatTypeInfo["CHANNEL"];
+        -- The channel may have been left between send and receipt; skip stale messages.
+        if ( not localId or localId <= 0 ) then
+            return;
+        end
+        local channelLink = ChatFrame_MakeChannelLink(localId, Localize(channelName));
+        ChatFrame:AddMessage(string.format(Localize("CHAT_FORMAT_CHANNEL"), channelLink, ChatFrame_MakePlayerLink(sender), message), info.r, info.g, info.b);
+    end);
+
+    this:RegisterEvent("CHANNEL_NOTIFY", function(this, notifyType, localId, channelName)
+        local info = ChatTypeInfo["SYSTEM"];
+        local name = Localize(channelName);
+        if ( notifyType == 0 ) then        -- Joined
+            ChatFrame:AddMessage(string.format(Localize("CHANNEL_NOTIFY_JOINED"), localId, name), info.r, info.g, info.b);
+        elseif ( notifyType == 1 ) then    -- Left
+            ChatFrame:AddMessage(string.format(Localize("CHANNEL_NOTIFY_LEFT"), name), info.r, info.g, info.b);
+        elseif ( notifyType == 2 ) then    -- DoesNotExist
+            ChatFrame:AddMessage(string.format(Localize("CHANNEL_NOTIFY_NOT_FOUND"), channelName), info.r, info.g, info.b);
+        elseif ( notifyType == 3 ) then    -- AlreadyMember
+            ChatFrame:AddMessage(string.format(Localize("CHANNEL_NOTIFY_ALREADY"), name), info.r, info.g, info.b);
+        end
+    end);
+
     this:RegisterEvent("HYPERLINK_CLICKED", function(self, type, payload)
         if not type or not payload then
             return;
         end
 
         if type == "channel" then
-            -- Handle channel hyperlink click
+            -- Handle channel hyperlink click (built-in chat types such as GUILD/RAID encode the
+            -- chat type as the payload).
             ChatType = payload;
             ChatEdit_UpdateHeader();
 
             if not ChatInputFrame:IsVisible() then
                 ChatFrame_OpenChat();
+            end
+        elseif type == "chatchannel" then
+            -- Global chat channel link: payload is the local channel id. Switch to channel mode
+            -- addressed to that channel.
+            local localId = tonumber(payload);
+            if ( localId and localId > 0 ) then
+                ChatType = "CHANNEL";
+                ChatFrame_ChannelTarget = localId;
+                ChatEdit_UpdateHeader();
+
+                if not ChatInputFrame:IsVisible() then
+                    ChatFrame_OpenChat();
+                end
             end
         elseif type == "player" then
             -- Click on a player name: switch to whisper mode addressed to that player
@@ -568,6 +648,14 @@ function ChatEdit_UpdateHeader()
     if type == "WHISPER" then
         local target = ChatFrame_WhisperTarget or ChatFrame_ReplyTarget or "?";
         headerText = "To " .. target .. ":";
+    elseif type == "CHANNEL" then
+        local localId = ChatFrame_ChannelTarget;
+        local channel = localId and GetChannelInfo(localId) or nil;
+        if channel then
+            headerText = "[" .. localId .. ". " .. Localize(channel.name) .. "]:";
+        else
+            headerText = Localize("CHAT_TYPE_CHANNEL") .. ":";
+        end
     else
         headerText = Localize("CHAT_TYPE_"..ChatType) .. ":";
     end
@@ -599,6 +687,27 @@ function ChatFrame_ParseText(send)
 
 	command = string.gsub(command, "%s+", "");
 	command = string.upper(command);
+
+    -- Numeric channel shortcut: "/1" switches to (or sends on) chat channel number 1.
+    local channelNum = string.match(command, "^/(%d+)$");
+    if ( channelNum ) then
+        local localId = tonumber(channelNum);
+        if ( GetChannelGlobalId(localId) > 0 ) then
+            ChatType = "CHANNEL";
+            ChatFrame_ChannelTarget = localId;
+            ChatInput:SetText(msg);
+            ChatEdit_UpdateHeader();
+            return;
+        end
+
+        -- Unknown channel number: only complain when actually sending.
+        if ( send ) then
+            local info = ChatTypeInfo["SYSTEM"];
+            ChatFrame:AddMessage(string.format(Localize("CHANNEL_INVALID"), localId), info.r, info.g, info.b);
+            ChatInput_OnEscapePressed();
+        end
+        return;
+    end
 
     -- Parse chat type first
     for index, value in pairs(ChatTypeInfo) do
@@ -692,6 +801,11 @@ function ChatFrame_SendMessage(this)
             local target = ChatFrame_WhisperTarget or ChatFrame_ReplyTarget;
             if target then
                 SendChatMessage(text, ChatType, target);
+            end
+        elseif ( ChatType == "CHANNEL" ) then
+            local globalId = ChatFrame_ChannelTarget and GetChannelGlobalId(ChatFrame_ChannelTarget) or 0;
+            if ( globalId and globalId > 0 ) then
+                SendChatMessage(text, "CHANNEL", tostring(globalId));
             end
         else
             SendChatMessage(text, ChatType);

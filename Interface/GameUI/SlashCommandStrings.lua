@@ -71,3 +71,11 @@ SLASH_LOOTMETHOD1 = "/lootmethod"; -- Set group loot method
 SLASH_LOOTMETHOD2 = "/lm";         -- Set group loot method (short)
 SLASH_REPLY1 = "/r";          -- Reply to last whisper
 SLASH_REPLY2 = "/reply";      -- Reply to last whisper
+
+SLASH_JOIN1 = "/join";        -- Join a chat channel by name
+SLASH_JOIN2 = "/channel";     -- Join a chat channel by name
+SLASH_JOIN3 = "/chan";        -- Join a chat channel by name
+SLASH_LEAVE1 = "/leave";      -- Leave a chat channel by id
+SLASH_LEAVE2 = "/chatleave";  -- Leave a chat channel by id
+SLASH_CHATLIST1 = "/chatlist"; -- List joined chat channels
+SLASH_CHATLIST2 = "/chatwho";  -- List joined chat channels
