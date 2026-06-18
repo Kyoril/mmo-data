@@ -33,6 +33,7 @@ strings =
 	(key = "AUTH_STATUS_FAIL_INVALID_SERVER", string = "Unable to connect.")
 	(key = "AUTH_STATUS_FAIL_SUSPENDED", string = "This account has been temporarily suspended.\nPlease go to https://mmo-dev.net/banned.html for further information.")
 	(key = "AUTH_STATUS_FAIL_NO_ACCESS", string = "Unable to connect.")
+	(key = "REALM_STATUS_FAIL_NO_ACCESS", string = "Вам не разрешено подключаться к этому миру.")
 	(key = "AUTH_STATUS_FAIL_PARENTAL_CONTROL", string = "Access to this account has been blocked by parental controls.\nYour settings may be changed in your account preferences at https://mmo-dev.net.")
 	(key = "AUTH_STATUS_FAIL_LOCKED", string = "You have applied a lock to your account. You can change your locked status at https://mmo-dev.net.")
 	(key = "AUTH_STATUS_FAIL_TRIAL", string = "Your trial subscription has expired. Please visit https://mmo-dev.net to upgrade your account.")
@@ -318,6 +319,9 @@ strings =
 	(key = "ACCEPT_QUEST", string = "Accept")
 	(key = "ABANDON_QUEST", string = "Abandon")
 	(key = "QUEST_COMPLETED_FORMAT", string = "%s (Completed)")
+	(key = "QUEST_FAILED", string = "Провалено")
+	(key = "QUEST_FAILED_FORMAT", string = "%s (Провалено)")
+	(key = "QUEST_TIME_REMAINING", string = "Осталось: %s")
 	(key = "CONTINUE", string = "Continue")
 	(key = "COMPLETE_QUEST", string = "Complete")
 	(key = "QUEST_REWARDED_TITLE", string = "%s completed")
@@ -522,6 +526,15 @@ strings =
 	(key = "COMBAT_BLOCKED", string = "Блок")
 
 	(key = "COMBAT_BLOCKED_SUFFIX", string = "заблокировано")
+
+	(key = "DAMAGE_METER_TITLE", string = "Damage Meter")
+	(key = "DAMAGE_METER_VIEW_CURRENT", string = "Текущие данные")
+	(key = "DAMAGE_METER_VIEW_FIGHT", string = "Бой %d: %s")
+	(key = "DAMAGE_METER_CURRENT_FIGHT", string = "Текущий бой")
+	(key = "DAMAGE_METER_FIGHT_NAME", string = "Бой %d")
+	(key = "DAMAGE_METER_SUMMARY", string = "%d урона за %.1fс")
+	(key = "DAMAGE_METER_ROW", string = "%d. %s - %d (%.1f DPS)")
+	(key = "DAMAGE_METER_NO_DATA", string = "Урон не записан.")
 
 	(key = "ATTACK_SWING_CANT_ATTACK", string = "Вы не можете атаковать эту цель.")
 	(key = "ATTACK_SWING_TARGET_DEAD", string = "Ваша цель мертва.")

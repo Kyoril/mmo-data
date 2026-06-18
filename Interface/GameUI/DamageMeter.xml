@@ -1,0 +1,173 @@
+<?xml version="1.0" ?>
+<UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
+	<Script file="DamageMeter.lua" />
+
+	<Frame name="DamageMeterRowTemplate" type="ProgressBar">
+		<Property name="Progress" value="0.0" />
+		<Property name="Text" value="" />
+		<Property name="Font" value="SmallLabelFont" />
+		<Property name="Visible" value="False" />
+
+		<Visual>
+			<ImagerySection name="Caption">
+				<TextComponent color="FFFFFFFF" horzAlign="LEFT" vertAlign="CENTER">
+					<Area><Inset left="12" right="12" /></Area>
+				</TextComponent>
+			</ImagerySection>
+			<ImagerySection name="Background">
+				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="B0000000" />
+			</ImagerySection>
+			<ImagerySection name="Progress">
+				<ImageComponent texture="Interface/fg4_gradientWhiteV1_result.htex" tiling="HORZ" tint="FF8C2F12">
+					<Area><Inset all="5" /></Area>
+				</ImageComponent>
+			</ImagerySection>
+
+			<StateImagery name="Enabled">
+				<Layer><Section section="Background" /></Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer><Section section="Background" /></Layer>
+			</StateImagery>
+			<StateImagery name="Progress">
+				<Layer><Section section="Progress" /></Layer>
+			</StateImagery>
+			<StateImagery name="Overlay">
+				<Layer><Section section="Caption" /></Layer>
+			</StateImagery>
+		</Visual>
+
+		<Area>
+			<Size><AbsDimension x="0" y="44" /></Size>
+		</Area>
+	</Frame>
+
+	<Frame name="DamageMeterSmallButtonTemplate" type="Button" renderer="ButtonRenderer">
+		<Property name="Font" value="SmallLabelFont" />
+
+		<Visual>
+			<ImagerySection name="NormalFrame">
+				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Up_result.htex" borderSize="22" />
+			</ImagerySection>
+			<ImagerySection name="HoveredFrame">
+				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Over_result.htex" borderSize="22" />
+			</ImagerySection>
+			<ImagerySection name="PushedFrame">
+				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Down_result.htex" borderSize="22" />
+			</ImagerySection>
+			<ImagerySection name="Caption">
+				<TextComponent color="FFFFD100" horzAlign="CENTER" vertAlign="CENTER">
+					<Area><Inset left="12" right="12" /></Area>
+				</TextComponent>
+			</ImagerySection>
+			<ImagerySection name="HoveredCaption">
+				<TextComponent color="FFFFFFFF" horzAlign="CENTER" vertAlign="CENTER">
+					<Area><Inset left="12" right="12" /></Area>
+				</TextComponent>
+			</ImagerySection>
+
+			<StateImagery name="Normal">
+				<Layer>
+					<Section section="NormalFrame" />
+					<Section section="Caption" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Hovered">
+				<Layer>
+					<Section section="HoveredFrame" />
+					<Section section="HoveredCaption" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Pushed">
+				<Layer>
+					<Section section="PushedFrame" />
+					<Section section="Caption" color="FFAAAAAA" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="NormalFrame" color="80808080" />
+					<Section section="Caption" color="AE888888" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+
+		<Area>
+			<Size><AbsDimension x="300" y="56" /></Size>
+		</Area>
+	</Frame>
+
+	<Frame name="DamageMeterFrame" parent="GameParent" renderer="DefaultRenderer">
+		<Property name="Visible" value="False" />
+
+		<Visual>
+			<ImagerySection name="Background">
+				<BorderComponent texture="Interface/GameUI/fg4_borders_simple.htex" borderSize="250" tint="F0FFFFFF" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer><Section section="Background" /></Layer>
+			</StateImagery>
+		</Visual>
+
+		<Area>
+			<Size><AbsDimension x="620" y="420" /></Size>
+			<Anchor point="RIGHT" offset="-40" />
+			<Anchor point="V_CENTER" offset="-120" />
+		</Area>
+
+		<Frame name="DamageMeterTitleBar" inherits="TitleBar">
+			<Property name="Text" value="DAMAGE_METER_TITLE" />
+
+			<Area>
+				<Anchor point="TOP" offset="24" />
+				<Anchor point="LEFT" offset="24" />
+				<Anchor point="RIGHT" offset="-24" />
+			</Area>
+		</Frame>
+
+		<Frame name="DamageMeterViewButton" inherits="DamageMeterSmallButtonTemplate">
+			<Property name="Text" value="DAMAGE_METER_VIEW_CURRENT" />
+
+			<Area>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="DamageMeterTitleBar" offset="16" />
+				<Anchor point="LEFT" offset="32" />
+				<Anchor point="RIGHT" offset="-32" />
+				<Size><AbsDimension y="56" /></Size>
+			</Area>
+		</Frame>
+
+		<Frame name="DamageMeterSummary" inherits="TextSmall">
+			<Property name="Text" value="DAMAGE_METER_NO_DATA" />
+			<Property name="TextColor" value="FFD0D0D0" />
+
+			<Area>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="DamageMeterViewButton" offset="10" />
+				<Anchor point="LEFT" offset="36" />
+				<Anchor point="RIGHT" offset="-36" />
+				<Size><AbsDimension y="32" /></Size>
+			</Area>
+		</Frame>
+
+		<Frame name="DamageMeterRows" renderer="DefaultRenderer">
+			<Area>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="DamageMeterSummary" offset="12" />
+				<Anchor point="LEFT" offset="32" />
+				<Anchor point="RIGHT" offset="-32" />
+				<Anchor point="BOTTOM" offset="-32" />
+			</Area>
+		</Frame>
+
+		<Scripts>
+			<OnLoad>
+				return function(self)
+					DamageMeter_OnLoad(self);
+				end
+			</OnLoad>
+			<OnUpdate>
+				return function(self, elapsed)
+					DamageMeter_OnUpdate(self, elapsed);
+				end
+			</OnUpdate>
+		</Scripts>
+	</Frame>
+</UiLayout>

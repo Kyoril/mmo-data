@@ -177,12 +177,23 @@ function GameTooltip_SetItemTemplate(item)
         end
     end
 
+    -- Required level
+    local requiredLevel = item.requiredLevel;
+    if (requiredLevel and requiredLevel > 0) then
+        local player = GetUnit("player");
+        local levelColor = "FFFFFFFF";
+        if (player and player:GetLevel() < requiredLevel) then
+            levelColor = "FFFF2020";
+        end
+        GameTooltip_AddLine(string.format(Localize("LEVEL_REQUIREMENT_FORMAT"), requiredLevel), TOOLTIP_LINE_LEFT, levelColor);
+    end
+
     -- Line 3: Description
     local description = item.description;
     if (description and description:len() > 0) then
         GameTooltip_AddLine(description, TOOLTIP_LINE_LEFT, "FFFFD100");
     end
-    
+
     local maxDurability = item.maxDurability;
     if (maxDurability > 0) then
         local durability = maxDurability;
@@ -291,12 +302,22 @@ function GameTooltip_SetItem(item)
         end
     end
 
+    -- Required level
+    local requiredLevel = item:GetRequiredLevel();
+    if (requiredLevel and requiredLevel > 0) then
+        local levelColor = "FFFFFFFF";
+        if (player and player:GetLevel() < requiredLevel) then
+            levelColor = "FFFF2020";
+        end
+        GameTooltip_AddLine(string.format(Localize("LEVEL_REQUIREMENT_FORMAT"), requiredLevel), TOOLTIP_LINE_LEFT, levelColor);
+    end
+
     -- Line 3: Description
     local description = item:GetDescription();
     if (description and description:len() > 0) then
         GameTooltip_AddLine(description, TOOLTIP_LINE_LEFT, "FFFFD100");
     end
-    
+
     local maxDurability = item:GetMaxDurability();
     if (maxDurability > 0) then
         local durability = item:GetDurability();

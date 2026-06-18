@@ -9,6 +9,10 @@ function RealmListItem_Clicked(item)
 end
 
 function RealmList_Show()
+	-- Make sure the login frame is not left visible behind the realm list (e.g. when returning here
+	-- after a failed auto-connect to the last used realm, where the login frame was never faded out).
+	AccountLogin:Hide()
+
 	RealmListFrame:Show()
 	RealmListButton01:Disable()
 

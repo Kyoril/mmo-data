@@ -33,6 +33,7 @@ strings =
 	(key = "AUTH_STATUS_FAIL_INVALID_SERVER", string = "Verbindungsaufbau fehlgeschlagen.")
 	(key = "AUTH_STATUS_FAIL_SUSPENDED", string = "This account has been temporarily suspended.\nPlease go to https://mmo-dev.net/banned.html for further information.")
 	(key = "AUTH_STATUS_FAIL_NO_ACCESS", string = "Verbindungsaufbau fehlgeschlagen.")
+	(key = "REALM_STATUS_FAIL_NO_ACCESS", string = "Du bist nicht berechtigt, dich mit diesem Realm zu verbinden.")
 	(key = "AUTH_STATUS_FAIL_PARENTAL_CONTROL", string = "Access to this account has been blocked by parental controls.\nYour settings may be changed in your account preferences at https://mmo-dev.net.")
 	(key = "AUTH_STATUS_FAIL_LOCKED", string = "Sie haben Ihren Account gesperrt. You can change your locked status at https://mmo-dev.net.")
 	(key = "AUTH_STATUS_FAIL_TRIAL", string = "Ihre Testzeit ist abgelaufen. Bitte besuchen Sie https://mmo-dev.net um Ihren Account aufzuwerten.")
@@ -319,6 +320,9 @@ strings =
 	(key = "ACCEPT_QUEST", string = "Annehmen")
 	(key = "ABANDON_QUEST", string = "Abbrechen")
 	(key = "QUEST_COMPLETED_FORMAT", string = "%s (Abgeschlossen)")
+	(key = "QUEST_FAILED", string = "Fehlgeschlagen")
+	(key = "QUEST_FAILED_FORMAT", string = "%s (Fehlgeschlagen)")
+	(key = "QUEST_TIME_REMAINING", string = "Verbleibend: %s")
 	(key = "CONTINUE", string = "Fortfahren")
 	(key = "COMPLETE_QUEST", string = "Abschließen")
 	(key = "QUEST_REWARDED_TITLE", string = "%s abgeschlossen")
@@ -393,6 +397,7 @@ strings =
 	(key = "LOOT_MASTER_LOOT", string = "Hauptplünderer")
 	(key = "LOOT_GROUP_LOOT", string = "Gruppenbeute")
 	(key = "LOOT_EMPTY", string = "Keine Beute")
+	(key = "ERR_TOO_FAR_AWAY_TO_LOOT", string = "Du bist zu weit entfernt, um das zu plündern.")
 	(key = "SET_LOOT_METHOD", string = "Beutemethode festlegen")
 	(key = "LOOT_METHOD_TITLE", string = "Gruppenbeute-Regeln")
 	(key = "LOOT_OPTIONS_HEADER", string = "Beute-Optionen")
@@ -606,12 +611,26 @@ strings =
 	(key = "COMBAT_IMMUNE", string = "Immun")
 
 	(key = "COMBAT_BLOCKED", string = "Geblockt")
-
 	(key = "COMBAT_BLOCKED_SUFFIX", string = "geblockt")
+	
+	(key = "DAMAGE_METER_TITLE", string = "Damage Meter")
+	(key = "DAMAGE_METER_VIEW_CURRENT", string = "Aktuelle Daten")
+	(key = "DAMAGE_METER_VIEW_FIGHT", string = "Kampf %d: %s")
+	(key = "DAMAGE_METER_CURRENT_FIGHT", string = "Aktueller Kampf")
+	(key = "DAMAGE_METER_FIGHT_NAME", string = "Kampf %d")
+	(key = "DAMAGE_METER_SUMMARY", string = "%d Schaden über %.1fs")
+	(key = "DAMAGE_METER_ROW", string = "%d. %s - %d (%.1f DPS)")
+	(key = "DAMAGE_METER_NO_DATA", string = "Kein Schaden aufgezeichnet.")
 
 	(key = "ATTACK_SWING_CANT_ATTACK", string = "Du kannst dieses Ziel nicht angreifen.")
 	(key = "ATTACK_SWING_TARGET_DEAD", string = "Dein Ziel ist tot.")
 	(key = "ATTACK_SWING_WRONG_FACING", string = "Du blickst nicht in Richtung deines Ziels.")
 	(key = "ATTACK_SWING_NOT_STANDING", string = "Du musst stehen, um angreifen zu können.")
 	(key = "ATTACK_SWING_OUT_OF_RANGE", string = "Dein Ziel ist außer Reichweite.")
+
+	(key = "SPELL_CAST_FAILED_NO_POWER", string = "Nicht genug Mana.")
+	(key = "SPELL_CAST_FAILED_NO_POWER_MANA", string = "Nicht genug Mana.")
+	(key = "SPELL_CAST_FAILED_NO_POWER_RAGE", string = "Nicht genug Wut.")
+	(key = "SPELL_CAST_FAILED_NO_POWER_ENERGY", string = "Nicht genug Energie.")
+	(key = "SPELL_CAST_FAILED_NO_POWER_HEALTH", string = "Nicht genug Gesundheit.")
 }
