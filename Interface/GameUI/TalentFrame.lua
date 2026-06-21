@@ -1,292 +1,301 @@
-
--- Constants
-MAX_TALENT_TABS = 3
-MAX_TALENTS_PER_TAB = 20
-MAX_TALENT_TIERS = 7
-MAX_TALENTS_PER_TIER = 4
-MAX_TALENT_RANK = 5
-
--- Keep track of which tab is selected
 local selectedTab = 1
 local playerTalentPoints = 0
-local talentAvailable = false
+local talentZoom = 1.0
+local talentPanX = 0.0
+local talentPanY = 0.0
+local canvasDragging = false
+local visibleNodes = {}
+local talentsById = {}
+local talentIndexById = {}
+
+local TALENT_NODE_SIZE = 128
+local TALENT_MIN_ZOOM = 0.35
+local TALENT_MAX_ZOOM = 1.60
+
+local function TalentFrame_GetSelectedTabInfo()
+    return GetTalentTabInfo(selectedTab - 1)
+end
+
+local function TalentFrame_ApplyView()
+    local tab = TalentFrame_GetSelectedTabInfo()
+    if tab == nil then
+        return
+    end
+
+    TalentFrameCanvasContent:SetSize(tab.canvasWidth * talentZoom, tab.canvasHeight * talentZoom)
+    TalentFrameCanvasContent:ClearAnchors()
+    TalentFrameCanvasContent:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, talentPanY)
+    TalentFrameCanvasContent:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, talentPanX)
+end
+
+local function TalentFrame_ResetView()
+    local tab = TalentFrame_GetSelectedTabInfo()
+    if tab == nil then
+        return
+    end
+
+    talentZoom = math.max(TALENT_MIN_ZOOM, math.min(TALENT_MAX_ZOOM, tab.initialZoom))
+    talentPanX = (TalentFrameCanvasViewport:GetWidth() - tab.canvasWidth * talentZoom) * 0.5
+    talentPanY = (TalentFrameCanvasViewport:GetHeight() - tab.canvasHeight * talentZoom) * 0.5
+    TalentFrame_ApplyView()
+end
+
+local function TalentFrame_SetZoom(newZoom)
+    local oldZoom = talentZoom
+    newZoom = math.max(TALENT_MIN_ZOOM, math.min(TALENT_MAX_ZOOM, newZoom))
+    if math.abs(newZoom - oldZoom) < 0.001 then
+        return
+    end
+
+    local centerX = TalentFrameCanvasViewport:GetWidth() * 0.5
+    local centerY = TalentFrameCanvasViewport:GetHeight() * 0.5
+    local canvasCenterX = (centerX - talentPanX) / oldZoom
+    local canvasCenterY = (centerY - talentPanY) / oldZoom
+    talentZoom = newZoom
+    talentPanX = centerX - canvasCenterX * talentZoom
+    talentPanY = centerY - canvasCenterY * talentZoom
+    TalentFrame_UpdateTalents()
+end
 
 function TalentFrame_Toggle()
-    if (TalentFrame:IsVisible()) then
-        HideUIPanel(TalentFrame);
+    if TalentFrame:IsVisible() then
+        HideUIPanel(TalentFrame)
     else
-        ShowUIPanel(TalentFrame);
+        ShowUIPanel(TalentFrame)
     end
-end
-
-function TalentFrame_OnLoad(self)
-    -- Initialize side panel functionality first, like the close button
-    SidePanel_OnLoad(self);
-    
-    -- Set title
-    self:GetChild(0):SetText(Localize("TALENTS"));
-    
-    -- Register events
-    self:RegisterEvent("PLAYER_TALENT_UPDATE", TalentFrame_Update);
-    self:RegisterEvent("PLAYER_LEVEL_UP", TalentFrame_Update);
-    self:RegisterEvent("PLAYER_ENTER_WORLD", TalentFrame_Update);
-    
-    -- Clear talent display first
-    for i=1, MAX_TALENTS_PER_TAB do
-        local button = _G["TalentFrameTalent"..i];
-        button:SetOnEnterHandler(TalentFrameTalent_OnEnter);
-        button:SetOnLeaveHandler(TalentFrameTalent_OnLeave);
-        button:SetClickedHandler(TalentFrameTalent_OnClick);
-    end
-
-    -- Add button to menu bar
-    AddMenuBarButton("Interface/Icons/fg4_icons_emblemShield_result.htex", TalentFrame_Toggle);
-end
-
-function TalentFrame_OnShow(self)
-    TalentFrame_Update(self);
-end
-
-function TalentFrame_Update(self)
-    -- Update and display tab information
-    TalentFrame_UpdateTabs();
-    
-    -- Update talents for the selected tab
-    TalentFrame_UpdateTalents();
 end
 
 function TalentFrame_UpdateTabs()
-    -- Get the class tabs info
-    local numTabs = GetNumTalentTabs();
-    
-    -- Show/hide the tabs based on availability
-    for i=1, MAX_TALENT_TABS do
-        local tabButton = _G["TalentFrameTab"..i];
-        
-        if (i <= numTabs) then
-            local tabInfo = GetTalentTabName(i - 1);
-            tabButton:SetText(tabInfo);
-            tabButton:Show();
-              -- Highlight selected tab
-            if (i == selectedTab) then
-                tabButton:SetChecked(true);
-            else
-                tabButton:SetChecked(false);
-            end
-        else
-            -- Hide unused tabs
-            tabButton:Hide();
-        end
+    TalentFrameTabContainer:RemoveAllChildren()
+    local count = GetNumTalentTabs()
+    local tabWidth = 360
+    local startX = math.max(0, (TalentFrameTabContainer:GetWidth() - count * tabWidth) * 0.5)
+
+    for index = 1, count do
+        local tab = GetTalentTabInfo(index - 1)
+        local button = TalentFrameTabButtonTemplate:Clone()
+        button.id = index
+        button:SetText(tab.name)
+        button:SetChecked(index == selectedTab)
+        button:SetClickedHandler(TalentFrameTab_OnClick)
+        button:ClearAnchors()
+        button:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, 0)
+        button:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, startX + (index - 1) * tabWidth)
+        TalentFrameTabContainer:AddChild(button)
     end
 end
 
 function TalentFrameTab_OnClick(self)
-    local id = self.id;
-
-    if (id ~= selectedTab) then
-        selectedTab = id;
-        TalentFrame_Update(TalentFrame);
+    if self.id ~= selectedTab then
+        selectedTab = self.id
+        TalentFrame_ResetView()
+        TalentFrame_Update(TalentFrame)
+    else
+        TalentFrame_UpdateTabs()
     end
+end
+
+local function TalentFrame_CreateLine(startTalent, endTalent, prerequisite)
+    local line = TalentFrameLineTemplate:Clone()
+    line:SetSize(TalentFrameCanvasContent:GetWidth(), TalentFrameCanvasContent:GetHeight())
+    line:ClearAnchors()
+    line:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, 0)
+    line:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, 0)
+    line:SetProperty("StartX", tostring(startTalent.positionX * talentZoom))
+    line:SetProperty("StartY", tostring(startTalent.positionY * talentZoom))
+    line:SetProperty("EndX", tostring(endTalent.positionX * talentZoom))
+    line:SetProperty("EndY", tostring(endTalent.positionY * talentZoom))
+    line:SetProperty("Thickness", tostring((prerequisite.met and 8 or 5) * talentZoom))
+    line:SetProperty("Color", prerequisite.met and "FF42D1D8" or "FF4A5360")
+    line:SetFrameLevel(0)
+    TalentFrameCanvasContent:AddChild(line)
+end
+
+local function TalentFrame_CreateNode(talent, talentIndex)
+    local button = TalentFrameTalentTemplate:Clone()
+    local size = TALENT_NODE_SIZE * talent.nodeScale * talentZoom
+    -- NOTE: 'id' is a real (C++ backed) frame property and persists across handler calls, whereas
+    -- arbitrary Lua fields set on the frame wrapper do not. So we key the talent index by frame id.
+    button.id = talent.id
+    button:SetSize(size, size)
+    button:ClearAnchors()
+    button:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, talent.positionY * talentZoom - size * 0.5)
+    button:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, talent.positionX * talentZoom - size * 0.5)
+    button:SetProperty("Icon", talent.icon or "")
+    button:SetChecked(talent.rank == talent.maxRank)
+    button:SetOpacity((talent.canLearn or talent.rank > 0) and 1.0 or 0.48)
+    button:SetClickedHandler(TalentFrameTalent_OnClick)
+    button:SetOnEnterHandler(TalentFrameTalent_OnEnter)
+    button:SetOnLeaveHandler(TalentFrameTalent_OnLeave)
+    button:SetFrameLevel(10)
+
+    local rank = button:GetChild(0)
+    rank:SetText(string.format("%d/%d", talent.rank, talent.maxRank))
+    if talent.rank == talent.maxRank then
+        rank:SetProperty("TextColor", "FFFFD100")
+    elseif talent.canLearn then
+        rank:SetProperty("TextColor", "FF42E67A")
+    else
+        rank:SetProperty("TextColor", "FFB8BEC8")
+    end
+
+    TalentFrameCanvasContent:AddChild(button)
+    visibleNodes[talent.id] = button
 end
 
 function TalentFrame_UpdateTalents()
-    -- Update talent point display
-    local player = GetUnit("player");
-    playerTalentPoints = player:GetTalentPoints() or 0;
-    TalentFramePointsText:SetText(string.format(Localize("TALENT_POINTS_AVAILABLE"), playerTalentPoints));
-
-    -- Get the talents for the selected tab
-    local numTalents = GetNumTalents(selectedTab - 1);
-    
-    TalentFrameScrollBar:SetMinimum(0);
-    TalentFrameScrollBar:SetMaximum(0);
-
-    local pointsSpent = GetTalentPointsSpentInTab(selectedTab - 1);
-    
-    -- Clear talent display first
-    for i=1, MAX_TALENTS_PER_TAB do
-        local button = _G["TalentFrameTalent"..i];
-        button:Hide();
+    local tab = TalentFrame_GetSelectedTabInfo()
+    if tab == nil then
+        TalentFrameCanvasContent:RemoveAllChildren()
+        return
     end
-    
-    -- Display the talents
-    for i=1, numTalents do
-        local talent = GetTalentInfo(selectedTab - 1, i - 1);
 
-        -- Calculate button index from tier and column
-        local index = (talent.tier * MAX_TALENTS_PER_TIER) + talent.column + 1;
-        local button = _G["TalentFrameTalent"..index];
-        
-        button.id = i;
-        button.tabID = selectedTab - 1;
-        button.tier = talent.tier;
-        button.column = talent.column;
-        button.spell = talent.spell;        
-        
-        -- For each tier, 5 points spent are required to unlock the next tier, so make the button appear disabled if not enough points spent
-        if (talent.tier > 0 and pointsSpent < (talent.tier * 5)) then
-            -- Make button appear disabled but keep it enabled for mouse events
-            button:SetOpacity(0.4);  -- 40% opacity to show as disabled
-            button.isDisabled = true;  -- Track disabled state for click handling
-        else
-            -- Button is available
-            button:SetOpacity(1.0);  -- Full opacity
-            button.isDisabled = false;  -- Track enabled state
-        end
-        
-        -- Set the icon
-        button:SetProperty("Icon", talent.icon or "");        -- Set the rank overlay
-        local rankFrame = _G["TalentFrameTalent"..index.."_Rank"];
-        if rankFrame then
-            -- Hide rank frame for unavailable talents, show for available ones
-            if (button.isDisabled) then
-                rankFrame:Hide();
-            else
-                rankFrame:Show();
-                -- Show only current rank instead of current/max
-                rankFrame:SetText(string.format("%d", talent.rank));
-                
-                -- Color the rank text based on talent state
-                if (talent.rank == talent.maxRank) then
-                    -- Max rank - yellow/orange
-                    rankFrame:SetProperty("TextColor", "FFFFD100");  -- Orange/yellow for max rank
-                elseif (playerTalentPoints > 0 and talent.rank < talent.maxRank) then
-                    -- Can be trained - green
-                    rankFrame:SetProperty("TextColor", "FF33FF33");  -- Green for available
-                else
-                    -- Cannot be trained - white/grey
-                    rankFrame:SetProperty("TextColor", "FFCCCCCC");  -- Light grey for unavailable
-                end
+    TalentFrameCanvasViewport:SetProperty("Background", tab.background ~= "" and tab.background or "Interface/GameUI/TalentFrameBackground.htex")
+    TalentFrame_ApplyView()
+    TalentFrameCanvasContent:RemoveAllChildren()
+    visibleNodes = {}
+    talentsById = {}
+    talentIndexById = {}
+
+    local count = GetNumTalents(selectedTab - 1)
+    for index = 0, count - 1 do
+        local talent = GetTalentInfo(selectedTab - 1, index)
+        talentsById[talent.id] = talent
+        talentIndexById[talent.id] = index
+    end
+
+    for index = 0, count - 1 do
+        local talent = GetTalentInfo(selectedTab - 1, index)
+        local prerequisiteCount = GetNumTalentPrerequisites(selectedTab - 1, index)
+        for prerequisiteIndex = 0, prerequisiteCount - 1 do
+            local prerequisite = GetTalentPrerequisiteInfo(selectedTab - 1, index, prerequisiteIndex)
+            local source = talentsById[prerequisite.talentId]
+            if source ~= nil then
+                TalentFrame_CreateLine(source, talent, prerequisite)
             end
         end
-        
-        -- Color the talent based on whether it can be trained
-        talentAvailable = false;--CanTrainTalent(talent, playerTalentPoints)
-        if (talent.rank == talent.maxRank) then
-            -- Max rank, show as normal
-            --button:SetState("Normal")
-        elseif (talentAvailable) then
-            -- Available to train
-            --button:SetState("Highlighted")
-        else
-            -- Not available to train
-            --button:SetState("Disabled")
-        end
-        
-        -- Show the button
-        button:Show();
-        
-        -- Update branch lines
-        TalentFrame_UpdateBranches(button, talent);
+    end
+
+    for index = 0, count - 1 do
+        TalentFrame_CreateNode(GetTalentInfo(selectedTab - 1, index), index)
     end
 end
 
-function TalentFrame_UpdateBranches(button, talent)
-    -- Update the arrow connections between talents based on prerequisites
-    if not talent.prerequisite then return end;
-    
-    -- Find parent button
-    local parentButton = nil;
-    for i=1, MAX_TALENTS_PER_TAB do
-        local possibleParent = _G["TalentFrameTalent"..i]
-        if (possibleParent.id == talent.prerequisite) then;
-            parentButton = possibleParent;
-            break;
-        end
+function TalentFrame_Update(self)
+    local tabCount = GetNumTalentTabs()
+    if tabCount == 0 then
+        selectedTab = 1
+    elseif selectedTab > tabCount then
+        selectedTab = tabCount
     end
-    
-    if not parentButton then return end;
-    
-    -- Calculate positions
-    local left = min(button.column, parentButton.column);
-    local right = max(button.column, parentButton.column);
-    local top = min(button.tier, parentButton.tier);
-    local bottom = max(button.tier, parentButton.tier);
-    local horizontalDistance = right - left;
-    local verticalDistance = bottom - top;
-    
-    -- Setup branch graphics here between interconnected talents
-    if horizontalDistance > 0 and verticalDistance > 0 then
-        -- Diagonal connections
-    elseif horizontalDistance > 0 then
-        -- Horizontal connections
-    else
-        -- Vertical connections
-    end
+
+    local player = GetUnit("player")
+    playerTalentPoints = player and player:GetTalentPoints() or 0
+    TalentFramePointsText:SetText(string.format(Localize("TALENT_POINTS_AVAILABLE"), playerTalentPoints))
+    TalentFrame_UpdateTabs()
+    TalentFrame_UpdateTalents()
 end
 
 function TalentFrameTalent_OnClick(self)
-    -- Check if button is visually disabled
-    if (self.isDisabled) then
-        return; -- Don't allow clicking on disabled talents
+    local talentIndex = talentIndexById[self.id]
+    if talentIndex == nil then
+        return
     end
-    
-    if (playerTalentPoints > 0) then
-        local talentID = self.id;
-        local tabID = selectedTab - 1;
-        
-        -- Learn the talent (in a real implementation, this would call server)
-        local result = LearnTalent(tabID, talentID - 1)
-        
-        if (result) then
-            -- Update display after learning
-            TalentFrame_Update(TalentFrame);
-        end
+    local talent = GetTalentInfo(selectedTab - 1, talentIndex)
+    if talent ~= nil and talent.canLearn then
+        LearnTalent(selectedTab - 1, talentIndex)
     end
 end
 
 function TalentFrameTalent_OnEnter(self)
-    local talentID = self.id;
-    local talent = GetTalentInfo(selectedTab - 1, talentID - 1);
-
-    if not talent then
+    local talentIndex = talentIndexById[self.id]
+    if talentIndex == nil then
         return
-    end;
-
-    -- Provide visual feedback for disabled talents
-    if (self.isDisabled) then
-        -- Slightly brighten disabled talents on hover for better feedback
-        self:SetProperty("Alpha", "0.6");  -- Increase from 40% to 60% opacity on hover
     end
-
-    GameTooltip:ClearAnchors();
-    GameTooltip:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, self, 0);
-    GameTooltip:SetAnchor(AnchorPoint.LEFT, AnchorPoint.RIGHT, self, 0);
-
-    local player = GetUnit("player");
-    GameTooltip_Clear();
-
-    if (talent.spell == nil) then
+    local talent = GetTalentInfo(selectedTab - 1, talentIndex)
+    if talent == nil or talent.spell == nil then
         return
-    end    
-    
-    GameTooltip_AddLine(talent.spell.name, TOOLTIP_LINE_LEFT, "FFFFFFFF");
-    GameTooltip_AddLine(string.format(Localize("TALENT_RANK_OF_MAX_RANK"), talent.rank, talent.maxRank), TOOLTIP_LINE_LEFT, "FFFFFFFF");
-    GameTooltip_AddLine(GetSpellDescription(talent.spell), TOOLTIP_LINE_LEFT, "FFFFD100");
-
-    -- Show next rank information if available
-    if (talent.rank < talent.maxRank and talent.rank > 0 and talent.nextRankSpell) then
-        GameTooltip_AddLine("", TOOLTIP_LINE_LEFT, "FFFFFFFF");
-        GameTooltip_AddLine(Localize("TALENT_NEXT_RANK"), TOOLTIP_LINE_LEFT, "FFFFFFFF");
-        GameTooltip_AddLine(GetSpellDescription(talent.nextRankSpell), TOOLTIP_LINE_LEFT, "FFFFD100");
     end
 
-    -- Show requirement information if talent is disabled
-    if (self.isDisabled) then
-        local pointsSpent = GetTalentPointsSpentInTab(selectedTab - 1);
-        local requiredPoints = talent.tier * 5;
-        GameTooltip_AddLine("", TOOLTIP_LINE_LEFT, "FFFFFFFF");
-        GameTooltip_AddLine(string.format("Requires %d points in this talent tree (%d/%d)", requiredPoints, pointsSpent, requiredPoints), TOOLTIP_LINE_LEFT, "FFFF5555");
+    GameTooltip:ClearAnchors()
+    GameTooltip:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, self, 12)
+    GameTooltip:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, self, 0)
+    GameTooltip_Clear()
+    GameTooltip_AddLine(talent.spell.name, TOOLTIP_LINE_LEFT, "FFFFFFFF")
+    GameTooltip_AddLine(string.format(Localize("TALENT_RANK_OF_MAX_RANK"), talent.rank, talent.maxRank), TOOLTIP_LINE_LEFT, "FFB8BEC8")
+    GameTooltip_AddLine(GetSpellDescription(talent.spell), TOOLTIP_LINE_LEFT, "FFFFD100")
+
+    if talent.rank < talent.maxRank and talent.rank > 0 and talent.nextRankSpell ~= nil then
+        GameTooltip_AddLine("", TOOLTIP_LINE_LEFT, "FFFFFFFF")
+        GameTooltip_AddLine(Localize("TALENT_NEXT_RANK"), TOOLTIP_LINE_LEFT, "FFFFFFFF")
+        GameTooltip_AddLine(GetSpellDescription(talent.nextRankSpell), TOOLTIP_LINE_LEFT, "FFFFD100")
     end
 
-    GameTooltip:Show();
+    local spent = GetTalentPointsSpentInTab(selectedTab - 1)
+    if spent < talent.requiredPoints then
+        GameTooltip_AddLine("", TOOLTIP_LINE_LEFT, "FFFFFFFF")
+        GameTooltip_AddLine(string.format(Localize("TALENT_REQUIRES_POINTS"), talent.requiredPoints, spent, talent.requiredPoints), TOOLTIP_LINE_LEFT, "FFFF6666")
+    end
+    local prerequisiteCount = GetNumTalentPrerequisites(selectedTab - 1, talentIndex)
+    for prerequisiteIndex = 0, prerequisiteCount - 1 do
+        local prerequisite = GetTalentPrerequisiteInfo(selectedTab - 1, talentIndex, prerequisiteIndex)
+        if not prerequisite.met then
+            local source = talentsById[prerequisite.talentId]
+            local sourceName = source and source.name or tostring(prerequisite.talentId)
+            GameTooltip_AddLine(string.format(Localize("TALENT_REQUIRES_TALENT"), sourceName, prerequisite.requiredRank, prerequisite.currentRank, prerequisite.requiredRank), TOOLTIP_LINE_LEFT, "FFFF6666")
+        end
+    end
+    GameTooltip:Show()
 end
 
 function TalentFrameTalent_OnLeave(self)
-    GameTooltip:Hide();
-    
-    -- Restore original alpha state for disabled talents
-    if (self.isDisabled) then
-        self:SetOpacity(0.4);  -- Restore to 40% opacity when not hovering
+    GameTooltip:Hide()
+end
+
+local function TalentFrameCanvas_OnMouseDown(self, button)
+    -- Allow panning with either the left (1) or right (2) mouse button.
+    if button == 1 or button == 2 then
+        canvasDragging = true
+        return true
     end
+    return false
+end
+
+local function TalentFrameCanvas_OnMouseUp(self, button)
+    canvasDragging = false
+end
+
+local function TalentFrameCanvas_OnMouseMove(self, x, y, deltaX, deltaY)
+    if not canvasDragging then
+        return
+    end
+    talentPanX = talentPanX + deltaX
+    talentPanY = talentPanY + deltaY
+    TalentFrame_ApplyView()
+end
+
+local function TalentFrameCanvas_OnMouseWheel(self, delta)
+    TalentFrame_SetZoom(talentZoom * (delta > 0 and 1.12 or 0.89))
+end
+
+function TalentFrame_OnShow(self)
+    TalentFrame_Update(self)
+end
+
+function TalentFrame_OnLoad(self)
+    self:RegisterEvent("PLAYER_TALENT_UPDATE", TalentFrame_Update)
+    self:RegisterEvent("PLAYER_LEVEL_UP", TalentFrame_Update)
+    self:RegisterEvent("PLAYER_ENTER_WORLD", TalentFrame_Update)
+
+    TalentFrameTitleBar:GetChild(0):SetClickedHandler(TalentFrame_Toggle)
+    TalentFrameZoomOut:SetClickedHandler(function() TalentFrame_SetZoom(talentZoom - 0.1) end)
+    TalentFrameZoomIn:SetClickedHandler(function() TalentFrame_SetZoom(talentZoom + 0.1) end)
+    TalentFrameZoomReset:SetClickedHandler(function() TalentFrame_ResetView(); TalentFrame_UpdateTalents() end)
+    TalentFrameCanvasViewport:SetOnMouseDownHandler(TalentFrameCanvas_OnMouseDown)
+    TalentFrameCanvasViewport:SetOnMouseUpHandler(TalentFrameCanvas_OnMouseUp)
+    TalentFrameCanvasViewport:SetOnMouseMoveHandler(TalentFrameCanvas_OnMouseMove)
+    TalentFrameCanvasViewport:SetOnMouseWheelHandler(TalentFrameCanvas_OnMouseWheel)
+
+    AddMenuBarButton("Interface/Icons/fg4_icons_emblemShield_result.htex", TalentFrame_Toggle)
+    TalentFrame_ResetView()
 end

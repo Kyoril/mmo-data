@@ -501,6 +501,9 @@ strings =
 	(key = "TALENT_RANK_OF_MAX_RANK", string = "Rang %d/%d")
 	(key = "TALENT_NEXT_RANK", string = "Rang suivant :")
 	(key = "TALENT_POINTS_AVAILABLE", string = "Points de talent disponibles : %d")
+	(key = "TALENT_RESET_VIEW", string = "Réinitialiser la vue")
+	(key = "TALENT_REQUIRES_POINTS", string = "Nécessite %d points dans cet arbre (%d/%d)")
+	(key = "TALENT_REQUIRES_TALENT", string = "Nécessite %s rang %d (%d/%d)")
 	
 	(key = "YOU_RECEIVE_LOOT_SINGLE", string = "Vous recevez le butin : %s.")
 	(key = "YOU_RECEIVE_LOOT_MULTI", string = "Vous recevez le butin : %sx%d.")
