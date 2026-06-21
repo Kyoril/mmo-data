@@ -277,12 +277,29 @@ function GameParent_OnHoveredObjectChanged(self)
 		color = "FFFF0000";
 	end
 
-    GameTooltip_AddLine(mouseOverUnit:GetName(), TOOLTIP_LINE_LEFT, color);
 	if (mouseOverUnit:GetType() == "PLAYER") then
-		GameTooltip_AddLine(Localize("PLAYER"), TOOLTIP_LINE_LEFT, "FFFFFFFF");
+		if (IsFriend(mouseOverUnit:GetName())) then
+			GameTooltip_AddIconLine(mouseOverUnit:GetName(), "Interface/Icons/FriendMarker.htex", color);
+		else
+			GameTooltip_AddLine(mouseOverUnit:GetName(), TOOLTIP_LINE_LEFT, color);
+		end
+
+		local guildName = mouseOverUnit:GetGuildName();
+		if (guildName and guildName ~= "") then
+			GameTooltip_AddLine("<" .. guildName .. ">", TOOLTIP_LINE_LEFT, "FFFFD100");
+		end
+
+		local className = mouseOverUnit:GetClass();
+		if (className and className ~= "") then
+			GameTooltip_AddLine(string.format(Localize("PLAYER_LEVEL_CLASS_FORMAT"), mouseOverUnit:GetLevel(), className), TOOLTIP_LINE_LEFT, "FFFFFFFF");
+		else
+			GameTooltip_AddLine(string.format(Localize("LEVEL_FORMAT"), mouseOverUnit:GetLevel()), TOOLTIP_LINE_LEFT, "FFFFFFFF");
+		end
+	else
+		GameTooltip_AddLine(mouseOverUnit:GetName(), TOOLTIP_LINE_LEFT, color);
+		GameTooltip_AddLine(string.format(Localize("LEVEL_FORMAT"), mouseOverUnit:GetLevel()), TOOLTIP_LINE_LEFT, "FFFFFFFF");
 	end
 
-	GameTooltip_AddLine(string.format(Localize("LEVEL_FORMAT"), mouseOverUnit:GetLevel()), TOOLTIP_LINE_LEFT, "FFFFFFFF");
     GameTooltip:Show();
 end
 

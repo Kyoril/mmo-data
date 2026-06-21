@@ -29,6 +29,29 @@
         </Area>
     </Frame>
 
+	<Frame name="GameTooltipIconLineTemplate" renderer="DefaultRenderer">
+		<Area>
+			<Size><AbsDimension x="512" y="32" /></Size>
+		</Area>
+
+		<Frame name="GameTooltipLineIcon" inherits="IconTemplate">
+			<Area>
+				<Anchor point="LEFT" />
+				<Anchor point="TOP" />
+				<Size><AbsDimension x="32" y="32" /></Size>
+			</Area>
+		</Frame>
+
+		<Frame name="GameTooltipLineIconText" inherits="GameTooltipLineTemplate">
+			<Area>
+				<Anchor point="LEFT" relativeTo="GameTooltipLineIcon" relativePoint="RIGHT" offset="8" />
+				<Anchor point="RIGHT" />
+				<Anchor point="TOP" />
+				<Size><AbsDimension x="0" y="32" /></Size>
+			</Area>
+		</Frame>
+	</Frame>
+
     <Frame name="GameTooltipLineRightTemplate" renderer="DefaultRenderer">
 		<Property name="Font" value="TooltipFont" />
 

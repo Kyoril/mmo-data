@@ -434,6 +434,7 @@ strings =
 	(key = "QUALITY_LEGENDARY", string = "Legendary")
 	
 	(key = "LEVEL_FORMAT", string = "Level %d")
+	(key = "PLAYER_LEVEL_CLASS_FORMAT", string = "Level %d %s")
 
 	(key = "GUILD_INVITATION", string = "%s invites you to guild '%s'.")
 	(key = "GUILD_INVITE_SENT", string = "You invited %s to join your guild.")

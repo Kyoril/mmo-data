@@ -49,6 +49,35 @@ function GameTooltip_AddLine(line, alignment, color)
     GameTooltip:SetHeight(TooltipHeight);
 end
 
+function GameTooltip_AddIconLine(line, icon, color)
+	local lineFrame = GameTooltipIconLineTemplate:Clone();
+	local iconFrame = lineFrame:GetChild(0);
+	local textFrame = lineFrame:GetChild(1);
+
+	iconFrame:SetProperty("Icon", icon);
+	textFrame:SetText(line);
+	GameTooltipLines:AddChild(lineFrame);
+
+	if (GameTooltipLines:GetChildCount() > 1) then
+		lineFrame:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, GameTooltipLines:GetChild(GameTooltipLines:GetChildCount() - 2), 8);
+	else
+		lineFrame:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, 8);
+	end
+
+	lineFrame:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, 8);
+	lineFrame:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, -8);
+
+	if (color ~= nil) then
+		textFrame:SetProperty("Color", color);
+	end
+
+	local lineHeight = math.max(iconFrame:GetHeight(), textFrame:GetTextHeight());
+	lineFrame:SetHeight(lineHeight);
+	textFrame:SetHeight(lineHeight);
+	TooltipHeight = TooltipHeight + lineHeight + 8;
+	GameTooltip:SetHeight(TooltipHeight);
+end
+
 function GameTooltip_AddDualLine(leftText, rightText, leftColor, rightColor)
 	-- Create left-aligned text frame
 	local leftFrame = GameTooltipLineTemplate:Clone();
