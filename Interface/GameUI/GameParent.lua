@@ -258,12 +258,63 @@ function GameParent_OnReviveRequest(self, casterName)
     StaticDialog_Show("REVIVE_REQUEST", casterName);
 end
 
+-- Repositions the game tooltip so it hovers above the currently hovered world object.
+-- Returns true if the object is on screen and the tooltip was positioned, false otherwise.
+function GameParent_UpdateWorldObjectTooltip()
+	local onScreen, x, y = GetMouseoverWorldObjectScreenPosition();
+	if (not onScreen) then
+		return false;
+	end
+
+	local parent = GameTooltip:GetParent();
+	local tooltipWidth = GameTooltip:GetWidth();
+	local tooltipHeight = GameTooltip:GetHeight();
+
+	-- Center the tooltip horizontally on the object and place it just above the object's top.
+	local left = x - tooltipWidth * 0.5;
+	local top = y - tooltipHeight;
+
+	-- Keep the tooltip fully on screen.
+	local margin = 8.0;
+	local maxLeft = parent:GetWidth() - tooltipWidth - margin;
+	local maxTop = parent:GetHeight() - tooltipHeight - margin;
+	if (left < margin) then left = margin; end
+	if (maxLeft > margin and left > maxLeft) then left = maxLeft; end
+	if (top < margin) then top = margin; end
+	if (maxTop > margin and top > maxTop) then top = maxTop; end
+
+	GameTooltip:ClearAnchors();
+	GameTooltip:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, parent, left);
+	GameTooltip:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, parent, top);
+	return true;
+end
+
 function GameParent_OnHoveredObjectChanged(self)
 	local mouseOverUnit = GetUnit("mouseover");
 	if ( not mouseOverUnit ) then
+		-- No unit is hovered, but an interactable world object might be: show its name where it sits.
+		if (IsMouseoverWorldObject()) then
+			local objectName = GetMouseoverWorldObjectName();
+			if (objectName and objectName ~= "") then
+				GameTooltip.followWorldObject = true;
+				GameTooltip_Clear();
+				GameTooltip_AddLine(objectName, TOOLTIP_LINE_LEFT, "FFFFD100");
+
+				if (GameParent_UpdateWorldObjectTooltip()) then
+					GameTooltip:Show();
+				else
+					GameTooltip:Hide();
+				end
+				return;
+			end
+		end
+
+		GameTooltip.followWorldObject = false;
 		GameTooltip_FadeOut(1.0, 1.0);
 		return;
 	end
+
+	GameTooltip.followWorldObject = false;
 
     GameTooltip_Clear();
 	GameTooltip:ClearAnchors();
