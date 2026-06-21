@@ -58,7 +58,7 @@
 		<Frame name="StaticDialogButton2" inherits="GlueButton">
 			<Property name="Text" value="CANCEL" />
 			<Property name="Visible" value="false" />
-			
+
 			<Area>
 				<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="StaticDialogButton1" offset="20" />
 				<Anchor point="BOTTOM" relativeTo="StaticDialogButton1" />
@@ -75,7 +75,28 @@
 				</OnClick>
 			</Scripts>
 		</Frame>
-	
+
+		<Frame name="StaticDialogButton3" inherits="GlueButton">
+			<Property name="Text" value="CANCEL" />
+			<Property name="Visible" value="false" />
+
+			<Area>
+				<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="StaticDialogButton2" offset="20" />
+				<Anchor point="BOTTOM" relativeTo="StaticDialogButton1" />
+				<Size>
+					<AbsDimension x="180" y="80" />
+				</Size>
+			</Area>
+
+			<Scripts>
+				<OnClick>
+					return function(this)
+						StaticDialog_Button3Clicked();
+					end
+				</OnClick>
+			</Scripts>
+		</Frame>
+
 		<Scripts>
 			<OnLoad>
 				return function(this)

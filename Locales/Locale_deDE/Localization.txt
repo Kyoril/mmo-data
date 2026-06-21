@@ -84,6 +84,10 @@ strings =
 	(key = "OPTIONS_QUALITY_ULTRA", string = "Ultra")
 
 	(key = "OPTIONS_INTERFACE", string = "Benutzeroberfläche")
+	(key = "OPTIONS_GAMEPLAY", string = "Gameplay")
+	(key = "OPTIONS_CHAT_BUBBLES_SAY", string = "Sprechblasen: Sagen")
+	(key = "OPTIONS_CHAT_BUBBLES_YELL", string = "Sprechblasen: Schreien")
+	(key = "OPTIONS_CHAT_BUBBLES_PARTY", string = "Sprechblasen: Gruppe")
 	(key = "OPTIONS_LANGUAGE", string = "Sprache")
 	(key = "OPTIONS_LOCALE_ENUS", string = "English")
 	(key = "OPTIONS_LOCALE_DEDE", string = "Deutsch")
@@ -181,7 +185,9 @@ strings =
 	
 	(key = "YOU_DIED", string = "Euer Charakter ist tot!")
 	(key = "DEATH_RELEASE", string = "Geist freilassen")
-	
+	(key = "REVIVE_REQUEST", string = "%s möchte Euch wiederbeleben.")
+	(key = "REVIVE_ACCEPT", string = "Wiederbeleben")
+
 	(key = "FORMAT_DURATION_HOURS", string = "%.0f Stunden")
 	(key = "FORMAT_DURATION_HOURS_PRECISE", string = "%.2f Stunden")
 	(key = "FORMAT_DURATION_MINUTES", string = "%.0f Minuten")

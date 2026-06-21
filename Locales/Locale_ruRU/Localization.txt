@@ -84,6 +84,10 @@ strings =
 	(key = "OPTIONS_QUALITY_ULTRA", string = "Ультра")
 
 	(key = "OPTIONS_INTERFACE", string = "Интерфейс")
+	(key = "OPTIONS_GAMEPLAY", string = "Игровой процесс")
+	(key = "OPTIONS_CHAT_BUBBLES_SAY", string = "Облачка обычной речи")
+	(key = "OPTIONS_CHAT_BUBBLES_YELL", string = "Облачка крика")
+	(key = "OPTIONS_CHAT_BUBBLES_PARTY", string = "Облачка группы")
 	(key = "OPTIONS_LANGUAGE", string = "Язык")
 	(key = "OPTIONS_LOCALE_ENUS", string = "English")
 	(key = "OPTIONS_LOCALE_DEDE", string = "Deutsch")
@@ -180,7 +184,9 @@ strings =
 	
 	(key = "YOU_DIED", string = "Your character is dead!")
 	(key = "DEATH_RELEASE", string = "Release")
-	
+	(key = "REVIVE_REQUEST", string = "%s wants to revive you.")
+	(key = "REVIVE_ACCEPT", string = "Revive")
+
 	(key = "FORMAT_DURATION_HOURS", string = "%.0f hours")
 	(key = "FORMAT_DURATION_HOURS_PRECISE", string = "%.2f hours")
 	(key = "FORMAT_DURATION_MINUTES", string = "%.0f minutes")

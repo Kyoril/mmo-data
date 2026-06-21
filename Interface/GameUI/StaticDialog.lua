@@ -14,6 +14,31 @@ StaticDialogs["DEATH"] = {
 	notClosableByLogout = true
 };
 
+StaticDialogs["REVIVE_REQUEST"] = {
+	text = Localize("REVIVE_REQUEST"),
+	button1 = Localize("REVIVE_ACCEPT"),
+	button2 = Localize("DECLINE"),
+	button3 = Localize("DEATH_RELEASE"),
+	OnAccept = function()
+		-- Revive: accept the revival offered by another player.
+		AcceptRevive();
+	end,
+	OnCancel = function()
+		-- Decline: tell the server we declined, then fall back to the standard
+		-- death dialog so the player can still choose to release their body.
+		DeclineRevive();
+		StaticDialog_Show("DEATH");
+	end,
+	OnAlt = function()
+		-- Release Body: decline the revival and release the spirit immediately.
+		DeclineRevive();
+		ReviveMe();
+	end,
+	timeout = 60,
+	whileDead = true,
+	notClosableByLogout = true
+};
+
 StaticDialogs["PARTY_INVITE"] = {
 	text = Localize("INVITATION"),
 	button1 = Localize("ACCEPT"),
@@ -252,10 +277,31 @@ function StaticDialog_Show(which, text_arg1, text_arg2)
 	-- Set the buttons of the dialog
 	local button1 = _G[dialog:GetName().."Button1"];
 	local button2 = _G[dialog:GetName().."Button2"];
-	
+	local button3 = _G[dialog:GetName().."Button3"];
+
 	local lastElement = StaticDialogs[which].hasEditBox and editBox or text;
 
-	if ( StaticDialogs[which].button2 and
+	if ( StaticDialogs[which].button3 ) then
+		-- Three-button layout: the middle button is centered, the others flank it.
+		button1:ClearAnchors();
+		button2:ClearAnchors();
+		button3:ClearAnchors();
+
+		button2:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, lastElement, 8);
+		button2:SetAnchor(AnchorPoint.H_CENTER, AnchorPoint.H_CENTER, lastElement, 0);
+		button2:SetWidth(180);
+		button2:SetText(StaticDialogs[which].button2);
+		button2:Show();
+
+		button1:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, button2, 0);
+		button1:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.LEFT, button2, -20);
+
+		button3:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, button2, 0);
+		button3:SetAnchor(AnchorPoint.LEFT, AnchorPoint.RIGHT, button2, 20);
+		button3:SetWidth(180);
+		button3:SetText(StaticDialogs[which].button3);
+		button3:Show();
+	elseif ( StaticDialogs[which].button2 and
 	   ( not StaticDialogs[which].DisplayButton2 or StaticDialogs[which].DisplayButton2() ) ) then
 		button1:ClearAnchors();
 		button2:ClearAnchors();
@@ -271,11 +317,13 @@ function StaticDialog_Show(which, text_arg1, text_arg2)
 			button2:SetWidth(180);
 		end
 		button2:Show();
+		button3:Hide();
 	else
 		button1:ClearAnchors();
 		button1:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, lastElement, 8);
 		button1:SetAnchor(AnchorPoint.H_CENTER, AnchorPoint.H_CENTER, lastElement, 0);
 		button2:Hide();
+		button3:Hide();
 	end
 
 	if ( StaticDialogs[which].button1 ) then
@@ -338,8 +386,16 @@ end
 
 function StaticDialog_Button2Clicked()
 	StaticDialog:Hide();
-	
+
 	if (StaticDialogs[StaticDialog.which].OnCancel) then
 		StaticDialogs[StaticDialog.which].OnCancel()
+	end
+end
+
+function StaticDialog_Button3Clicked()
+	StaticDialog:Hide();
+
+	if (StaticDialogs[StaticDialog.which].OnAlt) then
+		StaticDialogs[StaticDialog.which].OnAlt()
 	end
 end

@@ -84,6 +84,10 @@ strings =
 	(key = "OPTIONS_QUALITY_ULTRA", string = "Ultra")
 
 	(key = "OPTIONS_INTERFACE", string = "Interface")
+	(key = "OPTIONS_GAMEPLAY", string = "Jouabilité")
+	(key = "OPTIONS_CHAT_BUBBLES_SAY", string = "Bulles de discussion : dire")
+	(key = "OPTIONS_CHAT_BUBBLES_YELL", string = "Bulles de discussion : crier")
+	(key = "OPTIONS_CHAT_BUBBLES_PARTY", string = "Bulles de discussion : groupe")
 	(key = "OPTIONS_LANGUAGE", string = "Langue")
 	(key = "OPTIONS_LOCALE_ENUS", string = "English")
 	(key = "OPTIONS_LOCALE_DEDE", string = "Deutsch")
@@ -181,7 +185,9 @@ strings =
 	
 	(key = "YOU_DIED", string = "Vous êtes mort !")
 	(key = "DEATH_RELEASE", string = "Réapparaître…")
-	
+	(key = "REVIVE_REQUEST", string = "%s veut vous ressusciter.")
+	(key = "REVIVE_ACCEPT", string = "Ressusciter")
+
 	(key = "FORMAT_DURATION_HOURS", string = "%.0f heures")
 	(key = "FORMAT_DURATION_HOURS_PRECISE", string = "%.2f heures")
 	(key = "FORMAT_DURATION_MINUTES", string = "%.0f minutes")

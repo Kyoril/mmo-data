@@ -253,6 +253,11 @@ function GameParent_OnPlayerDead()
     StaticDialog_Show("DEATH");
 end
 
+function GameParent_OnReviveRequest(self, casterName)
+    -- Another player is trying to revive us while we lie dead and haven't released yet.
+    StaticDialog_Show("REVIVE_REQUEST", casterName);
+end
+
 function GameParent_OnHoveredObjectChanged(self)
 	local mouseOverUnit = GetUnit("mouseover");
 	if ( not mouseOverUnit ) then
@@ -286,6 +291,7 @@ function GameParent_OnLoad(self)
     self:RegisterEvent("PLAYER_SPELL_CAST_FAILED", GameParent_OnSpellError);
     self:RegisterEvent("ATTACK_SWING_ERROR", GameParent_OnAttackSwingError);
     self:RegisterEvent("PLAYER_DEAD", GameParent_OnPlayerDead);
+	self:RegisterEvent("REVIVE_REQUEST", GameParent_OnReviveRequest);
 	self:RegisterEvent("PARTY_INVITE_REQUEST", GameParent_OnPartyInviteRequest);
 	self:RegisterEvent("RANDOM_ROLL_RESULT", GameParent_OnRandomRollResult);
 	self:RegisterEvent("HOVERED_OBJECT_CHANGED", GameParent_OnHoveredObjectChanged);

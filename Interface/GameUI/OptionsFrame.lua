@@ -161,6 +161,31 @@ local OPTIONS_CATEGORIES = {
 		},
 	},
 	{
+		id = "Gameplay",
+		labelKey = "OPTIONS_GAMEPLAY",
+		type = "settings",
+		options = {
+			{
+				type = "toggle",
+				labelKey = "OPTIONS_CHAT_BUBBLES_SAY",
+				cvar = "ChatBubblesSay",
+				defaultValue = "1",
+			},
+			{
+				type = "toggle",
+				labelKey = "OPTIONS_CHAT_BUBBLES_YELL",
+				cvar = "ChatBubblesYell",
+				defaultValue = "1",
+			},
+			{
+				type = "toggle",
+				labelKey = "OPTIONS_CHAT_BUBBLES_PARTY",
+				cvar = "ChatBubblesParty",
+				defaultValue = "1",
+			},
+		},
+	},
+	{
 		id = "KeyBindings",
 		labelKey = "OPTIONS_KEYBINDINGS",
 		type = "keybinding",
