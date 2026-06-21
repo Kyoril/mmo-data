@@ -195,9 +195,11 @@ strings =
 	(key = "FORMAT_DURATION_SECONDS_PRECISE", string = "%.2f seconds")
 	
 	(key = "SPELLBOOK", string = "Spell Book")
+	(key = "REPERTOIRE", string = "Репертуар")
 	(key = "SPELLBOOK_TAB_GENERAL", string = "General")
 	(key = "SPELLBOOK_TAB_ABILITIES", string = "Abilities")
 	(key = "SPELLBOOK_TAB_SKILLS", string = "Skills")
+	(key = "SPELLBOOK_EMPTY_CATEGORY", string = "No spells in this category.")
 	(key = "CHARACTER", string = "Character")
 	(key = "ATTRIBUTES", string = "Attributes")
 	(key = "DEFENSE", string = "Defense")

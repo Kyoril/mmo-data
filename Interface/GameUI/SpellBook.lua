@@ -81,6 +81,10 @@ function SpellBook_UpdatePage()
         SpellBookPage = maxPage;
     end
 
+    SpellBookPrevPageButton:Show();
+    SpellBookNextPageButton:Show();
+    SpellBookPageLabel:Show();
+
     if (SpellBookPage > 1) then
         SpellBookPrevPageButton:Enable();
     else
@@ -94,7 +98,13 @@ function SpellBook_UpdatePage()
     end
 
     SpellBookPageLabel:SetText(string.format(Localize("SPELL_BOOK_PAGE_FORMAT"), SpellBookPage));
-    SpellBookCategoryLabel:SetText(SpellBook_GetTabText(SpellBookTab));
+
+    if (#SpellBookVisibleSpells == 0) then
+        SpellBookEmptyLabel:Show();
+    else
+        SpellBookEmptyLabel:Hide();
+    end
+
     SpellBook_UpdateTabs();
 
     -- Refresh all spell buttons
@@ -186,14 +196,15 @@ function SpellButton_Update(button)
         button:GetChild(0):SetText("");
         button:GetChild(1):SetText("");
         button:SetProperty("icon", "");
-        button:Disable();
+        button:Hide();
         return;
     end
 
+    button:Show();
     button:GetChild(0):SetText(spell.name);
 
     if spell.rank > 0 then
-        button:GetChild(1):SetText("Rank " .. spell.rank);
+        button:GetChild(1):SetText(string.format(Localize("SPELL_RANK_FORMAT"), spell.rank));
     else
         button:GetChild(1):SetText("");
     end
@@ -230,6 +241,8 @@ function SpellBook_SelectTab(tabId)
         SpellBookTab = tabId;
         SpellBookPage = 1;
         SpellBook_UpdatePage();
+    else
+        SpellBook_UpdateTabs();
     end
 end
 

@@ -120,53 +120,75 @@
 		</Scripts>
 	</Frame>
 
-	<Frame name="SpellBookTabButtonTemplate" type="Button" renderer="ButtonRenderer">
+	<Frame name="SpellBookTabButtonTemplate" type="Button" renderer="CheckboxRenderer">
 		<Property name="Font" value="SpellBookTabFont" />
+		<Property name="Checkable" value="true" />
 
 		<Visual>
 			<ImagerySection name="NormalFrame">
-				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Up_result.htex" borderSize="25" />
+				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Down_result.htex" borderSize="25" />
 			</ImagerySection>
 			<ImagerySection name="HoveredFrame">
-				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Over_result.htex" borderSize="25" />
+				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Up_result.htex" borderSize="25" />
 			</ImagerySection>
 			<ImagerySection name="PushedFrame">
-				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Down_result.htex" borderSize="25" />
+				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Over_result.htex" borderSize="25" />
 			</ImagerySection>
 			<ImagerySection name="SelectedFrame">
-				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Down_result.htex" borderSize="25" />
+				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Over_result.htex" borderSize="25" />
+				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="8">
+					<Area><Inset all="5" /></Area>
+				</BorderComponent>
 			</ImagerySection>
-			<ImagerySection name="Caption">
+			<ImagerySection name="CaptionNormal">
+				<TextComponent color="FFB9A26A" horzAlign="CENTER" vertAlign="CENTER" />
+			</ImagerySection>
+			<ImagerySection name="CaptionActive">
 				<TextComponent color="FFFFD100" horzAlign="CENTER" vertAlign="CENTER" />
+			</ImagerySection>
+			<ImagerySection name="CaptionSelected">
+				<TextComponent color="FFFFFFFF" horzAlign="CENTER" vertAlign="CENTER" />
 			</ImagerySection>
 			<StateImagery name="Normal">
 				<Layer>
 					<Section section="NormalFrame" />
-					<Section section="Caption" />
+					<Section section="CaptionNormal" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="Hovered">
 				<Layer>
 					<Section section="HoveredFrame" />
-					<Section section="Caption" />
+					<Section section="CaptionActive" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="Pushed">
 				<Layer>
 					<Section section="PushedFrame" />
-					<Section section="Caption" />
+					<Section section="CaptionSelected" />
 				</Layer>
 			</StateImagery>
-			<StateImagery name="Selected">
+			<StateImagery name="NormalChecked">
 				<Layer>
 					<Section section="SelectedFrame" />
-					<Section section="Caption" />
+					<Section section="CaptionSelected" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="HoveredChecked">
+				<Layer>
+					<Section section="SelectedFrame" />
+					<Section section="CaptionSelected" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="PushedChecked">
+				<Layer>
+					<Section section="SelectedFrame" />
+					<Section section="CaptionSelected" />
 				</Layer>
 			</StateImagery>
 		</Visual>
 
 		<Area>
-			<Size><AbsDimension x="220" y="84" /></Size>
+			<Size><AbsDimension x="256" y="76" /></Size>
 		</Area>
 	</Frame>
 
@@ -191,7 +213,7 @@
         </Area>
 
 		<Frame name="SpellBookTitleBar" inherits="TitleBar">
-			<Property name="Text" value="SPELLBOOK" />
+			<Property name="Text" value="REPERTOIRE" />
 
 			<Area>
 				<Anchor point="TOP" offset="24" />
@@ -200,26 +222,7 @@
 			</Area>
 		</Frame>
 
-		<Frame name="SpellBookBackground" renderer="DefaultRenderer">
-			<Visual>
-				<ImagerySection name="Frame">
-					<BorderComponent texture="Interface/GameUI/QuestFrame_Background.htex" borderSize="96" tint="FFFFFFFF">
-						<Area><Inset right="8" top="8" left="8" bottom="8" /></Area>
-					</BorderComponent>
-					<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" />
-				</ImagerySection>
-				<StateImagery name="Enabled">
-					<Layer>
-						<Section section="Frame" />
-					</Layer>
-				</StateImagery>
-				<StateImagery name="Disabled">
-					<Layer>
-						<Section section="Frame" />
-					</Layer>
-				</StateImagery>
-			</Visual>
-
+		<Frame name="SpellBookBackground">
 			<Area>
 				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="SpellBookTitleBar" />
 				<Anchor point="LEFT" offset="24" />
@@ -227,39 +230,90 @@
 				<Anchor point="BOTTOM" offset="-24" />
 			</Area>
 
-			<Frame name="SpellBookTab1" inherits="SpellBookTabButtonTemplate" type="Button" id="1">
-				<Property name="Text" value="General" />
+			<Frame name="SpellBookPaper" renderer="DefaultRenderer">
+				<Property name="Clickable" value="false" />
+
+				<Visual>
+					<ImagerySection name="Frame">
+						<BorderComponent texture="Interface/GameUI/QuestFrame_Background.htex" borderSize="96" tint="FFFFFFFF" />
+					</ImagerySection>
+					<StateImagery name="Enabled">
+						<Layer><Section section="Frame" /></Layer>
+					</StateImagery>
+				</Visual>
+
 				<Area>
-					<Anchor point="TOP" offset="24" />
-					<Anchor point="LEFT" offset="40" />
+					<Anchor point="TOP" offset="112" />
+					<Anchor point="LEFT" offset="12" />
+					<Anchor point="RIGHT" offset="-12" />
+					<Anchor point="BOTTOM" offset="-136" />
 				</Area>
 			</Frame>
 
-			<Frame name="SpellBookTab2" inherits="SpellBookTabButtonTemplate" type="Button" id="2">
-				<Property name="Text" value="Abilities" />
+			<Frame name="SpellBookPaperBorder" renderer="DefaultRenderer">
+				<Property name="Clickable" value="false" />
+
+				<Visual>
+					<ImagerySection name="Frame">
+						<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" />
+					</ImagerySection>
+					<StateImagery name="Enabled">
+						<Layer><Section section="Frame" /></Layer>
+					</StateImagery>
+				</Visual>
+
 				<Area>
-					<Anchor point="TOP" relativeTo="SpellBookTab1" />
-					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="SpellBookTab1" offset="12" />
+					<Anchor point="TOP" offset="104" />
+					<Anchor point="LEFT" offset="4" />
+					<Anchor point="RIGHT" offset="-4" />
+					<Anchor point="BOTTOM" offset="-128" />
 				</Area>
 			</Frame>
 
-			<Frame name="SpellBookTab3" inherits="SpellBookTabButtonTemplate" type="Button" id="3">
-				<Property name="Text" value="Skills" />
+			<Frame name="SpellBookTabBar">
 				<Area>
-					<Anchor point="TOP" relativeTo="SpellBookTab1" />
-					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="SpellBookTab2" offset="12" />
+					<Anchor point="TOP" offset="20" />
+					<Anchor point="LEFT" offset="36" />
+					<Anchor point="RIGHT" offset="-36" />
+					<Size><AbsDimension y="88" /></Size>
 				</Area>
+
+				<Frame name="SpellBookTab1" inherits="SpellBookTabButtonTemplate" type="Button" id="1">
+					<Property name="Text" value="SPELLBOOK_TAB_GENERAL" />
+					<Area>
+						<Anchor point="TOP" offset="6" />
+						<Anchor point="LEFT" offset="36" />
+					</Area>
+				</Frame>
+
+				<Frame name="SpellBookTab2" inherits="SpellBookTabButtonTemplate" type="Button" id="2">
+					<Property name="Text" value="SPELLBOOK_TAB_ABILITIES" />
+					<Area>
+						<Anchor point="TOP" relativeTo="SpellBookTab1" />
+						<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="SpellBookTab1" offset="0" />
+					</Area>
+				</Frame>
+
+				<Frame name="SpellBookTab3" inherits="SpellBookTabButtonTemplate" type="Button" id="3">
+					<Property name="Text" value="SPELLBOOK_TAB_SKILLS" />
+					<Area>
+						<Anchor point="TOP" relativeTo="SpellBookTab1" />
+						<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="SpellBookTab2" offset="0" />
+					</Area>
+				</Frame>
 			</Frame>
 
-			<Frame inherits="TextSmall" name="SpellBookCategoryLabel">
-				<Property name="HorzAlign" value="RIGHT" />
-				<Property name="TextColor" value="FF4A3620" />
+			<Frame inherits="TextSmall" name="SpellBookEmptyLabel">
+				<Property name="HorzAlign" value="CENTER" />
+				<Property name="TextColor" value="FF776A58" />
+				<Property name="Text" value="SPELLBOOK_EMPTY_CATEGORY" />
+				<Property name="Visible" value="false" />
 
 				<Area>
-					<Anchor point="TOP" offset="44" />
-					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="SpellBookTab3" offset="24" />
-					<Anchor point="RIGHT" offset="-40" />
-					<Size><AbsDimension y="32" /></Size>
+					<Anchor point="TOP" offset="340" />
+					<Anchor point="LEFT" offset="80" />
+					<Anchor point="RIGHT" offset="-80" />
+					<Size><AbsDimension y="48" /></Size>
 				</Area>
 			</Frame>
 
@@ -267,7 +321,7 @@
 			<Frame inherits="SpellBookButtonTemplate" name="SpellBookButton01">
 				<Property name="Icon" value="Interface/Icons/Spells/S_Attack.htex" />
 				<Area>
-					<Anchor point="TOP" offset="128" />
+					<Anchor point="TOP" offset="144" />
 					<Anchor point="LEFT" offset="48" />
 				</Area>
 			</Frame>
@@ -351,12 +405,23 @@
 				</Area>
 			</Frame>
 
+			<Frame name="SpellBookFooter">
+				<Property name="Clickable" value="false" />
+
+				<Area>
+					<Anchor point="BOTTOM" offset="-12" />
+					<Anchor point="LEFT" offset="36" />
+					<Anchor point="RIGHT" offset="-36" />
+					<Size><AbsDimension y="112" /></Size>
+				</Area>
+			</Frame>
+
         <Frame inherits="TextSmall" name="SpellBookPageLabel">
 			<Property name="HorzAlign" value="CENTER" />
-			<Property name="TextColor" value="FF4A3620" />
+			<Property name="TextColor" value="FFFFD100" />
 
             <Area>
-                <Anchor point="BOTTOM" offset="-80" />
+				<Anchor point="BOTTOM" offset="-52" />
                 <Anchor point="LEFT" />
 				<Anchor point="RIGHT" />
 				<Size><AbsDimension y="39" /></Size>
@@ -367,7 +432,7 @@
 			<Property name="Icon" value="Interface/Icons/fg4_iconsGold_leftArrow.htex" />
 
             <Area>
-                <Anchor point="BOTTOM" offset="-56" />
+				<Anchor point="BOTTOM" offset="-20" />
                 <Anchor point="LEFT" offset="64" />
 				<Size><AbsDimension x="96" y="96" /></Size>
             </Area>
@@ -385,7 +450,7 @@
 			<Property name="Icon" value="Interface/Icons/fg4_iconsGold_rightArrow.htex" />
 
             <Area>
-                <Anchor point="BOTTOM" offset="-56" />
+				<Anchor point="BOTTOM" offset="-20" />
                 <Anchor point="RIGHT" offset="-64" />
 				<Size><AbsDimension x="96" y="96" /></Size>
             </Area>

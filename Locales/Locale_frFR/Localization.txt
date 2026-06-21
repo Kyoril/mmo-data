@@ -196,9 +196,11 @@ strings =
 	(key = "FORMAT_DURATION_SECONDS_PRECISE", string = "%.2f secondes")
 	
 	(key = "SPELLBOOK", string = "Livre des sorts")
+	(key = "REPERTOIRE", string = "Répertoire")
 	(key = "SPELLBOOK_TAB_GENERAL", string = "Général")
 	(key = "SPELLBOOK_TAB_ABILITIES", string = "Capacités")
 	(key = "SPELLBOOK_TAB_SKILLS", string = "Compétences")
+	(key = "SPELLBOOK_EMPTY_CATEGORY", string = "Aucun sort dans cette catégorie.")
 	(key = "CHARACTER", string = "Personnage")
 	(key = "ATTRIBUTES", string = "Caractéristiques")
 	(key = "DEFENSE", string = "Défense")

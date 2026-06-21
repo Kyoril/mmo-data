@@ -196,9 +196,11 @@ strings =
 	(key = "FORMAT_DURATION_SECONDS_PRECISE", string = "%.2f Sekunden")
 	
 	(key = "SPELLBOOK", string = "Zauberbuch")
+	(key = "REPERTOIRE", string = "Repertoire")
 	(key = "SPELLBOOK_TAB_GENERAL", string = "Allgemein")
 	(key = "SPELLBOOK_TAB_ABILITIES", string = "Fähigkeiten")
 	(key = "SPELLBOOK_TAB_SKILLS", string = "Waffenfertigkeiten")
+	(key = "SPELLBOOK_EMPTY_CATEGORY", string = "Keine Zauber in dieser Kategorie.")
 	(key = "CHARACTER", string = "Charakter")
 	(key = "ATTRIBUTES", string = "Attribute")
 	(key = "DEFENSE", string = "Verteidigung")
