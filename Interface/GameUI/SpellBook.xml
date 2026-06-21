@@ -4,6 +4,7 @@
 
 	<Font name="SpellNameLabelFont" file="Fonts/FRIZQT__.TTF" size="22" outline="0" shadowX="1.0" shadowY="1.0" />
 	<Font name="SpellSubLabelFont" file="Fonts/FRIZQT__.TTF" size="18" outline="0" shadowX="1.0" shadowY="1.0" />
+	<Font name="SpellBookTabFont" file="Fonts/FRIZQT__.TTF" size="20" outline="0" shadowX="1.0" shadowY="1.0" />
 
 	<!-- Small label -->
 	<Frame name="SpellNameLabel" renderer="DefaultRenderer">
@@ -119,6 +120,56 @@
 		</Scripts>
 	</Frame>
 
+	<Frame name="SpellBookTabButtonTemplate" type="Button" renderer="ButtonRenderer">
+		<Property name="Font" value="SpellBookTabFont" />
+
+		<Visual>
+			<ImagerySection name="NormalFrame">
+				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Up_result.htex" borderSize="25" />
+			</ImagerySection>
+			<ImagerySection name="HoveredFrame">
+				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Over_result.htex" borderSize="25" />
+			</ImagerySection>
+			<ImagerySection name="PushedFrame">
+				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Down_result.htex" borderSize="25" />
+			</ImagerySection>
+			<ImagerySection name="SelectedFrame">
+				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Down_result.htex" borderSize="25" />
+			</ImagerySection>
+			<ImagerySection name="Caption">
+				<TextComponent color="FFFFD100" horzAlign="CENTER" vertAlign="CENTER" />
+			</ImagerySection>
+			<StateImagery name="Normal">
+				<Layer>
+					<Section section="NormalFrame" />
+					<Section section="Caption" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Hovered">
+				<Layer>
+					<Section section="HoveredFrame" />
+					<Section section="Caption" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Pushed">
+				<Layer>
+					<Section section="PushedFrame" />
+					<Section section="Caption" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Selected">
+				<Layer>
+					<Section section="SelectedFrame" />
+					<Section section="Caption" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+
+		<Area>
+			<Size><AbsDimension x="220" y="84" /></Size>
+		</Area>
+	</Frame>
+
     <Frame name="SpellBook" renderer="DefaultRenderer" parent="GameParent">
 		<Property name="Visible" value="False" />
 
@@ -176,11 +227,47 @@
 				<Anchor point="BOTTOM" offset="-24" />
 			</Area>
 
+			<Frame name="SpellBookTab1" inherits="SpellBookTabButtonTemplate" type="Button" id="1">
+				<Property name="Text" value="General" />
+				<Area>
+					<Anchor point="TOP" offset="24" />
+					<Anchor point="LEFT" offset="40" />
+				</Area>
+			</Frame>
+
+			<Frame name="SpellBookTab2" inherits="SpellBookTabButtonTemplate" type="Button" id="2">
+				<Property name="Text" value="Abilities" />
+				<Area>
+					<Anchor point="TOP" relativeTo="SpellBookTab1" />
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="SpellBookTab1" offset="12" />
+				</Area>
+			</Frame>
+
+			<Frame name="SpellBookTab3" inherits="SpellBookTabButtonTemplate" type="Button" id="3">
+				<Property name="Text" value="Skills" />
+				<Area>
+					<Anchor point="TOP" relativeTo="SpellBookTab1" />
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="SpellBookTab2" offset="12" />
+				</Area>
+			</Frame>
+
+			<Frame inherits="TextSmall" name="SpellBookCategoryLabel">
+				<Property name="HorzAlign" value="RIGHT" />
+				<Property name="TextColor" value="FF4A3620" />
+
+				<Area>
+					<Anchor point="TOP" offset="44" />
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="SpellBookTab3" offset="24" />
+					<Anchor point="RIGHT" offset="-40" />
+					<Size><AbsDimension y="32" /></Size>
+				</Area>
+			</Frame>
+
 				
 			<Frame inherits="SpellBookButtonTemplate" name="SpellBookButton01">
 				<Property name="Icon" value="Interface/Icons/Spells/S_Attack.htex" />
 				<Area>
-					<Anchor point="TOP" offset="48" />
+					<Anchor point="TOP" offset="128" />
 					<Anchor point="LEFT" offset="48" />
 				</Area>
 			</Frame>

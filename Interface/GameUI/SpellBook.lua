@@ -1,16 +1,101 @@
 
 SpellBookPage = 1
+SpellBookTab = 1
 
 SPELLS_PER_PAGE = 12
+SPELLBOOK_TAB_GENERAL = 1
+SPELLBOOK_TAB_ABILITIES = 2
+SPELLBOOK_TAB_SKILLS = 3
+SPELLBOOK_MAX_TABS = 3
+
+local SpellBookVisibleSpells = {}
+
+local function SpellBook_GetCategory(spell)
+    if (spell == nil) then
+        return SPELLBOOK_TAB_GENERAL;
+    end
+
+    if (spell:IsSkill()) then
+        return SPELLBOOK_TAB_SKILLS;
+    end
+
+    if (spell:IsAbility()) then
+        return SPELLBOOK_TAB_ABILITIES;
+    end
+
+    return SPELLBOOK_TAB_GENERAL;
+end
+
+local function SpellBook_GetTabText(tabId)
+    if (tabId == SPELLBOOK_TAB_ABILITIES) then
+        return Localize("SPELLBOOK_TAB_ABILITIES");
+    end
+
+    if (tabId == SPELLBOOK_TAB_SKILLS) then
+        return Localize("SPELLBOOK_TAB_SKILLS");
+    end
+
+    return Localize("SPELLBOOK_TAB_GENERAL");
+end
+
+local function SpellBook_RebuildVisibleSpells()
+    SpellBookVisibleSpells = {};
+
+    local spellIndex = 0;
+    while true do
+        local spell = GetSpell(spellIndex);
+        if (spell == nil) then
+            break;
+        end
+
+        if (SpellBook_GetCategory(spell) == SpellBookTab) then
+            table.insert(SpellBookVisibleSpells, spell);
+        end
+
+        spellIndex = spellIndex + 1;
+    end
+end
+
+local function SpellBook_GetSpellAtPageIndex(index)
+    return SpellBookVisibleSpells[index + 1];
+end
+
+function SpellBook_UpdateTabs()
+    for i = 1, SPELLBOOK_MAX_TABS do
+        local tabButton = _G["SpellBookTab" .. i];
+        tabButton:SetText(SpellBook_GetTabText(i));
+
+        if (i == SpellBookTab) then
+            tabButton:SetChecked(true);
+        else
+            tabButton:SetChecked(false);
+        end
+    end
+end
 
 function SpellBook_UpdatePage()
+    SpellBook_RebuildVisibleSpells();
+
+    local maxPage = math.max(1, math.ceil(#SpellBookVisibleSpells / SPELLS_PER_PAGE));
+    if (SpellBookPage > maxPage) then
+        SpellBookPage = maxPage;
+    end
+
     if (SpellBookPage > 1) then
         SpellBookPrevPageButton:Enable();
     else
         SpellBookPrevPageButton:Disable();
     end
 
+    if (SpellBookPage < maxPage) then
+        SpellBookNextPageButton:Enable();
+    else
+        SpellBookNextPageButton:Disable();
+    end
+
     SpellBookPageLabel:SetText(string.format(Localize("SPELL_BOOK_PAGE_FORMAT"), SpellBookPage));
+    SpellBookCategoryLabel:SetText(SpellBook_GetTabText(SpellBookTab));
+    SpellBook_UpdateTabs();
 
     -- Refresh all spell buttons
     for i = 1, SPELLS_PER_PAGE do
@@ -30,7 +115,7 @@ function SpellButton_OnClick(self, button)
     end
 
     local spellIndex = id + (SpellBookPage - 1) * SPELLS_PER_PAGE;
-    local spell = GetSpell(spellIndex);
+    local spell = SpellBook_GetSpellAtPageIndex(spellIndex);
     if (spell == nil) then
         return;
     end
@@ -38,7 +123,7 @@ function SpellButton_OnClick(self, button)
     if button == "LEFT" then
         PickupSpell(spell.id);
     else
-        CastSpell(spellIndex)
+        CastSpellById(spell.id)
     end
 end
 
@@ -51,7 +136,10 @@ function SpellButton_OnEnter(self)
     end
 
     local spellIndex = id + (SpellBookPage - 1) * SPELLS_PER_PAGE;
-    local spell = GetSpell(spellIndex);
+    local spell = SpellBook_GetSpellAtPageIndex(spellIndex);
+    if (spell == nil) then
+        return;
+    end
 
     GameTooltip:ClearAnchors()
     GameTooltip:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, self, 0)
@@ -73,7 +161,7 @@ function SpellButton_OnDrag(self)
     end
 
     local spellIndex = id + (SpellBookPage - 1) * SPELLS_PER_PAGE;
-    local spell = GetSpell(spellIndex);
+    local spell = SpellBook_GetSpellAtPageIndex(spellIndex);
     if (spell == nil) then
         return;
     end
@@ -92,7 +180,7 @@ function SpellButton_Update(button)
     end
 
     local spellIndex = id + (SpellBookPage - 1) * SPELLS_PER_PAGE;
-    local spell = GetSpell(spellIndex);
+    local spell = SpellBook_GetSpellAtPageIndex(spellIndex);
 
     if (spell == nil) then
         button:GetChild(0):SetText("");
@@ -137,12 +225,25 @@ function SpellBook_SpellsChanged(self)
     SpellBook_UpdatePage();
 end
 
+function SpellBook_SelectTab(tabId)
+    if (tabId ~= SpellBookTab) then
+        SpellBookTab = tabId;
+        SpellBookPage = 1;
+        SpellBook_UpdatePage();
+    end
+end
+
+function SpellBookTab_OnClick(self)
+    SpellBook_SelectTab(self.id);
+end
+
 function SpellBook_OnShow(self)
     PlaySound("Sound/Interface/Papers_01.wav");
 end
 
 function SpellBook_OnLoad(self)
     SpellBookPage = 1;
+    SpellBookTab = SPELLBOOK_TAB_GENERAL;
 
     self:RegisterEvent("SPELL_LEARNED", ActionBar_UpdateButtons);
 
@@ -153,6 +254,11 @@ function SpellBook_OnLoad(self)
         button:SetOnEnterHandler(SpellButton_OnEnter);
         button:SetOnLeaveHandler(SpellButton_OnLeave);
         button:SetOnDragHandler(SpellButton_OnDrag);
+    end
+
+    for i = 1, SPELLBOOK_MAX_TABS do
+        local tabButton = _G["SpellBookTab" .. i];
+        tabButton:SetClickedHandler(SpellBookTab_OnClick);
     end
 
 	SpellBookTitleBar:GetChild(0):SetClickedHandler(SpellBook_Toggle);
