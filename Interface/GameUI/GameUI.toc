@@ -6,6 +6,7 @@ GameMenuBar.xml
 ActionBarButton.xml
 ActionBar.xml
 ChatFrame.xml
+ChatBubble.xml
 PlayerFrame.xml
 PartyFrame.xml
 InventoryButton.xml

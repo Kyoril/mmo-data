@@ -1,0 +1,65 @@
+<?xml version="1.0" ?>
+<UiLayout>
+	<!--
+		Visual definition for in-world chat bubbles. The C++ ChatBubbleFrame copies the
+		imagery of these templates at runtime, so the entire look (textures, padding,
+		font, colors) can be tweaked here without touching code.
+
+		- ChatBubbleTemplate     : the rounded speech-bubble body (border + text).
+		- ChatBubbleTailTemplate : the little downward tail that points at the speaker.
+
+		Per chat-type accents are driven through the "TextColor" / "Tint" properties
+		which the frame sets before the imagery is rendered.
+	-->
+
+	<Font name="ChatBubbleFont" file="Fonts/FRIZQT__.TTF" size="24" outline="0" shadowX="0.0" shadowY="0.0" />
+
+	<Frame name="ChatBubbleTemplate" renderer="DefaultRenderer">
+		<Property name="Font" value="ChatBubbleFont" />
+		<!-- Default text color (dark, for the light bubble). Overridden per chat type. -->
+		<Property name="TextColor" value="FF1C1A20" />
+
+		<Visual>
+			<ImagerySection name="Background">
+				<BorderComponent texture="Interface/GameUI/ChatBubbleBackground.htex" borderSize="22" tint="FFFFFFFF" />
+			</ImagerySection>
+
+			<ImagerySection name="Text">
+				<TextComponent color="$TextColor" horzAlign="CENTER" vertAlign="CENTER">
+					<Area>
+						<Inset left="24" top="14" right="24" bottom="14" />
+					</Area>
+				</TextComponent>
+			</ImagerySection>
+
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Background" />
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+	</Frame>
+
+	<Frame name="ChatBubbleTailTemplate" renderer="DefaultRenderer">
+		<!-- Multiplied onto the tail texture so it matches the bubble body. -->
+		<Property name="Tint" value="FFFFFFFF" />
+
+		<Visual>
+			<ImagerySection name="Tail">
+				<ImageComponent texture="Interface/GameUI/ChatBubbleTail.htex" tint="$Tint" />
+			</ImagerySection>
+
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Tail" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+
+		<Area>
+			<Size><AbsDimension x="30" y="22" /></Size>
+		</Area>
+	</Frame>
+
+</UiLayout>
