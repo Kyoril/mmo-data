@@ -175,11 +175,8 @@ function QuestTracker_Refresh()
         s.title:SetAnchor(AnchorPoint.TOP,  AnchorPoint.TOP,  QuestTrackerFrame, offsetY)
         s.title:Show()
 
-        -- Wire click on title (capture qi for closure)
-        local capturedId = entry.id
-        s.title:SetOnEnterHandler(nil)  -- clear; click is on the button
-        -- Use the toggle button click to also allow title-click to open log
-        -- (toggle only collapses, title click opens log)
+        -- Title click (wired in XML via QuestTracker_TitleClick) opens the quest log;
+        -- the toggle button handles collapse. No hover handler is needed here.
 
         offsetY = offsetY + titleH
 

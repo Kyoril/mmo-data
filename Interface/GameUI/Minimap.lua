@@ -7,11 +7,26 @@ function Minimap_OnLoad(self)
     self:RegisterEvent("PARTY_PING", Minimap_OnPartyPing);
     self:RegisterEvent("PARTY_PING_UNIT", Minimap_OnPartyPing);
 
+    -- Consume the mouse wheel while hovering the minimap to zoom in/out, mirroring
+    -- the "+"/"-" buttons. Registered on MinimapContent so wheel events bubbling up
+    -- from the border and the zoom buttons are caught as well.
+    MinimapContent:SetOnMouseWheelHandler(Minimap_OnMouseWheel);
+
     Minimap_OnZoomChanged();
 
     -- Set the correct day/night icon immediately on load
     local hour, _ = GetGameTime();
     Minimap_UpdateDayNightIcon(hour);
+end
+
+function Minimap_OnMouseWheel(self, delta)
+    -- SetMinimapZoomLevel clamps to [min, max] internally, so no bounds check needed here.
+    if delta > 0 then
+        SetMinimapZoomLevel(GetMinimapZoomLevel() + 1);
+    else
+        SetMinimapZoomLevel(GetMinimapZoomLevel() - 1);
+    end
+    Minimap_OnZoomChanged();
 end
 
 function Minimap_OnPartyPing()
@@ -124,6 +139,10 @@ function Minimap_OnUpdate(self, elapsed)
             GameTooltip_AddLine(obj.name, TOOLTIP_LINE_LEFT, "FFFFFF00");
         end
     end
+
+    -- Shrink the tooltip to its text width so it does not stay at the wide default size
+    -- (same behavior as the world object tooltip).
+    GameTooltip_ShrinkToTextWidth();
 
     -- Position tooltip at cursor with a small offset, flipping sides if it would
     -- overflow the right or bottom edge of the 4K logical screen (3840×2160).
