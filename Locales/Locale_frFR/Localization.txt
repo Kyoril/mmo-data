@@ -324,6 +324,7 @@ strings =
 	(key = "LEVEL_UP_CHAR_ATTR_POINTS", string = "Vous avez gagné %d points d'attributs.")
 	(key = "NEW_SPELL_LEARNED", string = "Vous avez appris le sort: %s")
 	(key = "NEW_ABILITY_LEARNED", string = "Vous avez appris la compétence: %s")
+	(key = "ACTION_BAR_PASSIVE_SPELL_ERROR", string = "Les compétences passives ne peuvent pas être placées sur la barre d'action.")
 	
 	(key = "ON_USE", string = "Utiliser")
 	(key = "ON_EQUIP", string = "À l'équipement")

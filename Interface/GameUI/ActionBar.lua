@@ -104,6 +104,10 @@ function ActionBar_UpdateButtons(self)
             button:SetText("");
             button:SetOpacity(0.5);
         end
+
+        -- Recompute the usable tint as well, so that changes which only affect usability
+        -- (e.g. consuming the last item: count 1 -> 0) are reflected immediately.
+        ActionButton_OnUpdate(button);
     end
 end
 
@@ -119,25 +123,52 @@ function ActionButton_OnUpdate(self)
     ActionButton_UpdateCooldown(self);
 end
 
+-- Returns the spell that drives an item-type action button's cooldown, i.e. the item's
+-- "On Use" spell, or nil if the item has no usable spell.
+function ActionButton_GetItemUseSpell(slot)
+    if not IsActionButtonItem(slot) then
+        return nil;
+    end
+
+    local item = GetActionButtonItem(slot);
+    if item == nil then
+        return nil;
+    end
+
+    for i = 0, 4 do
+        local spellId = item:GetSpellId(i);
+        if spellId ~= 0 then
+            if item:GetSpellTriggerType(i) == "ON_USE" then
+                return GetSpell(spellId);
+            end
+        else
+            break;
+        end
+    end
+
+    return nil;
+end
+
 function ActionButton_UpdateCooldown(self)
     local cooldownFrame = self:GetChild(0);
     if cooldownFrame == nil then
         return;
     end
 
-    -- Check if this action button has a spell with a cooldown
+    -- Resolve the spell driving this button's cooldown. For spell buttons this is the spell
+    -- itself; for item buttons it is the item's "On Use" spell (e.g. a potion's heal effect).
+    local spell = nil;
     if IsActionButtonSpell(self.id - 1) then
-        local spell = GetActionButtonSpell(self.id - 1);
-        if spell ~= nil and IsSpellOnCooldown(spell.id) then
-            local progress = GetSpellCooldownProgress(spell.id);
-            cooldownFrame:SetProgress(progress);
-            cooldownFrame:Show();
-        else
-            cooldownFrame:SetProgress(1.0);
-            cooldownFrame:Hide();
-        end
+        spell = GetActionButtonSpell(self.id - 1);
+    elseif IsActionButtonItem(self.id - 1) then
+        spell = ActionButton_GetItemUseSpell(self.id - 1);
+    end
+
+    if spell ~= nil and IsSpellOnCooldown(spell.id) then
+        local progress = GetSpellCooldownProgress(spell.id);
+        cooldownFrame:SetProgress(progress);
+        cooldownFrame:Show();
     else
-        -- No spell, hide cooldown
         cooldownFrame:SetProgress(1.0);
         cooldownFrame:Hide();
     end
