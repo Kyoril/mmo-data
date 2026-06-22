@@ -12,6 +12,44 @@ local TALENT_NODE_SIZE = 128
 local TALENT_MIN_ZOOM = 0.35
 local TALENT_MAX_ZOOM = 1.60
 
+-- Visual states for a talent node, used to convey at a glance whether a talent
+-- can be spent into right now.
+--   "maxed"     - fully ranked, nothing more to spend
+--   "available" - learnable right now (points available + requirements met)
+--   "nopoints"  - requirements met, but no talent points left to spend
+--   "blocked"   - requirements not met yet (missing prerequisites / required points)
+-- Unavailable nodes are pushed dark and cold so they recede; the only nodes that
+-- read as "warm / colorful" are the ones you can actually act on. Available nodes
+-- additionally get a green glow halo so they pop out at a glance.
+local TALENT_ICON_TINT = {
+    maxed = "FFFFFFFF",
+    available = "FFFFFFFF",
+    nopoints = "FF5A6470",
+    blocked = "FF454C57",
+}
+local TALENT_NODE_OPACITY = {
+    maxed = 1.0,
+    available = 1.0,
+    nopoints = 0.5,
+    blocked = 0.4,
+}
+local TALENT_GLOW_TINT = {
+    maxed = "00000000",
+    available = "FF3BE07A",
+    nopoints = "00000000",
+    blocked = "00000000",
+}
+local TALENT_RANK_COLOR = {
+    maxed = "FFFFD100",
+    available = "FF42E67A",
+    nopoints = "FFA0A8B2",
+    blocked = "FF7A828E",
+}
+
+-- Prerequisite line colors / thickness.
+local TALENT_LINE_COLOR_MET = "FF42D1D8"
+local TALENT_LINE_COLOR_UNMET = "66525A66"
+
 local function TalentFrame_GetSelectedTabInfo()
     return GetTalentTabInfo(selectedTab - 1)
 end
@@ -105,15 +143,46 @@ local function TalentFrame_CreateLine(startTalent, endTalent, prerequisite)
     line:SetProperty("StartY", tostring(startTalent.positionY * talentZoom))
     line:SetProperty("EndX", tostring(endTalent.positionX * talentZoom))
     line:SetProperty("EndY", tostring(endTalent.positionY * talentZoom))
-    line:SetProperty("Thickness", tostring((prerequisite.met and 8 or 5) * talentZoom))
-    line:SetProperty("Color", prerequisite.met and "FF42D1D8" or "FF4A5360")
+    line:SetProperty("Thickness", tostring((prerequisite.met and 8 or 4) * talentZoom))
+    line:SetProperty("Color", prerequisite.met and TALENT_LINE_COLOR_MET or TALENT_LINE_COLOR_UNMET)
     line:SetFrameLevel(0)
     TalentFrameCanvasContent:AddChild(line)
+end
+
+-- Determines the visual state of a talent node (see TALENT_ICON_TINT above).
+-- Note: talent.canLearn already bundles "points available + rank < maxRank +
+-- required points spent + prerequisites met", so when it is false we recompute
+-- the requirements here to tell apart "merely out of points" from "blocked".
+local function TalentFrame_GetNodeState(talent, talentIndex)
+    if talent.rank >= talent.maxRank then
+        return "maxed"
+    end
+    if talent.canLearn then
+        return "available"
+    end
+
+    local prerequisitesMet = true
+    local prerequisiteCount = GetNumTalentPrerequisites(selectedTab - 1, talentIndex)
+    for prerequisiteIndex = 0, prerequisiteCount - 1 do
+        local prerequisite = GetTalentPrerequisiteInfo(selectedTab - 1, talentIndex, prerequisiteIndex)
+        if prerequisite ~= nil and not prerequisite.met then
+            prerequisitesMet = false
+            break
+        end
+    end
+
+    local spent = GetTalentPointsSpentInTab(selectedTab - 1)
+    if prerequisitesMet and spent >= talent.requiredPoints then
+        -- Every requirement is satisfied; the only thing missing is free points.
+        return "nopoints"
+    end
+    return "blocked"
 end
 
 local function TalentFrame_CreateNode(talent, talentIndex)
     local button = TalentFrameTalentTemplate:Clone()
     local size = TALENT_NODE_SIZE * talent.nodeScale * talentZoom
+    local state = TalentFrame_GetNodeState(talent, talentIndex)
     -- NOTE: 'id' is a real (C++ backed) frame property and persists across handler calls, whereas
     -- arbitrary Lua fields set on the frame wrapper do not. So we key the talent index by frame id.
     button.id = talent.id
@@ -122,8 +191,10 @@ local function TalentFrame_CreateNode(talent, talentIndex)
     button:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, talent.positionY * talentZoom - size * 0.5)
     button:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, talent.positionX * talentZoom - size * 0.5)
     button:SetProperty("Icon", talent.icon or "")
-    button:SetChecked(talent.rank == talent.maxRank)
-    button:SetOpacity((talent.canLearn or talent.rank > 0) and 1.0 or 0.48)
+    button:SetProperty("IconTint", TALENT_ICON_TINT[state])
+    button:SetProperty("GlowTint", TALENT_GLOW_TINT[state])
+    button:SetChecked(state == "maxed")
+    button:SetOpacity(TALENT_NODE_OPACITY[state])
     button:SetClickedHandler(TalentFrameTalent_OnClick)
     button:SetOnEnterHandler(TalentFrameTalent_OnEnter)
     button:SetOnLeaveHandler(TalentFrameTalent_OnLeave)
@@ -131,13 +202,7 @@ local function TalentFrame_CreateNode(talent, talentIndex)
 
     local rank = button:GetChild(0)
     rank:SetText(string.format("%d/%d", talent.rank, talent.maxRank))
-    if talent.rank == talent.maxRank then
-        rank:SetProperty("TextColor", "FFFFD100")
-    elseif talent.canLearn then
-        rank:SetProperty("TextColor", "FF42E67A")
-    else
-        rank:SetProperty("TextColor", "FFB8BEC8")
-    end
+    rank:SetProperty("TextColor", TALENT_RANK_COLOR[state])
 
     TalentFrameCanvasContent:AddChild(button)
     visibleNodes[talent.id] = button

@@ -518,8 +518,8 @@ function GameTooltip_OnLoad(self)
 end
 
 function GameTooltip_OnUpdate(self, deltaTime)
-    -- While anchored to a hovered world object, keep the tooltip pinned above it as the
-    -- camera or object moves. If the object is no longer hovered or leaves the screen, hide it.
+    -- While a world object is hovered, keep the tooltip stuck to the mouse cursor. As soon as
+    -- the object is no longer hovered, hide the tooltip immediately (no fade out).
     if (GameTooltip.followWorldObject) then
         if (not IsMouseoverWorldObject()) then
             GameTooltip.followWorldObject = false;
@@ -527,11 +527,8 @@ function GameTooltip_OnUpdate(self, deltaTime)
             return;
         end
 
-        if (not GameParent_UpdateWorldObjectTooltip()) then
-            GameTooltip:Hide();
-        else
-            GameTooltip:Show();
-        end
+        GameParent_UpdateWorldObjectTooltip();
+        GameTooltip:Show();
         return;
     end
 

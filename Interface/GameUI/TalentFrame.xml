@@ -29,17 +29,20 @@
 
 	<Frame name="TalentFrameTalentTemplate" type="Button" renderer="CheckboxRenderer">
 		<Property name="Icon" />
+		<Property name="IconTint" value="FFFFFFFF" />
+		<Property name="GlowTint" value="00000000" />
 		<Property name="Checkable" value="true" />
 		<Visual>
+			<ImagerySection name="Glow"><ImageComponent texture="Interface/GlueUI/GlowYellow.htex" tint="$GlowTint"><Area><Inset all="-16" /></Area></ImageComponent></ImagerySection>
 			<ImagerySection name="NormalFrame"><BorderComponent texture="Interface/BW_ButtonSmall_Up.htex" borderSize="30" /></ImagerySection>
 			<ImagerySection name="HoverFrame"><BorderComponent texture="Interface/BW_ButtonSmall_Over.htex" borderSize="30" /></ImagerySection>
 			<ImagerySection name="PushedFrame"><BorderComponent texture="Interface/BW_ButtonSmall_Down.htex" borderSize="30" /></ImagerySection>
 			<ImagerySection name="DisabledFrame"><BorderComponent texture="Interface/BW_ButtonSmall_Up.htex" borderSize="30" /></ImagerySection>
-			<ImagerySection name="Icon"><ImageComponent><Area><Inset all="16" /></Area><PropertyValue property="Icon" /></ImageComponent></ImagerySection>
+			<ImagerySection name="Icon"><ImageComponent tint="$IconTint"><Area><Inset all="16" /></Area><PropertyValue property="Icon" /></ImageComponent></ImagerySection>
 			<ImagerySection name="DisabledIcon"><ImageComponent tint="FF676B72"><Area><Inset all="16" /></Area><PropertyValue property="Icon" /></ImageComponent></ImagerySection>
-			<StateImagery name="Normal"><Layer><Section section="NormalFrame" /><Section section="Icon" /></Layer></StateImagery>
-			<StateImagery name="Hovered"><Layer><Section section="HoverFrame" /><Section section="Icon" /></Layer></StateImagery>
-			<StateImagery name="Pushed"><Layer><Section section="PushedFrame" /><Section section="Icon" /></Layer></StateImagery>
+			<StateImagery name="Normal"><Layer><Section section="Glow" /><Section section="NormalFrame" /><Section section="Icon" /></Layer></StateImagery>
+			<StateImagery name="Hovered"><Layer><Section section="Glow" /><Section section="HoverFrame" /><Section section="Icon" /></Layer></StateImagery>
+			<StateImagery name="Pushed"><Layer><Section section="Glow" /><Section section="PushedFrame" /><Section section="Icon" /></Layer></StateImagery>
 			<StateImagery name="NormalChecked"><Layer><Section section="HoverFrame" /><Section section="Icon" /></Layer></StateImagery>
 			<StateImagery name="HoveredChecked"><Layer><Section section="PushedFrame" /><Section section="Icon" /></Layer></StateImagery>
 			<StateImagery name="PushedChecked"><Layer><Section section="PushedFrame" /><Section section="Icon" /></Layer></StateImagery>

@@ -502,7 +502,9 @@ strings =
 	(key = "TALENT_RESET_VIEW", string = "Reset view")
 	(key = "TALENT_REQUIRES_POINTS", string = "Requires %d points in this tree (%d/%d)")
 	(key = "TALENT_REQUIRES_TALENT", string = "Requires %s rank %d (%d/%d)")
-	
+	(key = "TALENTS_RESET_NOTIFICATION", string = "Ваши таланты были сброшены.")
+	(key = "ATTRIBUTE_POINTS_RESET_NOTIFICATION", string = "Ваши очки характеристик были сброшены.")
+
 	(key = "YOU_RECEIVE_LOOT_SINGLE", string = "You receive loot: %s.")
 	(key = "YOU_RECEIVE_LOOT_MULTI", string = "You receive loot: %sx%d.")
 	(key = "YOU_RECEIVE_ITEM_SINGLE", string = "You receive item: %s.")

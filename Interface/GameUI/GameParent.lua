@@ -258,26 +258,32 @@ function GameParent_OnReviveRequest(self, casterName)
     StaticDialog_Show("REVIVE_REQUEST", casterName);
 end
 
--- Repositions the game tooltip so it hovers above the currently hovered world object.
--- Returns true if the object is on screen and the tooltip was positioned, false otherwise.
+-- Repositions the game tooltip so it follows (sticks to) the mouse cursor while a world
+-- object is hovered.
 function GameParent_UpdateWorldObjectTooltip()
-	local onScreen, x, y = GetMouseoverWorldObjectScreenPosition();
-	if (not onScreen) then
-		return false;
-	end
+	-- GetCursorPosition() returns the cursor in UI (native-resolution) space, which is also the
+	-- space anchor offsets are expressed in. The tooltip's own width/height are likewise in UI
+	-- space. The parent frame fills the screen, so its width/height are reported in scaled screen
+	-- pixels and must be converted back to UI space, otherwise the on-screen clamp below mixes
+	-- coordinate spaces and pins the tooltip to a fixed wrong position whenever the UI scale != 1.
+	local cursor = GetCursorPosition();
+	local scale = GetUIScale();
 
 	local parent = GameTooltip:GetParent();
 	local tooltipWidth = GameTooltip:GetWidth();
 	local tooltipHeight = GameTooltip:GetHeight();
+	local parentWidth = parent:GetWidth() / scale.x;
+	local parentHeight = parent:GetHeight() / scale.y;
 
-	-- Center the tooltip horizontally on the object and place it just above the object's top.
-	local left = x - tooltipWidth * 0.5;
-	local top = y - tooltipHeight;
+	-- Place the tooltip just below-right of the cursor so it does not sit under the pointer.
+	local cursorOffset = 16.0;
+	local left = cursor.x + cursorOffset;
+	local top = cursor.y + cursorOffset;
 
 	-- Keep the tooltip fully on screen.
 	local margin = 8.0;
-	local maxLeft = parent:GetWidth() - tooltipWidth - margin;
-	local maxTop = parent:GetHeight() - tooltipHeight - margin;
+	local maxLeft = parentWidth - tooltipWidth - margin;
+	local maxTop = parentHeight - tooltipHeight - margin;
 	if (left < margin) then left = margin; end
 	if (maxLeft > margin and left > maxLeft) then left = maxLeft; end
 	if (top < margin) then top = margin; end
@@ -286,13 +292,12 @@ function GameParent_UpdateWorldObjectTooltip()
 	GameTooltip:ClearAnchors();
 	GameTooltip:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, parent, left);
 	GameTooltip:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, parent, top);
-	return true;
 end
 
 function GameParent_OnHoveredObjectChanged(self)
 	local mouseOverUnit = GetUnit("mouseover");
 	if ( not mouseOverUnit ) then
-		-- No unit is hovered, but an interactable world object might be: show its name where it sits.
+		-- No unit is hovered, but an interactable world object might be: show its name at the cursor.
 		if (IsMouseoverWorldObject()) then
 			local objectName = GetMouseoverWorldObjectName();
 			if (objectName and objectName ~= "") then
@@ -303,13 +308,17 @@ function GameParent_OnHoveredObjectChanged(self)
 				-- Shrink the tooltip to the name width so it does not stay at the wide default size.
 				GameTooltip_ShrinkToTextWidth();
 
-				if (GameParent_UpdateWorldObjectTooltip()) then
-					GameTooltip:Show();
-				else
-					GameTooltip:Hide();
-				end
+				GameParent_UpdateWorldObjectTooltip();
+				GameTooltip:Show();
 				return;
 			end
+		end
+
+		-- We just stopped hovering a world object: hide its tooltip immediately (no fade out).
+		if (GameTooltip.followWorldObject) then
+			GameTooltip.followWorldObject = false;
+			GameTooltip:Hide();
+			return;
 		end
 
 		GameTooltip.followWorldObject = false;

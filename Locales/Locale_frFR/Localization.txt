@@ -504,7 +504,9 @@ strings =
 	(key = "TALENT_RESET_VIEW", string = "Réinitialiser la vue")
 	(key = "TALENT_REQUIRES_POINTS", string = "Nécessite %d points dans cet arbre (%d/%d)")
 	(key = "TALENT_REQUIRES_TALENT", string = "Nécessite %s rang %d (%d/%d)")
-	
+	(key = "TALENTS_RESET_NOTIFICATION", string = "Vos talents ont été réinitialisés.")
+	(key = "ATTRIBUTE_POINTS_RESET_NOTIFICATION", string = "Vos points de caractéristiques ont été réinitialisés.")
+
 	(key = "YOU_RECEIVE_LOOT_SINGLE", string = "Vous recevez le butin : %s.")
 	(key = "YOU_RECEIVE_LOOT_MULTI", string = "Vous recevez le butin : %sx%d.")
 	(key = "YOU_RECEIVE_ITEM_SINGLE", string = "Vous recevez l'objet : %s.")
