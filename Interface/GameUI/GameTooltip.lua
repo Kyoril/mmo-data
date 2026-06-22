@@ -5,6 +5,10 @@ TOOLTIP_LINE_RIGHT = 2
 
 TooltipHeight = 40
 
+-- Horizontal space (in pixels) between the tooltip edge and the line text on each side.
+-- Mirrors the LEFT/RIGHT anchor offsets of the lines container (8) plus the line frame (8).
+TOOLTIP_TEXT_PADDING = 16
+
 PowerTypeNames = {};
 PowerTypeNames[0] = "MANA";
 PowerTypeNames[1] = "RAGE";
@@ -12,9 +16,15 @@ PowerTypeNames[2] = "ENERGY";
 
 function GameTooltip_Clear()
     GameTooltipLines:RemoveAllChildren();
-    
+
     TooltipHeight = 40;
     GameTooltip:SetHeight(TooltipHeight);
+
+    -- Restore the default width. The world object tooltip may have shrunk it; every other
+    -- tooltip type (items, spells, units, ...) expects the full default width.
+    if (GameTooltip.defaultWidth) then
+        GameTooltip:SetWidth(GameTooltip.defaultWidth);
+    end
 
     TooltipMoneyFrame:Hide(); 
     TooltipMoneyText:Hide();
@@ -469,6 +479,30 @@ function GameTooltip_SetSpell(spell)
     GameTooltip_AddLine(GetSpellDescription(spell), TOOLTIP_LINE_LEFT, "FFFFD100");
 end
 
+-- Shrinks the tooltip width to fit its widest line of text, clamped to the default width.
+-- If the text is wider than the default width, the default width is kept and the text wraps
+-- across multiple lines (the existing behavior).
+function GameTooltip_ShrinkToTextWidth()
+    local maxWidth = GameTooltip.defaultWidth or GameTooltip:GetWidth();
+
+    local widestText = 0;
+    local lineCount = GameTooltipLines:GetChildCount();
+    for i = 0, lineCount - 1 do
+        local lineFrame = GameTooltipLines:GetChild(i);
+        local textWidth = lineFrame:GetTextWidth();
+        if (textWidth > widestText) then
+            widestText = textWidth;
+        end
+    end
+
+    local desiredWidth = widestText + TOOLTIP_TEXT_PADDING * 2.0;
+    if (desiredWidth > maxWidth) then
+        desiredWidth = maxWidth;
+    end
+
+    GameTooltip:SetWidth(desiredWidth);
+end
+
 function GameTooltip_FadeOut(delay, fadeTime)
     GameTooltip.fadeOut = true;
     GameTooltip.fadeOutDelay = delay;
@@ -477,6 +511,10 @@ end
 
 function GameTooltip_OnLoad(self)
     GameTooltip.fadeOut = false;
+
+    -- Remember the default (maximum) width defined in XML so it can be restored after the
+    -- world object tooltip temporarily shrinks the tooltip to its text width.
+    GameTooltip.defaultWidth = GameTooltip:GetWidth();
 end
 
 function GameTooltip_OnUpdate(self, deltaTime)

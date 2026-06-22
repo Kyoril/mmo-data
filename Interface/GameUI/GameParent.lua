@@ -300,6 +300,9 @@ function GameParent_OnHoveredObjectChanged(self)
 				GameTooltip_Clear();
 				GameTooltip_AddLine(objectName, TOOLTIP_LINE_LEFT, "FFFFD100");
 
+				-- Shrink the tooltip to the name width so it does not stay at the wide default size.
+				GameTooltip_ShrinkToTextWidth();
+
 				if (GameParent_UpdateWorldObjectTooltip()) then
 					GameTooltip:Show();
 				else
