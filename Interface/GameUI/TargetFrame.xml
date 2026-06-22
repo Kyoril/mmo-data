@@ -213,16 +213,6 @@
                 <Anchor point="TOP" relativePoint="BOTTOM" offset="0" />
 				<Size><AbsDimension x="96" y="96" /></Size>
             </Area>
-			<Scripts>
-				<OnLoad>
-					return function(this)
-					end
-				</OnLoad>
-				<OnUpdate>
-					return function(this, elapsed)
-					end
-				</OnUpdate>
-			</Scripts>
         </Frame>
         
         <Frame name="TargetAuraButton2" inherits="AuraBarButtonTemplate" id="2">
@@ -231,16 +221,6 @@
                 <Anchor point="TOP" relativeTo="TargetAuraButton1" />
 				<Size><AbsDimension x="96" y="96" /></Size>
             </Area>
-			<Scripts>
-				<OnLoad>
-					return function(this)
-					end
-				</OnLoad>
-				<OnUpdate>
-					return function(this, elapsed)
-					end
-				</OnUpdate>
-			</Scripts>
         </Frame>
         
         <Frame name="TargetAuraButton3" inherits="AuraBarButtonTemplate" id="3">
@@ -249,16 +229,6 @@
                 <Anchor point="TOP" relativeTo="TargetAuraButton1" />
 				<Size><AbsDimension x="96" y="96" /></Size>
             </Area>
-			<Scripts>
-				<OnLoad>
-					return function(this)
-					end
-				</OnLoad>
-				<OnUpdate>
-					return function(this, elapsed)
-					end
-				</OnUpdate>
-			</Scripts>
         </Frame>
         
         <Frame name="TargetAuraButton4" inherits="AuraBarButtonTemplate" id="4">
@@ -267,16 +237,6 @@
                 <Anchor point="TOP" relativeTo="TargetAuraButton1" />
 				<Size><AbsDimension x="96" y="96" /></Size>
             </Area>
-			<Scripts>
-				<OnLoad>
-					return function(this)
-					end
-				</OnLoad>
-				<OnUpdate>
-					return function(this, elapsed)
-					end
-				</OnUpdate>
-			</Scripts>
         </Frame>
         
         <Frame name="TargetAuraButton5" inherits="AuraBarButtonTemplate" id="5">
@@ -285,16 +245,6 @@
                 <Anchor point="TOP" relativeTo="TargetAuraButton1" />
 				<Size><AbsDimension x="96" y="96" /></Size>
             </Area>
-			<Scripts>
-				<OnLoad>
-					return function(this)
-					end
-				</OnLoad>
-				<OnUpdate>
-					return function(this, elapsed)
-					end
-				</OnUpdate>
-			</Scripts>
         </Frame>
 
 		<Frame name="TargetFrameClick" setAllPoints="true">

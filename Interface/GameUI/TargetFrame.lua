@@ -12,7 +12,11 @@ function TargetFrame_OnLoad()
     TargetFrame:RegisterEvent("UNIT_POWER_UPDATED", TargetFrame_OnUnitUpdate);
     TargetFrame:RegisterEvent("UNIT_LEVEL_UPDATED", TargetFrame_OnUnitUpdate);
     TargetFrame:RegisterEvent("UNIT_NAME_UPDATED", TargetFrame_OnUnitUpdate);
+    TargetFrame:RegisterEvent("UNIT_AURA_UPDATED", TargetFrame_OnAuraUpdate);
 end
+
+-- Number of debuff slots available on the target frame (TargetAuraButton1..N).
+TARGET_DEBUFF_SLOTS = 5;
 
 function TargetFrame_OnUnitUpdate(self, unit)
     if (unit ~= "target") then
@@ -22,40 +26,80 @@ function TargetFrame_OnUnitUpdate(self, unit)
     TargetFrame_Update();
 end
 
+-- Lightweight handler for aura-only changes: refresh just the debuff icons instead
+-- of rebuilding the whole frame (and re-setting the portrait model).
+function TargetFrame_OnAuraUpdate(self, unit)
+    if (unit ~= "target") then
+        return;
+    end
+
+    TargetFrame_UpdateAuras();
+end
+
+-- Clears the stored aura/spell state of a debuff slot and hides it. Without
+-- explicitly clearing the stored aura, AuraButton_OnUpdate would keep refreshing a
+-- stale aura, leaving old debuff icons visible after switching targets.
+function TargetFrame_ClearAuraButton(button)
+    local frameTable = _G[button:GetName()];
+    if frameTable then
+        frameTable.aura = nil;
+        frameTable.spell = nil;
+    end
+    button:Hide();
+end
+
 function TargetFrame_UpdateAuras()
     local unit = GetUnit("target");
-    for i = 1, 5 do
+    if not unit then
+        for i = 1, TARGET_DEBUFF_SLOTS do
+            local button = _G["TargetAuraButton" .. i];
+            if button then
+                TargetFrame_ClearAuraButton(button);
+            end
+        end
+        return;
+    end
+
+    local playerGuid = nil;
+    local player = GetUnit("player");
+    if player then
+        playerGuid = player:GetGuid();
+    end
+
+    -- Collect the target's debuffs (negative auras), keeping the ones we applied
+    -- ourselves separate so we can prioritize them.
+    local mine = {};
+    local others = {};
+
+    local auraCount = unit:GetAuraCount();
+    for i = 0, auraCount - 1 do
+        local aura = unit:GetAura(i);
+        if aura and not aura:IsExpired() and aura:IsNegative() then
+            if playerGuid and aura:GetCasterId() == playerGuid then
+                table.insert(mine, aura);
+            else
+                table.insert(others, aura);
+            end
+        end
+    end
+
+    -- Player-applied debuffs first, then everything else.
+    local debuffs = {};
+    for _, aura in ipairs(mine) do
+        table.insert(debuffs, aura);
+    end
+    for _, aura in ipairs(others) do
+        table.insert(debuffs, aura);
+    end
+
+    for i = 1, TARGET_DEBUFF_SLOTS do
         local button = _G["TargetAuraButton" .. i];
-        
-        if not unit then
-            button:Hide();
-            return;
-        end
-
-        local auraCount = unit:GetAuraCount();
-        if button.id > auraCount then
-            button:Hide();
-            return;
-        end
-
-        local aura = unit:GetAura(button.id - 1);
-        if not aura then
-            button:Hide();
-            return;
-        end
-
-        -- TODO: If aura has expired, remove it from the list
-        if aura:IsExpired() then
-            button:Hide();
-            return;
-        end
-
-        -- We have an aura in the given slot, show the button
-        button:Show();
-
-        local spell = aura:GetSpell();
-        if spell then
-            button:SetProperty("Icon", spell.icon);
+        if button then
+            if i <= #debuffs then
+                AuraButton_RefreshWithAura(button, debuffs[i], true);
+            else
+                TargetFrame_ClearAuraButton(button);
+            end
         end
     end
 end

@@ -1,12 +1,12 @@
 
-=One-Handed Sword *Attack_1H_01*Attack_1H_0221HReady
+=One-Handed Sword *Attack_1H_0121HReady:Attack_1H_02
 !Two-Handed Sword 22HReady
-<One-Handed Mace *Attack_1H_01*Attack_1H_0221HReady
+<One-Handed Mace *Attack_1H_0121HReady:Attack_1H_02
  Two-Handed Mace 	22HReady
 ;One-Handed Axe 
-*Attack_1H_01*Attack_1H_0221HReady
+*Attack_1H_0121HReady:Attack_1H_02
 Two-Handed Axe 22HReady
-3Dagger *Attack_1H_01*Attack_1H_0221HReady
+3Dagger *Attack_1H_0121HReady:Attack_1H_02
 Stave 22HLReady
 	Shield 
 

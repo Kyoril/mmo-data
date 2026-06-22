@@ -19,6 +19,25 @@ function AuraButton_SetDuration(self, aura, hasDuration)
 	end
 end
 
+function AuraButton_UpdateExpiryPulse(self, aura)
+	-- Make a button fade in and out shortly before its aura expires so the player
+	-- gets a visual warning. Outside the warning window the button is fully opaque.
+	local pulseThreshold = 5.0; -- seconds remaining before the pulse kicks in
+	if aura:CanExpire() then
+		local remaining = aura:GetDuration() / 1000.0;
+		if remaining > 0 and remaining <= pulseThreshold then
+			-- Oscillate opacity using the remaining time as the phase. Because the
+			-- remaining time decreases smoothly every frame this produces a steady
+			-- blink without needing to track elapsed time ourselves.
+			local pulse = 0.65 + 0.35 * math.cos(remaining * math.pi * 3.0);
+			self:SetOpacity(pulse);
+			return;
+		end
+	end
+
+	self:SetOpacity(1.0);
+end
+
 function AuraButton_SetStackCount(self, aura)
 	local stackCount = aura:GetStackCount();
 	if stackCount and stackCount > 1 then
@@ -55,6 +74,7 @@ function AuraButton_RefreshWithAura(self, aura, hasDuration)
 
 	AuraButton_SetDuration(self, aura, hasDuration);
 	AuraButton_SetStackCount(self, aura);
+	AuraButton_UpdateExpiryPulse(self, aura);
 end
 
 function AuraButton_Refresh(self, hasDuration)

@@ -5,7 +5,7 @@
     <Frame name="PlayerFrame" parent="GameParent" renderer="DefaultRenderer">
         <Area>
             <Anchor point="RIGHT" relativePoint="H_CENTER" offset="-384" />
-            <Anchor point="BOTTOM" offset="-320" />
+            <Anchor point="BOTTOM" offset="-380" />
             <Size><AbsDimension x="512" y="174" /></Size>
         </Area>
 
