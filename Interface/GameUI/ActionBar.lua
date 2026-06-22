@@ -139,7 +139,10 @@ function ActionButton_GetItemUseSpell(slot)
         local spellId = item:GetSpellId(i);
         if spellId ~= 0 then
             if item:GetSpellTriggerType(i) == "ON_USE" then
-                return GetSpell(spellId);
+                -- Resolve the spell entry by its id from the static game data. Note: the global
+                -- GetSpell() resolves an index into the player's known spells, which would fail
+                -- here because item-use spells are usually not in the player's spellbook.
+                return GetItemSpell(item, i);
             end
         else
             break;
