@@ -505,6 +505,7 @@ strings =
 	(key = "TALENT_REQUIRES_TALENT", string = "Requires %s rank %d (%d/%d)")
 	(key = "TALENTS_RESET_NOTIFICATION", string = "Ваши таланты были сброшены.")
 	(key = "ATTRIBUTE_POINTS_RESET_NOTIFICATION", string = "Ваши очки характеристик были сброшены.")
+	(key = "CLASS_CHANGED_NOTIFICATION", string = "Вы сменили класс на %s.")
 
 	(key = "YOU_RECEIVE_LOOT_SINGLE", string = "You receive loot: %s.")
 	(key = "YOU_RECEIVE_LOOT_MULTI", string = "You receive loot: %sx%d.")
