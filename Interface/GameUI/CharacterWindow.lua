@@ -43,6 +43,14 @@ function CharacterWindow_OnLoad(self)
     self:RegisterEvent("PLAYER_MODEL_CHANGED", CharacterWindow_OnPlayerModelChanged);
     self:RegisterEvent("PLAYER_KNOWN_CLASSES_CHANGED", CharacterWindow_OnKnownClassesChanged);
 
+    CharacterWindowTab = 1;
+    for i = 1, 2 do
+        local tabButton = _G["CharacterWindowTab" .. i];
+        if tabButton then
+            tabButton:SetClickedHandler(CharacterWindowTab_OnClick);
+        end
+    end
+
     -- Hook up the multi-class list row buttons (clicking a non-active class switches to it).
     for i = 1, CHARACTER_MAX_CLASS_ROWS do
         local classButton = _G["CharacterClassButton" .. i];
@@ -245,6 +253,7 @@ end
 function CharacterWindow_OnShow(this)
     CharacterWindow_RefreshStats();
     CharacterWindow_RefreshClasses();
+	CharacterWindow_UpdateTabs();
     CharacterWindow_UpdateEquipmentWarning();
     CharacterFrameModel:SetUnit("player");
 
@@ -298,19 +307,50 @@ function CharacterWindow_UpdateEquipmentWarning()
 end
 
 CHARACTER_MAX_CLASS_ROWS = 8;
-local CHARACTER_CLASS_ROW_HEIGHT = 44;
-local CHARACTER_CLASSES_FRAME_TOP = 660;  -- keep in sync with CharacterWindowClassesFrame anchor
+
+function CharacterWindow_UpdateTabs()
+    for i = 1, 2 do
+        local tabButton = _G["CharacterWindowTab" .. i];
+        if tabButton then
+            tabButton:SetChecked(i == CharacterWindowTab);
+        end
+    end
+
+    if CharacterWindowTab == 2 then
+        CharacterStatsScrollClip:Hide();
+        CharacterClassesPage:Show();
+    else
+        CharacterClassesPage:Hide();
+        CharacterStatsScrollClip:Show();
+    end
+end
+
+function CharacterWindow_SelectTab(tabId)
+    CharacterWindowTab = tabId;
+    CharacterWindow_UpdateTabs();
+
+    if tabId == 2 then
+        CharacterWindow_RefreshClasses();
+    end
+end
+
+function CharacterWindowTab_OnClick(self)
+    CharacterWindow_SelectTab(self.id);
+end
 
 function CharacterClassButton_OnClick(self)
     -- The active class can't be switched to itself; only non-active known classes cast their
     -- class-change spell to switch.
     if self.isActiveClass then
+		CharacterWindow_RefreshClasses();
         return;
     end
 
     local spellId = self.changeSpellId;
     if spellId and spellId > 0 then
         CastSpellById(spellId);
+	else
+		CharacterWindow_RefreshClasses();
     end
 end
 
@@ -326,27 +366,58 @@ function CharacterWindow_RefreshClasses()
             if index < shown then
                 local className = player:GetKnownClassName(index) or "";
                 local classLevel = player:GetKnownClassLevel(index);
+				local maxClassLevel = player:GetKnownClassMaxLevel(index);
+				local classXp = player:GetKnownClassXp(index);
+				local xpToNextLevel = player:GetKnownClassXpToNextLevel(index);
+				local isUnlocked = player:IsKnownClassUnlocked(index);
                 local isActive = player:IsKnownClassActive(index);
 
                 button.userData = index;
                 button.changeSpellId = player:GetKnownClassChangeSpell(index);
                 button.isActiveClass = isActive;
+				button:SetChecked(isActive);
 
                 button:GetChild(0):SetText(className);
 
-                if isActive then
+				if not isUnlocked then
+					button:GetChild(0):SetProperty("TextColor", "FF808080");
+					button:GetChild(1):SetProperty("TextColor", "FF808080");
+					button:GetChild(1):SetText(Localize("CLASS_RANK_UNAVAILABLE"));
+					button:GetChild(2):SetProperty("TextColor", "FF808080");
+					button:GetChild(2):SetText(Localize("CLASS_STATUS_LOCKED"));
+					button:GetChild(3):Hide();
+					button:Disable();
+				elseif isActive then
                     button:GetChild(0):SetProperty("TextColor", "FFFFD100");
                     button:GetChild(1):SetProperty("TextColor", "FFFFD100");
-                    button:GetChild(1):SetText(Localize("CLASS_STATUS_ACTIVE"));
-                    -- The current class isn't clickable; disabling it also removes the hover highlight
-                    -- so it clearly reads as the active class. Its text frames keep their gold color.
+					button:GetChild(1):SetText(string.format(Localize("CLASS_RANK_FORMAT"), classLevel, maxClassLevel));
+					button:GetChild(2):SetProperty("TextColor", "FFFFD100");
+					button:GetChild(2):SetText(Localize("CLASS_STATUS_ACTIVE"));
                     button:Disable();
                 else
                     button:GetChild(0):SetProperty("TextColor", "FFFFFFFF");
                     button:GetChild(1):SetProperty("TextColor", "FFB9A26A");
-                    button:GetChild(1):SetText(string.format(Localize("LEVEL_FORMAT"), classLevel));
-                    button:Enable();
+					button:GetChild(1):SetText(string.format(Localize("CLASS_RANK_FORMAT"), classLevel, maxClassLevel));
+					button:GetChild(2):SetProperty("TextColor", "FFB9A26A");
+					if button.changeSpellId and button.changeSpellId > 0 then
+						button:GetChild(2):SetText(Localize("CLASS_STATUS_CLICK_TO_ACTIVATE"));
+						button:Enable();
+					else
+						button:GetChild(2):SetText(Localize("CLASS_STATUS_UNAVAILABLE"));
+						button:Disable();
+					end
                 end
+
+				local experienceBar = button:GetChild(3);
+				if isUnlocked and xpToNextLevel > 0 then
+					experienceBar:SetProgress(math.min(1.0, classXp / xpToNextLevel));
+					experienceBar:SetText(string.format(Localize("CLASS_XP_FORMAT"), classXp, xpToNextLevel));
+					experienceBar:Show();
+				elseif isUnlocked then
+					experienceBar:SetProgress(1.0);
+					experienceBar:SetText(Localize("CLASS_RANK_MAX"));
+					experienceBar:Show();
+				end
 
                 button:Show();
             else
@@ -355,18 +426,6 @@ function CharacterWindow_RefreshClasses()
         end
     end
 
-    -- Resize the classes container (and the surrounding scroll content) to fit exactly the visible
-    -- rows so there is no dead space below the list, then refresh the scrollbar.
-    local rowsHeight = math.max(1, shown) * CHARACTER_CLASS_ROW_HEIGHT;
-    local classesFrameHeight = 52 + rowsHeight + 10;
-    if CharacterWindowClassesFrame then
-        CharacterWindowClassesFrame:SetHeight(classesFrameHeight);
-    end
-    if CharacterStatsScrollContent then
-        CharacterStatsScrollContent:SetHeight(CHARACTER_CLASSES_FRAME_TOP + classesFrameHeight + 16);
-    end
-
-    CharacterWindow_UpdateStatsScrollBar();
 end
 
 function CharacterWindow_AddAttributeClicked(this)

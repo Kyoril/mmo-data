@@ -92,39 +92,55 @@
 		</Frame>
 	</Frame>
 	
-	<!-- One clickable row in the multi-class list: class name (left) + level/status (right). -->
-	<Frame name="CharacterClassButtonTemplate" type="Button" renderer="ButtonRenderer">
+	<Frame name="CharacterWindowTabButtonTemplate" type="Button" renderer="CheckboxRenderer">
 		<Property name="Font" value="SmallLabelFont" />
+		<Property name="Checkable" value="true" />
 
 		<Visual>
 			<ImagerySection name="NormalFrame">
-				<ImageComponent texture="Interface/GlueUI/CharSelectButtonBackground.htex" tint="FF202020" />
+				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Down_result.htex" borderSize="25" />
 			</ImagerySection>
 			<ImagerySection name="HoveredFrame">
-				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="FFFF9B38" />
+				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Up_result.htex" borderSize="25" />
 			</ImagerySection>
-			<ImagerySection name="PushedFrame">
-				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="FF9E5E22" />
+			<ImagerySection name="SelectedFrame">
+				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Over_result.htex" borderSize="25" />
+				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="8"><Area><Inset all="5" /></Area></BorderComponent>
 			</ImagerySection>
-			<ImagerySection name="DisabledFrame">
-				<ImageComponent texture="Interface/GlueUI/CharSelectButtonBackground.htex" tint="FF302810" />
-			</ImagerySection>
-			<StateImagery name="Normal">
-				<Layer><Section section="NormalFrame" /></Layer>
-			</StateImagery>
-			<StateImagery name="Hovered">
-				<Layer><Section section="HoveredFrame" /></Layer>
-			</StateImagery>
-			<StateImagery name="Pushed">
-				<Layer><Section section="PushedFrame" /></Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer><Section section="DisabledFrame" /></Layer>
-			</StateImagery>
+			<ImagerySection name="Caption"><TextComponent color="FFB9A26A" horzAlign="CENTER" vertAlign="CENTER" /></ImagerySection>
+			<ImagerySection name="CaptionActive"><TextComponent color="FFFFFFFF" horzAlign="CENTER" vertAlign="CENTER" /></ImagerySection>
+			<StateImagery name="Normal"><Layer><Section section="NormalFrame" /><Section section="Caption" /></Layer></StateImagery>
+			<StateImagery name="Hovered"><Layer><Section section="HoveredFrame" /><Section section="CaptionActive" /></Layer></StateImagery>
+			<StateImagery name="Pushed"><Layer><Section section="SelectedFrame" /><Section section="CaptionActive" /></Layer></StateImagery>
+			<StateImagery name="NormalChecked"><Layer><Section section="SelectedFrame" /><Section section="CaptionActive" /></Layer></StateImagery>
+			<StateImagery name="HoveredChecked"><Layer><Section section="SelectedFrame" /><Section section="CaptionActive" /></Layer></StateImagery>
+			<StateImagery name="PushedChecked"><Layer><Section section="SelectedFrame" /><Section section="CaptionActive" /></Layer></StateImagery>
+		</Visual>
+		<Area><Size><AbsDimension x="240" y="72" /></Size></Area>
+	</Frame>
+
+	<!-- One class overview row: selection state, rank, availability, and class XP. -->
+	<Frame name="CharacterClassButtonTemplate" type="Button" renderer="CheckboxRenderer">
+		<Property name="Checkable" value="true" />
+
+		<Visual>
+			<ImagerySection name="NormalBg"><BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="50000000" /></ImagerySection>
+			<ImagerySection name="HoveredBg"><BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="A0553300" /></ImagerySection>
+			<ImagerySection name="PushedBg"><BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="A0221100" /></ImagerySection>
+			<ImagerySection name="SelectedBg"><BorderComponent texture="Interface/GameUI/fg4_borders_01_28_2_result.htex" borderSize="24" /></ImagerySection>
+			<ImagerySection name="DisabledBg"><BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="30000000" /></ImagerySection>
+			<StateImagery name="Normal"><Layer><Section section="NormalBg" /></Layer></StateImagery>
+			<StateImagery name="Hovered"><Layer><Section section="HoveredBg" /></Layer></StateImagery>
+			<StateImagery name="Pushed"><Layer><Section section="PushedBg" /></Layer></StateImagery>
+			<StateImagery name="Disabled"><Layer><Section section="DisabledBg" /></Layer></StateImagery>
+			<StateImagery name="NormalChecked"><Layer><Section section="SelectedBg" /></Layer></StateImagery>
+			<StateImagery name="HoveredChecked"><Layer><Section section="SelectedBg" /></Layer></StateImagery>
+			<StateImagery name="PushedChecked"><Layer><Section section="SelectedBg" /></Layer></StateImagery>
+			<StateImagery name="DisabledChecked"><Layer><Section section="SelectedBg" /></Layer></StateImagery>
 		</Visual>
 
 		<Area>
-			<Size><AbsDimension x="0" y="40" /></Size>
+			<Size><AbsDimension x="0" y="112" /></Size>
 		</Area>
 
 		<Frame inherits="TextSmall" name="ClassRowName">
@@ -133,9 +149,8 @@
 
 			<Area>
 				<Anchor point="LEFT" offset="14" />
-				<Anchor point="TOP" offset="0" />
-				<Anchor point="BOTTOM" offset="0" />
-				<Size><AbsDimension x="260" /></Size>
+				<Anchor point="TOP" offset="10" />
+				<Size><AbsDimension x="240" y="34" /></Size>
 			</Area>
 		</Frame>
 
@@ -146,10 +161,40 @@
 
 			<Area>
 				<Anchor point="RIGHT" offset="-14" />
-				<Anchor point="TOP" offset="0" />
-				<Anchor point="BOTTOM" offset="0" />
-				<Size><AbsDimension x="180" /></Size>
+				<Anchor point="TOP" offset="10" />
+				<Size><AbsDimension x="190" y="34" /></Size>
 			</Area>
+		</Frame>
+
+		<Frame inherits="TextSmall" name="ClassRowStatus">
+			<Property name="Clickable" value="false" />
+			<Property name="VertAlign" value="CENTER" />
+			<Area>
+				<Anchor point="LEFT" offset="14" />
+				<Anchor point="TOP" offset="42" />
+				<Size><AbsDimension x="420" y="28" /></Size>
+			</Area>
+		</Frame>
+
+		<Frame name="ClassRowExperience" type="ProgressBar">
+			<Property name="Clickable" value="false" />
+			<Property name="Font" value="DefaultSmall" />
+			<Area>
+				<Anchor point="LEFT" offset="14" />
+				<Anchor point="RIGHT" offset="-14" />
+				<Anchor point="BOTTOM" offset="-10" />
+				<Size><AbsDimension y="30" /></Size>
+			</Area>
+			<Visual>
+				<ImagerySection name="Caption"><TextComponent color="FFFFFFFF" horzAlign="CENTER" vertAlign="CENTER" /></ImagerySection>
+				<ImagerySection name="Background"><BorderComponent texture="Interface/fg4_borders_01_33.htex" borderSize="5" /></ImagerySection>
+				<ImagerySection name="Border"><BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" /></ImagerySection>
+				<ImagerySection name="Progress"><ImageComponent texture="Interface/fg4_gradientWhiteV1_result.htex" tiling="HORZ" tint="FF9E5E22"><Area><Inset all="6" /></Area></ImageComponent></ImagerySection>
+				<StateImagery name="Enabled"><Layer><Section section="Background" /></Layer></StateImagery>
+				<StateImagery name="Disabled"><Layer><Section section="Background" /></Layer></StateImagery>
+				<StateImagery name="Progress"><Layer><Section section="Progress" /></Layer></StateImagery>
+				<StateImagery name="Overlay"><Layer><Section section="Border" /><Section section="Caption" /></Layer></StateImagery>
+			</Visual>
 		</Frame>
 	</Frame>
 
@@ -381,6 +426,33 @@
 			</Area>
 		</Frame>
 
+		<Frame name="CharacterWindowTabBar">
+			<Area>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterWindowTitle" offset="8" />
+				<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CharacterInvSlotHands" offset="8" />
+				<Anchor point="RIGHT" offset="-24" />
+				<Size><AbsDimension y="72" /></Size>
+			</Area>
+
+			<Frame name="CharacterWindowTab1" inherits="CharacterWindowTabButtonTemplate" id="1">
+				<Property name="Text" value="CHARACTER_TAB_ATTRIBUTES" />
+				<Area>
+					<Anchor point="TOP" />
+					<Anchor point="LEFT" />
+					<Size><AbsDimension x="240" y="72" /></Size>
+				</Area>
+			</Frame>
+
+			<Frame name="CharacterWindowTab2" inherits="CharacterWindowTabButtonTemplate" id="2">
+				<Property name="Text" value="CHARACTER_CLASSES_HEADER" />
+				<Area>
+					<Anchor point="TOP" />
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CharacterWindowTab1" />
+					<Anchor point="RIGHT" />
+				</Area>
+			</Frame>
+		</Frame>
+
 		<Frame name="CharacterStatsScrollClip" renderer="DefaultRenderer">
 			<Visual>
 				<ImagerySection name="Background">
@@ -394,7 +466,7 @@
 			</Visual>
 
 			<Area>
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterWindowTitle" offset="8" />
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterWindowTabBar" offset="4" />
 				<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CharacterInvSlotHands" offset="8" />
 				<Anchor point="RIGHT" offset="-24" />
 				<Anchor point="BOTTOM" offset="-50" />
@@ -418,7 +490,7 @@
 					<Anchor point="TOP" offset="8" />
 					<Anchor point="LEFT" offset="8" />
 					<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CharacterStatsScrollBar" offset="-8" />
-					<Size><AbsDimension y="940" /></Size>
+					<Size><AbsDimension y="666" /></Size>
 				</Area>
 
 				<Frame name="CharacterWindowAttributePointsHeader" inherits="StatSectionHeaderTemplate">
@@ -783,71 +855,35 @@
 				</Frame>
 				</Frame> <!-- End Secondary Stats Frame -->
 
-				<!-- Known Classes Bordered Container (multi-class system) -->
-				<Frame name="CharacterWindowClassesFrame" renderer="DefaultRenderer">
-					<Visual>
-						<ImagerySection name="Border">
-							<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" />
-						</ImagerySection>
-						<StateImagery name="Enabled">
-							<Layer>
-								<Section section="Border" />
-							</Layer>
-						</StateImagery>
-					</Visual>
-
-					<Area>
-						<Anchor point="TOP" offset="660" />
-						<Anchor point="LEFT" offset="16" />
-						<Anchor point="RIGHT" offset="-16" />
-						<Size><AbsDimension y="260" /></Size>
-					</Area>
-
-					<Frame name="CharacterWindowClassesHeader" inherits="StatSectionHeaderTemplate">
-						<Property name="Text" value="CHARACTER_CLASSES_HEADER" />
-
-						<Area>
-							<Anchor point="TOP" offset="8" />
-							<Anchor point="LEFT" offset="8" />
-							<Anchor point="RIGHT" offset="-8" />
-						</Area>
-					</Frame>
-
-					<Frame name="CharacterClassListContent" renderer="DefaultRenderer">
-						<Area>
-							<Anchor point="TOP" offset="52" />
-							<Anchor point="LEFT" offset="14" />
-							<Anchor point="RIGHT" offset="-14" />
-							<Anchor point="BOTTOM" offset="-10" />
-						</Area>
-
-						<Frame name="CharacterClassButton1" inherits="CharacterClassButtonTemplate" id="1">
-							<Area><Anchor point="TOP" offset="0" /><Anchor point="LEFT" /><Anchor point="RIGHT" /></Area>
-						</Frame>
-						<Frame name="CharacterClassButton2" inherits="CharacterClassButtonTemplate" id="2">
-							<Area><Anchor point="TOP" offset="44" /><Anchor point="LEFT" /><Anchor point="RIGHT" /></Area>
-						</Frame>
-						<Frame name="CharacterClassButton3" inherits="CharacterClassButtonTemplate" id="3">
-							<Area><Anchor point="TOP" offset="88" /><Anchor point="LEFT" /><Anchor point="RIGHT" /></Area>
-						</Frame>
-						<Frame name="CharacterClassButton4" inherits="CharacterClassButtonTemplate" id="4">
-							<Area><Anchor point="TOP" offset="132" /><Anchor point="LEFT" /><Anchor point="RIGHT" /></Area>
-						</Frame>
-						<Frame name="CharacterClassButton5" inherits="CharacterClassButtonTemplate" id="5">
-							<Area><Anchor point="TOP" offset="176" /><Anchor point="LEFT" /><Anchor point="RIGHT" /></Area>
-						</Frame>
-						<Frame name="CharacterClassButton6" inherits="CharacterClassButtonTemplate" id="6">
-							<Area><Anchor point="TOP" offset="220" /><Anchor point="LEFT" /><Anchor point="RIGHT" /></Area>
-						</Frame>
-						<Frame name="CharacterClassButton7" inherits="CharacterClassButtonTemplate" id="7">
-							<Area><Anchor point="TOP" offset="264" /><Anchor point="LEFT" /><Anchor point="RIGHT" /></Area>
-						</Frame>
-						<Frame name="CharacterClassButton8" inherits="CharacterClassButtonTemplate" id="8">
-							<Area><Anchor point="TOP" offset="308" /><Anchor point="LEFT" /><Anchor point="RIGHT" /></Area>
-						</Frame>
-					</Frame>
-				</Frame> <!-- End Classes Frame -->
 			</Frame>
+		</Frame>
+
+		<Frame name="CharacterClassesPage" renderer="DefaultRenderer">
+			<Property name="Visible" value="false" />
+			<Visual>
+				<ImagerySection name="Background"><BorderComponent texture="Interface/GameUI/fg4_iconsSlot.htex" borderSize="64" /></ImagerySection>
+				<StateImagery name="Enabled"><Layer><Section section="Background" /></Layer></StateImagery>
+			</Visual>
+			<Area>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterWindowTabBar" offset="4" />
+				<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CharacterInvSlotHands" offset="8" />
+				<Anchor point="RIGHT" offset="-24" />
+				<Anchor point="BOTTOM" offset="-50" />
+			</Area>
+
+			<Frame name="CharacterWindowClassesHeader" inherits="StatSectionHeaderTemplate">
+				<Property name="Text" value="CHARACTER_CLASSES_OVERVIEW" />
+				<Area><Anchor point="TOP" offset="12" /><Anchor point="LEFT" offset="16" /><Anchor point="RIGHT" offset="-16" /></Area>
+			</Frame>
+
+			<Frame name="CharacterClassButton1" inherits="CharacterClassButtonTemplate" id="1"><Area><Anchor point="TOP" offset="60" /><Anchor point="LEFT" offset="14" /><Anchor point="RIGHT" offset="-14" /></Area></Frame>
+			<Frame name="CharacterClassButton2" inherits="CharacterClassButtonTemplate" id="2"><Area><Anchor point="TOP" offset="176" /><Anchor point="LEFT" offset="14" /><Anchor point="RIGHT" offset="-14" /></Area></Frame>
+			<Frame name="CharacterClassButton3" inherits="CharacterClassButtonTemplate" id="3"><Area><Anchor point="TOP" offset="292" /><Anchor point="LEFT" offset="14" /><Anchor point="RIGHT" offset="-14" /></Area></Frame>
+			<Frame name="CharacterClassButton4" inherits="CharacterClassButtonTemplate" id="4"><Area><Anchor point="TOP" offset="408" /><Anchor point="LEFT" offset="14" /><Anchor point="RIGHT" offset="-14" /></Area></Frame>
+			<Frame name="CharacterClassButton5" inherits="CharacterClassButtonTemplate" id="5"><Area><Anchor point="TOP" offset="524" /><Anchor point="LEFT" offset="14" /><Anchor point="RIGHT" offset="-14" /></Area></Frame>
+			<Frame name="CharacterClassButton6" inherits="CharacterClassButtonTemplate" id="6"><Area><Anchor point="TOP" offset="640" /><Anchor point="LEFT" offset="14" /><Anchor point="RIGHT" offset="-14" /></Area></Frame>
+			<Frame name="CharacterClassButton7" inherits="CharacterClassButtonTemplate" id="7"><Area><Anchor point="TOP" offset="756" /><Anchor point="LEFT" offset="14" /><Anchor point="RIGHT" offset="-14" /></Area></Frame>
+			<Frame name="CharacterClassButton8" inherits="CharacterClassButtonTemplate" id="8"><Area><Anchor point="TOP" offset="872" /><Anchor point="LEFT" offset="14" /><Anchor point="RIGHT" offset="-14" /></Area></Frame>
 		</Frame>
 
 		<Frame name="CharacterLevelLabel" inherits="TextSmall">
