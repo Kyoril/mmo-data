@@ -7,8 +7,20 @@ CHAR_CREATION_ERROR_STRING[4] = "CHAR_CREATE_ERR_SERVER_LIMIT"
 CHAR_CREATION_ERROR_STRING[5] = "CHAR_CREATE_ERR_ACCOUNT_LIMIT"
 CHAR_CREATION_ERROR_STRING[6] = "CHAR_CREATE_ERR_ONLY_EXISTING"
 
+CLASS_ICONS = {}
+CLASS_ICONS[0] = "Interface/Icons/Spells/S_Class_Mage.htex"
+CLASS_ICONS[1] = "Interface/Icons/Spells/S_Class_Warrior.htex"
+CLASS_ICONS[2] = "Interface/Icons/Spells/S_Class_Cleric.htex"
+CLASS_ICONS[3] = "Interface/Icons/Spells/S_Class_Acolyte.htex"
+CLASS_ICONS[4] = "Interface/Icons/Spells/S_Class_Scout.htex"
+
 function CharCreate_OnLoad(this)
 	SetCharCustomizeFrame(CharCreateModel);
+end
+
+function UpdateSelectionPanelHeight()
+	local contentHeight = 352 + CharRaceSection:GetHeight() + CharClassSection:GetHeight();
+	CharCreateSelectionPanel:SetHeight(contentHeight);
 end
 
 function CustomizationPropertyButton_UpdateValue(this)
@@ -36,11 +48,14 @@ function SetupCustomization()
 
 		CharCreatePropertyList:AddChild(button);
 
-		button:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, 12 + i * 164);
+		button:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, 8 + i * 136);
 		button:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, 12);
 		button:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, -12);
 		button.userData = propertyName;
 	end
+
+	CharCreatePropertyList:SetHeight(8 + propertyCount * 136);
+	CharCreatePropertiesFrame:SetHeight(128 + propertyCount * 136);
 end
 
 function OnRaceChanged()
@@ -84,12 +99,14 @@ function SetupRaceButtons()
 			local btn = ListCheckButtonBase:Clone();
 			btn:SetText(GetRaceName(i));
 			btn:SetCheckable(true);
+			btn:SetSize(396, 104);
 			btn.id = raceId;
 
 			CharRaceList:AddChild(btn);
-			btn:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, 8 + count * 128);
-			btn:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, 4);
-			btn:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, -4);
+			local column = count % 2;
+			local row = math.floor(count / 2);
+			btn:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, 12 + row * 112);
+			btn:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, 12 + column * 420);
 
 			btn:SetClickedHandler(function(self)
 				OnRaceChange_Clicked(self);
@@ -102,7 +119,9 @@ function SetupRaceButtons()
 		end
 	end
 
-	CharRaceFrame:SetHeight(136 + count * 128);
+	local rowCount = math.ceil(count / 2);
+	CharRaceSection:SetHeight(64 + rowCount * 112);
+	UpdateSelectionPanelHeight();
 
 	if firstAvailableRaceId ~= -1 and not IsRaceAvailable(GetCharacterRace()) then
 		SetCharacterRace(firstAvailableRaceId);
@@ -121,15 +140,18 @@ function SetupClassButtons()
 	for i = 0, numClasses - 1 do
 		local classId = GetClassId(i);
 		if IsClassAvailable(classId) then
-			local btn = ListCheckButtonBase:Clone();
+			local btn = ClassCheckButtonBase:Clone();
 			btn:SetText(GetClassName(i));
 			btn:SetCheckable(true);
+			btn:SetSize(396, 144);
 			btn.id = classId;
+			btn:GetChild(0):SetProperty("Icon", CLASS_ICONS[classId] or "");
 
 			CharClassList:AddChild(btn);
-			btn:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, 8 + count * 128);
-			btn:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, 4);
-			btn:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, -4);
+			local column = count % 2;
+			local row = math.floor(count / 2);
+			btn:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, 12 + row * 152);
+			btn:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, 12 + column * 420);
 
 			btn:SetClickedHandler(function(self)
 				OnClassChange_Clicked(self);
@@ -142,7 +164,9 @@ function SetupClassButtons()
 		end
 	end
 
-	CharClassFrame:SetHeight(136 + count * 128);
+	local rowCount = math.ceil(count / 2);
+	CharClassSection:SetHeight(64 + rowCount * 152);
+	UpdateSelectionPanelHeight();
 
 	if firstAvailableClassId ~= -1 and not IsClassAvailable(GetCharacterClass()) then
 		SetCharacterClass(firstAvailableClassId);
@@ -169,13 +193,24 @@ function CharCreate_Show()
 	-- Hide character selection
 	CharSelect:Hide();
 	NewCharacterNameBox:SetText("");
-	CharCreateModel:SetProperty("Zoom", "4.0");
-	CharCreateModel:SetProperty("OffsetY", "1.0");
+	CharCreate_ShowSelectionPage();
+	CharCreate:Show();
+end
 
-	-- Show the character creation screen
+function CharCreate_ShowSelectionPage()
+	NewCharacterNameBox:ReleaseInput();
 	CharCreatePage2:Hide();
 	CharCreatePage1:Show();
-	CharCreate:Show();
+	CharCreateModel:SetProperty("Zoom", "4.0");
+	CharCreateModel:SetProperty("OffsetY", "1.0");
+end
+
+function CharCreate_ShowCustomizationPage()
+	CharCreatePage1:Hide();
+	CharCreatePage2:Show();
+	CharCreateModel:SetProperty("Zoom", "2.25");
+	CharCreateModel:SetProperty("OffsetY", "1.35");
+	NewCharacterNameBox:CaptureInput();
 end
 
 function OnRaceChange_Clicked(this)

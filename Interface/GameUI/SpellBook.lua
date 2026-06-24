@@ -260,6 +260,10 @@ function SpellBook_OnLoad(self)
 
     self:RegisterEvent("SPELL_LEARNED", ActionBar_UpdateButtons);
 
+    -- Rebuild the spellbook whenever the active spellbook is replaced (spawn, class switch, etc.),
+    -- so switching class updates the visible spells immediately instead of on the next open.
+    self:RegisterEvent("PLAYER_SPELLS_CHANGED", SpellBook_SpellsChanged);
+
     for i = 1, SPELLS_PER_PAGE do
         local button = _G["SpellBookButton" .. string.format("%02d", i)];
         button.userData = i - 1;

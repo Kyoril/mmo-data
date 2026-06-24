@@ -453,6 +453,8 @@ strings =
 	
 	(key = "LEVEL_FORMAT", string = "Level %d")
 	(key = "PLAYER_LEVEL_CLASS_FORMAT", string = "Level %d %s")
+	(key = "CHARACTER_CLASSES_HEADER", string = "CLASSES")
+	(key = "CLASS_STATUS_ACTIVE", string = "Active")
 
 	(key = "GUILD_INVITATION", string = "%s invites you to guild '%s'.")
 	(key = "GUILD_INVITE_SENT", string = "You invited %s to join your guild.")

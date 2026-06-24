@@ -2,191 +2,134 @@
 <UiLayout xmlns="http://mmo-dev.net/ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://mmo-dev.net/ui UI.xsd">
 	<Script file="CharCreate.lua" />
 
-	<!-- Virtual character button -->
+	<!-- Compact choice used for race and gender selections. -->
 	<Frame name="ListCheckButtonBase" type="Button" renderer="CheckboxRenderer">
 		<Property name="Font" value="DefaultHeader" />
 		<Property name="Checkable" value="true" />
-
+		<Area>
+			<Size><AbsDimension x="396" y="104" /></Size>
+		</Area>
 		<Visual>
-			<ImagerySection name="FrameNormal">
-				<ImageComponent texture="Interface/GlueUI/CharSelectButtonBackground.htex" />
-			</ImagerySection>
-			<ImagerySection name="FrameHovered">
-				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="FFFF9B38" />
-			</ImagerySection>
-			<ImagerySection name="FramePushed">
-				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="FF9E5E22">
-					<Area>
-						<Inset left="16" top="16" />
-					</Area>
-				</ImageComponent>
-			</ImagerySection>
-			<ImagerySection name="FrameDisabled">
-				<ImageComponent texture="Interface/GlueUI/CharSelectButtonBackground.htex" tint="88404040" />
-			</ImagerySection>
-
-			<ImagerySection name="FrameNormalChecked">
-				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="FF033F08" />
-			</ImagerySection>
-			<ImagerySection name="FramePushedChecked">
-				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="FF033F08">
-					<Area>
-						<Inset left="16" top="16" />
-					</Area>
-				</ImageComponent>
-			</ImagerySection>
-			<ImagerySection name="Text">
-				<TextComponent color="FFEED37C" horzAlign="LEFT" vertAlign="CENTER">
-					<Area>
-						<Inset left="16" top="16" />
-					</Area>
-				</TextComponent>
-			</ImagerySection>
-			<ImagerySection name="TextDisabled">
-				<TextComponent color="88404040" horzAlign="LEFT" vertAlign="CENTER">
-					<Area>
-						<Inset left="16" top="16" />
-					</Area>
-				</TextComponent>
-			</ImagerySection>
-			<StateImagery name="Normal">
-				<Layer>
-					<Section section="FrameNormal" />
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Hovered">
-				<Layer>
-					<Section section="FrameHovered" />
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Pushed">
-				<Layer>
-					<Section section="FramePushed" />
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer>
-					<Section section="FrameDisabled" />
-					<Section section="TextDisabled" />
-				</Layer>
-			</StateImagery>
-			
-			<StateImagery name="NormalChecked">
-				<Layer>
-					<Section section="FrameNormalChecked" />
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="HoveredChecked">
-				<Layer>
-					<Section section="FrameNormalChecked" />
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="PushedChecked">
-				<Layer>
-					<Section section="FramePushedChecked" />
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="DisabledChecked">
-				<Layer>
-					<Section section="FrameDisabled" />
-					<Section section="TextDisabled" />
-				</Layer>
-			</StateImagery>
+			<ImagerySection name="NormalFrame"><BorderComponent texture="Interface/GlueUI/CharButtonUp.htex" borderSize="22" tint="D0201810" /></ImagerySection>
+			<ImagerySection name="HoveredFrame"><BorderComponent texture="Interface/GlueUI/CharButtonHovered.htex" borderSize="22" /></ImagerySection>
+			<ImagerySection name="PushedFrame"><BorderComponent texture="Interface/GlueUI/CharButtonPushed.htex" borderSize="22" /></ImagerySection>
+			<ImagerySection name="DisabledFrame"><BorderComponent texture="Interface/GlueUI/CharButtonDisabled.htex" borderSize="22" tint="88707070" /></ImagerySection>
+			<ImagerySection name="SelectedFrame"><BorderComponent texture="Interface/GlueUI/CharButtonHovered.htex" borderSize="22" tint="FFFFD67A" /></ImagerySection>
+			<ImagerySection name="Caption"><TextComponent color="FFEDE1B1" horzAlign="CENTER" vertAlign="CENTER"><Area><Inset left="20" top="8" right="20" bottom="8" /></Area></TextComponent></ImagerySection>
+			<ImagerySection name="HoveredCaption"><TextComponent color="FFFFFFFF" horzAlign="CENTER" vertAlign="CENTER"><Area><Inset left="20" top="8" right="20" bottom="8" /></Area></TextComponent></ImagerySection>
+			<ImagerySection name="DisabledCaption"><TextComponent color="FF777777" horzAlign="CENTER" vertAlign="CENTER"><Area><Inset left="20" top="8" right="20" bottom="8" /></Area></TextComponent></ImagerySection>
+			<StateImagery name="Normal"><Layer><Section section="NormalFrame" /><Section section="Caption" /></Layer></StateImagery>
+			<StateImagery name="Hovered"><Layer><Section section="HoveredFrame" /><Section section="HoveredCaption" /></Layer></StateImagery>
+			<StateImagery name="Pushed"><Layer><Section section="PushedFrame" /><Section section="Caption" color="FFAAAAAA" /></Layer></StateImagery>
+			<StateImagery name="Disabled"><Layer><Section section="DisabledFrame" /><Section section="DisabledCaption" /></Layer></StateImagery>
+			<StateImagery name="NormalChecked"><Layer><Section section="SelectedFrame" /><Section section="HoveredCaption" /></Layer></StateImagery>
+			<StateImagery name="HoveredChecked"><Layer><Section section="SelectedFrame" /><Section section="HoveredCaption" /></Layer></StateImagery>
+			<StateImagery name="PushedChecked"><Layer><Section section="PushedFrame" /><Section section="HoveredCaption" /></Layer></StateImagery>
+			<StateImagery name="DisabledChecked"><Layer><Section section="DisabledFrame" /><Section section="DisabledCaption" /></Layer></StateImagery>
 		</Visual>
-		<Area>
-			<Size><AbsDimension x="128" y="128" /></Size>
-		</Area>
 	</Frame>
 
-	<Frame name="CustomizationPropertyButton">
-        <Frame inherits="GlueTextSmall" name="PropertyName">
-			<Property name="HorzAlign" value="CENTER" />
-			<Property name="TextColor" value="FFFFFFFF" />
-			<Property name="Text" value="PROPERTY" />
-
-            <Area>
-                <Anchor point="TOP" offset="0" />
-                <Anchor point="LEFT" />
-				<Anchor point="RIGHT" />
-				<Size><AbsDimension y="39" /></Size>
-            </Area>
-        </Frame>
-
-        <Frame inherits="GlueButton" name="PrevButton">
-			<Property name="Icon" value="Interface/Icons/fg4_iconsGold_leftArrow.htex" />
-
-            <Area>
-                <Anchor point="TOP" offset="40" />
-                <Anchor point="LEFT" />
-				<Size><AbsDimension x="96" y="96" /></Size>
-            </Area>
-
-			<Scripts>
-				<OnClick>
-					return function(this)
-						CycleCustomizationProperty(this:GetParent().userData, false);
-						CustomizationPropertyButton_UpdateValue(this:GetParent());
-					end
-				</OnClick>
-			</Scripts>
-        </Frame>
-
-        <Frame inherits="GlueButton" name="NextButton">
-			<Property name="Icon" value="Interface/Icons/fg4_iconsGold_rightArrow.htex" />
-
-            <Area>
-                <Anchor point="TOP" offset="40" />
-                <Anchor point="RIGHT" />
-				<Size><AbsDimension x="96" y="96" /></Size>
-            </Area>
-			
-			<Scripts>
-				<OnClick>
-					return function(this)
-						CycleCustomizationProperty(this:GetParent().userData, true);
-						CustomizationPropertyButton_UpdateValue(this:GetParent());
-					end
-				</OnClick>
-			</Scripts>
-        </Frame>
-
-        <Frame inherits="GlueTextSmall" name="Label">
-			<Property name="HorzAlign" value="CENTER" />
-			<Property name="Text" value="LABEL" />
-
-            <Area>
-                <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="PropertyName" offset="24" />
-                <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="PrevButton" />
-				<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="NextButton" />
-				<Size><AbsDimension y="39" /></Size>
-            </Area>
-        </Frame>
-
+	<!-- Larger class card with the canonical class icon. -->
+	<Frame name="ClassCheckButtonBase" type="Button" renderer="CheckboxRenderer">
+		<Property name="Font" value="DefaultHeader" />
+		<Property name="Checkable" value="true" />
 		<Area>
-			<Size><AbsDimension x="256" y="164"/></Size>
+			<Size><AbsDimension x="396" y="144" /></Size>
 		</Area>
+		<Visual>
+			<ImagerySection name="NormalFrame"><BorderComponent texture="Interface/GlueUI/CharButtonUp.htex" borderSize="22" tint="D0201810" /></ImagerySection>
+			<ImagerySection name="HoveredFrame"><BorderComponent texture="Interface/GlueUI/CharButtonHovered.htex" borderSize="22" /></ImagerySection>
+			<ImagerySection name="PushedFrame"><BorderComponent texture="Interface/GlueUI/CharButtonPushed.htex" borderSize="22" /></ImagerySection>
+			<ImagerySection name="DisabledFrame"><BorderComponent texture="Interface/GlueUI/CharButtonDisabled.htex" borderSize="22" tint="88707070" /></ImagerySection>
+			<ImagerySection name="SelectedFrame"><BorderComponent texture="Interface/GlueUI/CharButtonHovered.htex" borderSize="22" tint="FFFFD67A" /></ImagerySection>
+			<ImagerySection name="Caption"><TextComponent color="FFEDE1B1" horzAlign="LEFT" vertAlign="CENTER"><Area><Inset left="152" top="8" right="20" bottom="8" /></Area></TextComponent></ImagerySection>
+			<ImagerySection name="HoveredCaption"><TextComponent color="FFFFFFFF" horzAlign="LEFT" vertAlign="CENTER"><Area><Inset left="152" top="8" right="20" bottom="8" /></Area></TextComponent></ImagerySection>
+			<ImagerySection name="DisabledCaption"><TextComponent color="FF777777" horzAlign="LEFT" vertAlign="CENTER"><Area><Inset left="152" top="8" right="20" bottom="8" /></Area></TextComponent></ImagerySection>
+			<StateImagery name="Normal"><Layer><Section section="NormalFrame" /><Section section="Caption" /></Layer></StateImagery>
+			<StateImagery name="Hovered"><Layer><Section section="HoveredFrame" /><Section section="HoveredCaption" /></Layer></StateImagery>
+			<StateImagery name="Pushed"><Layer><Section section="PushedFrame" /><Section section="Caption" color="FFAAAAAA" /></Layer></StateImagery>
+			<StateImagery name="Disabled"><Layer><Section section="DisabledFrame" /><Section section="DisabledCaption" /></Layer></StateImagery>
+			<StateImagery name="NormalChecked"><Layer><Section section="SelectedFrame" /><Section section="HoveredCaption" /></Layer></StateImagery>
+			<StateImagery name="HoveredChecked"><Layer><Section section="SelectedFrame" /><Section section="HoveredCaption" /></Layer></StateImagery>
+			<StateImagery name="PushedChecked"><Layer><Section section="PushedFrame" /><Section section="HoveredCaption" /></Layer></StateImagery>
+			<StateImagery name="DisabledChecked"><Layer><Section section="DisabledFrame" /><Section section="DisabledCaption" /></Layer></StateImagery>
+		</Visual>
+		<Frame name="ClassChoiceIcon" renderer="DefaultRenderer">
+			<Property name="Icon" />
+			<Area>
+				<Anchor point="LEFT" offset="20" />
+				<Anchor point="V_CENTER" />
+				<Size><AbsDimension x="108" y="108" /></Size>
+			</Area>
+			<Visual>
+				<ImagerySection name="Icon"><ImageComponent><Area><Inset all="6" /></Area><PropertyValue property="Icon" /></ImageComponent></ImagerySection>
+				<ImagerySection name="Slot"><BorderComponent texture="Interface/GlueUI/fg4_slotBrown_result.htex" borderSize="28" /></ImagerySection>
+				<StateImagery name="Enabled"><Layer><Section section="Slot" /><Section section="Icon" /></Layer></StateImagery>
+				<StateImagery name="Disabled"><Layer><Section section="Slot" /><Section section="Icon" color="88777777" /></Layer></StateImagery>
+			</Visual>
+		</Frame>
 	</Frame>
-	
-	<!-- This is the character selection screen frame. It covers the whole screen. -->
-	<Frame name="CharCreate" parent="GlueParent" setAllPoints="true" renderer="DefaultRenderer">
-		<Property name="Visible" value="false" />
 
-		<!-- For now, only a placeholder image is rendered in the background -->
+	<!-- One compact customization row. Child order is part of the Lua contract. -->
+	<Frame name="CustomizationPropertyButton" renderer="DefaultRenderer">
+		<Area>
+			<Size><AbsDimension x="824" y="128" /></Size>
+		</Area>
 		<Visual>
 			<ImagerySection name="Background">
-				<ImageComponent texture="Interface/GlueUI/BackgroundPH.htex" tiling="NONE" />
+				<ImageComponent texture="Interface/GlueUI/RealmListBackground.htex" tiling="BOTH"><Area><Inset all="8" /></Area></ImageComponent>
+				<BorderComponent texture="Interface/GlueUI/RealmListBorder.htex" borderSize="8" />
 			</ImagerySection>
-			<StateImagery name="Enabled">
-				<Layer>
-					<Section section="Background" />
-				</Layer>
-			</StateImagery>
+			<StateImagery name="Enabled"><Layer><Section section="Background" /></Layer></StateImagery>
+		</Visual>
+		<Frame inherits="GlueTextSmall" name="PropertyName">
+			<Property name="HorzAlign" value="LEFT" />
+			<Property name="VertAlign" value="CENTER" />
+			<Property name="TextColor" value="FFFFFFFF" />
+			<Property name="Text" value="PROPERTY" />
+			<Area>
+				<Anchor point="LEFT" offset="28" />
+				<Anchor point="TOP" />
+				<Anchor point="BOTTOM" />
+				<Size><AbsDimension x="260" /></Size>
+			</Area>
+		</Frame>
+		<Frame inherits="GlueButton" name="PrevButton">
+			<Property name="Icon" value="Interface/Icons/fg4_iconsGold_leftArrow.htex" />
+			<Area>
+				<Anchor point="LEFT" offset="304" />
+				<Anchor point="V_CENTER" />
+				<Size><AbsDimension x="80" y="80" /></Size>
+			</Area>
+			<Scripts><OnClick>return function(this) CycleCustomizationProperty(this:GetParent().userData, false); CustomizationPropertyButton_UpdateValue(this:GetParent()); end</OnClick></Scripts>
+		</Frame>
+		<Frame inherits="GlueButton" name="NextButton">
+			<Property name="Icon" value="Interface/Icons/fg4_iconsGold_rightArrow.htex" />
+			<Area>
+				<Anchor point="RIGHT" offset="-20" />
+				<Anchor point="V_CENTER" />
+				<Size><AbsDimension x="80" y="80" /></Size>
+			</Area>
+			<Scripts><OnClick>return function(this) CycleCustomizationProperty(this:GetParent().userData, true); CustomizationPropertyButton_UpdateValue(this:GetParent()); end</OnClick></Scripts>
+		</Frame>
+		<Frame inherits="GlueTextSmall" name="Label">
+			<Property name="HorzAlign" value="CENTER" />
+			<Property name="VertAlign" value="CENTER" />
+			<Property name="Text" value="LABEL" />
+			<Area>
+				<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="PrevButton" offset="8" />
+				<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="NextButton" offset="-8" />
+				<Anchor point="TOP" />
+				<Anchor point="BOTTOM" />
+			</Area>
+		</Frame>
+	</Frame>
+
+	<Frame name="CharCreate" parent="GlueParent" setAllPoints="true" renderer="DefaultRenderer">
+		<Property name="Visible" value="false" />
+		<Visual>
+			<ImagerySection name="Background"><ImageComponent texture="Interface/GlueUI/BackgroundPH.htex" tiling="NONE" /></ImagerySection>
+			<StateImagery name="Enabled"><Layer><Section section="Background" /></Layer></StateImagery>
 		</Visual>
 
 		<Frame name="CharCreateModel" type="Model" setAllPoints="true" renderer="ModelRenderer">
@@ -195,356 +138,116 @@
 		</Frame>
 
 		<Frame name="CharCreatePage1" setAllPoints="true">
-			<Frame name="CharRaceFrame" inherits="GlueBorderFrame">
-				<Property name="Visible" value="true" />
-
+			<Frame name="CharCreateSelectionPanel" inherits="GlueBorderFrame">
 				<Area>
-					<Anchor point="TOP" offset="24" />
-					<Anchor point="RIGHT" offset="-24" />
-					<Size>
-						<AbsDimension x="720" y="0" />
-					</Size>
+					<Anchor point="TOP" offset="32" />
+					<Anchor point="RIGHT" offset="-32" />
+					<Size><AbsDimension x="920" y="1240" /></Size>
 				</Area>
-
-				<Frame name="CharRaceLabel" inherits="GlueTextLarge">
-					<Property name="Text" value="RACE" />
-					<Area>
-						<Anchor point="LEFT" offset="32" />
-						<Anchor point="RIGHT" offset="-32" />
-						<Anchor point="TOP" offset="24" />
-					</Area>
+				<Frame name="CharCreateSelectionTitle" inherits="GlueTextLarge">
+					<Property name="Text" value="CREATE_CHARACTER" />
+					<Area><Anchor point="LEFT" offset="40" /><Anchor point="RIGHT" offset="-40" /><Anchor point="TOP" offset="28" /></Area>
 				</Frame>
 
-				<Frame name="CharRaceList" renderer="DefaultRenderer">
-					<Visual>
-						<ImagerySection name="Frame">
-							<ImageComponent texture="Interface/GlueUI/RealmListBackground.htex" tiling="BOTH" />
-							<BorderComponent texture="Interface/GlueUI/RealmListBorder.htex" borderSize="8" />
-						</ImagerySection>
-						<StateImagery name="Enabled">
-							<Layer>
-								<Section section="Frame" />
-							</Layer>
-						</StateImagery>
-					</Visual>
-
-					<Area>
-						<Anchor point="LEFT" offset="16" />
-						<Anchor point="RIGHT" offset="-16" />
-						<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharRaceLabel" offset="24" />
-						<Anchor point="BOTTOM" offset="-16" />
-					</Area>
-				</Frame>
-			</Frame>
-
-			<Frame name="CharClassFrame" inherits="GlueBorderFrame">
-				<Property name="Visible" value="true" />
-
-				<Area>
-					<Anchor point="TOP" offset="24" relativePoint="BOTTOM" relativeTo="CharRaceFrame" />
-					<Anchor point="RIGHT" offset="-24" />
-					<Size>
-						<AbsDimension x="720" y="0" />
-					</Size>
-				</Area>
-
-				<Frame name="CharClassLabel" inherits="GlueTextLarge">
-					<Property name="Text" value="CLASS" />
-					<Area>
-						<Anchor point="LEFT" offset="32" />
-						<Anchor point="RIGHT" offset="-32" />
-						<Anchor point="TOP" offset="24" />
-					</Area>
+				<Frame name="CharRaceSection">
+					<Area><Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharCreateSelectionTitle" offset="12" /><Anchor point="LEFT" offset="32" /><Anchor point="RIGHT" offset="-32" /><Size><AbsDimension y="188" /></Size></Area>
+					<Frame name="CharRaceLabel" inherits="GlueTextSmall">
+						<Property name="Text" value="RACE" /><Property name="TextColor" value="FFEED37C" />
+						<Area><Anchor point="TOP" /><Anchor point="LEFT" offset="12" /><Anchor point="RIGHT" offset="-12" /></Area>
+					</Frame>
+					<Frame name="CharRaceList" renderer="DefaultRenderer">
+						<Area><Anchor point="LEFT" /><Anchor point="RIGHT" /><Anchor point="TOP" offset="52" /><Anchor point="BOTTOM" /></Area>
+						<Visual><ImagerySection name="Frame"><ImageComponent texture="Interface/GlueUI/RealmListBackground.htex" tiling="BOTH"><Area><Inset all="8" /></Area></ImageComponent><BorderComponent texture="Interface/GlueUI/RealmListBorder.htex" borderSize="8" /></ImagerySection><StateImagery name="Enabled"><Layer><Section section="Frame" /></Layer></StateImagery></Visual>
+					</Frame>
 				</Frame>
 
-				<Frame name="CharClassList" renderer="DefaultRenderer">
-					<Visual>
-						<ImagerySection name="Frame">
-							<ImageComponent texture="Interface/GlueUI/RealmListBackground.htex" tiling="BOTH" />
-							<BorderComponent texture="Interface/GlueUI/RealmListBorder.htex" borderSize="8" />
-						</ImagerySection>
-						<StateImagery name="Enabled">
-							<Layer>
-								<Section section="Frame" />
-							</Layer>
-						</StateImagery>
-					</Visual>
-
-					<Area>
-						<Anchor point="LEFT" offset="16" />
-						<Anchor point="RIGHT" offset="-16" />
-						<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharClassLabel" offset="24" />
-						<Anchor point="BOTTOM" offset="-16" />
-					</Area>
-				</Frame>
-			</Frame>
-
-			<Frame name="CharGenderFrame" inherits="GlueBorderFrame">
-				<Property name="Visible" value="true" />
-
-				<Area>
-					<Anchor point="TOP" offset="24" relativePoint="BOTTOM" relativeTo="CharClassFrame" />
-					<Anchor point="RIGHT" offset="-24" />
-					<Size>
-						<AbsDimension x="720" y="392" />	<!-- 128 px per race button on top of 264px base height -->
-					</Size>
-				</Area>
-
-				<Frame name="CharGenderLabel" inherits="GlueTextLarge">
-					<Property name="Text" value="GENDER" />
-					<Area>
-						<Anchor point="LEFT" offset="32" />
-						<Anchor point="RIGHT" offset="-32" />
-						<Anchor point="TOP" offset="24" />
-					</Area>
+				<Frame name="CharClassSection">
+					<Area><Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharRaceSection" offset="16" /><Anchor point="LEFT" offset="32" /><Anchor point="RIGHT" offset="-32" /><Size><AbsDimension y="532" /></Size></Area>
+					<Frame name="CharClassLabel" inherits="GlueTextSmall">
+						<Property name="Text" value="CLASS" /><Property name="TextColor" value="FFEED37C" />
+						<Area><Anchor point="TOP" /><Anchor point="LEFT" offset="12" /><Anchor point="RIGHT" offset="-12" /></Area>
+					</Frame>
+					<Frame name="CharClassList" renderer="DefaultRenderer">
+						<Area><Anchor point="LEFT" /><Anchor point="RIGHT" /><Anchor point="TOP" offset="52" /><Anchor point="BOTTOM" /></Area>
+						<Visual><ImagerySection name="Frame"><ImageComponent texture="Interface/GlueUI/RealmListBackground.htex" tiling="BOTH"><Area><Inset all="8" /></Area></ImageComponent><BorderComponent texture="Interface/GlueUI/RealmListBorder.htex" borderSize="8" /></ImagerySection><StateImagery name="Enabled"><Layer><Section section="Frame" /></Layer></StateImagery></Visual>
+					</Frame>
 				</Frame>
 
-				<Frame name="CharGenderList" renderer="DefaultRenderer">
-					<Visual>
-						<ImagerySection name="Frame">
-							<ImageComponent texture="Interface/GlueUI/RealmListBackground.htex" tiling="BOTH" />
-							<BorderComponent texture="Interface/GlueUI/RealmListBorder.htex" borderSize="8" />
-						</ImagerySection>
-						<StateImagery name="Enabled">
-							<Layer>
-								<Section section="Frame" />
-							</Layer>
-						</StateImagery>
-					</Visual>
-
+				<Frame name="CharGenderSection">
+					<Area><Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharClassSection" offset="16" /><Anchor point="LEFT" offset="32" /><Anchor point="RIGHT" offset="-32" /><Size><AbsDimension y="188" /></Size></Area>
+					<Frame name="CharGenderLabel" inherits="GlueTextSmall">
+						<Property name="Text" value="GENDER" /><Property name="TextColor" value="FFEED37C" />
+						<Area><Anchor point="TOP" /><Anchor point="LEFT" offset="12" /><Anchor point="RIGHT" offset="-12" /></Area>
+					</Frame>
+					<Frame name="CharGenderList" renderer="DefaultRenderer">
+						<Area><Anchor point="LEFT" /><Anchor point="RIGHT" /><Anchor point="TOP" offset="52" /><Anchor point="BOTTOM" /></Area>
+						<Visual><ImagerySection name="Frame"><ImageComponent texture="Interface/GlueUI/RealmListBackground.htex" tiling="BOTH"><Area><Inset all="8" /></Area></ImageComponent><BorderComponent texture="Interface/GlueUI/RealmListBorder.htex" borderSize="8" /></ImagerySection><StateImagery name="Enabled"><Layer><Section section="Frame" /></Layer></StateImagery></Visual>
 						<Frame name="GenderMaleButton" inherits="ListCheckButtonBase" id="0">
-							<Property name="Text" value="MALE" />
-							<Property name="Checkable" value="true" />
-							<Property name="Checked" value="true" />
-
-							<Scripts>
-								<OnClick>
-									return function(this)
-										OnGenderChange_Clicked(this);
-									end
-								</OnClick>
-							</Scripts>
-
-							<Area>
-								<Anchor point="LEFT" offset="4" />
-								<Anchor point="RIGHT" offset="-4" />
-								<Anchor point="TOP" offset="8" />
-							</Area>
+							<Property name="Text" value="MALE" /><Property name="Checked" value="true" />
+							<Area><Anchor point="LEFT" offset="12" /><Anchor point="TOP" offset="12" /></Area>
+							<Scripts><OnClick>return function(this) OnGenderChange_Clicked(this); end</OnClick></Scripts>
 						</Frame>
-						
 						<Frame name="GenderFemaleButton" inherits="ListCheckButtonBase" id="1">
 							<Property name="Text" value="FEMALE" />
-							<Property name="Checkable" value="true" />
-
-							<Scripts>
-								<OnClick>
-									return function(this)
-										OnGenderChange_Clicked(this);
-									end
-								</OnClick>
-							</Scripts>
-							
-							<Area>
-								<Anchor point="LEFT" offset="4" />
-								<Anchor point="RIGHT" offset="-4" />
-								<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="GenderMaleButton" />
-							</Area>
+							<Area><Anchor point="LEFT" offset="432" /><Anchor point="TOP" offset="12" /></Area>
+							<Scripts><OnClick>return function(this) OnGenderChange_Clicked(this); end</OnClick></Scripts>
 						</Frame>
-
-					<Area>
-						<Anchor point="LEFT" offset="16" />
-						<Anchor point="RIGHT" offset="-16" />
-						<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharGenderLabel" offset="24" />
-						<Anchor point="BOTTOM" offset="-16" />
-					</Area>
+					</Frame>
 				</Frame>
 			</Frame>
 
-			<Frame renderer="DefaultRenderer">
-				<Area>
-					<Anchor point="LEFT"/>
-					<Anchor point="RIGHT"/>
-					<Anchor point="BOTTOM"/>
-					<Size>
-						<AbsDimension y="512" />
-					</Size>
-				</Area>
-
-				<Visual>
-					<ImagerySection name="Background">
-						<ImageComponent texture="Interface/GlueUI/GradientBlack.htex" tiling="HORZ" />
-					</ImagerySection>
-
-					<StateImagery name="Enabled">
-						<Layer>
-							<Section section="Background" />
-						</Layer>
-					</StateImagery>
-				</Visual>
-
-				<Frame name="CharCreatePage1NextButton" inherits="GlueButton">
-					<Property name="Text" value="CUSTOMIZE" />
-					<Area>
-						<Anchor point="BOTTOM" offset="-24" />
-						<Anchor point="RIGHT" offset="-24" />
-					</Area>
-
-					<Scripts>
-						<OnClick>
-							return function(this)
-								CharCreatePage1:Hide();
-								CharCreatePage2:Show();
-								CharCreateModel:SetProperty("Zoom", "1.0");
-								CharCreateModel:SetProperty("OffsetY", "1.7");
-								NewCharacterNameBox:CaptureInput();
-							end
-						</OnClick>
-					</Scripts>
-				</Frame>
-
+			<Frame name="CharCreatePage1Footer" renderer="DefaultRenderer">
+				<Area><Anchor point="LEFT" /><Anchor point="RIGHT" /><Anchor point="BOTTOM" /><Size><AbsDimension y="280" /></Size></Area>
+				<Visual><ImagerySection name="Background"><ImageComponent texture="Interface/GlueUI/GradientBlack.htex" tiling="HORZ" /></ImagerySection><StateImagery name="Enabled"><Layer><Section section="Background" /></Layer></StateImagery></Visual>
 				<Frame name="CancelCharCreationButton" inherits="GlueButton">
 					<Property name="Text" value="CANCEL" />
-					<Area>
-						<Anchor point="LEFT" offset="24" />
-						<Anchor point="BOTTOM" offset="-24" />
-					</Area>
-					
-					<Scripts>
-						<OnClick>
-							return function(this)
-								CharSelect_Cancel();
-							end
-						</OnClick>
-					</Scripts>
+					<Area><Anchor point="LEFT" offset="32" /><Anchor point="BOTTOM" offset="-32" /></Area>
+					<Scripts><OnClick>return function(this) CharSelect_Cancel(); end</OnClick></Scripts>
+				</Frame>
+				<Frame name="CharCreatePage1NextButton" inherits="GlueButtonPrimary">
+					<Property name="Text" value="CUSTOMIZE" />
+					<Area><Anchor point="RIGHT" offset="-32" /><Anchor point="BOTTOM" offset="-32" /></Area>
+					<Scripts><OnClick>return function(this) CharCreate_ShowCustomizationPage(); end</OnClick></Scripts>
 				</Frame>
 			</Frame>
 		</Frame>
-		
+
 		<Frame name="CharCreatePage2" setAllPoints="true">
 			<Property name="Visible" value="false" />
-
 			<Frame name="CharCreatePropertiesFrame" inherits="GlueBorderFrame">
-				<Area>
-					<Anchor point="TOP" offset="24" />
-					<Anchor point="RIGHT" offset="-24" />
-					<Anchor point="BOTTOM" offset="-256" />
-					<Size>
-						<AbsDimension x="720" />	<!-- 128 px per race button on top of 264px base height -->
-					</Size>
-				</Area>
-
+				<Area><Anchor point="TOP" offset="32" /><Anchor point="RIGHT" offset="-32" /><Size><AbsDimension x="920" y="536" /></Size></Area>
 				<Frame name="CharCreatePropertiesLabel" inherits="GlueTextLarge">
 					<Property name="Text" value="CUSTOMIZATION" />
-					<Area>
-						<Anchor point="LEFT" offset="32" />
-						<Anchor point="RIGHT" offset="-32" />
-						<Anchor point="TOP" offset="24" />
-					</Area>
+					<Area><Anchor point="LEFT" offset="40" /><Anchor point="RIGHT" offset="-40" /><Anchor point="TOP" offset="28" /></Area>
 				</Frame>
-
 				<Frame name="CharCreatePropertyList" renderer="DefaultRenderer">
-					<Visual>
-						<ImagerySection name="Frame">
-							<ImageComponent texture="Interface/GlueUI/RealmListBackground.htex" tiling="BOTH" />
-							<BorderComponent texture="Interface/GlueUI/RealmListBorder.htex" borderSize="8" />
-						</ImagerySection>
-						<StateImagery name="Enabled">
-							<Layer>
-								<Section section="Frame" />
-							</Layer>
-						</StateImagery>
-					</Visual>
-
-					<Area>
-						<Anchor point="LEFT" offset="16" />
-						<Anchor point="RIGHT" offset="-16" />
-						<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharCreatePropertiesLabel" offset="24" />
-						<Anchor point="BOTTOM" offset="-16" />
-					</Area>
+					<Area><Anchor point="LEFT" offset="32" /><Anchor point="RIGHT" offset="-32" /><Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharCreatePropertiesLabel" offset="16" /><Size><AbsDimension y="416" /></Size></Area>
 				</Frame>
 			</Frame>
 
-			<Frame renderer="DefaultRenderer">
-				<Area>
-					<Anchor point="LEFT"/>
-					<Anchor point="RIGHT"/>
-					<Anchor point="BOTTOM"/>
-					<Size>
-						<AbsDimension y="512" />
-					</Size>
-				</Area>
-				
-				<Visual>
-					<ImagerySection name="Background">
-						<ImageComponent texture="Interface/GlueUI/GradientBlack.htex" tiling="HORZ" />
-					</ImagerySection>
-
-					<StateImagery name="Enabled">
-						<Layer>
-							<Section section="Background" />
-						</Layer>
-					</StateImagery>
-				</Visual>
-
-				<Frame name="CharCreateSubmitButton" inherits="GlueButtonPrimary">
-					<Property name="Text" value="CREATE_CHARACTER" />
-					<Area>
-						<Anchor point="BOTTOM" offset="-24" />
-						<Anchor point="RIGHT" offset="-24" />
-					</Area>
-						
-					<Scripts>
-						<OnClick>
-							return function(this)
-								CharCreate_Submit();
-							end
-						</OnClick>
-					</Scripts>
-				</Frame>
-					
+			<Frame name="CharCreatePage2Footer" renderer="DefaultRenderer">
+				<Area><Anchor point="LEFT" /><Anchor point="RIGHT" /><Anchor point="BOTTOM" /><Size><AbsDimension y="280" /></Size></Area>
+				<Visual><ImagerySection name="Background"><ImageComponent texture="Interface/GlueUI/GradientBlack.htex" tiling="HORZ" /></ImagerySection><StateImagery name="Enabled"><Layer><Section section="Background" /></Layer></StateImagery></Visual>
 				<Frame name="NewCharacterNameBox" inherits="GlueTextField">
-					<Area>
-						<Anchor point="BOTTOM" offset="-48" />
-						<Anchor point="H_CENTER" />
-					</Area>
+					<Area><Anchor point="H_CENTER" /><Anchor point="BOTTOM" offset="-48" /><Size><AbsDimension x="600" y="90" /></Size></Area>
 				</Frame>
-
-				<Frame name="CharacterNameLabel" inherits="GlueTextLarge">
-					<Property name="Text" value="NAME" />
-
-					<Area>
-						<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="NewCharacterNameBox" offset="-8" />
-						<Anchor point="H_CENTER" />
-					</Area>
+				<Frame name="CharacterNameLabel" inherits="GlueTextSmall">
+					<Property name="Text" value="NAME" /><Property name="HorzAlign" value="CENTER" /><Property name="TextColor" value="FFEED37C" />
+					<Area><Anchor point="H_CENTER" /><Anchor point="BOTTOM" relativePoint="TOP" relativeTo="NewCharacterNameBox" offset="-8" /><Size><AbsDimension x="600" y="44" /></Size></Area>
 				</Frame>
-
 				<Frame name="CharCreationPage2BackButton" inherits="GlueButton">
 					<Property name="Text" value="BACK" />
-					<Area>
-						<Anchor point="LEFT" offset="24" />
-						<Anchor point="BOTTOM" offset="-24" />
-					</Area>
-					
-					<Scripts>
-						<OnClick>
-							return function(this)
-								CharCreatePage2:Hide();
-								CharCreatePage1:Show();
-								CharCreateModel:SetProperty("Zoom", "4.0");
-								CharCreateModel:SetProperty("OffsetY", "1.0");
-							end
-						</OnClick>
-					</Scripts>
+					<Area><Anchor point="LEFT" offset="32" /><Anchor point="BOTTOM" offset="-32" /></Area>
+					<Scripts><OnClick>return function(this) CharCreate_ShowSelectionPage(); end</OnClick></Scripts>
+				</Frame>
+				<Frame name="CharCreateSubmitButton" inherits="GlueButtonPrimary">
+					<Property name="Text" value="CREATE_CHARACTER" />
+					<Area><Anchor point="RIGHT" offset="-32" /><Anchor point="BOTTOM" offset="-32" /></Area>
+					<Scripts><OnClick>return function(this) CharCreate_Submit(); end</OnClick></Scripts>
 				</Frame>
 			</Frame>
 		</Frame>
-		
-		<Scripts>
-			<OnLoad>
-				return function(this)
-					CharCreate_OnLoad(this);
-				end
-			</OnLoad>
-		</Scripts>
+
+		<Scripts><OnLoad>return function(this) CharCreate_OnLoad(this); end</OnLoad></Scripts>
 	</Frame>
 </UiLayout>

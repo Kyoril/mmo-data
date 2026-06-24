@@ -92,6 +92,67 @@
 		</Frame>
 	</Frame>
 	
+	<!-- One clickable row in the multi-class list: class name (left) + level/status (right). -->
+	<Frame name="CharacterClassButtonTemplate" type="Button" renderer="ButtonRenderer">
+		<Property name="Font" value="SmallLabelFont" />
+
+		<Visual>
+			<ImagerySection name="NormalFrame">
+				<ImageComponent texture="Interface/GlueUI/CharSelectButtonBackground.htex" tint="FF202020" />
+			</ImagerySection>
+			<ImagerySection name="HoveredFrame">
+				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="FFFF9B38" />
+			</ImagerySection>
+			<ImagerySection name="PushedFrame">
+				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="FF9E5E22" />
+			</ImagerySection>
+			<ImagerySection name="DisabledFrame">
+				<ImageComponent texture="Interface/GlueUI/CharSelectButtonBackground.htex" tint="FF302810" />
+			</ImagerySection>
+			<StateImagery name="Normal">
+				<Layer><Section section="NormalFrame" /></Layer>
+			</StateImagery>
+			<StateImagery name="Hovered">
+				<Layer><Section section="HoveredFrame" /></Layer>
+			</StateImagery>
+			<StateImagery name="Pushed">
+				<Layer><Section section="PushedFrame" /></Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer><Section section="DisabledFrame" /></Layer>
+			</StateImagery>
+		</Visual>
+
+		<Area>
+			<Size><AbsDimension x="0" y="40" /></Size>
+		</Area>
+
+		<Frame inherits="TextSmall" name="ClassRowName">
+			<Property name="Clickable" value="false" />
+			<Property name="VertAlign" value="CENTER" />
+
+			<Area>
+				<Anchor point="LEFT" offset="14" />
+				<Anchor point="TOP" offset="0" />
+				<Anchor point="BOTTOM" offset="0" />
+				<Size><AbsDimension x="260" /></Size>
+			</Area>
+		</Frame>
+
+		<Frame inherits="TextSmall" name="ClassRowLevel">
+			<Property name="Clickable" value="false" />
+			<Property name="HorzAlign" value="RIGHT" />
+			<Property name="VertAlign" value="CENTER" />
+
+			<Area>
+				<Anchor point="RIGHT" offset="-14" />
+				<Anchor point="TOP" offset="0" />
+				<Anchor point="BOTTOM" offset="0" />
+				<Size><AbsDimension x="180" /></Size>
+			</Area>
+		</Frame>
+	</Frame>
+
 	<Frame name="CharacterWindow" renderer="DefaultRenderer" parent="GameParent">
 		<Property name="Visible" value="False" />
 
@@ -343,7 +404,7 @@
 					<Anchor point="TOP" offset="8" />
 					<Anchor point="LEFT" offset="8" />
 					<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CharacterStatsScrollBar" offset="-8" />
-					<Size><AbsDimension y="720" /></Size>
+					<Size><AbsDimension y="940" /></Size>
 				</Area>
 
 				<Frame name="CharacterWindowAttributePointsHeader" inherits="StatSectionHeaderTemplate">
@@ -707,6 +768,71 @@
 					</Area>
 				</Frame>
 				</Frame> <!-- End Secondary Stats Frame -->
+
+				<!-- Known Classes Bordered Container (multi-class system) -->
+				<Frame name="CharacterWindowClassesFrame" renderer="DefaultRenderer">
+					<Visual>
+						<ImagerySection name="Border">
+							<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" />
+						</ImagerySection>
+						<StateImagery name="Enabled">
+							<Layer>
+								<Section section="Border" />
+							</Layer>
+						</StateImagery>
+					</Visual>
+
+					<Area>
+						<Anchor point="TOP" offset="660" />
+						<Anchor point="LEFT" offset="16" />
+						<Anchor point="RIGHT" offset="-16" />
+						<Size><AbsDimension y="260" /></Size>
+					</Area>
+
+					<Frame name="CharacterWindowClassesHeader" inherits="StatSectionHeaderTemplate">
+						<Property name="Text" value="CHARACTER_CLASSES_HEADER" />
+
+						<Area>
+							<Anchor point="TOP" offset="8" />
+							<Anchor point="LEFT" offset="8" />
+							<Anchor point="RIGHT" offset="-8" />
+						</Area>
+					</Frame>
+
+					<Frame name="CharacterClassListContent" renderer="DefaultRenderer">
+						<Area>
+							<Anchor point="TOP" offset="52" />
+							<Anchor point="LEFT" offset="14" />
+							<Anchor point="RIGHT" offset="-14" />
+							<Anchor point="BOTTOM" offset="-10" />
+						</Area>
+
+						<Frame name="CharacterClassButton1" inherits="CharacterClassButtonTemplate" id="1">
+							<Area><Anchor point="TOP" offset="0" /><Anchor point="LEFT" /><Anchor point="RIGHT" /></Area>
+						</Frame>
+						<Frame name="CharacterClassButton2" inherits="CharacterClassButtonTemplate" id="2">
+							<Area><Anchor point="TOP" offset="44" /><Anchor point="LEFT" /><Anchor point="RIGHT" /></Area>
+						</Frame>
+						<Frame name="CharacterClassButton3" inherits="CharacterClassButtonTemplate" id="3">
+							<Area><Anchor point="TOP" offset="88" /><Anchor point="LEFT" /><Anchor point="RIGHT" /></Area>
+						</Frame>
+						<Frame name="CharacterClassButton4" inherits="CharacterClassButtonTemplate" id="4">
+							<Area><Anchor point="TOP" offset="132" /><Anchor point="LEFT" /><Anchor point="RIGHT" /></Area>
+						</Frame>
+						<Frame name="CharacterClassButton5" inherits="CharacterClassButtonTemplate" id="5">
+							<Area><Anchor point="TOP" offset="176" /><Anchor point="LEFT" /><Anchor point="RIGHT" /></Area>
+						</Frame>
+						<Frame name="CharacterClassButton6" inherits="CharacterClassButtonTemplate" id="6">
+							<Area><Anchor point="TOP" offset="220" /><Anchor point="LEFT" /><Anchor point="RIGHT" /></Area>
+						</Frame>
+						<Frame name="CharacterClassButton7" inherits="CharacterClassButtonTemplate" id="7">
+							<Area><Anchor point="TOP" offset="264" /><Anchor point="LEFT" /><Anchor point="RIGHT" /></Area>
+						</Frame>
+						<Frame name="CharacterClassButton8" inherits="CharacterClassButtonTemplate" id="8">
+							<Area><Anchor point="TOP" offset="308" /><Anchor point="LEFT" /><Anchor point="RIGHT" /></Area>
+						</Frame>
+					</Frame>
+				</Frame> <!-- End Classes Frame -->
 			</Frame>
 		</Frame>
 
