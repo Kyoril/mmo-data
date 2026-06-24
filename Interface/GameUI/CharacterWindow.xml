@@ -367,6 +367,20 @@
 			</Area>
 		</Frame>
 
+		<!-- Aggregate warning shown when one or more equipped items cannot be used by the active class. -->
+		<Frame name="CharacterEquipmentWarning" inherits="TextSmall">
+			<Property name="Font" value="SmallLabelFont" />
+			<Property name="HorzAlign" value="CENTER" />
+			<Property name="Color" value="FFFF2020" />
+			<Property name="Visible" value="false" />
+
+			<Area>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterInvSlotMainHand" offset="6" />
+				<Anchor point="LEFT" relativeTo="CharacterInvSlotMainHand" offset="-8" />
+				<Anchor point="RIGHT" relativeTo="CharacterInvSlotRanged" offset="8" />
+			</Area>
+		</Frame>
+
 		<Frame name="CharacterStatsScrollClip" renderer="DefaultRenderer">
 			<Visual>
 				<ImagerySection name="Background">

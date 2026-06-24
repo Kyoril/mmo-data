@@ -127,14 +127,34 @@
 
 	<Frame name="CharCreate" parent="GlueParent" setAllPoints="true" renderer="DefaultRenderer">
 		<Property name="Visible" value="false" />
-		<Visual>
-			<ImagerySection name="Background"><ImageComponent texture="Interface/GlueUI/BackgroundPH.htex" tiling="NONE" /></ImagerySection>
-			<StateImagery name="Enabled"><Layer><Section section="Background" /></Layer></StateImagery>
-		</Visual>
+		<Animations>
+			<Animation name="BackgroundZoomIn" duration="1.6" loop="false">
+				<Track property="Width" target="CharCreateBackdrop"><Keyframe time="0" value="3840" /><Keyframe time="0.1" value="4696" /><Keyframe time="0.2" value="5330" /><Keyframe time="0.3" value="5800" /><Keyframe time="0.4" value="6147" /><Keyframe time="0.5" value="6405" /><Keyframe time="0.65" value="6672" /><Keyframe time="0.8" value="6842" /><Keyframe time="1" value="6978" /><Keyframe time="1.25" value="7064" /><Keyframe time="1.6" value="7142" /></Track>
+				<Track property="Height" target="CharCreateBackdrop"><Keyframe time="0" value="2160" /><Keyframe time="0.1" value="2642" /><Keyframe time="0.2" value="2998" /><Keyframe time="0.3" value="3263" /><Keyframe time="0.4" value="3458" /><Keyframe time="0.5" value="3603" /><Keyframe time="0.65" value="3754" /><Keyframe time="0.8" value="3849" /><Keyframe time="1" value="3925" /><Keyframe time="1.25" value="3974" /><Keyframe time="1.6" value="4018" /></Track>
+				<Track property="PositionX" target="CharCreateBackdrop"><Keyframe time="0" value="0" /><Keyframe time="0.1" value="-428" /><Keyframe time="0.2" value="-745" /><Keyframe time="0.3" value="-980" /><Keyframe time="0.4" value="-1154" /><Keyframe time="0.5" value="-1283" /><Keyframe time="0.65" value="-1416" /><Keyframe time="0.8" value="-1501" /><Keyframe time="1" value="-1569" /><Keyframe time="1.25" value="-1612" /><Keyframe time="1.6" value="-1651" /></Track>
+				<Track property="PositionY" target="CharCreateBackdrop"><Keyframe time="0" value="0" /><Keyframe time="0.1" value="-201" /><Keyframe time="0.2" value="-349" /><Keyframe time="0.3" value="-459" /><Keyframe time="0.4" value="-541" /><Keyframe time="0.5" value="-601" /><Keyframe time="0.65" value="-664" /><Keyframe time="0.8" value="-704" /><Keyframe time="1" value="-735" /><Keyframe time="1.25" value="-756" /><Keyframe time="1.6" value="-774" /></Track>
+			</Animation>
+			<Animation name="BackgroundZoomOut" duration="1.6" loop="false">
+				<Track property="Width" target="CharCreateBackdrop"><Keyframe time="0" value="7142" /><Keyframe time="0.1" value="6286" /><Keyframe time="0.2" value="5652" /><Keyframe time="0.3" value="5182" /><Keyframe time="0.4" value="4835" /><Keyframe time="0.5" value="4577" /><Keyframe time="0.65" value="4310" /><Keyframe time="0.8" value="4140" /><Keyframe time="1" value="4004" /><Keyframe time="1.25" value="3918" /><Keyframe time="1.6" value="3840" /></Track>
+				<Track property="Height" target="CharCreateBackdrop"><Keyframe time="0" value="4018" /><Keyframe time="0.1" value="3536" /><Keyframe time="0.2" value="3180" /><Keyframe time="0.3" value="2915" /><Keyframe time="0.4" value="2720" /><Keyframe time="0.5" value="2575" /><Keyframe time="0.65" value="2424" /><Keyframe time="0.8" value="2329" /><Keyframe time="1" value="2253" /><Keyframe time="1.25" value="2204" /><Keyframe time="1.6" value="2160" /></Track>
+				<Track property="PositionX" target="CharCreateBackdrop"><Keyframe time="0" value="-1651" /><Keyframe time="0.1" value="-1223" /><Keyframe time="0.2" value="-906" /><Keyframe time="0.3" value="-671" /><Keyframe time="0.4" value="-497" /><Keyframe time="0.5" value="-368" /><Keyframe time="0.65" value="-235" /><Keyframe time="0.8" value="-150" /><Keyframe time="1" value="-82" /><Keyframe time="1.25" value="-39" /><Keyframe time="1.6" value="0" /></Track>
+				<Track property="PositionY" target="CharCreateBackdrop"><Keyframe time="0" value="-774" /><Keyframe time="0.1" value="-573" /><Keyframe time="0.2" value="-425" /><Keyframe time="0.3" value="-315" /><Keyframe time="0.4" value="-233" /><Keyframe time="0.5" value="-173" /><Keyframe time="0.65" value="-110" /><Keyframe time="0.8" value="-70" /><Keyframe time="1" value="-39" /><Keyframe time="1.25" value="-18" /><Keyframe time="1.6" value="0" /></Track>
+			</Animation>
+		</Animations>
+
+		<Frame name="CharCreateBackdrop" renderer="DefaultRenderer">
+			<Area><Position><AbsDimension x="0" y="0" /></Position><Size><AbsDimension x="3840" y="2160" /></Size></Area>
+			<Visual>
+				<ImagerySection name="Background"><ImageComponent texture="Interface/GlueUI/BackgroundPH.htex" tiling="NONE" /></ImagerySection>
+				<StateImagery name="Enabled"><Layer><Section section="Background" /></Layer></StateImagery>
+			</Visual>
+		</Frame>
 
 		<Frame name="CharCreateModel" type="Model" setAllPoints="true" renderer="ModelRenderer">
 			<Property name="Yaw" value="-120" />
 			<Property name="Animation" value="Idle" />
+			<Property name="Zoom" value="5.0" />
+			<Property name="OffsetY" value="1.00" />
 		</Frame>
 
 		<Frame name="CharCreatePage1" setAllPoints="true">
@@ -164,7 +184,7 @@
 				<Frame name="CharClassSection">
 					<Area><Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharRaceSection" offset="16" /><Anchor point="LEFT" offset="32" /><Anchor point="RIGHT" offset="-32" /><Size><AbsDimension y="532" /></Size></Area>
 					<Frame name="CharClassLabel" inherits="GlueTextSmall">
-						<Property name="Text" value="CLASS" /><Property name="TextColor" value="FFEED37C" />
+						<Property name="Text" value="STARTING_CLASS" /><Property name="TextColor" value="FFEED37C" />
 						<Area><Anchor point="TOP" /><Anchor point="LEFT" offset="12" /><Anchor point="RIGHT" offset="-12" /></Area>
 					</Frame>
 					<Frame name="CharClassList" renderer="DefaultRenderer">

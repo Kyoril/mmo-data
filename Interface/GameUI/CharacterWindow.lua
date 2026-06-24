@@ -245,6 +245,7 @@ end
 function CharacterWindow_OnShow(this)
     CharacterWindow_RefreshStats();
     CharacterWindow_RefreshClasses();
+    CharacterWindow_UpdateEquipmentWarning();
     CharacterFrameModel:SetUnit("player");
 
     local player = GetUnit("player");
@@ -257,6 +258,43 @@ function CharacterWindow_OnKnownClassesChanged(self)
     -- Refresh whenever the known-class set or active class changes (learning a class-change spell,
     -- switching class, etc.). Safe to run while hidden.
     CharacterWindow_RefreshClasses();
+    CharacterWindow_UpdateEquipmentWarning();
+end
+
+-- Paperdoll equipment slot frames, scanned to detect items the active class can no longer use.
+local CHARACTER_EQUIPMENT_SLOTS = {
+    "CharacterInvSlotHead", "CharacterInvSlotNeck", "CharacterInvSlotShoulder",
+    "CharacterInvSlotBack", "CharacterInvSlotChest", "CharacterInvSlotShirt",
+    "CharacterInvSlotTabard", "CharacterInvSlotWrists", "CharacterInvSlotHands",
+    "CharacterInvSlotWaist", "CharacterInvSlotLegs", "CharacterInvSlotFeet",
+    "CharacterInvSlotFinger1", "CharacterInvSlotFinger2", "CharacterInvSlotTrinket1",
+    "CharacterInvSlotTrinket2", "CharacterInvSlotMainHand", "CharacterInvSlotOffHand",
+    "CharacterInvSlotRanged",
+};
+
+function CharacterWindow_UpdateEquipmentWarning()
+    if not CharacterEquipmentWarning then
+        return;
+    end
+
+    local anyDisabled = false;
+    for _, slotName in ipairs(CHARACTER_EQUIPMENT_SLOTS) do
+        local slot = _G[slotName];
+        if slot then
+            local item = GetInventorySlotItem("player", slot.id);
+            if item and not item:IsUsable() then
+                anyDisabled = true;
+                break;
+            end
+        end
+    end
+
+    if anyDisabled then
+        CharacterEquipmentWarning:SetText(Localize("CHARACTER_EQUIPMENT_DISABLED_WARNING"));
+        CharacterEquipmentWarning:Show();
+    else
+        CharacterEquipmentWarning:Hide();
+    end
 end
 
 CHARACTER_MAX_CLASS_ROWS = 8;

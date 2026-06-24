@@ -165,8 +165,8 @@
 		<Frame name="CharModel" type="Model" setAllPoints="true" renderer="ModelRenderer">
 			<Property name="Yaw" value="-120" />
 			<Property name="Animation" value="Idle" />
-			<Property name="OffsetY" value="1.0" />
-			<Property name="Zoom" value="4.0" />
+			<Property name="Zoom" value="5.0" />
+			<Property name="OffsetY" value="1.00" />
 		</Frame>
 
 		<Frame name="BackgroundFrame" renderer="DefaultRenderer">

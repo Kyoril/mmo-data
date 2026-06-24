@@ -14,6 +14,8 @@ CLASS_ICONS[2] = "Interface/Icons/Spells/S_Class_Cleric.htex"
 CLASS_ICONS[3] = "Interface/Icons/Spells/S_Class_Acolyte.htex"
 CLASS_ICONS[4] = "Interface/Icons/Spells/S_Class_Scout.htex"
 
+charCreateBackdropZoomed = false;
+
 function CharCreate_OnLoad(this)
 	SetCharCustomizeFrame(CharCreateModel);
 end
@@ -193,16 +195,22 @@ function CharCreate_Show()
 	-- Hide character selection
 	CharSelect:Hide();
 	NewCharacterNameBox:SetText("");
-	CharCreate_ShowSelectionPage();
+	CharCreate_ShowSelectionPage(charCreateBackdropZoomed);
 	CharCreate:Show();
 end
 
-function CharCreate_ShowSelectionPage()
+function CharCreate_ShowSelectionPage(animateBackdrop)
 	NewCharacterNameBox:ReleaseInput();
 	CharCreatePage2:Hide();
 	CharCreatePage1:Show();
-	CharCreateModel:SetProperty("Zoom", "4.0");
-	CharCreateModel:SetProperty("OffsetY", "1.0");
+	CharCreateModel:SetProperty("Zoom", "5.0");
+	CharCreateModel:SetProperty("OffsetY", "1.00");
+
+	if animateBackdrop ~= false and charCreateBackdropZoomed then
+		CharCreate:StopAnimation("BackgroundZoomIn");
+		CharCreate:PlayAnimation("BackgroundZoomOut");
+	end
+	charCreateBackdropZoomed = false;
 end
 
 function CharCreate_ShowCustomizationPage()
@@ -210,6 +218,9 @@ function CharCreate_ShowCustomizationPage()
 	CharCreatePage2:Show();
 	CharCreateModel:SetProperty("Zoom", "2.25");
 	CharCreateModel:SetProperty("OffsetY", "1.35");
+	CharCreate:StopAnimation("BackgroundZoomOut");
+	CharCreate:PlayAnimation("BackgroundZoomIn");
+	charCreateBackdropZoomed = true;
 	NewCharacterNameBox:CaptureInput();
 end
 

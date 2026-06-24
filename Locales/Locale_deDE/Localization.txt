@@ -164,6 +164,7 @@ strings =
 
 	(key = "RACE", string = "Volk")
 	(key = "CLASS", string = "Klasse")
+	(key = "STARTING_CLASS", string = "Startklasse")
 	(key = "GENDER", string = "Geschlecht")
 	
 	(key = "STAMINA", string = "Ausdauer")
@@ -445,6 +446,8 @@ strings =
 	(key = "PLAYER_LEVEL_CLASS_FORMAT", string = "Stufe %d %s")
 	(key = "CHARACTER_CLASSES_HEADER", string = "KLASSEN")
 	(key = "CLASS_STATUS_ACTIVE", string = "Aktiv")
+	(key = "ITEM_DISABLED_WRONG_CLASS", string = "Kann von deiner aktuellen Klasse nicht verwendet werden")
+	(key = "CHARACTER_EQUIPMENT_DISABLED_WARNING", string = "Einige angelegte Gegenstände können von deiner aktuellen Klasse nicht verwendet werden")
 	
 	(key = "GUILD_INVITATION", string = "%s lädt Euch ein, Euch der Gilde '%s' anzuschließen.")
 	(key = "GUILD_INVITE_SENT", string = "Ihr habt %s eingeladen sich Eurer Gilde anzuschließen.")

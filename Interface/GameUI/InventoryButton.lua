@@ -1,8 +1,14 @@
 
+-- Tint applied to an equipped item's icon when the active class can no longer use it (lost
+-- weapon/armor proficiency or dual-wield after a class switch). Plain white means "usable".
+INVENTORY_ICON_COLOR_NORMAL = "FFFFFFFF";
+INVENTORY_ICON_COLOR_DISABLED = "FFFF4040";
+
 function InventoryItemButton_OnLoad(this)
     this:SetOnEnterHandler(InventoryItemButton_OnEnter);
     this:SetOnLeaveHandler(ActionButton_OnLeave);
-    this:SetClickedHandler(InventoryItemButton_OnClick);    
+    this:SetClickedHandler(InventoryItemButton_OnClick);
+    this:SetProperty("IconColor", INVENTORY_ICON_COLOR_NORMAL);
 end
 
 function InventoryItemButton_OnDrag(this, button, position)
@@ -29,6 +35,12 @@ function InventoryItemButton_OnEnter(this)
     GameTooltip:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.TOP, this, -16);
 
     GameTooltip_SetItem(item);
+
+    -- Warn when the active class can't use this equipped item (revoked proficiency / dual-wield).
+    if not item:IsUsable() then
+        GameTooltip_AddLine(Localize("ITEM_DISABLED_WRONG_CLASS"), TOOLTIP_LINE_LEFT, "FFFF2020");
+    end
+
     GameTooltip:Show();
 end
 
@@ -83,4 +95,11 @@ function InventoryItemButton_OnUpdate(this, elapsed)
     end
 
     this:SetProperty("Icon", icon);
+
+    -- Tint the icon red when the item is equipped but the active class can no longer use it.
+    if item:IsUsable() then
+        this:SetProperty("IconColor", INVENTORY_ICON_COLOR_NORMAL);
+    else
+        this:SetProperty("IconColor", INVENTORY_ICON_COLOR_DISABLED);
+    end
 end
