@@ -167,6 +167,7 @@
 		</Frame>
 
 		<Frame inherits="TextSmall" name="ClassRowStatus">
+			<Property name="Font" value="SmallLabelFont" />
 			<Property name="Clickable" value="false" />
 			<Property name="VertAlign" value="CENTER" />
 			<Area>
@@ -453,7 +454,7 @@
 			</Frame>
 		</Frame>
 
-		<Frame name="CharacterStatsScrollClip" renderer="DefaultRenderer">
+		<Frame name="CharacterAttributesPage" renderer="DefaultRenderer">
 			<Visual>
 				<ImagerySection name="Background">
 					<BorderComponent texture="Interface/GameUI/fg4_iconsSlot.htex" borderSize="64" />
@@ -472,24 +473,11 @@
 				<Anchor point="BOTTOM" offset="-50" />
 			</Area>
 
-			<Frame name="CharacterStatsScrollBar" inherits="VerticalScrollBar">
-				<Property name="Enabled" value="false" />
-
-				<Area>
-					<Size><AbsDimension x="96" /></Size>
-					<Anchor point="RIGHT" offset="-8" />
-					<Anchor point="TOP" offset="8" />
-					<Anchor point="BOTTOM" offset="-8" />
-				</Area>
-			</Frame>
-
-			<Frame name="CharacterStatsScrollContent" renderer="DefaultRenderer">
-				<Property name="ClippedByParent" value="true" />
-
+			<Frame name="CharacterAttributesContent" renderer="DefaultRenderer">
 				<Area>
 					<Anchor point="TOP" offset="8" />
 					<Anchor point="LEFT" offset="8" />
-					<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CharacterStatsScrollBar" offset="-8" />
+					<Anchor point="RIGHT" offset="-8" />
 					<Size><AbsDimension y="666" /></Size>
 				</Area>
 
@@ -876,14 +864,38 @@
 				<Area><Anchor point="TOP" offset="12" /><Anchor point="LEFT" offset="16" /><Anchor point="RIGHT" offset="-16" /></Area>
 			</Frame>
 
-			<Frame name="CharacterClassButton1" inherits="CharacterClassButtonTemplate" id="1"><Area><Anchor point="TOP" offset="60" /><Anchor point="LEFT" offset="14" /><Anchor point="RIGHT" offset="-14" /></Area></Frame>
-			<Frame name="CharacterClassButton2" inherits="CharacterClassButtonTemplate" id="2"><Area><Anchor point="TOP" offset="176" /><Anchor point="LEFT" offset="14" /><Anchor point="RIGHT" offset="-14" /></Area></Frame>
-			<Frame name="CharacterClassButton3" inherits="CharacterClassButtonTemplate" id="3"><Area><Anchor point="TOP" offset="292" /><Anchor point="LEFT" offset="14" /><Anchor point="RIGHT" offset="-14" /></Area></Frame>
-			<Frame name="CharacterClassButton4" inherits="CharacterClassButtonTemplate" id="4"><Area><Anchor point="TOP" offset="408" /><Anchor point="LEFT" offset="14" /><Anchor point="RIGHT" offset="-14" /></Area></Frame>
-			<Frame name="CharacterClassButton5" inherits="CharacterClassButtonTemplate" id="5"><Area><Anchor point="TOP" offset="524" /><Anchor point="LEFT" offset="14" /><Anchor point="RIGHT" offset="-14" /></Area></Frame>
-			<Frame name="CharacterClassButton6" inherits="CharacterClassButtonTemplate" id="6"><Area><Anchor point="TOP" offset="640" /><Anchor point="LEFT" offset="14" /><Anchor point="RIGHT" offset="-14" /></Area></Frame>
-			<Frame name="CharacterClassButton7" inherits="CharacterClassButtonTemplate" id="7"><Area><Anchor point="TOP" offset="756" /><Anchor point="LEFT" offset="14" /><Anchor point="RIGHT" offset="-14" /></Area></Frame>
-			<Frame name="CharacterClassButton8" inherits="CharacterClassButtonTemplate" id="8"><Area><Anchor point="TOP" offset="872" /><Anchor point="LEFT" offset="14" /><Anchor point="RIGHT" offset="-14" /></Area></Frame>
+			<Frame name="CharacterClassButton1" inherits="CharacterClassButtonTemplate" id="1">
+				<Area><Anchor point="TOP" offset="60" /><Anchor point="LEFT" offset="14" /><Anchor point="RIGHT" offset="-14" /></Area>
+				<Scripts><OnClick>return function(self) CharacterClassButton_OnClick(self); end</OnClick></Scripts>
+			</Frame>
+			<Frame name="CharacterClassButton2" inherits="CharacterClassButtonTemplate" id="2">
+				<Area><Anchor point="TOP" offset="176" /><Anchor point="LEFT" offset="14" /><Anchor point="RIGHT" offset="-14" /></Area>
+				<Scripts><OnClick>return function(self) CharacterClassButton_OnClick(self); end</OnClick></Scripts>
+			</Frame>
+			<Frame name="CharacterClassButton3" inherits="CharacterClassButtonTemplate" id="3">
+				<Area><Anchor point="TOP" offset="292" /><Anchor point="LEFT" offset="14" /><Anchor point="RIGHT" offset="-14" /></Area>
+				<Scripts><OnClick>return function(self) CharacterClassButton_OnClick(self); end</OnClick></Scripts>
+			</Frame>
+			<Frame name="CharacterClassButton4" inherits="CharacterClassButtonTemplate" id="4">
+				<Area><Anchor point="TOP" offset="408" /><Anchor point="LEFT" offset="14" /><Anchor point="RIGHT" offset="-14" /></Area>
+				<Scripts><OnClick>return function(self) CharacterClassButton_OnClick(self); end</OnClick></Scripts>
+			</Frame>
+			<Frame name="CharacterClassButton5" inherits="CharacterClassButtonTemplate" id="5">
+				<Area><Anchor point="TOP" offset="524" /><Anchor point="LEFT" offset="14" /><Anchor point="RIGHT" offset="-14" /></Area>
+				<Scripts><OnClick>return function(self) CharacterClassButton_OnClick(self); end</OnClick></Scripts>
+			</Frame>
+			<Frame name="CharacterClassButton6" inherits="CharacterClassButtonTemplate" id="6">
+				<Area><Anchor point="TOP" offset="640" /><Anchor point="LEFT" offset="14" /><Anchor point="RIGHT" offset="-14" /></Area>
+				<Scripts><OnClick>return function(self) CharacterClassButton_OnClick(self); end</OnClick></Scripts>
+			</Frame>
+			<Frame name="CharacterClassButton7" inherits="CharacterClassButtonTemplate" id="7">
+				<Area><Anchor point="TOP" offset="756" /><Anchor point="LEFT" offset="14" /><Anchor point="RIGHT" offset="-14" /></Area>
+				<Scripts><OnClick>return function(self) CharacterClassButton_OnClick(self); end</OnClick></Scripts>
+			</Frame>
+			<Frame name="CharacterClassButton8" inherits="CharacterClassButtonTemplate" id="8">
+				<Area><Anchor point="TOP" offset="872" /><Anchor point="LEFT" offset="14" /><Anchor point="RIGHT" offset="-14" /></Area>
+				<Scripts><OnClick>return function(self) CharacterClassButton_OnClick(self); end</OnClick></Scripts>
+			</Frame>
 		</Frame>
 
 		<Frame name="CharacterLevelLabel" inherits="TextSmall">

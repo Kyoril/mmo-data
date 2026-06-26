@@ -447,6 +447,7 @@ strings =
 	(key = "CHARACTER_CLASSES_OVERVIEW", string = "ОБЗОР КЛАССОВ")
 	(key = "CLASS_STATUS_ACTIVE", string = "Активный")
 	(key = "CLASS_STATUS_CLICK_TO_ACTIVATE", string = "Нажмите, чтобы активировать")
+	(key = "CLASS_STATUS_CHANGING", string = "Смена класса...")
 	(key = "CLASS_STATUS_LOCKED", string = "Не открыт")
 	(key = "CLASS_STATUS_UNAVAILABLE", string = "Смена класса недоступна")
 	(key = "CLASS_RANK_FORMAT", string = "Ранг %d / %d")

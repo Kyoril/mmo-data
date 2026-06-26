@@ -42,6 +42,9 @@ function CharacterWindow_OnLoad(self)
     self:RegisterEvent("PLAYER_ENTER_WORLD", CharacterWindow_OnEnterWorld);
     self:RegisterEvent("PLAYER_MODEL_CHANGED", CharacterWindow_OnPlayerModelChanged);
     self:RegisterEvent("PLAYER_KNOWN_CLASSES_CHANGED", CharacterWindow_OnKnownClassesChanged);
+    self:RegisterEvent("PLAYER_SPELL_CAST_START", CharacterWindow_OnClassChangeCastStart);
+    self:RegisterEvent("PLAYER_SPELL_CAST_FINISH", CharacterWindow_OnClassChangeCastEnded);
+    self:RegisterEvent("PLAYER_SPELL_CAST_FAILED", CharacterWindow_OnClassChangeCastEnded);
 
     CharacterWindowTab = 1;
     for i = 1, 2 do
@@ -51,11 +54,12 @@ function CharacterWindow_OnLoad(self)
         end
     end
 
-    -- Hook up the multi-class list row buttons (clicking a non-active class switches to it).
+    -- Class row click handlers are declared on the concrete XML frames. Template script handlers
+    -- are compiled after inheritance is resolved, so declaring the handler only on the template
+    -- would not copy it to the concrete rows.
     for i = 1, CHARACTER_MAX_CLASS_ROWS do
         local classButton = _G["CharacterClassButton" .. i];
         if classButton then
-            classButton:SetClickedHandler(CharacterClassButton_OnClick);
             classButton:Hide();
         end
     end
@@ -84,14 +88,6 @@ function CharacterWindow_OnLoad(self)
         end
     end
 
-    -- Setup stats scrollbar
-    CharacterStatsScrollBar:SetMinimum(0);
-    CharacterStatsScrollBar:SetValue(0);
-    CharacterStatsScrollBar:SetStep(44);  -- Scroll 44 pixels at a time (one stat row)
-    CharacterStatsScrollBar:SetMaximum(0);
-    CharacterStatsScrollBar:SetOnValueChangedHandler(CharacterStatsScrollBar_OnValueChanged);
-    CharacterStatsScrollBar:Disable();  -- Will enable when content overflows
-
     -- Setup tooltips for secondary stats
     CharacterArmorStat:SetOnEnterHandler(CharacterWindow_ArmorLabel_OnEnter);
     CharacterArmorStat:SetOnLeaveHandler(CharacterWindow_HideTooltip);
@@ -104,10 +100,6 @@ function CharacterWindow_OnLoad(self)
 
     CharacterAttackTimeStat:SetOnEnterHandler(CharacterWindow_AttackSpeedLabel_OnEnter);
     CharacterAttackTimeStat:SetOnLeaveHandler(CharacterWindow_HideTooltip);
-end
-
-function CharacterStatsScrollBar_OnValueChanged(self, value)
-    CharacterStatsScrollContent:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, -value);
 end
 
 function CharacterWindow_AddAttributeButton_OnEnter(self)
@@ -317,11 +309,11 @@ function CharacterWindow_UpdateTabs()
     end
 
     if CharacterWindowTab == 2 then
-        CharacterStatsScrollClip:Hide();
+        CharacterAttributesPage:Hide();
         CharacterClassesPage:Show();
     else
         CharacterClassesPage:Hide();
-        CharacterStatsScrollClip:Show();
+        CharacterAttributesPage:Show();
     end
 end
 
@@ -349,9 +341,32 @@ function CharacterClassButton_OnClick(self)
     local spellId = self.changeSpellId;
     if spellId and spellId > 0 then
         CastSpellById(spellId);
+		-- CheckboxRenderer toggles before invoking OnClick. Restore selection from the active class;
+		-- the cast-start event will replace the row status once the server accepts the spell.
+		CharacterWindow_RefreshClasses();
 	else
 		CharacterWindow_RefreshClasses();
     end
+end
+
+function CharacterWindow_OnClassChangeCastStart(self, spell)
+    if not spell then
+        return;
+    end
+
+    for i = 1, CHARACTER_MAX_CLASS_ROWS do
+        local button = _G["CharacterClassButton" .. i];
+        if button and button.changeSpellId == spell.id then
+            button:GetChild(2):SetProperty("TextColor", "FFFFD100");
+            button:GetChild(2):SetText(Localize("CLASS_STATUS_CHANGING"));
+            button:Disable();
+            return;
+        end
+    end
+end
+
+function CharacterWindow_OnClassChangeCastEnded(self)
+    CharacterWindow_RefreshClasses();
 end
 
 function CharacterWindow_RefreshClasses()
@@ -392,7 +407,7 @@ function CharacterWindow_RefreshClasses()
                     button:GetChild(1):SetProperty("TextColor", "FFFFD100");
 					button:GetChild(1):SetText(string.format(Localize("CLASS_RANK_FORMAT"), classLevel, maxClassLevel));
 					button:GetChild(2):SetProperty("TextColor", "FFFFD100");
-					button:GetChild(2):SetText(Localize("CLASS_STATUS_ACTIVE"));
+					button:GetChild(2):SetText("");
                     button:Disable();
                 else
                     button:GetChild(0):SetProperty("TextColor", "FFFFFFFF");
@@ -506,19 +521,4 @@ function CharacterWindow_RefreshStats()
         end
     end
 
-    CharacterWindow_UpdateStatsScrollBar();
-end
-
-function CharacterWindow_UpdateStatsScrollBar()
-    -- Update scrollbar based on content height
-    local contentHeight = CharacterStatsScrollContent:GetHeight();
-    local clipHeight = CharacterStatsScrollClip:GetHeight();
-
-    if contentHeight > clipHeight then
-        CharacterStatsScrollBar:SetMaximum(contentHeight - clipHeight);
-        CharacterStatsScrollBar:Enable();
-    else
-        CharacterStatsScrollBar:SetMaximum(0);
-        CharacterStatsScrollBar:Disable();
-    end
 end

@@ -449,6 +449,7 @@ strings =
 	(key = "CHARACTER_CLASSES_OVERVIEW", string = "KLASSENÜBERSICHT")
 	(key = "CLASS_STATUS_ACTIVE", string = "Aktiv")
 	(key = "CLASS_STATUS_CLICK_TO_ACTIVATE", string = "Zum Aktivieren klicken")
+	(key = "CLASS_STATUS_CHANGING", string = "Klassenwechsel läuft...")
 	(key = "CLASS_STATUS_LOCKED", string = "Nicht freigeschaltet")
 	(key = "CLASS_STATUS_UNAVAILABLE", string = "Klassenwechsel nicht verfügbar")
 	(key = "CLASS_RANK_FORMAT", string = "Rang %d / %d")
