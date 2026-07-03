@@ -23,6 +23,7 @@ LootFrame.xml
 TrainerFrame.xml
 VendorFrame.xml
 BankFrame.xml
+MailFrame.xml
 QuestFrame.xml
 QuestLogFrame.xml
 GuildFrame.xml

@@ -67,6 +67,9 @@ function InventoryItemButton_OnClick(this, button)
         if IsTrading() then
             -- Trade window is open: put the item into the next free trade slot
             TradeFrame_AddFromInventory(this.id);
+        elseif (MailFrame_IsSendPanelVisible()) then
+            -- Mail send panel is open: attach the item to the mail draft
+            MailFrame_AttachItem(this.id);
         elseif (BankFrame:IsVisible()) then
             -- Bank window is open: move the item between inventory and bank
             BankFrame_OnItemRightClicked(this.id);

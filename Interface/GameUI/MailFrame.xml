@@ -1,0 +1,216 @@
+<?xml version="1.0" ?>
+<UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
+	<Script file="MailFrame.lua" />
+
+	<Frame name="MailFrame" inherits="SidePanelTemplate" parent="GameParent">
+		<Property name="Visible" value="False" />
+
+		<Scripts>
+			<OnLoad>
+				return function(this)
+					MailFrame_Load(this);
+				end
+			</OnLoad>
+			<OnHide>
+				return function(this)
+					CloseMailbox();
+				end
+			</OnHide>
+		</Scripts>
+
+		<Frame name="MailInboxTabButton" inherits="GlueButton">
+			<Property name="Text" value="MAIL_INBOX" />
+			<Area>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="MailFrame_SidePanelTitleBar" offset="8" />
+				<Anchor point="LEFT" offset="24" />
+				<Size><AbsDimension x="360" y="44" /></Size>
+			</Area>
+			<Scripts>
+				<OnClick>
+					return function(this)
+						MailFrame_ShowInbox();
+					end
+				</OnClick>
+			</Scripts>
+		</Frame>
+
+		<Frame name="MailSendTabButton" inherits="GlueButton">
+			<Property name="Text" value="MAIL_SEND" />
+			<Area>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="MailFrame_SidePanelTitleBar" offset="8" />
+				<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="MailInboxTabButton" offset="8" />
+				<Size><AbsDimension x="360" y="44" /></Size>
+			</Area>
+			<Scripts>
+				<OnClick>
+					return function(this)
+						MailFrame_ShowSend();
+					end
+				</OnClick>
+			</Scripts>
+		</Frame>
+
+		<Frame name="MailInboxPanel">
+			<Area>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="MailInboxTabButton" offset="8" />
+				<Anchor point="LEFT" offset="24" />
+				<Anchor point="RIGHT" offset="-24" />
+				<Anchor point="BOTTOM" offset="-24" />
+			</Area>
+
+			<Frame name="MailListScrollBar" inherits="VerticalScrollBar">
+				<Area>
+					<Anchor point="TOP" offset="0" />
+					<Anchor point="RIGHT" offset="0" />
+					<Size><AbsDimension y="440" /></Size>
+				</Area>
+			</Frame>
+
+			<Frame name="MailListContent">
+				<Area>
+					<Anchor point="TOP" offset="0" />
+					<Anchor point="LEFT" offset="0" />
+					<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="MailListScrollBar" offset="-8" />
+					<Size><AbsDimension y="440" /></Size>
+				</Area>
+			</Frame>
+
+			<Frame name="MailBodyText" renderer="DefaultRenderer">
+				<Property name="Font" value="SmallLabelFont" />
+				<Visual>
+					<ImagerySection name="Border">
+						<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" />
+					</ImagerySection>
+					<ImagerySection name="Text">
+						<TextComponent horzAlign="Left" vertAlign="Top" />
+					</ImagerySection>
+					<StateImagery name="Enabled">
+						<Layer>
+							<Section section="Border" />
+							<Section section="Text" />
+						</Layer>
+					</StateImagery>
+				</Visual>
+				<Area>
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="MailListContent" offset="8" />
+					<Anchor point="LEFT" offset="0" />
+					<Anchor point="RIGHT" offset="0" />
+					<Anchor point="BOTTOM" offset="-64" />
+				</Area>
+			</Frame>
+
+			<Frame name="MailTakeMoneyButton" inherits="GlueButton">
+				<Property name="Text" value="MAIL_TAKE_MONEY" />
+				<Area>
+					<Anchor point="BOTTOM" offset="-8" />
+					<Anchor point="LEFT" offset="0" />
+					<Size><AbsDimension x="300" y="44" /></Size>
+				</Area>
+				<Scripts>
+					<OnClick>
+						return function(this)
+							MailFrame_TakeMoneyClicked();
+						end
+					</OnClick>
+				</Scripts>
+			</Frame>
+
+			<Frame name="MailTakeItemButton" inherits="InventoryItemButtonTemplate">
+				<Area>
+					<Anchor point="BOTTOM" offset="-8" />
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="MailTakeMoneyButton" offset="16" />
+				</Area>
+			</Frame>
+
+			<Frame name="MailDeleteButton" inherits="GlueButton">
+				<Property name="Text" value="MAIL_DELETE" />
+				<Area>
+					<Anchor point="BOTTOM" offset="-8" />
+					<Anchor point="RIGHT" offset="0" />
+					<Size><AbsDimension x="300" y="44" /></Size>
+				</Area>
+				<Scripts>
+					<OnClick>
+						return function(this)
+							MailFrame_DeleteClicked();
+						end
+					</OnClick>
+				</Scripts>
+			</Frame>
+		</Frame>
+
+		<Frame name="MailSendPanel">
+			<Property name="Visible" value="False" />
+			<Area>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="MailInboxTabButton" offset="8" />
+				<Anchor point="LEFT" offset="24" />
+				<Anchor point="RIGHT" offset="-24" />
+				<Anchor point="BOTTOM" offset="-24" />
+			</Area>
+
+			<Frame name="MailSendToField" inherits="GameTextField">
+				<Property name="AcceptsTab" value="False" />
+				<Area>
+					<Anchor point="TOP" offset="8" />
+					<Anchor point="LEFT" offset="0" />
+					<Anchor point="RIGHT" offset="0" />
+					<Size><AbsDimension y="56" /></Size>
+				</Area>
+			</Frame>
+
+			<Frame name="MailSendSubjectField" inherits="GameTextField">
+				<Property name="AcceptsTab" value="False" />
+				<Area>
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="MailSendToField" offset="8" />
+					<Anchor point="LEFT" offset="0" />
+					<Anchor point="RIGHT" offset="0" />
+					<Size><AbsDimension y="56" /></Size>
+				</Area>
+			</Frame>
+
+			<Frame name="MailSendBodyField" inherits="GameTextField">
+				<Property name="AcceptsTab" value="False" />
+				<Area>
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="MailSendSubjectField" offset="8" />
+					<Anchor point="LEFT" offset="0" />
+					<Anchor point="RIGHT" offset="0" />
+					<Size><AbsDimension y="200" /></Size>
+				</Area>
+			</Frame>
+
+			<Frame name="MailSendMoneyField" inherits="GameTextField">
+				<Property name="AcceptsTab" value="False" />
+				<Property name="Text" value="0" />
+				<Area>
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="MailSendBodyField" offset="8" />
+					<Anchor point="LEFT" offset="0" />
+					<Size><AbsDimension x="360" y="56" /></Size>
+				</Area>
+			</Frame>
+
+			<Frame name="MailSendAttachButton" inherits="InventoryItemButtonTemplate">
+				<Area>
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="MailSendBodyField" offset="8" />
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="MailSendMoneyField" offset="16" />
+				</Area>
+			</Frame>
+
+			<Frame name="MailSendButton" inherits="GlueButton">
+				<Property name="Text" value="MAIL_SEND_BUTTON" />
+				<Area>
+					<Anchor point="BOTTOM" offset="-8" />
+					<Anchor point="LEFT" offset="0" />
+					<Anchor point="RIGHT" offset="0" />
+					<Size><AbsDimension y="44" /></Size>
+				</Area>
+				<Scripts>
+					<OnClick>
+						return function(this)
+							MailFrame_SendClicked();
+						end
+					</OnClick>
+				</Scripts>
+			</Frame>
+		</Frame>
+	</Frame>
+</UiLayout>
