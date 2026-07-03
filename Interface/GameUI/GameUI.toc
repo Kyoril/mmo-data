@@ -22,6 +22,7 @@ InventoryFrame.xml
 LootFrame.xml
 TrainerFrame.xml
 VendorFrame.xml
+BankFrame.xml
 QuestFrame.xml
 QuestLogFrame.xml
 GuildFrame.xml

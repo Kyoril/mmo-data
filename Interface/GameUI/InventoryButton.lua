@@ -25,6 +25,14 @@ function InventoryItemButton_OnEnter(this)
         return;
     end
 
+    -- Fill the tooltip first so its final height is known for anchoring below
+    GameTooltip_SetItem(item);
+
+    -- Warn when the active class can't use this equipped item (revoked proficiency / dual-wield).
+    if not item:IsUsable() then
+        GameTooltip_AddLine(Localize("ITEM_DISABLED_WRONG_CLASS"), TOOLTIP_LINE_LEFT, "FFFF2020");
+    end
+
     GameTooltip:ClearAnchors();
 
     if (this:GetX() >= 300) then
@@ -32,13 +40,12 @@ function InventoryItemButton_OnEnter(this)
     else
         GameTooltip:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, this, 0);
     end
-    GameTooltip:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.TOP, this, -16);
 
-    GameTooltip_SetItem(item);
-
-    -- Warn when the active class can't use this equipped item (revoked proficiency / dual-wield).
-    if not item:IsUsable() then
-        GameTooltip_AddLine(Localize("ITEM_DISABLED_WRONG_CLASS"), TOOLTIP_LINE_LEFT, "FFFF2020");
+    -- Show the tooltip above the button if it fits on screen, below otherwise
+    if (this:GetY() >= GameTooltip:GetHeight() + 16) then
+        GameTooltip:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.TOP, this, -16);
+    else
+        GameTooltip:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, this, 16);
     end
 
     GameTooltip:Show();
@@ -60,6 +67,9 @@ function InventoryItemButton_OnClick(this, button)
         if IsTrading() then
             -- Trade window is open: put the item into the next free trade slot
             TradeFrame_AddFromInventory(this.id);
+        elseif (BankFrame:IsVisible()) then
+            -- Bank window is open: move the item between inventory and bank
+            BankFrame_OnItemRightClicked(this.id);
         else
             UseContainerItem(this.id);
             -- TODO: If is vendor item, sell it

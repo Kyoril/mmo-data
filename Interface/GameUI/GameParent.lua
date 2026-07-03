@@ -48,6 +48,7 @@ UIPanelWindows["SpellBook"] = { area = "left", pushable = 0 };
 UIPanelWindows["CharacterWindow"] = { area = "left", pushable = 2 };
 UIPanelWindows["TrainerFrame"] = { area = "left", pushable = 0 };
 UIPanelWindows["VendorFrame"] = { area = "left", pushable = 0 };
+UIPanelWindows["BankFrame"] = { area = "left", pushable = 0 };
 UIPanelWindows["LootFrame"] = { area = "left", pushable = 7 };
 UIPanelWindows["QuestFrame"] = { area = "left", pushable = 0 };
 UIPanelWindows["QuestLogFrame"] = { area = "left", pushable = 0 };

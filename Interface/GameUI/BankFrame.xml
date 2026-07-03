@@ -1,0 +1,107 @@
+<?xml version="1.0" ?>
+<UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
+	<Script file="BankFrame.lua" />
+
+	<Frame name="BankFrame" inherits="SidePanelTemplate" parent="GameParent">
+		<Property name="Visible" value="False" />
+
+		<Scripts>
+			<OnLoad>
+				return function(this)
+					BankFrame_Load(this);
+				end
+			</OnLoad>
+			<OnUpdate>
+				return function(this, elapsed)
+					BankFrame_OnUpdate(this, elapsed);
+				end
+			</OnUpdate>
+			<OnHide>
+				return function(this)
+					CloseBank();
+				end
+			</OnHide>
+			<OnMouseDown>
+				return function(this, button)
+					if CursorHasItem() then
+						HandleInvalidItemDrop();
+						return true;
+					end
+					return true;
+				end
+			</OnMouseDown>
+		</Scripts>
+
+		<Frame name="BankBuySlotPanel" renderer="DefaultRenderer">
+			<Visual>
+				<ImagerySection name="Border">
+					<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Border" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+
+			<Area>
+				<Anchor point="BOTTOM" offset="-24" />
+				<Anchor point="LEFT" offset="24" />
+				<Anchor point="RIGHT" offset="-24" />
+				<Size><AbsDimension x="0" y="72" /></Size>
+			</Area>
+
+			<Frame name="BankBuySlotButton" inherits="GlueButton">
+				<Property name="Text" value="BANK_BUY_SLOT" />
+
+				<Area>
+					<Anchor point="LEFT" offset="16" />
+					<Anchor point="TOP" offset="14" />
+					<Size><AbsDimension x="480" y="44" /></Size>
+				</Area>
+
+				<Scripts>
+					<OnClick>
+						return function(this)
+							BuyBankBagSlot();
+						end
+					</OnClick>
+				</Scripts>
+			</Frame>
+
+			<Frame name="BankSlotPriceFrame" inherits="MoneyFrameTemplate">
+				<Area>
+					<Anchor point="BOTTOM" offset="-16" />
+					<Anchor point="RIGHT" offset="-16" />
+					<Size><AbsDimension x="100" y="44" /></Size>
+				</Area>
+			</Frame>
+		</Frame>
+
+		<Frame name="BankBagContainer">
+			<Area>
+				<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="BankBuySlotPanel" offset="0" />
+				<Anchor point="LEFT" offset="24" />
+				<Anchor point="RIGHT" offset="-24" />
+				<Size><AbsDimension y="128" /></Size>
+			</Area>
+		</Frame>
+
+		<Frame name="BankScrollBar" inherits="VerticalScrollBar">
+			<Area>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="BankFrame_SidePanelTitleBar" offset="8" />
+				<Anchor point="RIGHT" offset="-24" />
+				<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="BankBagContainer" offset="-8" />
+			</Area>
+		</Frame>
+
+		<Frame name="BankSlotContainer">
+			<Area>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="BankFrame_SidePanelTitleBar" offset="0" />
+				<Anchor point="LEFT" offset="24" />
+				<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="BankScrollBar" offset="0" />
+				<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="BankBagContainer" />
+			</Area>
+		</Frame>
+	</Frame>
+</UiLayout>

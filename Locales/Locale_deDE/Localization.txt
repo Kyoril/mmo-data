@@ -310,6 +310,11 @@ strings =
 	(key = "YES", string = "Ja")
 	(key = "NO", string = "Nein")
 	(key = "INVENTORY", string = "Inventar")
+	(key = "BANK", string = "Bank")
+	(key = "BANK_BUY_SLOT", string = "Bankfach kaufen")
+	(key = "ERR_BANK_SLOT_INSUFFICIENT_FUNDS", string = "Ihr habt nicht genug Geld, um dieses Bankfach zu kaufen.")
+	(key = "ERR_BANK_SLOT_TOO_MANY", string = "Ihr besitzt bereits alle Bankfächer.")
+	(key = "ERR_BANK_SLOT_NOT_BANKER", string = "Es ist kein Bankier in der Nähe.")
 	(key = "DESTROY_ITEM", string = "Seid Ihr sicher, dass Ihr %s zerstören wollt?")
 
 	(key = "LEVEL_UP", string = "Herzlichen Glückwunsch, Ihr habt Stufe %d erreicht!")
