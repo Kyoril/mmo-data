@@ -2,6 +2,194 @@
 <UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
 	<Script file="MailFrame.lua" />
 
+	<Frame name="MailFrameTabButtonTemplate" type="Button" renderer="CheckboxRenderer">
+		<Property name="Font" value="DefaultSmall" />
+		<Property name="Checkable" value="true" />
+
+		<Visual>
+			<ImagerySection name="NormalFrame">
+				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Down_result.htex" borderSize="25" />
+			</ImagerySection>
+			<ImagerySection name="HoveredFrame">
+				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Up_result.htex" borderSize="25" />
+			</ImagerySection>
+			<ImagerySection name="PushedFrame">
+				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Over_result.htex" borderSize="25" />
+			</ImagerySection>
+			<ImagerySection name="SelectedFrame">
+				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Over_result.htex" borderSize="25" />
+				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="8">
+					<Area><Inset all="5" /></Area>
+				</BorderComponent>
+			</ImagerySection>
+			<ImagerySection name="Caption">
+				<TextComponent color="FFB9A26A" horzAlign="CENTER" vertAlign="CENTER" />
+			</ImagerySection>
+			<ImagerySection name="CaptionActive">
+				<TextComponent color="FFFFFFFF" horzAlign="CENTER" vertAlign="CENTER" />
+			</ImagerySection>
+			<StateImagery name="Normal">
+				<Layer><Section section="NormalFrame" /><Section section="Caption" /></Layer>
+			</StateImagery>
+			<StateImagery name="Hovered">
+				<Layer><Section section="HoveredFrame" /><Section section="CaptionActive" /></Layer>
+			</StateImagery>
+			<StateImagery name="Pushed">
+				<Layer><Section section="PushedFrame" /><Section section="CaptionActive" color="FFAAAAAA" /></Layer>
+			</StateImagery>
+			<StateImagery name="NormalChecked">
+				<Layer><Section section="SelectedFrame" /><Section section="CaptionActive" /></Layer>
+			</StateImagery>
+			<StateImagery name="HoveredChecked">
+				<Layer><Section section="SelectedFrame" /><Section section="CaptionActive" /></Layer>
+			</StateImagery>
+			<StateImagery name="PushedChecked">
+				<Layer><Section section="SelectedFrame" /><Section section="CaptionActive" color="FFAAAAAA" /></Layer>
+			</StateImagery>
+		</Visual>
+
+		<Area>
+			<Size><AbsDimension x="452" y="76" /></Size>
+		</Area>
+	</Frame>
+
+	<Frame name="MailListRowTemplate" type="Button" renderer="CheckboxRenderer">
+		<Property name="Font" value="DefaultSmall" />
+		<Property name="Checkable" value="true" />
+
+		<Visual>
+			<ImagerySection name="NormalBg">
+				<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="50000000" />
+			</ImagerySection>
+			<ImagerySection name="HoveredBg">
+				<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="A0553300" />
+			</ImagerySection>
+			<ImagerySection name="PushedBg">
+				<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="A0221100" />
+			</ImagerySection>
+			<ImagerySection name="SelectedBg">
+				<BorderComponent texture="Interface/GameUI/fg4_borders_01_28_2_result.htex" borderSize="24" />
+			</ImagerySection>
+			<StateImagery name="Normal">
+				<Layer><Section section="NormalBg" /></Layer>
+			</StateImagery>
+			<StateImagery name="Hovered">
+				<Layer><Section section="HoveredBg" /></Layer>
+			</StateImagery>
+			<StateImagery name="Pushed">
+				<Layer><Section section="PushedBg" /></Layer>
+			</StateImagery>
+			<StateImagery name="NormalChecked">
+				<Layer><Section section="SelectedBg" /></Layer>
+			</StateImagery>
+			<StateImagery name="HoveredChecked">
+				<Layer><Section section="SelectedBg" /></Layer>
+			</StateImagery>
+			<StateImagery name="PushedChecked">
+				<Layer><Section section="SelectedBg" /></Layer>
+			</StateImagery>
+		</Visual>
+
+		<Area>
+			<Size><AbsDimension x="0" y="68" /></Size>
+		</Area>
+
+		<Scripts>
+			<OnClick>
+				return function(this)
+					MailFrame_OnRowClicked(this);
+				end
+			</OnClick>
+		</Scripts>
+
+		<Frame name="UnreadMarker" inherits="TextSmall">
+			<Property name="Clickable" value="false" />
+			<Property name="HorzAlign" value="CENTER" />
+			<Property name="VertAlign" value="CENTER" />
+			<Property name="TextColor" value="FFFFD100" />
+			<Area>
+				<Anchor point="LEFT" offset="6" />
+				<Anchor point="TOP" offset="0" />
+				<Anchor point="BOTTOM" offset="0" />
+				<Size><AbsDimension x="40" y="0" /></Size>
+			</Area>
+		</Frame>
+
+		<Frame name="SenderName" inherits="TextSmall">
+			<Property name="Clickable" value="false" />
+			<Property name="VertAlign" value="BOTTOM" />
+			<Area>
+				<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="UnreadMarker" offset="4" />
+				<Anchor point="TOP" offset="4" />
+				<Anchor point="RIGHT" offset="-12" />
+				<Size><AbsDimension x="0" y="30" /></Size>
+			</Area>
+		</Frame>
+
+		<Frame name="Subject" inherits="TextSmall">
+			<Property name="Clickable" value="false" />
+			<Property name="Font" value="SmallLabelFont" />
+			<Property name="TextColor" value="FFD0D0D0" />
+			<Property name="VertAlign" value="TOP" />
+			<Area>
+				<Anchor point="LEFT" relativeTo="SenderName" />
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="SenderName" offset="0" />
+				<Anchor point="RIGHT" relativeTo="SenderName" />
+				<Anchor point="BOTTOM" offset="-6" />
+			</Area>
+		</Frame>
+	</Frame>
+
+	<Frame name="MailActionButtonTemplate" type="Button" renderer="ButtonRenderer">
+		<Property name="Font" value="DefaultSmall" />
+
+		<Visual>
+			<ImagerySection name="NormalFrame">
+				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Up_result.htex" borderSize="22" />
+			</ImagerySection>
+			<ImagerySection name="HoveredFrame">
+				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Over_result.htex" borderSize="22" />
+			</ImagerySection>
+			<ImagerySection name="PushedFrame">
+				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Down_result.htex" borderSize="22" />
+			</ImagerySection>
+			<ImagerySection name="DisabledFrame">
+				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Down_result.htex" borderSize="22" tint="80404040" />
+			</ImagerySection>
+			<ImagerySection name="Caption">
+				<TextComponent color="FFFFD100" horzAlign="CENTER" vertAlign="CENTER">
+					<Area><Inset left="12" right="12" /></Area>
+				</TextComponent>
+			</ImagerySection>
+			<ImagerySection name="CaptionHovered">
+				<TextComponent color="FFFFFFFF" horzAlign="CENTER" vertAlign="CENTER">
+					<Area><Inset left="12" right="12" /></Area>
+				</TextComponent>
+			</ImagerySection>
+			<ImagerySection name="CaptionDisabled">
+				<TextComponent color="AE888888" horzAlign="CENTER" vertAlign="CENTER">
+					<Area><Inset left="12" right="12" /></Area>
+				</TextComponent>
+			</ImagerySection>
+			<StateImagery name="Normal">
+				<Layer><Section section="NormalFrame" /><Section section="Caption" /></Layer>
+			</StateImagery>
+			<StateImagery name="Hovered">
+				<Layer><Section section="HoveredFrame" /><Section section="CaptionHovered" /></Layer>
+			</StateImagery>
+			<StateImagery name="Pushed">
+				<Layer><Section section="PushedFrame" /><Section section="Caption" color="FFAAAAAA" /></Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer><Section section="DisabledFrame" /><Section section="CaptionDisabled" /></Layer>
+			</StateImagery>
+		</Visual>
+
+		<Area>
+			<Size><AbsDimension x="280" y="80" /></Size>
+		</Area>
+	</Frame>
+
 	<Frame name="MailFrame" inherits="SidePanelTemplate" parent="GameParent">
 		<Property name="Visible" value="False" />
 
@@ -18,12 +206,11 @@
 			</OnHide>
 		</Scripts>
 
-		<Frame name="MailInboxTabButton" inherits="GlueButton">
+		<Frame name="MailInboxTabButton" inherits="MailFrameTabButtonTemplate" id="1">
 			<Property name="Text" value="MAIL_INBOX" />
 			<Area>
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="MailFrame_SidePanelTitleBar" offset="8" />
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="MailFrame_SidePanelTitleBar" offset="16" />
 				<Anchor point="LEFT" offset="24" />
-				<Size><AbsDimension x="360" y="44" /></Size>
 			</Area>
 			<Scripts>
 				<OnClick>
@@ -34,12 +221,11 @@
 			</Scripts>
 		</Frame>
 
-		<Frame name="MailSendTabButton" inherits="GlueButton">
+		<Frame name="MailSendTabButton" inherits="MailFrameTabButtonTemplate" id="2">
 			<Property name="Text" value="MAIL_SEND" />
 			<Area>
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="MailFrame_SidePanelTitleBar" offset="8" />
+				<Anchor point="TOP" relativeTo="MailInboxTabButton" />
 				<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="MailInboxTabButton" offset="8" />
-				<Size><AbsDimension x="360" y="44" /></Size>
 			</Area>
 			<Scripts>
 				<OnClick>
@@ -52,156 +238,241 @@
 
 		<Frame name="MailInboxPanel">
 			<Area>
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="MailInboxTabButton" offset="8" />
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="MailInboxTabButton" offset="12" />
 				<Anchor point="LEFT" offset="24" />
 				<Anchor point="RIGHT" offset="-24" />
 				<Anchor point="BOTTOM" offset="-24" />
 			</Area>
 
-			<Frame name="MailListScrollBar" inherits="VerticalScrollBar">
-				<Area>
-					<Anchor point="TOP" offset="0" />
-					<Anchor point="RIGHT" offset="0" />
-					<Size><AbsDimension y="440" /></Size>
-				</Area>
-			</Frame>
-
-			<Frame name="MailListContent">
-				<Area>
-					<Anchor point="TOP" offset="0" />
-					<Anchor point="LEFT" offset="0" />
-					<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="MailListScrollBar" offset="-8" />
-					<Size><AbsDimension y="440" /></Size>
-				</Area>
-			</Frame>
-
-			<Frame name="MailBodyText" renderer="DefaultRenderer">
-				<Property name="Font" value="SmallLabelFont" />
+			<Frame name="MailListFrame" renderer="DefaultRenderer">
+				<Property name="Visible" value="true" />
 				<Visual>
 					<ImagerySection name="Border">
-						<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" />
-					</ImagerySection>
-					<ImagerySection name="Text">
-						<TextComponent horzAlign="Left" vertAlign="Top" />
+						<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="50000000" />
 					</ImagerySection>
 					<StateImagery name="Enabled">
-						<Layer>
-							<Section section="Border" />
-							<Section section="Text" />
-						</Layer>
+						<Layer><Section section="Border" /></Layer>
 					</StateImagery>
 				</Visual>
 				<Area>
-					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="MailListContent" offset="8" />
+					<Anchor point="TOP" offset="0" />
 					<Anchor point="LEFT" offset="0" />
 					<Anchor point="RIGHT" offset="0" />
-					<Anchor point="BOTTOM" offset="-64" />
+					<Anchor point="BOTTOM" offset="0" />
 				</Area>
+
+				<Frame name="MailEmptyInboxLabel" inherits="TextSmall">
+					<Property name="Text" value="MAIL_EMPTY_INBOX" />
+					<Property name="HorzAlign" value="CENTER" />
+					<Property name="VertAlign" value="CENTER" />
+					<Property name="TextColor" value="FFAAAAAA" />
+					<Property name="Visible" value="false" />
+					<Area>
+						<Anchor point="TOP" offset="120" />
+						<Anchor point="LEFT" offset="48" />
+						<Anchor point="RIGHT" offset="-144" />
+						<Size><AbsDimension y="56" /></Size>
+					</Area>
+				</Frame>
+
+				<Frame name="MailListContent">
+					<Area>
+						<Anchor point="TOP" offset="12" />
+						<Anchor point="LEFT" offset="12" />
+						<Anchor point="RIGHT" offset="-108" />
+						<Anchor point="BOTTOM" offset="-12" />
+					</Area>
+				</Frame>
+
+				<Frame name="MailListScrollBar" inherits="VerticalScrollBar">
+					<Area>
+						<Anchor point="TOP" offset="8" />
+						<Anchor point="RIGHT" offset="-8" />
+						<Anchor point="BOTTOM" offset="-8" />
+					</Area>
+				</Frame>
 			</Frame>
 
-			<Frame name="MailTakeMoneyButton" inherits="GlueButton">
-				<Property name="Text" value="MAIL_TAKE_MONEY" />
+			<Frame name="MailInboxActions">
+				<Property name="Visible" value="false" />
 				<Area>
-					<Anchor point="BOTTOM" offset="-8" />
+					<Anchor point="BOTTOM" offset="0" />
 					<Anchor point="LEFT" offset="0" />
-					<Size><AbsDimension x="300" y="44" /></Size>
-				</Area>
-				<Scripts>
-					<OnClick>
-						return function(this)
-							MailFrame_TakeMoneyClicked();
-						end
-					</OnClick>
-				</Scripts>
-			</Frame>
-
-			<Frame name="MailTakeItemButton" inherits="InventoryItemButtonTemplate">
-				<Area>
-					<Anchor point="BOTTOM" offset="-8" />
-					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="MailTakeMoneyButton" offset="16" />
-				</Area>
-			</Frame>
-
-			<Frame name="MailDeleteButton" inherits="GlueButton">
-				<Property name="Text" value="MAIL_DELETE" />
-				<Area>
-					<Anchor point="BOTTOM" offset="-8" />
 					<Anchor point="RIGHT" offset="0" />
-					<Size><AbsDimension x="300" y="44" /></Size>
+					<Size><AbsDimension y="96" /></Size>
 				</Area>
-				<Scripts>
-					<OnClick>
-						return function(this)
-							MailFrame_DeleteClicked();
-						end
-					</OnClick>
-				</Scripts>
+
+				<Frame name="MailBackButton" inherits="MailActionButtonTemplate">
+					<Property name="Text" value="MAIL_BACK_TO_INBOX" />
+					<Area>
+						<Anchor point="LEFT" offset="0" />
+						<Anchor point="V_CENTER" />
+						<Size><AbsDimension x="180" y="80" /></Size>
+					</Area>
+					<Scripts>
+						<OnClick>
+							return function(this)
+								MailFrame_ShowMailList();
+							end
+						</OnClick>
+					</Scripts>
+				</Frame>
+
+				<Frame name="MailTakeMoneyButton" inherits="MailActionButtonTemplate">
+					<Property name="Text" value="MAIL_TAKE_MONEY" />
+					<Area>
+						<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="MailBackButton" offset="8" />
+						<Anchor point="V_CENTER" />
+						<Size><AbsDimension x="260" y="80" /></Size>
+					</Area>
+					<Scripts>
+						<OnClick>
+							return function(this)
+								MailFrame_TakeMoneyClicked();
+							end
+						</OnClick>
+					</Scripts>
+				</Frame>
+
+				<Frame name="MailTakeItemButton" inherits="InventoryItemButtonTemplate">
+					<Area>
+						<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="MailTakeMoneyButton" offset="8" />
+						<Anchor point="V_CENTER" />
+					</Area>
+				</Frame>
+
+				<Frame name="MailDeleteButton" inherits="MailActionButtonTemplate">
+					<Property name="Text" value="MAIL_DELETE" />
+					<Area>
+						<Anchor point="RIGHT" offset="0" />
+						<Anchor point="V_CENTER" />
+						<Size><AbsDimension x="220" y="80" /></Size>
+					</Area>
+					<Scripts>
+						<OnClick>
+							return function(this)
+								MailFrame_DeleteClicked();
+							end
+						</OnClick>
+					</Scripts>
+				</Frame>
+			</Frame>
+
+			<Frame name="MailDetailFrame" renderer="DefaultRenderer">
+				<Property name="Visible" value="false" />
+				<Visual>
+					<ImagerySection name="Well">
+						<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="B0000000" />
+					</ImagerySection>
+					<StateImagery name="Enabled">
+						<Layer><Section section="Well" /></Layer>
+					</StateImagery>
+				</Visual>
+				<Area>
+					<Anchor point="TOP" offset="0" />
+					<Anchor point="LEFT" offset="0" />
+					<Anchor point="RIGHT" offset="0" />
+					<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="MailInboxActions" offset="-14" />
+				</Area>
+
+				<Frame name="MailNoSelectionLabel" inherits="TextSmall">
+					<Property name="Text" value="MAIL_NO_MAIL_SELECTED" />
+					<Property name="HorzAlign" value="CENTER" />
+					<Property name="VertAlign" value="CENTER" />
+					<Property name="TextColor" value="FFAAAAAA" />
+					<Property name="Visible" value="false" />
+					<Area>
+						<Anchor point="H_CENTER" />
+						<Anchor point="V_CENTER" />
+						<Size><AbsDimension x="720" y="64" /></Size>
+					</Area>
+				</Frame>
+
+				<Frame name="MailDetailFromLabel" inherits="TextSmall">
+					<Property name="Text" value="MAIL_FROM" />
+					<Property name="TextColor" value="FFFFD100" />
+					<Property name="Visible" value="false" />
+					<Area>
+						<Anchor point="TOP" offset="18" />
+						<Anchor point="LEFT" offset="18" />
+						<Size><AbsDimension x="120" y="34" /></Size>
+					</Area>
+				</Frame>
+
+				<Frame name="MailDetailFromText" inherits="TextSmall">
+					<Property name="TextColor" value="FFFFFFFF" />
+					<Property name="Visible" value="false" />
+					<Area>
+						<Anchor point="TOP" relativeTo="MailDetailFromLabel" />
+						<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="MailDetailFromLabel" offset="8" />
+						<Anchor point="RIGHT" offset="-18" />
+						<Size><AbsDimension y="34" /></Size>
+					</Area>
+				</Frame>
+
+				<Frame name="MailDetailSubjectLabel" inherits="TextSmall">
+					<Property name="Text" value="MAIL_SUBJECT" />
+					<Property name="TextColor" value="FFFFD100" />
+					<Property name="Visible" value="false" />
+					<Area>
+						<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="MailDetailFromLabel" offset="4" />
+						<Anchor point="LEFT" relativeTo="MailDetailFromLabel" />
+						<Size><AbsDimension x="120" y="34" /></Size>
+					</Area>
+				</Frame>
+
+				<Frame name="MailDetailSubjectText" inherits="TextSmall">
+					<Property name="TextColor" value="FFFFFFFF" />
+					<Property name="Visible" value="false" />
+					<Area>
+						<Anchor point="TOP" relativeTo="MailDetailSubjectLabel" />
+						<Anchor point="LEFT" relativeTo="MailDetailFromText" />
+						<Anchor point="RIGHT" relativeTo="MailDetailFromText" />
+						<Size><AbsDimension y="34" /></Size>
+					</Area>
+				</Frame>
+
+				<Frame name="MailDetailMessageLabel" inherits="TextSmall">
+					<Property name="Text" value="MAIL_MESSAGE" />
+					<Property name="TextColor" value="FFFFD100" />
+					<Property name="Visible" value="false" />
+					<Area>
+						<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="MailDetailSubjectLabel" offset="12" />
+						<Anchor point="LEFT" relativeTo="MailDetailFromLabel" />
+						<Anchor point="RIGHT" offset="-18" />
+						<Size><AbsDimension y="34" /></Size>
+					</Area>
+				</Frame>
+
+				<Frame name="MailBodyText" inherits="TextSmall">
+					<Property name="Font" value="SmallLabelFont" />
+					<Property name="TextColor" value="FFD0D0D0" />
+					<Property name="Visible" value="false" />
+					<Area>
+						<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="MailDetailMessageLabel" offset="6" />
+						<Anchor point="LEFT" offset="18" />
+						<Anchor point="RIGHT" offset="-18" />
+						<Anchor point="BOTTOM" offset="-18" />
+					</Area>
+				</Frame>
 			</Frame>
 		</Frame>
 
 		<Frame name="MailSendPanel">
 			<Property name="Visible" value="False" />
 			<Area>
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="MailInboxTabButton" offset="8" />
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="MailInboxTabButton" offset="12" />
 				<Anchor point="LEFT" offset="24" />
 				<Anchor point="RIGHT" offset="-24" />
 				<Anchor point="BOTTOM" offset="-24" />
 			</Area>
 
-			<Frame name="MailSendToField" inherits="GameTextField">
-				<Property name="AcceptsTab" value="False" />
-				<Area>
-					<Anchor point="TOP" offset="8" />
-					<Anchor point="LEFT" offset="0" />
-					<Anchor point="RIGHT" offset="0" />
-					<Size><AbsDimension y="56" /></Size>
-				</Area>
-			</Frame>
-
-			<Frame name="MailSendSubjectField" inherits="GameTextField">
-				<Property name="AcceptsTab" value="False" />
-				<Area>
-					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="MailSendToField" offset="8" />
-					<Anchor point="LEFT" offset="0" />
-					<Anchor point="RIGHT" offset="0" />
-					<Size><AbsDimension y="56" /></Size>
-				</Area>
-			</Frame>
-
-			<Frame name="MailSendBodyField" inherits="GameTextField">
-				<Property name="AcceptsTab" value="False" />
-				<Area>
-					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="MailSendSubjectField" offset="8" />
-					<Anchor point="LEFT" offset="0" />
-					<Anchor point="RIGHT" offset="0" />
-					<Size><AbsDimension y="200" /></Size>
-				</Area>
-			</Frame>
-
-			<Frame name="MailSendMoneyField" inherits="GameTextField">
-				<Property name="AcceptsTab" value="False" />
-				<Property name="Text" value="0" />
-				<Area>
-					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="MailSendBodyField" offset="8" />
-					<Anchor point="LEFT" offset="0" />
-					<Size><AbsDimension x="360" y="56" /></Size>
-				</Area>
-			</Frame>
-
-			<Frame name="MailSendAttachButton" inherits="InventoryItemButtonTemplate">
-				<Area>
-					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="MailSendBodyField" offset="8" />
-					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="MailSendMoneyField" offset="16" />
-				</Area>
-			</Frame>
-
-			<Frame name="MailSendButton" inherits="GlueButton">
+			<Frame name="MailSendButton" inherits="MailActionButtonTemplate">
 				<Property name="Text" value="MAIL_SEND_BUTTON" />
 				<Area>
-					<Anchor point="BOTTOM" offset="-8" />
-					<Anchor point="LEFT" offset="0" />
+					<Anchor point="BOTTOM" offset="0" />
 					<Anchor point="RIGHT" offset="0" />
-					<Size><AbsDimension y="44" /></Size>
+					<Size><AbsDimension x="280" y="80" /></Size>
 				</Area>
 				<Scripts>
 					<OnClick>
@@ -210,6 +481,125 @@
 						end
 					</OnClick>
 				</Scripts>
+			</Frame>
+
+			<Frame name="MailSendFormFrame" renderer="DefaultRenderer">
+				<Visual>
+					<ImagerySection name="Well">
+						<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="B0000000" />
+					</ImagerySection>
+					<StateImagery name="Enabled">
+						<Layer><Section section="Well" /></Layer>
+					</StateImagery>
+				</Visual>
+				<Area>
+					<Anchor point="TOP" offset="0" />
+					<Anchor point="LEFT" offset="0" />
+					<Anchor point="RIGHT" offset="0" />
+					<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="MailSendButton" offset="-16" />
+				</Area>
+
+				<Frame name="MailSendToLabel" inherits="TextSmall">
+					<Property name="Text" value="MAIL_RECIPIENT" />
+					<Property name="TextColor" value="FFFFD100" />
+					<Property name="VertAlign" value="CENTER" />
+					<Area>
+						<Anchor point="TOP" offset="24" />
+						<Anchor point="LEFT" offset="24" />
+						<Size><AbsDimension x="180" y="72" /></Size>
+					</Area>
+				</Frame>
+
+				<Frame name="MailSendToField" inherits="GameTextField">
+					<Property name="AcceptsTab" value="False" />
+					<Area>
+						<Anchor point="TOP" relativeTo="MailSendToLabel" />
+						<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="MailSendToLabel" offset="12" />
+						<Anchor point="RIGHT" offset="-24" />
+						<Size><AbsDimension y="72" /></Size>
+					</Area>
+				</Frame>
+
+				<Frame name="MailSendSubjectLabel" inherits="TextSmall">
+					<Property name="Text" value="MAIL_SUBJECT" />
+					<Property name="TextColor" value="FFFFD100" />
+					<Property name="VertAlign" value="CENTER" />
+					<Area>
+						<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="MailSendToLabel" offset="12" />
+						<Anchor point="LEFT" relativeTo="MailSendToLabel" />
+						<Size><AbsDimension x="180" y="72" /></Size>
+					</Area>
+				</Frame>
+
+				<Frame name="MailSendSubjectField" inherits="GameTextField">
+					<Property name="AcceptsTab" value="False" />
+					<Area>
+						<Anchor point="TOP" relativeTo="MailSendSubjectLabel" />
+						<Anchor point="LEFT" relativeTo="MailSendToField" />
+						<Anchor point="RIGHT" relativeTo="MailSendToField" />
+						<Size><AbsDimension y="72" /></Size>
+					</Area>
+				</Frame>
+
+				<Frame name="MailSendBodyLabel" inherits="TextSmall">
+					<Property name="Text" value="MAIL_MESSAGE" />
+					<Property name="TextColor" value="FFFFD100" />
+					<Area>
+						<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="MailSendSubjectLabel" offset="20" />
+						<Anchor point="LEFT" relativeTo="MailSendToLabel" />
+						<Size><AbsDimension x="180" y="44" /></Size>
+					</Area>
+				</Frame>
+
+				<Frame name="MailSendBodyField" inherits="GameTextField">
+					<Property name="AcceptsTab" value="False" />
+					<Property name="VertAlign" value="TOP" />
+					<Area>
+						<Anchor point="TOP" relativeTo="MailSendBodyLabel" />
+						<Anchor point="LEFT" relativeTo="MailSendToField" />
+						<Anchor point="RIGHT" relativeTo="MailSendToField" />
+						<Size><AbsDimension y="300" /></Size>
+					</Area>
+				</Frame>
+
+				<Frame name="MailSendMoneyLabel" inherits="TextSmall">
+					<Property name="Text" value="MAIL_MONEY" />
+					<Property name="TextColor" value="FFFFD100" />
+					<Property name="VertAlign" value="CENTER" />
+					<Area>
+						<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="MailSendBodyField" offset="20" />
+						<Anchor point="LEFT" relativeTo="MailSendToLabel" />
+						<Size><AbsDimension x="180" y="72" /></Size>
+					</Area>
+				</Frame>
+
+				<Frame name="MailSendMoneyField" inherits="GameTextField">
+					<Property name="AcceptsTab" value="False" />
+					<Property name="Text" value="0" />
+					<Area>
+						<Anchor point="TOP" relativeTo="MailSendMoneyLabel" />
+						<Anchor point="LEFT" relativeTo="MailSendToField" />
+						<Size><AbsDimension x="240" y="72" /></Size>
+					</Area>
+				</Frame>
+
+				<Frame name="MailSendAttachLabel" inherits="TextSmall">
+					<Property name="Text" value="MAIL_ATTACHMENT" />
+					<Property name="TextColor" value="FFFFD100" />
+					<Property name="VertAlign" value="CENTER" />
+					<Area>
+						<Anchor point="TOP" relativeTo="MailSendMoneyLabel" />
+						<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="MailSendMoneyField" offset="28" />
+						<Size><AbsDimension x="210" y="72" /></Size>
+					</Area>
+				</Frame>
+
+				<Frame name="MailSendAttachButton" inherits="InventoryItemButtonTemplate">
+					<Area>
+						<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="MailSendBodyField" offset="8" />
+						<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="MailSendAttachLabel" offset="12" />
+					</Area>
+				</Frame>
 			</Frame>
 		</Frame>
 	</Frame>

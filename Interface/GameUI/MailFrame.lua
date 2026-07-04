@@ -1,5 +1,5 @@
 MAIL_LIST_MAX_DISPLAY = 8;
-MAIL_LIST_ROW_HEIGHT = 55;
+MAIL_LIST_ROW_HEIGHT = 72;
 
 local mailListOffset = 0;
 local selectedMailIndex = -1;
@@ -10,15 +10,81 @@ function MailFrame_IsSendPanelVisible()
     return MailFrame:IsVisible() and MailSendPanel:IsVisible();
 end
 
+function MailFrame_SetDetailVisible(visible)
+    if (visible) then
+        MailNoSelectionLabel:Hide();
+        MailDetailFromLabel:Show();
+        MailDetailFromText:Show();
+        MailDetailSubjectLabel:Show();
+        MailDetailSubjectText:Show();
+        MailDetailMessageLabel:Show();
+        MailBodyText:Show();
+    else
+        MailNoSelectionLabel:Show();
+        MailDetailFromLabel:Hide();
+        MailDetailFromText:Hide();
+        MailDetailSubjectLabel:Hide();
+        MailDetailSubjectText:Hide();
+        MailDetailMessageLabel:Hide();
+        MailBodyText:Hide();
+    end
+end
+
+function MailFrame_UpdateTabs(sendVisible)
+    MailInboxTabButton:SetChecked(not sendVisible);
+    MailSendTabButton:SetChecked(sendVisible);
+end
+
+function MailFrame_ShowMailList()
+    MailDetailFrame:Hide();
+    MailInboxActions:Hide();
+    MailListFrame:Show();
+    MailFrame_UpdateList();
+end
+
+function MailFrame_ShowMailRead(mailIndex)
+    if (mailIndex ~= nil) then
+        selectedMailIndex = mailIndex;
+    end
+
+    if (selectedMailIndex < 0 or selectedMailIndex >= GetNumMails()) then
+        selectedMailIndex = -1;
+        MailFrame_ShowMailList();
+        return;
+    end
+
+    MarkMailRead(selectedMailIndex);
+    MailListFrame:Hide();
+    MailDetailFrame:Show();
+    MailInboxActions:Show();
+    MailFrame_UpdateList();
+    MailFrame_UpdateDetail();
+end
+
 function MailFrame_UpdateList()
     local numMails = GetNumMails();
 
     local maxScroll = math.max(0, numMails - MAIL_LIST_MAX_DISPLAY);
     MailListScrollBar:SetMaximum(maxScroll);
+    if (mailListOffset > maxScroll) then
+        mailListOffset = maxScroll;
+        MailListScrollBar:SetValue(mailListOffset);
+    end
+
     if (maxScroll > 0) then
         MailListScrollBar:Enable();
     else
         MailListScrollBar:Disable();
+    end
+
+    if (selectedMailIndex >= numMails) then
+        selectedMailIndex = -1;
+    end
+
+    if (numMails > 0) then
+        MailEmptyInboxLabel:Hide();
+    else
+        MailEmptyInboxLabel:Show();
     end
 
     for i = 1, MAIL_LIST_MAX_DISPLAY do
@@ -27,18 +93,29 @@ function MailFrame_UpdateList()
         if (index < numMails) then
             local mail = GetMailInfo(index);
             if (mail) then
-                local prefix = "";
+                local unreadMarker = "";
+                local senderColor = "FFD0D0D0";
+                local subjectColor = "FFAAAAAA";
                 if (not mail.read) then
-                    prefix = "* ";
+                    unreadMarker = "!";
+                    senderColor = "FFFFD100";
+                    subjectColor = "FFFFFFFF";
                 end
-                button:SetText(prefix .. mail.senderName .. " - " .. mail.subject);
-                button.mailIndex = index;
+
+                button:GetChild(0):SetText(unreadMarker);
+                button:GetChild(1):SetText(mail.senderName);
+                button:GetChild(1):SetProperty("TextColor", senderColor);
+                button:GetChild(2):SetText(mail.subject);
+                button:GetChild(2):SetProperty("TextColor", subjectColor);
+                button.id = i;
+                button:SetChecked(index == selectedMailIndex);
                 button:Show();
             else
                 button:Hide();
             end
         else
-            button.mailIndex = -1;
+            button.id = i;
+            button:SetChecked(false);
             button:Hide();
         end
     end
@@ -53,13 +130,22 @@ function MailFrame_UpdateDetail()
     end
 
     if (not mail) then
+        MailFrame_SetDetailVisible(false);
+        MailDetailFromText:SetText("");
+        MailDetailSubjectText:SetText("");
         MailBodyText:SetText("");
         MailTakeMoneyButton:Hide();
         MailTakeItemButton:Hide();
         MailDeleteButton:Hide();
+        if (MailDetailFrame:IsVisible()) then
+            MailFrame_ShowMailList();
+        end
         return;
     end
 
+    MailFrame_SetDetailVisible(true);
+    MailDetailFromText:SetText(mail.senderName);
+    MailDetailSubjectText:SetText(mail.subject);
     MailBodyText:SetText(mail.body);
     MailDeleteButton:Show();
 
@@ -92,10 +178,9 @@ function MailFrame_UpdateDetail()
 end
 
 function MailFrame_OnRowClicked(this)
-    if (this.mailIndex ~= nil and this.mailIndex >= 0) then
-        selectedMailIndex = this.mailIndex;
-        MarkMailRead(selectedMailIndex);
-        MailFrame_UpdateList();
+    local mailIndex = mailListOffset + this.id - 1;
+    if (mailIndex >= 0 and mailIndex < GetNumMails()) then
+        MailFrame_ShowMailRead(mailIndex);
     end
 end
 
@@ -115,17 +200,21 @@ function MailFrame_DeleteClicked()
     if (selectedMailIndex >= 0) then
         DeleteMail(selectedMailIndex);
         selectedMailIndex = -1;
+        MailFrame_ShowMailList();
     end
 end
 
 function MailFrame_ShowInbox()
     MailSendPanel:Hide();
     MailInboxPanel:Show();
+    MailFrame_UpdateTabs(false);
+    MailFrame_ShowMailList();
 end
 
 function MailFrame_ShowSend()
     MailInboxPanel:Hide();
     MailSendPanel:Show();
+    MailFrame_UpdateTabs(true);
 end
 
 -- Called from the inventory button right click handler while the send panel is open
@@ -201,8 +290,8 @@ function MailFrame_Load(this)
 
     -- Create the fixed inbox row buttons once (virtual scrolling)
     for i = 1, MAIL_LIST_MAX_DISPLAY do
-        local row = GameMenuButtonTemplate:Clone();
-        row.mailIndex = -1;
+        local row = MailListRowTemplate:Clone();
+        row.id = i;
         MailListContent:AddChild(row);
         row:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, MailListContent, 0);
         row:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, MailListContent, 0);
