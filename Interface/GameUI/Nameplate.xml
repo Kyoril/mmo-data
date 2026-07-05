@@ -1,0 +1,126 @@
+<?xml version="1.0" ?>
+<UiLayout>
+	<!--
+		Visual definition for in-world unit nameplates. The C++ NameplateFrame copies the
+		imagery of these templates at runtime, so the entire look (textures, sizes, font,
+		colors) can be tweaked here without touching code.
+
+		- NameplateTemplate          : the invisible plate container (also the click target).
+		- NameplateNameTemplate      : the unit name text above the health bar.
+		- NameplateHealthBarTemplate : the reaction-colored health bar (Plater-style flat bar).
+		- NameplateHighlightTemplate : white backing shown behind the bar of the selected unit,
+		                               reading as an outline around it.
+
+		The bar fill color is driven through the health bar's "ProgressColor" property which
+		the frame sets based on the unit's reaction (hostile / neutral / friendly / player).
+	-->
+
+	<Font name="NameplateFont" file="Fonts/FRIZQT__.TTF" size="24" outline="0" shadowX="1.0" shadowY="1.0" />
+
+	<Frame name="NameplateTemplate" renderer="DefaultRenderer">
+		<Area>
+			<Size><AbsDimension x="240" y="58" /></Size>
+		</Area>
+	</Frame>
+
+	<Frame name="NameplateNameTemplate" renderer="DefaultRenderer">
+		<Property name="Font" value="NameplateFont" />
+		<Property name="TextColor" value="FFFFFFFF" />
+
+		<Visual>
+			<ImagerySection name="Text">
+				<TextComponent color="$TextColor" horzAlign="CENTER" vertAlign="CENTER" />
+			</ImagerySection>
+
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+
+		<Area>
+			<Size><AbsDimension x="240" y="24" /></Size>
+		</Area>
+	</Frame>
+
+	<Frame name="NameplateHealthBarTemplate" type="ProgressBar">
+		<Property name="Progress" value="1.0" />
+		<Property name="ProgressColor" value="FFD23A3A" />
+
+		<Visual>
+			<!-- Near-black translucent backing so missing health reads as a dark gap. -->
+			<ImagerySection name="Background">
+				<ImageComponent texture="Interface/fg4_gradientWhiteV1_result.htex" tiling="HORZ" tint="D8101010" />
+			</ImagerySection>
+			<!-- White gradient fill, tinted at runtime via the ProgressColor property. -->
+			<ImagerySection name="Progress">
+				<ImageComponent texture="Interface/fg4_gradientWhiteV1_result.htex" tiling="HORZ" tint="FFFFFFFF">
+					<Area><Inset all="4" /></Area>
+				</ImageComponent>
+			</ImagerySection>
+			<ImagerySection name="Border">
+				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" />
+			</ImagerySection>
+
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Background" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="Background" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Progress">
+				<Layer>
+					<Section section="Progress" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Overlay">
+				<Layer>
+					<Section section="Border" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="OverlayDisabled">
+				<Layer>
+					<Section section="Border" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+
+		<Area>
+			<Size><AbsDimension x="240" y="30" /></Size>
+		</Area>
+	</Frame>
+
+	<Frame name="NameplateHighlightTemplate" renderer="DefaultRenderer">
+		<Visual>
+			<ImagerySection name="Fill">
+				<ImageComponent texture="Interface/fg4_gradientWhiteV1_result.htex" tiling="HORZ" tint="FFFFFFFF" />
+			</ImagerySection>
+
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Fill" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="Fill" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+
+		<Area>
+			<Size><AbsDimension x="248" y="38" /></Size>
+		</Area>
+	</Frame>
+
+</UiLayout>

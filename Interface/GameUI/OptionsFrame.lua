@@ -183,6 +183,53 @@ local OPTIONS_CATEGORIES = {
 				cvar = "ChatBubblesParty",
 				defaultValue = "1",
 			},
+			{
+				type = "toggle",
+				labelKey = "OPTIONS_NAMEPLATES_ENEMY_NPCS",
+				cvar = "NameplateShowEnemyNpcs",
+				defaultValue = "1",
+			},
+			{
+				type = "toggle",
+				labelKey = "OPTIONS_NAMEPLATES_ENEMY_PLAYERS",
+				cvar = "NameplateShowEnemyPlayers",
+				defaultValue = "1",
+			},
+			{
+				type = "toggle",
+				labelKey = "OPTIONS_NAMEPLATES_FRIENDLY_NPCS",
+				cvar = "NameplateShowFriendlyNpcs",
+				defaultValue = "0",
+			},
+			{
+				type = "toggle",
+				labelKey = "OPTIONS_NAMEPLATES_FRIENDLY_PLAYERS",
+				cvar = "NameplateShowFriendlyPlayers",
+				defaultValue = "0",
+			},
+			{
+				type = "toggle",
+				labelKey = "OPTIONS_NAMEPLATES_ENEMY_PETS",
+				cvar = "NameplateShowEnemyPets",
+				defaultValue = "0",
+			},
+			{
+				type = "toggle",
+				labelKey = "OPTIONS_NAMEPLATES_FRIENDLY_PETS",
+				cvar = "NameplateShowFriendlyPets",
+				defaultValue = "0",
+			},
+			{
+				type = "dropdown",
+				labelKey = "OPTIONS_NAMEPLATE_DISTANCE",
+				cvar = "NameplateDistance",
+				defaultValue = "40",
+				items = {
+					{ labelKey = "OPTIONS_DISTANCE_NEAR",   value = "20" },
+					{ labelKey = "OPTIONS_DISTANCE_MEDIUM", value = "40" },
+					{ labelKey = "OPTIONS_DISTANCE_FAR",    value = "60" },
+				},
+			},
 		},
 	},
 	{
