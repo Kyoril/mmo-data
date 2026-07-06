@@ -1,6 +1,10 @@
 
 MAX_ACTION_BUTTONS = 12;
 
+-- Tint used for the "active" glow shown on toggled ("Disabled While Active") spells such as Stealth.
+ACTION_BUTTON_ACTIVE_GLOW = "FFFFD100";
+ACTION_BUTTON_INACTIVE_GLOW = "00000000";
+
 function ActionButton_OnEnter(self)
     if IsActionButtonSpell(self.id - 1) then
         local spell = GetActionButtonSpell(self.id - 1);
@@ -119,6 +123,13 @@ function ActionButton_OnUpdate(self)
         self:SetProperty("Color", "FF888888");
     end
 
+    -- Toggle the "active" glow for spells that stay active while their aura persists (e.g. Stealth).
+    if IsActionButtonActive(self.id - 1) then
+        self:SetProperty("ActiveGlowTint", ACTION_BUTTON_ACTIVE_GLOW);
+    else
+        self:SetProperty("ActiveGlowTint", ACTION_BUTTON_INACTIVE_GLOW);
+    end
+
     -- Update cooldown display
     ActionButton_UpdateCooldown(self);
 end
@@ -201,6 +212,10 @@ function ActionBar_OnLoad(self)
     -- Register for cooldown events
     self:RegisterEvent("SPELL_COOLDOWN_STARTED", ActionBar_UpdateCooldowns);
     self:RegisterEvent("SPELL_COOLDOWN_ENDED", ActionBar_UpdateCooldowns);
+
+    -- Refresh the active-state glow (and usability) whenever the player's auras change, e.g. when a
+    -- toggled "Disabled While Active" spell such as Stealth is applied or fades.
+    self:RegisterEvent("PLAYER_AURA_UPDATE", ActionBar_UpdateButtons);
 
     for i = 1, MAX_ACTION_BUTTONS do
         local button = _G["ActionButton"..i];

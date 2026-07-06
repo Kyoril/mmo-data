@@ -5,8 +5,18 @@
         <Property name="Font" value="SmallLabelFont" />
         <Property name="DragEnabled" value="true" />
         <Property name="DropEnabled" value="true" />
+        <!-- Tint of the "active" glow overlay. Transparent (00000000) hides it; the action bar sets
+             it to an opaque colour while a "Disabled While Active" spell (e.g. Stealth) is active. -->
+        <Property name="ActiveGlowTint" value="00000000" />
 
 		<Visual>
+			<ImagerySection name="ActiveGlow">
+				<ImageComponent texture="Interface/GlueUI/GlowYellow.htex" tint="$ActiveGlowTint">
+					<Area>
+						<Inset all="-4" />
+					</Area>
+				</ImageComponent>
+			</ImagerySection>
 			<ImagerySection name="Image">
 				<ImageComponent>
 					<Area>
@@ -36,6 +46,7 @@
 			</ImagerySection>
 			<StateImagery name="Normal">
 				<Layer>
+					<Section section="ActiveGlow" />
 					<Section section="NormalFrame" />
 					<Section section="Image" />
 					<Section section="Counter" />
@@ -43,6 +54,7 @@
 			</StateImagery>
 			<StateImagery name="Hovered">
 				<Layer>
+					<Section section="ActiveGlow" />
 					<Section section="HoveredFrame" />
 					<Section section="Image" />
 					<Section section="Counter" />
@@ -50,6 +62,7 @@
 			</StateImagery>
 			<StateImagery name="Pushed">
 				<Layer>
+					<Section section="ActiveGlow" />
 					<Section section="PushedFrame" />
 					<Section section="Image" />
 					<Section section="Counter" />
