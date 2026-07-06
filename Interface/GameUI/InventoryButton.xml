@@ -4,6 +4,7 @@
 
 	<Frame name="InventoryItemButtonTemplate" type="Button" renderer="ButtonRenderer">
 		<Property name="Icon" />
+		<Property name="IconColor" value="FFFFFFFF" />
 		<Property name="Background" />
         <Property name="DragEnabled" value="true" />
         <Property name="DropEnabled" value="true" />
