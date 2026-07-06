@@ -370,4 +370,18 @@
             end
         end
 	</Binding>
+
+	<Binding name="TOGGLENAMEPLATES" description="Toggle enemy nameplates" category="INTERFACE">
+		return function(key, keystate)
+            if keystate == "DOWN" then
+                local enabled = GetCVar("NameplateShowEnemyNpcs");
+                local newValue = "1";
+                if enabled ~= nil and enabled ~= "0" and enabled ~= "" then
+                    newValue = "0";
+                end
+                SetCVar("NameplateShowEnemyNpcs", newValue);
+                SetCVar("NameplateShowEnemyPlayers", newValue);
+            end
+        end
+	</Binding>
 </Bindings>
