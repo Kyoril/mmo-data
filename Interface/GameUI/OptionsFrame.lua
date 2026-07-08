@@ -185,6 +185,24 @@ local OPTIONS_CATEGORIES = {
 			},
 			{
 				type = "toggle",
+				labelKey = "OPTIONS_COMBAT_VIGNETTE",
+				cvar = "CombatVignette",
+				defaultValue = "1",
+			},
+			{
+				type = "toggle",
+				labelKey = "OPTIONS_CAMERA_SHAKE_DAMAGE",
+				cvar = "CombatCameraShake",
+				defaultValue = "0",
+			},
+			{
+				type = "toggle",
+				labelKey = "OPTIONS_FAST_LOOT",
+				cvar = "FastLoot",
+				defaultValue = "0",
+			},
+			{
+				type = "toggle",
 				labelKey = "OPTIONS_NAMEPLATES_ENEMY_NPCS",
 				cvar = "NameplateShowEnemyNpcs",
 				defaultValue = "1",

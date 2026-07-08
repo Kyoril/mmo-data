@@ -1,12 +1,53 @@
 LOOTFRAME_NUMBUTTONS = 4;
 
+LOOT_SLOT_ALLOW_LOOT = 0;
+LOOT_SLOT_ROLL_ONGOING = 1;
+LOOT_SLOT_MASTER = 2;
+LOOT_SLOT_LOCKED = 3;
+
+local function IsCvarOn(val)
+    return val ~= nil and val ~= "0" and val ~= "" and val ~= "false";
+end
+
+-- Determines whether this loot should be auto-looted. Fast Loot is a cvar (off by default);
+-- holding Shift while opening the loot inverts the behaviour for that single loot.
+local function ShouldFastLoot()
+    local enabled = IsCvarOn(GetCVar("FastLoot"));
+    if IsShiftKeyDown() then
+        return not enabled;
+    end
+    return enabled;
+end
+
+-- Attempts to loot every available slot. Slots that cannot be looted (locked, being rolled on,
+-- master-looter controlled) are skipped. Looting is asynchronous: the slot list does not change
+-- during this loop, so iterating over a snapshot of the slot count is safe.
+function LootFrame_AutoLootAll(self)
+    self.autoLooting = true;
+
+    local numLootItems = GetNumLootItems();
+    for slot = 1, numLootItems, 1 do
+        local slotType = GetLootSlotType(slot);
+        if slotType == LOOT_SLOT_ALLOW_LOOT then
+            LootSlot(slot, false);
+        end
+    end
+end
+
 function LootFrame_OnLootOpened(self)
     self.page = 1;
     LootFrame.page = 1; -- Keep global reference for button handlers
+    self.autoLooting = false;
+
     ShowUIPanel(self);
 
     if not self:IsVisible() then
         CloseLoot();
+        return;
+    end
+
+    if ShouldFastLoot() then
+        LootFrame_AutoLootAll(self);
     end
 end
 
@@ -35,7 +76,15 @@ function LootFrame_OnLootSlotCleared(self, absoluteSlot)
 			emptyLabel:Hide();
 		end
 	end
-    
+
+	-- When fast looting emptied the window, close it so auto-loot feels seamless. If items remain
+	-- (e.g. locked by party loot rules), leave the window open so the player can handle them.
+	if self.autoLooting and self.numLootItems == 0 then
+		self.autoLooting = false;
+		CloseLoot();
+		return;
+	end
+
     -- Trigger a UI update to refresh the display
     LootFrame_OnUpdate(self, 0);
 end
@@ -107,14 +156,9 @@ function LootFrame_OnShow(self)
 	end
 end
 
-function LootFrame_OnHide()	
+function LootFrame_OnHide()
 	CloseLoot();
 end
-
-LOOT_SLOT_ALLOW_LOOT = 0;
-LOOT_SLOT_ROLL_ONGOING = 1;
-LOOT_SLOT_MASTER = 2;
-LOOT_SLOT_LOCKED = 3;
 
 function LootButton_OnClick(button)
 	local numLootToShow = LOOTFRAME_NUMBUTTONS;
