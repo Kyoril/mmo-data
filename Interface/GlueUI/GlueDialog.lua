@@ -6,6 +6,7 @@ GlueDialogs["CONNECTING"] = {
 	button1 = "CANCEL",
 	button2 = nil,
 	OnAccept = function()
+		loginConnector:CancelConnect()
 		LoginButton:Enable()
 	end,
 	OnCancel = function()
@@ -17,6 +18,7 @@ GlueDialogs["CONNECTING_TO_REALM"] = {
 	button1 = "CANCEL",
 	button2 = nil,
 	OnAccept = function()
+		realmConnector:CancelConnect()
 		RealmList_Show()
 	end,
 	OnCancel = function()
