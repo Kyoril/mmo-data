@@ -98,6 +98,130 @@
 		</Area>
     </Frame>
 
+	<!-- Bordered row holding one quest reward (icon slot + name). Sized from Lua; uses the
+	     same border vocabulary as the quest panels so it reads well on the parchment. -->
+	<Frame name="QuestRewardRowTemplate" renderer="DefaultRenderer">
+		<Property name="ClippedByParent" value="true" />
+
+		<Visual>
+			<ImagerySection name="Background">
+				<ImageComponent texture="Interface/GlueUI/CharSelectButtonBackground.htex" tiling="BOTH" tint="50FFFFFF">
+					<Area><Inset all="8" /></Area>
+				</ImageComponent>
+				<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Background" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="Background" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+
+		<Area>
+			<Size><AbsDimension y="128" /></Size>
+		</Area>
+	</Frame>
+
+	<!-- Icon slot for a single quest reward (item or spell). Uses the CheckboxRenderer so the
+	     offer-reward panel can mark the selected choice reward via SetChecked from Lua. The
+	     button text renders the stack count in the lower right corner. -->
+	<Frame name="QuestRewardSlotTemplate" type="Button" renderer="CheckboxRenderer">
+		<Property name="Icon" />
+		<Property name="Checkable" value="false" />
+
+		<Visual>
+			<ImagerySection name="Image">
+				<ImageComponent tiling="NONE">
+					<Area><Inset all="14" /></Area>
+					<PropertyValue property="Icon" />
+				</ImageComponent>
+			</ImagerySection>
+			<ImagerySection name="Count">
+				<TextComponent color="FFFFFFFF" horzAlign="RIGHT" vertAlign="BOTTOM">
+					<Area><Inset all="10" /></Area>
+				</TextComponent>
+			</ImagerySection>
+			<ImagerySection name="NormalFrame">
+				<BorderComponent texture="Interface/BW_ButtonSmall_Up.htex" borderSize="30" />
+			</ImagerySection>
+			<ImagerySection name="HoveredFrame">
+				<BorderComponent texture="Interface/BW_ButtonSmall_Over.htex" borderSize="30" />
+			</ImagerySection>
+			<ImagerySection name="PushedFrame">
+				<BorderComponent texture="Interface/BW_ButtonSmall_Down.htex" borderSize="30" />
+			</ImagerySection>
+			<ImagerySection name="SelectedFrame">
+				<BorderComponent texture="Interface/BW_ButtonSmall_Over.htex" borderSize="30" tint="FFFACC12" />
+			</ImagerySection>
+
+			<StateImagery name="Normal">
+				<Layer>
+					<Section section="NormalFrame" />
+					<Section section="Image" />
+					<Section section="Count" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Hovered">
+				<Layer>
+					<Section section="HoveredFrame" />
+					<Section section="Image" />
+					<Section section="Count" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Pushed">
+				<Layer>
+					<Section section="PushedFrame" />
+					<Section section="Image" />
+					<Section section="Count" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="NormalFrame" />
+					<Section section="Image" />
+					<Section section="Count" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="NormalChecked">
+				<Layer>
+					<Section section="SelectedFrame" />
+					<Section section="Image" />
+					<Section section="Count" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="HoveredChecked">
+				<Layer>
+					<Section section="SelectedFrame" />
+					<Section section="Image" />
+					<Section section="Count" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="PushedChecked">
+				<Layer>
+					<Section section="SelectedFrame" />
+					<Section section="Image" />
+					<Section section="Count" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="DisabledChecked">
+				<Layer>
+					<Section section="SelectedFrame" />
+					<Section section="Image" />
+					<Section section="Count" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+
+		<Area>
+			<Size><AbsDimension x="96" y="96" /></Size>
+		</Area>
+	</Frame>
+
 	<Frame name="QuestFrame" inherits="SidePanelTemplate" parent="GameParent">
 		<Property name="Visible" value="false" />
 
@@ -246,6 +370,17 @@
                             </Area>
                         </Frame>
 
+                        <Frame name="QuestDetailRewardItems">
+                            <Property name="ClippedByParent" value="true" />
+
+                            <Area>
+                                <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestDetailRewards" offset="8" />
+                                <Anchor point="LEFT" offset="32" />
+                                <Anchor point="RIGHT" offset="-16" />
+                                <Size><AbsDimension y="0" /></Size>
+                            </Area>
+                        </Frame>
+
                         <Frame name="QuestDetailRewardMoneyLabel" inherits="TextSmall">
                             <Property name="Text" value="QUEST_REWARD_YOU_WILL_RECEIVE" />
                             <Property name="TextColor" value="FF100500" />
@@ -253,7 +388,7 @@
                             <Property name="ClippedByParent" value="true" />
 
                             <Area>
-                                <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestDetailRewards" offset="8" />
+                                <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestDetailRewardItems" offset="8" />
                                 <Anchor point="LEFT" offset="32" />
                             </Area>
                         </Frame>
@@ -355,9 +490,7 @@
                     </Area>
                 </Frame>
                 
-                <Frame name="QuestRewardsScrollContent">
-                    <Property name="ClippedByParent" value="true" />
-                    
+                <Frame name="QuestRewardsScrollClip">
                     <Area>
                         <Anchor point="TOP" offset="0" />
                         <Anchor point="LEFT" offset="0" />
@@ -365,45 +498,113 @@
                         <Anchor point="BOTTOM" offset="-96" />
                     </Area>
 
-                    <Frame name="QuestRewardsTitle" inherits="TextSmall">
-                        <Property name="TextColor" value="FF100500" />
-                        <Property name="Font" value="QuestTitleFont" />
+                    <Frame name="QuestRewardsScrollContent" renderer="DefaultRenderer">
+                        <Property name="ClippedByParent" value="true" />
 
                         <Area>
-                            <Anchor point="TOP" offset="32" />
-                            <Anchor point="LEFT" offset="32" />
-                            <Anchor point="RIGHT" offset="-16" />
-                        </Area>
-                    </Frame>
-                    
-                    <Frame name="QuestRewardsText" inherits="TextSmall">
-                        <Property name="TextColor" value="FF100500" />
-                        <Property name="Font" value="QuestFont" />
-
-                        <Area>
-                            <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestRewardsTitle" offset="8" />
-                            <Anchor point="LEFT" offset="32" />
-                            <Anchor point="RIGHT" offset="-16" />
-                        </Area>
-                    </Frame>
-
-                    <Frame name="QuestRewardCompleteButton" inherits="GlueButton">
-                        <Property name="Text" value="COMPLETE_QUEST" />
-
-                        <Area>
-                            <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestRewardsText" offset="32" />
-                            <Anchor point="LEFT" offset="32" />
-                            <Size><AbsDimension x="384" y="80" /></Size>
+                            <Anchor point="TOP" offset="0" />
+                            <Anchor point="LEFT" offset="0" />
+                            <Anchor point="RIGHT" offset="0" />
+                            <Size><AbsDimension y="64" /></Size>
                         </Area>
 
-                        <Scripts>
-                            <OnClick>
-                                return function(self)
-                                    QuestRewardCompleteButton_OnClick(self);
-                                end
-                            </OnClick>
-                        </Scripts>
+                        <Frame name="QuestRewardsTitle" inherits="TextSmall">
+                            <Property name="TextColor" value="FF100500" />
+                            <Property name="Font" value="QuestTitleFont" />
+
+                            <Area>
+                                <Anchor point="TOP" offset="32" />
+                                <Anchor point="LEFT" offset="32" />
+                                <Anchor point="RIGHT" offset="-16" />
+                            </Area>
+                        </Frame>
+
+                        <Frame name="QuestRewardsText" inherits="TextSmall">
+                            <Property name="TextColor" value="FF100500" />
+                            <Property name="Font" value="QuestFont" />
+                            <Property name="ClippedByParent" value="true" />
+
+                            <Area>
+                                <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestRewardsTitle" offset="8" />
+                                <Anchor point="LEFT" offset="32" />
+                                <Anchor point="RIGHT" offset="-16" />
+                            </Area>
+                        </Frame>
+
+                        <Frame name="QuestOfferRewardsHeader" inherits="TextSmall">
+                            <Property name="Text" value="QUEST_REWARDS" />
+                            <Property name="TextColor" value="FF100500" />
+                            <Property name="Font" value="QuestTitleFont" />
+                            <Property name="ClippedByParent" value="true" />
+
+                            <Area>
+                                <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestRewardsText" offset="32" />
+                                <Anchor point="LEFT" offset="32" />
+                                <Anchor point="RIGHT" offset="-16" />
+                            </Area>
+                        </Frame>
+
+                        <Frame name="QuestOfferRewardItems">
+                            <Property name="ClippedByParent" value="true" />
+
+                            <Area>
+                                <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestOfferRewardsHeader" offset="8" />
+                                <Anchor point="LEFT" offset="32" />
+                                <Anchor point="RIGHT" offset="-16" />
+                                <Size><AbsDimension y="0" /></Size>
+                            </Area>
+                        </Frame>
+
+                        <Frame name="QuestOfferRewardMoneyLabel" inherits="TextSmall">
+                            <Property name="Text" value="QUEST_REWARD_YOU_WILL_RECEIVE" />
+                            <Property name="TextColor" value="FF100500" />
+                            <Property name="Font" value="QuestFont" />
+                            <Property name="ClippedByParent" value="true" />
+
+                            <Area>
+                                <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestOfferRewardItems" offset="8" />
+                                <Anchor point="LEFT" offset="32" />
+                            </Area>
+                        </Frame>
+
+                        <Frame name="QuestOfferRewardMoney" inherits="MoneyFrameTemplate">
+                            <Property name="ClippedByParent" value="true" />
+
+                            <Area>
+                                <Anchor point="V_CENTER" relativeTo="QuestOfferRewardMoneyLabel" />
+                                <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="QuestOfferRewardMoneyLabel" offset="8" />
+                            </Area>
+                        </Frame>
+
+                        <Frame name="QuestOfferRewardXpLabel" inherits="TextSmall">
+                            <Property name="TextColor" value="FF100500" />
+                            <Property name="Font" value="QuestFont" />
+                            <Property name="ClippedByParent" value="true" />
+
+                            <Area>
+                                <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestOfferRewardMoneyLabel" offset="4" />
+                                <Anchor point="LEFT" offset="32" />
+                            </Area>
+                        </Frame>
                     </Frame>
+                </Frame>
+
+                <Frame name="QuestRewardCompleteButton" inherits="GlueButton">
+                    <Property name="Text" value="COMPLETE_QUEST" />
+
+                    <Area>
+                        <Anchor point="BOTTOM" offset="-16" />
+                        <Anchor point="RIGHT" offset="-96" />
+                        <Size><AbsDimension x="384" y="80" /></Size>
+                    </Area>
+
+                    <Scripts>
+                        <OnClick>
+                            return function(self)
+                                QuestRewardCompleteButton_OnClick(self);
+                            end
+                        </OnClick>
+                    </Scripts>
                 </Frame>
             </Frame>
         </Frame>

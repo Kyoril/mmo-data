@@ -170,22 +170,91 @@ function QuestLogFrame_UpdateQuestDetails()
         + QuestLogQuestDetailObjectives:GetHeight()
         + 32; -- bottom padding
 
-    local rewardMoney = questLogEntry.quest.rewardMoney;
-    if rewardMoney > 0 then
+    local quest = questLogEntry.quest;
+
+    -- Gather reward items and the taught spell for display.
+    local choiceEntries = {};
+    for i = 1, GetQuestInfoChoiceItemCount(quest) do
+        local rewardItem = GetQuestInfoChoiceItem(quest, i - 1);
+        if rewardItem then
+            choiceEntries[#choiceEntries + 1] = QuestRewards_BuildItemEntry(rewardItem);
+        end
+    end
+
+    local itemEntries = {};
+    for i = 1, GetQuestInfoRewardItemCount(quest) do
+        local rewardItem = GetQuestInfoRewardItem(quest, i - 1);
+        if rewardItem then
+            itemEntries[#itemEntries + 1] = QuestRewards_BuildItemEntry(rewardItem);
+        end
+    end
+
+    local rewardSpell = GetQuestInfoRewardSpell(quest);
+    local hasItemRewards = #choiceEntries > 0 or #itemEntries > 0 or rewardSpell ~= nil;
+
+    local rewardMoney = quest.rewardMoney;
+    local rewardXp = quest.rewardXp;
+
+    -- Always populate so stale rows from a previously selected quest are cleared.
+    local rewardItemsHeight = QuestRewards_Populate(QuestLogDetailRewardItems, {
+        choiceItems = choiceEntries,
+        items = itemEntries,
+        spell = rewardSpell
+    });
+
+    if rewardMoney > 0 or rewardXp > 0 or hasItemRewards then
         QuestLogQuestDetailRewards:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, QuestLogQuestDetailObjectives, 32);
         QuestLogQuestDetailRewards:Show();
+        QuestLogQuestDetailRewards:SetHeight(QuestLogQuestDetailRewards:GetTextHeight());
 
-        QuestLogDetailRewardMoneyLabel:SetWidth(QuestLogDetailRewardMoneyLabel:GetTextWidth());
-        QuestLogDetailRewardMoneyLabel:Show();
+        -- When the item list already printed its "You will receive:" heading, the
+        -- money row drops its own label text to avoid a duplicated heading.
+        if hasItemRewards and rewardMoney > 0 then
+            QuestLogDetailRewardMoneyLabel:SetText("");
+            QuestLogDetailRewardMoneyLabel:SetWidth(0);
+            QuestLogDetailRewardMoneyLabel:SetHeight(32);
+        else
+            QuestLogDetailRewardMoneyLabel:SetText(Localize("QUEST_REWARD_YOU_WILL_RECEIVE"));
+            QuestLogDetailRewardMoneyLabel:SetWidth(QuestLogDetailRewardMoneyLabel:GetTextWidth());
+            QuestLogDetailRewardMoneyLabel:SetHeight(QuestLogDetailRewardMoneyLabel:GetTextHeight());
+        end
 
-        RefreshMoneyFrame("QuestLogDetailRewardMoney", rewardMoney, false, false, true);
-        QuestLogDetailRewardMoney:Show();
+        if rewardMoney > 0 then
+            QuestLogDetailRewardMoneyLabel:Show();
+            RefreshMoneyFrame("QuestLogDetailRewardMoney", rewardMoney, false, false, true);
+            QuestLogDetailRewardMoney:Show();
+        else
+            QuestLogDetailRewardMoneyLabel:Hide();
+            QuestLogDetailRewardMoney:Hide();
+        end
 
-        contentHeight = contentHeight + 80; -- reward header + money row + bottom padding
+        -- Rewards header 32 below the objectives, item list 8 below the header,
+        -- money label 8 below the item list.
+        contentHeight = contentHeight
+            + 32
+            + QuestLogQuestDetailRewards:GetHeight()
+            + 8
+            + rewardItemsHeight
+            + 8
+            + QuestLogDetailRewardMoneyLabel:GetHeight();
+
+        if rewardXp > 0 then
+            QuestLogDetailRewardXpLabel:SetText(string.format(Localize("QUEST_REWARDED_XP"), rewardXp));
+            -- Explicit width before measuring height, otherwise word-wrap on an
+            -- unconstrained label can loop forever (see QuestFrame.lua).
+            QuestLogDetailRewardXpLabel:SetWidth(QuestLogDetailRewardXpLabel:GetTextWidth());
+            QuestLogDetailRewardXpLabel:SetHeight(QuestLogDetailRewardXpLabel:GetTextHeight());
+            QuestLogDetailRewardXpLabel:Show();
+
+            contentHeight = contentHeight + 4 + QuestLogDetailRewardXpLabel:GetHeight();
+        else
+            QuestLogDetailRewardXpLabel:Hide();
+        end
     else
         QuestLogQuestDetailRewards:Hide();
         QuestLogDetailRewardMoney:Hide();
         QuestLogDetailRewardMoneyLabel:Hide();
+        QuestLogDetailRewardXpLabel:Hide();
     end
 
     QuestLogQuestDetailScrollContent:SetHeight(contentHeight);

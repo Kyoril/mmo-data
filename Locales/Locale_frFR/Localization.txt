@@ -403,7 +403,9 @@ strings =
 	(key = "QUEST_MONSTERS_KILLED", string = "%s tués : %d/%d")
 	(key = "COMPLETE", string = "Terminée")
 	(key = "QUEST_REWARD_YOU_WILL_RECEIVE", string = "Vous recevrez : ")
-	
+	(key = "QUEST_REWARD_CHOOSE", string = "Vous pourrez choisir l'une de ces récompenses :")
+	(key = "QUEST_REWARD_LEARN_SPELL", string = "Vous apprendrez également :")
+
 	(key = "MONEY_GOLD_SILVER_COPPER", string = "%d d'or, %2d d'argent, %2d de cuivre")
 	(key = "MONEY_SILVER_COPPER", string = "%d d'argent, %2d de cuivre")
 	(key = "MONEY_COPPER", string = "%d de cuivre")
