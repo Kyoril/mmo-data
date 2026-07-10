@@ -10,6 +10,7 @@ local QS_INCOMPLETE = 3  -- and anything else
 local COLOR_TITLE_NORMAL   = "FFFFD100"   -- gold
 local COLOR_TITLE_COMPLETE = "FF00FF00"   -- green
 local COLOR_TITLE_FAILED   = "FFFF3030"   -- red
+local COLOR_TITLE_DISABLED = "FF808080"   -- grey (wrong active class)
 local COLOR_OBJ_INCOMPLETE = "FFAAAAAA"   -- grey
 local COLOR_OBJ_COMPLETE   = "FFFFFFFF"   -- white
 
@@ -134,15 +135,17 @@ function QuestTracker_Refresh()
         local status = entry.status
         local isComplete = (status == QS_COMPLETE)
         local isFailed   = (status == QS_FAILED)
+        local isDisabled = not IsQuestAllowedForClass(entry.quest)
         local isCollapsed = collapsed[entry.id] or false
 
         -- Title color
         local titleColor = COLOR_TITLE_NORMAL
-        if isComplete then titleColor = COLOR_TITLE_COMPLETE
+        if isDisabled then titleColor = COLOR_TITLE_DISABLED
+        elseif isComplete then titleColor = COLOR_TITLE_COMPLETE
         elseif isFailed then titleColor = COLOR_TITLE_FAILED end
 
-        -- Collapse toggle button: show only when there are objectives and not complete/failed
-        local showToggle = (not isComplete and not isFailed)
+        -- Collapse toggle button: show only when there are objectives and not complete/failed/disabled
+        local showToggle = (not isComplete and not isFailed and not isDisabled)
         if showToggle then
             s.toggle:ClearAnchors()
             s.toggle:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, QuestTrackerFrame, PAD)
@@ -155,7 +158,9 @@ function QuestTracker_Refresh()
         local titleLeft = showToggle and (PAD + TITLE_H) or PAD
         -- Build the title text, optionally annotated with a failed marker or a live countdown.
         local titleText = entry.quest.title
-        if isFailed then
+        if isDisabled then
+            titleText = titleText .. "  (" .. Localize("QUEST_WRONG_CLASS") .. ")"
+        elseif isFailed then
             titleText = titleText .. "  (" .. Localize("QUEST_FAILED") .. ")"
         elseif not isComplete then
             local timeLeft = GetQuestLogTimeLeft(entry.id)
@@ -180,8 +185,8 @@ function QuestTracker_Refresh()
 
         offsetY = offsetY + titleH
 
-        -- Objectives (hidden when complete, failed, or collapsed)
-        if not isComplete and not isFailed and not isCollapsed then
+        -- Objectives (hidden when complete, failed, class-disabled, or collapsed)
+        if not isComplete and not isFailed and not isDisabled and not isCollapsed then
             QuestLogSelectQuest(entry.id)
             local numObj = GetQuestObjectiveCount()
             for oi = 1, math.min(numObj, MAX_OBJS) do

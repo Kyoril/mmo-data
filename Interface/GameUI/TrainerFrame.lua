@@ -12,6 +12,20 @@ function TrainerFrame_OnTrainerUpdate(self)
 	TrainerList_Update(TrainerFrame);
 end
 
+-- Error codes fired with TRAINER_BUY_ERROR (see TrainerClient::OnTrainerBuyError / BuySpell).
+local TRAINER_BUY_ERROR_MESSAGES = {
+	[0] = "TRAINER_ERROR_LEVEL_TOO_LOW",
+	[1] = "TRAINER_ERROR_NOT_ENOUGH_MONEY",
+	[2] = "TRAINER_ERROR_WRONG_CLASS"
+};
+
+function TrainerFrame_OnTrainerBuyError(self, errorCode)
+	local messageKey = TRAINER_BUY_ERROR_MESSAGES[errorCode];
+	if messageKey then
+		UIErrorFrame_OnErrorMessage(ErrorFrame, Localize(messageKey));
+	end
+end
+
 function TrainerFrame_OnTrainerClosed(self)
     HideUIPanel(self);
 end
@@ -45,20 +59,21 @@ function TrainerFrame_CanBuySpell(trainerSpellIndex)
         return false;
     end
 
-    -- Level check
+    -- Level check against the trainer entry's own required level. Class trainers gate by the
+    -- player's CLASS level (a fresh class must be leveled up first); other trainer types use
+    -- the character level.
     local player = GetUnit("player");
-    local playerLevel = player:GetLevel();
-    local spell = gameData.spells:GetById(spellId);
-    if not spell then
-        -- Can't buy because spell doesn't exist
-        return false;
-    end
+    local reqLevel = GetTrainerSpellReqLevel(trainerSpellIndex);
+    if reqLevel and reqLevel > 0 then
+        local effectiveLevel;
+        if IsTrainerClassTrainer() then
+            effectiveLevel = player:GetActiveClassLevel();
+        else
+            effectiveLevel = player:GetLevel();
+        end
 
-    if spell.level and spell.level > 0 then
-        -- Spell has a level requirement
-        local spellLevel = spell.level;
-        if playerLevel < spellLevel then
-            -- Can't buy because not high enough level
+        if effectiveLevel < reqLevel then
+            -- Can't buy because not high enough (class) level
             return false;
         end
     end
@@ -119,9 +134,12 @@ function TrainerFrame_OnLoad(self)
     self:RegisterEvent("TRAINER_SHOW", TrainerFrame_OnTrainerShow);
     self:RegisterEvent("TRAINER_UPDATE", TrainerFrame_OnTrainerUpdate);
     self:RegisterEvent("TRAINER_CLOSED", TrainerFrame_OnTrainerClosed);
+    self:RegisterEvent("TRAINER_BUY_ERROR", TrainerFrame_OnTrainerBuyError);
     self:RegisterEvent("MONEY_CHANGED", TrainerList_Update);
     self:RegisterEvent("SPELL_LEARNED", TrainerList_Update);
     self:RegisterEvent("PLAYER_LEVEL_CHANGED", TrainerList_Update);
+    -- Class level-ups change buyability at class trainers while the window is open.
+    self:RegisterEvent("PLAYER_KNOWN_CLASSES_CHANGED", TrainerList_Update);
 end
 
 function TrainerList_Update(self)
