@@ -11,6 +11,19 @@ QUEST_REWARD_COLUMN_GAP = 8;
 QUEST_REWARD_LABEL_SPACING = 8;
 QUEST_REWARD_SECTION_SPACING = 8;
 
+-- Registers a mouse wheel handler on a scroll area that moves the given scroll
+-- bar by stepsPerNotch steps per wheel notch. Registering a handler makes the
+-- frame consume wheel input over the area (and everything anchored inside it),
+-- so the camera no longer zooms while the cursor hovers the panel — even while
+-- the scroll bar is disabled because the content fits.
+function QuestScroll_AttachMouseWheel(area, scrollBar, stepsPerNotch)
+    area:SetOnMouseWheelHandler(function(self, delta)
+        if scrollBar:IsEnabled(true) then
+            scrollBar:SetValue(scrollBar:GetValue() - delta * scrollBar:GetStep() * stepsPerNotch);
+        end
+    end);
+end
+
 -- Formats a number with thousands separators, e.g. 1650 -> "1,650".
 function QuestRewards_FormatNumber(value)
     local formatted = tostring(value);
@@ -711,6 +724,13 @@ function QuestFrame_OnLoad(self)
     QuestRewardsPanelScrollBar:SetMaximum(0);
     QuestRewardsPanelScrollBar:SetOnValueChangedHandler(QuestRewardsPanelScrollBar_OnValueChanged);
     QuestRewardsPanelScrollBar:Disable();
+
+    -- Mouse wheel scrolls the panel contents instead of zooming the camera.
+    -- 3 steps per notch matches the chat frame's lines-per-notch feel (step = 32 px).
+    QuestScroll_AttachMouseWheel(QuestFrameGreetingPanel, GreetingPanelScrollBar, 3);
+    QuestScroll_AttachMouseWheel(QuestDetailScrollClip, QuestDetailPanelScrollBar, 3);
+    QuestScroll_AttachMouseWheel(QuestRequestItemsScrollContent, QuestRequestItemsPanelScrollBar, 3);
+    QuestScroll_AttachMouseWheel(QuestRewardsScrollClip, QuestRewardsPanelScrollBar, 3);
 end
 
 function QuestFrame_OnShow(self)

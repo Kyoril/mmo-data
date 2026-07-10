@@ -45,6 +45,11 @@ function QuestLogFrame_OnLoad(self)
     QuestLogQuestListScrollBar:SetOnValueChangedHandler(QuestLogQuestListScrollBar_OnValueChanged);
     QuestLogQuestListScrollBar:Disable();
 
+    -- Mouse wheel scrolls the quest list (one quest per notch, step = 1) and the
+    -- detail panel instead of zooming the camera.
+    QuestScroll_AttachMouseWheel(QuestLogQuestList, QuestLogQuestListScrollBar, 1);
+    QuestScroll_AttachMouseWheel(QuestLogDetailScrollClip, QuestLogQuestDetailPanelScrollBar, 3);
+
     -- Register for events
     self:RegisterEvent("QUEST_LOG_UPDATE", QuestLogFrame_OnUpdateQuestLog);
 
