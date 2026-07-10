@@ -112,6 +112,9 @@ function QuestLogFrame_UpdateQuestDetails()
 
     -- Annotate the title with the wrong-class/failed state or a remaining timer where appropriate.
     local titleText = questLogEntry.quest.title;
+    if IsClassUnlockQuest(questLogEntry.quest) then
+        titleText = string.format(Localize("QUEST_CLASS_UNLOCK_FORMAT"), titleText);
+    end
     if not IsQuestAllowedForClass(questLogEntry.quest) then
         titleText = titleText .. "  (" .. Localize("QUEST_WRONG_CLASS") .. ")";
     elseif questLogEntry.status == QS_FAILED then
@@ -262,21 +265,24 @@ function QuestLog_Update()
             if not questLogEntry.quest then
                 -- Quest data not yet loaded from server; skip rendering this slot.
                 button:Hide();
-            elseif not IsQuestAllowedForClass(questLogEntry.quest) then
-                -- Quest is frozen because the active class does not match its required class.
-                button:SetText(string.format(Localize("QUEST_WRONG_CLASS_FORMAT"), questLogEntry.quest.title));
-                button:SetChecked(questLogEntry.quest.id == GetQuestLogSelection());
-                button:Show();
-            elseif questLogEntry.status == QS_COMPLETE then
-                button:SetText(string.format(Localize("QUEST_COMPLETED_FORMAT"), questLogEntry.quest.title));
-                button:SetChecked(questLogEntry.quest.id == GetQuestLogSelection());
-                button:Show();
-            elseif questLogEntry.status == QS_FAILED then
-                button:SetText(string.format(Localize("QUEST_FAILED_FORMAT"), questLogEntry.quest.title));
-                button:SetChecked(questLogEntry.quest.id == GetQuestLogSelection());
-                button:Show();
             else
-                button:SetText(questLogEntry.quest.title);
+                -- Feature-unlock chains (e.g. class unlock quests) are tagged so the player can
+                -- tell them apart from regular quests.
+                local title = questLogEntry.quest.title;
+                if IsClassUnlockQuest(questLogEntry.quest) then
+                    title = string.format(Localize("QUEST_CLASS_UNLOCK_FORMAT"), title);
+                end
+
+                if not IsQuestAllowedForClass(questLogEntry.quest) then
+                    -- Quest is frozen because the active class does not match its required class.
+                    button:SetText(string.format(Localize("QUEST_WRONG_CLASS_FORMAT"), title));
+                elseif questLogEntry.status == QS_COMPLETE then
+                    button:SetText(string.format(Localize("QUEST_COMPLETED_FORMAT"), title));
+                elseif questLogEntry.status == QS_FAILED then
+                    button:SetText(string.format(Localize("QUEST_FAILED_FORMAT"), title));
+                else
+                    button:SetText(title);
+                end
                 button:SetChecked(questLogEntry.quest.id == GetQuestLogSelection());
                 button:Show();
             end

@@ -390,6 +390,7 @@ strings =
 	(key = "QUEST_FAILED_FORMAT", string = "%s (Провалено)")
 	(key = "QUEST_WRONG_CLASS", string = "Неверный класс")
 	(key = "QUEST_WRONG_CLASS_FORMAT", string = "%s (Неверный класс)")
+	(key = "QUEST_CLASS_UNLOCK_FORMAT", string = "[Открытие] %s")
 	(key = "QUEST_TIME_REMAINING", string = "Осталось: %s")
 	(key = "CONTINUE", string = "Continue")
 	(key = "COMPLETE_QUEST", string = "Complete")

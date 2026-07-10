@@ -389,6 +389,7 @@ strings =
 	(key = "QUEST_FAILED_FORMAT", string = "%s (Fehlgeschlagen)")
 	(key = "QUEST_WRONG_CLASS", string = "Falsche Klasse")
 	(key = "QUEST_WRONG_CLASS_FORMAT", string = "%s (Falsche Klasse)")
+	(key = "QUEST_CLASS_UNLOCK_FORMAT", string = "[Freischaltung] %s")
 	(key = "QUEST_TIME_REMAINING", string = "Verbleibend: %s")
 	(key = "CONTINUE", string = "Fortfahren")
 	(key = "COMPLETE_QUEST", string = "Abschließen")

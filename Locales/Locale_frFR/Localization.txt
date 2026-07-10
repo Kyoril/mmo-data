@@ -389,6 +389,7 @@ strings =
 	(key = "QUEST_FAILED_FORMAT", string = "%s (Échec)")
 	(key = "QUEST_WRONG_CLASS", string = "Mauvaise classe")
 	(key = "QUEST_WRONG_CLASS_FORMAT", string = "%s (Mauvaise classe)")
+	(key = "QUEST_CLASS_UNLOCK_FORMAT", string = "[Déblocage] %s")
 	(key = "QUEST_TIME_REMAINING", string = "Temps restant : %s")
 	(key = "CONTINUE", string = "Continuer")
 	(key = "COMPLETE_QUEST", string = "Terminer")

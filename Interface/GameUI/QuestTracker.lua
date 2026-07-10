@@ -11,6 +11,7 @@ local COLOR_TITLE_NORMAL   = "FFFFD100"   -- gold
 local COLOR_TITLE_COMPLETE = "FF00FF00"   -- green
 local COLOR_TITLE_FAILED   = "FFFF3030"   -- red
 local COLOR_TITLE_DISABLED = "FF808080"   -- grey (wrong active class)
+local COLOR_TITLE_UNLOCK   = "FF40C8FF"   -- light blue (feature/class unlock chain)
 local COLOR_OBJ_INCOMPLETE = "FFAAAAAA"   -- grey
 local COLOR_OBJ_COMPLETE   = "FFFFFFFF"   -- white
 
@@ -136,10 +137,11 @@ function QuestTracker_Refresh()
         local isComplete = (status == QS_COMPLETE)
         local isFailed   = (status == QS_FAILED)
         local isDisabled = not IsQuestAllowedForClass(entry.quest)
+        local isUnlock   = IsClassUnlockQuest(entry.quest)
         local isCollapsed = collapsed[entry.id] or false
 
         -- Title color
-        local titleColor = COLOR_TITLE_NORMAL
+        local titleColor = isUnlock and COLOR_TITLE_UNLOCK or COLOR_TITLE_NORMAL
         if isDisabled then titleColor = COLOR_TITLE_DISABLED
         elseif isComplete then titleColor = COLOR_TITLE_COMPLETE
         elseif isFailed then titleColor = COLOR_TITLE_FAILED end
@@ -158,6 +160,9 @@ function QuestTracker_Refresh()
         local titleLeft = showToggle and (PAD + TITLE_H) or PAD
         -- Build the title text, optionally annotated with a failed marker or a live countdown.
         local titleText = entry.quest.title
+        if isUnlock then
+            titleText = string.format(Localize("QUEST_CLASS_UNLOCK_FORMAT"), titleText)
+        end
         if isDisabled then
             titleText = titleText .. "  (" .. Localize("QUEST_WRONG_CLASS") .. ")"
         elseif isFailed then
