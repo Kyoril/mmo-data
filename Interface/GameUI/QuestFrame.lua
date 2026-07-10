@@ -11,6 +11,42 @@ QUEST_REWARD_COLUMN_GAP = 8;
 QUEST_REWARD_LABEL_SPACING = 8;
 QUEST_REWARD_SECTION_SPACING = 8;
 
+-- Formats a number with thousands separators, e.g. 1650 -> "1,650".
+function QuestRewards_FormatNumber(value)
+    local formatted = tostring(value);
+    while true do
+        local replaced;
+        formatted, replaced = string.gsub(formatted, "^(-?%d+)(%d%d%d)", "%1,%2");
+        if replaced == 0 then
+            break;
+        end
+    end
+    return formatted;
+end
+
+-- Shows or hides an XP reward row (dark prefix label + highlighted value).
+-- Returns the row height contribution (0 when the row is hidden).
+function QuestRewards_SetXpRow(label, valueFrame, amount)
+    if amount and amount > 0 then
+        label:SetWidth(label:GetTextWidth());
+        label:SetHeight(label:GetTextHeight());
+        label:Show();
+
+        valueFrame:SetText(QuestRewards_FormatNumber(amount));
+        valueFrame:SetWidth(valueFrame:GetTextWidth());
+        valueFrame:SetHeight(valueFrame:GetTextHeight());
+        valueFrame:Show();
+
+        return label:GetHeight();
+    end
+
+    -- Collapse the hidden label so rows anchored below it move up.
+    label:SetHeight(0);
+    label:Hide();
+    valueFrame:Hide();
+    return 0;
+end
+
 -- Reward item names render on the parchment background where the white/grey
 -- low-quality colors are unreadable. Use dark ink for those and the quality
 -- color for uncommon and better.
@@ -136,7 +172,8 @@ local function QuestRewards_AddRow(container, y, column, entry, clickedHandler)
     label:SetProperty("TextColor", entry.color or "FF100500");
     label:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, QUEST_REWARD_SLOT_PADDING);
     label:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, QUEST_REWARD_SLOT_PADDING + QUEST_REWARD_SLOT_SIZE + 16);
-    label:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, -QUEST_REWARD_SLOT_PADDING);
+    -- Keep the name clear of the border art (25px ring) on the right side.
+    label:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, -(QUEST_REWARD_SLOT_PADDING + 16));
     row:AddChild(label);
     label:SetText(entry.name or "");
     label:SetHeight(QUEST_REWARD_SLOT_SIZE);
@@ -397,24 +434,22 @@ function QuestFrame_OnQuestDetail(self)
         spell = rewardSpell
     });
 
-    if questDetails.rewardedMoney > 0 or questDetails.rewardedXp > 0 or hasItemRewards then
+    if questDetails.rewardedMoney > 0 or questDetails.rewardedXp > 0 or questDetails.rewardedClassXp > 0 or hasItemRewards then
 
         QuestDetailRewards:Show();
         QuestDetailRewards:SetHeight(QuestDetailRewards:GetTextHeight());
 
-        -- The money label always participates in layout (the XP label is anchored
+        -- The money label always participates in layout (the XP rows are anchored
         -- below it), so its height must be measured even when no money is rewarded.
         -- When the item list already printed its "You will receive:" heading, the
-        -- money row drops its own label text to avoid a duplicated heading.
+        -- money row uses "You will also receive:" instead of repeating it.
         if hasItemRewards and questDetails.rewardedMoney > 0 then
-            QuestDetailRewardMoneyLabel:SetText("");
-            QuestDetailRewardMoneyLabel:SetWidth(0);
-            QuestDetailRewardMoneyLabel:SetHeight(32);
+            QuestDetailRewardMoneyLabel:SetText(Localize("QUEST_REWARD_ALSO_RECEIVE"));
         else
             QuestDetailRewardMoneyLabel:SetText(Localize("QUEST_REWARD_YOU_WILL_RECEIVE"));
-            QuestDetailRewardMoneyLabel:SetWidth(QuestDetailRewardMoneyLabel:GetTextWidth());
-            QuestDetailRewardMoneyLabel:SetHeight(QuestDetailRewardMoneyLabel:GetTextHeight());
         end
+        QuestDetailRewardMoneyLabel:SetWidth(QuestDetailRewardMoneyLabel:GetTextWidth());
+        QuestDetailRewardMoneyLabel:SetHeight(QuestDetailRewardMoneyLabel:GetTextHeight());
 
         if questDetails.rewardedMoney > 0 then
             QuestDetailRewardMoneyLabel:Show();
@@ -435,19 +470,14 @@ function QuestFrame_OnQuestDetail(self)
             + 8
             + QuestDetailRewardMoneyLabel:GetHeight();
 
-        if questDetails.rewardedXp > 0 then
-            QuestDetailRewardXpLabel:SetText(string.format(Localize("QUEST_REWARDED_XP"), questDetails.rewardedXp));
-            -- The XP label has no RIGHT anchor, so it has no constrained width.
-            -- Give it an explicit width before measuring height, otherwise the text
-            -- layout cannot fit a word and word-wrap loops forever (client freeze).
-            QuestDetailRewardXpLabel:SetWidth(QuestDetailRewardXpLabel:GetTextWidth());
-            QuestDetailRewardXpLabel:SetHeight(QuestDetailRewardXpLabel:GetTextHeight());
-            QuestDetailRewardXpLabel:Show();
+        local xpRowHeight = QuestRewards_SetXpRow(QuestDetailRewardXpLabel, QuestDetailRewardXpValue, questDetails.rewardedXp);
+        if xpRowHeight > 0 then
+            contentHeight = contentHeight + 8 + xpRowHeight;
+        end
 
-            -- XP label is anchored 4px below the money label.
-            contentHeight = contentHeight + 4 + QuestDetailRewardXpLabel:GetHeight();
-        else
-            QuestDetailRewardXpLabel:Hide();
+        local classXpRowHeight = QuestRewards_SetXpRow(QuestDetailRewardClassXpLabel, QuestDetailRewardClassXpValue, questDetails.rewardedClassXp);
+        if classXpRowHeight > 0 then
+            contentHeight = contentHeight + 4 + classXpRowHeight;
         end
 
         contentHeight = contentHeight + 32; -- bottom padding
@@ -457,7 +487,8 @@ function QuestFrame_OnQuestDetail(self)
         QuestDetailRewards:Hide();
         QuestDetailRewardMoneyLabel:Hide();
         QuestDetailRewardMoney:Hide();
-        QuestDetailRewardXpLabel:Hide();
+        QuestRewards_SetXpRow(QuestDetailRewardXpLabel, QuestDetailRewardXpValue, 0);
+        QuestRewards_SetXpRow(QuestDetailRewardClassXpLabel, QuestDetailRewardClassXpValue, 0);
 
         contentHeight = contentHeight + 32; -- bottom padding
 
@@ -575,22 +606,20 @@ function QuestFrame_OnQuestOfferRewards(self)
         end
     end
 
-    if questDetails.rewardedMoney > 0 or questDetails.rewardedXp > 0 or hasItemRewards then
+    if questDetails.rewardedMoney > 0 or questDetails.rewardedXp > 0 or questDetails.rewardedClassXp > 0 or hasItemRewards then
 
         QuestOfferRewardsHeader:Show();
         QuestOfferRewardsHeader:SetHeight(QuestOfferRewardsHeader:GetTextHeight());
 
         -- When the item list already printed its "You will receive:" heading, the
-        -- money row drops its own label text to avoid a duplicated heading.
+        -- money row uses "You will also receive:" instead of repeating it.
         if hasItemRewards and questDetails.rewardedMoney > 0 then
-            QuestOfferRewardMoneyLabel:SetText("");
-            QuestOfferRewardMoneyLabel:SetWidth(0);
-            QuestOfferRewardMoneyLabel:SetHeight(32);
+            QuestOfferRewardMoneyLabel:SetText(Localize("QUEST_REWARD_ALSO_RECEIVE"));
         else
             QuestOfferRewardMoneyLabel:SetText(Localize("QUEST_REWARD_YOU_WILL_RECEIVE"));
-            QuestOfferRewardMoneyLabel:SetWidth(QuestOfferRewardMoneyLabel:GetTextWidth());
-            QuestOfferRewardMoneyLabel:SetHeight(QuestOfferRewardMoneyLabel:GetTextHeight());
         end
+        QuestOfferRewardMoneyLabel:SetWidth(QuestOfferRewardMoneyLabel:GetTextWidth());
+        QuestOfferRewardMoneyLabel:SetHeight(QuestOfferRewardMoneyLabel:GetTextHeight());
 
         if questDetails.rewardedMoney > 0 then
             QuestOfferRewardMoneyLabel:Show();
@@ -609,16 +638,14 @@ function QuestFrame_OnQuestOfferRewards(self)
             + 8
             + QuestOfferRewardMoneyLabel:GetHeight();
 
-        if questDetails.rewardedXp > 0 then
-            QuestOfferRewardXpLabel:SetText(string.format(Localize("QUEST_REWARDED_XP"), questDetails.rewardedXp));
-            -- Explicit width before measuring height (see QuestFrame_OnQuestDetail).
-            QuestOfferRewardXpLabel:SetWidth(QuestOfferRewardXpLabel:GetTextWidth());
-            QuestOfferRewardXpLabel:SetHeight(QuestOfferRewardXpLabel:GetTextHeight());
-            QuestOfferRewardXpLabel:Show();
+        local xpRowHeight = QuestRewards_SetXpRow(QuestOfferRewardXpLabel, QuestOfferRewardXpValue, questDetails.rewardedXp);
+        if xpRowHeight > 0 then
+            contentHeight = contentHeight + 8 + xpRowHeight;
+        end
 
-            contentHeight = contentHeight + 4 + QuestOfferRewardXpLabel:GetHeight();
-        else
-            QuestOfferRewardXpLabel:Hide();
+        local classXpRowHeight = QuestRewards_SetXpRow(QuestOfferRewardClassXpLabel, QuestOfferRewardClassXpValue, questDetails.rewardedClassXp);
+        if classXpRowHeight > 0 then
+            contentHeight = contentHeight + 4 + classXpRowHeight;
         end
 
         contentHeight = contentHeight + 32; -- bottom padding
@@ -628,7 +655,8 @@ function QuestFrame_OnQuestOfferRewards(self)
         QuestOfferRewardsHeader:Hide();
         QuestOfferRewardMoneyLabel:Hide();
         QuestOfferRewardMoney:Hide();
-        QuestOfferRewardXpLabel:Hide();
+        QuestRewards_SetXpRow(QuestOfferRewardXpLabel, QuestOfferRewardXpValue, 0);
+        QuestRewards_SetXpRow(QuestOfferRewardClassXpLabel, QuestOfferRewardClassXpValue, 0);
 
         contentHeight = contentHeight + 32; -- bottom padding
 

@@ -337,12 +337,44 @@
 					</Frame>
 
 					<Frame name="QuestLogDetailRewardXpLabel" inherits="TextSmall">
+						<Property name="Text" value="QUEST_REWARD_XP" />
 						<Property name="TextColor" value="FF100500" />
 						<Property name="Font" value="QuestFont" />
 
 						<Area>
-							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestLogDetailRewardMoneyLabel" offset="4" />
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestLogDetailRewardMoneyLabel" offset="8" />
 							<Anchor point="LEFT" offset="32" />
+						</Area>
+					</Frame>
+
+					<Frame name="QuestLogDetailRewardXpValue" inherits="TextSmall">
+						<Property name="TextColor" value="FFFFFFFF" />
+						<Property name="Font" value="DefaultSmallBorder" />
+
+						<Area>
+							<Anchor point="V_CENTER" relativeTo="QuestLogDetailRewardXpLabel" />
+							<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="QuestLogDetailRewardXpLabel" offset="12" />
+						</Area>
+					</Frame>
+
+					<Frame name="QuestLogDetailRewardClassXpLabel" inherits="TextSmall">
+						<Property name="Text" value="QUEST_REWARD_CLASS_XP" />
+						<Property name="TextColor" value="FF100500" />
+						<Property name="Font" value="QuestFont" />
+
+						<Area>
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestLogDetailRewardXpLabel" offset="4" />
+							<Anchor point="LEFT" offset="32" />
+						</Area>
+					</Frame>
+
+					<Frame name="QuestLogDetailRewardClassXpValue" inherits="TextSmall">
+						<Property name="TextColor" value="FFFFFFFF" />
+						<Property name="Font" value="DefaultSmallBorder" />
+
+						<Area>
+							<Anchor point="V_CENTER" relativeTo="QuestLogDetailRewardClassXpLabel" />
+							<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="QuestLogDetailRewardClassXpLabel" offset="12" />
 						</Area>
 					</Frame>
 				</Frame>

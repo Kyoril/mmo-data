@@ -105,7 +105,9 @@
 
 		<Visual>
 			<ImagerySection name="Background">
-				<ImageComponent texture="Interface/GlueUI/CharSelectButtonBackground.htex" tiling="BOTH" tint="50FFFFFF">
+				<!-- Flat translucent fill: TransparentBorder.htex is a uniform dark texture
+				     (the tooltip backdrop); the low tint alpha darkens the parchment subtly. -->
+				<ImageComponent texture="Interface/GlueUI/TransparentBorder.htex" tiling="NONE" tint="40FFFFFF">
 					<Area><Inset all="8" /></Area>
 				</ImageComponent>
 				<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" />
@@ -403,13 +405,48 @@
                         </Frame>
 
                         <Frame name="QuestDetailRewardXpLabel" inherits="TextSmall">
+                            <Property name="Text" value="QUEST_REWARD_XP" />
                             <Property name="TextColor" value="FF100500" />
                             <Property name="Font" value="QuestFont" />
                             <Property name="ClippedByParent" value="true" />
 
                             <Area>
-                                <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestDetailRewardMoneyLabel" offset="4" />
+                                <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestDetailRewardMoneyLabel" offset="8" />
                                 <Anchor point="LEFT" offset="32" />
+                            </Area>
+                        </Frame>
+
+                        <Frame name="QuestDetailRewardXpValue" inherits="TextSmall">
+                            <Property name="TextColor" value="FFFFFFFF" />
+                            <Property name="Font" value="DefaultSmallBorder" />
+                            <Property name="ClippedByParent" value="true" />
+
+                            <Area>
+                                <Anchor point="V_CENTER" relativeTo="QuestDetailRewardXpLabel" />
+                                <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="QuestDetailRewardXpLabel" offset="12" />
+                            </Area>
+                        </Frame>
+
+                        <Frame name="QuestDetailRewardClassXpLabel" inherits="TextSmall">
+                            <Property name="Text" value="QUEST_REWARD_CLASS_XP" />
+                            <Property name="TextColor" value="FF100500" />
+                            <Property name="Font" value="QuestFont" />
+                            <Property name="ClippedByParent" value="true" />
+
+                            <Area>
+                                <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestDetailRewardXpLabel" offset="4" />
+                                <Anchor point="LEFT" offset="32" />
+                            </Area>
+                        </Frame>
+
+                        <Frame name="QuestDetailRewardClassXpValue" inherits="TextSmall">
+                            <Property name="TextColor" value="FFFFFFFF" />
+                            <Property name="Font" value="DefaultSmallBorder" />
+                            <Property name="ClippedByParent" value="true" />
+
+                            <Area>
+                                <Anchor point="V_CENTER" relativeTo="QuestDetailRewardClassXpLabel" />
+                                <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="QuestDetailRewardClassXpLabel" offset="12" />
                             </Area>
                         </Frame>
                     </Frame>
@@ -577,13 +614,48 @@
                         </Frame>
 
                         <Frame name="QuestOfferRewardXpLabel" inherits="TextSmall">
+                            <Property name="Text" value="QUEST_REWARD_XP" />
                             <Property name="TextColor" value="FF100500" />
                             <Property name="Font" value="QuestFont" />
                             <Property name="ClippedByParent" value="true" />
 
                             <Area>
-                                <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestOfferRewardMoneyLabel" offset="4" />
+                                <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestOfferRewardMoneyLabel" offset="8" />
                                 <Anchor point="LEFT" offset="32" />
+                            </Area>
+                        </Frame>
+
+                        <Frame name="QuestOfferRewardXpValue" inherits="TextSmall">
+                            <Property name="TextColor" value="FFFFFFFF" />
+                            <Property name="Font" value="DefaultSmallBorder" />
+                            <Property name="ClippedByParent" value="true" />
+
+                            <Area>
+                                <Anchor point="V_CENTER" relativeTo="QuestOfferRewardXpLabel" />
+                                <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="QuestOfferRewardXpLabel" offset="12" />
+                            </Area>
+                        </Frame>
+
+                        <Frame name="QuestOfferRewardClassXpLabel" inherits="TextSmall">
+                            <Property name="Text" value="QUEST_REWARD_CLASS_XP" />
+                            <Property name="TextColor" value="FF100500" />
+                            <Property name="Font" value="QuestFont" />
+                            <Property name="ClippedByParent" value="true" />
+
+                            <Area>
+                                <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestOfferRewardXpLabel" offset="4" />
+                                <Anchor point="LEFT" offset="32" />
+                            </Area>
+                        </Frame>
+
+                        <Frame name="QuestOfferRewardClassXpValue" inherits="TextSmall">
+                            <Property name="TextColor" value="FFFFFFFF" />
+                            <Property name="Font" value="DefaultSmallBorder" />
+                            <Property name="ClippedByParent" value="true" />
+
+                            <Area>
+                                <Anchor point="V_CENTER" relativeTo="QuestOfferRewardClassXpLabel" />
+                                <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="QuestOfferRewardClassXpLabel" offset="12" />
                             </Area>
                         </Frame>
                     </Frame>

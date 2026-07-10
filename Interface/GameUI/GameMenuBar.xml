@@ -226,7 +226,7 @@
 		</Frame>
 -->
 		<Area>
-			<Size><AbsDimension x="1580" y="200" /></Size>
+			<Size><AbsDimension x="1580" y="224" /></Size>
 			<Anchor point="BOTTOM" offset="0" />
 			<Anchor point="H_CENTER" offset="0" />
 		</Area>
