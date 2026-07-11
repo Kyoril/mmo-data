@@ -133,10 +133,70 @@ local OPTIONS_CATEGORIES = {
 				defaultValue = "1",
 			},
 			{
+				type = "slider",
+				labelKey = "OPTIONS_MASTER_VOLUME",
+				cvar = "MasterVolume",
+				defaultValue = "1.0",
+			},
+			{
 				type = "toggle",
 				labelKey = "OPTIONS_MUSIC_ENABLED",
 				cvar = "MusicEnabled",
 				defaultValue = "1",
+			},
+			{
+				type = "slider",
+				labelKey = "OPTIONS_MUSIC_VOLUME",
+				cvar = "MusicVolume",
+				defaultValue = "0.6",
+			},
+			{
+				type = "toggle",
+				labelKey = "OPTIONS_AMBIENCE_ENABLED",
+				cvar = "AmbienceEnabled",
+				defaultValue = "1",
+			},
+			{
+				type = "slider",
+				labelKey = "OPTIONS_AMBIENCE_VOLUME",
+				cvar = "AmbienceVolume",
+				defaultValue = "0.8",
+			},
+			{
+				type = "toggle",
+				labelKey = "OPTIONS_EFFECTS_ENABLED",
+				cvar = "EffectsEnabled",
+				defaultValue = "1",
+			},
+			{
+				type = "slider",
+				labelKey = "OPTIONS_EFFECTS_VOLUME",
+				cvar = "EffectsVolume",
+				defaultValue = "1.0",
+			},
+			{
+				type = "toggle",
+				labelKey = "OPTIONS_UI_SOUND_ENABLED",
+				cvar = "InterfaceEnabled",
+				defaultValue = "1",
+			},
+			{
+				type = "slider",
+				labelKey = "OPTIONS_UI_SOUND_VOLUME",
+				cvar = "InterfaceVolume",
+				defaultValue = "1.0",
+			},
+			{
+				type = "toggle",
+				labelKey = "OPTIONS_VOICE_ENABLED",
+				cvar = "VoiceEnabled",
+				defaultValue = "1",
+			},
+			{
+				type = "slider",
+				labelKey = "OPTIONS_VOICE_VOLUME",
+				cvar = "VoiceVolume",
+				defaultValue = "1.0",
 			},
 		},
 	},
@@ -362,6 +422,53 @@ local function BuildComboRow(opt, yOffset)
 	end
 end
 
+-- Slider row: the cvar stores a float in [0, 1], the slider works in percent (0-100).
+local function BuildSliderRow(opt, yOffset)
+	local row = OptionsSliderRowTemplate:Clone();
+	row:ClearAnchors();
+	row:SetAnchor(AnchorPoint.TOP,   AnchorPoint.TOP,   nil, yOffset);
+	row:SetAnchor(AnchorPoint.LEFT,  AnchorPoint.LEFT,  nil, 0);
+	row:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, 0);
+	OptionsScrollContent:AddChild(row);
+
+	local label = row:GetChild(0);
+	if label then
+		local text = Localize(opt.labelKey);
+		if opt.needsRestart then
+			text = text .. " *";
+		end
+		label:SetText(text);
+	end
+
+	local slider = row:GetChild(1);
+	local valueLabel = row:GetChild(2);
+
+	local function UpdateValueLabel(percent)
+		if valueLabel then
+			valueLabel:SetText(string.format("%d%%", percent));
+		end
+	end
+
+	if slider then
+		slider:SetMinimum(0);
+		slider:SetMaximum(100);
+		slider:SetStep(5);
+
+		local current = tonumber(GetCVar(opt.cvar)) or tonumber(opt.defaultValue) or 1.0;
+		local percent = math.floor(current * 100 + 0.5);
+		if percent < 0 then percent = 0; elseif percent > 100 then percent = 100; end
+		slider:SetValue(percent);
+		UpdateValueLabel(percent);
+
+		-- Install the handler after the initial SetValue so setup doesn't echo into the cvar.
+		slider:SetOnValueChangedHandler(function(bar, value)
+			local rounded = math.floor(value + 0.5);
+			SetCVar(opt.cvar, tostring(rounded / 100));
+			UpdateValueLabel(rounded);
+		end);
+	end
+end
+
 -- Resolution combo row: items are populated dynamically from the graphics API
 -- rather than from a fixed list. The cvar stores the resolution as a "WxH" string.
 local function BuildResolutionRow(opt, yOffset)
@@ -429,6 +536,8 @@ local function BuildContent(options)
 
 		if opt.type == "toggle" then
 			BuildToggleRow(opt, yOff);
+		elseif opt.type == "slider" then
+			BuildSliderRow(opt, yOff);
 		elseif opt.type == "dropdown" then
 			BuildComboRow(opt, yOff);
 		elseif opt.type == "resolution" then

@@ -305,6 +305,116 @@
 	</Frame>
 
 	<!--
+		Slider row template (e.g. volume settings).
+		Child 0 = label text frame.
+		Child 1 = horizontal ScrollBar used as slider (children: left button, right button, thumb).
+		Child 2 = value text frame (e.g. "80%").
+	-->
+	<Frame name="OptionsSliderRowTemplate">
+		<Area>
+			<Size><AbsDimension x="0" y="96" /></Size>
+		</Area>
+
+		<!-- Child 0: row label -->
+		<Frame name="OptionsSliderRowLabel" renderer="DefaultRenderer">
+			<Property name="Font" value="DefaultSmall" />
+
+			<Visual>
+				<ImagerySection name="Text">
+					<TextComponent color="FFD0D0D0" horzAlign="LEFT" vertAlign="CENTER" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer><Section section="Text" /></Layer>
+				</StateImagery>
+				<StateImagery name="Disabled">
+					<Layer><Section section="Text" /></Layer>
+				</StateImagery>
+			</Visual>
+
+			<Area>
+				<Anchor point="LEFT" offset="16" />
+				<Anchor point="TOP" />
+				<Anchor point="BOTTOM" />
+				<Size><AbsDimension x="700" /></Size>
+			</Area>
+		</Frame>
+
+		<!-- Child 1: horizontal slider built from the scroll bar widget -->
+		<Frame name="OptionsSliderWidget" type="ScrollBar" renderer="DefaultRenderer">
+			<Property name="Orientation" value="HORIZONTAL" />
+
+			<Visual>
+				<ImagerySection name="Border">
+					<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer><Section section="Border" /></Layer>
+				</StateImagery>
+				<StateImagery name="Disabled">
+					<Layer><Section section="Border" /></Layer>
+				</StateImagery>
+			</Visual>
+
+			<Area>
+				<Anchor point="RIGHT" offset="-24" />
+				<Anchor point="TOP" offset="8" />
+				<Anchor point="BOTTOM" offset="-8" />
+				<Size><AbsDimension x="400" /></Size>
+			</Area>
+
+			<Frame name="SliderLeftButton" inherits="GlueButton">
+				<Property name="Icon" value="Interface/Icons/fg4_iconsGold_leftArrow.htex" />
+				<Area>
+					<Anchor point="LEFT" offset="8" />
+					<Anchor point="TOP" offset="8" />
+					<Size><AbsDimension x="64" y="64" /></Size>
+				</Area>
+			</Frame>
+
+			<Frame name="SliderRightButton" inherits="GlueButton">
+				<Property name="Icon" value="Interface/Icons/fg4_iconsGold_rightArrow.htex" />
+				<Area>
+					<Anchor point="RIGHT" offset="-8" />
+					<Anchor point="TOP" offset="8" />
+					<Size><AbsDimension x="64" y="64" /></Size>
+				</Area>
+			</Frame>
+
+			<Frame name="SliderThumb" inherits="ThumbButtonTemplate">
+				<Area>
+					<Anchor point="LEFT" offset="72" />
+					<Anchor point="TOP" offset="8" />
+					<Size><AbsDimension x="64" y="64" /></Size>
+				</Area>
+			</Frame>
+		</Frame>
+
+		<!-- Child 2: current value label -->
+		<Frame name="OptionsSliderValueLabel" renderer="DefaultRenderer">
+			<Property name="Font" value="DefaultSmall" />
+
+			<Visual>
+				<ImagerySection name="Text">
+					<TextComponent color="FFFFD100" horzAlign="RIGHT" vertAlign="CENTER" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer><Section section="Text" /></Layer>
+				</StateImagery>
+				<StateImagery name="Disabled">
+					<Layer><Section section="Text" /></Layer>
+				</StateImagery>
+			</Visual>
+
+			<Area>
+				<Anchor point="RIGHT" offset="-440" />
+				<Anchor point="TOP" />
+				<Anchor point="BOTTOM" />
+				<Size><AbsDimension x="140" /></Size>
+			</Area>
+		</Frame>
+	</Frame>
+
+	<!--
 		Key-binding category header row (full-width label with gold title text).
 	-->
 	<Frame name="KeyBindCatRowTemplate">
