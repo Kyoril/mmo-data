@@ -125,6 +125,7 @@
     <xs:attribute name="color" use="optional" type="xs:string" />
     <xs:attribute name="horzAlign" use="optional" type="HorzAlignType" />
     <xs:attribute name="vertAlign" use="optional" type="VertAlignType" />
+    <xs:attribute name="wrap" use="optional" type="xs:boolean" />
   </xs:complexType>
 
   <xs:complexType name="ImagerySectionType">

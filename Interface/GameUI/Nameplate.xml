@@ -23,13 +23,18 @@
 		</Area>
 	</Frame>
 
+	<!--
+		The name is truncated with an ellipsis by the C++ frame and must never word-wrap:
+		a wrapped second line would spill over the health bar below. The "TextColor"
+		property is driven at runtime with the unit's reaction color (see NameplateFrame).
+	-->
 	<Frame name="NameplateNameTemplate" renderer="DefaultRenderer">
 		<Property name="Font" value="NameplateFont" />
 		<Property name="TextColor" value="FFFFFFFF" />
 
 		<Visual>
 			<ImagerySection name="Text">
-				<TextComponent color="$TextColor" horzAlign="CENTER" vertAlign="CENTER" />
+				<TextComponent color="$TextColor" horzAlign="CENTER" vertAlign="CENTER" wrap="false" />
 			</ImagerySection>
 
 			<StateImagery name="Enabled">
