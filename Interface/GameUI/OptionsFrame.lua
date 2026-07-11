@@ -813,6 +813,12 @@ function OptionsFrame_OnLoad(self)
 	end);
 	OptionsContentScrollBar:Disable();
 
+	-- Consume mouse wheel events anywhere over the options window and use them to
+	-- scroll the settings content (one row per wheel notch; wheel up scrolls up).
+	OptionsFrame:SetOnMouseWheelHandler(function(self, delta)
+		OptionsContentScrollBar:SetValue(OptionsContentScrollBar:GetValue() - delta * OptionsContentScrollBar:GetStep());
+	end);
+
 	BuildCategoryButtons();
 end
 
