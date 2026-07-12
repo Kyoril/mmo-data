@@ -51,12 +51,19 @@ function GuildFrame_OnEvent(self, event, arg1, arg2, arg3)
         GuildMOTDLabel:SetText(GetGuildMOTD());
     end
 
-    if (format) then
+    -- If the member is also on the friend list, the friend status notification
+    -- already announces this event - don't print a duplicate guild message
+    local suppressMessage = false;
+    if (event == "LOGGED_IN" or event == "LOGGED_OUT") then
+        suppressMessage = arg1 ~= nil and IsFriend(arg1);
+    end
+
+    if (format and not suppressMessage) then
         ChatFrame:AddMessage(string.format(format, arg1, arg2, arg3), color[1], color[2], color[3]);
     end
-    
+
     -- Update the guild roster if the event might have changed it
-    if (event == "LOGGED_IN" or event == "LOGGED_OFF" or event == "JOINED" or event == "LEFT" or event == "REMOVED") then
+    if (event == "LOGGED_IN" or event == "LOGGED_OUT" or event == "JOINED" or event == "LEFT" or event == "REMOVED") then
         GuildRoster_Update();
     end
 end

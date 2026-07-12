@@ -76,6 +76,7 @@ function RealmList_Cancel()
 			AccountLogin:Show();
 			AccountLogin:PlayAnimation("FadeIn");
 			LoginButton:Enable();
+			AccountNameField:CaptureInput();
 		end);
 
 		RealmListFrame:PlayAnimation("FadeOut");

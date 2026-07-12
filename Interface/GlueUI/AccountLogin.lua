@@ -86,6 +86,7 @@ function AccountLogin_OnLoad()
 		CharCreate:Hide();
 		AccountLogin:Show();
 		LoginButton:Enable();
+		AccountNameField:CaptureInput();
 		GlueDialog_Show("REALM_DISCONNECTED_ERROR");
 
 		AccountLogin:PlayAnimation("FadeIn");
