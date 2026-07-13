@@ -415,6 +415,22 @@ function GameTooltip_SetAura(spell)
     GameTooltip_AddLine(GetSpellAuraText(spell), TOOLTIP_LINE_LEFT, "FFFFD100");
 end
 
+-- Shows a tooltip for an emote table ({ id, name, command, icon }) as returned by
+-- GetEmoteInfo / GetActionButtonEmote.
+function GameTooltip_SetEmote(emote)
+    GameTooltip_Clear();
+
+    if (emote == nil) then
+        return
+    end
+
+    GameTooltip_AddLine(emote.name, TOOLTIP_LINE_LEFT, "FFFFD100");
+
+    if (emote.command ~= nil and emote.command ~= "") then
+        GameTooltip_AddLine("/" .. emote.command, TOOLTIP_LINE_LEFT, "FF808080");
+    end
+end
+
 function GameTooltip_SetSpell(spell)
     local player = GetUnit("player");
 

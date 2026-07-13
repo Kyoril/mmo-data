@@ -83,6 +83,15 @@ SlashCmdList["PLAYED"] = function(msg)
     RequestTimePlayed();
 end
 
+SlashCmdList["POSE"] = function(msg)
+    -- Cycles the pose variant of the current stand state (idle, sitting, sleeping).
+    CyclePose();
+end
+
+SlashCmdList["EMOTELIST"] = function(msg)
+    EmoteList_Toggle();
+end
+
 SlashCmdList["RANDOM"] = function(msg)
     local num1 = string.gsub(msg, "(%s*)(%d+)(.*)", "%2", 1);
     local rest = string.gsub(msg, "(%s*)(%d+)(.*)", "%3", 1);
@@ -395,6 +404,16 @@ function ChatFrame_OnSpellLearned(this, spellName)
     ChatFrame:AddMessage(string.format(Localize("NEW_ABILITY_LEARNED"), spellName), 1.0, 1.0, 0.0);
 end
 
+-- Returns a clickable emote hyperlink rendered as "[Name]"; clicking it opens the
+-- emote list window focused on that emote.
+function ChatFrame_MakeEmoteLink(emoteId, emoteName)
+    return "|Hemote:" .. emoteId .. "|h[" .. emoteName .. "]|h";
+end
+
+function ChatFrame_OnEmoteLearned(this, emoteId, emoteName)
+    ChatFrame:AddMessage(string.format(Localize("NEW_EMOTE_LEARNED"), ChatFrame_MakeEmoteLink(emoteId, emoteName)), 1.0, 1.0, 0.0);
+end
+
 function ChatFrame_OnMOTD(this, motd)
     ChatFrame:AddMessage(motd, 1.0, 1.0, 0.0);
 end
@@ -515,9 +534,15 @@ function ChatFrame_OnLoad(this)
         local info = ChatTypeInfo["UNIT_EMOTE"];
         ChatFrame:AddMessage(string.format(CHAT_FORMAT_CREATURE_EMOTE, character, message), info.r, info.g, info.b);
     end);
+    this:RegisterEvent("CHAT_MSG_TEXT_EMOTE", function(this, message)
+        -- Animated emote lines arrive fully composed by the server ("Bob waves at you.").
+        local info = ChatTypeInfo["TEXT_EMOTE"];
+        ChatFrame:AddMessage(message, info.r, info.g, info.b);
+    end);
 
     this:RegisterEvent("PLAYER_LEVEL_UP", ChatFrame_OnPlayerLevelUp);
     this:RegisterEvent("SPELL_LEARNED", ChatFrame_OnSpellLearned);
+    this:RegisterEvent("EMOTE_LEARNED", ChatFrame_OnEmoteLearned);
     this:RegisterEvent("QUEST_ACCEPTED", ChatFrame_OnQuestAccepted);
     this:RegisterEvent("QUEST_ABANDONED", ChatFrame_OnQuestAbandoned);
     this:RegisterEvent("QUEST_REWARDED", ChatFrame_OnQuestRewarded);
@@ -612,6 +637,12 @@ function ChatFrame_OnLoad(this)
 
             if not ChatInputFrame:IsVisible() then
                 ChatFrame_OpenChat();
+            end
+        elseif type == "emote" then
+            -- Click on an emote link: open the emote list focused on that emote.
+            local emoteId = tonumber(payload);
+            if ( emoteId and emoteId > 0 ) then
+                EmoteList_FocusEmote(emoteId);
             end
         end
     end);
@@ -780,6 +811,19 @@ function ChatFrame_ParseText(send)
 			cmdString = _G["SLASH_"..index..i];
 		end
 	end
+
+    -- Animated emote command? ("/wave", "/dance", ... - resolved via the emote catalog's aliases)
+    local emoteId = GetEmoteFromCommand(command);
+    if ( emoteId and emoteId > 0 ) then
+        if ( HasEmote(emoteId) ) then
+            DoEmote(emoteId);
+        else
+            local info = ChatTypeInfo["SYSTEM"];
+            ChatFrame:AddMessage(Localize("EMOTE_NOT_KNOWN"), info.r, info.g, info.b);
+        end
+        ChatInput_OnEscapePressed();
+        return;
+    end
 
     -- Unknown chat command, display help text
     ChatFrame:AddMessage(Localize("HELP_TEXT_SIMPLE"), 1.0, 1.0, 0.0);

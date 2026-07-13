@@ -79,3 +79,7 @@ SLASH_LEAVE1 = "/leave";      -- Leave a chat channel by id
 SLASH_LEAVE2 = "/chatleave";  -- Leave a chat channel by id
 SLASH_CHATLIST1 = "/chatlist"; -- List joined chat channels
 SLASH_CHATLIST2 = "/chatwho";  -- List joined chat channels
+
+SLASH_POSE1 = "/pose";        -- Cycle the pose of the current stand state (idle/sit/sleep)
+SLASH_EMOTELIST1 = "/emotes"; -- Toggle the emote list window
+SLASH_EMOTELIST2 = "/em";     -- Toggle the emote list window

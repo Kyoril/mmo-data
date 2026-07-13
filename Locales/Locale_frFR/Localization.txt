@@ -376,6 +376,7 @@ strings =
 	(key = "LEVEL_UP_CHAR_ATTR_POINTS", string = "Vous avez gagné %d points d'attributs.")
 	(key = "NEW_SPELL_LEARNED", string = "Vous avez appris le sort: %s")
 	(key = "NEW_ABILITY_LEARNED", string = "Vous avez appris la compétence: %s")
+	(key = "NEW_EMOTE_LEARNED", string = "Vous avez appris une nouvelle emote : %s")
 	(key = "ACTION_BAR_PASSIVE_SPELL_ERROR", string = "Les compétences passives ne peuvent pas être placées sur la barre d'action.")
 	
 	(key = "ON_USE", string = "Utiliser")
@@ -415,6 +416,7 @@ strings =
 	(key = "QUEST_REWARD_YOU_WILL_RECEIVE", string = "Vous recevrez : ")
 	(key = "QUEST_REWARD_CHOOSE", string = "Vous pourrez choisir l'une de ces récompenses :")
 	(key = "QUEST_REWARD_LEARN_SPELL", string = "Vous apprendrez également :")
+	(key = "QUEST_REWARD_UNLOCK_EMOTE", string = "Vous débloquerez cette emote :")
 	(key = "QUEST_REWARD_ALSO_RECEIVE", string = "Vous recevrez également :")
 	(key = "QUEST_REWARD_XP", string = "Expérience :")
 	(key = "QUEST_REWARD_CLASS_XP", string = "Expérience de classe :")
@@ -435,6 +437,9 @@ strings =
 	(key = "WEAPON_ATTACK_SPEED", string = "Vitesse %.2f")
 	
 	(key = "HELP_TEXT_SIMPLE", string = "Tapez '/help' pour obtenir la liste des commandes.")
+	(key = "EMOTE_NOT_KNOWN", string = "Vous ne connaissez pas encore cette emote.")
+	(key = "EMOTELIST_TITLE", string = "Emotes")
+	(key = "EMOTELIST_EMPTY", string = "Vous ne connaissez encore aucune emote.")
 	(key = "ACCEPT", string = "Accepter")
 	(key = "DECLINE", string = "Refuser")
 	(key = "RANDOM_ROLL_RESULT", string = "%s a obtenu %d au dé. (%d-%d)")

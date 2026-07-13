@@ -113,6 +113,9 @@ local function QuestRewardSlot_OnEnter(this)
     if data.spell then
         GameTooltip_SetSpell(data.spell);
         GameTooltip:Show();
+    elseif data.emote then
+        GameTooltip_SetEmote(data.emote);
+        GameTooltip:Show();
     elseif data.itemId and data.itemId > 0 then
         local item = GetCachedItemInfo(data.itemId);
         if item then
@@ -171,7 +174,7 @@ local function QuestRewards_AddRow(container, y, column, entry, clickedHandler)
     end
     -- Store the reward data in the engine-backed userData property so the
     -- tooltip and click handlers can read it back later.
-    button.userData = { itemId = entry.itemId, spell = entry.spell, choiceIndex = entry.choiceIndex };
+    button.userData = { itemId = entry.itemId, spell = entry.spell, emote = entry.emote, choiceIndex = entry.choiceIndex };
     button:SetOnEnterHandler(QuestRewardSlot_OnEnter);
     button:SetOnLeaveHandler(QuestRewardSlot_OnLeave);
     if clickedHandler then
@@ -209,9 +212,10 @@ local function QuestRewards_AddGrid(container, y, entries, clickedHandler)
 end
 
 -- Populates a container frame with quest reward rows: an optional choice
--- section, the fixed reward items and the taught spell, in that order.
+-- section, the fixed reward items, the taught spell and the unlocked emote,
+-- in that order.
 -- rewards = { choiceItems = {entry...}, items = {entry...}, spell = spell or nil,
---             onChoiceClicked = handler or nil }
+--             emote = emote or nil, onChoiceClicked = handler or nil }
 -- Returns the total content height and the list of choice slot buttons.
 function QuestRewards_Populate(container, rewards)
     container:RemoveAllChildren();
@@ -237,6 +241,17 @@ function QuestRewards_Populate(container, rewards)
     if rewards.spell then
         y = y + QuestRewards_AddLabel(container, y, Localize("QUEST_REWARD_LEARN_SPELL")) + QUEST_REWARD_LABEL_SPACING;
         y = QuestRewards_AddGrid(container, y, { { icon = rewards.spell.icon, name = rewards.spell.name, color = "FF100500", spell = rewards.spell } });
+        y = y + QUEST_REWARD_SECTION_SPACING;
+    end
+
+    if rewards.emote then
+        local emoteIcon = rewards.emote.icon;
+        if emoteIcon == nil or emoteIcon == "" then
+            emoteIcon = EMOTE_FALLBACK_ICON;
+        end
+
+        y = y + QuestRewards_AddLabel(container, y, Localize("QUEST_REWARD_UNLOCK_EMOTE")) + QUEST_REWARD_LABEL_SPACING;
+        y = QuestRewards_AddGrid(container, y, { { icon = emoteIcon, name = rewards.emote.name, color = "FF100500", emote = rewards.emote } });
     end
 
     container:SetHeight(y);
@@ -435,16 +450,18 @@ function QuestFrame_OnQuestDetail(self)
         + 8   -- objectives top offset from header bottom
         + QuestDetailObjectives:GetHeight();
 
-    -- Gather reward items and the taught spell for display.
+    -- Gather reward items, the taught spell and the unlocked emote for display.
     local choiceEntries, itemEntries = QuestRewards_CollectDialogEntries();
     local rewardSpell = questDetails.rewardedSpell;
-    local hasItemRewards = #choiceEntries > 0 or #itemEntries > 0 or rewardSpell ~= nil;
+    local rewardEmote = GetQuestRewardEmote();
+    local hasItemRewards = #choiceEntries > 0 or #itemEntries > 0 or rewardSpell ~= nil or rewardEmote ~= nil;
 
     -- Always populate so stale rows from a previously shown quest are cleared.
     local rewardItemsHeight = QuestRewards_Populate(QuestDetailRewardItems, {
         choiceItems = choiceEntries,
         items = itemEntries,
-        spell = rewardSpell
+        spell = rewardSpell,
+        emote = rewardEmote
     });
 
     if questDetails.rewardedMoney > 0 or questDetails.rewardedXp > 0 or questDetails.rewardedClassXp > 0 or hasItemRewards then
@@ -591,10 +608,11 @@ function QuestFrame_OnQuestOfferRewards(self)
         + 8   -- reward text top offset from title bottom
         + QuestRewardsText:GetHeight();
 
-    -- Gather reward items and the taught spell for display.
+    -- Gather reward items, the taught spell and the unlocked emote for display.
     local choiceEntries, itemEntries = QuestRewards_CollectDialogEntries();
     local rewardSpell = questDetails.rewardedSpell;
-    local hasItemRewards = #choiceEntries > 0 or #itemEntries > 0 or rewardSpell ~= nil;
+    local rewardEmote = GetQuestRewardEmote();
+    local hasItemRewards = #choiceEntries > 0 or #itemEntries > 0 or rewardSpell ~= nil or rewardEmote ~= nil;
 
     selectedRewardChoice = nil;
 
@@ -603,6 +621,7 @@ function QuestFrame_OnQuestOfferRewards(self)
         choiceItems = choiceEntries,
         items = itemEntries,
         spell = rewardSpell,
+        emote = rewardEmote,
         onChoiceClicked = QuestOfferRewardChoice_OnClick
     });
     offerChoiceButtons = choiceButtons;

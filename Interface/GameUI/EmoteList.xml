@@ -1,0 +1,361 @@
+<?xml version="1.0" ?>
+<UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
+	<Script file="EmoteList.lua" />
+
+	<Font name="EmoteNameLabelFont" file="Fonts/FRIZQT__.TTF" size="22" outline="0" shadowX="1.0" shadowY="1.0" />
+	<Font name="EmoteSubLabelFont" file="Fonts/FRIZQT__.TTF" size="18" outline="0" shadowX="1.0" shadowY="1.0" />
+
+	<!-- Small label -->
+	<Frame name="EmoteNameLabel" renderer="DefaultRenderer">
+		<Property name="Font" value="EmoteNameLabelFont" />
+
+		<Visual>
+			<ImagerySection name="Text">
+				<TextComponent color="FFFFFFFF" horzAlign="LEFT" vertAlign="TOP" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+		<Area>
+			<Size><AbsDimension x="0" y="40" /></Size>
+		</Area>
+	</Frame>
+
+	<Frame name="EmoteListButtonTemplate" type="Button" renderer="ButtonRenderer">
+		<Property name="Icon" />
+		<Property name="DragEnabled" value="true" />
+
+		<Visual>
+			<ImagerySection name="Image">
+				<ImageComponent>
+					<Area>
+						<Inset all="16" />
+					</Area>
+					<PropertyValue property="Icon" />
+				</ImageComponent>
+			</ImagerySection>
+			<ImagerySection name="NormalFrame">
+				<BorderComponent texture="Interface/BW_ButtonSmall_Up.htex" borderSize="30" />
+			</ImagerySection>
+			<ImagerySection name="HoveredFrame">
+				<BorderComponent texture="Interface/BW_ButtonSmall_Over.htex" borderSize="30" />
+			</ImagerySection>
+			<ImagerySection name="PushedFrame">
+				<BorderComponent texture="Interface/BW_ButtonSmall_Down.htex" borderSize="30" />
+			</ImagerySection>
+			<ImagerySection name="DisabledFrame">
+				<BorderComponent texture="Interface/BW_ButtonSmall_Up.htex" borderSize="30" />
+			</ImagerySection>
+			<StateImagery name="Normal">
+				<Layer>
+					<Section section="NormalFrame" />
+					<Section section="Image" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Hovered">
+				<Layer>
+					<Section section="HoveredFrame" />
+					<Section section="Image" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Pushed">
+				<Layer>
+					<Section section="PushedFrame" />
+					<Section section="Image" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="DisabledFrame" />
+					<Section section="Image" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+
+		<Frame name="EmoteButtonNameLabel" inherits="EmoteNameLabel">
+			<Property name="Color" value="FF4A3620" />
+			<Property name="Clickable" value="false" />
+
+			<Area>
+				<Anchor point="TOP" />
+				<Anchor point="LEFT" offset="128" />
+				<Size><AbsDimension x="256" y="32" /></Size>
+			</Area>
+		</Frame>
+
+		<Frame name="EmoteButtonSubLabel" inherits="EmoteNameLabel">
+			<Property name="Text" value="" />
+			<Property name="Color" value="FF656565" />
+			<Property name="Clickable" value="false" />
+			<Property name="Font" value="EmoteSubLabelFont" />
+
+			<Area>
+				<Anchor point="TOP" relativeTo="EmoteButtonNameLabel" relativePoint="BOTTOM" />
+				<Anchor point="LEFT" offset="128" />
+				<Size><AbsDimension x="256" y="32" /></Size>
+			</Area>
+		</Frame>
+
+		<Area>
+			<Size>
+				<AbsDimension x="128" y="128" />
+			</Size>
+		</Area>
+
+		<Scripts>
+			<OnDrag>
+				return function(this)
+					EmoteButton_OnDrag(this);
+				end
+			</OnDrag>
+		</Scripts>
+	</Frame>
+
+	<Frame name="EmoteList" renderer="DefaultRenderer" parent="GameParent">
+		<Property name="Visible" value="False" />
+
+		<Visual>
+			<ImagerySection name="Background">
+				<BorderComponent texture="Interface/GameUI/fg4_borders_simple.htex" borderSize="250" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Background" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+
+		<Area>
+			<Size><AbsDimension x="960" y="1280" /></Size>
+			<Anchor point="LEFT" offset="0" />
+			<Anchor point="TOP" offset="300" />
+		</Area>
+
+		<Frame name="EmoteListTitleBar" inherits="TitleBar">
+			<Property name="Text" value="EMOTELIST_TITLE" />
+
+			<Area>
+				<Anchor point="TOP" offset="24" />
+				<Anchor point="LEFT" offset="24" />
+				<Anchor point="RIGHT" offset="-24" />
+			</Area>
+		</Frame>
+
+		<Frame name="EmoteListBackground">
+			<Area>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="EmoteListTitleBar" />
+				<Anchor point="LEFT" offset="24" />
+				<Anchor point="RIGHT" offset="-24" />
+				<Anchor point="BOTTOM" offset="-24" />
+			</Area>
+
+			<Frame name="EmoteListPaper" renderer="DefaultRenderer">
+				<Property name="Clickable" value="false" />
+
+				<Visual>
+					<ImagerySection name="Frame">
+						<BorderComponent texture="Interface/GameUI/QuestFrame_Background.htex" borderSize="96" tint="FFFFFFFF" />
+					</ImagerySection>
+					<StateImagery name="Enabled">
+						<Layer><Section section="Frame" /></Layer>
+					</StateImagery>
+				</Visual>
+
+				<Area>
+					<Anchor point="TOP" offset="20" />
+					<Anchor point="LEFT" offset="12" />
+					<Anchor point="RIGHT" offset="-12" />
+					<Anchor point="BOTTOM" offset="-136" />
+				</Area>
+			</Frame>
+
+			<Frame name="EmoteListPaperBorder" renderer="DefaultRenderer">
+				<Property name="Clickable" value="false" />
+
+				<Visual>
+					<ImagerySection name="Frame">
+						<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" />
+					</ImagerySection>
+					<StateImagery name="Enabled">
+						<Layer><Section section="Frame" /></Layer>
+					</StateImagery>
+				</Visual>
+
+				<Area>
+					<Anchor point="TOP" offset="12" />
+					<Anchor point="LEFT" offset="4" />
+					<Anchor point="RIGHT" offset="-4" />
+					<Anchor point="BOTTOM" offset="-128" />
+				</Area>
+			</Frame>
+
+			<Frame inherits="TextSmall" name="EmoteListEmptyLabel">
+				<Property name="HorzAlign" value="CENTER" />
+				<Property name="TextColor" value="FF776A58" />
+				<Property name="Text" value="EMOTELIST_EMPTY" />
+				<Property name="Visible" value="false" />
+
+				<Area>
+					<Anchor point="TOP" offset="340" />
+					<Anchor point="LEFT" offset="80" />
+					<Anchor point="RIGHT" offset="-80" />
+					<Size><AbsDimension y="48" /></Size>
+				</Area>
+			</Frame>
+
+			<Frame inherits="EmoteListButtonTemplate" name="EmoteListButton01">
+				<Area>
+					<Anchor point="TOP" offset="52" />
+					<Anchor point="LEFT" offset="48" />
+				</Area>
+			</Frame>
+
+			<Frame inherits="EmoteListButtonTemplate" name="EmoteListButton02">
+				<Area>
+					<Anchor point="TOP" relativeTo="EmoteListButton01" />
+					<Anchor point="LEFT" relativePoint="H_CENTER" offset="16" />
+				</Area>
+			</Frame>
+
+			<Frame inherits="EmoteListButtonTemplate" name="EmoteListButton03">
+				<Area>
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="EmoteListButton01" offset="16" />
+					<Anchor point="LEFT" relativeTo="EmoteListButton01" />
+				</Area>
+			</Frame>
+
+			<Frame inherits="EmoteListButtonTemplate" name="EmoteListButton04">
+				<Area>
+					<Anchor point="TOP" relativeTo="EmoteListButton03" />
+					<Anchor point="LEFT" relativeTo="EmoteListButton02" />
+				</Area>
+			</Frame>
+
+			<Frame inherits="EmoteListButtonTemplate" name="EmoteListButton05">
+				<Area>
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="EmoteListButton03" offset="16" />
+					<Anchor point="LEFT" relativeTo="EmoteListButton03" />
+				</Area>
+			</Frame>
+
+			<Frame inherits="EmoteListButtonTemplate" name="EmoteListButton06">
+				<Area>
+					<Anchor point="TOP" relativeTo="EmoteListButton05" />
+					<Anchor point="LEFT" relativeTo="EmoteListButton04" />
+				</Area>
+			</Frame>
+
+			<Frame inherits="EmoteListButtonTemplate" name="EmoteListButton07">
+				<Area>
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="EmoteListButton05" offset="16" />
+					<Anchor point="LEFT" relativeTo="EmoteListButton05" />
+				</Area>
+			</Frame>
+
+			<Frame inherits="EmoteListButtonTemplate" name="EmoteListButton08">
+				<Area>
+					<Anchor point="TOP" relativeTo="EmoteListButton07" />
+					<Anchor point="LEFT" relativeTo="EmoteListButton06" />
+				</Area>
+			</Frame>
+
+			<Frame inherits="EmoteListButtonTemplate" name="EmoteListButton09">
+				<Area>
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="EmoteListButton07" offset="16" />
+					<Anchor point="LEFT" relativeTo="EmoteListButton07" />
+				</Area>
+			</Frame>
+
+			<Frame inherits="EmoteListButtonTemplate" name="EmoteListButton10">
+				<Area>
+					<Anchor point="TOP" relativeTo="EmoteListButton09" />
+					<Anchor point="LEFT" relativeTo="EmoteListButton08" />
+				</Area>
+			</Frame>
+
+			<Frame inherits="EmoteListButtonTemplate" name="EmoteListButton11">
+				<Area>
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="EmoteListButton09" offset="16" />
+					<Anchor point="LEFT" relativeTo="EmoteListButton09" />
+				</Area>
+			</Frame>
+
+			<Frame inherits="EmoteListButtonTemplate" name="EmoteListButton12">
+				<Area>
+					<Anchor point="TOP" relativeTo="EmoteListButton11" />
+					<Anchor point="LEFT" relativeTo="EmoteListButton10" />
+				</Area>
+			</Frame>
+
+			<Frame inherits="TextSmall" name="EmoteListPageLabel">
+				<Property name="HorzAlign" value="CENTER" />
+				<Property name="TextColor" value="FFFFD100" />
+
+				<Area>
+					<Anchor point="BOTTOM" offset="-52" />
+					<Anchor point="LEFT" />
+					<Anchor point="RIGHT" />
+					<Size><AbsDimension y="39" /></Size>
+				</Area>
+			</Frame>
+
+			<Frame inherits="GlueButton" name="EmoteListPrevPageButton">
+				<Property name="Icon" value="Interface/Icons/fg4_iconsGold_leftArrow.htex" />
+
+				<Area>
+					<Anchor point="BOTTOM" offset="-20" />
+					<Anchor point="LEFT" offset="64" />
+					<Size><AbsDimension x="96" y="96" /></Size>
+				</Area>
+
+				<Scripts>
+					<OnClick>
+						return function(this)
+							EmoteList_PrevPage()
+						end
+					</OnClick>
+				</Scripts>
+			</Frame>
+
+			<Frame inherits="GlueButton" name="EmoteListNextPageButton">
+				<Property name="Icon" value="Interface/Icons/fg4_iconsGold_rightArrow.htex" />
+
+				<Area>
+					<Anchor point="BOTTOM" offset="-20" />
+					<Anchor point="RIGHT" offset="-64" />
+					<Size><AbsDimension x="96" y="96" /></Size>
+				</Area>
+
+				<Scripts>
+					<OnClick>
+						return function(this)
+							EmoteList_NextPage()
+						end
+					</OnClick>
+				</Scripts>
+			</Frame>
+
+		</Frame>
+
+		<Scripts>
+			<OnLoad>
+				return function(this)
+					EmoteList_OnLoad(this)
+				end
+			</OnLoad>
+			<OnShow>
+				return function(this)
+					EmoteList_OnShow(this);
+				end
+			</OnShow>
+		</Scripts>
+	</Frame>
+</UiLayout>

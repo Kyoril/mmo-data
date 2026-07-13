@@ -13,6 +13,7 @@ PartyFrame.xml
 InventoryButton.xml
 CharacterWindow.xml
 SpellBook.xml
+EmoteList.xml
 CastBar.xml
 #CombatLog.xml
 AuraButton.xml

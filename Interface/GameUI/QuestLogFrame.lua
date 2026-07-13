@@ -195,7 +195,8 @@ function QuestLogFrame_UpdateQuestDetails()
     end
 
     local rewardSpell = GetQuestInfoRewardSpell(quest);
-    local hasItemRewards = #choiceEntries > 0 or #itemEntries > 0 or rewardSpell ~= nil;
+    local rewardEmote = GetQuestInfoRewardEmote(quest);
+    local hasItemRewards = #choiceEntries > 0 or #itemEntries > 0 or rewardSpell ~= nil or rewardEmote ~= nil;
 
     local rewardMoney = quest.rewardMoney;
     local rewardXp = quest.rewardXp;
@@ -204,7 +205,8 @@ function QuestLogFrame_UpdateQuestDetails()
     local rewardItemsHeight = QuestRewards_Populate(QuestLogDetailRewardItems, {
         choiceItems = choiceEntries,
         items = itemEntries,
-        spell = rewardSpell
+        spell = rewardSpell,
+        emote = rewardEmote
     });
 
     if rewardMoney > 0 or rewardXp > 0 or quest.rewardClassXp > 0 or hasItemRewards then

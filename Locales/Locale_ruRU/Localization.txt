@@ -377,6 +377,7 @@ strings =
 	(key = "LEVEL_UP_CHAR_ATTR_POINTS", string = "You have gained %d attribute points.")
 	(key = "NEW_SPELL_LEARNED", string = "You have learned a new spell: %s")
 	(key = "NEW_ABILITY_LEARNED", string = "You have learned a new ability: %s")
+	(key = "NEW_EMOTE_LEARNED", string = "You have learned a new emote: %s")
 	(key = "ACTION_BAR_PASSIVE_SPELL_ERROR", string = "Пассивные способности нельзя разместить на панели действий.")
 	
 	(key = "ON_USE", string = "Use")
@@ -416,6 +417,7 @@ strings =
 	(key = "QUEST_REWARD_YOU_WILL_RECEIVE", string = "You receive: ")
 	(key = "QUEST_REWARD_CHOOSE", string = "You will be able to choose one of these rewards:")
 	(key = "QUEST_REWARD_LEARN_SPELL", string = "You will also learn:")
+	(key = "QUEST_REWARD_UNLOCK_EMOTE", string = "You will unlock this emote:")
 	(key = "QUEST_REWARD_ALSO_RECEIVE", string = "You will also receive:")
 	(key = "QUEST_REWARD_XP", string = "Experience:")
 	(key = "QUEST_REWARD_CLASS_XP", string = "Class experience:")
@@ -436,6 +438,9 @@ strings =
 	(key = "WEAPON_ATTACK_SPEED", string = "Speed %.2f")
 
 	(key = "HELP_TEXT_SIMPLE", string = "Type '/help' for a listing of a few commands.")
+	(key = "EMOTE_NOT_KNOWN", string = "You don't know that emote yet.")
+	(key = "EMOTELIST_TITLE", string = "Emotes")
+	(key = "EMOTELIST_EMPTY", string = "You don't know any emotes yet.")
 	(key = "ACCEPT", string = "Accept")
 	(key = "DECLINE", string = "Decline")
 	(key = "RANDOM_ROLL_RESULT", string = "%s rolls %d (%d-%d)")

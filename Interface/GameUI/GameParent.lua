@@ -57,6 +57,7 @@ UIPanelWindows["GuildFrame"] = { area = "left", pushable = 1 };
 UIPanelWindows["FriendsFrame"] = { area = "left", pushable = 1 };
 UIPanelWindows["TalentFrame"] = { area = "center", pushable = 0 };
 UIPanelWindows["TradeFrame"] = { area = "left", pushable = 0 };
+UIPanelWindows["EmoteList"] = { area = "left", pushable = 0 };
 
 local menuOffsetY = BUTTON_V_PADDING
 

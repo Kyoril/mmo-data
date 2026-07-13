@@ -5,6 +5,9 @@ MAX_ACTION_BUTTONS = 12;
 ACTION_BUTTON_ACTIVE_GLOW = "FFFFD100";
 ACTION_BUTTON_INACTIVE_GLOW = "00000000";
 
+-- Fallback icon for emotes without an authored icon.
+EMOTE_FALLBACK_ICON = "Interface/Icons/fg4_iconsFlat_dialogue.htex";
+
 function ActionButton_OnEnter(self)
     if IsActionButtonSpell(self.id - 1) then
         local spell = GetActionButtonSpell(self.id - 1);
@@ -22,6 +25,15 @@ function ActionButton_OnEnter(self)
             GameTooltip:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.TOP, self, -16);
             GameTooltip:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, self, 0);
             GameTooltip_SetItemTemplate(item);
+            GameTooltip:Show();
+        end
+    elseif IsActionButtonEmote(self.id - 1) then
+        local emote = GetActionButtonEmote(self.id - 1);
+        if (emote ~= nil) then
+            GameTooltip:ClearAnchors();
+            GameTooltip:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.TOP, self, -16);
+            GameTooltip:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, self, 0);
+            GameTooltip_SetEmote(emote);
             GameTooltip:Show();
         end
     end
@@ -95,13 +107,22 @@ function ActionBar_UpdateButtons(self)
 
             if (item ~= nil) then
                 button:SetProperty("Icon", item.GetIcon(item));
-                
+
                 local itemCount = GetItemCount(item.id);
                 button:SetText(tostring(itemCount));
             else
                 button:SetProperty("Icon", "");
                 button:SetText("");
             end
+        elseif IsActionButtonEmote(i - 1) then
+            local emote = GetActionButtonEmote(i - 1);
+
+            if (emote ~= nil and emote.icon ~= "") then
+                button:SetProperty("Icon", emote.icon);
+            else
+                button:SetProperty("Icon", EMOTE_FALLBACK_ICON);
+            end
+            button:SetText("");
         else
             -- Clear icon!
             button:SetProperty("Icon", "");
