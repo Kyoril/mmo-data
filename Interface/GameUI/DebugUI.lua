@@ -46,5 +46,5 @@ function DebugUI_OnLoad(this)
     end)
 
     -- Add debug button to main menu bar to toggle the debug menu
-    AddMenuBarButton("Interface/Icons/fg4_icons_anvil_result.htex", DebugUI_Toggle)
+    AddMenuBarButton("Interface/Icons/fg4_icons_anvil_result.htex", DebugUI_Toggle, "MENUBAR_TOOLTIP_DEBUG")
 end

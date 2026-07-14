@@ -666,4 +666,12 @@ strings =
 	(key = "ATTACK_SWING_WRONG_FACING", string = "Вы не смотрите на свою цель.")
 	(key = "ATTACK_SWING_NOT_STANDING", string = "Вы должны стоять, чтобы атаковать.")
 	(key = "ATTACK_SWING_OUT_OF_RANGE", string = "Ваша цель вне досягаемости.")
+	(key = "MENUBAR_TOOLTIP_CHARACTER", string = "Персонаж")
+	(key = "MENUBAR_TOOLTIP_INVENTORY", string = "Инвентарь")
+	(key = "MENUBAR_TOOLTIP_SPELLBOOK", string = "Репертуар")
+	(key = "MENUBAR_TOOLTIP_TALENTS", string = "Таланты")
+	(key = "MENUBAR_TOOLTIP_QUESTLOG", string = "Журнал заданий")
+	(key = "MENUBAR_TOOLTIP_EMOTES", string = "Эмоции")
+	(key = "MENUBAR_TOOLTIP_GAMEMENU", string = "Игровое меню")
+	(key = "MENUBAR_TOOLTIP_DEBUG", string = "Отладка")
 }

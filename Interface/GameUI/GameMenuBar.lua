@@ -146,12 +146,61 @@ function GameMenuBar_OnLoad(self)
 	PlayerClassExperienceBar:SetOnLeaveHandler(ExperienceBar_OnLeave);
 end
 
-function AddMenuBarButton(text, callback)
+-- Shared hover handler for every menu bar button. Shows a one-line tooltip naming the
+-- window the button toggles, with the currently bound shortcut key appended in white
+-- (e.g. "Repertoire (S)") when a binding exists for it.
+function MenuBarButton_OnEnter(self)
+	-- Custom data is stored in the C++-backed userData property (not arbitrary Lua fields),
+	-- because this button is a Clone() and the handler receives a fresh wrapper for it.
+	local data = self.userData;
+	if (data == nil or data.tooltipKey == nil) then
+		return;
+	end
+
+	-- All coloring is inline. The tooltip line's own color is white, so the label needs an
+	-- explicit gold run; only then does the key's white run register as a color change (an inline
+	-- color equal to the line's default color is treated as a no-op and would not render).
+	local gold = "|cFFFFD100";
+	local text = gold .. Localize(data.tooltipKey);
+
+	if (data.bindingName ~= nil) then
+		local keys = GetKeysForBinding(data.bindingName);
+		if (keys ~= nil and keys[1] ~= nil and keys[1] ~= "") then
+			text = text .. " (|cFFFFFFFF" .. keys[1] .. gold .. ")";
+		end
+	end
+
+	GameTooltip_Clear();
+	GameTooltip_AddLine(text, TOOLTIP_LINE_LEFT);
+	GameTooltip_ShrinkToTextWidth();
+
+	-- Anchor above the button and right-aligned to it. The menu bar sits in the bottom-right
+	-- corner, so growing up and to the left keeps the tooltip clear of both screen edges.
+	GameTooltip:ClearAnchors();
+	GameTooltip:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.TOP, self, -16);
+	GameTooltip:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, self, 0);
+	GameTooltip:Show();
+end
+
+function MenuBarButton_OnLeave(self)
+	GameTooltip:Hide();
+end
+
+-- tooltipKey (optional): localization key for the hover label.
+-- bindingName (optional): keybinding action name to query for the displayed shortcut key.
+function AddMenuBarButton(icon, callback, tooltipKey, bindingName)
 	-- Create a new button from the template and add it to the window
 	local button = GameMenuBarImageButton:Clone();
-	button:SetText(Localize(text));
-	button:SetProperty("Icon", text);
+	button:SetText(Localize(icon));
+	button:SetProperty("Icon", icon);
 	button:SetClickedHandler(callback);
+
+	-- Remember tooltip metadata for the shared hover handler. Uses userData (C++-backed) so
+	-- it survives being read from the handler's frame wrapper.
+	button.userData = { tooltipKey = tooltipKey, bindingName = bindingName };
+	button:SetOnEnterHandler(MenuBarButton_OnEnter);
+	button:SetOnLeaveHandler(MenuBarButton_OnLeave);
+
 	MenuBarButtons:AddChild(button);
 
 	-- Increase offset

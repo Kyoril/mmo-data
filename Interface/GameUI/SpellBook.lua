@@ -282,6 +282,6 @@ function SpellBook_OnLoad(self)
     
     SpellBook_UpdatePage();
     
-    AddMenuBarButton("Interface/Icons/fg4_icons_firesword_result.htex", SpellBook_Toggle);
+    AddMenuBarButton("Interface/Icons/fg4_icons_firesword_result.htex", SpellBook_Toggle, "MENUBAR_TOOLTIP_SPELLBOOK", "TOGGLESPELLBOOK");
 end
 

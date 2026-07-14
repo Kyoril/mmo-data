@@ -757,4 +757,12 @@ strings =
 	(key = "SPELL_CAST_FAILED_NO_POWER_RAGE", string = "Pas assez de rage.")
 	(key = "SPELL_CAST_FAILED_NO_POWER_ENERGY", string = "Pas assez d'énergie.")
 	(key = "SPELL_CAST_FAILED_NO_POWER_HEALTH", string = "Pas assez de santé.")
+	(key = "MENUBAR_TOOLTIP_CHARACTER", string = "Personnage")
+	(key = "MENUBAR_TOOLTIP_INVENTORY", string = "Inventaire")
+	(key = "MENUBAR_TOOLTIP_SPELLBOOK", string = "Répertoire")
+	(key = "MENUBAR_TOOLTIP_TALENTS", string = "Talents")
+	(key = "MENUBAR_TOOLTIP_QUESTLOG", string = "Journal de quêtes")
+	(key = "MENUBAR_TOOLTIP_EMOTES", string = "Émotes")
+	(key = "MENUBAR_TOOLTIP_GAMEMENU", string = "Menu du jeu")
+	(key = "MENUBAR_TOOLTIP_DEBUG", string = "Débogage")
 }

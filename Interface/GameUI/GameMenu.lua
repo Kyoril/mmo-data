@@ -57,6 +57,6 @@ function GameMenu_OnLoad(this)
 	AddMenuButton("LOGOUT", OnLogoutButton_Clicked);
 	AddMenuButton("QUIT", OnQuitButton_Clicked);
 
-	AddMenuBarButton("Interface/Icons/fg4_icons_menu_result.htex", OnMenuItem_Clicked);
+	AddMenuBarButton("Interface/Icons/fg4_icons_menu_result.htex", OnMenuItem_Clicked, "MENUBAR_TOOLTIP_GAMEMENU", "TOGGLEGAMEMENU");
 end
 

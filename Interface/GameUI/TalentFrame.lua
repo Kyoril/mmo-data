@@ -361,6 +361,6 @@ function TalentFrame_OnLoad(self)
     TalentFrameCanvasViewport:SetOnMouseMoveHandler(TalentFrameCanvas_OnMouseMove)
     TalentFrameCanvasViewport:SetOnMouseWheelHandler(TalentFrameCanvas_OnMouseWheel)
 
-    AddMenuBarButton("Interface/Icons/fg4_icons_emblemShield_result.htex", TalentFrame_Toggle)
+    AddMenuBarButton("Interface/Icons/fg4_icons_emblemShield_result.htex", TalentFrame_Toggle, "MENUBAR_TOOLTIP_TALENTS", "TOGGLETALENTS")
     TalentFrame_ResetView()
 end

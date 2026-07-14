@@ -230,5 +230,5 @@ function EmoteList_OnLoad(self)
 
     EmoteList_UpdatePage();
 
-    AddMenuBarButton("Interface/Icons/fg4_iconsFlat_dialogue.htex", EmoteList_Toggle);
+    AddMenuBarButton("Interface/Icons/fg4_iconsFlat_dialogue.htex", EmoteList_Toggle, "MENUBAR_TOOLTIP_EMOTES");
 end

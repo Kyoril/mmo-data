@@ -54,7 +54,7 @@ function QuestLogFrame_OnLoad(self)
     self:RegisterEvent("QUEST_LOG_UPDATE", QuestLogFrame_OnUpdateQuestLog);
 
     -- Add button to the main menu bar of the game
-    AddMenuBarButton("Interface/Icons/fg4_icons_questlog_result.htex", QuestLogFrame_Toggle);
+    AddMenuBarButton("Interface/Icons/fg4_icons_questlog_result.htex", QuestLogFrame_Toggle, "MENUBAR_TOOLTIP_QUESTLOG", "TOGGLEQUESTLOG");
 end
 
 function QuestLogQuestDetailPanelScrollBar_OnValueChanged(self, value)

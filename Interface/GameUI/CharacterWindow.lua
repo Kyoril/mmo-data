@@ -65,7 +65,7 @@ function CharacterWindow_OnLoad(self)
     end
 
     -- Register the character window in the menu bar as a button
-	AddMenuBarButton("Interface/Icons/fg4_icons_helmet_result.htex", CharacterWindow_Toggle);
+	AddMenuBarButton("Interface/Icons/fg4_icons_helmet_result.htex", CharacterWindow_Toggle, "MENUBAR_TOOLTIP_CHARACTER", "TOGGLECHARACTERWINDOW");
 
     -- Setup tooltips for armor stat (will be added in Task 6)
     if CharacterArmorStat then
