@@ -443,28 +443,73 @@ local function BuildSliderRow(opt, yOffset)
 	local slider = row:GetChild(1);
 	local valueLabel = row:GetChild(2);
 
-	local function UpdateValueLabel(percent)
+	-- Two modes, chosen by whether the option declares an explicit range:
+	--
+	--   * No opt.min/opt.max (the original behaviour, and what every volume slider uses): the cvar
+	--     holds a float in [0, 1] and the slider works in percent (0-100, step 5), shown as "75%".
+	--     This path is deliberately identical to the pre-extension code, rounding included, so the
+	--     existing sound options cannot regress.
+	--   * With opt.min/opt.max: the slider works in the cvar's OWN units and stores the raw value.
+	--     opt.step defaults to a hundredth of the range and opt.format to "%.2f"; use opt.format to
+	--     add a unit suffix, e.g. "%.2f m".
+	local isPercent = (opt.min == nil and opt.max == nil);
+	local minVal = opt.min or 0;
+	local maxVal = opt.max or 100;
+	local step = opt.step or (isPercent and 5 or (maxVal - minVal) / 100);
+	local format = opt.format or (isPercent and "%d%%" or "%.2f");
+
+	-- Percent mode scales through 100 in both directions; unit mode is 1:1.
+	local function ToSlider(v) return isPercent and (v * 100) or v; end
+	local function FromSlider(v) return isPercent and (v / 100) or v; end
+
+	local function Quantize(v)
+		if isPercent then
+			-- Exactly the original rounding: nearest whole percent, clamped, and NOT snapped to the
+			-- step grid - so an off-grid stored cvar (0.63) still reads back as 63%, as it always has.
+			local r = math.floor(v + 0.5);
+			if r < 0 then r = 0; elseif r > 100 then r = 100; end
+			return r;
+		end
+
+		-- Unit mode snaps to the step grid measured FROM minVal, so a range like min=0.05 step=0.05
+		-- yields 0.05, 0.10, ... rather than an out-of-range 0.
+		local snapped = minVal + math.floor((v - minVal) / step + 0.5) * step;
+		if snapped < minVal then snapped = minVal; elseif snapped > maxVal then snapped = maxVal; end
+		return snapped;
+	end
+
+	local function UpdateValueLabel(value)
 		if valueLabel then
-			valueLabel:SetText(string.format("%d%%", percent));
+			valueLabel:SetText(string.format(format, value));
 		end
 	end
 
 	if slider then
-		slider:SetMinimum(0);
-		slider:SetMaximum(100);
-		slider:SetStep(5);
+		-- Maximum BEFORE minimum, deliberately. A freshly cloned slider is 0..100, and
+		-- ScrollBar::SetMinimumValue refuses (with an ELOG) any minimum above the current maximum -
+		-- so setting a range like 200..300 min-first would silently do nothing. Max-first is safe
+		-- for any range whose maximum is non-negative.
+		slider:SetMaximum(maxVal);
+		slider:SetMinimum(minVal);
+		slider:SetStep(step);
 
-		local current = tonumber(GetCVar(opt.cvar)) or tonumber(opt.defaultValue) or 1.0;
-		local percent = math.floor(current * 100 + 0.5);
-		if percent < 0 then percent = 0; elseif percent > 100 then percent = 100; end
-		slider:SetValue(percent);
-		UpdateValueLabel(percent);
+		-- Last-resort fallback when neither the cvar nor the option declares a usable number.
+		-- Percent mode keeps the original's 1.0 (a full slider) rather than deriving one from the
+		-- range, which would silently turn an unreadable volume cvar into 0% instead of 100%.
+		local fallback = isPercent and 1.0 or FromSlider(minVal);
+		local current = tonumber(GetCVar(opt.cvar)) or tonumber(opt.defaultValue) or fallback;
+		local value = Quantize(ToSlider(current));
+		slider:SetValue(value);
+		UpdateValueLabel(value);
 
-		-- Install the handler after the initial SetValue so setup doesn't echo into the cvar.
+		-- Install the handler after the initial SetValue so setup doesn't echo into the cvar. This
+		-- applies to the range setters above too, not just SetValue: SetMinimum/SetMaximum call
+		-- SetValue internally when the current value falls outside the new range, which would fire
+		-- the handler and write a placeholder value over the user's cvar. Do not reorder.
 		slider:SetOnValueChangedHandler(function(bar, value)
-			local rounded = math.floor(value + 0.5);
-			SetCVar(opt.cvar, tostring(rounded / 100));
-			UpdateValueLabel(rounded);
+			local snapped = Quantize(value);
+			SetCVar(opt.cvar, tostring(FromSlider(snapped)));
+			UpdateValueLabel(snapped);
 		end);
 	end
 end
