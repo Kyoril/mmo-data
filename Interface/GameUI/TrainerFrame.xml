@@ -449,6 +449,11 @@
 					TrainerFrame_OnShow(this);
 				end
 			</OnShow>
+			<OnHide>
+				return function(this)
+					CloseTrainer();
+				end
+			</OnHide>
         </Scripts>
 	</Frame>
 </UiLayout>
