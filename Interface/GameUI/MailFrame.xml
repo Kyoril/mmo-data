@@ -553,6 +553,7 @@
 
 				<Frame name="MailSendBodyField" inherits="GameTextField">
 					<Property name="AcceptsTab" value="False" />
+					<Property name="MultiLine" value="True" />
 					<Property name="VertAlign" value="TOP" />
 					<Area>
 						<Anchor point="TOP" relativeTo="MailSendBodyLabel" />
