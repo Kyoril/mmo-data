@@ -115,6 +115,7 @@ strings =
 	(key = "OPTIONS_NAMEPLATES_ENEMY_PETS", string = "Namensplaketten: Feindliche Begleiter")
 	(key = "OPTIONS_NAMEPLATES_FRIENDLY_PETS", string = "Namensplaketten: Freundliche Begleiter")
 	(key = "OPTIONS_NAMEPLATE_DISTANCE", string = "Namensplaketten-Sichtweite")
+	(key = "NAMEPLATE_INTERRUPTED", string = "Unterbrochen")
 	(key = "OPTIONS_DISTANCE_NEAR", string = "Nah")
 	(key = "OPTIONS_DISTANCE_MEDIUM", string = "Mittel")
 	(key = "OPTIONS_DISTANCE_FAR", string = "Fern")

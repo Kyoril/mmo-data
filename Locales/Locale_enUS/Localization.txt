@@ -115,6 +115,7 @@ strings =
 	(key = "OPTIONS_NAMEPLATES_ENEMY_PETS", string = "Enemy pet nameplates")
 	(key = "OPTIONS_NAMEPLATES_FRIENDLY_PETS", string = "Friendly pet nameplates")
 	(key = "OPTIONS_NAMEPLATE_DISTANCE", string = "Nameplate distance")
+	(key = "NAMEPLATE_INTERRUPTED", string = "Interrupted")
 	(key = "OPTIONS_DISTANCE_NEAR", string = "Near")
 	(key = "OPTIONS_DISTANCE_MEDIUM", string = "Medium")
 	(key = "OPTIONS_DISTANCE_FAR", string = "Far")

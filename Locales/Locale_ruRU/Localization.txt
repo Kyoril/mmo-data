@@ -115,6 +115,7 @@ strings =
 	(key = "OPTIONS_NAMEPLATES_ENEMY_PETS", string = "Индикаторы враждебных питомцев")
 	(key = "OPTIONS_NAMEPLATES_FRIENDLY_PETS", string = "Индикаторы дружественных питомцев")
 	(key = "OPTIONS_NAMEPLATE_DISTANCE", string = "Дальность индикаторов")
+	(key = "NAMEPLATE_INTERRUPTED", string = "Прервано")
 	(key = "OPTIONS_DISTANCE_NEAR", string = "Близко")
 	(key = "OPTIONS_DISTANCE_MEDIUM", string = "Средне")
 	(key = "OPTIONS_DISTANCE_FAR", string = "Далеко")
