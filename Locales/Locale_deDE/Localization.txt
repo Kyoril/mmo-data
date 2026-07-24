@@ -114,6 +114,7 @@ strings =
 	(key = "OPTIONS_NAMEPLATES_FRIENDLY_PLAYERS", string = "Namensplaketten: Freundliche Spieler")
 	(key = "OPTIONS_NAMEPLATES_ENEMY_PETS", string = "Namensplaketten: Feindliche Begleiter")
 	(key = "OPTIONS_NAMEPLATES_FRIENDLY_PETS", string = "Namensplaketten: Freundliche Begleiter")
+	(key = "OPTIONS_NAMEPLATES_CAST_BARS", string = "Zauberbalken an Namensplaketten")
 	(key = "OPTIONS_NAMEPLATE_DISTANCE", string = "Namensplaketten-Sichtweite")
 	(key = "NAMEPLATE_INTERRUPTED", string = "Unterbrochen")
 	(key = "OPTIONS_DISTANCE_NEAR", string = "Nah")

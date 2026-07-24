@@ -114,6 +114,7 @@ strings =
 	(key = "OPTIONS_NAMEPLATES_FRIENDLY_PLAYERS", string = "Friendly player nameplates")
 	(key = "OPTIONS_NAMEPLATES_ENEMY_PETS", string = "Enemy pet nameplates")
 	(key = "OPTIONS_NAMEPLATES_FRIENDLY_PETS", string = "Friendly pet nameplates")
+	(key = "OPTIONS_NAMEPLATES_CAST_BARS", string = "Nameplate cast bars")
 	(key = "OPTIONS_NAMEPLATE_DISTANCE", string = "Nameplate distance")
 	(key = "NAMEPLATE_INTERRUPTED", string = "Interrupted")
 	(key = "OPTIONS_DISTANCE_NEAR", string = "Near")

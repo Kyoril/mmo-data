@@ -358,6 +358,12 @@ local OPTIONS_CATEGORIES = {
 				defaultValue = "0",
 			},
 			{
+				type = "toggle",
+				labelKey = "OPTIONS_NAMEPLATES_CAST_BARS",
+				cvar = "NameplateShowCastBars",
+				defaultValue = "1",
+			},
+			{
 				type = "dropdown",
 				labelKey = "OPTIONS_NAMEPLATE_DISTANCE",
 				cvar = "NameplateDistance",

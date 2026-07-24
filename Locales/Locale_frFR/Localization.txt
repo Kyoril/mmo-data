@@ -114,6 +114,7 @@ strings =
 	(key = "OPTIONS_NAMEPLATES_FRIENDLY_PLAYERS", string = "Plaques : joueurs amicaux")
 	(key = "OPTIONS_NAMEPLATES_ENEMY_PETS", string = "Plaques : familiers ennemis")
 	(key = "OPTIONS_NAMEPLATES_FRIENDLY_PETS", string = "Plaques : familiers amicaux")
+	(key = "OPTIONS_NAMEPLATES_CAST_BARS", string = "Barres d'incantation des plaques")
 	(key = "OPTIONS_NAMEPLATE_DISTANCE", string = "Distance des plaques")
 	(key = "NAMEPLATE_INTERRUPTED", string = "Interrompu")
 	(key = "OPTIONS_DISTANCE_NEAR", string = "Proche")
