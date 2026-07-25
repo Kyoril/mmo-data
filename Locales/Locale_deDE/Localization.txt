@@ -705,6 +705,7 @@ strings =
 	(key = "ITEM_SOULBOUND", string = "Seelengebunden")
 	(key = "ITEM_BINDS_WHEN_PICKED_UP", string = "Bindet beim Aufheben")
 	(key = "ITEM_BINDS_WHEN_EQUIPPED", string = "Bindet beim Anlegen")
+	(key = "ITEM_STARTS_QUEST", string = "Dieser Gegenstand startet eine Quest")
 
 	(key = "REQUIRES", string = "Erfordert")
 	(key = "TIME_PLAYED_DAYS", string = "Gesamte Spielzeit: %d Tage, %d Stunden, %d Minuten, %d Sekunden")

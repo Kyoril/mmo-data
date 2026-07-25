@@ -654,6 +654,7 @@ strings =
 	(key = "ITEM_SOULBOUND", string = "Привязан к душе")
 	(key = "ITEM_BINDS_WHEN_PICKED_UP", string = "Привязывается при подборе")
 	(key = "ITEM_BINDS_WHEN_EQUIPPED", string = "Привязывается при надевании")
+	(key = "ITEM_STARTS_QUEST", string = "Этот предмет начинает задание")
 
 	(key = "COMBAT_IMMUNE", string = "Иммунитет")
 

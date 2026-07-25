@@ -227,6 +227,11 @@ function GameTooltip_SetItemTemplate(item)
         GameTooltip_AddLine(string.format(Localize("LEVEL_REQUIREMENT_FORMAT"), requiredLevel), TOOLTIP_LINE_LEFT, levelColor);
     end
 
+    -- Quest-starting item hint
+    if (item.startQuestId and item.startQuestId > 0) then
+        GameTooltip_AddLine(Localize("ITEM_STARTS_QUEST"), TOOLTIP_LINE_LEFT, "FFFFD100");
+    end
+
     -- Line 3: Description
     local description = item.description;
     if (description and description:len() > 0) then
@@ -349,6 +354,12 @@ function GameTooltip_SetItem(item)
             levelColor = "FFFF2020";
         end
         GameTooltip_AddLine(string.format(Localize("LEVEL_REQUIREMENT_FORMAT"), requiredLevel), TOOLTIP_LINE_LEFT, levelColor);
+    end
+
+    -- Quest-starting item hint
+    local startQuestId = item:GetStartQuestId();
+    if (startQuestId and startQuestId > 0) then
+        GameTooltip_AddLine(Localize("ITEM_STARTS_QUEST"), TOOLTIP_LINE_LEFT, "FFFFD100");
     end
 
     -- Line 3: Description
