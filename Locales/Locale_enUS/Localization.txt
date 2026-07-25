@@ -431,6 +431,7 @@ strings =
 	(key = "QUEST_ABANDONED_TITLE", string = "Quest abandoned: %s")
 	(key = "QUEST_ITEMS_NEEDED", string = "%s: %d/%d")
 	(key = "QUEST_MONSTERS_KILLED", string = "%s slain: %d/%d")
+	(key = "QUEST_OBJECTS_USED", string = "%s: %d/%d")
 	(key = "COMPLETE", string = "Complete")
 	(key = "QUEST_REWARD_YOU_WILL_RECEIVE", string = "You receive: ")
 	(key = "QUEST_REWARD_CHOOSE", string = "You will be able to choose one of these rewards:")
