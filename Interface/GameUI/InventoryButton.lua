@@ -16,6 +16,11 @@ function InventoryItemButton_OnDrag(this, button, position)
 end
 
 function InventoryItemButton_OnDrop(this, button, position)
+    -- A drag that started on an empty slot carries nothing; releasing it must
+    -- not pick up the item under the mouse.
+    if not CursorHasItem() then
+        return;
+    end
     PickupContainerItem(this.id);
 end
 
