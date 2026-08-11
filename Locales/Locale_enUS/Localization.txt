@@ -50,6 +50,7 @@ strings =
 
 	(key = "WORLD_SERVER_DOWN", string = "World server is down.")
 	(key = "REALM_DISCONNECTED", string = "You have been disconnected from the realm.")
+	(key = "KICK_REASON_LOGGED_IN_ELSEWHERE", string = "You have been disconnected because your account was logged in from another location.\n\nIf this was not you, someone else may have access to your account - please change your password immediately.")
 	(key = "CHAR_DISABLED", string = "Disabled")
 	
 	(key = "CLOSE", string = "Close")

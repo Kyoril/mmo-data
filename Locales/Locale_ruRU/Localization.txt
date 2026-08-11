@@ -50,6 +50,7 @@ strings =
 
 	(key = "WORLD_SERVER_DOWN", string = "World server is down.")
 	(key = "REALM_DISCONNECTED", string = "Соединение с игровым миром было потеряно.")
+	(key = "KICK_REASON_LOGGED_IN_ELSEWHERE", string = "Соединение разорвано, так как в ваш аккаунт вошли из другого места.\n\nЕсли это были не вы, возможно, кто-то другой получил доступ к вашему аккаунту - немедленно смените пароль.")
 	(key = "CHAR_DISABLED", string = "Отключён")
 	
 	(key = "CLOSE", string = "Close")

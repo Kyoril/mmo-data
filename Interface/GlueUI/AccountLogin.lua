@@ -72,7 +72,7 @@ function AccountLogin_OnLoad()
 	end);
 
 	-- Realm dropped while still in the GlueUI: fade to black, land on login with error.
-	AccountLogin:RegisterEvent("REALM_DISCONNECTED", function()
+	AccountLogin:RegisterEvent("REALM_DISCONNECTED", function(frame, kickReason)
 		-- If the realm just rejected our auth session (e.g. not allowed to connect), the
 		-- REALM_AUTH_ERROR dialog is already showing and sends the player back to the realm list on
 		-- confirm. The connection close that follows must not replace it.
@@ -87,7 +87,34 @@ function AccountLogin_OnLoad()
 		AccountLogin:Show();
 		LoginButton:Enable();
 		AccountNameField:CaptureInput();
-		GlueDialog_Show("REALM_DISCONNECTED_ERROR");
+
+		-- The realm sends a reason when it terminated the session on purpose (account signed in
+		-- elsewhere, banned). Anything else is an ordinary drop and gets the generic message.
+		local reasonText = kickReason and KICK_REASON_STRING[kickReason];
+		if reasonText then
+			GlueDialog_Show("SESSION_KICKED_ERROR", reasonText);
+		else
+			GlueDialog_Show("REALM_DISCONNECTED_ERROR");
+		end
+
+		AccountLogin:PlayAnimation("FadeIn");
+	end);
+
+	-- The login server terminated this session, most commonly because the account was signed in
+	-- somewhere else while we sat on the realm list. The disconnect follows immediately.
+	AccountLogin:RegisterEvent("ACCOUNT_KICKED", function(frame, kickReason)
+		-- A reason this client build does not know still means the session is gone, so say
+		-- something generic rather than leaving the player on a screen that no longer works.
+		local reasonText = (kickReason and KICK_REASON_STRING[kickReason]) or "REALM_DISCONNECTED";
+
+		GlueDialog_Hide();
+		RealmListFrame:Hide();
+		CharSelect:Hide();
+		CharCreate:Hide();
+		AccountLogin:Show();
+		LoginButton:Enable();
+		AccountNameField:CaptureInput();
+		GlueDialog_Show("SESSION_KICKED_ERROR", reasonText);
 
 		AccountLogin:PlayAnimation("FadeIn");
 	end);

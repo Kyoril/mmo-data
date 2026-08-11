@@ -25,10 +25,18 @@ function GlueParent_OnLoad(this)
 		GlueDialog_Show("RETRIEVE_CHAR_LIST");
 	end);
 
-	-- Realm dropped while we were in-world: land on login screen with error.
-	this:RegisterEvent("GLUE_REALM_DISCONNECTED", function()
+	-- Realm dropped while we were in-world: land on login screen with error. A reason is passed
+	-- when the realm terminated the session on purpose (account signed in elsewhere, banned);
+	-- without one this was an ordinary drop and gets the generic message.
+	this:RegisterEvent("GLUE_REALM_DISCONNECTED", function(frame, kickReason)
 		LoginButton:Enable();
-		GlueDialog_Show("REALM_DISCONNECTED_ERROR");
+
+		local reasonText = kickReason and KICK_REASON_STRING[kickReason];
+		if reasonText then
+			GlueDialog_Show("SESSION_KICKED_ERROR", reasonText);
+		else
+			GlueDialog_Show("REALM_DISCONNECTED_ERROR");
+		end
 	end);
 end
 

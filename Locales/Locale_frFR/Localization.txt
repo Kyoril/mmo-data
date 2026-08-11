@@ -50,6 +50,7 @@ strings =
 
 	(key = "WORLD_SERVER_DOWN", string = "Le serveur de ce monde est fermé.")
 	(key = "REALM_DISCONNECTED", string = "Vous avez été déconnecté du royaume.")
+	(key = "KICK_REASON_LOGGED_IN_ELSEWHERE", string = "Vous avez été déconnecté car votre compte a été connecté depuis un autre endroit.\n\nSi ce n'était pas vous, quelqu'un d'autre a peut-être accès à votre compte - veuillez changer votre mot de passe immédiatement.")
 	(key = "CHAR_DISABLED", string = "Désactivé")
 
 	(key = "CLOSE", string = "Fermer")

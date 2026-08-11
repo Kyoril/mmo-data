@@ -50,6 +50,7 @@ strings =
 	
 	(key = "WORLD_SERVER_DOWN", string = "Der Welt-Server ist nicht verfügbar.")
 	(key = "REALM_DISCONNECTED", string = "Die Verbindung zum Realm-Server wurde getrennt.")
+	(key = "KICK_REASON_LOGGED_IN_ELSEWHERE", string = "Die Verbindung wurde getrennt, weil dein Account von einem anderen Ort aus angemeldet wurde.\n\nWenn du das nicht warst, hat möglicherweise jemand anderes Zugriff auf deinen Account - bitte ändere sofort dein Passwort.")
 	(key = "CHAR_DISABLED", string = "Deaktiviert")
 
 	(key = "CLOSE", string = "Schließen")

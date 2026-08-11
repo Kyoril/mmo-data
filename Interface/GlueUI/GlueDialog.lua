@@ -60,6 +60,19 @@ GlueDialogs["REALM_DISCONNECTED_ERROR"] = {
 	end
 }
 
+-- Shown when a server deliberately terminated the session (account signed in elsewhere, banned).
+-- The text is supplied by the caller from KICK_REASON_STRING.
+GlueDialogs["SESSION_KICKED_ERROR"] = {
+	text = "",
+	button1 = "OKAY",
+	button2 = nil,
+	OnAccept = function()
+		LoginButton:Enable()
+	end,
+	OnCancel = function()
+	end
+}
+
 GlueDialogs["CHAR_CREATION_ERROR"] = {
 	text = "",
 	button1 = "OKAY",
@@ -174,6 +187,13 @@ GlueDialogs["ENTER_WORLD_FAILED"] = {
 	end
 }
 
+
+-- Indexed by mmo::auth::session_kick_reason: why a server terminated the session. Used when the
+-- disconnect was deliberate, so the player is told what happened instead of seeing the generic
+-- REALM_DISCONNECTED text. An unknown code falls back to that generic text.
+KICK_REASON_STRING = {}
+KICK_REASON_STRING[0] = "KICK_REASON_LOGGED_IN_ELSEWHERE"
+KICK_REASON_STRING[1] = "AUTH_STATUS_FAIL_BANNED"
 
 AUTH_ERROR_STRING = {}
 AUTH_ERROR_STRING[0] = "AUTH_STATUS_SUCCESS"
