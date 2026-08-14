@@ -29,7 +29,7 @@ strings =
 	(key = "AUTH_STATUS_FAIL_NO_TIME", string = "Vos crédits gratuits touchent à leur fin.\nVeuillez en acheter d'autres pour continuer à jouer.")
 	(key = "AUTH_STATUS_FAIL_DB_BUSY", string = "Impossible de se connecter maintenant. Veuillez réessayer plus tard.")
 	(key = "AUTH_STATUS_FAIL_VERSION_INVALID", string = "Impossible de vérifier votre version de jeu. Cela peut être dû à une corruption des fichiers du jeu ou par un programme tiers.\nAllez sur https://mmo-dev.net pour essayer de trouver une solution à votre problème.")
-	(key = "AUTH_STATUS_FAIL_VERSION_UPDATE", string = "")
+	(key = "AUTH_STATUS_FAIL_VERSION_UPDATE", string = "Votre client de jeu n'est plus à jour et ne peut plus se connecter à ce serveur.\nVeuillez le mettre à jour vers la dernière version et réessayer.")
 	(key = "AUTH_STATUS_FAIL_INVALID_SERVER", string = "Impossible de se connecter.")
 	(key = "AUTH_STATUS_FAIL_SUSPENDED", string = "Ce compte a été temporairement bloqué.\nVeuillez visiter https://mmo-dev.net/banned.html pour plus d'informations.")
 	(key = "AUTH_STATUS_FAIL_NO_ACCESS", string = "Impossible de se connecter.")
@@ -38,6 +38,7 @@ strings =
 	(key = "AUTH_STATUS_FAIL_LOCKED", string = "Vous avez bloqué ce compte. Débloquez-le sur https://mmo-dev.net.")
 	(key = "AUTH_STATUS_FAIL_TRIAL", string = "Votre essai gratuit est fini. Allez sur https://mmo-dev.net pour mettre à jour votre compte.")
 	(key = "AUTH_STATUS_FAIL_INTERNAL_ERROR", string = "Erreur interne.")
+	(key = "UNKNOWN_ERROR", string = "Une erreur inconnue est survenue.")
 
 	(key = "CONNECTING", string = "Connexion...")
 	(key = "RETRIEVING_CHAR_LIST", string = "Récupération de la liste des personnages...")

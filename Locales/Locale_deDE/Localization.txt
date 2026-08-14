@@ -29,7 +29,7 @@ strings =
 	(key = "AUTH_STATUS_FAIL_NO_TIME", string = "You have used up your prepaid time for this account.\nPlease purchase more to continue playing.")
 	(key = "AUTH_STATUS_FAIL_DB_BUSY", string = "Could not log in at this time. Please try again later.")
 	(key = "AUTH_STATUS_FAIL_VERSION_INVALID", string = "Unable to validate game version. This may be caused by file corruption or interference of another program.\nPlease visit https://mmo-dev.net for more information and possible solutions to this issue.")
-	(key = "AUTH_STATUS_FAIL_VERSION_UPDATE", string = "")
+	(key = "AUTH_STATUS_FAIL_VERSION_UPDATE", string = "Ihr Spielclient ist veraltet und kann sich nicht mehr mit diesem Server verbinden.\nBitte aktualisieren Sie auf die neueste Version und versuchen Sie es erneut.")
 	(key = "AUTH_STATUS_FAIL_INVALID_SERVER", string = "Verbindungsaufbau fehlgeschlagen.")
 	(key = "AUTH_STATUS_FAIL_SUSPENDED", string = "This account has been temporarily suspended.\nPlease go to https://mmo-dev.net/banned.html for further information.")
 	(key = "AUTH_STATUS_FAIL_NO_ACCESS", string = "Verbindungsaufbau fehlgeschlagen.")
@@ -38,7 +38,8 @@ strings =
 	(key = "AUTH_STATUS_FAIL_LOCKED", string = "Sie haben Ihren Account gesperrt. You can change your locked status at https://mmo-dev.net.")
 	(key = "AUTH_STATUS_FAIL_TRIAL", string = "Ihre Testzeit ist abgelaufen. Bitte besuchen Sie https://mmo-dev.net um Ihren Account aufzuwerten.")
 	(key = "AUTH_STATUS_FAIL_INTERNAL_ERROR", string = "Interner Fehler.")
-	
+	(key = "UNKNOWN_ERROR", string = "Ein unbekannter Fehler ist aufgetreten.")
+
 	(key = "CONNECTING", string = "Verbinde...")
 	(key = "RETRIEVING_CHAR_LIST", string = "Rufe Charakterliste ab...")
 	(key = "RETRIEVING_REALM_LIST", string = "Rufe Realmliste ab...")

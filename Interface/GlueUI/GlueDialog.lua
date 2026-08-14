@@ -230,12 +230,24 @@ function GlueDialog_Show(which, text, data)
 		GlueDialog.which = nil
 	end
 
-	-- Setup the dialog text
+	-- Setup the dialog text. Callers that pick their message from an error table (AUTH_ERROR_STRING
+	-- and friends) pass it in; the rest carry their own. Either can resolve to nothing: an error code
+	-- this build has no entry for indexes to nil, and a key whose Localization.txt value is an empty
+	-- string localizes to "" rather than falling back to the key. Both used to leave the player
+	-- staring at a blank box with an Okay button and no idea what went wrong, so anything that
+	-- resolves to nothing lands on a generic message instead.
+	local message = nil
 	if text ~= nil then
-		GlueDialogLabel:SetText(Localize(text))
-	else
-		GlueDialogLabel:SetText(Localize(GlueDialogs[which].text))
+		message = Localize(text)
 	end
+	if message == nil or message == "" then
+		message = Localize(GlueDialogs[which].text)
+	end
+	if message == nil or message == "" then
+		message = Localize("UNKNOWN_ERROR")
+	end
+
+	GlueDialogLabel:SetText(message)
 
 	-- Check if there is a second button requested
 	if GlueDialogs[which].button2 then
