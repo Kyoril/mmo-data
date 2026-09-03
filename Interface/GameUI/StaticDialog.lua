@@ -127,56 +127,10 @@ StaticDialogs["RESTART_REQUIRED"] = {
 	exclusive = false
 };
 
--- Parses a money string into copper.
--- Accepts:  "1g 50s 25c"  or  "50s"  or  "25c"  or just a plain number (treated as gold).
-function ParseMoneyString(s)
-	if not s or s == "" then return 0; end
-	s = s:gsub("%s+", "");
-
-	local total = 0;
-	local hadDenom = false;
-
-	for amount, denom in s:gmatch("(%d+)([gsc])") do
-		local n = math.floor(tonumber(amount) or 0);
-		if denom == "g" then
-			total = total + n * COPPER_PER_GOLD;
-		elseif denom == "s" then
-			total = total + n * COPPER_PER_SILVER;
-		else
-			total = total + n;
-		end
-		hadDenom = true;
-	end
-
-	if not hadDenom then
-		-- Plain number: treat as gold for backward compatibility
-		total = math.floor(tonumber(s) or 0) * COPPER_PER_GOLD;
-	end
-
-	return total;
-end
-
-StaticDialogs["TRADE_SET_MONEY"] = {
-	text = Localize("TRADE_SET_MONEY_PROMPT"),
-	button1 = Localize("OKAY"),
-	button2 = Localize("CANCEL"),
-	hasEditBox = true,
-	OnAccept = function()
-		local text = StaticDialog.editBox:GetText();
-		local amount = ParseMoneyString(text);
-		local playerMoney = UnitMoney("player");
-		if amount < 0 then amount = 0; end
-		if amount > playerMoney then amount = playerMoney; end
-		SetTradeMoney(amount);
-	end,
-	timeout = 0,
-	exclusive = false
-};
-
 StaticDialogs["TRADE_REQUEST"] = {
-	text = "%s wants to trade with you.",
-	button1 = "Accept",
-	button2 = "Decline",
+	text = Localize("TRADE_REQUEST_INCOMING"),
+	button1 = Localize("ACCEPT"),
+	button2 = Localize("DECLINE"),
 	OnAccept = function()
 		AcceptTradeInvite();
 	end,

@@ -114,6 +114,19 @@ function RefreshMoneyFrame(frameName, money, small, collapse, showSmallerCoins)
 	copperButton:Show();
 	copperIcon:Show();
 
+	-- Each denomination button reserves 'iconWidth' at its right edge for the coin icon, so the
+	-- icons are anchored to the bottom right corner of their button. This has to happen before the
+	-- 'collapse' early out below: without anchors the icons stay at the money frame's top left
+	-- corner and overlap the gold text.
+	silverIcon:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, silverButton, 0);
+	silverIcon:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.BOTTOM, silverButton, 0);
+
+	goldIcon:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, goldButton, 0);
+	goldIcon:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.BOTTOM, goldButton, 0);
+
+	copperIcon:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, copperButton, 0);
+	copperIcon:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.BOTTOM, copperButton, 0);
+
 	local frame = _G[frameName];
 	frame.staticMoney = money;
 
@@ -161,15 +174,6 @@ function RefreshMoneyFrame(frameName, money, small, collapse, showSmallerCoins)
 		copperIcon:Hide();
 		silverButton:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, copperButton, 0);
 	end
-
-	silverIcon:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, silverButton, 0);
-	silverIcon:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.BOTTOM, silverButton, 0);
-
-	goldIcon:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, goldButton, 0);
-	goldIcon:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.BOTTOM, goldButton, 0);
-
-	copperIcon:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, copperButton, 0);
-	copperIcon:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.BOTTOM, copperButton, 0);
 
 	frame:SetWidth(width);
 end

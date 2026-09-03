@@ -750,7 +750,12 @@ strings =
 	(key = "SPELL_CAST_FAILED_UNIT_NOT_INFRONT", string = "Target must be in front of you.")
 	(key = "SPELL_CAST_FAILED_LINE_OF_SIGHT", string = "Target not in line of sight.")
 
-	(key = "TRADE_SET_MONEY_PROMPT", string = "Enter amount (e.g. 1g 50s 25c):")
+	(key = "TRADE_TITLE", string = "Trade")
+	(key = "TRADE_YOUR_OFFER", string = "Your Offer")
+	(key = "TRADE_THEIR_OFFER", string = "Their Offer")
+	(key = "TRADE_YOUR_MONEY", string = "Money you offer")
+	(key = "TRADE_THEIR_MONEY", string = "Money they offer")
+	(key = "TRADE_YOUR_PURSE", string = "You have:")
 	(key = "TRADE_FRAME_TITLE", string = "Trade: %s")
 	(key = "TRADE_ACCEPT", string = "Accept")
 	(key = "TRADE_ACCEPTED", string = "Accepted")

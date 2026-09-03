@@ -95,7 +95,133 @@
 		</Visual>
 	</Frame>
 
-	<!-- Main Trade Frame: 720x860 at 4K = 360x430 at 1080p -->
+	<!-- Thin horizontal rule used to separate the item offer from the money section -->
+	<Frame name="TradeDividerTemplate" renderer="DefaultRenderer">
+		<Area>
+			<Size><AbsDimension x="352" y="4" /></Size>
+		</Area>
+
+		<Visual>
+			<ImagerySection name="Line">
+				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Line" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+	</Frame>
+
+	<!-- Section label above a group of controls -->
+	<Frame name="TradeSectionLabelTemplate" renderer="DefaultRenderer">
+		<Property name="Font" value="SmallLabelFont" />
+		<Property name="HorzAlign" value="LEFT" />
+
+		<Visual>
+			<ImagerySection name="Text">
+				<TextComponent color="FFEED37C" horzAlign="$HorzAlign" vertAlign="CENTER" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+
+		<Area>
+			<Size><AbsDimension x="352" y="36" /></Size>
+		</Area>
+	</Frame>
+
+	<!-- Column headline above each offer grid -->
+	<Frame name="TradeColumnHeaderTemplate" renderer="DefaultRenderer">
+		<Property name="Font" value="DefaultSmall" />
+		<Property name="HorzAlign" value="CENTER" />
+
+		<Visual>
+			<ImagerySection name="Text">
+				<TextComponent color="FFFFD100" horzAlign="$HorzAlign" vertAlign="CENTER" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+
+		<Area>
+			<Size><AbsDimension x="352" y="40" /></Size>
+		</Area>
+	</Frame>
+
+	<!-- "Accepted" status line: check mark plus label, hidden until that side accepts -->
+	<Frame name="TradeAcceptStatusTemplate" renderer="DefaultRenderer">
+		<Property name="Visible" value="false" />
+
+		<Area>
+			<Size><AbsDimension x="352" y="44" /></Size>
+		</Area>
+
+		<Frame name="TradeAcceptStatusIcon" renderer="DefaultRenderer">
+			<Visual>
+				<ImagerySection name="Check">
+					<ImageComponent texture="Interface/Icons/fg4_iconsGold_checkMark_result.htex" tiling="NONE" tint="FF54E36A" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Check" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+
+			<Area>
+				<Anchor point="LEFT" offset="0" />
+				<Anchor point="V_CENTER" offset="0" />
+				<Size><AbsDimension x="36" y="36" /></Size>
+			</Area>
+		</Frame>
+
+		<Frame name="TradeAcceptStatusText" renderer="DefaultRenderer">
+			<Property name="Font" value="DefaultSmall" />
+			<Property name="Text" value="TRADE_ACCEPTED" />
+
+			<Visual>
+				<ImagerySection name="Text">
+					<TextComponent color="FF54E36A" horzAlign="LEFT" vertAlign="CENTER" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Text" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+
+			<Area>
+				<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="TradeAcceptStatusIcon" offset="10" />
+				<Anchor point="TOP" offset="0" />
+				<Anchor point="BOTTOM" offset="0" />
+				<Size><AbsDimension x="300" /></Size>
+			</Area>
+		</Frame>
+	</Frame>
+
+	<!-- Money entry field: one denomination of the offered amount -->
+	<Frame name="TradeMoneyFieldTemplate" inherits="GameTextField">
+		<Property name="AcceptsTab" value="False" />
+		<Property name="Font" value="DefaultSmall" />
+
+		<Area>
+			<Size><AbsDimension x="96" y="56" /></Size>
+		</Area>
+	</Frame>
+
+	<!--
+		Main Trade Frame: 880x860.
+		Two 352 wide columns (3x2 slots of 112) at a 40 margin, separated by a 96 wide gutter
+		holding a vertical rule. The player's column carries the money input, the partner's
+		column mirrors it with a read only money display.
+	-->
 	<Frame name="TradeFrame" renderer="DefaultRenderer" parent="GameParent">
 		<Property name="Visible" value="false" />
 
@@ -111,12 +237,12 @@
 		</Visual>
 
 		<Area>
-			<Size><AbsDimension x="720" y="860" /></Size>
+			<Size><AbsDimension x="880" y="860" /></Size>
 		</Area>
 
-		<!-- Title Bar -->
+		<!-- Title Bar. The partner name is written into it once the session opens. -->
 		<Frame name="TradeTitleBar" inherits="TitleBar">
-			<Property name="Text" value="TRADE" />
+			<Property name="Text" value="TRADE_TITLE" />
 
 			<Area>
 				<Anchor point="TOP" offset="24" />
@@ -125,94 +251,52 @@
 			</Area>
 		</Frame>
 
-		<!-- Dynamic subtitle: updated to "Trade: PlayerName" when session opens -->
-		<Frame name="TradeFrameTitle" renderer="DefaultRenderer">
-			<Property name="Font" value="DefaultSmall" />
-
-			<Visual>
-				<ImagerySection name="Text">
-					<TextComponent color="FFFFD100" horzAlign="CENTER" vertAlign="CENTER" />
-				</ImagerySection>
-				<StateImagery name="Enabled">
-					<Layer>
-						<Section section="Text" />
-					</Layer>
-				</StateImagery>
-			</Visual>
+		<!-- Column headers -->
+		<Frame name="TradeMyOfferHeader" inherits="TradeColumnHeaderTemplate">
+			<Property name="Text" value="TRADE_YOUR_OFFER" />
 
 			<Area>
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeTitleBar" offset="8" />
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeTitleBar" offset="20" />
+				<Anchor point="LEFT" offset="40" />
+			</Area>
+		</Frame>
+
+		<Frame name="TradeTheirOfferHeader" inherits="TradeColumnHeaderTemplate">
+			<Property name="Text" value="TRADE_THEIR_OFFER" />
+
+			<Area>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeTitleBar" offset="20" />
+				<Anchor point="RIGHT" offset="-40" />
+			</Area>
+		</Frame>
+
+		<!-- Vertical rule between the two offers -->
+		<Frame name="TradeColumnSeparator" renderer="DefaultRenderer">
+			<Area>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeTitleBar" offset="20" />
+				<Anchor point="BOTTOM" offset="-232" />
 				<Anchor point="H_CENTER" offset="0" />
-				<Size><AbsDimension x="560" y="48" /></Size>
+				<Size><AbsDimension x="4" /></Size>
 			</Area>
-		</Frame>
-
-		<!-- My Offer Section Header — anchored below TradeFrameTitle -->
-		<Frame name="TradeMyOfferHeader" renderer="DefaultRenderer">
-			<Property name="Font" value="DefaultSmall" />
 
 			<Visual>
-				<ImagerySection name="Text">
-					<TextComponent color="FFFFD100" horzAlign="CENTER" vertAlign="CENTER" />
+				<ImagerySection name="Line">
+					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" />
 				</ImagerySection>
 				<StateImagery name="Enabled">
 					<Layer>
-						<Section section="Text" />
+						<Section section="Line" />
 					</Layer>
 				</StateImagery>
 			</Visual>
-
-			<Area>
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeFrameTitle" offset="8" />
-				<Anchor point="LEFT" offset="48" />
-				<Size><AbsDimension x="232" y="44" /></Size>
-			</Area>
-
-			<Scripts>
-				<OnLoad>
-					return function(self)
-						self:SetText("Your Offer");
-					end
-				</OnLoad>
-			</Scripts>
 		</Frame>
 
-		<!-- Their Offer Section Header — anchored below TradeFrameTitle -->
-		<Frame name="TradeTheirOfferHeader" renderer="DefaultRenderer">
-			<Property name="Font" value="DefaultSmall" />
-
-			<Visual>
-				<ImagerySection name="Text">
-					<TextComponent color="FFFFD100" horzAlign="CENTER" vertAlign="CENTER" />
-				</ImagerySection>
-				<StateImagery name="Enabled">
-					<Layer>
-						<Section section="Text" />
-					</Layer>
-				</StateImagery>
-			</Visual>
-
-			<Area>
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeFrameTitle" offset="8" />
-				<Anchor point="RIGHT" offset="-48" />
-				<Size><AbsDimension x="232" y="44" /></Size>
-			</Area>
-
-			<Scripts>
-				<OnLoad>
-					return function(self)
-						self:SetText("Their Offer");
-					end
-				</OnLoad>
-			</Scripts>
-		</Frame>
-
-		<!-- My Trade Slots Container: 2 cols x 3 rows of 112px slots with 8px gaps = 232x352 -->
+		<!-- My Trade Slots: 3 cols x 2 rows of 112px slots with 8px gaps = 352x232 -->
 		<Frame name="TradeMySlotContainer">
 			<Area>
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeMyOfferHeader" offset="8" />
-				<Anchor point="LEFT" offset="48" />
-				<Size><AbsDimension x="232" y="352" /></Size>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeMyOfferHeader" offset="12" />
+				<Anchor point="LEFT" offset="40" />
+				<Size><AbsDimension x="352" y="232" /></Size>
 			</Area>
 
 			<!-- Row 1 -->
@@ -244,11 +328,10 @@
 				</Frame>
 			</Frame>
 
-			<!-- Row 2 -->
 			<Frame name="TradeMySlot3Border" inherits="TradeSlotBorderTemplate">
 				<Area>
-					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeMySlot1Border" offset="8" />
-					<Anchor point="LEFT" offset="0" />
+					<Anchor point="TOP" offset="0" />
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="TradeMySlot2Border" offset="8" />
 				</Area>
 
 				<Frame name="TradeMySlot3" inherits="TradeSlotButtonTemplate" id="3">
@@ -259,10 +342,11 @@
 				</Frame>
 			</Frame>
 
+			<!-- Row 2 -->
 			<Frame name="TradeMySlot4Border" inherits="TradeSlotBorderTemplate">
 				<Area>
-					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeMySlot2Border" offset="8" />
-					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="TradeMySlot3Border" offset="8" />
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeMySlot1Border" offset="8" />
+					<Anchor point="LEFT" offset="0" />
 				</Area>
 
 				<Frame name="TradeMySlot4" inherits="TradeSlotButtonTemplate" id="4">
@@ -273,11 +357,10 @@
 				</Frame>
 			</Frame>
 
-			<!-- Row 3 -->
 			<Frame name="TradeMySlot5Border" inherits="TradeSlotBorderTemplate">
 				<Area>
-					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeMySlot3Border" offset="8" />
-					<Anchor point="LEFT" offset="0" />
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeMySlot2Border" offset="8" />
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="TradeMySlot4Border" offset="8" />
 				</Area>
 
 				<Frame name="TradeMySlot5" inherits="TradeSlotButtonTemplate" id="5">
@@ -290,7 +373,7 @@
 
 			<Frame name="TradeMySlot6Border" inherits="TradeSlotBorderTemplate">
 				<Area>
-					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeMySlot4Border" offset="8" />
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeMySlot3Border" offset="8" />
 					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="TradeMySlot5Border" offset="8" />
 				</Area>
 
@@ -303,12 +386,12 @@
 			</Frame>
 		</Frame>
 
-		<!-- Other Player's Trade Slots Container: 2 cols x 3 rows = 232x352 -->
+		<!-- Other Player's Trade Slots: 3 cols x 2 rows = 352x232 -->
 		<Frame name="TradeOtherSlotContainer">
 			<Area>
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeTheirOfferHeader" offset="8" />
-				<Anchor point="RIGHT" offset="-48" />
-				<Size><AbsDimension x="232" y="352" /></Size>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeTheirOfferHeader" offset="12" />
+				<Anchor point="RIGHT" offset="-40" />
+				<Size><AbsDimension x="352" y="232" /></Size>
 			</Area>
 
 			<!-- Row 1 -->
@@ -342,11 +425,10 @@
 				</Frame>
 			</Frame>
 
-			<!-- Row 2 -->
 			<Frame name="TradeOtherSlot3Border" inherits="TradeSlotBorderTemplate">
 				<Area>
-					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeOtherSlot1Border" offset="8" />
-					<Anchor point="LEFT" offset="0" />
+					<Anchor point="TOP" offset="0" />
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="TradeOtherSlot2Border" offset="8" />
 				</Area>
 
 				<Frame name="TradeOtherSlot3" inherits="TradeSlotButtonTemplate" id="3">
@@ -358,10 +440,11 @@
 				</Frame>
 			</Frame>
 
+			<!-- Row 2 -->
 			<Frame name="TradeOtherSlot4Border" inherits="TradeSlotBorderTemplate">
 				<Area>
-					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeOtherSlot2Border" offset="8" />
-					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="TradeOtherSlot3Border" offset="8" />
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeOtherSlot1Border" offset="8" />
+					<Anchor point="LEFT" offset="0" />
 				</Area>
 
 				<Frame name="TradeOtherSlot4" inherits="TradeSlotButtonTemplate" id="4">
@@ -373,11 +456,10 @@
 				</Frame>
 			</Frame>
 
-			<!-- Row 3 -->
 			<Frame name="TradeOtherSlot5Border" inherits="TradeSlotBorderTemplate">
 				<Area>
-					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeOtherSlot3Border" offset="8" />
-					<Anchor point="LEFT" offset="0" />
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeOtherSlot2Border" offset="8" />
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="TradeOtherSlot4Border" offset="8" />
 				</Area>
 
 				<Frame name="TradeOtherSlot5" inherits="TradeSlotButtonTemplate" id="5">
@@ -391,7 +473,7 @@
 
 			<Frame name="TradeOtherSlot6Border" inherits="TradeSlotBorderTemplate">
 				<Area>
-					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeOtherSlot4Border" offset="8" />
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeOtherSlot3Border" offset="8" />
 					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="TradeOtherSlot5Border" offset="8" />
 				</Area>
 
@@ -405,114 +487,233 @@
 			</Frame>
 		</Frame>
 
-		<!-- My Money Display: explicit 232x44 so it stays within column width -->
-		<Frame name="TradeMyMoneyFrame" inherits="MoneyFrameTemplate">
+		<!-- ══ MONEY SECTION ══ -->
+
+		<Frame name="TradeMyMoneyDivider" inherits="TradeDividerTemplate">
 			<Area>
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeMySlotContainer" offset="16" />
-				<Anchor point="LEFT" offset="48" />
-				<Size><AbsDimension x="232" y="44" /></Size>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeMySlotContainer" offset="24" />
+				<Anchor point="LEFT" offset="40" />
 			</Area>
 		</Frame>
 
-		<!-- Other Player Money Display: explicit 232x44 -->
-		<Frame name="TradeOtherMoneyFrame" inherits="MoneyFrameTemplate">
+		<Frame name="TradeOtherMoneyDivider" inherits="TradeDividerTemplate">
 			<Area>
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeOtherSlotContainer" offset="16" />
-				<Anchor point="RIGHT" offset="-48" />
-				<Size><AbsDimension x="232" y="44" /></Size>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeOtherSlotContainer" offset="24" />
+				<Anchor point="RIGHT" offset="-40" />
 			</Area>
 		</Frame>
 
-		<!-- My Accept Check (shown when I have accepted) -->
-		<Frame name="TradeMyAcceptCheck" renderer="DefaultRenderer">
-			<Property name="Visible" value="false" />
+		<Frame name="TradeMyMoneyLabel" inherits="TradeSectionLabelTemplate">
+			<Property name="Text" value="TRADE_YOUR_MONEY" />
+
+			<Area>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeMyMoneyDivider" offset="14" />
+				<Anchor point="LEFT" offset="40" />
+			</Area>
+		</Frame>
+
+		<Frame name="TradeOtherMoneyLabel" inherits="TradeSectionLabelTemplate">
+			<Property name="Text" value="TRADE_THEIR_MONEY" />
+			<Property name="HorzAlign" value="RIGHT" />
+
+			<Area>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeOtherMoneyDivider" offset="14" />
+				<Anchor point="RIGHT" offset="-40" />
+			</Area>
+		</Frame>
+
+		<!--
+			Money input row. Three separate fields (gold / silver / copper), each followed by its
+			coin icon, so the amount is entered directly in the window instead of a popup dialog.
+		-->
+		<Frame name="TradeMoneyInputRow">
+			<Area>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeMyMoneyLabel" offset="8" />
+				<Anchor point="LEFT" offset="40" />
+				<Size><AbsDimension x="352" y="56" /></Size>
+			</Area>
+
+			<Frame name="TradeMoneyGoldField" inherits="TradeMoneyFieldTemplate">
+				<Area>
+					<Anchor point="LEFT" offset="0" />
+					<Anchor point="TOP" offset="0" />
+					<Size><AbsDimension x="96" y="56" /></Size>
+				</Area>
+
+				<Scripts>
+					<OnTabPressed>
+						return function(self)
+							TradeMoneySilverField:CaptureInput();
+						end
+					</OnTabPressed>
+					<OnEnterPressed>
+						return function(self)
+							self:ReleaseInput();
+						end
+					</OnEnterPressed>
+				</Scripts>
+			</Frame>
+
+			<Frame name="TradeMoneyGoldIcon" inherits="IconTemplate">
+				<Property name="Icon" value="Interface/Icons/Gold.htex" />
+
+				<Area>
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="TradeMoneyGoldField" offset="4" />
+					<Anchor point="V_CENTER" offset="0" />
+					<Size><AbsDimension x="32" y="32" /></Size>
+				</Area>
+			</Frame>
+
+			<Frame name="TradeMoneySilverField" inherits="TradeMoneyFieldTemplate">
+				<Area>
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="TradeMoneyGoldIcon" offset="10" />
+					<Anchor point="TOP" offset="0" />
+					<Size><AbsDimension x="64" y="56" /></Size>
+				</Area>
+
+				<Scripts>
+					<OnTabPressed>
+						return function(self)
+							TradeMoneyCopperField:CaptureInput();
+						end
+					</OnTabPressed>
+					<OnEnterPressed>
+						return function(self)
+							self:ReleaseInput();
+						end
+					</OnEnterPressed>
+				</Scripts>
+			</Frame>
+
+			<Frame name="TradeMoneySilverIcon" inherits="IconTemplate">
+				<Property name="Icon" value="Interface/Icons/Silver.htex" />
+
+				<Area>
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="TradeMoneySilverField" offset="4" />
+					<Anchor point="V_CENTER" offset="0" />
+					<Size><AbsDimension x="32" y="32" /></Size>
+				</Area>
+			</Frame>
+
+			<Frame name="TradeMoneyCopperField" inherits="TradeMoneyFieldTemplate">
+				<Area>
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="TradeMoneySilverIcon" offset="10" />
+					<Anchor point="TOP" offset="0" />
+					<Size><AbsDimension x="64" y="56" /></Size>
+				</Area>
+
+				<Scripts>
+					<OnTabPressed>
+						return function(self)
+							TradeMoneyGoldField:CaptureInput();
+						end
+					</OnTabPressed>
+					<OnEnterPressed>
+						return function(self)
+							self:ReleaseInput();
+						end
+					</OnEnterPressed>
+				</Scripts>
+			</Frame>
+
+			<Frame name="TradeMoneyCopperIcon" inherits="IconTemplate">
+				<Property name="Icon" value="Interface/Icons/Copper.htex" />
+
+				<Area>
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="TradeMoneyCopperField" offset="4" />
+					<Anchor point="V_CENTER" offset="0" />
+					<Size><AbsDimension x="32" y="32" /></Size>
+				</Area>
+			</Frame>
+		</Frame>
+
+		<!-- Reminder of how much the player actually owns, so the input can be judged at a glance -->
+		<Frame name="TradeMyPurseRow">
+			<Area>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeMoneyInputRow" offset="14" />
+				<Anchor point="LEFT" offset="40" />
+				<Size><AbsDimension x="352" y="44" /></Size>
+			</Area>
+
+			<Frame name="TradeMyPurseLabel" inherits="TradeSectionLabelTemplate">
+				<Property name="Text" value="TRADE_YOUR_PURSE" />
+
+				<Area>
+					<Anchor point="LEFT" offset="0" />
+					<Anchor point="TOP" offset="0" />
+					<Anchor point="BOTTOM" offset="0" />
+					<Size><AbsDimension x="130" /></Size>
+				</Area>
+			</Frame>
+
+			<Frame name="TradeMyPurseFrame" inherits="MoneyFrameTemplate">
+				<Area>
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="TradeMyPurseLabel" offset="8" />
+					<Anchor point="V_CENTER" offset="0" />
+					<Size><AbsDimension x="200" y="44" /></Size>
+				</Area>
+			</Frame>
+		</Frame>
+
+		<!-- Other player's money, mirrored on the right column -->
+		<Frame name="TradeOtherMoneyRow" renderer="DefaultRenderer">
 			<Visual>
-				<ImagerySection name="Image">
-					<TextComponent color="FF00FF00" horzAlign="CENTER" vertAlign="CENTER" />
+				<ImagerySection name="Background">
+					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" />
 				</ImagerySection>
 				<StateImagery name="Enabled">
 					<Layer>
-						<Section section="Image" />
+						<Section section="Background" />
 					</Layer>
 				</StateImagery>
 			</Visual>
+
 			<Area>
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeMyMoneyFrame" offset="12" />
-				<Anchor point="LEFT" offset="48" />
-				<Size><AbsDimension x="232" y="48" /></Size>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeOtherMoneyLabel" offset="8" />
+				<Anchor point="RIGHT" offset="-40" />
+				<Size><AbsDimension x="352" y="56" /></Size>
 			</Area>
-			<Scripts>
-				<OnLoad>
-					return function(self)
-						self:SetText("Accepted");
-					end
-				</OnLoad>
-			</Scripts>
+
+			<Frame name="TradeOtherMoneyFrame" inherits="MoneyFrameTemplate">
+				<Area>
+					<Anchor point="RIGHT" offset="-16" />
+					<Anchor point="V_CENTER" offset="0" />
+					<Size><AbsDimension x="200" y="44" /></Size>
+				</Area>
+			</Frame>
 		</Frame>
 
-		<!-- Set Gold Button — centered between the two columns, same row as accepted checks -->
-		<Frame name="TradeSetMoneyButton" inherits="GlueButton">
-			<Property name="Text" value="Set Gold" />
+		<!-- Accept status per side -->
+		<Frame name="TradeMyAcceptStatus" inherits="TradeAcceptStatusTemplate">
 			<Area>
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeMyMoneyFrame" offset="12" />
-				<Anchor point="H_CENTER" offset="0" />
-				<Size><AbsDimension x="180" y="48" /></Size>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeMyPurseRow" offset="26" />
+				<Anchor point="LEFT" offset="40" />
 			</Area>
-			<Scripts>
-				<OnLoad>
-					return function(self)
-						self:SetClickedHandler(function()
-							TradeFrame_ShowMoneyInput();
-						end);
-					end
-				</OnLoad>
-			</Scripts>
 		</Frame>
 
-		<!-- Other Accept Check (shown when they have accepted) -->
-		<Frame name="TradeOtherAcceptCheck" renderer="DefaultRenderer">
-			<Property name="Visible" value="false" />
-			<Visual>
-				<ImagerySection name="Image">
-					<TextComponent color="FF00FF00" horzAlign="CENTER" vertAlign="CENTER" />
-				</ImagerySection>
-				<StateImagery name="Enabled">
-					<Layer>
-						<Section section="Image" />
-					</Layer>
-				</StateImagery>
-			</Visual>
+		<Frame name="TradeOtherAcceptStatus" inherits="TradeAcceptStatusTemplate">
 			<Area>
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeOtherMoneyFrame" offset="12" />
-				<Anchor point="RIGHT" offset="-48" />
-				<Size><AbsDimension x="232" y="48" /></Size>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TradeMyPurseRow" offset="26" />
+				<Anchor point="LEFT" relativePoint="LEFT" relativeTo="TradeOtherSlotContainer" offset="0" />
 			</Area>
-			<Scripts>
-				<OnLoad>
-					return function(self)
-						self:SetText("Accepted");
-					end
-				</OnLoad>
-			</Scripts>
 		</Frame>
 
-		<!-- Accept Button -->
+		<!-- Accept / Cancel -->
 		<Frame name="TradeAcceptButton" inherits="GlueButton">
-			<Property name="Text" value="Accept" />
+			<Property name="Text" value="TRADE_ACCEPT" />
 			<Area>
-				<Anchor point="BOTTOM" offset="-32" />
-				<Anchor point="LEFT" offset="130" />
-				<Size><AbsDimension x="200" y="72" /></Size>
+				<Anchor point="BOTTOM" offset="-44" />
+				<Anchor point="H_CENTER" offset="-116" />
+				<Size><AbsDimension x="200" y="80" /></Size>
 			</Area>
 		</Frame>
 
-		<!-- Cancel Button -->
 		<Frame name="TradeCancelButton" inherits="GlueButton">
-			<Property name="Text" value="Cancel" />
+			<Property name="Text" value="CANCEL" />
 			<Area>
-				<Anchor point="BOTTOM" offset="-32" />
-				<Anchor point="RIGHT" offset="-130" />
-				<Size><AbsDimension x="200" y="72" /></Size>
+				<Anchor point="BOTTOM" offset="-44" />
+				<Anchor point="H_CENTER" offset="116" />
+				<Size><AbsDimension x="200" y="80" /></Size>
 			</Area>
 		</Frame>
 

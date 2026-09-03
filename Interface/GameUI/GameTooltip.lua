@@ -530,6 +530,71 @@ function GameTooltip_ShrinkToTextWidth()
     GameTooltip:SetWidth(desiredWidth);
 end
 
+--- Anchors the tooltip next to a frame, flipping to the other side and clamping vertically so it
+--- always stays fully on screen. Call this AFTER the tooltip has been filled, because the chosen
+--- side depends on the final tooltip size.
+---
+--- frame:          the frame the tooltip belongs to.
+--- preferredSide:  "RIGHT" (default) places the tooltip right of the frame, "LEFT" left of it.
+---                 The other side is used automatically when the preferred one does not fit.
+--- gap:            distance between the frame and the tooltip, in UI units (default 16).
+function GameTooltip_AnchorToFrame(frame, preferredSide, gap)
+    if (not frame) then
+        return;
+    end
+
+    gap = gap or 16.0;
+
+    -- GetRect() reports screen pixels while anchor offsets and the tooltip size are expressed in
+    -- UI (native resolution) units, so everything is converted into UI units first.
+    local scale = GetUIScale();
+    local parent = GameTooltip:GetParent();
+    local parentWidth = parent:GetWidth() / scale.x;
+    local parentHeight = parent:GetHeight() / scale.y;
+
+    local rect = frame:GetRect();
+    local frameLeft = rect.left / scale.x;
+    local frameRight = rect.right / scale.x;
+    local frameTop = rect.top / scale.y;
+
+    local tooltipWidth = GameTooltip:GetWidth();
+    local tooltipHeight = GameTooltip:GetHeight();
+
+    local margin = 8.0;
+    local rightSideLeft = frameRight + gap;
+    local leftSideLeft = frameLeft - gap - tooltipWidth;
+
+    local left;
+    if (preferredSide == "LEFT") then
+        -- Prefer the left side, fall back to the right one when the tooltip would leave the screen.
+        if (leftSideLeft >= margin) then
+            left = leftSideLeft;
+        else
+            left = rightSideLeft;
+        end
+    else
+        if (rightSideLeft + tooltipWidth <= parentWidth - margin) then
+            left = rightSideLeft;
+        else
+            left = leftSideLeft;
+        end
+    end
+
+    -- Neither side fits (very wide tooltip or very small screen): clamp into the viewport.
+    local maxLeft = parentWidth - tooltipWidth - margin;
+    if (left < margin) then left = margin; end
+    if (maxLeft > margin and left > maxLeft) then left = maxLeft; end
+
+    local top = frameTop;
+    local maxTop = parentHeight - tooltipHeight - margin;
+    if (top < margin) then top = margin; end
+    if (maxTop > margin and top > maxTop) then top = maxTop; end
+
+    GameTooltip:ClearAnchors();
+    GameTooltip:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, parent, left);
+    GameTooltip:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, parent, top);
+end
+
 function GameTooltip_FadeOut(delay, fadeTime)
     GameTooltip.fadeOut = true;
     GameTooltip.fadeOutDelay = delay;
