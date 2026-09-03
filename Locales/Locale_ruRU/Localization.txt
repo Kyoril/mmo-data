@@ -371,6 +371,7 @@ strings =
 	(key = "ERR_MAIL_NO_MAILBOX", string = "There is no mailbox nearby.")
 	(key = "ERR_MAIL_INVENTORY_FULL", string = "Your inventory is full.")
 	(key = "ERR_MAIL_INTERNAL_ERROR", string = "Internal mail error.")
+	(key = "EQUIP_ERR_NOT_ENOUGH_MONEY", string = "Not enough money.")
 	(key = "EQUIP_ERR_MUST_PURCHASE_THAT_BAG_SLOT", string = "You must purchase that bag slot.")
 	(key = "EQUIP_ERR_TOO_FAR_AWAY_FROM_BANK", string = "You are too far away from the bank.")
 	(key = "DESTROY_ITEM", string = "Are you sure you want to destroy %s?")
