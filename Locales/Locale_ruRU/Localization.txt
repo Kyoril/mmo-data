@@ -374,6 +374,7 @@ strings =
 	(key = "EQUIP_ERR_NOT_ENOUGH_MONEY", string = "Not enough money.")
 	(key = "EQUIP_ERR_MUST_PURCHASE_THAT_BAG_SLOT", string = "You must purchase that bag slot.")
 	(key = "EQUIP_ERR_TOO_FAR_AWAY_FROM_BANK", string = "You are too far away from the bank.")
+	(key = "EQUIP_ERR_CANT_TRADE_EQUIP_BAGS", string = "Cannot trade equipped bags.")
 	(key = "DESTROY_ITEM", string = "Are you sure you want to destroy %s?")
 
 	(key = "LEVEL_UP", string = "Congratulations, you have reached level %d!")
