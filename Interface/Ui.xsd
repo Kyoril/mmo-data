@@ -215,6 +215,7 @@
       <xs:element name="OnEnterPressed" type="ScriptBlockType" />
       <xs:element name="OnSpacePressed" type="ScriptBlockType" />
       <xs:element name="OnEscapePressed" type="ScriptBlockType" />
+      <xs:element name="OnTextChanged" type="ScriptBlockType" />
       <xs:element name="OnShow" type="ScriptBlockType" />
       <xs:element name="OnHide" type="ScriptBlockType" />
       <xs:element name="OnEnter" type="ScriptBlockType" />
