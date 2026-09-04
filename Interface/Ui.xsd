@@ -209,6 +209,7 @@
   <xs:complexType name="ScriptsType">
     <xs:choice minOccurs="0" maxOccurs="unbounded">
       <xs:element name="OnClick" type="ScriptBlockType" />
+      <xs:element name="OnMouseDown" type="ScriptBlockType" />
       <xs:element name="OnLoad" type="ScriptBlockType" />
       <xs:element name="OnUpdate" type="ScriptBlockType" />
       <xs:element name="OnTabPressed" type="ScriptBlockType" />
