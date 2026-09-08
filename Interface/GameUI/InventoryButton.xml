@@ -6,6 +6,11 @@
 		<Property name="Icon" />
 		<Property name="IconColor" value="FFFFFFFF" />
 		<Property name="Background" />
+		<!-- Tint applied to the button frame. Slots that opt in to quality borders (see
+		     QualityBorder) recolor this to the equipped item's quality color. -->
+		<Property name="QualityColor" value="FFFFFFFF" />
+		<!-- "true" makes InventoryItemButton_OnUpdate drive QualityColor from the item quality. -->
+		<Property name="QualityBorder" value="false" />
         <Property name="DragEnabled" value="true" />
         <Property name="DropEnabled" value="true" />
 
@@ -34,16 +39,16 @@
 				</TextComponent>
 			</ImagerySection>
 			<ImagerySection name="NormalFrame">
-				<BorderComponent texture="Interface/BW_ButtonSmall_Up.htex" borderSize="30" />
+				<BorderComponent texture="Interface/BW_ButtonSmall_Up.htex" borderSize="30" tint="$QualityColor" />
 			</ImagerySection>
 			<ImagerySection name="HoveredFrame">
-				<BorderComponent texture="Interface/BW_ButtonSmall_Over.htex" borderSize="30" />
+				<BorderComponent texture="Interface/BW_ButtonSmall_Over.htex" borderSize="30" tint="$QualityColor" />
 			</ImagerySection>
 			<ImagerySection name="PushedFrame">
-				<BorderComponent texture="Interface/BW_ButtonSmall_Down.htex" borderSize="30" />
+				<BorderComponent texture="Interface/BW_ButtonSmall_Down.htex" borderSize="30" tint="$QualityColor" />
 			</ImagerySection>
 			<ImagerySection name="DisabledFrame">
-				<BorderComponent texture="Interface/BW_ButtonSmall_Up.htex" borderSize="30" />
+				<BorderComponent texture="Interface/BW_ButtonSmall_Up.htex" borderSize="30" tint="$QualityColor" />
 			</ImagerySection>
 			<StateImagery name="Normal">
 				<Layer>

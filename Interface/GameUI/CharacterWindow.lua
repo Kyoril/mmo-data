@@ -100,6 +100,8 @@ function CharacterWindow_OnLoad(self)
 
     CharacterAttackTimeStat:SetOnEnterHandler(CharacterWindow_AttackSpeedLabel_OnEnter);
     CharacterAttackTimeStat:SetOnLeaveHandler(CharacterWindow_HideTooltip);
+
+    CharacterWindow_EnableEquipmentQualityBorders();
 end
 
 function CharacterWindow_AddAttributeButton_OnEnter(self)
@@ -272,6 +274,18 @@ local CHARACTER_EQUIPMENT_SLOTS = {
     "CharacterInvSlotTrinket2", "CharacterInvSlotMainHand", "CharacterInvSlotOffHand",
     "CharacterInvSlotRanged",
 };
+
+-- The paperdoll slots color their button border by the equipped item's quality, so the
+-- character sheet shows at a glance what is worn where. Bag, bank and mail slots share the
+-- same button template but keep their plain frames.
+function CharacterWindow_EnableEquipmentQualityBorders()
+    for _, slotName in ipairs(CHARACTER_EQUIPMENT_SLOTS) do
+        local slot = _G[slotName];
+        if slot then
+            InventoryItemButton_EnableQualityBorder(slot);
+        end
+    end
+end
 
 function CharacterWindow_UpdateEquipmentWarning()
     if not CharacterEquipmentWarning then

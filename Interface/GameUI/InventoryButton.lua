@@ -4,6 +4,30 @@
 INVENTORY_ICON_COLOR_NORMAL = "FFFFFFFF";
 INVENTORY_ICON_COLOR_DISABLED = "FFFF4040";
 
+-- Border tint of a slot that shows no quality color: empty slots and slots that never opted
+-- in to quality borders. White leaves the button frame art at its authored color.
+INVENTORY_QUALITY_COLOR_NONE = "FFFFFFFF";
+
+-- Recolors the button frame to the item's quality color. Only slots whose "QualityBorder"
+-- property is enabled participate; every other inventory button keeps its plain frame.
+function InventoryItemButton_UpdateQualityBorder(this, item)
+    if this:GetProperty("QualityBorder") ~= "true" then
+        return;
+    end
+
+    local color = INVENTORY_QUALITY_COLOR_NONE;
+    if item then
+        color = ItemQualityColors[item:GetQuality()] or INVENTORY_QUALITY_COLOR_NONE;
+    end
+
+    this:SetProperty("QualityColor", color);
+end
+
+-- Turns quality-colored borders on for an inventory button, e.g. the paperdoll slots.
+function InventoryItemButton_EnableQualityBorder(this)
+    this:SetProperty("QualityBorder", "true");
+end
+
 function InventoryItemButton_OnLoad(this)
     this:SetOnEnterHandler(InventoryItemButton_OnEnter);
     this:SetOnLeaveHandler(ActionButton_OnLeave);
@@ -95,9 +119,12 @@ function InventoryItemButton_OnUpdate(this, elapsed)
     if not item then
         this:SetText("");
         this:SetProperty("Icon", "");
+        InventoryItemButton_UpdateQualityBorder(this, nil);
         return;
     end
-    
+
+    InventoryItemButton_UpdateQualityBorder(this, item);
+
     local icon = item:GetIcon();
     if not icon then
         this:SetText("");
