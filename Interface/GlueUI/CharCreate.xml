@@ -235,13 +235,22 @@
 		<Frame name="CharCreatePage2" setAllPoints="true">
 			<Property name="Visible" value="false" />
 			<Frame name="CharCreatePropertiesFrame" inherits="GlueBorderFrame">
-				<Area><Anchor point="TOP" offset="32" /><Anchor point="RIGHT" offset="-32" /><Size><AbsDimension x="920" y="536" /></Size></Area>
+				<Area><Anchor point="TOP" offset="32" /><Anchor point="RIGHT" offset="-32" /><Size><AbsDimension x="920" y="680" /></Size></Area>
 				<Frame name="CharCreatePropertiesLabel" inherits="GlueTextLarge">
 					<Property name="Text" value="CUSTOMIZATION" />
 					<Area><Anchor point="LEFT" offset="40" /><Anchor point="RIGHT" offset="-40" /><Anchor point="TOP" offset="28" /></Area>
 				</Frame>
 				<Frame name="CharCreatePropertyList" renderer="DefaultRenderer">
 					<Area><Anchor point="LEFT" offset="32" /><Anchor point="RIGHT" offset="-32" /><Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharCreatePropertiesLabel" offset="16" /><Size><AbsDimension y="416" /></Size></Area>
+				</Frame>
+				<Frame name="CharCreateShowOutfitButton" inherits="ListCheckButtonBase">
+					<Property name="Text" value="SHOW_OUTFIT" />
+					<Property name="Checked" value="true" />
+					<Area>
+						<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharCreatePropertyList" offset="16" />
+						<Anchor point="H_CENTER" />
+					</Area>
+					<Scripts><OnClick>return function(this) CharCreate_ToggleOutfit(this); end</OnClick></Scripts>
 				</Frame>
 			</Frame>
 

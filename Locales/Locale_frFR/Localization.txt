@@ -468,6 +468,7 @@ strings =
 	(key = "BACK", string = "Retour")
 	(key = "CUSTOMIZE", string = "Personnaliser")
 	(key = "CUSTOMIZATION", string = "Personnalisation")
+	(key = "SHOW_OUTFIT", string = "Afficher l'armure")
 	
 	(key = "GROUP_DISBANDED", string = "Votre groupe a été dissous.")
 	(key = "PARTY_MEMBER_JOINED", string = "%s a rejoint le groupe.")

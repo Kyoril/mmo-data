@@ -471,6 +471,7 @@ strings =
 	(key = "BACK", string = "Back")
 	(key = "CUSTOMIZE", string = "Customize")
 	(key = "CUSTOMIZATION", string = "Customization")
+	(key = "SHOW_OUTFIT", string = "Показать доспехи")
 
 	(key = "GROUP_DISBANDED", string = "Your group has been disbanded.")
 	(key = "PARTY_MEMBER_JOINED", string = "%s has joined the group.")

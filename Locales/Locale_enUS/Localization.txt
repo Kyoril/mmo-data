@@ -476,6 +476,7 @@ strings =
 	(key = "CHAT_TYPE_RAID", string = "Raid")
 	(key = "CUSTOMIZE", string = "Customize")
 	(key = "CUSTOMIZATION", string = "Customization")
+	(key = "SHOW_OUTFIT", string = "Show Armor")
 
 	(key = "GROUP_DISBANDED", string = "Your group has been disbanded.")
 	(key = "PARTY_MEMBER_JOINED", string = "%s has joined the group.")

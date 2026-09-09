@@ -216,6 +216,7 @@ end
 function CharCreate_ShowCustomizationPage()
 	CharCreatePage1:Hide();
 	CharCreatePage2:Show();
+	CharCreateShowOutfitButton:SetChecked(IsCharCreateOutfitVisible());
 	CharCreateModel:SetProperty("Zoom", "2.25");
 	CharCreateModel:SetProperty("OffsetY", "1.35");
 	CharCreate:StopAnimation("BackgroundZoomOut");
@@ -245,6 +246,10 @@ function OnGenderChange_Clicked(this)
 	SetCharacterGender(this.id);
 	SetupCustomization();
 	OnGenderChanged();
+end
+
+function CharCreate_ToggleOutfit(this)
+	SetCharCreateOutfitVisible(this:IsChecked());
 end
 
 function CharCreate_Submit()
