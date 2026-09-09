@@ -235,7 +235,7 @@
 		<Frame name="CharCreatePage2" setAllPoints="true">
 			<Property name="Visible" value="false" />
 			<Frame name="CharCreatePropertiesFrame" inherits="GlueBorderFrame">
-				<!-- y=680 is only the pre-SetupCustomization value; SetupCustomization() in CharCreate.lua recomputes this height at runtime, so keep the two in agreement. -->
+				<!-- y=680 is a placeholder: SetupCustomization() in CharCreate.lua computes the real height from the property count and overwrites it before this page is ever shown. -->
 				<Area><Anchor point="TOP" offset="32" /><Anchor point="RIGHT" offset="-32" /><Size><AbsDimension x="920" y="680" /></Size></Area>
 				<Frame name="CharCreatePropertiesLabel" inherits="GlueTextLarge">
 					<Property name="Text" value="CUSTOMIZATION" />
