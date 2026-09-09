@@ -33,6 +33,12 @@ function CustomizationPropertyButton_UpdateValue(this)
 	end
 end
 
+-- Extra vertical space CharCreatePropertiesFrame must reserve below CharCreatePropertyList for
+-- the CharCreateShowOutfitButton checkbox: the checkbox's own ListCheckButtonBase height (104)
+-- plus its 16px TOP anchor offset from the list's BOTTOM in CharCreate.xml. Keep this in sync
+-- with both of those values.
+local SHOW_OUTFIT_CHECKBOX_RESERVED_HEIGHT = 104 + 16;
+
 function SetupCustomization()
 	local propertyCount = GetNumCustomizationProperties();
 	CharCreatePropertyList:RemoveAllChildren();
@@ -57,7 +63,7 @@ function SetupCustomization()
 	end
 
 	CharCreatePropertyList:SetHeight(8 + propertyCount * 136);
-	CharCreatePropertiesFrame:SetHeight(128 + propertyCount * 136);
+	CharCreatePropertiesFrame:SetHeight(128 + propertyCount * 136 + SHOW_OUTFIT_CHECKBOX_RESERVED_HEIGHT);
 end
 
 function OnRaceChanged()
