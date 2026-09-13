@@ -74,6 +74,9 @@ strings =
 	(key = "OPTIONS_SSAO_QUALITY", string = "Umgebungsverdeckungsdetail")
 	(key = "OPTIONS_SSAO_HALF_RES", string = "Umgebungsverdeckung in halber Auflösung")
 	(key = "OPTIONS_SSAO_RADIUS", string = "Umgebungsverdeckungsradius")
+	(key = "OPTIONS_ATMOSPHERE_QUALITY", string = "Nebel und Lichtstrahlen")
+	(key = "OPTIONS_BLOOM", string = "Bloom")
+	(key = "OPTIONS_BRIGHTNESS", string = "Helligkeit")
 	(key = "OPTIONS_RENDER_SCALE", string = "Renderskalierung")
 	(key = "OPTIONS_SCALE_50", string = "50%")
 	(key = "OPTIONS_SCALE_75", string = "75%")
@@ -101,6 +104,7 @@ strings =
 	(key = "OPTIONS_QUALITY_MEDIUM", string = "Mittel")
 	(key = "OPTIONS_QUALITY_HIGH", string = "Hoch")
 	(key = "OPTIONS_QUALITY_ULTRA", string = "Ultra")
+	(key = "OPTIONS_QUALITY_OFF", string = "Aus")
 
 	(key = "OPTIONS_INTERFACE", string = "Benutzeroberfläche")
 	(key = "OPTIONS_GAMEPLAY", string = "Gameplay")

@@ -74,6 +74,9 @@ strings =
 	(key = "OPTIONS_SSAO_QUALITY", string = "Détail de l'occlusion ambiante")
 	(key = "OPTIONS_SSAO_HALF_RES", string = "Occlusion ambiante en demi-résolution")
 	(key = "OPTIONS_SSAO_RADIUS", string = "Rayon de l'occlusion ambiante")
+	(key = "OPTIONS_ATMOSPHERE_QUALITY", string = "Brouillard et rayons de lumière")
+	(key = "OPTIONS_BLOOM", string = "Flou lumineux")
+	(key = "OPTIONS_BRIGHTNESS", string = "Luminosité")
 	(key = "OPTIONS_RENDER_SCALE", string = "Échelle de rendu")
 	(key = "OPTIONS_SCALE_50", string = "50%")
 	(key = "OPTIONS_SCALE_75", string = "75%")
@@ -101,6 +104,7 @@ strings =
 	(key = "OPTIONS_QUALITY_MEDIUM", string = "Moyen")
 	(key = "OPTIONS_QUALITY_HIGH", string = "Élevé")
 	(key = "OPTIONS_QUALITY_ULTRA", string = "Ultra")
+	(key = "OPTIONS_QUALITY_OFF", string = "Désactivé")
 
 	(key = "OPTIONS_INTERFACE", string = "Interface")
 	(key = "OPTIONS_GAMEPLAY", string = "Jouabilité")

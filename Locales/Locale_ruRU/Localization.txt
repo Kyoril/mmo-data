@@ -74,6 +74,9 @@ strings =
 	(key = "OPTIONS_SSAO_QUALITY", string = "Детализация фонового затенения")
 	(key = "OPTIONS_SSAO_HALF_RES", string = "Фоновое затенение в половинном разрешении")
 	(key = "OPTIONS_SSAO_RADIUS", string = "Радиус фонового затенения")
+	(key = "OPTIONS_ATMOSPHERE_QUALITY", string = "Туман и лучи света")
+	(key = "OPTIONS_BLOOM", string = "Свечение")
+	(key = "OPTIONS_BRIGHTNESS", string = "Яркость")
 	(key = "OPTIONS_RENDER_SCALE", string = "Масштаб рендеринга")
 	(key = "OPTIONS_SCALE_50", string = "50%")
 	(key = "OPTIONS_SCALE_75", string = "75%")
@@ -101,6 +104,7 @@ strings =
 	(key = "OPTIONS_QUALITY_MEDIUM", string = "Среднее")
 	(key = "OPTIONS_QUALITY_HIGH", string = "Высокое")
 	(key = "OPTIONS_QUALITY_ULTRA", string = "Ультра")
+	(key = "OPTIONS_QUALITY_OFF", string = "Выкл.")
 
 	(key = "OPTIONS_INTERFACE", string = "Интерфейс")
 	(key = "OPTIONS_GAMEPLAY", string = "Игровой процесс")

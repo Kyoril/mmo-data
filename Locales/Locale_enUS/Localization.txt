@@ -74,6 +74,9 @@ strings =
 	(key = "OPTIONS_SSAO_QUALITY", string = "Ambient Occlusion Detail")
 	(key = "OPTIONS_SSAO_HALF_RES", string = "Half-Resolution Ambient Occlusion")
 	(key = "OPTIONS_SSAO_RADIUS", string = "Ambient Occlusion Radius")
+	(key = "OPTIONS_ATMOSPHERE_QUALITY", string = "Fog and Light Shafts")
+	(key = "OPTIONS_BLOOM", string = "Bloom")
+	(key = "OPTIONS_BRIGHTNESS", string = "Brightness")
 	(key = "OPTIONS_RENDER_SCALE", string = "Render Scale")
 	(key = "OPTIONS_SCALE_50", string = "50%")
 	(key = "OPTIONS_SCALE_75", string = "75%")
@@ -101,6 +104,7 @@ strings =
 	(key = "OPTIONS_QUALITY_MEDIUM", string = "Medium")
 	(key = "OPTIONS_QUALITY_HIGH", string = "High")
 	(key = "OPTIONS_QUALITY_ULTRA", string = "Ultra")
+	(key = "OPTIONS_QUALITY_OFF", string = "Off")
 
 	(key = "OPTIONS_INTERFACE", string = "Interface")
 	(key = "OPTIONS_GAMEPLAY", string = "Gameplay")
