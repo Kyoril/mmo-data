@@ -3,6 +3,10 @@ VENDOR_ITEMS_PER_PAGE = 14;
 function VendorFrame_UpdateVendorItems()
     local numItems = GetVendorNumItems();
 
+    local pageCount = math.max(1, math.ceil(numItems / VENDOR_ITEMS_PER_PAGE));
+    VendorFrame.page = math.max(1, math.min(VendorFrame.page, pageCount));
+    VendorStockLabel:SetText(string.format(Localize("VENDOR_STOCK_COUNT"), numItems));
+
     if VendorFrame.page * VENDOR_ITEMS_PER_PAGE < numItems then
         VendorNextPageButton:Enable();
     else
@@ -15,7 +19,7 @@ function VendorFrame_UpdateVendorItems()
         VendorPrevPageButton:Enable();
     end
 
-    VendorPageLabel:SetText(string.format(Localize("SPELL_BOOK_PAGE_FORMAT"), VendorFrame.page));
+    VendorPageLabel:SetText(string.format(Localize("VENDOR_PAGE_FORMAT"), VendorFrame.page, pageCount));
 
     for i = 1, VENDOR_ITEMS_PER_PAGE, 1 do
         local index = (((VendorFrame.page - 1) * VENDOR_ITEMS_PER_PAGE) + i);
@@ -41,12 +45,16 @@ function VendorFrame_UpdateVendorItems()
             RefreshMoneyFrame("VendorMoney" .. i, price * quantity, false, false, true);
             money:Show();
 
+            button:SetProperty("QualityColor", item.quality > 1 and ItemQualityColors[item.quality] or "FFFFFFFF");
             border:Enable();
+            border:Show();
         else
             money:Hide();
             itemText:SetText("");
             button:SetProperty("Icon", "");
+            button:SetText("");
             border:Disable();
+            border:Hide();
         end
     end
 end
@@ -100,7 +108,7 @@ end
 function VendorButton_OnEnter(this)
     local numItems = GetVendorNumItems();
 
-    local index = ((VendorFrame.page - 1) * VENDOR_ITEMS_PER_PAGE) + this.id + 1;
+    local index = this.id + 1;
     if (index <= numItems) then
         local item = GetVendorItemInfo(index - 1);
         if item then

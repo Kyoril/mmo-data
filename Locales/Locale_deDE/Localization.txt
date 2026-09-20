@@ -797,4 +797,7 @@ strings =
 	(key = "HUD_EXPERIENCE_FORMAT", string = "%s: %d / %d")
 	(key = "TALENT_POINTS_LABEL", string = "Verfügbare Talentpunkte")
 	(key = "FRIEND_LIST_SUMMARY", string = "%d online / %d Freunde")
+	(key = "VENDOR_STOCK_COUNT", string = "%d Waren im Angebot")
+	(key = "VENDOR_PAGE_FORMAT", string = "Seite %d / %d")
+	(key = "VENDOR_PURCHASE_HINT", string = "Rechtsklick auf einen Gegenstand zum Kaufen")
 }

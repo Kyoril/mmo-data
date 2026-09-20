@@ -828,4 +828,7 @@ strings =
 	(key = "HUD_EXPERIENCE_FORMAT", string = "%s: %d / %d")
 	(key = "TALENT_POINTS_LABEL", string = "Available talent points")
 	(key = "FRIEND_LIST_SUMMARY", string = "%d online / %d friends")
+	(key = "VENDOR_STOCK_COUNT", string = "%d items for sale")
+	(key = "VENDOR_PAGE_FORMAT", string = "Page %d / %d")
+	(key = "VENDOR_PURCHASE_HINT", string = "Right-click an item to buy")
 }

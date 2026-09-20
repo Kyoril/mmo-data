@@ -1,12 +1,95 @@
-<?xml version="1.0" ?>
+<?xml version='1.0' encoding='utf-8'?>
 <UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
 	<Script file="VendorFrame.lua" />
-
+	<Font name="VendorItemFont" file="Fonts/FRIZQT__.TTF" size="24" outline="1" />
+	<Frame name="VendorItemIconTemplate" type="Button" renderer="ButtonRenderer">
+		<Property name="Icon" />
+		<Property name="QualityColor" value="FFFFFFFF" />
+		<Visual>
+			<ImagerySection name="Image">
+				<ImageComponent>
+					<Area>
+						<Inset all="10" />
+					</Area>
+					<PropertyValue property="Icon" />
+				</ImageComponent>
+			</ImagerySection>
+			<ImagerySection name="Text">
+				<TextComponent horzAlign="RIGHT" vertAlign="BOTTOM">
+					<Area>
+						<Inset all="8" />
+					</Area>
+				</TextComponent>
+			</ImagerySection>
+			<ImagerySection name="NormalFrame">
+				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="$QualityColor" />
+			</ImagerySection>
+			<ImagerySection name="HoveredFrame">
+				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="$QualityColor" />
+			</ImagerySection>
+			<ImagerySection name="PushedFrame">
+				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="$QualityColor" />
+			</ImagerySection>
+			<ImagerySection name="DisabledFrame">
+				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="$QualityColor" />
+			</ImagerySection>
+			<StateImagery name="Normal">
+				<Layer>
+					<Section section="NormalFrame" />
+					<Section section="Image" />
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Hovered">
+				<Layer>
+					<Section section="HoveredFrame" />
+					<Section section="Image" />
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Pushed">
+				<Layer>
+					<Section section="PushedFrame" />
+					<Section section="Image" />
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="DisabledFrame" />
+					<Section section="Image" />
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+		<Area>
+			<Size>
+				<AbsDimension x="112" y="112" />
+			</Size>
+		</Area>
+	</Frame>
+	<Frame name="VendorCardTemplate" renderer="DefaultRenderer">
+		<Area>
+			<Size>
+				<AbsDimension y="128" />
+			</Size>
+		</Area>
+		<Visual>
+			<ImagerySection name="Surface">
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF211E17" />
+				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="8" tint="FF9B8052" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Surface" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+	</Frame>
 	<Frame name="VendorFrame" inherits="SidePanelTemplate" parent="GameParent">
 		<Property name="Visible" value="False" />
-
-        <Scripts>
-            <OnLoad>
+		<Scripts>
+			<OnLoad>
                 return function(this)
                     VendorFrame_OnLoad(this);
                 end
@@ -22,33 +105,62 @@
 					CloseVendor();
 				end
 			</OnHide>
-        </Scripts>
-
-		<Frame name="VendorButton1Border" inherits="LootButtonBorderTemplate">
+		</Scripts>
+		<Frame name="VendorStockLabel" inherits="TextSmall">
+			<Property name="Font" value="VendorItemFont" />
+			<Property name="TextColor" value="FFE0C381" />
 			<Area>
-				<Anchor point="LEFT" offset="24" />
-				<Anchor point="RIGHT" relativePoint="H_CENTER" offset="-12" />
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="VendorFrame_SidePanelTitleBar" offset="6" />
+				<Anchor point="TOP" relativeTo="VendorFrame_SidePanelTitleBar" relativePoint="BOTTOM" offset="16" />
+				<Anchor point="LEFT" offset="36" />
+				<Anchor point="RIGHT" offset="-36" />
+				<Size>
+					<AbsDimension y="32" />
+				</Size>
 			</Area>
-			
-			<Frame name="VendorButton1" inherits="LootButtonTemplate" id="1">
+		</Frame>
+		<Frame name="VendorStockSurface" renderer="DefaultRenderer">
+			<Property name="Clickable" value="false" />
+			<Property name="Enabled" value="false" />
+			<Area>
+				<Anchor point="TOP" relativeTo="VendorStockLabel" relativePoint="BOTTOM" offset="12" />
+				<Anchor point="LEFT" offset="24" />
+				<Anchor point="RIGHT" offset="-24" />
+				<Anchor point="BOTTOM" offset="-144" />
+			</Area>
+			<Visual>
+				<ImagerySection name="Surface">
+					<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF11110F" />
+					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFAC946B" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Surface" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+		</Frame>
+		<Frame name="VendorButton1Border" inherits="VendorCardTemplate">
+			<Area>
+				<Anchor point="LEFT" offset="36" />
+				<Anchor point="RIGHT" relativePoint="H_CENTER" offset="-10" />
+				<Anchor point="TOP" relativeTo="VendorStockSurface" offset="12" />
+			</Area>
+			<Frame name="VendorButton1" inherits="VendorItemIconTemplate" id="1">
 				<Area>
 					<Anchor point="LEFT" offset="8" />
 					<Anchor point="TOP" offset="8" />
 				</Area>
 			</Frame>
-
 			<Frame name="VendorText1" renderer="DefaultRenderer" id="1">
-				<Property name="Font" value="SmallLabelFont" />
-
+				<Property name="Font" value="VendorItemFont" />
 				<Area>
-					<Anchor point="TOP" relativeTo="VendorButton1" offset="0" />
+					<Anchor point="TOP" relativeTo="VendorButton1" offset="4" />
 					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="VendorButton1" offset="8" />
-					<Anchor point="RIGHT" />
-					<Anchor point="BOTTOM" offset="-8" />
-					<Size><AbsDimension x="0" y="44" /></Size>
+					<Anchor point="RIGHT" offset="-12" />
+					<Size>
+						<AbsDimension x="0" y="58" />
+					</Size>
 				</Area>
-						
 				<Visual>
 					<ImagerySection name="Text">
 						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
@@ -65,7 +177,6 @@
 					</StateImagery>
 				</Visual>
 			</Frame>
-
 			<Frame name="VendorMoney1" inherits="MoneyFrameTemplate">
 				<Area>
 					<Anchor point="BOTTOM" relativeTo="VendorButton1Border" offset="-8" />
@@ -73,32 +184,28 @@
 				</Area>
 			</Frame>
 		</Frame>
-
-		<Frame name="VendorButton2Border" inherits="LootButtonBorderTemplate">
+		<Frame name="VendorButton2Border" inherits="VendorCardTemplate">
 			<Area>
-				<Anchor point="LEFT" relativePoint="H_CENTER" offset="0" />
-				<Anchor point="RIGHT" offset="-24" />
-				<Anchor point="TOP" relativeTo="VendorButton1Border" />
+				<Anchor point="LEFT" relativePoint="H_CENTER" offset="10" />
+				<Anchor point="RIGHT" offset="-36" />
+				<Anchor point="TOP" relativeTo="VendorStockSurface" offset="12" />
 			</Area>
-
-			<Frame name="VendorButton2" inherits="LootButtonTemplate" id="2">
+			<Frame name="VendorButton2" inherits="VendorItemIconTemplate" id="2">
 				<Area>
 					<Anchor point="LEFT" offset="8" />
 					<Anchor point="TOP" offset="8" />
 				</Area>
 			</Frame>
-
 			<Frame name="VendorText2" renderer="DefaultRenderer" id="2">
-				<Property name="Font" value="SmallLabelFont" />
-
+				<Property name="Font" value="VendorItemFont" />
 				<Area>
-					<Anchor point="TOP" relativeTo="VendorButton2" offset="0" />
+					<Anchor point="TOP" relativeTo="VendorButton2" offset="4" />
 					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="VendorButton2" offset="8" />
-					<Anchor point="RIGHT" />
-					<Anchor point="BOTTOM" offset="-8" />
-					<Size><AbsDimension x="0" y="44" /></Size>
+					<Anchor point="RIGHT" offset="-12" />
+					<Size>
+						<AbsDimension x="0" y="58" />
+					</Size>
 				</Area>
-
 				<Visual>
 					<ImagerySection name="Text">
 						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
@@ -115,7 +222,6 @@
 					</StateImagery>
 				</Visual>
 			</Frame>
-
 			<Frame name="VendorMoney2" inherits="MoneyFrameTemplate">
 				<Area>
 					<Anchor point="BOTTOM" relativeTo="VendorButton2Border" offset="-8" />
@@ -123,32 +229,28 @@
 				</Area>
 			</Frame>
 		</Frame>
-
-		<Frame name="VendorButton3Border" inherits="LootButtonBorderTemplate">
+		<Frame name="VendorButton3Border" inherits="VendorCardTemplate">
 			<Area>
-				<Anchor point="LEFT" relativeTo="VendorButton1Border" />
-				<Anchor point="RIGHT" relativeTo="VendorButton1Border" />
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="VendorButton1Border" offset="6" />
+				<Anchor point="LEFT" offset="36" />
+				<Anchor point="RIGHT" relativePoint="H_CENTER" offset="-10" />
+				<Anchor point="TOP" relativeTo="VendorStockSurface" offset="148" />
 			</Area>
-
-			<Frame name="VendorButton3" inherits="LootButtonTemplate" id="3">
+			<Frame name="VendorButton3" inherits="VendorItemIconTemplate" id="3">
 				<Area>
 					<Anchor point="LEFT" offset="8" />
 					<Anchor point="TOP" offset="8" />
 				</Area>
 			</Frame>
-
 			<Frame name="VendorText3" renderer="DefaultRenderer" id="3">
-				<Property name="Font" value="SmallLabelFont" />
-
+				<Property name="Font" value="VendorItemFont" />
 				<Area>
-					<Anchor point="TOP" relativeTo="VendorButton3" offset="0" />
+					<Anchor point="TOP" relativeTo="VendorButton3" offset="4" />
 					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="VendorButton3" offset="8" />
-					<Anchor point="RIGHT" />
-					<Anchor point="BOTTOM" offset="-8" />
-					<Size><AbsDimension x="0" y="44" /></Size>
+					<Anchor point="RIGHT" offset="-12" />
+					<Size>
+						<AbsDimension x="0" y="58" />
+					</Size>
 				</Area>
-
 				<Visual>
 					<ImagerySection name="Text">
 						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
@@ -165,7 +267,6 @@
 					</StateImagery>
 				</Visual>
 			</Frame>
-
 			<Frame name="VendorMoney3" inherits="MoneyFrameTemplate">
 				<Area>
 					<Anchor point="BOTTOM" relativeTo="VendorButton3Border" offset="-8" />
@@ -173,32 +274,28 @@
 				</Area>
 			</Frame>
 		</Frame>
-
-		<Frame name="VendorButton4Border" inherits="LootButtonBorderTemplate">
+		<Frame name="VendorButton4Border" inherits="VendorCardTemplate">
 			<Area>
-				<Anchor point="LEFT" relativeTo="VendorButton2Border" />
-				<Anchor point="RIGHT" relativeTo="VendorButton2Border" />
-				<Anchor point="TOP" relativeTo="VendorButton3Border" />
+				<Anchor point="LEFT" relativePoint="H_CENTER" offset="10" />
+				<Anchor point="RIGHT" offset="-36" />
+				<Anchor point="TOP" relativeTo="VendorStockSurface" offset="148" />
 			</Area>
-			
-			<Frame name="VendorButton4" inherits="LootButtonTemplate" id="4">
+			<Frame name="VendorButton4" inherits="VendorItemIconTemplate" id="4">
 				<Area>
 					<Anchor point="LEFT" offset="8" />
 					<Anchor point="TOP" offset="8" />
 				</Area>
 			</Frame>
-
 			<Frame name="VendorText4" renderer="DefaultRenderer" id="4">
-				<Property name="Font" value="SmallLabelFont" />
-
+				<Property name="Font" value="VendorItemFont" />
 				<Area>
-					<Anchor point="TOP" relativeTo="VendorButton4" offset="0" />
+					<Anchor point="TOP" relativeTo="VendorButton4" offset="4" />
 					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="VendorButton4" offset="8" />
-					<Anchor point="RIGHT" />
-					<Anchor point="BOTTOM" offset="-8" />
-					<Size><AbsDimension x="0" y="44" /></Size>
+					<Anchor point="RIGHT" offset="-12" />
+					<Size>
+						<AbsDimension x="0" y="58" />
+					</Size>
 				</Area>
-						
 				<Visual>
 					<ImagerySection name="Text">
 						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
@@ -215,7 +312,6 @@
 					</StateImagery>
 				</Visual>
 			</Frame>
-			
 			<Frame name="VendorMoney4" inherits="MoneyFrameTemplate">
 				<Area>
 					<Anchor point="BOTTOM" relativeTo="VendorButton4Border" offset="-8" />
@@ -223,32 +319,28 @@
 				</Area>
 			</Frame>
 		</Frame>
-
-		<Frame name="VendorButton5Border" inherits="LootButtonBorderTemplate">
+		<Frame name="VendorButton5Border" inherits="VendorCardTemplate">
 			<Area>
-				<Anchor point="LEFT" relativeTo="VendorButton3Border" />
-				<Anchor point="RIGHT" relativeTo="VendorButton3Border" />
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="VendorButton3Border" offset="6" />
+				<Anchor point="LEFT" offset="36" />
+				<Anchor point="RIGHT" relativePoint="H_CENTER" offset="-10" />
+				<Anchor point="TOP" relativeTo="VendorStockSurface" offset="284" />
 			</Area>
-			
-			<Frame name="VendorButton5" inherits="LootButtonTemplate" id="5">
+			<Frame name="VendorButton5" inherits="VendorItemIconTemplate" id="5">
 				<Area>
 					<Anchor point="LEFT" offset="8" />
 					<Anchor point="TOP" offset="8" />
 				</Area>
 			</Frame>
-
 			<Frame name="VendorText5" renderer="DefaultRenderer" id="5">
-				<Property name="Font" value="SmallLabelFont" />
-
+				<Property name="Font" value="VendorItemFont" />
 				<Area>
-					<Anchor point="TOP" relativeTo="VendorButton5" offset="0" />
+					<Anchor point="TOP" relativeTo="VendorButton5" offset="4" />
 					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="VendorButton5" offset="8" />
-					<Anchor point="RIGHT" />
-					<Anchor point="BOTTOM" offset="-8" />
-					<Size><AbsDimension x="0" y="44" /></Size>
+					<Anchor point="RIGHT" offset="-12" />
+					<Size>
+						<AbsDimension x="0" y="58" />
+					</Size>
 				</Area>
-						
 				<Visual>
 					<ImagerySection name="Text">
 						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
@@ -265,7 +357,6 @@
 					</StateImagery>
 				</Visual>
 			</Frame>
-			
 			<Frame name="VendorMoney5" inherits="MoneyFrameTemplate">
 				<Area>
 					<Anchor point="BOTTOM" relativeTo="VendorButton5Border" offset="-8" />
@@ -273,32 +364,28 @@
 				</Area>
 			</Frame>
 		</Frame>
-		
-		<Frame name="VendorButton6Border" inherits="LootButtonBorderTemplate">
+		<Frame name="VendorButton6Border" inherits="VendorCardTemplate">
 			<Area>
-				<Anchor point="LEFT" relativeTo="VendorButton4Border" />
-				<Anchor point="RIGHT" relativeTo="VendorButton4Border" />
-				<Anchor point="TOP" relativeTo="VendorButton5Border" />
+				<Anchor point="LEFT" relativePoint="H_CENTER" offset="10" />
+				<Anchor point="RIGHT" offset="-36" />
+				<Anchor point="TOP" relativeTo="VendorStockSurface" offset="284" />
 			</Area>
-			
-			<Frame name="VendorButton6" inherits="LootButtonTemplate" id="6">
+			<Frame name="VendorButton6" inherits="VendorItemIconTemplate" id="6">
 				<Area>
 					<Anchor point="LEFT" offset="8" />
 					<Anchor point="TOP" offset="8" />
 				</Area>
 			</Frame>
-
 			<Frame name="VendorText6" renderer="DefaultRenderer" id="6">
-				<Property name="Font" value="SmallLabelFont" />
-
+				<Property name="Font" value="VendorItemFont" />
 				<Area>
-					<Anchor point="TOP" relativeTo="VendorButton6" offset="0" />
+					<Anchor point="TOP" relativeTo="VendorButton6" offset="4" />
 					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="VendorButton6" offset="8" />
-					<Anchor point="RIGHT" />
-					<Anchor point="BOTTOM" offset="-8" />
-					<Size><AbsDimension x="0" y="44" /></Size>
+					<Anchor point="RIGHT" offset="-12" />
+					<Size>
+						<AbsDimension x="0" y="58" />
+					</Size>
 				</Area>
-						
 				<Visual>
 					<ImagerySection name="Text">
 						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
@@ -315,7 +402,6 @@
 					</StateImagery>
 				</Visual>
 			</Frame>
-
 			<Frame name="VendorMoney6" inherits="MoneyFrameTemplate">
 				<Area>
 					<Anchor point="BOTTOM" relativeTo="VendorButton6Border" offset="-8" />
@@ -323,32 +409,28 @@
 				</Area>
 			</Frame>
 		</Frame>
-		
-		<Frame name="VendorButton7Border" inherits="LootButtonBorderTemplate">
+		<Frame name="VendorButton7Border" inherits="VendorCardTemplate">
 			<Area>
-				<Anchor point="LEFT" relativeTo="VendorButton5Border" />
-				<Anchor point="RIGHT" relativeTo="VendorButton5Border" />
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="VendorButton5Border" offset="6" />
+				<Anchor point="LEFT" offset="36" />
+				<Anchor point="RIGHT" relativePoint="H_CENTER" offset="-10" />
+				<Anchor point="TOP" relativeTo="VendorStockSurface" offset="420" />
 			</Area>
-			
-			<Frame name="VendorButton7" inherits="LootButtonTemplate" id="7">
+			<Frame name="VendorButton7" inherits="VendorItemIconTemplate" id="7">
 				<Area>
 					<Anchor point="LEFT" offset="8" />
 					<Anchor point="TOP" offset="8" />
 				</Area>
 			</Frame>
-
 			<Frame name="VendorText7" renderer="DefaultRenderer" id="7">
-				<Property name="Font" value="SmallLabelFont" />
-
+				<Property name="Font" value="VendorItemFont" />
 				<Area>
-					<Anchor point="TOP" relativeTo="VendorButton7" offset="0" />
+					<Anchor point="TOP" relativeTo="VendorButton7" offset="4" />
 					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="VendorButton7" offset="8" />
-					<Anchor point="RIGHT" />
-					<Anchor point="BOTTOM" offset="-8" />
-					<Size><AbsDimension x="0" y="44" /></Size>
+					<Anchor point="RIGHT" offset="-12" />
+					<Size>
+						<AbsDimension x="0" y="58" />
+					</Size>
 				</Area>
-						
 				<Visual>
 					<ImagerySection name="Text">
 						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
@@ -365,7 +447,6 @@
 					</StateImagery>
 				</Visual>
 			</Frame>
-			
 			<Frame name="VendorMoney7" inherits="MoneyFrameTemplate">
 				<Area>
 					<Anchor point="BOTTOM" relativeTo="VendorButton7Border" offset="-8" />
@@ -373,32 +454,28 @@
 				</Area>
 			</Frame>
 		</Frame>
-		
-		<Frame name="VendorButton8Border" inherits="LootButtonBorderTemplate">
+		<Frame name="VendorButton8Border" inherits="VendorCardTemplate">
 			<Area>
-				<Anchor point="LEFT" relativeTo="VendorButton6Border" />
-				<Anchor point="RIGHT" relativeTo="VendorButton6Border" />
-				<Anchor point="TOP" relativeTo="VendorButton7Border" />
+				<Anchor point="LEFT" relativePoint="H_CENTER" offset="10" />
+				<Anchor point="RIGHT" offset="-36" />
+				<Anchor point="TOP" relativeTo="VendorStockSurface" offset="420" />
 			</Area>
-			
-			<Frame name="VendorButton8" inherits="LootButtonTemplate" id="8">
+			<Frame name="VendorButton8" inherits="VendorItemIconTemplate" id="8">
 				<Area>
 					<Anchor point="LEFT" offset="8" />
 					<Anchor point="TOP" offset="8" />
 				</Area>
 			</Frame>
-
 			<Frame name="VendorText8" renderer="DefaultRenderer" id="8">
-				<Property name="Font" value="SmallLabelFont" />
-
+				<Property name="Font" value="VendorItemFont" />
 				<Area>
-					<Anchor point="TOP" relativeTo="VendorButton8" offset="0" />
+					<Anchor point="TOP" relativeTo="VendorButton8" offset="4" />
 					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="VendorButton8" offset="8" />
-					<Anchor point="RIGHT" />
-					<Anchor point="BOTTOM" offset="-8" />
-					<Size><AbsDimension x="0" y="44" /></Size>
+					<Anchor point="RIGHT" offset="-12" />
+					<Size>
+						<AbsDimension x="0" y="58" />
+					</Size>
 				</Area>
-						
 				<Visual>
 					<ImagerySection name="Text">
 						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
@@ -415,7 +492,6 @@
 					</StateImagery>
 				</Visual>
 			</Frame>
-			
 			<Frame name="VendorMoney8" inherits="MoneyFrameTemplate">
 				<Area>
 					<Anchor point="BOTTOM" relativeTo="VendorButton8Border" offset="-8" />
@@ -423,32 +499,28 @@
 				</Area>
 			</Frame>
 		</Frame>
-		
-		<Frame name="VendorButton9Border" inherits="LootButtonBorderTemplate">
+		<Frame name="VendorButton9Border" inherits="VendorCardTemplate">
 			<Area>
-				<Anchor point="LEFT" relativeTo="VendorButton7Border" />
-				<Anchor point="RIGHT" relativeTo="VendorButton7Border" />
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="VendorButton7Border" offset="6" />
+				<Anchor point="LEFT" offset="36" />
+				<Anchor point="RIGHT" relativePoint="H_CENTER" offset="-10" />
+				<Anchor point="TOP" relativeTo="VendorStockSurface" offset="556" />
 			</Area>
-			
-			<Frame name="VendorButton9" inherits="LootButtonTemplate" id="9">
+			<Frame name="VendorButton9" inherits="VendorItemIconTemplate" id="9">
 				<Area>
 					<Anchor point="LEFT" offset="8" />
 					<Anchor point="TOP" offset="8" />
 				</Area>
 			</Frame>
-
 			<Frame name="VendorText9" renderer="DefaultRenderer" id="9">
-				<Property name="Font" value="SmallLabelFont" />
-
+				<Property name="Font" value="VendorItemFont" />
 				<Area>
-					<Anchor point="TOP" relativeTo="VendorButton9" offset="0" />
+					<Anchor point="TOP" relativeTo="VendorButton9" offset="4" />
 					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="VendorButton9" offset="8" />
-					<Anchor point="RIGHT" />
-					<Anchor point="BOTTOM" offset="-8" />
-					<Size><AbsDimension x="0" y="44" /></Size>
+					<Anchor point="RIGHT" offset="-12" />
+					<Size>
+						<AbsDimension x="0" y="58" />
+					</Size>
 				</Area>
-						
 				<Visual>
 					<ImagerySection name="Text">
 						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
@@ -465,7 +537,6 @@
 					</StateImagery>
 				</Visual>
 			</Frame>
-			
 			<Frame name="VendorMoney9" inherits="MoneyFrameTemplate">
 				<Area>
 					<Anchor point="BOTTOM" relativeTo="VendorButton9Border" offset="-8" />
@@ -473,32 +544,28 @@
 				</Area>
 			</Frame>
 		</Frame>
-		
-		<Frame name="VendorButton10Border" inherits="LootButtonBorderTemplate">
+		<Frame name="VendorButton10Border" inherits="VendorCardTemplate">
 			<Area>
-				<Anchor point="LEFT" relativeTo="VendorButton8Border" />
-				<Anchor point="RIGHT" relativeTo="VendorButton8Border" />
-				<Anchor point="TOP" relativeTo="VendorButton9Border" />
+				<Anchor point="LEFT" relativePoint="H_CENTER" offset="10" />
+				<Anchor point="RIGHT" offset="-36" />
+				<Anchor point="TOP" relativeTo="VendorStockSurface" offset="556" />
 			</Area>
-			
-			<Frame name="VendorButton10" inherits="LootButtonTemplate" id="10">
+			<Frame name="VendorButton10" inherits="VendorItemIconTemplate" id="10">
 				<Area>
 					<Anchor point="LEFT" offset="8" />
 					<Anchor point="TOP" offset="8" />
 				</Area>
 			</Frame>
-
 			<Frame name="VendorText10" renderer="DefaultRenderer" id="10">
-				<Property name="Font" value="SmallLabelFont" />
-
+				<Property name="Font" value="VendorItemFont" />
 				<Area>
-					<Anchor point="TOP" relativeTo="VendorButton10" offset="0" />
+					<Anchor point="TOP" relativeTo="VendorButton10" offset="4" />
 					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="VendorButton10" offset="8" />
-					<Anchor point="RIGHT" />
-					<Anchor point="BOTTOM" offset="-8" />
-					<Size><AbsDimension x="0" y="44" /></Size>
+					<Anchor point="RIGHT" offset="-12" />
+					<Size>
+						<AbsDimension x="0" y="58" />
+					</Size>
 				</Area>
-						
 				<Visual>
 					<ImagerySection name="Text">
 						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
@@ -515,7 +582,6 @@
 					</StateImagery>
 				</Visual>
 			</Frame>
-
 			<Frame name="VendorMoney10" inherits="MoneyFrameTemplate">
 				<Area>
 					<Anchor point="BOTTOM" relativeTo="VendorButton10Border" offset="-8" />
@@ -523,32 +589,28 @@
 				</Area>
 			</Frame>
 		</Frame>
-		
-		<Frame name="VendorButton11Border" inherits="LootButtonBorderTemplate">
+		<Frame name="VendorButton11Border" inherits="VendorCardTemplate">
 			<Area>
-				<Anchor point="LEFT" relativeTo="VendorButton9Border" />
-				<Anchor point="RIGHT" relativeTo="VendorButton9Border" />
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="VendorButton9Border" offset="6" />
+				<Anchor point="LEFT" offset="36" />
+				<Anchor point="RIGHT" relativePoint="H_CENTER" offset="-10" />
+				<Anchor point="TOP" relativeTo="VendorStockSurface" offset="692" />
 			</Area>
-			
-			<Frame name="VendorButton11" inherits="LootButtonTemplate" id="11">
+			<Frame name="VendorButton11" inherits="VendorItemIconTemplate" id="11">
 				<Area>
 					<Anchor point="LEFT" offset="8" />
 					<Anchor point="TOP" offset="8" />
 				</Area>
 			</Frame>
-
 			<Frame name="VendorText11" renderer="DefaultRenderer" id="11">
-				<Property name="Font" value="SmallLabelFont" />
-
+				<Property name="Font" value="VendorItemFont" />
 				<Area>
-					<Anchor point="TOP" relativeTo="VendorButton11" offset="0" />
+					<Anchor point="TOP" relativeTo="VendorButton11" offset="4" />
 					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="VendorButton11" offset="8" />
-					<Anchor point="RIGHT" />
-					<Anchor point="BOTTOM" offset="-8" />
-					<Size><AbsDimension x="0" y="44" /></Size>
+					<Anchor point="RIGHT" offset="-12" />
+					<Size>
+						<AbsDimension x="0" y="58" />
+					</Size>
 				</Area>
-						
 				<Visual>
 					<ImagerySection name="Text">
 						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
@@ -565,7 +627,6 @@
 					</StateImagery>
 				</Visual>
 			</Frame>
-
 			<Frame name="VendorMoney11" inherits="MoneyFrameTemplate">
 				<Area>
 					<Anchor point="BOTTOM" relativeTo="VendorButton11Border" offset="-8" />
@@ -573,32 +634,28 @@
 				</Area>
 			</Frame>
 		</Frame>
-		
-		<Frame name="VendorButton12Border" inherits="LootButtonBorderTemplate">
+		<Frame name="VendorButton12Border" inherits="VendorCardTemplate">
 			<Area>
-				<Anchor point="LEFT" relativeTo="VendorButton10Border" />
-				<Anchor point="RIGHT" relativeTo="VendorButton10Border" />
-				<Anchor point="TOP" relativeTo="VendorButton11Border" />
+				<Anchor point="LEFT" relativePoint="H_CENTER" offset="10" />
+				<Anchor point="RIGHT" offset="-36" />
+				<Anchor point="TOP" relativeTo="VendorStockSurface" offset="692" />
 			</Area>
-			
-			<Frame name="VendorButton12" inherits="LootButtonTemplate" id="12">
+			<Frame name="VendorButton12" inherits="VendorItemIconTemplate" id="12">
 				<Area>
 					<Anchor point="LEFT" offset="8" />
 					<Anchor point="TOP" offset="8" />
 				</Area>
 			</Frame>
-
 			<Frame name="VendorText12" renderer="DefaultRenderer" id="12">
-				<Property name="Font" value="SmallLabelFont" />
-
+				<Property name="Font" value="VendorItemFont" />
 				<Area>
-					<Anchor point="TOP" relativeTo="VendorButton12" offset="0" />
+					<Anchor point="TOP" relativeTo="VendorButton12" offset="4" />
 					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="VendorButton12" offset="8" />
-					<Anchor point="RIGHT" />
-					<Anchor point="BOTTOM" offset="-8" />
-					<Size><AbsDimension x="0" y="44" /></Size>
+					<Anchor point="RIGHT" offset="-12" />
+					<Size>
+						<AbsDimension x="0" y="58" />
+					</Size>
 				</Area>
-						
 				<Visual>
 					<ImagerySection name="Text">
 						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
@@ -615,7 +672,6 @@
 					</StateImagery>
 				</Visual>
 			</Frame>
-			
 			<Frame name="VendorMoney12" inherits="MoneyFrameTemplate">
 				<Area>
 					<Anchor point="BOTTOM" relativeTo="VendorButton12Border" offset="-8" />
@@ -623,32 +679,28 @@
 				</Area>
 			</Frame>
 		</Frame>
-		
-		<Frame name="VendorButton13Border" inherits="LootButtonBorderTemplate">
+		<Frame name="VendorButton13Border" inherits="VendorCardTemplate">
 			<Area>
-				<Anchor point="LEFT" relativeTo="VendorButton11Border" />
-				<Anchor point="RIGHT" relativeTo="VendorButton11Border" />
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="VendorButton11Border" offset="6" />
+				<Anchor point="LEFT" offset="36" />
+				<Anchor point="RIGHT" relativePoint="H_CENTER" offset="-10" />
+				<Anchor point="TOP" relativeTo="VendorStockSurface" offset="828" />
 			</Area>
-			
-			<Frame name="VendorButton13" inherits="LootButtonTemplate" id="13">
+			<Frame name="VendorButton13" inherits="VendorItemIconTemplate" id="13">
 				<Area>
 					<Anchor point="LEFT" offset="8" />
 					<Anchor point="TOP" offset="8" />
 				</Area>
 			</Frame>
-
 			<Frame name="VendorText13" renderer="DefaultRenderer" id="13">
-				<Property name="Font" value="SmallLabelFont" />
-
+				<Property name="Font" value="VendorItemFont" />
 				<Area>
-					<Anchor point="TOP" relativeTo="VendorButton13" offset="0" />
+					<Anchor point="TOP" relativeTo="VendorButton13" offset="4" />
 					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="VendorButton13" offset="8" />
-					<Anchor point="RIGHT" />
-					<Anchor point="BOTTOM" offset="-8" />
-					<Size><AbsDimension x="0" y="44" /></Size>
+					<Anchor point="RIGHT" offset="-12" />
+					<Size>
+						<AbsDimension x="0" y="58" />
+					</Size>
 				</Area>
-						
 				<Visual>
 					<ImagerySection name="Text">
 						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
@@ -665,7 +717,6 @@
 					</StateImagery>
 				</Visual>
 			</Frame>
-
 			<Frame name="VendorMoney13" inherits="MoneyFrameTemplate">
 				<Area>
 					<Anchor point="BOTTOM" offset="-8" />
@@ -673,32 +724,28 @@
 				</Area>
 			</Frame>
 		</Frame>
-		
-		<Frame name="VendorButton14Border" inherits="LootButtonBorderTemplate">
+		<Frame name="VendorButton14Border" inherits="VendorCardTemplate">
 			<Area>
-				<Anchor point="LEFT" relativeTo="VendorButton12Border" />
-				<Anchor point="RIGHT" relativeTo="VendorButton12Border" />
-				<Anchor point="TOP" relativeTo="VendorButton13Border" />
+				<Anchor point="LEFT" relativePoint="H_CENTER" offset="10" />
+				<Anchor point="RIGHT" offset="-36" />
+				<Anchor point="TOP" relativeTo="VendorStockSurface" offset="828" />
 			</Area>
-			
-			<Frame name="VendorButton14" inherits="LootButtonTemplate" id="14">
+			<Frame name="VendorButton14" inherits="VendorItemIconTemplate" id="14">
 				<Area>
 					<Anchor point="LEFT" offset="8" />
 					<Anchor point="TOP" offset="8" />
 				</Area>
 			</Frame>
-
 			<Frame name="VendorText14" renderer="DefaultRenderer" id="14">
-				<Property name="Font" value="SmallLabelFont" />
-
+				<Property name="Font" value="VendorItemFont" />
 				<Area>
-					<Anchor point="TOP" relativeTo="VendorButton14" offset="0" />
+					<Anchor point="TOP" relativeTo="VendorButton14" offset="4" />
 					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="VendorButton14" offset="8" />
-					<Anchor point="RIGHT" />
-					<Anchor point="BOTTOM" offset="-8" />
-					<Size><AbsDimension x="0" y="44" /></Size>
+					<Anchor point="RIGHT" offset="-12" />
+					<Size>
+						<AbsDimension x="0" y="58" />
+					</Size>
 				</Area>
-						
 				<Visual>
 					<ImagerySection name="Text">
 						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
@@ -715,7 +762,6 @@
 					</StateImagery>
 				</Visual>
 			</Frame>
-			
 			<Frame name="VendorMoney14" inherits="MoneyFrameTemplate">
 				<Area>
 					<Anchor point="BOTTOM" offset="-8" />
@@ -723,27 +769,48 @@
 				</Area>
 			</Frame>
 		</Frame>
-
-        <Frame inherits="TextCenter" name="VendorPageLabel">
-			<Property name="Text" value="Page 1" />
-
-            <Area>
-                <Anchor point="BOTTOM" offset="-48" />
-                <Anchor point="LEFT" />
+		<Frame name="VendorFooter" renderer="DefaultRenderer">
+			<Property name="Enabled" value="false" />
+			<Property name="Clickable" value="false" />
+			<Area>
+				<Anchor point="LEFT" offset="16" />
+				<Anchor point="RIGHT" offset="-16" />
+				<Anchor point="BOTTOM" offset="-16" />
+				<Size>
+					<AbsDimension y="112" />
+				</Size>
+			</Area>
+			<Visual>
+				<ImagerySection name="Surface">
+					<BorderComponent texture="Interface/GameUI/Alestia/WindowPanel.htex" borderSize="32" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Surface" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+		</Frame>
+		<Frame inherits="TextCenter" name="VendorPageLabel">
+			<Property name="Text" value="" />
+			<Area>
+				<Anchor point="BOTTOM" offset="-76" />
+				<Anchor point="LEFT" />
 				<Anchor point="RIGHT" />
-				<Size><AbsDimension y="39" /></Size>
-            </Area>
-        </Frame>
-
-        <Frame inherits="GlueButton" name="VendorPrevPageButton">
-			<Property name="Icon" value="Interface/Icons/fg4_iconsGold_leftArrow.htex" />
-
-            <Area>
-                <Anchor point="BOTTOM" offset="-24" />
-                <Anchor point="LEFT" offset="24" />
-				<Size><AbsDimension x="96" y="96" /></Size>
-            </Area>
-
+				<Size>
+					<AbsDimension y="39" />
+				</Size>
+			</Area>
+		</Frame>
+		<Frame inherits="GlueButton" name="VendorPrevPageButton">
+			<Property name="Text" value="&lt;" />
+			<Area>
+				<Anchor point="BOTTOM" offset="-36" />
+				<Anchor point="LEFT" offset="24" />
+				<Size>
+					<AbsDimension x="88" y="72" />
+				</Size>
+			</Area>
 			<Scripts>
 				<OnClick>
 					return function(this)
@@ -751,17 +818,16 @@
 					end
 				</OnClick>
 			</Scripts>
-        </Frame>
-
-        <Frame inherits="GlueButton" name="VendorNextPageButton">
-			<Property name="Icon" value="Interface/Icons/fg4_iconsGold_rightArrow.htex" />
-
-            <Area>
-                <Anchor point="BOTTOM" offset="-24" />
-                <Anchor point="RIGHT" offset="-24" />
-				<Size><AbsDimension x="96" y="96" /></Size>
-            </Area>
-			
+		</Frame>
+		<Frame inherits="GlueButton" name="VendorNextPageButton">
+			<Property name="Text" value="&gt;" />
+			<Area>
+				<Anchor point="BOTTOM" offset="-36" />
+				<Anchor point="RIGHT" offset="-24" />
+				<Size>
+					<AbsDimension x="88" y="72" />
+				</Size>
+			</Area>
 			<Scripts>
 				<OnClick>
 					return function(this)
@@ -769,7 +835,19 @@
 					end
 				</OnClick>
 			</Scripts>
-        </Frame>
-
+		</Frame>
+		<Frame name="VendorPurchaseHint" inherits="TextCenter">
+			<Property name="Font" value="SmallLabelFont" />
+			<Property name="Text" value="VENDOR_PURCHASE_HINT" />
+			<Property name="TextColor" value="FFBDB29B" />
+			<Area>
+				<Anchor point="BOTTOM" offset="-32" />
+				<Anchor point="LEFT" offset="128" />
+				<Anchor point="RIGHT" offset="-128" />
+				<Size>
+					<AbsDimension y="28" />
+				</Size>
+			</Area>
+		</Frame>
 	</Frame>
 </UiLayout>

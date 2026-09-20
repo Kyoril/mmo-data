@@ -709,4 +709,7 @@ strings =
 	(key = "HUD_EXPERIENCE_FORMAT", string = "%s: %d / %d")
 	(key = "TALENT_POINTS_LABEL", string = "Доступные очки талантов")
 	(key = "FRIEND_LIST_SUMMARY", string = "В сети: %d / Друзей: %d")
+	(key = "VENDOR_STOCK_COUNT", string = "Товаров в продаже: %d")
+	(key = "VENDOR_PAGE_FORMAT", string = "Страница %d / %d")
+	(key = "VENDOR_PURCHASE_HINT", string = "Правая кнопка мыши — купить")
 }
