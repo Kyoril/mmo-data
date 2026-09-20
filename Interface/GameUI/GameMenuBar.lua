@@ -15,7 +15,7 @@ function GameMenuBar_UpdateExperienceBarLayout()
 		visibleBars = visibleBars + 1;
 	end
 	GameMenuBar:SetHeight(156);
-	ExperienceDock:SetHeight(16 + visibleBars * 52);
+	ExperienceDock:SetHeight(visibleBars * 48);
 	if (visibleBars > 0) then
 		ExperienceDock:Show();
 	else
@@ -27,9 +27,9 @@ function GameMenuBar_UpdateExperienceBarLayout()
 	AlestiaOakLeft:SetWidth(ornamentHeight / 2);
 	AlestiaOakRight:SetWidth(ornamentHeight / 2);
 	if (PlayerExperienceBar:IsVisible()) then
-		PlayerClassExperienceBar:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.BOTTOM, ExperienceDock, -64);
+		PlayerClassExperienceBar:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.BOTTOM, ExperienceDock, -48);
 	else
-		PlayerClassExperienceBar:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.BOTTOM, ExperienceDock, -12);
+		PlayerClassExperienceBar:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.BOTTOM, ExperienceDock, 0);
 	end
 end
 

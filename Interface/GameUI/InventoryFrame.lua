@@ -63,7 +63,7 @@ function InventoryFrame_Load(this)
     this:RegisterEvent("EQUIPMENT_CHANGED", InventoryFrame_UpdateSlots);
 
 	InventoryFrame:GetChild(0):GetChild(0):SetClickedHandler(ToggleInventory);
-	AddMenuBarButton("Interface/Icons/fg4_icons_backpack_result.htex", ToggleInventory, "MENUBAR_TOOLTIP_INVENTORY", "TOGGLEINVENTORY");
+	AddMenuBarButton("Interface/GameUI/Alestia/MenuIcons/Inventory.htex", ToggleInventory, "MENUBAR_TOOLTIP_INVENTORY", "TOGGLEINVENTORY");
 
     this:RegisterEvent("MONEY_CHANGED", InventoryFrame_UpdateMoney);
 end

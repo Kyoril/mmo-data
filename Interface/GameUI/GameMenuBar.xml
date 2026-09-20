@@ -11,7 +11,7 @@
 			<ImagerySection name="Image">
 				<ImageComponent>
 					<Area>
-						<Inset left="16" right="16" top="24" bottom="24" />
+						<Inset left="10" right="10" top="18" bottom="18" />
 					</Area>
 					<PropertyValue property="Icon" />
 				</ImageComponent>
@@ -87,10 +87,11 @@
 			<Area><Size><AbsDimension x="64" /></Size><Anchor point="RIGHT" offset="64" /><Anchor point="TOP" offset="0" /><Anchor point="BOTTOM" offset="0" /></Area>
 			<Visual><ImagerySection name="Cap"><ImageComponent texture="Interface/GameUI/Alestia/BarRightCap.htex" tint="FFB5A790" /></ImagerySection><StateImagery name="Enabled"><Layer><Section section="Cap" /></Layer></StateImagery></Visual>
 		</Frame>
+		<!-- XP rails share the action bar's top seam; no separate panel or bottom border. -->
 		<Frame name="ExperienceDock" renderer="DefaultRenderer">
 			<Property name="Visible" value="false" />
-			<Area><Size><AbsDimension y="120" /></Size><Anchor point="LEFT" offset="0" /><Anchor point="RIGHT" offset="0" /><Anchor point="BOTTOM" relativePoint="TOP" offset="0" /></Area>
-			<Visual><ImagerySection name="Surface"><BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="8" tint="FFC3A36A" /></ImagerySection><StateImagery name="Enabled"><Layer><Section section="Surface" /></Layer></StateImagery></Visual>
+			<Area><Size><AbsDimension y="96" /></Size><Anchor point="LEFT" offset="-56" /><Anchor point="RIGHT" offset="56" /><Anchor point="BOTTOM" relativePoint="TOP" offset="8" /></Area>
+
 		</Frame>
 
 		<Frame name="PlayerExperienceBar" type="ProgressBar">
@@ -98,38 +99,38 @@
 			<Property name="Text" value="200 / 400" />
 			<Property name="Font" value="ExperienceHudFont" />
 			<Area>
-				<Anchor point="LEFT" relativeTo="ExperienceDock" offset="8" />
-				<Anchor point="RIGHT" relativeTo="ExperienceDock" offset="-8" />
-				<Anchor point="BOTTOM" relativeTo="ExperienceDock" offset="-12" />
+				<Anchor point="LEFT" relativeTo="ExperienceDock" offset="4" />
+				<Anchor point="RIGHT" relativeTo="ExperienceDock" offset="-4" />
+				<Anchor point="BOTTOM" relativeTo="ExperienceDock" offset="0" />
 				<Size>
 					<AbsDimension y="44" />
 				</Size>
 			</Area>
 			<Visual>
+				<ImagerySection name="RailRim"><BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="6" tint="FFB38C49" /></ImagerySection>
 				<ImagerySection name="Caption">
 					<TextComponent color="FFFFFFFF" horzAlign="CENTER" vertAlign="CENTER" />
 				</ImagerySection>
 				<ImagerySection name="Background">
 					<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF17130E" />
 				</ImagerySection>
-				<ImagerySection name="Border">
-					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" />
-				</ImagerySection>
 				<ImagerySection name="Progress">
 					<ImageComponent texture="Interface/fg4_gradientWhiteV1_result.htex" tiling="HORZ" tint="FFAD58E8">
 						<Area>
-							<Inset all="3" />
+							<Inset all="6" />
 						</Area>
 					</ImageComponent>
 				</ImagerySection>
 				<StateImagery name="Enabled">
 					<Layer>
 						<Section section="Background" />
+						<Section section="RailRim" />
 					</Layer>
 				</StateImagery>
 				<StateImagery name="Disabled">
 					<Layer>
 						<Section section="Background" />
+						<Section section="RailRim" />
 					</Layer>
 				</StateImagery>
 				<StateImagery name="Progress">
@@ -150,38 +151,38 @@
 			<Property name="Font" value="ExperienceHudFont" />
 			<Property name="Visible" value="False" />
 			<Area>
-				<Anchor point="LEFT" relativeTo="ExperienceDock" offset="8" />
-				<Anchor point="RIGHT" relativeTo="ExperienceDock" offset="-8" />
-				<Anchor point="BOTTOM" relativeTo="ExperienceDock" offset="-64" />
+				<Anchor point="LEFT" relativeTo="ExperienceDock" offset="4" />
+				<Anchor point="RIGHT" relativeTo="ExperienceDock" offset="-4" />
+				<Anchor point="BOTTOM" relativeTo="ExperienceDock" offset="-48" />
 				<Size>
 					<AbsDimension y="44" />
 				</Size>
 			</Area>
 			<Visual>
+				<ImagerySection name="RailRim"><BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="6" tint="FFB38C49" /></ImagerySection>
 				<ImagerySection name="Caption">
 					<TextComponent color="FFFFFFFF" horzAlign="CENTER" vertAlign="CENTER" />
 				</ImagerySection>
 				<ImagerySection name="Background">
 					<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF17130E" />
 				</ImagerySection>
-				<ImagerySection name="Border">
-					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" />
-				</ImagerySection>
 				<ImagerySection name="Progress">
 					<ImageComponent texture="Interface/fg4_gradientWhiteV1_result.htex" tiling="HORZ" tint="FFE5A72D">
 						<Area>
-							<Inset all="3" />
+							<Inset all="6" />
 						</Area>
 					</ImageComponent>
 				</ImagerySection>
 				<StateImagery name="Enabled">
 					<Layer>
 						<Section section="Background" />
+						<Section section="RailRim" />
 					</Layer>
 				</StateImagery>
 				<StateImagery name="Disabled">
 					<Layer>
 						<Section section="Background" />
+						<Section section="RailRim" />
 					</Layer>
 				</StateImagery>
 				<StateImagery name="Progress">

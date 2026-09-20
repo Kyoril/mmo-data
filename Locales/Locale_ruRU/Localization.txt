@@ -708,4 +708,5 @@ strings =
 	(key = "HUD_QUEST_READY", string = "Можно сдать")
 	(key = "HUD_EXPERIENCE_FORMAT", string = "%s: %d / %d")
 	(key = "TALENT_POINTS_LABEL", string = "Доступные очки талантов")
+	(key = "FRIEND_LIST_SUMMARY", string = "В сети: %d / Друзей: %d")
 }

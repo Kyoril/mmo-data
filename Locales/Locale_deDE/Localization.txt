@@ -796,4 +796,5 @@ strings =
 	(key = "HUD_QUEST_READY", string = "Bereit zur Abgabe")
 	(key = "HUD_EXPERIENCE_FORMAT", string = "%s: %d / %d")
 	(key = "TALENT_POINTS_LABEL", string = "Verfügbare Talentpunkte")
+	(key = "FRIEND_LIST_SUMMARY", string = "%d online / %d Freunde")
 }

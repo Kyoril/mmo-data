@@ -20,10 +20,10 @@ local FRIEND_DATA = {
 }
 
 local COLOR_ONLINE       = "FF33CC33"
-local COLOR_OFFLINE      = "FF666666"
+local COLOR_OFFLINE      = "FFAAA396"
 local COLOR_NAME_ONLINE  = "FFFFD100"
-local COLOR_NAME_OFFLINE = "FF999999"
-local COLOR_LEVEL        = "FFAAAAAA"
+local COLOR_NAME_OFFLINE = "FFCCC5B6"
+local COLOR_LEVEL        = "FFB5AD9D"
 
 -- Child indices within each FriendButton (from FriendButtonTemplate)
 local CHILD_DOT    = 0
@@ -121,6 +121,14 @@ function FriendsList_Update()
         end
     end
 
+    local onlineCount = 0;
+    for _, friend in ipairs(FRIEND_DATA.friends) do
+        if friend.online then
+            onlineCount = onlineCount + 1;
+        end
+    end
+    FriendListSummary:SetText(string.format(Localize("FRIEND_LIST_SUMMARY"), onlineCount, #FRIEND_DATA.friends));
+
     -- Online friends first, then alphabetical within each group
     table.sort(FRIEND_DATA.friends, function(a, b)
         if a.online ~= b.online then
@@ -143,8 +151,12 @@ function FriendsList_Update()
     end
     if maxValue > 0 then
         FriendListScrollBar:Enable();
+        FriendListScrollBar:Show();
+        FriendListContent:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, FriendListFrame, -108);
     else
         FriendListScrollBar:Disable();
+        FriendListScrollBar:Hide();
+        FriendListContent:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, FriendListFrame, -12);
     end
 
     if #FRIEND_DATA.friends > 0 then
@@ -163,8 +175,7 @@ function FriendsList_Update()
             local nameColor = friend.online and COLOR_NAME_ONLINE or COLOR_NAME_OFFLINE;
 
             -- Status dot
-            button:GetChild(CHILD_DOT):SetText("\xE2\x97\x8F");
-            button:GetChild(CHILD_DOT):SetProperty("TextColor", dotColor);
+            button:GetChild(CHILD_DOT):SetProperty("StatusColor", dotColor);
 
             -- Player name
             button:GetChild(CHILD_NAME):SetText(friend.name);
@@ -228,7 +239,8 @@ function FriendsFrame_UpdateActionButtons()
     local hasSelection = FRIEND_SELECTED_NAME ~= nil;
 
     FriendRemoveButton:SetEnabled(hasSelection);
-    FriendWhisperButton:SetEnabled(hasSelection);
+    local selectedFriend = hasSelection and FriendsList_FindFriendByName(FRIEND_SELECTED_NAME);
+    FriendWhisperButton:SetEnabled(selectedFriend ~= nil and selectedFriend ~= false and selectedFriend.online);
     FriendInviteButton:SetEnabled(true);
 end
 
@@ -237,7 +249,8 @@ function FriendsFrame_InviteClicked(self)
 end
 
 function FriendsFrame_WhisperClicked(self)
-    if FRIEND_SELECTED_NAME then
+    local friend = FriendsList_FindFriendByName(FRIEND_SELECTED_NAME);
+    if friend and friend.online then
         ChatFrame_WhisperTarget = FRIEND_SELECTED_NAME;
         ChatType = "WHISPER";
         ChatEdit_UpdateHeader();

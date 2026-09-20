@@ -58,6 +58,6 @@ function GameMenu_OnLoad(this)
 	menuOffsetY = menuOffsetY + 20;
 	AddMenuButton("CLOSE", OnCloseButton_Clicked);
 
-	AddMenuBarButton("Interface/Icons/fg4_icons_menu_result.htex", OnMenuItem_Clicked, "MENUBAR_TOOLTIP_GAMEMENU", "TOGGLEGAMEMENU");
+	AddMenuBarButton("Interface/GameUI/Alestia/MenuIcons/Menu.htex", OnMenuItem_Clicked, "MENUBAR_TOOLTIP_GAMEMENU", "TOGGLEGAMEMENU");
 end
 
