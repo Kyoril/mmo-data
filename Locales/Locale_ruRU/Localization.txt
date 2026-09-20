@@ -699,4 +699,13 @@ strings =
 	(key = "MENUBAR_TOOLTIP_EMOTES", string = "Эмоции")
 	(key = "MENUBAR_TOOLTIP_GAMEMENU", string = "Игровое меню")
 	(key = "MENUBAR_TOOLTIP_DEBUG", string = "Отладка")
+
+	// Character sheet sections
+	(key = "CHARACTER_AVAILABLE_POINTS", string = "Доступные очки")
+	(key = "CHARACTER_PRIMARY_ATTRIBUTES", string = "Основные характеристики")
+	(key = "CHARACTER_SECONDARY_STATS", string = "Боевые характеристики")
+	(key = "HUD_QUEST_TRACKER", string = "Задания")
+	(key = "HUD_QUEST_READY", string = "Можно сдать")
+	(key = "HUD_EXPERIENCE_FORMAT", string = "%s: %d / %d")
+	(key = "TALENT_POINTS_LABEL", string = "Доступные очки талантов")
 }

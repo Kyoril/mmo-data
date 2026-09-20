@@ -7,20 +7,18 @@ local QS_FAILED     = 5
 local QS_INCOMPLETE = 3  -- and anything else
 
 -- Colors
-local COLOR_TITLE_NORMAL   = "FFFFD100"   -- gold
-local COLOR_TITLE_COMPLETE = "FF00FF00"   -- green
-local COLOR_TITLE_FAILED   = "FFFF3030"   -- red
-local COLOR_TITLE_DISABLED = "FF808080"   -- grey (wrong active class)
-local COLOR_TITLE_UNLOCK   = "FF40C8FF"   -- light blue (feature/class unlock chain)
-local COLOR_OBJ_INCOMPLETE = "FFAAAAAA"   -- grey
-local COLOR_OBJ_COMPLETE   = "FFFFFFFF"   -- white
+local COLOR_TITLE_NORMAL   = "FFF3CF50"   -- warm gold
+local COLOR_STATUS_FAILED  = "FFFF8070"   -- failure detail
+local COLOR_TITLE_DISABLED = "FFB8B1A4"   -- muted, but readable over the world
+local COLOR_OBJ_INCOMPLETE = "FFCEC8BC"   -- warm ivory
+local COLOR_OBJ_COMPLETE   = "FF86DE56"   -- completed objective
 
 -- Layout constants (logical 4K units)
-local PAD          = 8    -- outer padding
-local TITLE_H      = 32   -- minimum title row height (collapse button + text)
+local PAD          = 24    -- outer padding
+local TITLE_H      = 36   -- minimum title row height (collapse button + text)
 local OBJ_H        = 28   -- minimum objective row height
-local QUEST_GAP    = 4    -- gap between quests
-local OBJ_INDENT   = 24   -- indent for objective text
+local QUEST_GAP    = 16    -- gap between quests
+local OBJ_INDENT   = 36   -- indent for objective text
 
 -- Max slots in the pool
 local MAX_QUESTS   = 5
@@ -52,6 +50,7 @@ function QuestTracker_OnLoad(self)
     for qi = 1, MAX_QUESTS do
         local s = {
             toggle = _G["QuestTrackerToggle" .. qi],
+            collapse = _G["QuestTrackerCollapse" .. qi],
             title  = _G["QuestTrackerTitle"  .. qi],
             objs   = {},
         }
@@ -78,15 +77,19 @@ local function OpenQuestInLog(questId)
 end
 
 function QuestTracker_TitleClick(qi)
-    local entry = GetQuestLogEntry(qi - 1)
-    if not entry then return end
-    OpenQuestInLog(entry.id)
+    local slot = slots[qi]
+    if not slot or not slot.questId then return end
+    OpenQuestInLog(slot.questId)
 end
 
 function QuestTracker_ToggleCollapse(qi)
-    local entry = GetQuestLogEntry(qi - 1)
-    if not entry then return end
-    collapsed[entry.id] = not collapsed[entry.id]
+    local slot = slots[qi]
+    if not slot or not slot.questId then return end
+    if slot.statusOnly then
+        OpenQuestInLog(slot.questId)
+        return
+    end
+    collapsed[slot.questId] = not collapsed[slot.questId]
     QuestTracker_Refresh()
 end
 
@@ -97,7 +100,9 @@ function QuestTracker_Refresh()
     -- Hide all slots first
     for qi = 1, MAX_QUESTS do
         local s = slots[qi]
+        s.questId = nil
         s.toggle:Hide()
+        s.collapse:Hide()
         s.title:Hide()
         for oi = 1, MAX_OBJS do s.objs[oi]:Hide() end
     end
@@ -121,10 +126,10 @@ function QuestTracker_Refresh()
     -- Accumulate offsetY as we go.
 
     local frameW = QuestTrackerFrame:GetWidth()
-    local titleW = frameW - PAD * 2 - TITLE_H   -- width left for title text (TITLE_H reserved for toggle btn)
+    local titleW = frameW - PAD * 2 - TITLE_H * 2   -- width left for title text (TITLE_H reserved for toggle btn)
     local objW   = frameW - PAD * 2 - OBJ_INDENT
 
-    local offsetY = PAD
+    local offsetY = 72
     local slotIdx = 0
 
     for _, entry in ipairs(questList) do
@@ -132,7 +137,7 @@ function QuestTracker_Refresh()
         slotIdx = slotIdx + 1
 
         local s      = slots[slotIdx]
-        local qi     = slotIdx
+        s.questId = entry.id
         local status = entry.status
         local isComplete = (status == QS_COMPLETE)
         local isFailed   = (status == QS_FAILED)
@@ -140,34 +145,37 @@ function QuestTracker_Refresh()
         local isUnlock   = IsClassUnlockQuest(entry.quest)
         local isCollapsed = collapsed[entry.id] or false
 
-        -- Title color
-        local titleColor = isUnlock and COLOR_TITLE_UNLOCK or COLOR_TITLE_NORMAL
-        if isDisabled then titleColor = COLOR_TITLE_DISABLED
-        elseif isComplete then titleColor = COLOR_TITLE_COMPLETE
-        elseif isFailed then titleColor = COLOR_TITLE_FAILED end
+        -- Keep quest names consistent; communicate outcomes in the detail row.
+        local titleColor = isDisabled and COLOR_TITLE_DISABLED or COLOR_TITLE_NORMAL
 
         -- Collapse toggle button: show only when there are objectives and not complete/failed/disabled
-        local showToggle = (not isComplete and not isFailed and not isDisabled)
+        s.statusOnly = isComplete or isFailed or isDisabled
+        local showToggle = true
         if showToggle then
             s.toggle:ClearAnchors()
             s.toggle:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, QuestTrackerFrame, PAD)
             s.toggle:SetAnchor(AnchorPoint.TOP,  AnchorPoint.TOP,  QuestTrackerFrame, offsetY)
             s.toggle:SetText(isCollapsed and "+" or "-")
+            s.toggle:SetProperty("StatusIcon", isComplete and "Interface/Icons/Icon_QuestCompleted.htex" or "Interface/Icons/Icon_QuestInProgress.htex")
+            s.toggle:SetProperty("StatusTint", isDisabled and "FF777777" or (isFailed and "FFFF6655" or "FFFFFFFF"))
             s.toggle:Show()
+            if not s.statusOnly then
+                s.collapse:ClearAnchors()
+                s.collapse:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, QuestTrackerFrame, -PAD)
+                s.collapse:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, QuestTrackerFrame, offsetY)
+                s.collapse:SetText(isCollapsed and "+" or "-")
+                s.collapse:Show()
+            end
         end
 
         -- Title frame
-        local titleLeft = showToggle and (PAD + TITLE_H) or PAD
+        local titleLeft = PAD + TITLE_H
         -- Build the title text, optionally annotated with a failed marker or a live countdown.
         local titleText = entry.quest.title
         if isUnlock then
             titleText = string.format(Localize("QUEST_CLASS_UNLOCK_FORMAT"), titleText)
         end
-        if isDisabled then
-            titleText = titleText .. "  (" .. Localize("QUEST_WRONG_CLASS") .. ")"
-        elseif isFailed then
-            titleText = titleText .. "  (" .. Localize("QUEST_FAILED") .. ")"
-        elseif not isComplete then
+        if not isDisabled and not isFailed and not isComplete then
             local timeLeft = GetQuestLogTimeLeft(entry.id)
             if timeLeft and timeLeft > 0 then
                 titleText = titleText .. "  (" .. FormatQuestTime(timeLeft) .. ")"
@@ -190,6 +198,23 @@ function QuestTracker_Refresh()
 
         offsetY = offsetY + titleH
 
+        -- Short state text belongs below the title, not in a wrapping title suffix.
+        if isDisabled or isFailed or isComplete then
+            local detail = s.objs[1]
+            local key = isDisabled and "QUEST_WRONG_CLASS" or (isFailed and "QUEST_FAILED" or "HUD_QUEST_READY")
+            local color = isDisabled and COLOR_TITLE_DISABLED or (isFailed and COLOR_STATUS_FAILED or COLOR_OBJ_COMPLETE)
+            detail:SetProperty("TextColor", color)
+            detail:SetWidth(objW)
+            detail:SetText(Localize(key))
+            local detailH = math.max(OBJ_H, detail:GetTextHeight() + 4)
+            detail:SetHeight(detailH)
+            detail:ClearAnchors()
+            detail:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, QuestTrackerFrame, PAD + OBJ_INDENT)
+            detail:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, QuestTrackerFrame, offsetY)
+            detail:Show()
+            offsetY = offsetY + detailH
+        end
+
         -- Objectives (hidden when complete, failed, class-disabled, or collapsed)
         if not isComplete and not isFailed and not isDisabled and not isCollapsed then
             QuestLogSelectQuest(entry.id)
@@ -199,7 +224,7 @@ function QuestTracker_Refresh()
                 -- Detect X/Y completion by parsing the fraction
                 local isDone = false
                 if objText then
-                    local cur, req = string.match(objText, "(%d+)/(%d+)")
+                    local cur, req = string.match(objText, "(%d+)%s*/%s*(%d+)")
                     if cur and req then
                         isDone = (tonumber(cur) >= tonumber(req))
                     end

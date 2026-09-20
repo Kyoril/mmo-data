@@ -788,4 +788,13 @@ strings =
 	(key = "MENUBAR_TOOLTIP_EMOTES", string = "Émotes")
 	(key = "MENUBAR_TOOLTIP_GAMEMENU", string = "Menu du jeu")
 	(key = "MENUBAR_TOOLTIP_DEBUG", string = "Débogage")
+
+	// Character sheet sections
+	(key = "CHARACTER_AVAILABLE_POINTS", string = "Points disponibles")
+	(key = "CHARACTER_PRIMARY_ATTRIBUTES", string = "Attributs principaux")
+	(key = "CHARACTER_SECONDARY_STATS", string = "Statistiques de combat")
+	(key = "HUD_QUEST_TRACKER", string = "Quêtes")
+	(key = "HUD_QUEST_READY", string = "Prête à être rendue")
+	(key = "HUD_EXPERIENCE_FORMAT", string = "%s: %d / %d")
+	(key = "TALENT_POINTS_LABEL", string = "Points de talent disponibles")
 }

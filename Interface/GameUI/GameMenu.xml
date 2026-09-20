@@ -6,7 +6,7 @@
 		<Area>
 			<Anchor point="LEFT" offset="16" />
 			<Anchor point="RIGHT" offset="-16" />
-			<Size><AbsDimension x="440" y="112" /></Size>
+			<Size><AbsDimension x="440" y="88" /></Size>
 		</Area>
 	</Frame>
 
@@ -15,7 +15,7 @@
 
 		<Visual>
 			<ImagerySection name="Background">
-				<BorderComponent texture="Interface/GameUI/fg4_borders_01_03.htex" borderSize="250" />
+				<BorderComponent texture="Interface/GameUI/Alestia/WindowPanel.htex" borderSize="32" />
 			</ImagerySection>
 			<StateImagery name="Enabled">
 				<Layer>
@@ -35,7 +35,7 @@
 			<Property name="Text" value="MENU" />
 
 			<Area>
-				<Anchor point="TOP" offset="62" />
+				<Anchor point="TOP" offset="24" />
 				<Anchor point="LEFT" offset="48" />
 				<Anchor point="RIGHT" offset="-48" />
 			</Area>
@@ -48,13 +48,13 @@
 				</ImagerySection>
 				<StateImagery name="Enabled">
 					<Layer>
-						<Section section="Border" />
+						<!-- Buttons sit directly on the window surface. -->
 					</Layer>
 				</StateImagery>
 			</Visual>
 
 			<Area>
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="MenuTitleBar" offset="5" />
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="MenuTitleBar" offset="20" />
 				<Anchor point="LEFT" offset="48" />
 				<Anchor point="RIGHT" offset="-48" />
 				<Anchor point="BOTTOM" offset="-48" />

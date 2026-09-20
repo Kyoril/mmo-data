@@ -30,8 +30,8 @@ local TALENT_ICON_TINT = {
 local TALENT_NODE_OPACITY = {
     maxed = 1.0,
     available = 1.0,
-    nopoints = 0.5,
-    blocked = 0.4,
+    nopoints = 0.85,
+    blocked = 0.75,
 }
 local TALENT_GLOW_TINT = {
     maxed = "00000000",
@@ -47,8 +47,8 @@ local TALENT_RANK_COLOR = {
 }
 
 -- Prerequisite line colors / thickness.
-local TALENT_LINE_COLOR_MET = "FF42D1D8"
-local TALENT_LINE_COLOR_UNMET = "66525A66"
+local TALENT_LINE_COLOR_MET = "FFC1A56C"
+local TALENT_LINE_COLOR_UNMET = "FF68645C"
 
 local function TalentFrame_GetSelectedTabInfo()
     return GetTalentTabInfo(selectedTab - 1)
@@ -73,8 +73,8 @@ local function TalentFrame_ResetView()
     end
 
     talentZoom = math.max(TALENT_MIN_ZOOM, math.min(TALENT_MAX_ZOOM, tab.initialZoom))
-    talentPanX = (TalentFrameCanvasViewport:GetWidth() - tab.canvasWidth * talentZoom) * 0.5
-    talentPanY = (TalentFrameCanvasViewport:GetHeight() - tab.canvasHeight * talentZoom) * 0.5
+    talentPanX = ((TalentFrameCanvasViewport:GetWidth() / GetUIScale().x) - tab.canvasWidth * talentZoom) * 0.5
+    talentPanY = ((TalentFrameCanvasViewport:GetHeight() / GetUIScale().y) - tab.canvasHeight * talentZoom) * 0.5
     TalentFrame_ApplyView()
 end
 
@@ -85,8 +85,8 @@ local function TalentFrame_SetZoom(newZoom)
         return
     end
 
-    local centerX = TalentFrameCanvasViewport:GetWidth() * 0.5
-    local centerY = TalentFrameCanvasViewport:GetHeight() * 0.5
+    local centerX = (TalentFrameCanvasViewport:GetWidth() / GetUIScale().x) * 0.5
+    local centerY = (TalentFrameCanvasViewport:GetHeight() / GetUIScale().y) * 0.5
     local canvasCenterX = (centerX - talentPanX) / oldZoom
     local canvasCenterY = (centerY - talentPanY) / oldZoom
     talentZoom = newZoom
@@ -106,13 +106,14 @@ end
 function TalentFrame_UpdateTabs()
     TalentFrameTabContainer:RemoveAllChildren()
     local count = GetNumTalentTabs()
-    local tabWidth = 360
-    local startX = math.max(0, (TalentFrameTabContainer:GetWidth() - count * tabWidth) * 0.5)
+    local tabWidth = math.min(360, (TalentFrameTabContainer:GetWidth() / GetUIScale().x) / math.max(1, count))
+    local startX = 0
 
     for index = 1, count do
         local tab = GetTalentTabInfo(index - 1)
         local button = TalentFrameTabButtonTemplate:Clone()
         button.id = index
+        button:SetWidth(tabWidth - 8)
         button:SetText(tab.name)
         button:SetChecked(index == selectedTab)
         button:SetClickedHandler(TalentFrameTab_OnClick)
@@ -256,7 +257,9 @@ function TalentFrame_Update(self)
 
     local player = GetUnit("player")
     playerTalentPoints = player and player:GetTalentPoints() or 0
-    TalentFramePointsText:SetText(string.format(Localize("TALENT_POINTS_AVAILABLE"), playerTalentPoints))
+    TalentFramePointsText:SetText(Localize("TALENT_POINTS_LABEL"))
+    TalentFramePointsCounter:SetText(tostring(playerTalentPoints))
+    TalentFramePointsCounter:SetProperty("TextColor", playerTalentPoints > 0 and "FFF3CF50" or "FF99958C")
     TalentFrame_UpdateTabs()
     TalentFrame_UpdateTalents()
 end

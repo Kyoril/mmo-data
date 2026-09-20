@@ -127,7 +127,7 @@ function ActionBar_UpdateButtons(self)
             -- Clear icon!
             button:SetProperty("Icon", "");
             button:SetText("");
-            button:SetOpacity(0.5);
+            -- Empty slots keep an opaque interior so terrain does not muddy the bar.
         end
 
         -- Recompute the usable tint as well, so that changes which only affect usability
@@ -138,7 +138,8 @@ end
 
 function ActionButton_OnUpdate(self)
     local usable = IsActionButtonUsable(self.id - 1);
-    if usable then
+    local occupied = IsActionButtonSpell(self.id - 1) or IsActionButtonItem(self.id - 1) or IsActionButtonEmote(self.id - 1);
+    if usable or not occupied then
         self:SetProperty("Color", "FFFFFFFF");
     else
         self:SetProperty("Color", "FF888888");
@@ -250,5 +251,23 @@ function ActionBar_OnLoad(self)
         button:RegisterEvent("ACTION_BAR_CHANGED", ActionButton_OnUpdate);
 
         ActionButton_OnUpdate(button);
+    end
+end
+
+-- Binding changes have no UI event; refresh these small captions once per second.
+local shortcutRefreshElapsed = 1.0;
+function ActionBar_UpdateShortcutLabels(elapsed)
+    shortcutRefreshElapsed = shortcutRefreshElapsed + elapsed;
+    if shortcutRefreshElapsed < 1.0 then
+        return;
+    end
+    shortcutRefreshElapsed = 0;
+    for i = 1, MAX_ACTION_BUTTONS do
+        local keys = GetKeysForBinding("ACTIONBUTTON" .. i);
+        local text = keys and keys[1] or "";
+        text = text:gsub("CTRL%-", "C-"):gsub("SHIFT%-", "S-"):gsub("ALT%-", "A-");
+        text = text:gsub("MINUS$", "-"):gsub("PLUS$", "+");
+        local label = _G["ActionButton" .. i]:GetChild(1);
+        label:SetText(text);
     end
 end

@@ -1,30 +1,32 @@
 <?xml version="1.0" ?>
 <UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
 	<Script file="GameMenuBar.lua" />
-	
+	<Font name="ExperienceHudFont" file="Fonts/FRIZQT__.TTF" size="22" outline="1" shadowX="1.0" shadowY="1.0" />
+	<Font name="ActionShortcutFont" file="Fonts/FRIZQT__.TTF" size="16" outline="1" shadowX="1.0" shadowY="1.0" />
+	<Font name="CombatHudNameFont" file="Fonts/FRIZQT__.TTF" size="24" outline="1" shadowX="1.0" shadowY="1.0" />
+	<Font name="CombatHudTextFont" file="Fonts/FRIZQT__.TTF" size="22" outline="1" shadowX="1.0" shadowY="1.0" />
 	<Frame name="GameMenuBarImageButton" type="Button" renderer="ButtonRenderer">
 		<Property name="Icon" />
-
 		<Visual>
 			<ImagerySection name="Image">
 				<ImageComponent>
 					<Area>
-						<Inset all="16" />
+						<Inset left="16" right="16" top="24" bottom="24" />
 					</Area>
 					<PropertyValue property="Icon" />
 				</ImageComponent>
 			</ImagerySection>
 			<ImagerySection name="NormalFrame">
-				<BorderComponent texture="Interface/BW_ButtonSmall_Up.htex" borderSize="30" />
+				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="8" tint="FF7E817F"><Area><Inset top="0" bottom="0" /></Area></BorderComponent>
 			</ImagerySection>
 			<ImagerySection name="HoveredFrame">
-				<BorderComponent texture="Interface/BW_ButtonSmall_Over.htex" borderSize="30" />
+				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="8" tint="FFCEB67E"><Area><Inset top="0" bottom="0" /></Area></BorderComponent>
 			</ImagerySection>
 			<ImagerySection name="PushedFrame">
-				<BorderComponent texture="Interface/BW_ButtonSmall_Down.htex" borderSize="30" />
+				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="8" tint="FF665C49"><Area><Inset top="0" bottom="0" /></Area></BorderComponent>
 			</ImagerySection>
 			<ImagerySection name="DisabledFrame">
-				<BorderComponent texture="Interface/BW_ButtonSmall_Up.htex" borderSize="30" />
+				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="8" tint="FF7E817F"><Area><Inset top="0" bottom="0" /></Area></BorderComponent>
 			</ImagerySection>
 			<StateImagery name="Normal">
 				<Layer>
@@ -53,113 +55,73 @@
 		</Visual>
 		<Area>
 			<Size>
-				<AbsDimension x="96" y="96" />
+				<AbsDimension x="80" y="96" />
 			</Size>
 		</Area>
 	</Frame>
-
 	<Frame name="GameMenuBarButtonTemplate" inherits="GlueButton">
 		<Area>
-			<Size><AbsDimension x="400" y="96"/></Size>
+			<Size>
+				<AbsDimension x="400" y="96" />
+			</Size>
 			<Anchor point="LEFT" offset="16" />
 		</Area>
 	</Frame>
-
 	<Frame name="GameMenuBar" renderer="DefaultRenderer" parent="GameParent">
 		<Visual>
 			<ImagerySection name="Background">
-				<ImageComponent texture="Interface/GameUI/fg4_borders_stone_bg_01_result.htex" tiling="BOTH">
-					<Area><Inset all="8" /></Area>
-				</ImageComponent>
-				<BorderComponent texture="Interface/GameUI/fg4_borders_stone_edges_result.htex" borderSize="45" />
+				<!-- Nine-slice corners remain fixed as the bar grows or XP rows collapse. -->
+				<ImageComponent texture="Interface/GameUI/Alestia/BarMiddle.htex" tint="FFB5A790" />
 			</ImagerySection>
 			<StateImagery name="Enabled">
-				<Layer>
-					<!--<Section section="Background" />-->
-				</Layer>
+				<Layer><Section section="Background" /></Layer>
 			</StateImagery>
 		</Visual>
+		<Frame name="ActionBackingLeft" renderer="DefaultRenderer">
+			<Property name="Enabled" value="false" /><Property name="Clickable" value="false" />
+			<Area><Size><AbsDimension x="64" /></Size><Anchor point="LEFT" offset="-64" /><Anchor point="TOP" offset="0" /><Anchor point="BOTTOM" offset="0" /></Area>
+			<Visual><ImagerySection name="Cap"><ImageComponent texture="Interface/GameUI/Alestia/BarLeftCap.htex" tint="FFB5A790" /></ImagerySection><StateImagery name="Enabled"><Layer><Section section="Cap" /></Layer></StateImagery></Visual>
+		</Frame>
+		<Frame name="ActionBackingRight" renderer="DefaultRenderer">
+			<Property name="Enabled" value="false" /><Property name="Clickable" value="false" />
+			<Area><Size><AbsDimension x="64" /></Size><Anchor point="RIGHT" offset="64" /><Anchor point="TOP" offset="0" /><Anchor point="BOTTOM" offset="0" /></Area>
+			<Visual><ImagerySection name="Cap"><ImageComponent texture="Interface/GameUI/Alestia/BarRightCap.htex" tint="FFB5A790" /></ImagerySection><StateImagery name="Enabled"><Layer><Section section="Cap" /></Layer></StateImagery></Visual>
+		</Frame>
+		<Frame name="ExperienceDock" renderer="DefaultRenderer">
+			<Property name="Visible" value="false" />
+			<Area><Size><AbsDimension y="120" /></Size><Anchor point="LEFT" offset="0" /><Anchor point="RIGHT" offset="0" /><Anchor point="BOTTOM" relativePoint="TOP" offset="0" /></Area>
+			<Visual><ImagerySection name="Surface"><BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="8" tint="FFC3A36A" /></ImagerySection><StateImagery name="Enabled"><Layer><Section section="Surface" /></Layer></StateImagery></Visual>
+		</Frame>
 
 		<Frame name="PlayerExperienceBar" type="ProgressBar">
 			<Property name="Progress" value="0.12783" />
 			<Property name="Text" value="200 / 400" />
-			<Property name="Font" value="DefaultSmall" />
-
+			<Property name="Font" value="ExperienceHudFont" />
 			<Area>
-				<Anchor point="LEFT" offset="8" />
-				<Anchor point="RIGHT" offset="-8" />
-				<Anchor point="BOTTOM" offset="0" />
-				<Size><AbsDimension y="48" /></Size>
+				<Anchor point="LEFT" relativeTo="ExperienceDock" offset="8" />
+				<Anchor point="RIGHT" relativeTo="ExperienceDock" offset="-8" />
+				<Anchor point="BOTTOM" relativeTo="ExperienceDock" offset="-12" />
+				<Size>
+					<AbsDimension y="44" />
+				</Size>
 			</Area>
-
 			<Visual>
 				<ImagerySection name="Caption">
 					<TextComponent color="FFFFFFFF" horzAlign="CENTER" vertAlign="CENTER" />
 				</ImagerySection>
 				<ImagerySection name="Background">
-					<BorderComponent texture="Interface/fg4_borders_01_33.htex" borderSize="5" />
-				</ImagerySection>
-				<ImagerySection name="Border">
-					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlack.htex" borderSize="24" />
-				</ImagerySection>
-				<ImagerySection name="Progress">
-					<ImageComponent texture="Interface/fg4_gradientWhiteV1_result.htex" tiling="HORZ" tint="FF94008C">
-						<Area><Inset all="8" /></Area>
-					</ImageComponent>
-				</ImagerySection>
-
-				<StateImagery name="Enabled">
-					<Layer>
-						<Section section="Background" />
-					</Layer>
-				</StateImagery>
-				<StateImagery name="Disabled">
-					<Layer>
-						<Section section="Background" />
-					</Layer>
-				</StateImagery>
-				<StateImagery name="Progress">
-					<Layer>
-						<Section section="Progress" />
-					</Layer>
-				</StateImagery>
-				<StateImagery name="Overlay">
-					<Layer>
-						<Section section="Border" />
-						<Section section="Caption" />
-					</Layer>
-				</StateImagery>
-			</Visual>
-		</Frame>
-
-		<Frame name="PlayerClassExperienceBar" type="ProgressBar">
-			<Property name="Progress" value="0" />
-			<Property name="Font" value="DefaultSmall" />
-			<Property name="Visible" value="False" />
-
-			<Area>
-				<Anchor point="LEFT" offset="8" />
-				<Anchor point="RIGHT" offset="-8" />
-				<Anchor point="BOTTOM" offset="-48" />
-				<Size><AbsDimension y="36" /></Size>
-			</Area>
-
-			<Visual>
-				<ImagerySection name="Caption">
-					<TextComponent color="FFFFFFFF" horzAlign="CENTER" vertAlign="CENTER" />
-				</ImagerySection>
-				<ImagerySection name="Background">
-					<BorderComponent texture="Interface/fg4_borders_01_33.htex" borderSize="5" />
+					<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF17130E" />
 				</ImagerySection>
 				<ImagerySection name="Border">
 					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" />
 				</ImagerySection>
 				<ImagerySection name="Progress">
-					<ImageComponent texture="Interface/fg4_gradientWhiteV1_result.htex" tiling="HORZ" tint="FF9E5E22">
-						<Area><Inset all="6" /></Area>
+					<ImageComponent texture="Interface/fg4_gradientWhiteV1_result.htex" tiling="HORZ" tint="FFAD58E8">
+						<Area>
+							<Inset all="3" />
+						</Area>
 					</ImageComponent>
 				</ImagerySection>
-
 				<StateImagery name="Enabled">
 					<Layer>
 						<Section section="Background" />
@@ -177,29 +139,80 @@
 				</StateImagery>
 				<StateImagery name="Overlay">
 					<Layer>
-						<Section section="Border" />
+
 						<Section section="Caption" />
 					</Layer>
 				</StateImagery>
 			</Visual>
 		</Frame>
+		<Frame name="PlayerClassExperienceBar" type="ProgressBar">
+			<Property name="Progress" value="0" />
+			<Property name="Font" value="ExperienceHudFont" />
+			<Property name="Visible" value="False" />
+			<Area>
+				<Anchor point="LEFT" relativeTo="ExperienceDock" offset="8" />
+				<Anchor point="RIGHT" relativeTo="ExperienceDock" offset="-8" />
+				<Anchor point="BOTTOM" relativeTo="ExperienceDock" offset="-64" />
+				<Size>
+					<AbsDimension y="44" />
+				</Size>
+			</Area>
+			<Visual>
+				<ImagerySection name="Caption">
+					<TextComponent color="FFFFFFFF" horzAlign="CENTER" vertAlign="CENTER" />
+				</ImagerySection>
+				<ImagerySection name="Background">
+					<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF17130E" />
+				</ImagerySection>
+				<ImagerySection name="Border">
+					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" />
+				</ImagerySection>
+				<ImagerySection name="Progress">
+					<ImageComponent texture="Interface/fg4_gradientWhiteV1_result.htex" tiling="HORZ" tint="FFE5A72D">
+						<Area>
+							<Inset all="3" />
+						</Area>
+					</ImageComponent>
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Background" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="Disabled">
+					<Layer>
+						<Section section="Background" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="Progress">
+					<Layer>
+						<Section section="Progress" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="Overlay">
+					<Layer>
 
-<!--
+						<Section section="Caption" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+		</Frame>
+		<!--
 		<Frame name="LeftSideDecoration" renderer="DefaultRenderer">
 			<Area>
-				<Anchor point="LEFT" relativePoint="LEFT" offset="64" />
-				<Anchor point="BOTTOM" relativePoint="BOTTOM" offset="48" />
-				<Size><AbsDimension x="-256" y="256" /></Size>
+				<Anchor point="LEFT" relativePoint="LEFT" offset="64"   />
+				<Anchor point="BOTTOM" relativePoint="BOTTOM" offset="48"   />
+				<Size><AbsDimension x="-256" y="256"   /></Size>
 			</Area>
 
 			<Visual>
 				<ImagerySection name="Background">
-					<ImageComponent texture="Interface/GameUI/fg4_icons_emblemLion_result.htex" tiling="NONE" />
+					<ImageComponent texture="Interface/GameUI/fg4_icons_emblemLion_result.htex" tiling="NONE"   />
 				</ImagerySection>
 
 				<StateImagery name="Enabled">
 					<Layer>
-						<Section section="Background" />
+						<Section section="Background"   />
 					</Layer>
 				</StateImagery>
 			</Visual>
@@ -207,30 +220,31 @@
 
 		<Frame name="RightSideDecoration" renderer="DefaultRenderer">
 			<Area>
-				<Anchor point="LEFT" relativePoint="RIGHT" offset="-64" />
-				<Anchor point="BOTTOM" relativePoint="BOTTOM" offset="48" />
-				<Size><AbsDimension x="256" y="256" /></Size>
+				<Anchor point="LEFT" relativePoint="RIGHT" offset="-64"   />
+				<Anchor point="BOTTOM" relativePoint="BOTTOM" offset="48"   />
+				<Size><AbsDimension x="256" y="256"   /></Size>
 			</Area>
 
 			<Visual>
 				<ImagerySection name="Background">
-					<ImageComponent texture="Interface/GameUI/fg4_icons_emblemLion_result.htex" tiling="NONE" />
+					<ImageComponent texture="Interface/GameUI/fg4_icons_emblemLion_result.htex" tiling="NONE"   />
 				</ImagerySection>
 
 				<StateImagery name="Enabled">
 					<Layer>
-						<Section section="Background" />
+						<Section section="Background"   />
 					</Layer>
 				</StateImagery>
 			</Visual>
 		</Frame>
 -->
 		<Area>
-			<Size><AbsDimension x="1580" y="224" /></Size>
-			<Anchor point="BOTTOM" offset="0" />
+			<Size>
+				<AbsDimension x="2128" y="156" />
+			</Size>
+			<Anchor point="BOTTOM" offset="-24" />
 			<Anchor point="H_CENTER" offset="0" />
 		</Area>
-
 		<Scripts>
 			<OnLoad>
 				return function(this)
@@ -239,27 +253,55 @@
 			</OnLoad>
 		</Scripts>
 	</Frame>
-	
-		<Frame name="MenuBarButtons" parent="GameParent">
-			<Area>
-				<Anchor point="RIGHT" />
-				<Anchor point="BOTTOM" />
-				<Size><AbsDimension x="640" y="96" /></Size>
-			</Area>
-			
-			<Visual>
-				<ImagerySection name="Background">
-					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlack.htex" borderSize="30">
-						<Area><Inset bottom="8" left="0" top="8" right="8" /></Area>
-					</BorderComponent>
-				</ImagerySection>
+	<Frame name="MenuBarButtons" parent="GameMenuBar" renderer="DefaultRenderer">
+		<Area>
+			<Size>
+				<AbsDimension x="640" y="112" />
+			</Size>
+			<Anchor point="RIGHT" offset="-16" />
+			<Anchor point="BOTTOM" offset="-24" />
+		</Area>
+		<Visual>
+			<ImagerySection name="Surface">
+				<BorderComponent texture="Interface/GameUI/Alestia/WindowPanel.htex" borderSize="32" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<!-- Shared action-bar backing supplies this section. -->
+				</Layer>
+			</StateImagery>
+		</Visual>
+	</Frame>
+	<Frame name="AlestiaOakLeft" parent="GameParent" renderer="DefaultRenderer">
+		<Property name="Clickable" value="false" />
+		<Property name="Enabled" value="false" />
+		<Area>
+			<Size><AbsDimension x="96" y="192" /></Size>
+			<Anchor point="RIGHT" relativeTo="GameMenuBar" relativePoint="LEFT" offset="-64" />
+			<Anchor point="BOTTOM" relativeTo="GameMenuBar" relativePoint="BOTTOM" offset="0" />
+		</Area>
+		<Visual>
+			<ImagerySection name="Oak"><ImageComponent texture="Interface/GameUI/Alestia/OakLeft.htex" tint="FF998D7C" /></ImagerySection>
+			<StateImagery name="Enabled"><Layer><Section section="Oak" /></Layer></StateImagery>
+		</Visual>
+	</Frame>
+	<Frame name="AlestiaOakRight" parent="GameParent" renderer="DefaultRenderer">
+		<Property name="Clickable" value="false" />
+		<Property name="Enabled" value="false" />
+		<Area>
+			<Size><AbsDimension x="96" y="192" /></Size>
+			<Anchor point="LEFT" relativeTo="GameMenuBar" relativePoint="RIGHT" offset="64" />
+			<Anchor point="BOTTOM" relativeTo="GameMenuBar" relativePoint="BOTTOM" offset="0" />
+		</Area>
+		<Visual>
+			<ImagerySection name="Oak"><ImageComponent texture="Interface/GameUI/Alestia/OakRight.htex" tint="FF998D7C" /></ImagerySection>
+			<StateImagery name="Enabled"><Layer><Section section="Oak" /></Layer></StateImagery>
+		</Visual>
+	</Frame>
 
-				<StateImagery name="Enabled">
-					<Layer>
-						<Section section="Background" />
-					</Layer>
-				</StateImagery>
-			</Visual>
-		</Frame>
-
+	<Frame name="ActionMenuDivider" parent="GameMenuBar" renderer="DefaultRenderer">
+		<Property name="Enabled" value="false" /><Property name="Clickable" value="false" />
+		<Area><Size><AbsDimension x="2" y="88" /></Size><Anchor point="LEFT" offset="1460" /><Anchor point="BOTTOM" offset="-36" /></Area>
+		<Visual><ImagerySection name="Line"><ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF8A704A" /></ImagerySection><StateImagery name="Enabled"><Layer><Section section="Line" /></Layer></StateImagery></Visual>
+	</Frame>
 </UiLayout>

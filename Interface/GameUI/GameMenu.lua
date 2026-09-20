@@ -20,7 +20,7 @@ function AddMenuButton(text, callback)
 
 	menuOffsetY = menuOffsetY + button:GetHeight() + BUTTON_V_PADDING
 
-	GameMenu:SetHeight(menuOffsetY + BUTTON_V_PADDING + 190.0)
+	GameMenu:SetHeight(menuOffsetY + BUTTON_V_PADDING + 166.0)
 end
 
 function OnQuitButton_Clicked()
@@ -52,10 +52,11 @@ end
 function GameMenu_OnLoad(this)
 	MenuTitleBar:GetChild(0):SetClickedHandler(OnCloseButton_Clicked);
 
-	AddMenuButton("CLOSE", OnCloseButton_Clicked);
 	AddMenuButton("OPTIONS", OnOptionsButton_Clicked);
 	AddMenuButton("LOGOUT", OnLogoutButton_Clicked);
 	AddMenuButton("QUIT", OnQuitButton_Clicked);
+	menuOffsetY = menuOffsetY + 20;
+	AddMenuButton("CLOSE", OnCloseButton_Clicked);
 
 	AddMenuBarButton("Interface/Icons/fg4_icons_menu_result.htex", OnMenuItem_Clicked, "MENUBAR_TOOLTIP_GAMEMENU", "TOGGLEGAMEMENU");
 end

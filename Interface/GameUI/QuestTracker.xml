@@ -1,64 +1,137 @@
 <?xml version="1.0" ?>
 <UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3.org/2001/XMLSchema-instance http://www.w3.org/2001/XMLSchema-instance">
 	<Script file="QuestTracker.lua" />
-
+	<Font name="QuestTrackerHeadingFont" file="Fonts/FRIZQT__.TTF" size="26" outline="1" shadowX="1.0" shadowY="1.0" />
+	<Font name="QuestTrackerObjectiveFont" file="Fonts/FRIZQT__.TTF" size="20" outline="1" shadowX="1.0" shadowY="1.0" />
+	<Font name="QuestTrackerTitleFont" file="Fonts/FRIZQT__.TTF" size="22" outline="1" shadowX="1.0" shadowY="1.0" />
 	<!-- Toggle button template -->
 	<Frame name="QuestTrackerToggleTemplate" type="Button" renderer="ButtonRenderer">
-		<Property name="Font" value="DefaultSmall" />
+		<Property name="StatusIcon" /><Property name="StatusTint" value="FFFFFFFF" />
+		<Property name="Font" value="QuestTrackerTitleFont" />
 		<Property name="HorzAlign" value="CENTER" />
-		<Property name="VertAlign" value="MIDDLE" />
+		<Property name="VertAlign" value="CENTER" />
 		<Visual>
 			<ImagerySection name="FrameNormal">
-				<ImageComponent color="66333333" />
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="00000000" />
 			</ImagerySection>
 			<ImagerySection name="FrameHovered">
-				<ImageComponent color="AA555555" />
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="303D2E17" />
 			</ImagerySection>
 			<ImagerySection name="FramePushed">
-				<ImageComponent color="CC222222" />
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="50433119" />
 			</ImagerySection>
 			<ImagerySection name="TextNormal">
-				<TextComponent color="FFCCCCCC" horzAlign="CENTER" vertAlign="MIDDLE" />
+				<ImageComponent tint="$StatusTint"><PropertyValue property="StatusIcon" /></ImageComponent>
 			</ImagerySection>
 			<ImagerySection name="TextHovered">
-				<TextComponent color="FFFFFFFF" horzAlign="CENTER" vertAlign="MIDDLE" />
+				<ImageComponent tint="$StatusTint"><PropertyValue property="StatusIcon" /></ImageComponent>
 			</ImagerySection>
 			<ImagerySection name="TextPushed">
-				<TextComponent color="FFAAAAAA" horzAlign="CENTER" vertAlign="MIDDLE" />
+				<ImageComponent tint="$StatusTint"><PropertyValue property="StatusIcon" /></ImageComponent>
 			</ImagerySection>
 			<StateImagery name="Normal">
-				<Layer><Section section="FrameNormal" /></Layer>
-				<Layer><Section section="TextNormal" /></Layer>
+				<Layer>
+					<Section section="FrameNormal" />
+				</Layer>
+				<Layer>
+					<Section section="TextNormal" />
+				</Layer>
 			</StateImagery>
 			<StateImagery name="Hovered">
-				<Layer><Section section="FrameHovered" /></Layer>
-				<Layer><Section section="TextHovered" /></Layer>
+				<Layer>
+					<Section section="FrameHovered" />
+				</Layer>
+				<Layer>
+					<Section section="TextHovered" />
+				</Layer>
 			</StateImagery>
 			<StateImagery name="Pushed">
-				<Layer><Section section="FramePushed" /></Layer>
-				<Layer><Section section="TextPushed" /></Layer>
+				<Layer>
+					<Section section="FramePushed" />
+				</Layer>
+				<Layer>
+					<Section section="TextPushed" />
+				</Layer>
 			</StateImagery>
 		</Visual>
-		<Area><Size><AbsDimension x="24" y="24" /></Size></Area>
+		<Area>
+			<Size>
+				<AbsDimension x="32" y="32" />
+			</Size>
+		</Area>
 	</Frame>
-
+	<Frame name="QuestTrackerCollapseTemplate" type="Button" renderer="ButtonRenderer">
+		<Property name="StatusIcon" /><Property name="StatusTint" value="FFFFFFFF" />
+		<Property name="Font" value="QuestTrackerTitleFont" />
+		<Property name="HorzAlign" value="CENTER" />
+		<Property name="VertAlign" value="CENTER" />
+		<Visual>
+			<ImagerySection name="FrameNormal">
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="00000000" />
+			</ImagerySection>
+			<ImagerySection name="FrameHovered">
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="303D2E17" />
+			</ImagerySection>
+			<ImagerySection name="FramePushed">
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="50433119" />
+			</ImagerySection>
+			<ImagerySection name="TextNormal">
+				<TextComponent color="FFF3CF50" horzAlign="CENTER" vertAlign="CENTER" />
+			</ImagerySection>
+			<ImagerySection name="TextHovered">
+				<TextComponent color="FFF3CF50" horzAlign="CENTER" vertAlign="CENTER" />
+			</ImagerySection>
+			<ImagerySection name="TextPushed">
+				<TextComponent color="FFF3CF50" horzAlign="CENTER" vertAlign="CENTER" />
+			</ImagerySection>
+			<StateImagery name="Normal">
+				<Layer>
+					<Section section="FrameNormal" />
+				</Layer>
+				<Layer>
+					<Section section="TextNormal" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Hovered">
+				<Layer>
+					<Section section="FrameHovered" />
+				</Layer>
+				<Layer>
+					<Section section="TextHovered" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Pushed">
+				<Layer>
+					<Section section="FramePushed" />
+				</Layer>
+				<Layer>
+					<Section section="TextPushed" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+		<Area>
+			<Size>
+				<AbsDimension x="32" y="32" />
+			</Size>
+		</Area>
+	</Frame>
 	<!-- Title button template (clickable to open quest log) -->
 	<Frame name="QuestTrackerTitleTemplate" type="Button" renderer="ButtonRenderer">
-		<Property name="Font" value="DefaultSmall" />
+		<Property name="Font" value="QuestTrackerTitleFont" />
 		<Property name="HorzAlign" value="LEFT" />
 		<Property name="VertAlign" value="TOP" />
-		<Property name="TextColor" value="FFFFD100" />
+		<Property name="TextColor" value="FFF3CF50" />
 		<Property name="TextColorHover" value="FFFFFFFF" />
 		<Property name="TextColorPush" value="FFCCCC88" />
 		<Visual>
 			<ImagerySection name="FrameNormal">
-				<ImageComponent color="00000000" />
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="00000000" />
 			</ImagerySection>
 			<ImagerySection name="FrameHovered">
-				<ImageComponent color="44FFFFFF" />
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="303D2E17" />
 			</ImagerySection>
 			<ImagerySection name="FramePushed">
-				<ImageComponent color="22FFFFFF" />
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="50433119" />
 			</ImagerySection>
 			<ImagerySection name="TextNormal">
 				<TextComponent color="$TextColor" horzAlign="$HorzAlign" vertAlign="$VertAlign" />
@@ -70,40 +143,62 @@
 				<TextComponent color="$TextColorPush" horzAlign="$HorzAlign" vertAlign="$VertAlign" />
 			</ImagerySection>
 			<StateImagery name="Normal">
-				<Layer><Section section="FrameNormal" /></Layer>
-				<Layer><Section section="TextNormal" /></Layer>
+				<Layer>
+					<Section section="FrameNormal" />
+				</Layer>
+				<Layer>
+					<Section section="TextNormal" />
+				</Layer>
 			</StateImagery>
 			<StateImagery name="Hovered">
-				<Layer><Section section="FrameHovered" /></Layer>
-				<Layer><Section section="TextHovered" /></Layer>
+				<Layer>
+					<Section section="FrameHovered" />
+				</Layer>
+				<Layer>
+					<Section section="TextHovered" />
+				</Layer>
 			</StateImagery>
 			<StateImagery name="Pushed">
-				<Layer><Section section="FramePushed" /></Layer>
-				<Layer><Section section="TextPushed" /></Layer>
+				<Layer>
+					<Section section="FramePushed" />
+				</Layer>
+				<Layer>
+					<Section section="TextPushed" />
+				</Layer>
 			</StateImagery>
 		</Visual>
-		<Area><Size><AbsDimension x="352" y="32" /></Size></Area>
+		<Area>
+			<Size>
+				<AbsDimension x="352" y="32" />
+			</Size>
+		</Area>
 	</Frame>
-
 	<!-- Objective text template -->
 	<Frame name="QuestTrackerObjTemplate" renderer="DefaultRenderer">
-		<Property name="Font" value="SmallLabelFont" />
+		<Property name="Clickable" value="false" />
+		<Property name="Font" value="QuestTrackerObjectiveFont" />
 		<Property name="HorzAlign" value="LEFT" />
 		<Property name="VertAlign" value="TOP" />
-		<Property name="TextColor" value="FFAAAAAA" />
+		<Property name="TextColor" value="FFCEC8BC" />
 		<Visual>
 			<ImagerySection name="Text">
 				<TextComponent color="$TextColor" horzAlign="$HorzAlign" vertAlign="$VertAlign" />
 			</ImagerySection>
 			<StateImagery name="Enabled">
-				<Layer><Section section="Text" /></Layer>
+				<Layer>
+					<Section section="Text" />
+				</Layer>
 			</StateImagery>
 		</Visual>
-		<Area><Size><AbsDimension x="352" y="28" /></Size></Area>
+		<Area>
+			<Size>
+				<AbsDimension x="352" y="28" />
+			</Size>
+		</Area>
 	</Frame>
-
 	<!-- Quest Tracker panel: anchored below the Minimap, right-aligned -->
 	<Frame name="QuestTrackerFrame" parent="GameParent" renderer="DefaultRenderer">
+		<Property name="Clickable" value="false" />
 		<Scripts>
 			<OnLoad>
 				return function(self)
@@ -116,20 +211,13 @@
 				end
 			</OnUpdate>
 		</Scripts>
-		<Visual>
-			<ImagerySection name="Background">
-				<ImageComponent color="BB000000" />
-			</ImagerySection>
-			<StateImagery name="Enabled">
-				<Layer><Section section="Background" /></Layer>
-			</StateImagery>
-		</Visual>
 		<Area>
-			<Size><AbsDimension x="384" y="64" /></Size>
-			<Anchor point="RIGHT" offset="0" />
-			<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="Minimap" offset="8" />
+			<Size>
+				<AbsDimension x="560" y="96" />
+			</Size>
+			<Anchor point="RIGHT" offset="0" relativeTo="Minimap" relativePoint="RIGHT" />
+			<Anchor point="TOP" offset="24" relativeTo="Minimap" relativePoint="BOTTOM" />
 		</Area>
-
 		<!-- Slot 1 -->
 		<Frame name="QuestTrackerToggle1" inherits="QuestTrackerToggleTemplate" id="1">
 			<Scripts>
@@ -153,7 +241,6 @@
 		<Frame name="QuestTrackerObj1_2" inherits="QuestTrackerObjTemplate" />
 		<Frame name="QuestTrackerObj1_3" inherits="QuestTrackerObjTemplate" />
 		<Frame name="QuestTrackerObj1_4" inherits="QuestTrackerObjTemplate" />
-
 		<!-- Slot 2 -->
 		<Frame name="QuestTrackerToggle2" inherits="QuestTrackerToggleTemplate" id="2">
 			<Scripts>
@@ -177,7 +264,6 @@
 		<Frame name="QuestTrackerObj2_2" inherits="QuestTrackerObjTemplate" />
 		<Frame name="QuestTrackerObj2_3" inherits="QuestTrackerObjTemplate" />
 		<Frame name="QuestTrackerObj2_4" inherits="QuestTrackerObjTemplate" />
-
 		<!-- Slot 3 -->
 		<Frame name="QuestTrackerToggle3" inherits="QuestTrackerToggleTemplate" id="3">
 			<Scripts>
@@ -201,7 +287,6 @@
 		<Frame name="QuestTrackerObj3_2" inherits="QuestTrackerObjTemplate" />
 		<Frame name="QuestTrackerObj3_3" inherits="QuestTrackerObjTemplate" />
 		<Frame name="QuestTrackerObj3_4" inherits="QuestTrackerObjTemplate" />
-
 		<!-- Slot 4 -->
 		<Frame name="QuestTrackerToggle4" inherits="QuestTrackerToggleTemplate" id="4">
 			<Scripts>
@@ -225,7 +310,6 @@
 		<Frame name="QuestTrackerObj4_2" inherits="QuestTrackerObjTemplate" />
 		<Frame name="QuestTrackerObj4_3" inherits="QuestTrackerObjTemplate" />
 		<Frame name="QuestTrackerObj4_4" inherits="QuestTrackerObjTemplate" />
-
 		<!-- Slot 5 -->
 		<Frame name="QuestTrackerToggle5" inherits="QuestTrackerToggleTemplate" id="5">
 			<Scripts>
@@ -249,6 +333,50 @@
 		<Frame name="QuestTrackerObj5_2" inherits="QuestTrackerObjTemplate" />
 		<Frame name="QuestTrackerObj5_3" inherits="QuestTrackerObjTemplate" />
 		<Frame name="QuestTrackerObj5_4" inherits="QuestTrackerObjTemplate" />
-
+		<Frame name="QuestTrackerHeading" inherits="TextSmall">
+			<Property name="Clickable" value="false" />
+			<Property name="TextColor" value="FFF3CF50" />
+			<Property name="Font" value="QuestTrackerHeadingFont" />
+			<Property name="Text" value="HUD_QUEST_TRACKER" />
+			<Area>
+				<Size>
+					<AbsDimension y="32" />
+				</Size>
+				<Anchor point="LEFT" offset="24" />
+				<Anchor point="RIGHT" offset="-24" />
+				<Anchor point="TOP" offset="16" />
+			</Area>
+		</Frame>
+		<Frame name="QuestTrackerHeadingRule" renderer="DefaultRenderer">
+			<Property name="Clickable" value="false" />
+			<Area>
+				<Size>
+					<AbsDimension y="2" />
+				</Size>
+				<Anchor point="LEFT" offset="24" />
+				<Anchor point="RIGHT" offset="-24" />
+				<Anchor point="TOP" offset="54" />
+			</Area>
+			<Visual>
+				<ImagerySection name="Rule">
+					<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="C09E8050" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Rule" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+		</Frame>
 	</Frame>
+
+	<Frame name="QuestTrackerCollapse1" inherits="QuestTrackerCollapseTemplate" parent="QuestTrackerFrame"><Scripts><OnClick>return function(self, button) QuestTracker_ToggleCollapse(1); end</OnClick></Scripts></Frame>
+
+	<Frame name="QuestTrackerCollapse2" inherits="QuestTrackerCollapseTemplate" parent="QuestTrackerFrame"><Scripts><OnClick>return function(self, button) QuestTracker_ToggleCollapse(2); end</OnClick></Scripts></Frame>
+
+	<Frame name="QuestTrackerCollapse3" inherits="QuestTrackerCollapseTemplate" parent="QuestTrackerFrame"><Scripts><OnClick>return function(self, button) QuestTracker_ToggleCollapse(3); end</OnClick></Scripts></Frame>
+
+	<Frame name="QuestTrackerCollapse4" inherits="QuestTrackerCollapseTemplate" parent="QuestTrackerFrame"><Scripts><OnClick>return function(self, button) QuestTracker_ToggleCollapse(4); end</OnClick></Scripts></Frame>
+
+	<Frame name="QuestTrackerCollapse5" inherits="QuestTrackerCollapseTemplate" parent="QuestTrackerFrame"><Scripts><OnClick>return function(self, button) QuestTracker_ToggleCollapse(5); end</OnClick></Scripts></Frame>
 </UiLayout>

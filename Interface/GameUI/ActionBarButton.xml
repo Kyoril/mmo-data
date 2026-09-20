@@ -2,13 +2,12 @@
 <UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
 	<Frame name="ActionBarButtonTemplate" type="Button" renderer="ButtonRenderer">
 		<Property name="Icon" />
-        <Property name="Font" value="SmallLabelFont" />
-        <Property name="DragEnabled" value="true" />
-        <Property name="DropEnabled" value="true" />
-        <!-- Tint of the "active" glow overlay. Transparent (00000000) hides it; the action bar sets
+		<Property name="Font" value="CombatHudTextFont" />
+		<Property name="DragEnabled" value="true" />
+		<Property name="DropEnabled" value="true" />
+		<!-- Tint of the "active" glow overlay. Transparent (00000000) hides it; the action bar sets
              it to an opaque colour while a "Disabled While Active" spell (e.g. Stealth) is active. -->
-        <Property name="ActiveGlowTint" value="00000000" />
-
+		<Property name="ActiveGlowTint" value="00000000" />
 		<Visual>
 			<ImagerySection name="ActiveGlow">
 				<ImageComponent texture="Interface/GlueUI/GlowYellow.htex" tint="$ActiveGlowTint">
@@ -20,29 +19,29 @@
 			<ImagerySection name="Image">
 				<ImageComponent>
 					<Area>
-						<Inset all="16" />
+						<Inset all="10" />
 					</Area>
 					<PropertyValue property="Icon" />
 				</ImageComponent>
 			</ImagerySection>
 			<ImagerySection name="Counter">
-                <TextComponent color="FFFFFFFF" horzAlign="RIGHT" vertAlign="BOTTOM">
+				<TextComponent color="FFFFFFFF" horzAlign="RIGHT" vertAlign="BOTTOM">
 					<Area>
 						<Inset all="16" />
 					</Area>
-                </TextComponent>
+				</TextComponent>
 			</ImagerySection>
 			<ImagerySection name="NormalFrame">
-				<BorderComponent texture="Interface/BW_ButtonSmall_Up.htex" borderSize="30" />
+				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="FF998D7C" />
 			</ImagerySection>
 			<ImagerySection name="HoveredFrame">
-				<BorderComponent texture="Interface/BW_ButtonSmall_Over.htex" borderSize="30" />
+				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="FFFFFFFF" />
 			</ImagerySection>
 			<ImagerySection name="PushedFrame">
-				<BorderComponent texture="Interface/BW_ButtonSmall_Down.htex" borderSize="30" />
+				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="FF91806A" />
 			</ImagerySection>
 			<ImagerySection name="DisabledFrame">
-				<BorderComponent texture="Interface/BW_ButtonSmall_Up.htex" borderSize="30" />
+				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="FF998D7C" />
 			</ImagerySection>
 			<StateImagery name="Normal">
 				<Layer>
@@ -77,10 +76,9 @@
 		</Visual>
 		<Area>
 			<Size>
-				<AbsDimension x="128" y="128" />
+				<AbsDimension x="112" y="112" />
 			</Size>
 		</Area>
-
 		<!-- Cooldown overlay frame -->
 		<Frame name="Cooldown" type="Cooldown">
 			<Property name="Clickable" value="false" />
@@ -88,12 +86,11 @@
 			<Property name="Visible" value="false" />
 			<Property name="Material" value="Interface/Cooldown_Instance.hmi" />
 			<Area>
-				<Anchor point="TOP" offset="14" />
-				<Anchor point="LEFT" offset="14" />
-				<Anchor point="BOTTOM" offset="-14" />
-				<Anchor point="RIGHT" offset="-14" />
+				<Anchor point="TOP" offset="10" />
+				<Anchor point="LEFT" offset="10" />
+				<Anchor point="BOTTOM" offset="-10" />
+				<Anchor point="RIGHT" offset="-10" />
 			</Area>
-
 			<Scripts>
 				<OnUpdate>
 					return function(self, elapsed)
@@ -102,18 +99,40 @@
 				</OnUpdate>
 			</Scripts>
 		</Frame>
-
-        <Scripts>
-            <OnDrag>
+		<Scripts>
+			<OnDrag>
                 return function(this, button, position)
                     ActionBarButton_OnDrag(this, button, position);
                 end
             </OnDrag>
-            <OnDrop>
+			<OnDrop>
                 return function(this, button, position)
                     ActionBarButton_OnDrop(this, button, position);
                 end
             </OnDrop>
-        </Scripts>
+		</Scripts>
+		<Frame name="ActionShortcut" renderer="DefaultRenderer">
+			<Property name="Enabled" value="false" />
+			<Property name="Clickable" value="false" />
+			<Property name="Font" value="ActionShortcutFont" />
+			<Area>
+				<Size>
+					<AbsDimension y="28" />
+				</Size>
+				<Anchor point="LEFT" offset="8" />
+				<Anchor point="RIGHT" offset="-8" />
+				<Anchor point="TOP" offset="2" />
+			</Area>
+			<Visual>
+				<ImagerySection name="Text">
+					<TextComponent color="FFF0E7D6" horzAlign="RIGHT" vertAlign="TOP" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Text" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+		</Frame>
 	</Frame>
 </UiLayout>

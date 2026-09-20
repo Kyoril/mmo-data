@@ -1,37 +1,37 @@
 <?xml version="1.0" ?>
 <UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="file:\\F:\mmo\data\client\Interface\Ui.xsd">
 	<Script file="PlayerFrame.lua" />
-
-    <Frame name="PlayerFrame" parent="GameParent" renderer="DefaultRenderer">
-        <Area>
-            <Anchor point="RIGHT" relativePoint="H_CENTER" offset="-384" />
-            <Anchor point="BOTTOM" offset="-380" />
-            <Size><AbsDimension x="512" y="174" /></Size>
-        </Area>
-
+	<Frame name="PlayerFrame" parent="GameParent" renderer="DefaultRenderer">
+		<Area>
+			<Size>
+				<AbsDimension x="560" y="176" />
+			</Size>
+			<Anchor point="RIGHT" offset="-360" relativePoint="H_CENTER" />
+			<Anchor point="BOTTOM" offset="-400" />
+		</Area>
 		<Visual>
 			<ImagerySection name="Background">
-                <BorderComponent texture="Interface/GameUI/fg4_gradientBlackCircle2.htex" borderSize="31" tint="81FFFFFF" />
-            </ImagerySection>
-            <StateImagery name="Enabled">
-                <Layer>
-                    <Section section="Background" />
-                </Layer>
-            </StateImagery>
-            <StateImagery name="Disabled">
-                <Layer>
-                    <Section section="Background" />
-                </Layer>
-            </StateImagery>
+				<BorderComponent texture="Interface/GameUI/fg4_gradientBlackCircle2.htex" borderSize="31" tint="81FFFFFF" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Background" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="Background" />
+				</Layer>
+			</StateImagery>
 		</Visual>
-
 		<Frame name="PlayerPortrait" renderer="DefaultRenderer">
 			<Area>
-				<Anchor point="TOP" offset="5" />
-				<Anchor point="LEFT" offset="5" />
-				<Size><AbsDimension x="128" y="128" /></Size>
+				<Size>
+					<AbsDimension x="136" y="136" />
+				</Size>
+				<Anchor point="TOP" offset="8" />
+				<Anchor point="LEFT" offset="8" />
 			</Area>
-
 			<Visual>
 				<ImagerySection name="Background">
 					<BorderComponent texture="Interface/GameUI/fg4_slotBrownRound1_result.htex" borderSize="36" tint="FFFFFFFF" />
@@ -47,13 +47,11 @@
 					</Layer>
 				</StateImagery>
 			</Visual>
-
 			<Frame name="PlayerPortraitModel" type="UnitModel" renderer="ModelRenderer">
 				<Property name="Animation" value="Idle" />
 				<Property name="Yaw" value="-90" />
 				<Property name="Zoom" value="0.55" />
 				<Property name="OffsetY" value="1.7" />
-
 				<Area>
 					<Anchor point="TOP" offset="16" />
 					<Anchor point="LEFT" offset="16" />
@@ -61,15 +59,13 @@
 					<Anchor point="BOTTOM" offset="-16" />
 				</Area>
 			</Frame>
-
 			<Frame name="PlayerPortraitLevel" renderer="DefaultRenderer">
-				<Property name="Font" value="DefaultSmall" />
+				<Property name="Font" value="CombatHudTextFont" />
 				<Property name="TextColor" value="FFFFFFFF" />
 				<Property name="Icon" />
-				
 				<Visual>
 					<ImagerySection name="Background">
-						<ImageComponent texture="Interface/GameUI/fg4_progressbar1.htex" tiling="NONE" tint="FFFF0909" />
+						<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFB6A890" />
 						<TextComponent color="$TextColor" horzAlign="CENTER" vertAlign="CENTER" />
 						<ImageComponent tiling="NONE">
 							<Area>
@@ -78,7 +74,6 @@
 							<PropertyValue property="Icon" />
 						</ImageComponent>
 					</ImagerySection>
-						
 					<StateImagery name="Enabled">
 						<Layer>
 							<Section section="Background" />
@@ -90,22 +85,20 @@
 						</Layer>
 					</StateImagery>
 				</Visual>
-
 				<Area>
-					<Anchor point="H_CENTER" />
-					<Anchor point="BOTTOM" offset="24" />
-					<Size><AbsDimension x="72" y="48" /></Size>
+					<Size>
+						<AbsDimension x="64" y="40" />
+					</Size>
+					<Anchor point="H_CENTER" offset="0" />
+					<Anchor point="BOTTOM" offset="18" />
 				</Area>
 			</Frame>
-
 			<Frame name="PlayerPortraitCombat" renderer="DefaultRenderer">
 				<Property name="Visible" value="false" />
-
 				<Visual>
 					<ImagerySection name="Background">
 						<ImageComponent texture="Interface/Icons/fg4_icons_daggers_result.htex" tiling="NONE" />
 					</ImagerySection>
-						
 					<StateImagery name="Enabled">
 						<Layer>
 							<Section section="Background" />
@@ -117,89 +110,39 @@
 						</Layer>
 					</StateImagery>
 				</Visual>
-
 				<Area>
 					<Anchor point="H_CENTER" />
 					<Anchor point="BOTTOM" offset="24" />
-					<Size><AbsDimension x="48" y="48" /></Size>
+					<Size>
+						<AbsDimension x="48" y="48" />
+					</Size>
 				</Area>
 			</Frame>
 		</Frame>
-
-        <Frame name="PlayerName" inherits="TextSmall">
-			<Property name="Font" value="DefaultSmallOutline" />
-			<Property name="HorzAlign" value="CENTER" />
-
-            <Area>
-                <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="PlayerPortrait" offset="10" />
-                <Anchor point="RIGHT" offset="-10" />
-                <Anchor point="TOP" offset="10" />
-                <Size><AbsDimension y="42" /></Size>
-            </Area>
-        </Frame>
-
-        <Frame name="PlayerHealthBar" type="ProgressBar">
-            <Property name="Progress" value="0.12783" />
-			<Property name="Font" value="DefaultSmall" />
-
-            <Area>
-                <Anchor point="LEFT" relativePoint="RIGHT" relativeTo="PlayerPortrait" offset="10" />
-                <Anchor point="RIGHT" offset="-10" />
-                <Anchor point="TOP" relativeTo="PlayerName" relativePoint="BOTTOM" />
-                <Size><AbsDimension y="70" /></Size>
-            </Area>
-            
-			<Visual>
-				<ImagerySection name="Caption">
-					<TextComponent color="FFFFFFFF" horzAlign="CENTER" vertAlign="CENTER" />
-				</ImagerySection>
-				<ImagerySection name="Background">
-					<BorderComponent texture="Interface/fg4_borders_01_33.htex" borderSize="5" />
-				</ImagerySection>
-				<ImagerySection name="Border">
-					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" />
-				</ImagerySection>
-				<ImagerySection name="Progress">
-					<ImageComponent texture="Interface/fg4_gradientWhiteV1_result.htex" tiling="HORZ" tint="FF00FF00">
-						<Area><Inset all="8" /></Area>
-					</ImageComponent>
-				</ImagerySection>
-
-				<StateImagery name="Enabled">
-					<Layer>
-						<Section section="Background" />
-					</Layer>
-				</StateImagery>
-				<StateImagery name="Disabled">
-					<Layer>
-						<Section section="Background" />
-					</Layer>
-				</StateImagery>
-				<StateImagery name="Progress">
-					<Layer>
-						<Section section="Progress" />
-					</Layer>
-				</StateImagery>
-				<StateImagery name="Overlay">
-					<Layer>
-						<Section section="Border" />
-						<Section section="Caption" />
-					</Layer>
-				</StateImagery>
-			</Visual>"
-        </Frame>
-
-		<Frame name="PlayerManaBar" type="ProgressBar">
-			<Property name="Progress" value="0.12783" />
-			<Property name="Font" value="DefaultSmall" />
-
+		<Frame name="PlayerName" inherits="TextSmall">
+			<Property name="TextColor" value="FFF0E7D6" />
+			<Property name="Font" value="CombatHudNameFont" />
+			<Property name="HorzAlign" value="LEFT" />
 			<Area>
-				<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="PlayerPortrait" offset="10" />
-				<Anchor point="RIGHT" offset="-10" />
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="PlayerHealthBar" />
-				<Size><AbsDimension y="40" /></Size>
+				<Size>
+					<AbsDimension y="42" />
+				</Size>
+				<Anchor point="LEFT" offset="16" relativeTo="PlayerPortrait" relativePoint="RIGHT" />
+				<Anchor point="RIGHT" offset="-8" />
+				<Anchor point="TOP" offset="4" />
 			</Area>
-
+		</Frame>
+		<Frame name="PlayerHealthBar" type="ProgressBar">
+			<Property name="Progress" value="0.12783" />
+			<Property name="Font" value="CombatHudTextFont" />
+			<Area>
+				<Size>
+					<AbsDimension y="60" />
+				</Size>
+				<Anchor point="LEFT" offset="16" relativeTo="PlayerPortrait" relativePoint="RIGHT" />
+				<Anchor point="RIGHT" offset="-8" />
+				<Anchor point="TOP" offset="0" relativeTo="PlayerName" relativePoint="BOTTOM" />
+			</Area>
 			<Visual>
 				<ImagerySection name="Caption">
 					<TextComponent color="FFFFFFFF" horzAlign="CENTER" vertAlign="CENTER" />
@@ -208,14 +151,15 @@
 					<BorderComponent texture="Interface/fg4_borders_01_33.htex" borderSize="5" />
 				</ImagerySection>
 				<ImagerySection name="Border">
-					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" />
+					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFB6A890" />
 				</ImagerySection>
 				<ImagerySection name="Progress">
-					<ImageComponent texture="Interface/fg4_gradientWhiteV1_result.htex" tiling="HORZ">
-						<Area><Inset all="8" /></Area>
+					<ImageComponent texture="Interface/fg4_gradientWhiteV1_result.htex" tiling="HORZ" tint="FF43C653">
+						<Area>
+							<Inset all="8" />
+						</Area>
 					</ImageComponent>
 				</ImagerySection>
-
 				<StateImagery name="Enabled">
 					<Layer>
 						<Section section="Background" />
@@ -239,17 +183,65 @@
 				</StateImagery>
 			</Visual>
 		</Frame>
-
-        <Frame name="PlayerLeaderIcon" inherits="IconTemplate">
-            <Property name="Visible" value="false" />
-            <Property name="Icon" value="Interface/Icons/fg4_iconsGold_crown_result.htex" />
-
-            <Area>
-                <Anchor point="TOP" offset="20" />
-                <Anchor point="LEFT" offset="20" />
-            </Area>
-        </Frame>
-
+		<Frame name="PlayerManaBar" type="ProgressBar">
+			<Property name="Progress" value="0.12783" />
+			<Property name="Font" value="CombatHudTextFont" />
+			<Area>
+				<Size>
+					<AbsDimension y="44" />
+				</Size>
+				<Anchor point="LEFT" offset="16" relativeTo="PlayerPortrait" relativePoint="RIGHT" />
+				<Anchor point="RIGHT" offset="-8" />
+				<Anchor point="TOP" offset="6" relativeTo="PlayerHealthBar" relativePoint="BOTTOM" />
+			</Area>
+			<Visual>
+				<ImagerySection name="Caption">
+					<TextComponent color="FFFFFFFF" horzAlign="CENTER" vertAlign="CENTER" />
+				</ImagerySection>
+				<ImagerySection name="Background">
+					<BorderComponent texture="Interface/fg4_borders_01_33.htex" borderSize="5" />
+				</ImagerySection>
+				<ImagerySection name="Border">
+					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFB6A890" />
+				</ImagerySection>
+				<ImagerySection name="Progress">
+					<ImageComponent texture="Interface/fg4_gradientWhiteV1_result.htex" tiling="HORZ" tint="FFFFFFFF">
+						<Area>
+							<Inset all="8" />
+						</Area>
+					</ImageComponent>
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Background" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="Disabled">
+					<Layer>
+						<Section section="Background" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="Progress">
+					<Layer>
+						<Section section="Progress" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="Overlay">
+					<Layer>
+						<Section section="Border" />
+						<Section section="Caption" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+		</Frame>
+		<Frame name="PlayerLeaderIcon" inherits="IconTemplate">
+			<Property name="Visible" value="false" />
+			<Property name="Icon" value="Interface/Icons/fg4_iconsGold_crown_result.htex" />
+			<Area>
+				<Anchor point="TOP" offset="20" />
+				<Anchor point="LEFT" offset="20" />
+			</Area>
+		</Frame>
 		<Frame name="PlayerFrameClick" setAllPoints="true">
 			<Scripts>
 				<OnClick>
@@ -260,13 +252,12 @@
 				</OnClick>
 			</Scripts>
 		</Frame>
-
-        <Scripts>
-            <OnLoad>
+		<Scripts>
+			<OnLoad>
                 return function(self)
                     PlayerFrame_OnLoad(self);
                 end
             </OnLoad>
-        </Scripts>
-    </Frame>
+		</Scripts>
+	</Frame>
 </UiLayout>

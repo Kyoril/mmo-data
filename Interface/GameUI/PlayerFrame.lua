@@ -1,8 +1,8 @@
 
 ResourceBarColors = {}
-ResourceBarColors[0] = "FF0000FF"; -- Mana
-ResourceBarColors[1] = "FFFF0000"; -- Rage
-ResourceBarColors[2] = "FFFFFF00"; -- Energy
+ResourceBarColors[0] = "FF328FEA"; -- Mana
+ResourceBarColors[1] = "FFE94B38"; -- Rage
+ResourceBarColors[2] = "FFF0C632"; -- Energy
 
 function PlayerFrame_Update(self)
     local player = GetUnit("player");

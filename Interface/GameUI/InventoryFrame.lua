@@ -13,6 +13,7 @@ function InventoryFrame_UpdateSlots(this)
     -- Ensure backpack slots are created
     for i = 1, NUM_BACKPACK_SLOTS do
         local slot = InventoryItemButtonTemplate:Clone();
+        InventoryItemButton_EnableQualityBorder(slot);
         slot.id = GetBackpackSlot(i - 1);
         ItemSlotContainer:AddChild(slot);
         slot:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, this, 24 + buttonSize + 16 + math.fmod((i - 1), INVENTORY_SLOTS_PER_ROW) * buttonSize);
@@ -26,6 +27,7 @@ function InventoryFrame_UpdateSlots(this)
 
         for j = 1, bagSlots do
             local slot = InventoryItemButtonTemplate:Clone();
+        InventoryItemButton_EnableQualityBorder(slot);
             slot.id = ((i - 1 + 19) * 256) + (j - 1);    -- pack bag slot
             ItemSlotContainer:AddChild(slot);
 
@@ -47,6 +49,7 @@ function InventoryFrame_Load(this)
 
     for i = 1, NUM_BAG_SLOTS do
         local slot = InventoryItemButtonTemplate:Clone();
+        InventoryItemButton_EnableQualityBorder(slot);
         slot.id = 65299 + i - 1;
 
         BagContainer:AddChild(slot);

@@ -1,13 +1,13 @@
 <?xml version="1.0" ?>
 <UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
 	<Script file="CharacterWindow.lua" />
-	
+	<Font name="CharacterTitleFont" file="Fonts/FRIZQT__.TTF" size="32" outline="0" shadowX="1.0" shadowY="1.0" />
+	<Font name="CharacterBodyFont" file="Fonts/FRIZQT__.TTF" size="24" outline="0" shadowX="1.0" shadowY="1.0" />
 	<Frame name="CharacterStatLabelTemplate" renderer="DefaultRenderer">
-		<Property name="Font" value="SmallLabelFont" />
-
+		<Property name="Font" value="CharacterBodyFont" />
 		<Visual>
 			<ImagerySection name="Text">
-				<TextComponent color="FFEED37C" horzAlign="LEFT" />
+				<TextComponent color="FFE2DCCD" horzAlign="LEFT" vertAlign="CENTER" />
 			</ImagerySection>
 			<StateImagery name="Enabled">
 				<Layer>
@@ -21,16 +21,16 @@
 			</StateImagery>
 		</Visual>
 		<Area>
-			<Size><AbsDimension x="0" y="44" /></Size>
+			<Size>
+				<AbsDimension y="52" />
+			</Size>
 		</Area>
 	</Frame>
-
 	<Frame name="CharacterStatValueTemplate" renderer="DefaultRenderer">
-		<Property name="Font" value="SmallLabelFont" />
-
+		<Property name="Font" value="CharacterBodyFont" />
 		<Visual>
 			<ImagerySection name="Text">
-				<TextComponent color="FFFFFFFF" horzAlign="RIGHT" />
+				<TextComponent color="FFFFFFFF" horzAlign="RIGHT" vertAlign="CENTER" />
 			</ImagerySection>
 			<StateImagery name="Enabled">
 				<Layer>
@@ -44,46 +44,42 @@
 			</StateImagery>
 		</Visual>
 		<Area>
-			<Size><AbsDimension x="0" y="44" /></Size>
+			<Size>
+				<AbsDimension y="52" />
+			</Size>
 		</Area>
 	</Frame>
-
 	<Frame name="StatSectionHeaderTemplate" renderer="DefaultRenderer">
 		<Property name="Font" value="SmallLabelFont" />
-		<Property name="HorzAlign" value="CENTER" />
-
+		<Property name="HorzAlign" value="LEFT" />
 		<Visual>
-			<ImagerySection name="Text">
-				<TextComponent color="FFFFD100" horzAlign="CENTER" />
+			<ImagerySection name="Surface">
+				<TextComponent color="FFEED37C" horzAlign="LEFT" vertAlign="CENTER" />
 			</ImagerySection>
 			<StateImagery name="Enabled">
 				<Layer>
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer>
-					<Section section="Text" />
+					<Section section="Surface" />
 				</Layer>
 			</StateImagery>
 		</Visual>
 		<Area>
-			<Size><AbsDimension x="0" y="44" /></Size>
+			<Size>
+				<AbsDimension x="0" y="44" />
+			</Size>
 		</Area>
 	</Frame>
-
 	<Frame name="SecondaryStatRowTemplate" renderer="DefaultRenderer">
 		<Area>
-			<Size><AbsDimension x="0" y="44" /></Size>
+			<Size>
+				<AbsDimension x="0" y="44" />
+			</Size>
 		</Area>
-
 		<Frame name="Label" inherits="CharacterStatLabelTemplate">
 			<Area>
 				<Anchor point="LEFT" offset="24" />
 				<Anchor point="TOP" offset="0" />
 			</Area>
 		</Frame>
-
 		<Frame name="Value" inherits="CharacterStatValueTemplate">
 			<Area>
 				<Anchor point="RIGHT" offset="-24" />
@@ -91,120 +87,287 @@
 			</Area>
 		</Frame>
 	</Frame>
-	
 	<Frame name="CharacterWindowTabButtonTemplate" type="Button" renderer="CheckboxRenderer">
 		<Property name="Font" value="SmallLabelFont" />
 		<Property name="Checkable" value="true" />
-
 		<Visual>
 			<ImagerySection name="NormalFrame">
-				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Down_result.htex" borderSize="25" />
+				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FF84765D" />
 			</ImagerySection>
 			<ImagerySection name="HoveredFrame">
-				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Up_result.htex" borderSize="25" />
+				<BorderComponent texture="Interface/GameUI/fg4_borders_01_28_2_result.htex" borderSize="24" tint="FFBAA27B" />
 			</ImagerySection>
 			<ImagerySection name="SelectedFrame">
-				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Over_result.htex" borderSize="25" />
-				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="8"><Area><Inset all="5" /></Area></BorderComponent>
+				<BorderComponent texture="Interface/GameUI/fg4_borders_01_28_2_result.htex" borderSize="24" tint="FFFFFFFF" />
 			</ImagerySection>
-			<ImagerySection name="Caption"><TextComponent color="FFB9A26A" horzAlign="CENTER" vertAlign="CENTER" /></ImagerySection>
-			<ImagerySection name="CaptionActive"><TextComponent color="FFFFFFFF" horzAlign="CENTER" vertAlign="CENTER" /></ImagerySection>
-			<StateImagery name="Normal"><Layer><Section section="NormalFrame" /><Section section="Caption" /></Layer></StateImagery>
-			<StateImagery name="Hovered"><Layer><Section section="HoveredFrame" /><Section section="CaptionActive" /></Layer></StateImagery>
-			<StateImagery name="Pushed"><Layer><Section section="SelectedFrame" /><Section section="CaptionActive" /></Layer></StateImagery>
-			<StateImagery name="NormalChecked"><Layer><Section section="SelectedFrame" /><Section section="CaptionActive" /></Layer></StateImagery>
-			<StateImagery name="HoveredChecked"><Layer><Section section="SelectedFrame" /><Section section="CaptionActive" /></Layer></StateImagery>
-			<StateImagery name="PushedChecked"><Layer><Section section="SelectedFrame" /><Section section="CaptionActive" /></Layer></StateImagery>
+			<ImagerySection name="Caption">
+				<TextComponent color="FFB9AD96" horzAlign="CENTER" vertAlign="CENTER" />
+			</ImagerySection>
+			<ImagerySection name="CaptionActive">
+				<TextComponent color="FFF0E7D6" horzAlign="CENTER" vertAlign="CENTER" />
+			</ImagerySection>
+			<StateImagery name="Normal">
+				<Layer>
+					<Section section="NormalFrame" />
+					<Section section="Caption" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Hovered">
+				<Layer>
+					<Section section="HoveredFrame" />
+					<Section section="CaptionActive" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Pushed">
+				<Layer>
+					<Section section="SelectedFrame" />
+					<Section section="CaptionActive" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="NormalFrame" />
+					<Section section="Caption" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="NormalChecked">
+				<Layer>
+					<Section section="SelectedFrame" />
+					<Section section="CaptionActive" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="HoveredChecked">
+				<Layer>
+					<Section section="SelectedFrame" />
+					<Section section="CaptionActive" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="PushedChecked">
+				<Layer>
+					<Section section="SelectedFrame" />
+					<Section section="CaptionActive" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="DisabledChecked">
+				<Layer>
+					<Section section="SelectedFrame" />
+					<Section section="CaptionActive" />
+				</Layer>
+			</StateImagery>
 		</Visual>
-		<Area><Size><AbsDimension x="240" y="72" /></Size></Area>
+		<Area>
+			<Size>
+				<AbsDimension x="276" y="64" />
+			</Size>
+		</Area>
 	</Frame>
-
 	<!-- One class overview row: selection state, rank, availability, and class XP. -->
 	<Frame name="CharacterClassButtonTemplate" type="Button" renderer="CheckboxRenderer">
 		<Property name="Checkable" value="true" />
-
 		<Visual>
-			<ImagerySection name="NormalBg"><BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="50000000" /></ImagerySection>
-			<ImagerySection name="HoveredBg"><BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="A0553300" /></ImagerySection>
-			<ImagerySection name="PushedBg"><BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="A0221100" /></ImagerySection>
-			<ImagerySection name="SelectedBg"><BorderComponent texture="Interface/GameUI/fg4_borders_01_28_2_result.htex" borderSize="24" /></ImagerySection>
-			<ImagerySection name="DisabledBg"><BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="30000000" /></ImagerySection>
-			<StateImagery name="Normal"><Layer><Section section="NormalBg" /></Layer></StateImagery>
-			<StateImagery name="Hovered"><Layer><Section section="HoveredBg" /></Layer></StateImagery>
-			<StateImagery name="Pushed"><Layer><Section section="PushedBg" /></Layer></StateImagery>
-			<StateImagery name="Disabled"><Layer><Section section="DisabledBg" /></Layer></StateImagery>
-			<StateImagery name="NormalChecked"><Layer><Section section="SelectedBg" /></Layer></StateImagery>
-			<StateImagery name="HoveredChecked"><Layer><Section section="SelectedBg" /></Layer></StateImagery>
-			<StateImagery name="PushedChecked"><Layer><Section section="SelectedBg" /></Layer></StateImagery>
-			<StateImagery name="DisabledChecked"><Layer><Section section="SelectedBg" /></Layer></StateImagery>
+			<ImagerySection name="NormalBg">
+				<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="50000000" />
+			</ImagerySection>
+			<ImagerySection name="HoveredBg">
+				<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="A0553300" />
+			</ImagerySection>
+			<ImagerySection name="PushedBg">
+				<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="A0221100" />
+			</ImagerySection>
+			<ImagerySection name="SelectedBg">
+				<BorderComponent texture="Interface/GameUI/fg4_borders_01_28_2_result.htex" borderSize="24" />
+			</ImagerySection>
+			<ImagerySection name="DisabledBg">
+				<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="30000000" />
+			</ImagerySection>
+			<StateImagery name="Normal">
+				<Layer>
+					<Section section="NormalBg" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Hovered">
+				<Layer>
+					<Section section="HoveredBg" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Pushed">
+				<Layer>
+					<Section section="PushedBg" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="DisabledBg" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="NormalChecked">
+				<Layer>
+					<Section section="SelectedBg" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="HoveredChecked">
+				<Layer>
+					<Section section="SelectedBg" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="PushedChecked">
+				<Layer>
+					<Section section="SelectedBg" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="DisabledChecked">
+				<Layer>
+					<Section section="SelectedBg" />
+				</Layer>
+			</StateImagery>
 		</Visual>
-
 		<Area>
-			<Size><AbsDimension x="0" y="112" /></Size>
+			<Size>
+				<AbsDimension x="0" y="112" />
+			</Size>
 		</Area>
-
 		<Frame inherits="TextSmall" name="ClassRowName">
+			<Property name="Font" value="CharacterBodyFont" />
 			<Property name="Clickable" value="false" />
 			<Property name="VertAlign" value="CENTER" />
-
 			<Area>
-				<Anchor point="LEFT" offset="14" />
+				<Size>
+					<AbsDimension y="34" />
+				</Size>
+				<Anchor point="LEFT" offset="16" />
+				<Anchor point="RIGHT" offset="-244" />
 				<Anchor point="TOP" offset="10" />
-				<Size><AbsDimension x="240" y="34" /></Size>
 			</Area>
 		</Frame>
-
 		<Frame inherits="TextSmall" name="ClassRowLevel">
+			<Property name="Font" value="SmallLabelFont" />
 			<Property name="Clickable" value="false" />
 			<Property name="HorzAlign" value="RIGHT" />
 			<Property name="VertAlign" value="CENTER" />
-
 			<Area>
-				<Anchor point="RIGHT" offset="-14" />
+				<Size>
+					<AbsDimension x="224" y="34" />
+				</Size>
+				<Anchor point="RIGHT" offset="-16" />
 				<Anchor point="TOP" offset="10" />
-				<Size><AbsDimension x="190" y="34" /></Size>
 			</Area>
 		</Frame>
-
 		<Frame inherits="TextSmall" name="ClassRowStatus">
 			<Property name="Font" value="SmallLabelFont" />
 			<Property name="Clickable" value="false" />
 			<Property name="VertAlign" value="CENTER" />
 			<Area>
-				<Anchor point="LEFT" offset="14" />
-				<Anchor point="TOP" offset="42" />
-				<Size><AbsDimension x="420" y="28" /></Size>
+				<Size>
+					<AbsDimension y="26" />
+				</Size>
+				<Anchor point="LEFT" offset="16" />
+				<Anchor point="RIGHT" offset="-16" />
+				<Anchor point="TOP" offset="44" />
 			</Area>
 		</Frame>
-
 		<Frame name="ClassRowExperience" type="ProgressBar">
 			<Property name="Clickable" value="false" />
-			<Property name="Font" value="DefaultSmall" />
+			<Property name="Font" value="SmallLabelFont" />
 			<Area>
 				<Anchor point="LEFT" offset="14" />
 				<Anchor point="RIGHT" offset="-14" />
-				<Anchor point="BOTTOM" offset="-10" />
-				<Size><AbsDimension y="30" /></Size>
+				<Anchor point="BOTTOM" offset="-6" />
+				<Size>
+					<AbsDimension y="32" />
+				</Size>
 			</Area>
 			<Visual>
-				<ImagerySection name="Caption"><TextComponent color="FFFFFFFF" horzAlign="CENTER" vertAlign="CENTER" /></ImagerySection>
-				<ImagerySection name="Background"><BorderComponent texture="Interface/fg4_borders_01_33.htex" borderSize="5" /></ImagerySection>
-				<ImagerySection name="Border"><BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" /></ImagerySection>
-				<ImagerySection name="Progress"><ImageComponent texture="Interface/fg4_gradientWhiteV1_result.htex" tiling="HORZ" tint="FF9E5E22"><Area><Inset all="6" /></Area></ImageComponent></ImagerySection>
-				<StateImagery name="Enabled"><Layer><Section section="Background" /></Layer></StateImagery>
-				<StateImagery name="Disabled"><Layer><Section section="Background" /></Layer></StateImagery>
-				<StateImagery name="Progress"><Layer><Section section="Progress" /></Layer></StateImagery>
-				<StateImagery name="Overlay"><Layer><Section section="Border" /><Section section="Caption" /></Layer></StateImagery>
+				<ImagerySection name="Caption">
+					<TextComponent color="FFFFFFFF" horzAlign="CENTER" vertAlign="CENTER" />
+				</ImagerySection>
+				<ImagerySection name="Background">
+					<BorderComponent texture="Interface/fg4_borders_01_33.htex" borderSize="5" />
+				</ImagerySection>
+				<ImagerySection name="Border">
+					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" />
+				</ImagerySection>
+				<ImagerySection name="Progress">
+					<ImageComponent texture="Interface/fg4_gradientWhiteV1_result.htex" tiling="HORZ" tint="FF9E5E22">
+						<Area>
+							<Inset all="6" />
+						</Area>
+					</ImageComponent>
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Background" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="Disabled">
+					<Layer>
+						<Section section="Background" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="Progress">
+					<Layer>
+						<Section section="Progress" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="Overlay">
+					<Layer>
+						<Section section="Border" />
+						<Section section="Caption" />
+					</Layer>
+				</StateImagery>
 			</Visual>
 		</Frame>
 	</Frame>
-
+	<Frame name="CharacterAttributeButtonTemplate" type="Button" renderer="ButtonRenderer">
+		<Property name="Font" value="DefaultSmall" />
+		<Area>
+			<Size>
+				<AbsDimension x="52" y="52" />
+			</Size>
+		</Area>
+		<Visual>
+			<ImagerySection name="NormalSurface">
+				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFB9AD96" />
+				<TextComponent color="FFEED37C" horzAlign="CENTER" vertAlign="CENTER" />
+			</ImagerySection>
+			<StateImagery name="Normal">
+				<Layer>
+					<Section section="NormalSurface" />
+				</Layer>
+			</StateImagery>
+			<ImagerySection name="HoveredSurface">
+				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFFFFFFF" />
+				<TextComponent color="FFFFFFFF" horzAlign="CENTER" vertAlign="CENTER" />
+			</ImagerySection>
+			<StateImagery name="Hovered">
+				<Layer>
+					<Section section="HoveredSurface" />
+				</Layer>
+			</StateImagery>
+			<ImagerySection name="PushedSurface">
+				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FF78664C" />
+				<TextComponent color="FFB9AD96" horzAlign="CENTER" vertAlign="CENTER" />
+			</ImagerySection>
+			<StateImagery name="Pushed">
+				<Layer>
+					<Section section="PushedSurface" />
+				</Layer>
+			</StateImagery>
+			<ImagerySection name="DisabledSurface">
+				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FF55514A" />
+				<TextComponent color="FF77736B" horzAlign="CENTER" vertAlign="CENTER" />
+			</ImagerySection>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="DisabledSurface" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+	</Frame>
 	<Frame name="CharacterWindow" renderer="DefaultRenderer" parent="GameParent">
 		<Property name="Visible" value="False" />
-
 		<Visual>
 			<ImagerySection name="Background">
-				<BorderComponent texture="Interface/GameUI/fg4_borders_simple.htex" borderSize="250" />
+				<BorderComponent texture="Interface/GameUI/Alestia/WindowPanel.htex" borderSize="32" />
 			</ImagerySection>
 			<StateImagery name="Enabled">
 				<Layer>
@@ -212,15 +375,15 @@
 				</Layer>
 			</StateImagery>
 		</Visual>
-
 		<Area>
-			<Size><AbsDimension x="1280" y="1280" /></Size>
+			<Size>
+				<AbsDimension x="1440" y="1280" />
+			</Size>
 			<Anchor point="LEFT" offset="0" />
 			<Anchor point="TOP" offset="300" />
 		</Area>
-
-        <Scripts>
-            <OnLoad>
+		<Scripts>
+			<OnLoad>
                 return function(this)
                     CharacterWindow_OnLoad(this);
                 end
@@ -230,710 +393,865 @@
 					CharacterWindow_OnShow(this);
 				end
 			</OnShow>
-        </Scripts>
-
-		<Frame name="CharacterWindowTitle" inherits="TitleBar">
+		</Scripts>
+		<Frame name="CharacterWindowTitle" renderer="DefaultRenderer">
+			<Property name="Font" value="CharacterTitleFont" />
 			<Property name="Text" value="CHARACTER" />
-
+			<Visual>
+				<ImagerySection name="Surface">
+					<TextComponent color="FFF0E7D6" horzAlign="LEFT" vertAlign="CENTER">
+						<Area>
+							<Inset right="80" />
+						</Area>
+					</TextComponent>
+					</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Surface" />
+					</Layer>
+				</StateImagery>
+			</Visual>
 			<Area>
+				<Size>
+					<AbsDimension y="64" />
+				</Size>
 				<Anchor point="TOP" offset="24" />
-				<Anchor point="LEFT" offset="24" />
-				<Anchor point="RIGHT" offset="-24" />
+				<Anchor point="LEFT" offset="32" />
+				<Anchor point="RIGHT" offset="-32" />
 			</Area>
+			<Frame name="CharacterWindowCloseButton" inherits="IconButton">
+				<Property name="Icon" value="Interface/Icons/fg4_iconsGold_close_result.htex" />
+				<Area>
+					<Size>
+						<AbsDimension x="64" y="64" />
+					</Size>
+					<Anchor point="TOP" offset="0" />
+					<Anchor point="RIGHT" offset="0" />
+				</Area>
+			</Frame>
+			<Frame name="CharacterWindowTitleDivider" renderer="DefaultRenderer">
+				<Property name="Clickable" value="false" />
+				<Area>
+					<Size>
+						<AbsDimension y="2" />
+					</Size>
+					<Anchor point="LEFT" offset="0" />
+					<Anchor point="RIGHT" offset="0" />
+					<Anchor point="BOTTOM" offset="12" />
+				</Area>
+				<Visual>
+					<ImagerySection name="Line">
+						<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="806F5B3C" />
+					</ImagerySection>
+					<StateImagery name="Enabled">
+						<Layer>
+							<Section section="Line" />
+						</Layer>
+					</StateImagery>
+				</Visual>
+			</Frame>
 		</Frame>
-
 		<Frame name="CharacterInvSlotHead" inherits="InventoryItemButtonTemplate" id="65280">
 			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_helmet.htex" />
-
 			<Area>
-				<Anchor point="LEFT" offset="24" />
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterWindowTitle" offset="8" />
+				<Size>
+					<AbsDimension x="112" y="112" />
+				</Size>
+				<Anchor point="LEFT" offset="32" />
+				<Anchor point="TOP" offset="144" />
 			</Area>
 		</Frame>
-		
 		<Frame name="CharacterInvSlotNeck" inherits="InventoryItemButtonTemplate" id="65281">
 			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_necklace.htex" />
-
 			<Area>
-				<Anchor point="LEFT" offset="24" />
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterInvSlotHead" offset="2" />
+				<Size>
+					<AbsDimension x="112" y="112" />
+				</Size>
+				<Anchor point="LEFT" offset="32" />
+				<Anchor point="TOP" offset="272" />
 			</Area>
 		</Frame>
-
 		<Frame name="CharacterInvSlotShoulder" inherits="InventoryItemButtonTemplate" id="65282">
 			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_spaulders.htex" />
-
 			<Area>
-				<Anchor point="LEFT" offset="24" />
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterInvSlotNeck" offset="2" />
+				<Size>
+					<AbsDimension x="112" y="112" />
+				</Size>
+				<Anchor point="LEFT" offset="32" />
+				<Anchor point="TOP" offset="400" />
 			</Area>
 		</Frame>
-
 		<Frame name="CharacterInvSlotBack" inherits="InventoryItemButtonTemplate" id="65294">
 			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_cape.htex" />
-
 			<Area>
-				<Anchor point="LEFT" offset="24" />
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterInvSlotShoulder" offset="2" />
+				<Size>
+					<AbsDimension x="112" y="112" />
+				</Size>
+				<Anchor point="LEFT" offset="32" />
+				<Anchor point="TOP" offset="528" />
 			</Area>
 		</Frame>
-
 		<Frame name="CharacterInvSlotChest" inherits="InventoryItemButtonTemplate" id="65283">
 			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_chest.htex" />
-
 			<Area>
-				<Anchor point="LEFT" offset="24" />
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterInvSlotBack" offset="2" />
+				<Size>
+					<AbsDimension x="112" y="112" />
+				</Size>
+				<Anchor point="LEFT" offset="32" />
+				<Anchor point="TOP" offset="656" />
 			</Area>
 		</Frame>
-
 		<Frame name="CharacterInvSlotShirt" inherits="InventoryItemButtonTemplate" id="65284">
 			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_shirt.htex" />
-
 			<Area>
-				<Anchor point="LEFT" offset="24" />
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterInvSlotChest" offset="2" />
+				<Size>
+					<AbsDimension x="112" y="112" />
+				</Size>
+				<Anchor point="LEFT" offset="32" />
+				<Anchor point="TOP" offset="784" />
 			</Area>
 		</Frame>
-
 		<Frame name="CharacterInvSlotTabard" inherits="InventoryItemButtonTemplate" id="65298">
 			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_shirt.htex" />
-
 			<Area>
-				<Anchor point="LEFT" offset="24" />
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterInvSlotShirt" offset="2" />
+				<Size>
+					<AbsDimension x="112" y="112" />
+				</Size>
+				<Anchor point="LEFT" offset="32" />
+				<Anchor point="TOP" offset="912" />
 			</Area>
 		</Frame>
-
 		<Frame name="CharacterInvSlotWrists" inherits="InventoryItemButtonTemplate" id="65288">
 			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_arms.htex" />
-
 			<Area>
-				<Anchor point="LEFT" offset="24" />
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterInvSlotTabard" offset="2" />
+				<Size>
+					<AbsDimension x="112" y="112" />
+				</Size>
+				<Anchor point="LEFT" offset="32" />
+				<Anchor point="TOP" offset="1040" />
 			</Area>
 		</Frame>
-
 		<Frame name="CharacterInvSlotHands" inherits="InventoryItemButtonTemplate" id="65289">
 			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_gloves.htex" />
-
 			<Area>
-				<Anchor point="LEFT" offset="624" />
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterWindowTitle" offset="8" />
+				<Size>
+					<AbsDimension x="112" y="112" />
+				</Size>
+				<Anchor point="LEFT" offset="704" />
+				<Anchor point="TOP" offset="144" />
 			</Area>
 		</Frame>
-		
 		<Frame name="CharacterInvSlotWaist" inherits="InventoryItemButtonTemplate" id="65285">
 			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_belt.htex" />
-
 			<Area>
-				<Anchor point="LEFT" relativeTo="CharacterInvSlotHands" />
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterInvSlotHands" offset="2" />
+				<Size>
+					<AbsDimension x="112" y="112" />
+				</Size>
+				<Anchor point="LEFT" offset="704" />
+				<Anchor point="TOP" offset="272" />
 			</Area>
 		</Frame>
-
 		<Frame name="CharacterInvSlotLegs" inherits="InventoryItemButtonTemplate" id="65286">
 			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_pants.htex" />
-
 			<Area>
-				<Anchor point="LEFT" relativeTo="CharacterInvSlotHands" />
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterInvSlotWaist" offset="2" />
+				<Size>
+					<AbsDimension x="112" y="112" />
+				</Size>
+				<Anchor point="LEFT" offset="704" />
+				<Anchor point="TOP" offset="400" />
 			</Area>
 		</Frame>
-
 		<Frame name="CharacterInvSlotFeet" inherits="InventoryItemButtonTemplate" id="65287">
 			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_boots.htex" />
-
 			<Area>
-				<Anchor point="LEFT" relativeTo="CharacterInvSlotHands" />
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterInvSlotLegs" offset="2" />
+				<Size>
+					<AbsDimension x="112" y="112" />
+				</Size>
+				<Anchor point="LEFT" offset="704" />
+				<Anchor point="TOP" offset="528" />
 			</Area>
 		</Frame>
-
 		<Frame name="CharacterInvSlotFinger1" inherits="InventoryItemButtonTemplate" id="65290">
 			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_ring.htex" />
-
 			<Area>
-				<Anchor point="LEFT" relativeTo="CharacterInvSlotHands" />
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterInvSlotFeet" offset="2" />
+				<Size>
+					<AbsDimension x="112" y="112" />
+				</Size>
+				<Anchor point="LEFT" offset="704" />
+				<Anchor point="TOP" offset="656" />
 			</Area>
 		</Frame>
-
 		<Frame name="CharacterInvSlotFinger2" inherits="InventoryItemButtonTemplate" id="65291">
 			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_ring.htex" />
-
 			<Area>
-				<Anchor point="LEFT" relativeTo="CharacterInvSlotHands" />
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterInvSlotFinger1" offset="2" />
+				<Size>
+					<AbsDimension x="112" y="112" />
+				</Size>
+				<Anchor point="LEFT" offset="704" />
+				<Anchor point="TOP" offset="784" />
 			</Area>
 		</Frame>
-
 		<Frame name="CharacterInvSlotTrinket1" inherits="InventoryItemButtonTemplate" id="65292">
 			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_trinket.htex" />
-
 			<Area>
-				<Anchor point="LEFT" relativeTo="CharacterInvSlotHands" />
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterInvSlotFinger2" offset="2" />
+				<Size>
+					<AbsDimension x="112" y="112" />
+				</Size>
+				<Anchor point="LEFT" offset="704" />
+				<Anchor point="TOP" offset="912" />
 			</Area>
 		</Frame>
-
 		<Frame name="CharacterInvSlotTrinket2" inherits="InventoryItemButtonTemplate" id="65293">
 			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_trinket.htex" />
-
 			<Area>
-				<Anchor point="LEFT" relativeTo="CharacterInvSlotHands" />
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterInvSlotTrinket1" offset="2" />
+				<Size>
+					<AbsDimension x="112" y="112" />
+				</Size>
+				<Anchor point="LEFT" offset="704" />
+				<Anchor point="TOP" offset="1040" />
 			</Area>
 		</Frame>
-
 		<Frame name="CharacterInvSlotOffHand" inherits="InventoryItemButtonTemplate" id="65296">
 			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_shield.htex" />
-
 			<Area>
-				<Anchor point="LEFT" offset="320" />
-				<Anchor point="BOTTOM" offset="-24" />
+				<Size>
+					<AbsDimension x="112" y="112" />
+				</Size>
+				<Anchor point="LEFT" offset="368" />
+				<Anchor point="BOTTOM" offset="-64" />
 			</Area>
 		</Frame>
-
 		<Frame name="CharacterInvSlotMainHand" inherits="InventoryItemButtonTemplate" id="65295">
 			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_sword.htex" />
-
 			<Area>
-				<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CharacterInvSlotOffHand" offset="-8" />
-				<Anchor point="BOTTOM" relativeTo="CharacterInvSlotOffHand" />
+				<Size>
+					<AbsDimension x="112" y="112" />
+				</Size>
+				<Anchor point="LEFT" offset="240" />
+				<Anchor point="BOTTOM" offset="-64" />
 			</Area>
 		</Frame>
-
 		<Frame name="CharacterInvSlotRanged" inherits="InventoryItemButtonTemplate" id="65297">
 			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_bow.htex" />
-
 			<Area>
-				<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CharacterInvSlotOffHand" offset="8" />
-				<Anchor point="BOTTOM" relativeTo="CharacterInvSlotOffHand" />
+				<Size>
+					<AbsDimension x="112" y="112" />
+				</Size>
+				<Anchor point="LEFT" offset="496" />
+				<Anchor point="BOTTOM" offset="-64" />
 			</Area>
 		</Frame>
-
 		<!-- Aggregate warning shown when one or more equipped items cannot be used by the active class. -->
 		<Frame name="CharacterEquipmentWarning" inherits="TextSmall">
 			<Property name="Font" value="SmallLabelFont" />
 			<Property name="HorzAlign" value="CENTER" />
 			<Property name="Color" value="FFFF2020" />
 			<Property name="Visible" value="false" />
-
 			<Area>
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterInvSlotMainHand" offset="6" />
-				<Anchor point="LEFT" relativeTo="CharacterInvSlotMainHand" offset="-8" />
-				<Anchor point="RIGHT" relativeTo="CharacterInvSlotRanged" offset="8" />
+				<Size>
+					<AbsDimension y="44" />
+				</Size>
+				<Anchor point="LEFT" offset="32" />
+				<Anchor point="RIGHT" offset="-624" />
+				<Anchor point="BOTTOM" offset="-12" />
 			</Area>
 		</Frame>
-
 		<Frame name="CharacterWindowTabBar">
 			<Area>
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterWindowTitle" offset="8" />
-				<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CharacterInvSlotHands" offset="8" />
-				<Anchor point="RIGHT" offset="-24" />
-				<Size><AbsDimension y="72" /></Size>
+				<Size>
+					<AbsDimension y="64" />
+				</Size>
+				<Anchor point="TOP" offset="144" />
+				<Anchor point="LEFT" offset="848" />
+				<Anchor point="RIGHT" offset="-32" />
 			</Area>
-
 			<Frame name="CharacterWindowTab1" inherits="CharacterWindowTabButtonTemplate" id="1">
 				<Property name="Text" value="CHARACTER_TAB_ATTRIBUTES" />
 				<Area>
-					<Anchor point="TOP" />
-					<Anchor point="LEFT" />
-					<Size><AbsDimension x="240" y="72" /></Size>
+					<Size>
+						<AbsDimension x="276" y="64" />
+					</Size>
+					<Anchor point="TOP" offset="0" />
+					<Anchor point="LEFT" offset="0" />
 				</Area>
 			</Frame>
-
 			<Frame name="CharacterWindowTab2" inherits="CharacterWindowTabButtonTemplate" id="2">
 				<Property name="Text" value="CHARACTER_CLASSES_HEADER" />
 				<Area>
-					<Anchor point="TOP" />
-					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CharacterWindowTab1" />
-					<Anchor point="RIGHT" />
+					<Size>
+						<AbsDimension y="64" />
+					</Size>
+					<Anchor point="TOP" offset="0" />
+					<Anchor point="LEFT" offset="8" relativeTo="CharacterWindowTab1" relativePoint="RIGHT" />
+					<Anchor point="RIGHT" offset="0" />
 				</Area>
 			</Frame>
 		</Frame>
-
 		<Frame name="CharacterAttributesPage" renderer="DefaultRenderer">
 			<Visual>
-				<ImagerySection name="Background">
-					<BorderComponent texture="Interface/GameUI/fg4_iconsSlot.htex" borderSize="64" />
+				<ImagerySection name="Surface">
+					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FF84765D" />
 				</ImagerySection>
 				<StateImagery name="Enabled">
 					<Layer>
-						<Section section="Background" />
+						<Section section="Surface" />
 					</Layer>
 				</StateImagery>
 			</Visual>
-
 			<Area>
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterWindowTabBar" offset="4" />
-				<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CharacterInvSlotHands" offset="8" />
-				<Anchor point="RIGHT" offset="-24" />
-				<Anchor point="BOTTOM" offset="-50" />
+				<Anchor point="TOP" offset="12" relativeTo="CharacterWindowTabBar" relativePoint="BOTTOM" />
+				<Anchor point="LEFT" offset="848" />
+				<Anchor point="RIGHT" offset="-32" />
+				<Anchor point="BOTTOM" offset="-40" />
 			</Area>
-
 			<Frame name="CharacterAttributesContent" renderer="DefaultRenderer">
 				<Area>
-					<Anchor point="TOP" offset="8" />
-					<Anchor point="LEFT" offset="8" />
-					<Anchor point="RIGHT" offset="-8" />
-					<Size><AbsDimension y="666" /></Size>
+					<Anchor point="TOP" offset="24" />
+					<Anchor point="LEFT" offset="24" />
+					<Anchor point="RIGHT" offset="-24" />
+					<Anchor point="BOTTOM" offset="-24" />
 				</Area>
-
 				<Frame name="CharacterWindowAttributePointsHeader" inherits="StatSectionHeaderTemplate">
-					<Property name="Text" value="AVAILABLE POINTS" />
-
+					<Property name="Text" value="CHARACTER_AVAILABLE_POINTS" />
 					<Area>
-						<Anchor point="TOP" offset="16" />
-						<Anchor point="LEFT" offset="24" />
-						<Anchor point="RIGHT" offset="-24" />
+						<Size>
+							<AbsDimension y="52" />
+						</Size>
+						<Anchor point="TOP" offset="0" />
+						<Anchor point="LEFT" offset="16" />
+						<Anchor point="RIGHT" offset="-96" />
 					</Area>
 				</Frame>
-
-				<Frame name="CharacterWindowAttributePointsLabel" inherits="TextSmallRight">
+				<Frame name="CharacterWindowAttributePointsLabel" inherits="CharacterStatValueTemplate">
+					<Property name="Font" value="CharacterBodyFont" />
 					<Property name="Text" value="0" />
-
 					<Area>
-						<Anchor point="TOP" offset="48" />
-						<Anchor point="LEFT" offset="24" />
-						<Anchor point="RIGHT" offset="-24" />
+						<Size>
+							<AbsDimension x="72" y="52" />
+						</Size>
+						<Anchor point="TOP" offset="0" />
+						<Anchor point="RIGHT" offset="-16" />
 					</Area>
 				</Frame>
-
 				<!-- Primary Stats Bordered Container -->
 				<Frame name="CharacterWindowPrimaryStatsFrame" renderer="DefaultRenderer">
-					<Visual>
-						<ImagerySection name="Border">
-							<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" />
-						</ImagerySection>
-						<StateImagery name="Enabled">
-							<Layer>
-								<Section section="Border" />
-							</Layer>
-						</StateImagery>
-					</Visual>
-
 					<Area>
+						<Size>
+							<AbsDimension y="432" />
+						</Size>
 						<Anchor point="TOP" offset="88" />
-						<Anchor point="LEFT" offset="16" />
-						<Anchor point="RIGHT" offset="-16" />
-						<Size><AbsDimension y="310" /></Size>
+						<Anchor point="LEFT" offset="0" />
+						<Anchor point="RIGHT" offset="0" />
 					</Area>
-
-				<Frame name="CharacterWindowPrimaryStatsHeader" inherits="StatSectionHeaderTemplate">
-					<Property name="Text" value="PRIMARY ATTRIBUTES" />
-
-					<Area>
-						<Anchor point="TOP" offset="8" />
-						<Anchor point="LEFT" offset="8" />
-						<Anchor point="RIGHT" offset="-8" />
-					</Area>
-				</Frame>
-
-				<!-- Stamina (0) -->
-				<Frame name="CharacterStatLabel0" inherits="CharacterStatLabelTemplate" id="0">
-					<Property name="Text" value="STAMINA" />
-
-					<Area>
-						<Anchor point="TOP" offset="56" />
-						<Anchor point="LEFT" offset="16" />
-						<Anchor point="RIGHT" offset="-84" />
-					</Area>
-				</Frame>
-
-				<Frame name="CharacterStat0" inherits="CharacterStatValueTemplate" id="0">
-					<Property name="Text" value="0" />
-
-					<Area>
-						<Anchor point="TOP" offset="56" />
-						<Anchor point="LEFT" offset="16" />
-						<Anchor point="RIGHT" offset="-84" />
-					</Area>
-				</Frame>
-
-				<Frame name="CharacterStatAdd0" type="Button" inherits="GlueButton" id="0">
-					<Property name="Text" value="+" />
-
-					<Area>
-						<Size><AbsDimension x="64" y="64" /></Size>
-						<Anchor point="TOP" offset="44" />
-						<Anchor point="RIGHT" offset="-8" />
-					</Area>
-
-					<Scripts>
-						<OnClick>
+					<Frame name="CharacterWindowPrimaryStatsHeader" inherits="StatSectionHeaderTemplate">
+						<Property name="Text" value="CHARACTER_PRIMARY_ATTRIBUTES" />
+						<Area>
+							<Size>
+								<AbsDimension y="36" />
+							</Size>
+							<Anchor point="TOP" offset="16" />
+							<Anchor point="LEFT" offset="16" />
+							<Anchor point="RIGHT" offset="-16" />
+						</Area>
+					</Frame>
+					<!-- Stamina (0) -->
+					<Frame name="CharacterStatLabel0" inherits="CharacterStatLabelTemplate" id="0">
+						<Property name="Text" value="STAMINA" />
+						<Area>
+							<Size>
+								<AbsDimension y="52" />
+							</Size>
+							<Anchor point="TOP" offset="68" />
+							<Anchor point="LEFT" offset="16" />
+							<Anchor point="RIGHT" offset="-176" />
+						</Area>
+					</Frame>
+					<Frame name="CharacterStat0" inherits="CharacterStatValueTemplate" id="0">
+						<Property name="Text" value="0" />
+						<Area>
+							<Size>
+								<AbsDimension x="80" y="52" />
+							</Size>
+							<Anchor point="TOP" offset="68" />
+							<Anchor point="RIGHT" offset="-88" />
+						</Area>
+					</Frame>
+					<Frame name="CharacterStatAdd0" type="Button" inherits="CharacterAttributeButtonTemplate" id="0">
+						<Property name="Text" value="+" />
+						<Area>
+							<Size>
+								<AbsDimension x="52" y="52" />
+							</Size>
+							<Anchor point="TOP" offset="68" />
+							<Anchor point="RIGHT" offset="-16" />
+						</Area>
+						<Scripts>
+							<OnClick>
 							return function(self)
 								CharacterWindow_AddAttributeClicked(self);
 							end
 						</OnClick>
-					</Scripts>
-				</Frame>
-
-				<!-- Strength (1) -->
-				<Frame name="CharacterStatLabel1" inherits="CharacterStatLabelTemplate" id="1">
-					<Property name="Text" value="STRENGTH" />
-
-					<Area>
-						<Anchor point="TOP" offset="108" />
-						<Anchor point="LEFT" offset="16" />
-						<Anchor point="RIGHT" offset="-84" />
-					</Area>
-				</Frame>
-
-				<Frame name="CharacterStat1" inherits="CharacterStatValueTemplate" id="1">
-					<Property name="Text" value="0" />
-
-					<Area>
-						<Anchor point="TOP" offset="108" />
-						<Anchor point="LEFT" offset="16" />
-						<Anchor point="RIGHT" offset="-84" />
-					</Area>
-				</Frame>
-
-				<Frame name="CharacterStatAdd1" type="Button" inherits="GlueButton" id="1">
-					<Property name="Text" value="+" />
-
-					<Area>
-						<Size><AbsDimension x="64" y="64" /></Size>
-						<Anchor point="TOP" offset="96" />
-						<Anchor point="RIGHT" offset="-8" />
-					</Area>
-
-					<Scripts>
-						<OnClick>
+						</Scripts>
+					</Frame>
+					<!-- Strength (1) -->
+					<Frame name="CharacterStatLabel1" inherits="CharacterStatLabelTemplate" id="1">
+						<Property name="Text" value="STRENGTH" />
+						<Area>
+							<Size>
+								<AbsDimension y="52" />
+							</Size>
+							<Anchor point="TOP" offset="140" />
+							<Anchor point="LEFT" offset="16" />
+							<Anchor point="RIGHT" offset="-176" />
+						</Area>
+					</Frame>
+					<Frame name="CharacterStat1" inherits="CharacterStatValueTemplate" id="1">
+						<Property name="Text" value="0" />
+						<Area>
+							<Size>
+								<AbsDimension x="80" y="52" />
+							</Size>
+							<Anchor point="TOP" offset="140" />
+							<Anchor point="RIGHT" offset="-88" />
+						</Area>
+					</Frame>
+					<Frame name="CharacterStatAdd1" type="Button" inherits="CharacterAttributeButtonTemplate" id="1">
+						<Property name="Text" value="+" />
+						<Area>
+							<Size>
+								<AbsDimension x="52" y="52" />
+							</Size>
+							<Anchor point="TOP" offset="140" />
+							<Anchor point="RIGHT" offset="-16" />
+						</Area>
+						<Scripts>
+							<OnClick>
 							return function(self)
 								CharacterWindow_AddAttributeClicked(self);
 							end
 						</OnClick>
-					</Scripts>
-				</Frame>
-
-				<!-- Agility (2) -->
-				<Frame name="CharacterStatLabel2" inherits="CharacterStatLabelTemplate" id="2">
-					<Property name="Text" value="AGILITY" />
-
-					<Area>
-						<Anchor point="TOP" offset="160" />
-						<Anchor point="LEFT" offset="16" />
-						<Anchor point="RIGHT" offset="-84" />
-					</Area>
-				</Frame>
-
-				<Frame name="CharacterStat2" inherits="CharacterStatValueTemplate" id="2">
-					<Property name="Text" value="0" />
-
-					<Area>
-						<Anchor point="TOP" offset="160" />
-						<Anchor point="LEFT" offset="16" />
-						<Anchor point="RIGHT" offset="-84" />
-					</Area>
-				</Frame>
-
-				<Frame name="CharacterStatAdd2" type="Button" inherits="GlueButton" id="2">
-					<Property name="Text" value="+" />
-
-					<Area>
-						<Size><AbsDimension x="64" y="64" /></Size>
-						<Anchor point="TOP" offset="148" />
-						<Anchor point="RIGHT" offset="-8" />
-					</Area>
-
-					<Scripts>
-						<OnClick>
+						</Scripts>
+					</Frame>
+					<!-- Agility (2) -->
+					<Frame name="CharacterStatLabel2" inherits="CharacterStatLabelTemplate" id="2">
+						<Property name="Text" value="AGILITY" />
+						<Area>
+							<Size>
+								<AbsDimension y="52" />
+							</Size>
+							<Anchor point="TOP" offset="212" />
+							<Anchor point="LEFT" offset="16" />
+							<Anchor point="RIGHT" offset="-176" />
+						</Area>
+					</Frame>
+					<Frame name="CharacterStat2" inherits="CharacterStatValueTemplate" id="2">
+						<Property name="Text" value="0" />
+						<Area>
+							<Size>
+								<AbsDimension x="80" y="52" />
+							</Size>
+							<Anchor point="TOP" offset="212" />
+							<Anchor point="RIGHT" offset="-88" />
+						</Area>
+					</Frame>
+					<Frame name="CharacterStatAdd2" type="Button" inherits="CharacterAttributeButtonTemplate" id="2">
+						<Property name="Text" value="+" />
+						<Area>
+							<Size>
+								<AbsDimension x="52" y="52" />
+							</Size>
+							<Anchor point="TOP" offset="212" />
+							<Anchor point="RIGHT" offset="-16" />
+						</Area>
+						<Scripts>
+							<OnClick>
 							return function(self)
 								CharacterWindow_AddAttributeClicked(self);
 							end
 						</OnClick>
-					</Scripts>
-				</Frame>
-
-				<!-- Intellect (3) -->
-				<Frame name="CharacterStatLabel3" inherits="CharacterStatLabelTemplate" id="3">
-					<Property name="Text" value="INTELLECT" />
-
-					<Area>
-						<Anchor point="TOP" offset="212" />
-						<Anchor point="LEFT" offset="16" />
-						<Anchor point="RIGHT" offset="-84" />
-					</Area>
-				</Frame>
-
-				<Frame name="CharacterStat3" inherits="CharacterStatValueTemplate" id="3">
-					<Property name="Text" value="0" />
-
-					<Area>
-						<Anchor point="TOP" offset="212" />
-						<Anchor point="LEFT" offset="16" />
-						<Anchor point="RIGHT" offset="-84" />
-					</Area>
-				</Frame>
-
-				<Frame name="CharacterStatAdd3" type="Button" inherits="GlueButton" id="3">
-					<Property name="Text" value="+" />
-
-					<Area>
-						<Size><AbsDimension x="64" y="64" /></Size>
-						<Anchor point="TOP" offset="200" />
-						<Anchor point="RIGHT" offset="-8" />
-					</Area>
-
-					<Scripts>
-						<OnClick>
+						</Scripts>
+					</Frame>
+					<!-- Intellect (3) -->
+					<Frame name="CharacterStatLabel3" inherits="CharacterStatLabelTemplate" id="3">
+						<Property name="Text" value="INTELLECT" />
+						<Area>
+							<Size>
+								<AbsDimension y="52" />
+							</Size>
+							<Anchor point="TOP" offset="284" />
+							<Anchor point="LEFT" offset="16" />
+							<Anchor point="RIGHT" offset="-176" />
+						</Area>
+					</Frame>
+					<Frame name="CharacterStat3" inherits="CharacterStatValueTemplate" id="3">
+						<Property name="Text" value="0" />
+						<Area>
+							<Size>
+								<AbsDimension x="80" y="52" />
+							</Size>
+							<Anchor point="TOP" offset="284" />
+							<Anchor point="RIGHT" offset="-88" />
+						</Area>
+					</Frame>
+					<Frame name="CharacterStatAdd3" type="Button" inherits="CharacterAttributeButtonTemplate" id="3">
+						<Property name="Text" value="+" />
+						<Area>
+							<Size>
+								<AbsDimension x="52" y="52" />
+							</Size>
+							<Anchor point="TOP" offset="284" />
+							<Anchor point="RIGHT" offset="-16" />
+						</Area>
+						<Scripts>
+							<OnClick>
 							return function(self)
 								CharacterWindow_AddAttributeClicked(self);
 							end
 						</OnClick>
-					</Scripts>
-				</Frame>
-
-				<!-- Spirit (4) -->
-				<Frame name="CharacterStatLabel4" inherits="CharacterStatLabelTemplate" id="4">
-					<Property name="Text" value="SPIRIT" />
-
-					<Area>
-						<Anchor point="TOP" offset="264" />
-						<Anchor point="LEFT" offset="16" />
-						<Anchor point="RIGHT" offset="-84" />
-					</Area>
-				</Frame>
-
-				<Frame name="CharacterStat4" inherits="CharacterStatValueTemplate" id="4">
-					<Property name="Text" value="0" />
-
-					<Area>
-						<Anchor point="TOP" offset="264" />
-						<Anchor point="LEFT" offset="16" />
-						<Anchor point="RIGHT" offset="-84" />
-					</Area>
-				</Frame>
-
-				<Frame name="CharacterStatAdd4" type="Button" inherits="GlueButton" id="4">
-					<Property name="Text" value="+" />
-
-					<Area>
-						<Size><AbsDimension x="64" y="64" /></Size>
-						<Anchor point="TOP" offset="252" />
-						<Anchor point="RIGHT" offset="-8" />
-					</Area>
-
-					<Scripts>
-						<OnClick>
+						</Scripts>
+					</Frame>
+					<!-- Spirit (4) -->
+					<Frame name="CharacterStatLabel4" inherits="CharacterStatLabelTemplate" id="4">
+						<Property name="Text" value="SPIRIT" />
+						<Area>
+							<Size>
+								<AbsDimension y="52" />
+							</Size>
+							<Anchor point="TOP" offset="356" />
+							<Anchor point="LEFT" offset="16" />
+							<Anchor point="RIGHT" offset="-176" />
+						</Area>
+					</Frame>
+					<Frame name="CharacterStat4" inherits="CharacterStatValueTemplate" id="4">
+						<Property name="Text" value="0" />
+						<Area>
+							<Size>
+								<AbsDimension x="80" y="52" />
+							</Size>
+							<Anchor point="TOP" offset="356" />
+							<Anchor point="RIGHT" offset="-88" />
+						</Area>
+					</Frame>
+					<Frame name="CharacterStatAdd4" type="Button" inherits="CharacterAttributeButtonTemplate" id="4">
+						<Property name="Text" value="+" />
+						<Area>
+							<Size>
+								<AbsDimension x="52" y="52" />
+							</Size>
+							<Anchor point="TOP" offset="356" />
+							<Anchor point="RIGHT" offset="-16" />
+						</Area>
+						<Scripts>
+							<OnClick>
 							return function(self)
 								CharacterWindow_AddAttributeClicked(self);
 							end
 						</OnClick>
-					</Scripts>
+						</Scripts>
+					</Frame>
+					<Frame name="CharacterWindowPrimaryStatsFrameDivider" renderer="DefaultRenderer">
+						<Property name="Clickable" value="false" />
+						<Area>
+							<Size>
+								<AbsDimension y="2" />
+							</Size>
+							<Anchor point="LEFT" offset="0" />
+							<Anchor point="RIGHT" offset="0" />
+							<Anchor point="TOP" offset="0" />
+						</Area>
+						<Visual>
+							<ImagerySection name="Line">
+								<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="806F5B3C" />
+							</ImagerySection>
+							<StateImagery name="Enabled">
+								<Layer>
+									<Section section="Line" />
+								</Layer>
+							</StateImagery>
+						</Visual>
+					</Frame>
 				</Frame>
-				</Frame> <!-- End Primary Stats Frame -->
-
+				<!-- End Primary Stats Frame -->
 				<!-- Secondary Stats Bordered Container -->
 				<Frame name="CharacterWindowSecondaryStatsFrame" renderer="DefaultRenderer">
-					<Visual>
-						<ImagerySection name="Border">
-							<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" />
-						</ImagerySection>
-						<StateImagery name="Enabled">
-							<Layer>
-								<Section section="Border" />
-							</Layer>
-						</StateImagery>
-					</Visual>
-
 					<Area>
-						<Anchor point="TOP" offset="410" />
-						<Anchor point="LEFT" offset="16" />
-						<Anchor point="RIGHT" offset="-16" />
-						<Size><AbsDimension y="240" /></Size>
+						<Size>
+							<AbsDimension y="340" />
+						</Size>
+						<Anchor point="TOP" offset="552" />
+						<Anchor point="LEFT" offset="0" />
+						<Anchor point="RIGHT" offset="0" />
 					</Area>
-
-				<!-- Secondary Stats Section -->
-				<Frame name="CharacterWindowSecondaryStatsHeader" inherits="StatSectionHeaderTemplate">
-					<Property name="Text" value="SECONDARY STATS" />
-
-					<Area>
-						<Anchor point="TOP" offset="8" />
-						<Anchor point="LEFT" offset="8" />
-						<Anchor point="RIGHT" offset="-8" />
-					</Area>
+					<!-- Secondary Stats Section -->
+					<Frame name="CharacterWindowSecondaryStatsHeader" inherits="StatSectionHeaderTemplate">
+						<Property name="Text" value="CHARACTER_SECONDARY_STATS" />
+						<Area>
+							<Size>
+								<AbsDimension y="36" />
+							</Size>
+							<Anchor point="TOP" offset="16" />
+							<Anchor point="LEFT" offset="16" />
+							<Anchor point="RIGHT" offset="-16" />
+						</Area>
+					</Frame>
+					<!-- Armor -->
+					<Frame name="CharacterArmorLabel" inherits="CharacterStatLabelTemplate">
+						<Property name="Text" value="ARMOR" />
+						<Area>
+							<Size>
+								<AbsDimension y="52" />
+							</Size>
+							<Anchor point="TOP" offset="68" />
+							<Anchor point="LEFT" offset="16" />
+							<Anchor point="RIGHT" offset="-160" />
+						</Area>
+					</Frame>
+					<Frame name="CharacterArmorStat" inherits="CharacterStatValueTemplate">
+						<Property name="Text" value="0" />
+						<Area>
+							<Size>
+								<AbsDimension x="136" y="52" />
+							</Size>
+							<Anchor point="TOP" offset="68" />
+							<Anchor point="RIGHT" offset="-16" />
+						</Area>
+					</Frame>
+					<!-- Damage -->
+					<Frame name="CharacterDamageLabel" inherits="CharacterStatLabelTemplate">
+						<Property name="Text" value="DAMAGE" />
+						<Area>
+							<Size>
+								<AbsDimension y="52" />
+							</Size>
+							<Anchor point="TOP" offset="132" />
+							<Anchor point="LEFT" offset="16" />
+							<Anchor point="RIGHT" offset="-160" />
+						</Area>
+					</Frame>
+					<Frame name="CharacterDamageStat" inherits="CharacterStatValueTemplate">
+						<Property name="Text" value="0" />
+						<Area>
+							<Size>
+								<AbsDimension x="136" y="52" />
+							</Size>
+							<Anchor point="TOP" offset="132" />
+							<Anchor point="RIGHT" offset="-16" />
+						</Area>
+					</Frame>
+					<!-- Attack Power -->
+					<Frame name="CharacterAttackPowerLabel" inherits="CharacterStatLabelTemplate">
+						<Property name="Text" value="ATTACK_POWER" />
+						<Area>
+							<Size>
+								<AbsDimension y="52" />
+							</Size>
+							<Anchor point="TOP" offset="196" />
+							<Anchor point="LEFT" offset="16" />
+							<Anchor point="RIGHT" offset="-160" />
+						</Area>
+					</Frame>
+					<Frame name="CharacterAttackPowerStat" inherits="CharacterStatValueTemplate">
+						<Property name="Text" value="0" />
+						<Area>
+							<Size>
+								<AbsDimension x="136" y="52" />
+							</Size>
+							<Anchor point="TOP" offset="196" />
+							<Anchor point="RIGHT" offset="-16" />
+						</Area>
+					</Frame>
+					<!-- Attack Speed -->
+					<Frame name="CharacterAttackTimeLabel" inherits="CharacterStatLabelTemplate">
+						<Property name="Text" value="ATTACK_SPEED" />
+						<Area>
+							<Size>
+								<AbsDimension y="52" />
+							</Size>
+							<Anchor point="TOP" offset="260" />
+							<Anchor point="LEFT" offset="16" />
+							<Anchor point="RIGHT" offset="-160" />
+						</Area>
+					</Frame>
+					<Frame name="CharacterAttackTimeStat" inherits="CharacterStatValueTemplate">
+						<Property name="Text" value="0" />
+						<Area>
+							<Size>
+								<AbsDimension x="136" y="52" />
+							</Size>
+							<Anchor point="TOP" offset="260" />
+							<Anchor point="RIGHT" offset="-16" />
+						</Area>
+					</Frame>
+					<Frame name="CharacterWindowSecondaryStatsFrameDivider" renderer="DefaultRenderer">
+						<Property name="Clickable" value="false" />
+						<Area>
+							<Size>
+								<AbsDimension y="2" />
+							</Size>
+							<Anchor point="LEFT" offset="0" />
+							<Anchor point="RIGHT" offset="0" />
+							<Anchor point="TOP" offset="0" />
+						</Area>
+						<Visual>
+							<ImagerySection name="Line">
+								<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="806F5B3C" />
+							</ImagerySection>
+							<StateImagery name="Enabled">
+								<Layer>
+									<Section section="Line" />
+								</Layer>
+							</StateImagery>
+						</Visual>
+					</Frame>
 				</Frame>
-
-				<!-- Armor -->
-				<Frame name="CharacterArmorLabel" inherits="CharacterStatLabelTemplate">
-					<Property name="Text" value="ARMOR" />
-
-					<Area>
-						<Anchor point="TOP" offset="56" />
-						<Anchor point="LEFT" offset="16" />
-						<Anchor point="RIGHT" offset="-8" />
-					</Area>
-				</Frame>
-
-				<Frame name="CharacterArmorStat" inherits="CharacterStatValueTemplate">
-					<Property name="Text" value="0" />
-
-					<Area>
-						<Anchor point="TOP" offset="56" />
-						<Anchor point="LEFT" offset="16" />
-						<Anchor point="RIGHT" offset="-8" />
-					</Area>
-				</Frame>
-
-				<!-- Damage -->
-				<Frame name="CharacterDamageLabel" inherits="CharacterStatLabelTemplate">
-					<Property name="Text" value="DAMAGE" />
-
-					<Area>
-						<Anchor point="TOP" offset="100" />
-						<Anchor point="LEFT" offset="16" />
-						<Anchor point="RIGHT" offset="-8" />
-					</Area>
-				</Frame>
-
-				<Frame name="CharacterDamageStat" inherits="CharacterStatValueTemplate">
-					<Property name="Text" value="0" />
-
-					<Area>
-						<Anchor point="TOP" offset="100" />
-						<Anchor point="LEFT" offset="16" />
-						<Anchor point="RIGHT" offset="-8" />
-					</Area>
-				</Frame>
-
-				<!-- Attack Power -->
-				<Frame name="CharacterAttackPowerLabel" inherits="CharacterStatLabelTemplate">
-					<Property name="Text" value="ATTACK_POWER" />
-
-					<Area>
-						<Anchor point="TOP" offset="144" />
-						<Anchor point="LEFT" offset="16" />
-						<Anchor point="RIGHT" offset="-8" />
-					</Area>
-				</Frame>
-
-				<Frame name="CharacterAttackPowerStat" inherits="CharacterStatValueTemplate">
-					<Property name="Text" value="0" />
-
-					<Area>
-						<Anchor point="TOP" offset="144" />
-						<Anchor point="LEFT" offset="16" />
-						<Anchor point="RIGHT" offset="-8" />
-					</Area>
-				</Frame>
-
-				<!-- Attack Speed -->
-				<Frame name="CharacterAttackTimeLabel" inherits="CharacterStatLabelTemplate">
-					<Property name="Text" value="ATTACK_SPEED" />
-
-					<Area>
-						<Anchor point="TOP" offset="188" />
-						<Anchor point="LEFT" offset="16" />
-						<Anchor point="RIGHT" offset="-8" />
-					</Area>
-				</Frame>
-
-				<Frame name="CharacterAttackTimeStat" inherits="CharacterStatValueTemplate">
-					<Property name="Text" value="0" />
-
-					<Area>
-						<Anchor point="TOP" offset="188" />
-						<Anchor point="LEFT" offset="16" />
-						<Anchor point="RIGHT" offset="-8" />
-					</Area>
-				</Frame>
-				</Frame> <!-- End Secondary Stats Frame -->
-
+				<!-- End Secondary Stats Frame -->
 			</Frame>
 		</Frame>
-
 		<Frame name="CharacterClassesPage" renderer="DefaultRenderer">
 			<Property name="Visible" value="false" />
 			<Visual>
-				<ImagerySection name="Background"><BorderComponent texture="Interface/GameUI/fg4_iconsSlot.htex" borderSize="64" /></ImagerySection>
-				<StateImagery name="Enabled"><Layer><Section section="Background" /></Layer></StateImagery>
-			</Visual>
-			<Area>
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterWindowTabBar" offset="4" />
-				<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CharacterInvSlotHands" offset="8" />
-				<Anchor point="RIGHT" offset="-24" />
-				<Anchor point="BOTTOM" offset="-50" />
-			</Area>
-
-			<Frame name="CharacterWindowClassesHeader" inherits="StatSectionHeaderTemplate">
-				<Property name="Text" value="CHARACTER_CLASSES_OVERVIEW" />
-				<Area><Anchor point="TOP" offset="12" /><Anchor point="LEFT" offset="16" /><Anchor point="RIGHT" offset="-16" /></Area>
-			</Frame>
-
-			<Frame name="CharacterClassButton1" inherits="CharacterClassButtonTemplate" id="1">
-				<Area><Anchor point="TOP" offset="60" /><Anchor point="LEFT" offset="14" /><Anchor point="RIGHT" offset="-14" /></Area>
-				<Scripts><OnClick>return function(self) CharacterClassButton_OnClick(self); end</OnClick></Scripts>
-			</Frame>
-			<Frame name="CharacterClassButton2" inherits="CharacterClassButtonTemplate" id="2">
-				<Area><Anchor point="TOP" offset="176" /><Anchor point="LEFT" offset="14" /><Anchor point="RIGHT" offset="-14" /></Area>
-				<Scripts><OnClick>return function(self) CharacterClassButton_OnClick(self); end</OnClick></Scripts>
-			</Frame>
-			<Frame name="CharacterClassButton3" inherits="CharacterClassButtonTemplate" id="3">
-				<Area><Anchor point="TOP" offset="292" /><Anchor point="LEFT" offset="14" /><Anchor point="RIGHT" offset="-14" /></Area>
-				<Scripts><OnClick>return function(self) CharacterClassButton_OnClick(self); end</OnClick></Scripts>
-			</Frame>
-			<Frame name="CharacterClassButton4" inherits="CharacterClassButtonTemplate" id="4">
-				<Area><Anchor point="TOP" offset="408" /><Anchor point="LEFT" offset="14" /><Anchor point="RIGHT" offset="-14" /></Area>
-				<Scripts><OnClick>return function(self) CharacterClassButton_OnClick(self); end</OnClick></Scripts>
-			</Frame>
-			<Frame name="CharacterClassButton5" inherits="CharacterClassButtonTemplate" id="5">
-				<Area><Anchor point="TOP" offset="524" /><Anchor point="LEFT" offset="14" /><Anchor point="RIGHT" offset="-14" /></Area>
-				<Scripts><OnClick>return function(self) CharacterClassButton_OnClick(self); end</OnClick></Scripts>
-			</Frame>
-			<Frame name="CharacterClassButton6" inherits="CharacterClassButtonTemplate" id="6">
-				<Area><Anchor point="TOP" offset="640" /><Anchor point="LEFT" offset="14" /><Anchor point="RIGHT" offset="-14" /></Area>
-				<Scripts><OnClick>return function(self) CharacterClassButton_OnClick(self); end</OnClick></Scripts>
-			</Frame>
-			<Frame name="CharacterClassButton7" inherits="CharacterClassButtonTemplate" id="7">
-				<Area><Anchor point="TOP" offset="756" /><Anchor point="LEFT" offset="14" /><Anchor point="RIGHT" offset="-14" /></Area>
-				<Scripts><OnClick>return function(self) CharacterClassButton_OnClick(self); end</OnClick></Scripts>
-			</Frame>
-			<Frame name="CharacterClassButton8" inherits="CharacterClassButtonTemplate" id="8">
-				<Area><Anchor point="TOP" offset="872" /><Anchor point="LEFT" offset="14" /><Anchor point="RIGHT" offset="-14" /></Area>
-				<Scripts><OnClick>return function(self) CharacterClassButton_OnClick(self); end</OnClick></Scripts>
-			</Frame>
-		</Frame>
-
-		<Frame name="CharacterLevelLabel" inherits="TextSmall">
-			<Property name="Font" value="SmallLabelFont" />
-			<Property name="HorzAlign" value="CENTER" />
-
-			<Area>
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterWindowTitle" offset="8" />
-				<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CharacterInvSlotHead" offset="8" />
-				<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CharacterInvSlotHands" offset="-8" />
-			</Area>
-		</Frame>
-
-		<Frame name="CharacterModelFrameBorder" renderer="DefaultRenderer">
-			<Area>
-				<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CharacterInvSlotHead" offset="8" />
-				<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CharacterInvSlotHands" offset="-8" />
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharacterLevelLabel" offset="8" />
-				<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="CharacterInvSlotMainHand" offset="-8" />
-			</Area>
-				
-			<Visual>
-				<ImagerySection name="Background">
-					<BorderComponent texture="Interface/GameUI/fg4_iconsSlot.htex" borderSize="64" />
+				<ImagerySection name="Surface">
+					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FF84765D" />
 				</ImagerySection>
 				<StateImagery name="Enabled">
 					<Layer>
-						<Section section="Background" />
+						<Section section="Surface" />
 					</Layer>
 				</StateImagery>
 			</Visual>
-
-			<Frame name="CharacterFrameModel" type="UnitModel" renderer="ModelRenderer" >
+			<Area>
+				<Anchor point="TOP" offset="12" relativeTo="CharacterWindowTabBar" relativePoint="BOTTOM" />
+				<Anchor point="LEFT" offset="848" />
+				<Anchor point="RIGHT" offset="-32" />
+				<Anchor point="BOTTOM" offset="-40" />
+			</Area>
+			<Frame name="CharacterWindowClassesHeader" inherits="StatSectionHeaderTemplate">
+				<Property name="Text" value="CHARACTER_CLASSES_OVERVIEW" />
+				<Area>
+					<Size>
+						<AbsDimension y="44" />
+					</Size>
+					<Anchor point="TOP" offset="12" />
+					<Anchor point="LEFT" offset="24" />
+					<Anchor point="RIGHT" offset="-24" />
+				</Area>
+			</Frame>
+			<Frame name="CharacterClassButton1" inherits="CharacterClassButtonTemplate" id="1">
+				<Area>
+					<Anchor point="TOP" offset="60" />
+					<Anchor point="LEFT" offset="14" />
+					<Anchor point="RIGHT" offset="-14" />
+				</Area>
+				<Scripts>
+					<OnClick>return function(self) CharacterClassButton_OnClick(self); end</OnClick>
+				</Scripts>
+			</Frame>
+			<Frame name="CharacterClassButton2" inherits="CharacterClassButtonTemplate" id="2">
+				<Area>
+					<Anchor point="TOP" offset="180" />
+					<Anchor point="LEFT" offset="14" />
+					<Anchor point="RIGHT" offset="-14" />
+				</Area>
+				<Scripts>
+					<OnClick>return function(self) CharacterClassButton_OnClick(self); end</OnClick>
+				</Scripts>
+			</Frame>
+			<Frame name="CharacterClassButton3" inherits="CharacterClassButtonTemplate" id="3">
+				<Area>
+					<Anchor point="TOP" offset="300" />
+					<Anchor point="LEFT" offset="14" />
+					<Anchor point="RIGHT" offset="-14" />
+				</Area>
+				<Scripts>
+					<OnClick>return function(self) CharacterClassButton_OnClick(self); end</OnClick>
+				</Scripts>
+			</Frame>
+			<Frame name="CharacterClassButton4" inherits="CharacterClassButtonTemplate" id="4">
+				<Area>
+					<Anchor point="TOP" offset="420" />
+					<Anchor point="LEFT" offset="14" />
+					<Anchor point="RIGHT" offset="-14" />
+				</Area>
+				<Scripts>
+					<OnClick>return function(self) CharacterClassButton_OnClick(self); end</OnClick>
+				</Scripts>
+			</Frame>
+			<Frame name="CharacterClassButton5" inherits="CharacterClassButtonTemplate" id="5">
+				<Area>
+					<Anchor point="TOP" offset="540" />
+					<Anchor point="LEFT" offset="14" />
+					<Anchor point="RIGHT" offset="-14" />
+				</Area>
+				<Scripts>
+					<OnClick>return function(self) CharacterClassButton_OnClick(self); end</OnClick>
+				</Scripts>
+			</Frame>
+			<Frame name="CharacterClassButton6" inherits="CharacterClassButtonTemplate" id="6">
+				<Area>
+					<Anchor point="TOP" offset="660" />
+					<Anchor point="LEFT" offset="14" />
+					<Anchor point="RIGHT" offset="-14" />
+				</Area>
+				<Scripts>
+					<OnClick>return function(self) CharacterClassButton_OnClick(self); end</OnClick>
+				</Scripts>
+			</Frame>
+			<Frame name="CharacterClassButton7" inherits="CharacterClassButtonTemplate" id="7">
+				<Area>
+					<Anchor point="TOP" offset="780" />
+					<Anchor point="LEFT" offset="14" />
+					<Anchor point="RIGHT" offset="-14" />
+				</Area>
+				<Scripts>
+					<OnClick>return function(self) CharacterClassButton_OnClick(self); end</OnClick>
+				</Scripts>
+			</Frame>
+			<Frame name="CharacterClassButton8" inherits="CharacterClassButtonTemplate" id="8">
+				<Area>
+					<Anchor point="TOP" offset="900" />
+					<Anchor point="LEFT" offset="14" />
+					<Anchor point="RIGHT" offset="-14" />
+				</Area>
+				<Scripts>
+					<OnClick>return function(self) CharacterClassButton_OnClick(self); end</OnClick>
+				</Scripts>
+			</Frame>
+		</Frame>
+		<Frame name="CharacterLevelLabel" inherits="TextSmall">
+			<Property name="TextColor" value="FFB9AD96" />
+			<Property name="Font" value="SmallLabelFont" />
+			<Property name="HorzAlign" value="CENTER" />
+			<Area>
+				<Size>
+					<AbsDimension y="36" />
+				</Size>
+				<Anchor point="TOP" offset="100" />
+				<Anchor point="LEFT" offset="152" />
+				<Anchor point="RIGHT" offset="-744" />
+			</Area>
+		</Frame>
+		<Frame name="CharacterModelFrameBorder" renderer="DefaultRenderer">
+			<Area>
+				<Anchor point="LEFT" offset="160" />
+				<Anchor point="RIGHT" offset="-752" />
+				<Anchor point="TOP" offset="152" />
+				<Anchor point="BOTTOM" offset="-192" />
+			</Area>
+			<Visual>
+				<ImagerySection name="Surface">
+					<BorderComponent texture="Interface/GameUI/Alestia/WindowPanel.htex" borderSize="32" tint="FF807568" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Surface" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+			<Frame name="CharacterFrameModel" type="UnitModel" renderer="ModelRenderer">
 				<Property name="Yaw" value="-120" />
 				<Property name="Zoom" value="2.75" />
 				<Property name="OffsetY" value="1.0" />
 				<Property name="Animation" value="Idle" />
-
 				<Area>
 					<Anchor point="LEFT" offset="8" />
 					<Anchor point="RIGHT" offset="-8" />
@@ -941,8 +1259,6 @@
 					<Anchor point="BOTTOM" offset="-8" />
 				</Area>
 			</Frame>
-
 		</Frame>
-
 	</Frame>
 </UiLayout>

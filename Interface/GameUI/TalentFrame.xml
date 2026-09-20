@@ -2,8 +2,9 @@
 <UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
 	<Script file="TalentFrame.lua" />
 
+	<Font name="TalentPointsCounterFont" file="Fonts/FRIZQT__.TTF" size="40" outline="1" />
 	<Font name="TalentTabFont" file="Fonts/FRIZQT__.TTF" size="20" outline="0" shadowX="1.0" shadowY="1.0" />
-	<Font name="TalentRankFont" file="Fonts/FRIZQT__.TTF" size="15" outline="1" shadowX="0.5" shadowY="0.5" />
+	<Font name="TalentRankFont" file="Fonts/FRIZQT__.TTF" size="22" outline="1" shadowX="0.5" shadowY="0.5" />
 
 	<Frame name="TalentFrameTabButtonTemplate" type="Button" renderer="CheckboxRenderer">
 		<Property name="Font" value="TalentTabFont" />
@@ -34,10 +35,10 @@
 		<Property name="Checkable" value="true" />
 		<Visual>
 			<ImagerySection name="Glow"><ImageComponent texture="Interface/GlueUI/GlowYellow.htex" tint="$GlowTint"><Area><Inset all="-16" /></Area></ImageComponent></ImagerySection>
-			<ImagerySection name="NormalFrame"><BorderComponent texture="Interface/BW_ButtonSmall_Up.htex" borderSize="30" /></ImagerySection>
-			<ImagerySection name="HoverFrame"><BorderComponent texture="Interface/BW_ButtonSmall_Over.htex" borderSize="30" /></ImagerySection>
-			<ImagerySection name="PushedFrame"><BorderComponent texture="Interface/BW_ButtonSmall_Down.htex" borderSize="30" /></ImagerySection>
-			<ImagerySection name="DisabledFrame"><BorderComponent texture="Interface/BW_ButtonSmall_Up.htex" borderSize="30" /></ImagerySection>
+			<ImagerySection name="NormalFrame"><ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="FFAA9B80" /></ImagerySection>
+			<ImagerySection name="HoverFrame"><ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="FFFFE0A0" /></ImagerySection>
+			<ImagerySection name="PushedFrame"><ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="FF77654E" /></ImagerySection>
+			<ImagerySection name="DisabledFrame"><ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="FFAA9B80" /></ImagerySection>
 			<ImagerySection name="Icon"><ImageComponent tint="$IconTint"><Area><Inset all="16" /></Area><PropertyValue property="Icon" /></ImageComponent></ImagerySection>
 			<ImagerySection name="DisabledIcon"><ImageComponent tint="FF676B72"><Area><Inset all="16" /></Area><PropertyValue property="Icon" /></ImageComponent></ImagerySection>
 			<StateImagery name="Normal"><Layer><Section section="Glow" /><Section section="NormalFrame" /><Section section="Icon" /></Layer></StateImagery>
@@ -57,7 +58,7 @@
 				<ImagerySection name="Background"><BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="4" tint="EE000000" /><TextComponent color="$TextColor" horzAlign="CENTER" vertAlign="CENTER" /></ImagerySection>
 				<StateImagery name="Enabled"><Layer><Section section="Background" /></Layer></StateImagery>
 			</Visual>
-			<Area><Size><AbsDimension x="48" y="30" /></Size><Anchor point="BOTTOM" offset="-2" /><Anchor point="RIGHT" offset="-2" /></Area>
+			<Area><Size><AbsDimension x="64" y="38" /></Size><Anchor point="BOTTOM" offset="-2" /><Anchor point="RIGHT" offset="-2" /></Area>
 		</Frame>
 	</Frame>
 
@@ -72,7 +73,7 @@
 	<Frame name="TalentFrame" renderer="DefaultRenderer" parent="GameParent">
 		<Property name="Visible" value="false" />
 		<Visual>
-			<ImagerySection name="Background"><BorderComponent texture="Interface/GameUI/fg4_borders_simple.htex" borderSize="250" /></ImagerySection>
+			<ImagerySection name="Background"><BorderComponent texture="Interface/GameUI/Alestia/WindowPanel.htex" borderSize="32" /></ImagerySection>
 			<StateImagery name="Enabled"><Layer><Section section="Background" /></Layer></StateImagery>
 		</Visual>
 		<Area>
@@ -87,7 +88,7 @@
 		</Frame>
 
 		<Frame name="TalentFrameTabContainer">
-			<Area><Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TalentFrameTitleBar" offset="18" /><Anchor point="LEFT" offset="70" /><Anchor point="RIGHT" offset="-70" /><Size><AbsDimension y="82" /></Size></Area>
+			<Area><Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TalentFrameTitleBar" offset="18" /><Anchor point="LEFT" offset="70" /><Anchor point="RIGHT" offset="-1240" /><Size><AbsDimension y="82" /></Size></Area>
 		</Frame>
 
 		<Frame name="TalentFrameCanvasViewport" renderer="DefaultRenderer">
@@ -95,12 +96,12 @@
 			<Property name="Background" value="Interface/GameUI/TalentFrameBackground.htex" />
 			<Visual>
 				<ImagerySection name="Canvas">
-					<ImageComponent tint="FFB7C0CB"><Area><Inset all="12" /></Area><PropertyValue property="Background" /></ImageComponent>
-					<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" />
+					<ImageComponent tint="FF777E86"><Area><Inset all="12" /></Area><PropertyValue property="Background" /></ImageComponent>
+					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FF978362" />
 				</ImagerySection>
 				<StateImagery name="Enabled"><Layer><Section section="Canvas" /></Layer></StateImagery>
 			</Visual>
-			<Area><Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TalentFrameTabContainer" offset="12" /><Anchor point="LEFT" offset="54" /><Anchor point="RIGHT" offset="-54" /><Anchor point="BOTTOM" offset="-150" /></Area>
+			<Area><Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TalentFrameTabContainer" offset="12" /><Anchor point="LEFT" offset="54" /><Anchor point="RIGHT" offset="-54" /><Anchor point="BOTTOM" offset="-130" /></Area>
 			<Frame name="TalentFrameCanvasContent">
 				<Property name="ClippedByParent" value="true" />
 				<Property name="Clickable" value="false" />
@@ -113,14 +114,19 @@
 		<Frame name="TalentFrameZoomIn" inherits="GlueButton"><Property name="Text" value="+" /><Area><Anchor point="BOTTOM" offset="-52" /><Anchor point="LEFT" relativePoint="RIGHT" relativeTo="TalentFrameZoomReset" offset="8" /><Size><AbsDimension x="88" y="70" /></Size></Area></Frame>
 
 		<Frame name="TalentFramePointsText" inherits="TextSmall">
-			<Property name="HorzAlign" value="CENTER" />
-			<Property name="TextColor" value="FFFFD100" />
-			<Area><Anchor point="BOTTOM" offset="-64" /><Anchor point="LEFT" offset="700" /><Anchor point="RIGHT" offset="-700" /><Size><AbsDimension y="56" /></Size></Area>
+			<Property name="HorzAlign" value="RIGHT" />
+			<Property name="TextColor" value="FFF0E7D6" />
+			<Area><Anchor point="TOP" offset="144" /><Anchor point="LEFT" offset="1500" /><Anchor point="RIGHT" offset="-172" /><Size><AbsDimension y="56" /></Size></Area>
 		</Frame>
 
 		<Scripts>
 			<OnLoad>return function(this) TalentFrame_OnLoad(this) end</OnLoad>
 			<OnShow>return function(this) TalentFrame_OnShow(this) end</OnShow>
 		</Scripts>
+	</Frame>
+	<Frame name="TalentFramePointsCounter" parent="TalentFrame" renderer="DefaultRenderer">
+		<Property name="Font" value="TalentPointsCounterFont" /><Property name="TextColor" value="FFF3CF50" /><Property name="Clickable" value="false" />
+		<Area><Size><AbsDimension x="88" y="76" /></Size><Anchor point="TOP" offset="134" /><Anchor point="RIGHT" offset="-64" /></Area>
+		<Visual><ImagerySection name="Counter"><BorderComponent texture="Interface/GameUI/Alestia/WindowPanel.htex" borderSize="32" /><TextComponent color="$TextColor" horzAlign="CENTER" vertAlign="CENTER" /></ImagerySection><StateImagery name="Enabled"><Layer><Section section="Counter" /></Layer></StateImagery></Visual>
 	</Frame>
 </UiLayout>

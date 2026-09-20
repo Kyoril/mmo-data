@@ -1,8 +1,8 @@
 
 ResourceBarColors = {}
-ResourceBarColors[0] = "FF0000FF"; -- Mana
-ResourceBarColors[1] = "FFFF0000"; -- Rage
-ResourceBarColors[2] = "FFFFFF00"; -- Energy
+ResourceBarColors[0] = "FF328FEA"; -- Mana
+ResourceBarColors[1] = "FFE94B38"; -- Rage
+ResourceBarColors[2] = "FFF0C632"; -- Energy
 
 function TargetFrame_OnLoad()
     TargetFrame_Update();
@@ -113,11 +113,11 @@ function TargetFrame_Update()
         TargetPortraitModel:SetUnit("target");
 
         if (target:IsFriendly()) then
-            TargetName:SetProperty("TextColor", "FF00FF00");
+            TargetName:SetProperty("TextColor", "FF90CF8A");
         elseif (target:IsHostile()) then
-            TargetName:SetProperty("TextColor", "FFFF0000");
+            TargetName:SetProperty("TextColor", "FFE94B38");
         else
-            TargetName:SetProperty("TextColor", "FFFFFF00");
+            TargetName:SetProperty("TextColor", "FFF0C632");
         end
 
         -- Update progress bars

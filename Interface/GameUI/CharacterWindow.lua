@@ -35,8 +35,8 @@ function CharacterWindow_OnAttributeChanged(self)
 end
 
 function CharacterWindow_OnLoad(self)
-	-- Subscribe for title bar close handler (HACKY! Order of items is important which sucks)
-	CharacterWindow:GetChild(0):GetChild(0):SetClickedHandler(CharacterWindow_Toggle);
+	-- Bind the named control so decorative header changes cannot break closing.
+	CharacterWindowCloseButton:SetClickedHandler(CharacterWindow_Toggle);
 
     self:RegisterEvent("PLAYER_ATTRIBUTES_CHANGED", CharacterWindow_OnAttributeChanged);
     self:RegisterEvent("PLAYER_ENTER_WORLD", CharacterWindow_OnEnterWorld);
@@ -417,11 +417,11 @@ function CharacterWindow_RefreshClasses()
 					button:GetChild(3):Hide();
 					button:Disable();
 				elseif isActive then
-                    button:GetChild(0):SetProperty("TextColor", "FFFFD100");
-                    button:GetChild(1):SetProperty("TextColor", "FFFFD100");
+                    button:GetChild(0):SetProperty("TextColor", "FFEED37C");
+                    button:GetChild(1):SetProperty("TextColor", "FFEED37C");
 					button:GetChild(1):SetText(string.format(Localize("CLASS_RANK_FORMAT"), classLevel, maxClassLevel));
-					button:GetChild(2):SetProperty("TextColor", "FFFFD100");
-					button:GetChild(2):SetText("");
+					button:GetChild(2):SetProperty("TextColor", "FFEED37C");
+					button:GetChild(2):SetText(Localize("CLASS_STATUS_ACTIVE"));
                     button:Disable();
                 else
                     button:GetChild(0):SetProperty("TextColor", "FFFFFFFF");

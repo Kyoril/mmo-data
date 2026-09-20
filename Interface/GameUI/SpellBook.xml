@@ -44,16 +44,16 @@
 				</ImageComponent>
 			</ImagerySection>
 			<ImagerySection name="NormalFrame">
-				<BorderComponent texture="Interface/BW_ButtonSmall_Up.htex" borderSize="30" />
+				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="FFB8A887" />
 			</ImagerySection>
 			<ImagerySection name="HoveredFrame">
-				<BorderComponent texture="Interface/BW_ButtonSmall_Over.htex" borderSize="30" />
+				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="FFFFDDA0" />
 			</ImagerySection>
 			<ImagerySection name="PushedFrame">
-				<BorderComponent texture="Interface/BW_ButtonSmall_Down.htex" borderSize="30" />
+				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="FF7F6E53" />
 			</ImagerySection>
 			<ImagerySection name="DisabledFrame">
-				<BorderComponent texture="Interface/BW_ButtonSmall_Up.htex" borderSize="30" />
+				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="FFB8A887" />
 			</ImagerySection>
 			<StateImagery name="Normal">
 				<Layer>
@@ -197,7 +197,7 @@
 
 		<Visual>
 			<ImagerySection name="Background">
-				<BorderComponent texture="Interface/GameUI/fg4_borders_simple.htex" borderSize="250" />
+				<BorderComponent texture="Interface/GameUI/Alestia/WindowPanel.htex" borderSize="32" />
 			</ImagerySection>
 			<StateImagery name="Enabled">
 				<Layer>

@@ -347,12 +347,16 @@ function QuestLog_Update()
 
                 if not IsQuestAllowedForClass(questLogEntry.quest) then
                     -- Quest is frozen because the active class does not match its required class.
+                    button:SetProperty("TextColor", "FF99958C");
                     button:SetText(string.format(Localize("QUEST_WRONG_CLASS_FORMAT"), title));
                 elseif questLogEntry.status == QS_COMPLETE then
+                    button:SetProperty("TextColor", "FF89D95B");
                     button:SetText(string.format(Localize("QUEST_COMPLETED_FORMAT"), title));
                 elseif questLogEntry.status == QS_FAILED then
+                    button:SetProperty("TextColor", "FFD28B7F");
                     button:SetText(string.format(Localize("QUEST_FAILED_FORMAT"), title));
                 else
+                    button:SetProperty("TextColor", "FFF3CF50");
                     button:SetText(title);
                 end
                 button:SetChecked(questLogEntry.quest.id == GetQuestLogSelection());

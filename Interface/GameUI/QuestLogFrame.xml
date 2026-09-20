@@ -5,16 +5,17 @@
 	<Frame name="QuestListQuestButton" type="Button" renderer="CheckboxRenderer">
 		<Property name="Font" value="QuestFont" />
 		<Property name="Checkable" value="true" />
+		<Property name="TextColor" value="FFF3CF50" />
 
 		<Visual>
 			<ImagerySection name="FrameNormal">
 				<ImageComponent texture="Interface/GlueUI/CharSelectButtonBackground.htex" />
 			</ImagerySection>
 			<ImagerySection name="FrameHovered">
-				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="FFFF9B38" />
+				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="FF9A8055" />
 			</ImagerySection>
 			<ImagerySection name="FramePushed">
-				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="FF9E5E22">
+				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="FF705632">
 					<Area>
 						<Inset left="8" top="8" />
 					</Area>
@@ -25,17 +26,17 @@
 			</ImagerySection>
 
 			<ImagerySection name="FrameNormalChecked">
-				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="FF033F08" />
+				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="FF806537" />
 			</ImagerySection>
 			<ImagerySection name="FramePushedChecked">
-				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="FF033F08">
+				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="FF806537">
 					<Area>
 						<Inset left="8" top="8" />
 					</Area>
 				</ImageComponent>
 			</ImagerySection>
 			<ImagerySection name="Text">
-				<TextComponent color="FFEED37C" horzAlign="LEFT" vertAlign="TOP">
+				<TextComponent color="$TextColor" horzAlign="LEFT" vertAlign="TOP">
 					<Area>
 						<Inset left="8" top="8" />
 					</Area>
@@ -100,7 +101,7 @@
 			</StateImagery>
 		</Visual>
 		<Area>
-			<Size><AbsDimension x="128" y="48" /></Size>
+			<Size><AbsDimension x="128" y="64" /></Size>
 		</Area>
 	</Frame>
 
@@ -113,7 +114,7 @@
 					<ImageComponent texture="Interface/GlueUI/RealmListBackground.htex" tiling="BOTH">
 						<Area><Inset all="8" /></Area>
 					</ImageComponent>
-					<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" />
+					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" />
 				</ImagerySection>
 				<StateImagery name="Enabled">
 					<Layer>
@@ -126,7 +127,7 @@
 				<Anchor point="LEFT" offset="16" />
 				<Anchor point="RIGHT" offset="-16" />
 				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestLogFrame_SidePanelTitleBar" />
-				<Size><AbsDimension y="320" /></Size>		<!-- 48 px per item, 6 items + 32 -->
+				<Size><AbsDimension y="416" /></Size>		<!-- Six 64px rows with 32px vertical padding. -->
 			</Area>
 
 			<Frame name="QuestLogFrameQuestListContent">
@@ -208,7 +209,7 @@
 			<Area>
 				<Anchor point="LEFT" offset="16" />
 				<Anchor point="RIGHT" offset="-16" />
-				<Anchor point="BOTTOM" offset="-16" />
+				<Anchor point="BOTTOM" offset="-120" />
 				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestLogQuestList" />
 			</Area>
 
@@ -227,7 +228,7 @@
                     <Anchor point="TOP" offset="0" />
                     <Anchor point="LEFT" offset="0" />
                     <Anchor point="RIGHT" relativePoint="LEFT" relativeTo="QuestLogQuestDetailPanelScrollBar" />
-                    <Anchor point="BOTTOM" offset="-96" />
+                    <Anchor point="BOTTOM" offset="-8" />
                 </Area>
 
 				<Frame name="QuestLogQuestDetailScrollContent" renderer="DefaultRenderer">
@@ -381,13 +382,19 @@
 
 			</Frame>
 
+
+        </Frame>
+
+		<Frame name="QuestLogFooter" renderer="DefaultRenderer">
+			<Area><Anchor point="LEFT" offset="16" /><Anchor point="RIGHT" offset="-16" /><Anchor point="BOTTOM" offset="-16" /><Size><AbsDimension y="96" /></Size></Area>
+			<Visual><ImagerySection name="Surface"><BorderComponent texture="Interface/GameUI/Alestia/WindowPanel.htex" borderSize="32" /></ImagerySection><StateImagery name="Enabled"><Layer><Section section="Surface" /></Layer></StateImagery></Visual>
 			<Frame name="QuestLogAbandonButton" inherits="GlueButton">
 				<Property name="Text" value="ABANDON_QUEST" />
 
 				<Area>
 					<Anchor point="BOTTOM" offset="-16" />
-					<Anchor point="RIGHT" offset="-96" />
-					<Size><AbsDimension x="384" y="80" /></Size>
+					<Anchor point="RIGHT" offset="-16" />
+					<Size><AbsDimension x="300" y="64" /></Size>
 				</Area>
 
 				<Scripts>
@@ -398,7 +405,7 @@
 					</OnClick>
 				</Scripts>
 			</Frame>
-        </Frame>
+		</Frame>
 
         <Scripts>
             <OnLoad>

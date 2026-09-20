@@ -1,8 +1,7 @@
 <?xml version="1.0" ?>
 <UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
 	<Script file="Minimap.lua" />
-	
-    <Frame name="Minimap" parent="GameParent">
+	<Frame name="Minimap" parent="GameParent">
 		<Scripts>
 			<OnLoad>
 				return function(self)
@@ -20,163 +19,161 @@
 				end
 			</OnHide>
 		</Scripts>
-
 		<Area>
-			<Size><AbsDimension x="384" y="432" /></Size>
-			<Anchor point="RIGHT" offset="0" />
-			<Anchor point="TOP" offset="0" />
+			<Size>
+				<AbsDimension x="384" y="512" />
+			</Size>
+			<Anchor point="RIGHT" offset="-24" />
+			<Anchor point="TOP" offset="24" />
 		</Area>
-
-        <Frame name="MinimapTitleBar" renderer="DefaultRenderer">
-            <Area>
-                <Size><AbsDimension y="64" /></Size>
-                <Anchor point="LEFT" />
-                <Anchor point="RIGHT" />
-            </Area>
-
-            <Visual>
-                <ImagerySection name="Background">
-                    <BorderComponent texture="Interface/GameUI/fg4_borders_01_28_2_result.htex" borderSize="24" />
-                    <TextComponent color="FFFFD100" horzAlign="CENTER">
-                        <Area><Inset all="16" /></Area>
-                    </TextComponent>
-                </ImagerySection>
-                <StateImagery name="Enabled">
-                    <Layer>
-                        <Section section="Background" />
-                    </Layer>
-                </StateImagery>
-            </Visual>
-
-            <Frame name="MinimapCloseButton" inherits="IconButton">
-                <Property name="Icon" value="Interface/Icons/fg4_iconsGold_close_result.htex" />
-
-                <Area>
-                    <Anchor point="TOP" offset="0" />
-                    <Anchor point="RIGHT" offset="0" />
-                    <Anchor point="BOTTOM" offset="0" />
-                    <Size><AbsDimension x="64" y="64" /></Size>
-                </Area>
-                
-                <Scripts>
-                    <OnClick>
+		<Frame name="MinimapTitleBar" renderer="DefaultRenderer">
+			<Property name="Font" value="SmallLabelFont" />
+			<Area>
+				<Size>
+					<AbsDimension y="56" />
+				</Size>
+				<Anchor point="LEFT" offset="0" />
+				<Anchor point="RIGHT" offset="0" />
+				<Anchor point="TOP" offset="0" />
+			</Area>
+			<Visual>
+				<ImagerySection name="Background">
+					<BorderComponent texture="Interface/GameUI/Alestia/WindowPanel.htex" borderSize="24" />
+					<TextComponent color="FFF0E7D6" horzAlign="CENTER" vertAlign="CENTER">
+						<Area>
+							<Inset all="0" left="16" right="60" />
+						</Area>
+					</TextComponent>
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Background" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+			<Frame name="MinimapCloseButton" inherits="IconButton">
+				<Property name="Icon" value="Interface/Icons/fg4_iconsGold_close_result.htex" />
+				<Area>
+					<Size>
+						<AbsDimension x="56" y="56" />
+					</Size>
+					<Anchor point="TOP" offset="0" />
+					<Anchor point="RIGHT" offset="0" />
+				</Area>
+				<Scripts>
+					<OnClick>
                         return function(self, button)
                             Minimap_Toggle(self);
                         end
                     </OnClick>
-                </Scripts>
-            </Frame>
-        </Frame>
-
-        <Frame name="MinimapContent" parent="GameParent" type="Minimap">
-            <Area>
-                <Size><AbsDimension x="384" y="384" /></Size>
-                <Anchor point="RIGHT" offset="0" />
-                <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="MinimapTitleBar" />
-            </Area>
-
-            <Frame name="MinimapBorder" renderer="DefaultRenderer">
-                <Visual>
-                    <ImagerySection name="Background">
-                        <ImageComponent texture="Interface/GameUI/fg4_glass_border_result.htex" tiling="NONE" />
-                    </ImagerySection>
-                    <StateImagery name="Enabled">
-                        <Layer>
-                            <Section section="Background" />
-                        </Layer>
-                    </StateImagery>
-                </Visual>
-
-                <Area>
-                    <Size><AbsDimension x="384" y="384" /></Size>
-                    <Anchor point="RIGHT" offset="0" />
-                    <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="MinimapTitleBar" />
-                </Area>
-
-                <Scripts>
-                    <OnEnter>
+				</Scripts>
+			</Frame>
+		</Frame>
+		<Frame name="MinimapContent" parent="GameParent" type="Minimap">
+			<Area>
+				<Size>
+					<AbsDimension x="384" y="384" />
+				</Size>
+				<Anchor point="RIGHT" offset="0" relativeTo="Minimap" relativePoint="RIGHT" />
+				<Anchor point="TOP" offset="8" relativeTo="MinimapTitleBar" relativePoint="BOTTOM" />
+			</Area>
+			<Frame name="MinimapBorder" renderer="DefaultRenderer">
+				<Visual>
+					<ImagerySection name="Background">
+						<ImageComponent texture="Interface/GameUI/fg4_glass_border_result.htex" tiling="NONE" />
+					</ImagerySection>
+					<StateImagery name="Enabled">
+						<Layer>
+							<Section section="Background" />
+						</Layer>
+					</StateImagery>
+				</Visual>
+				<Area>
+					<Anchor point="LEFT" offset="0" />
+					<Anchor point="RIGHT" offset="0" />
+					<Anchor point="TOP" offset="0" />
+					<Anchor point="BOTTOM" offset="0" />
+				</Area>
+				<Scripts>
+					<OnEnter>
                         return function(self)
                             MinimapContent_mouseOver = true;
                         end
                     </OnEnter>
-                    <OnLeave>
+					<OnLeave>
                         return function(self)
                             MinimapContent_mouseOver = false;
                             GameTooltip:Hide();
                         end
                     </OnLeave>
-                    <OnUpdate>
+					<OnUpdate>
                         return function(self, delta)
                             Minimap_OnUpdate(self, delta);
                         end
                     </OnUpdate>
-                </Scripts>
-            </Frame>
-
-            <Frame name="MinimapZoomIn" inherits="RoundIconButton">
-                <Property name="Icon" value="Interface/Icons/fg4_iconsBrown_plus_result.htex" />
-
-                <Area>
-                    <Anchor point="RIGHT" offset="0" />
-                    <Anchor point="BOTTOM" offset="-64" />
-                </Area>
-
-                <Scripts>
-                    <OnClick>
+				</Scripts>
+			</Frame>
+			<Frame name="MinimapZoomIn" inherits="RoundIconButton">
+				<Property name="Icon" value="Interface/Icons/fg4_iconsBrown_plus_result.htex" />
+				<Area>
+					<Anchor point="RIGHT" offset="0" />
+					<Anchor point="BOTTOM" offset="-64" />
+				</Area>
+				<Scripts>
+					<OnClick>
                         return function(self, button)
                             SetMinimapZoomLevel(GetMinimapZoomLevel() + 1);
                             Minimap_OnZoomChanged();
                         end
                     </OnClick>
-                </Scripts>
-            </Frame>
-
-            <Frame name="MinimapZoomOut" inherits="RoundIconButton">
-                <Property name="Icon" value="Interface/Icons/fg4_iconsBrown_minus_result.htex" />
-
-                <Area>
-                    <Anchor point="RIGHT" offset="-64" />
-                    <Anchor point="BOTTOM" offset="0" />
-                </Area>
-                
-                <Scripts>
-                    <OnClick>
+				</Scripts>
+			</Frame>
+			<Frame name="MinimapZoomOut" inherits="RoundIconButton">
+				<Property name="Icon" value="Interface/Icons/fg4_iconsBrown_minus_result.htex" />
+				<Area>
+					<Anchor point="RIGHT" offset="-64" />
+					<Anchor point="BOTTOM" offset="0" />
+				</Area>
+				<Scripts>
+					<OnClick>
                         return function(self, button)
                             SetMinimapZoomLevel(GetMinimapZoomLevel() - 1);
                             Minimap_OnZoomChanged();
                         end
                     </OnClick>
-                </Scripts>
-            </Frame>
-            
-            <Frame name="MinimapDayNight" inherits="RoundIconButton">
-                <Property name="Icon" />
-
-                <Area>
-                    <Anchor point="RIGHT" offset="0" />
-                    <Anchor point="TOP" offset="0" />
-                    <Size><AbsDimension x="96" y="96" /></Size>
-                </Area>
-            </Frame>
-            
-            <Frame name="MinimapTime" inherits="TextSmall">
-                <Property name="HorzAlign" value="CENTER" />
-
-                <Area>
-                    <Anchor point="H_CENTER" offset="0" />
-                    <Anchor point="BOTTOM" offset="8" />
-                    <Size x="128" y="64" />
-                </Area>
-
-                <Scripts>
-                    <OnUpdate>
+				</Scripts>
+			</Frame>
+			<Frame name="MinimapDayNight" inherits="RoundIconButton">
+				<Property name="Icon" />
+				<Area>
+					<Anchor point="RIGHT" offset="0" />
+					<Anchor point="TOP" offset="0" />
+					<Size>
+						<AbsDimension x="96" y="96" />
+					</Size>
+				</Area>
+			</Frame>
+		</Frame>
+		<Frame name="MinimapTime" inherits="TextSmall">
+			<Property name="Clickable" value="false" />
+			<Property name="VertAlign" value="CENTER" />
+			<Property name="TextColor" value="FFE2DCCD" />
+			<Property name="Font" value="SmallLabelFont" />
+			<Property name="HorzAlign" value="CENTER" />
+			<Area>
+				<Size>
+					<AbsDimension x="160" y="40" />
+				</Size>
+				<Anchor point="H_CENTER" offset="0" relativeTo="Minimap" relativePoint="H_CENTER" />
+				<Anchor point="TOP" offset="8" relativeTo="MinimapContent" relativePoint="BOTTOM" />
+			</Area>
+			<Scripts>
+				<OnUpdate>
                         return function(self, delta)
                             Minimap_UpdateTime();
                         end
                     </OnUpdate>
-                </Scripts>
-            </Frame>
-
-        </Frame>
+			</Scripts>
+		</Frame>
 	</Frame>
 </UiLayout>

@@ -89,8 +89,12 @@ end
 function Minimap_Toggle(self)
     if MinimapContent:IsVisible() then
         MinimapContent:Hide();
+        MinimapTime:Hide();
+        Minimap:SetHeight(56);
     else
         MinimapContent:Show();
+        MinimapTime:Show();
+        Minimap:SetHeight(512);
     end
 end
 

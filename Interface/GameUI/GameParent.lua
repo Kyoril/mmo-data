@@ -526,6 +526,9 @@ function SetLeftFrame(frame)
 		frame:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, GameParent, 0.0);
 		frame:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, GameParent, 300.0);
 		frame:Show();
+		if (GameParent.center) then
+			GameParent.center:SetAnchor(AnchorPoint.LEFT, AnchorPoint.RIGHT, frame, 32.0);
+		end
 	end
 end
 
@@ -540,7 +543,11 @@ function SetCenterFrame(frame, skipSetPoint)
 	if ( frame ) then
 		frame:Show();
 		if ( not skipSetPoint ) then
-            frame:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, GameParent, 960.0);
+            if (GameParent.left) then
+                frame:SetAnchor(AnchorPoint.LEFT, AnchorPoint.RIGHT, GameParent.left, 32.0);
+            else
+                frame:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, GameParent, 992.0);
+            end
             frame:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, GameParent, 300.0);
 		end
 	end
@@ -579,7 +586,7 @@ function MovePanelToCenter()
 	if ( GameParent.left ) then
 		SetCenterFrame(nil);
         
-        GameParent.left:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, GameParent, 960.0);
+        GameParent.left:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, GameParent, 992.0);
         GameParent.left:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, GameParent, 300.0);
         
 		GameParent.center = GameParent.left

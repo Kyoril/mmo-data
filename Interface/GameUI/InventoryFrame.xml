@@ -7,7 +7,7 @@
 		
 		<Visual>
 			<ImagerySection name="Background">
-				<BorderComponent texture="Interface/GameUI/fg4_borders_simple.htex" borderSize="250" />
+				<BorderComponent texture="Interface/GameUI/Alestia/WindowPanel.htex" borderSize="32" />
 			</ImagerySection>
 			<StateImagery name="Enabled">
 				<Layer>

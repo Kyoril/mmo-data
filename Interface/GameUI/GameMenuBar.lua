@@ -1,16 +1,35 @@
 
-MENUBAR_H_PADDING = 0.0
+MENUBAR_H_PADDING = 8.0
 MENUBAR_V_PADDING = 4.0
 
 local menuBarOffset = MENUBAR_H_PADDING + 0.0
 
--- The class xp bar stacks on top of the character xp bar. When the character bar is
--- hidden (max level), the class bar takes its place at the bottom edge instead.
+-- Labeled experience bars sit above the action slots. At max character level,
+-- the class bar occupies the lower position. Tooltips provide further details.
 function GameMenuBar_UpdateExperienceBarLayout()
+	local visibleBars = 0;
 	if (PlayerExperienceBar:IsVisible()) then
-		PlayerClassExperienceBar:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.BOTTOM, nil, -48);
+		visibleBars = visibleBars + 1;
+	end
+	if (PlayerClassExperienceBar:IsVisible()) then
+		visibleBars = visibleBars + 1;
+	end
+	GameMenuBar:SetHeight(156);
+	ExperienceDock:SetHeight(16 + visibleBars * 52);
+	if (visibleBars > 0) then
+		ExperienceDock:Show();
 	else
-		PlayerClassExperienceBar:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.BOTTOM, nil, 0);
+		ExperienceDock:Hide();
+	end
+	local ornamentHeight = 156;
+	AlestiaOakLeft:SetHeight(ornamentHeight);
+	AlestiaOakRight:SetHeight(ornamentHeight);
+	AlestiaOakLeft:SetWidth(ornamentHeight / 2);
+	AlestiaOakRight:SetWidth(ornamentHeight / 2);
+	if (PlayerExperienceBar:IsVisible()) then
+		PlayerClassExperienceBar:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.BOTTOM, ExperienceDock, -64);
+	else
+		PlayerClassExperienceBar:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.BOTTOM, ExperienceDock, -12);
 	end
 end
 
@@ -26,7 +45,7 @@ function GameMenuBar_OnPlayerXpChanged(self)
 		local percent = xp / nextLevelXp;
 
 		PlayerExperienceBar:SetProgress(percent);
-		PlayerExperienceBar:SetText(xp .. " / " .. nextLevelXp);
+		PlayerExperienceBar:SetText(string.format(Localize("HUD_EXPERIENCE_FORMAT"), Localize("XPBAR_TOOLTIP_TITLE"), xp, nextLevelXp));
 		PlayerExperienceBar:Show();
 	end
 
@@ -37,6 +56,7 @@ function GameMenuBar_OnClassXpChanged(self)
 	local player = GetUnit("player");
 	if (player == nil) then
 		PlayerClassExperienceBar:Hide();
+		GameMenuBar_UpdateExperienceBarLayout();
 		return;
 	end
 
@@ -50,7 +70,7 @@ function GameMenuBar_OnClassXpChanged(self)
 			-- just like the character xp bar does at max level.
 			if (xpToNextLevel > 0) then
 				PlayerClassExperienceBar:SetProgress(math.min(1.0, classXp / xpToNextLevel));
-				PlayerClassExperienceBar:SetText(classXp .. " / " .. xpToNextLevel);
+				PlayerClassExperienceBar:SetText(string.format(Localize("HUD_EXPERIENCE_FORMAT"), Localize("CLASSXPBAR_TOOLTIP_TITLE"), classXp, xpToNextLevel));
 				PlayerClassExperienceBar:Show();
 			else
 				PlayerClassExperienceBar:Hide();
@@ -62,6 +82,7 @@ function GameMenuBar_OnClassXpChanged(self)
 	end
 
 	PlayerClassExperienceBar:Hide();
+	GameMenuBar_UpdateExperienceBarLayout();
 end
 
 -- Only one handler can be registered per event and frame, so both bars share
@@ -207,10 +228,13 @@ function AddMenuBarButton(icon, callback, tooltipKey, bindingName)
 	menuBarOffset = menuBarOffset + button:GetWidth() + MENUBAR_H_PADDING;
 	
 	local childCount = MenuBarButtons:GetChildCount();
+	local menuWidth = childCount * (button:GetWidth() + MENUBAR_H_PADDING) + 24;
+	MenuBarButtons:SetWidth(menuWidth);
+	GameMenuBar:SetWidth(1488 + menuWidth);
 	for i = 0, childCount - 1 do
 		local child = MenuBarButtons:GetChild(i);
 		child:ClearAnchors();
-		child:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.BOTTOM, nil, 0);
-		child:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, (childCount - i - 1) * child:GetWidth() * -1);
+		child:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.BOTTOM, nil, -8);
+		child:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, -16 - (childCount - i - 1) * (child:GetWidth() + MENUBAR_H_PADDING));
 	end
 end

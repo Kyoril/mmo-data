@@ -39,16 +39,18 @@
 				</TextComponent>
 			</ImagerySection>
 			<ImagerySection name="NormalFrame">
-				<BorderComponent texture="Interface/BW_ButtonSmall_Up.htex" borderSize="30" tint="$QualityColor" />
+				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="$QualityColor" />
 			</ImagerySection>
 			<ImagerySection name="HoveredFrame">
-				<BorderComponent texture="Interface/BW_ButtonSmall_Over.htex" borderSize="30" tint="$QualityColor" />
+				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="$QualityColor" />
+			<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="30FFFFFF" />
 			</ImagerySection>
 			<ImagerySection name="PushedFrame">
-				<BorderComponent texture="Interface/BW_ButtonSmall_Down.htex" borderSize="30" tint="$QualityColor" />
+				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="$QualityColor" />
+			<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="50000000" />
 			</ImagerySection>
 			<ImagerySection name="DisabledFrame">
-				<BorderComponent texture="Interface/BW_ButtonSmall_Up.htex" borderSize="30" tint="$QualityColor" />
+				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="$QualityColor" />
 			</ImagerySection>
 			<StateImagery name="Normal">
 				<Layer>

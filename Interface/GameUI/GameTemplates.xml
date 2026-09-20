@@ -283,14 +283,15 @@
 		</Area>
 	</Frame>
 	
+	<Font name="AlestiaWindowTitleFont" file="Fonts/FRIZQT__.TTF" size="32" outline="0" shadowX="1.0" shadowY="1.0" />
 	<Frame name="TitleBar" renderer="DefaultRenderer">
-		<Property name="Font" value="DefaultHeader" />
+		<Property name="Font" value="AlestiaWindowTitleFont" />
 
 		<Visual>
 			<ImagerySection name="Background">
-				<BorderComponent texture="Interface/GameUI/fg4_borders_01_28_2_result.htex" borderSize="24" />
-				<TextComponent color="FFFFD100" horzAlign="CENTER">
-					<Area><Inset all="16" /></Area>
+				<!-- The outer window supplies the frame; the header stays unboxed. -->
+				<TextComponent color="FFF0E7D6" horzAlign="LEFT">
+					<Area><Inset left="16" right="96" top="8" bottom="8" /></Area>
 				</TextComponent>
 			</ImagerySection>
 			<StateImagery name="Enabled">
@@ -308,11 +309,17 @@
 			<Property name="Icon" value="Interface/Icons/fg4_iconsGold_close_result.htex" />
 
 			<Area>
-				<Anchor point="TOP" offset="0" />
+				<Anchor point="TOP" offset="8" />
 				<Anchor point="RIGHT" offset="0" />
-				<Anchor point="BOTTOM" offset="0" />
-				<Size><AbsDimension x="90" y="90" /></Size>
+				<Anchor point="BOTTOM" offset="-18" />
+				<Size><AbsDimension x="64" y="64" /></Size>
 			</Area>
+		</Frame>
+		<Frame name="TitleTrim" renderer="DefaultRenderer">
+			<Property name="Clickable" value="false" />
+			<Property name="Enabled" value="false" />
+			<Area><Size><AbsDimension y="2" /></Size><Anchor point="LEFT" offset="8" /><Anchor point="RIGHT" offset="-8" /><Anchor point="BOTTOM" offset="-4" /></Area>
+			<Visual><ImagerySection name="Line"><ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="806F5B3C" /></ImagerySection><StateImagery name="Enabled"><Layer><Section section="Line" /></Layer></StateImagery></Visual>
 		</Frame>
 	</Frame>
 
@@ -425,7 +432,7 @@
 	<Frame name="SidePanelTemplate" renderer="DefaultRenderer">
 		<Visual>
 			<ImagerySection name="Background">
-				<BorderComponent texture="Interface/GameUI/fg4_borders_simple.htex" borderSize="250" />
+				<BorderComponent texture="Interface/GameUI/Alestia/WindowPanel.htex" borderSize="32" />
 			</ImagerySection>
 			<StateImagery name="Enabled">
 				<Layer>
@@ -462,17 +469,15 @@
 	<Frame name="ThumbButtonTemplate" type="Thumb" renderer="ButtonRenderer">
 		<Visual>
 			<ImagerySection name="NormalFrame">
-				<BorderComponent texture="Interface/GlueUI/ButtonNormal.htex" borderSize="30" />
+				<BorderComponent texture="Interface/GameUI/fg4_borders_01_28_2_result.htex" borderSize="8" tint="FFAA8550"><Area><Inset left="22" right="22" top="4" bottom="4" /></Area></BorderComponent>
 			</ImagerySection>
 			<ImagerySection name="HoveredFrame">
-				<BorderComponent texture="Interface/GlueUI/ButtonHovered.htex" borderSize="30" />
+				<BorderComponent texture="Interface/GameUI/fg4_borders_01_28_2_result.htex" borderSize="8" tint="FFE0BB78"><Area><Inset left="22" right="22" top="4" bottom="4" /></Area></BorderComponent>
 			</ImagerySection>
 			<ImagerySection name="PushedFrame">
-				<BorderComponent texture="Interface/GlueUI/ButtonPushed.htex" borderSize="30" />
+				<BorderComponent texture="Interface/GameUI/fg4_borders_01_28_2_result.htex" borderSize="8" tint="FF80623D"><Area><Inset left="22" right="22" top="4" bottom="4" /></Area></BorderComponent>
 			</ImagerySection>
-			<ImagerySection name="DisabledFrame">
-				<BorderComponent texture="Interface/GlueUI/ButtonDisabled.htex" borderSize="30" />
-			</ImagerySection>
+			<ImagerySection name="DisabledFrame"><!-- No draggable thumb when scrolling is unavailable. --></ImagerySection>
 			<StateImagery name="Normal">
 				<Layer>
 					<Section section="NormalFrame" />
@@ -508,7 +513,7 @@
 
 		<Visual>
 			<ImagerySection name="Border">
-				<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" />
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="80000000"><Area><Inset left="40" right="40" top="80" bottom="80" /></Area></ImageComponent>
 			</ImagerySection>
 			<StateImagery name="Enabled">
 				<Layer>
@@ -529,8 +534,9 @@
 			</Size>
 		</Area>
 
-		<Frame name="ScrollUpButton" inherits="GlueButton">
+		<Frame name="ScrollUpButton" type="Button" renderer="ButtonRenderer">
 			<Property name="Icon" value="Interface/Icons/IconGold_ArrowUp.htex" />
+			<Visual><ImagerySection name="ArrowNormal"><ImageComponent tint="FFB3A184"><Area><Inset all="24" /></Area><PropertyValue property="Icon" /></ImageComponent></ImagerySection><StateImagery name="Normal"><Layer><Section section="ArrowNormal" /></Layer></StateImagery><ImagerySection name="ArrowHovered"><ImageComponent tint="FFFFDA91"><Area><Inset all="24" /></Area><PropertyValue property="Icon" /></ImageComponent></ImagerySection><StateImagery name="Hovered"><Layer><Section section="ArrowHovered" /></Layer></StateImagery><ImagerySection name="ArrowPushed"><ImageComponent tint="FF8A724F"><Area><Inset all="24" /></Area><PropertyValue property="Icon" /></ImageComponent></ImagerySection><StateImagery name="Pushed"><Layer><Section section="ArrowPushed" /></Layer></StateImagery><ImagerySection name="ArrowDisabled"><ImageComponent tint="FF393939"><Area><Inset all="24" /></Area><PropertyValue property="Icon" /></ImageComponent></ImagerySection><StateImagery name="Disabled"><Layer><Section section="ArrowDisabled" /></Layer></StateImagery></Visual>
 			<Area>
 				<Anchor point="TOP" offset="8" />
 				<Anchor point="LEFT" offset="8" />
@@ -540,8 +546,9 @@
 			</Area>
 		</Frame>
 		
-		<Frame name="ScrollDownButton" inherits="GlueButton">
+		<Frame name="ScrollDownButton" type="Button" renderer="ButtonRenderer">
 			<Property name="Icon" value="Interface/Icons/IconGold_ArrowDown.htex" />
+			<Visual><ImagerySection name="ArrowNormal"><ImageComponent tint="FFB3A184"><Area><Inset all="24" /></Area><PropertyValue property="Icon" /></ImageComponent></ImagerySection><StateImagery name="Normal"><Layer><Section section="ArrowNormal" /></Layer></StateImagery><ImagerySection name="ArrowHovered"><ImageComponent tint="FFFFDA91"><Area><Inset all="24" /></Area><PropertyValue property="Icon" /></ImageComponent></ImagerySection><StateImagery name="Hovered"><Layer><Section section="ArrowHovered" /></Layer></StateImagery><ImagerySection name="ArrowPushed"><ImageComponent tint="FF8A724F"><Area><Inset all="24" /></Area><PropertyValue property="Icon" /></ImageComponent></ImagerySection><StateImagery name="Pushed"><Layer><Section section="ArrowPushed" /></Layer></StateImagery><ImagerySection name="ArrowDisabled"><ImageComponent tint="FF393939"><Area><Inset all="24" /></Area><PropertyValue property="Icon" /></ImageComponent></ImagerySection><StateImagery name="Disabled"><Layer><Section section="ArrowDisabled" /></Layer></StateImagery></Visual>
 			<Area>
 				<Anchor point="BOTTOM" offset="-8" />
 				<Anchor point="LEFT" offset="8" />
@@ -561,6 +568,7 @@
 			</Area>
 		</Frame>
 	</Frame>
+
 
 
 </UiLayout>
