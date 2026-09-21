@@ -835,4 +835,8 @@ strings =
 	(key = "GUILD_FOOTER_HINT", string = "Sélectionnez un membre pour le gérer ou le contacter.")
 	(key = "GUILD_INVITE_PROMPT", string = "Nom du joueur à inviter dans votre guilde :")
 	(key = "GUILD_REMOVE_CONFIRM", string = "Retirer %s de la guilde ?")
+	(key = "GUILD_MOTD_EDIT", string = "Modifier")
+	(key = "GUILD_MOTD_SAVE", string = "Enregistrer")
+	(key = "GUILD_MOTD_EDIT_PROMPT", string = "Modifiez le message du jour de la guilde.")
+	(key = "GUILD_MOTD_TOO_LONG", string = "Ce message est trop long. Raccourcissez-le et réessayez.")
 }

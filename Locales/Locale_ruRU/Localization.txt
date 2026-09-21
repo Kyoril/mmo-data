@@ -746,4 +746,8 @@ strings =
 	(key = "GUILD_FOOTER_HINT", string = "Выберите участника для общения или управления.")
 	(key = "GUILD_INVITE_PROMPT", string = "Введите имя игрока для приглашения в гильдию.")
 	(key = "GUILD_REMOVE_CONFIRM", string = "Исключить %s из гильдии?")
+	(key = "GUILD_MOTD_EDIT", string = "Изменить")
+	(key = "GUILD_MOTD_SAVE", string = "Сохранить")
+	(key = "GUILD_MOTD_EDIT_PROMPT", string = "Измените сообщение дня гильдии.")
+	(key = "GUILD_MOTD_TOO_LONG", string = "Сообщение слишком длинное. Сократите его и попробуйте снова.")
 }

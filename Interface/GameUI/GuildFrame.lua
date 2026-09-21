@@ -96,6 +96,7 @@ function GuildFrame_UpdateActionButtons()
 	local player = GetUnit("player");
 	local social = member ~= nil and member.online and player ~= nil and member.name ~= player:GetName();
 	GuildInviteButton:SetEnabled(IsInGuild() and CanGuildInvite());
+	GuildEditMOTDButton:SetEnabled(IsInGuild() and CanGuildSetMOTD());
 	UserPromoteButton:SetEnabled(GuildCanManage(member, "promote"));
 	UserDemoteButton:SetEnabled(GuildCanManage(member, "demote"));
 	UserKickButton:SetEnabled(GuildCanManage(member, "remove"));
@@ -208,16 +209,35 @@ function GuildFrame_GroupClicked()
 end
 function GuildFrame_WhisperClicked()
 	local member = GuildFindMember(guildSelectedName);
-	if member and member.online then
+	local player = GetUnit("player");
+	if IsInGuild() and member and member.online and player and member.name ~= player:GetName() then
 		ChatFrame_WhisperTarget = member.name;
 		ChatType = "WHISPER";
 		ChatEdit_UpdateHeader();
 		if not ChatInputFrame:IsVisible() then ChatFrame_OpenChat(); end
 	end
 end
+function GuildFrame_EditMOTDClicked()
+	if not IsInGuild() or not CanGuildSetMOTD() then return; end
+	local dialog = StaticDialog_Show("GUILD_EDIT_MOTD", Localize("GUILD_MOTD_EDIT_PROMPT"));
+	if dialog then dialog.editBox:SetText(GetGuildMOTD()); end
+end
+
+function GuildFrame_SaveMOTD()
+	if not GuildFrame:IsVisible() or not IsInGuild() or not CanGuildSetMOTD() then return; end
+	local message = StaticDialog.editBox:GetText();
+	-- The existing guild command uses an 8-bit UTF-8 byte length.
+	if #message > 255 then
+		local dialog = StaticDialog_Show("GUILD_EDIT_MOTD", Localize("GUILD_MOTD_TOO_LONG"));
+		if dialog then dialog.editBox:SetText(message); end
+		return;
+	end
+	GuildSetMOTD(message);
+end
+
 function GuildFrame_OnHide(self)
 	guildPendingRemoval = nil;
-	if StaticDialog and StaticDialog:IsVisible() and (StaticDialog.which == "GUILD_SEND_INVITE" or StaticDialog.which == "GUILD_REMOVE_MEMBER") then
+	if StaticDialog and StaticDialog:IsVisible() and (StaticDialog.which == "GUILD_SEND_INVITE" or StaticDialog.which == "GUILD_REMOVE_MEMBER" or StaticDialog.which == "GUILD_EDIT_MOTD") then
 		StaticDialog_Hide();
 	end
 end

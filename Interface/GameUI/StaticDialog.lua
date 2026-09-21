@@ -154,6 +154,16 @@ StaticDialogs["GUILD_REMOVE_MEMBER"] = {
 	OnAccept = function() GuildFrame_ConfirmRemove(); end
 };
 
+StaticDialogs["GUILD_EDIT_MOTD"] = {
+	text = "%s",
+	button1 = Localize("GUILD_MOTD_SAVE"),
+	button2 = Localize("CANCEL"),
+	hasEditBox = true,
+	timeout = 0,
+	exclusive = false,
+	OnAccept = function() GuildFrame_SaveMOTD(); end
+};
+
 function StaticDialog_OnLoad(self)
 
 end

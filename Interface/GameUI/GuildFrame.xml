@@ -57,7 +57,7 @@
 			<Property name="Clickable" value="false" />
 			<Area>
 				<Size>
-					<AbsDimension x="290" y="32" />
+					<AbsDimension x="224" y="32" />
 				</Size>
 				<Anchor point="LEFT" offset="16" />
 				<Anchor point="V_CENTER" offset="0" />
@@ -69,9 +69,9 @@
 			<Property name="Clickable" value="false" />
 			<Area>
 				<Size>
-					<AbsDimension x="60" y="32" />
+					<AbsDimension x="84" y="32" />
 				</Size>
-				<Anchor point="LEFT" offset="322" />
+				<Anchor point="LEFT" offset="256" />
 				<Anchor point="V_CENTER" offset="0" />
 			</Area>
 		</Frame>
@@ -81,9 +81,9 @@
 			<Property name="Clickable" value="false" />
 			<Area>
 				<Size>
-					<AbsDimension x="200" y="32" />
+					<AbsDimension x="260" y="32" />
 				</Size>
-				<Anchor point="LEFT" offset="400" />
+				<Anchor point="LEFT" offset="350" />
 				<Anchor point="V_CENTER" offset="0" />
 			</Area>
 		</Frame>
@@ -110,7 +110,7 @@
 		<Frame name="GuildInfoFrame" renderer="DefaultRenderer">
 			<Area>
 				<Size>
-					<AbsDimension y="168" />
+					<AbsDimension y="152" />
 				</Size>
 				<Anchor point="LEFT" offset="24" />
 				<Anchor point="RIGHT" offset="-24" />
@@ -137,7 +137,7 @@
 						<AbsDimension y="32" />
 					</Size>
 					<Anchor point="LEFT" offset="20" />
-					<Anchor point="RIGHT" offset="-20" />
+					<Anchor point="RIGHT" offset="-260" />
 					<Anchor point="TOP" offset="12" />
 				</Area>
 			</Frame>
@@ -148,11 +148,11 @@
 				<Area>
 					<Anchor point="LEFT" offset="20" />
 					<Anchor point="RIGHT" offset="-20" />
-					<Anchor point="TOP" offset="52" />
+					<Anchor point="TOP" offset="64" />
 					<Anchor point="BOTTOM" offset="-12" />
 				</Area>
 			</Frame>
-		</Frame>
+		<Frame name="GuildEditMOTDButton" inherits="GlueButton"><Property name="Text" value="GUILD_MOTD_EDIT" /><Area><Size><AbsDimension x="224" y="52" /></Size><Anchor point="RIGHT" offset="-16" /><Anchor point="TOP" offset="8" /></Area><Scripts><OnClick>return function(self) GuildFrame_EditMOTDClicked(); end</OnClick></Scripts></Frame></Frame>
 		<Frame name="GuildRosterSummary" inherits="TextSmall">
 			<Property name="Font" value="GuildTextFont" />
 			<Property name="TextColor" value="FFD6CDBA" />
@@ -192,7 +192,7 @@
 				<Property name="Font" value="GuildTextFont" />
 				<Area>
 					<Size>
-						<AbsDimension x="290" y="36" />
+						<AbsDimension x="224" y="36" />
 					</Size>
 					<Anchor point="LEFT" offset="28" />
 					<Anchor point="TOP" offset="12" />
@@ -226,9 +226,9 @@
 				<Property name="Font" value="GuildTextFont" />
 				<Area>
 					<Size>
-						<AbsDimension x="60" y="36" />
+						<AbsDimension x="84" y="36" />
 					</Size>
-					<Anchor point="LEFT" offset="334" />
+					<Anchor point="LEFT" offset="268" />
 					<Anchor point="TOP" offset="12" />
 				</Area>
 				<Visual>
@@ -260,9 +260,9 @@
 				<Property name="Font" value="GuildTextFont" />
 				<Area>
 					<Size>
-						<AbsDimension x="200" y="36" />
+						<AbsDimension x="260" y="36" />
 					</Size>
-					<Anchor point="LEFT" offset="412" />
+					<Anchor point="LEFT" offset="362" />
 					<Anchor point="TOP" offset="12" />
 				</Area>
 				<Visual>
