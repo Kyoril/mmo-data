@@ -17,6 +17,7 @@
 		</Frame>
 
 		<Frame name="ErrorFrame" frameLevel="1000">
+			<Property name="MousePassThrough" value="true" />
 			<Area>
 				<Anchor point="H_CENTER" />
 				<Anchor point="V_CENTER" offset="-600" />

@@ -1,220 +1,244 @@
+-- Trainer rows store source indices and spell IDs independently of visible slots.
+local trainerOffset = 0;
+local trainerHideLearned = true;
+local trainerHideUnavailable = false;
+local trainerUpdating = false;
+local trainerRows = {};
+local trainerVisibleRows = 5;
+
+local function TrainerSpellState(index)
+	local id, name, icon, cost, known = GetTrainerSpellInfo(index);
+	local requiredLevel = GetTrainerSpellReqLevel(index) or 0;
+	local player = GetUnit("player");
+	local level = 0;
+	if player then
+		level = IsTrainerClassTrainer() and player:GetActiveClassLevel() or player:GetLevel();
+	end
+	local state = "TRAINER_STATE_AVAILABLE";
+	if known then
+		state = "TRAINER_STATE_LEARNED";
+	elseif not player or level < requiredLevel then
+		state = "TRAINER_STATE_LOCKED";
+	elseif UnitMoney("player") < cost then
+		state = "TRAINER_STATE_MONEY";
+	end
+	return { index = index, id = id, name = name, icon = icon, cost = cost,
+		known = known, requiredLevel = requiredLevel, state = state,
+		available = id > 0 and state == "TRAINER_STATE_AVAILABLE" };
+end
+
+function TrainerFrame_CanBuySpell(index)
+	return index ~= nil and TrainerSpellState(index).available;
+end
+
+local function TrainerUpdatePreview(entry)
+	TrainerBuyButton:Disable();
+	TrainerSpellDescContent:Hide();
+	TrainerSelectionHint:Show();
+	TrainerFrame.selectedSpellIndex = nil;
+	if not entry then
+		TrainerFrame.selectedSpellId = nil;
+		return;
+	end
+	TrainerFrame.selectedSpellId = entry.id;
+	TrainerFrame.selectedSpellIndex = entry.index;
+	TrainerSpellPreviewButton:SetProperty("Icon", entry.icon);
+	TrainerSpellPreviewName:SetText(entry.name);
+	TrainerSpellPreviewButton.userData = gameData.spells:GetById(entry.id);
+	TrainerSpellDescriptionText:SetText(GetSpellDescription(TrainerSpellPreviewButton.userData));
+	RefreshMoneyFrame("TrainerSpellCostMoney", entry.cost, false, false, true);
+	TrainerPreviewState:SetText(Localize(entry.state));
+	TrainerPreviewState:SetProperty("TextColor", entry.available and "FF86DE56" or (entry.known and "FFAAA396" or "FFFF8770"));
+	TrainerSpellDescContent:Show();
+	TrainerSelectionHint:Hide();
+	TrainerBuyButton:SetEnabled(entry.available);
+end
+
+function TrainerSpellButton_OnClick(row)
+	local entry = row.userData;
+	if not entry then
+		return;
+	end
+	TrainerFrame.selectedSpellId = entry.id;
+	TrainerList_Update();
+end
+
+function TrainerBuyButton_OnClick(self)
+	-- Resolve again at click time: network updates may have reordered the list.
+	for index = 0, GetNumTrainerSpells() - 1 do
+		local entry = TrainerSpellState(index);
+		if entry.id == TrainerFrame.selectedSpellId and entry.available then
+			BuyTrainerSpell(index);
+			return;
+		end
+	end
+end
+
+function TrainerList_Update(self)
+	if trainerUpdating then
+		return;
+	end
+	trainerUpdating = true;
+	trainerRows = {};
+	for index = 0, GetNumTrainerSpells() - 1 do
+		local entry = TrainerSpellState(index);
+		if entry.id > 0 and not (trainerHideLearned and entry.known)
+			and not (trainerHideUnavailable and not entry.known and not entry.available) then
+			table.insert(trainerRows, entry);
+		end
+	end
+	local maximum = math.max(0, #trainerRows - trainerVisibleRows);
+	trainerOffset = math.max(0, math.min(trainerOffset, maximum));
+	TrainerSpellListScrollBar:SetMaximum(maximum);
+	TrainerSpellListScrollBar:SetValue(trainerOffset);
+	TrainerSpellListScrollBar:SetEnabled(maximum > 0);
+	if maximum > 0 then
+		TrainerSpellListScrollBar:Show();
+	else
+		TrainerSpellListScrollBar:Hide();
+	end
+	TrainerSpellListContent:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, TrainerSpellList, maximum > 0 and -96 or -12);
+	TrainerListSummary:SetText(string.format(Localize("TRAINER_FILTER_COUNT"), #trainerRows, GetNumTrainerSpells()));
+	if #trainerRows == 0 then
+		TrainerEmptyLabel:Show();
+	else
+		TrainerEmptyLabel:Hide();
+	end
+	local selected;
+	for _, entry in ipairs(trainerRows) do
+		if entry.id == TrainerFrame.selectedSpellId then
+			selected = entry;
+			break;
+		end
+	end
+	-- Never silently substitute a different spell after a purchase or filter change.
+	TrainerUpdatePreview(selected);
+	for slot = 1, trainerVisibleRows do
+		local row = _G["TrainerSpellButton" .. slot];
+		local entry = trainerRows[trainerOffset + slot];
+		row.userData = entry;
+		row:SetChecked(entry ~= nil and entry.id == TrainerFrame.selectedSpellId);
+		if entry then
+			local color = entry.available and "FFF3CF50" or (entry.known and "FFAAA396" or "FFD5C5B6");
+			_G["TrainerRowIcon" .. slot]:SetProperty("Icon", entry.icon);
+			_G["TrainerRowIcon" .. slot]:SetProperty("IconTint", entry.available and "FFFFFFFF" or "FF888888");
+			_G["TrainerRowName" .. slot]:SetText(entry.name);
+			_G["TrainerRowName" .. slot]:SetProperty("TextColor", color);
+			_G["TrainerRowLevel" .. slot]:SetText(string.format(Localize(IsTrainerClassTrainer() and "TRAINER_CLASS_LEVEL" or "TRAINER_REQUIRED_LEVEL"), entry.requiredLevel));
+			_G["TrainerRowState" .. slot]:SetText(Localize(entry.state));
+			_G["TrainerRowState" .. slot]:SetProperty("TextColor", entry.available and "FF86DE56" or (entry.known and "FFAAA396" or "FFFF8770"));
+			RefreshMoneyFrame("TrainerRowMoney" .. slot, entry.cost, false, false, true);
+			_G["TrainerRowState" .. slot]:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.LEFT, _G["TrainerRowMoney" .. slot], -12);
+			row:Show();
+		else
+			row:Hide();
+		end
+	end
+	RefreshMoneyFrame("TrainerPlayerMoneyFrame", UnitMoney("player"), false, false, true);
+	trainerUpdating = false;
+end
+
+function TrainerFilters_Changed()
+	trainerHideLearned = TrainerHideLearned:IsChecked();
+	trainerHideUnavailable = TrainerHideUnavailable:IsChecked();
+	trainerOffset = 0;
+	TrainerList_Update();
+end
 
 function TrainerFrame_OnTrainerShow(self)
-	-- Show trainer entry title in frame header (per CONTEXT.md locked decision: TrainerType enum + title field)
-	local trainerTitle = GetTrainerTitle();
-	if trainerTitle and trainerTitle ~= "" then
-		self:GetChild(0):SetText(trainerTitle);
-	end
+	trainerOffset = 0;
+	TrainerFrame.selectedSpellId = nil;
+	local target = GetUnit("target");
+	local title = GetTrainerTitle();
+	self:GetChild(0):SetText(target and target:GetName() or title);
 	ShowUIPanel(self);
+	TrainerList_Update();
 end
 
 function TrainerFrame_OnTrainerUpdate(self)
-	TrainerList_Update(TrainerFrame);
+	TrainerList_Update();
 end
 
--- Error codes fired with TRAINER_BUY_ERROR (see TrainerClient::OnTrainerBuyError / BuySpell).
 local TRAINER_BUY_ERROR_MESSAGES = {
 	[0] = "TRAINER_ERROR_LEVEL_TOO_LOW",
 	[1] = "TRAINER_ERROR_NOT_ENOUGH_MONEY",
 	[2] = "TRAINER_ERROR_WRONG_CLASS"
 };
-
-function TrainerFrame_OnTrainerBuyError(self, errorCode)
-	local messageKey = TRAINER_BUY_ERROR_MESSAGES[errorCode];
-	if messageKey then
-		UIErrorFrame_OnErrorMessage(ErrorFrame, Localize(messageKey));
+function TrainerFrame_OnTrainerBuyError(self, code)
+	if TRAINER_BUY_ERROR_MESSAGES[code] then
+		UIErrorFrame_OnErrorMessage(ErrorFrame, Localize(TRAINER_BUY_ERROR_MESSAGES[code]));
 	end
 end
-
 function TrainerFrame_OnTrainerClosed(self)
-    HideUIPanel(self);
-end
-
-function TrainerBuyButton_OnClick(self)
-    if TrainerFrame.selectedSpellIndex then
-        BuyTrainerSpell(TrainerFrame.selectedSpellIndex);
-    end
-end
-
-function TrainerFrame_CanBuySpell(trainerSpellIndex)
-    if not trainerSpellIndex then
-        return false;
-    end
-
-    -- Get trainer spell cost
-    local spellId, spellName, spellIcon, cost, isKnown = GetTrainerSpellInfo(trainerSpellIndex);
-    if spellId < 0 then
-        -- Can't buy because spell doesn't exist
-        return false;
-    end
-
-    if isKnown then
-        -- Can't buy because already known
-        return false;
-    end
-
-    local money = UnitMoney("player");
-    if money < cost then
-        -- Can't buy because not enough money
-        return false;
-    end
-
-    -- Level check against the trainer entry's own required level. Class trainers gate by the
-    -- player's CLASS level (a fresh class must be leveled up first); other trainer types use
-    -- the character level.
-    local player = GetUnit("player");
-    local reqLevel = GetTrainerSpellReqLevel(trainerSpellIndex);
-    if reqLevel and reqLevel > 0 then
-        local effectiveLevel;
-        if IsTrainerClassTrainer() then
-            effectiveLevel = player:GetActiveClassLevel();
-        else
-            effectiveLevel = player:GetLevel();
-        end
-
-        if effectiveLevel < reqLevel then
-            -- Can't buy because not high enough (class) level
-            return false;
-        end
-    end
-
-    return true;
-end
-
-function TrainerSpellButton_OnClick(item)
-	-- For each button in characterButtons, call SetChecked(false)
-    local maxVisibleItems = TrainerSpellListContent:GetChildCount();
-    for i = 1, maxVisibleItems do
-		TrainerSpellListContent:GetChild(i - 1):SetChecked(false);
-	end
-
-    -- Ensure list item is checked
-	item:SetChecked(true);
-
-    local spellId, spellName, spellIcon, cost = GetTrainerSpellInfo(item.id - 1);
-    if spellId > 0 then
-        TrainerSpellPreviewButton:SetProperty("Icon", spellIcon);
-        TrainerSpellPreviewName:SetText(spellName);
-        TrainerSpellPreviewButton.userData = gameData.spells:GetById(spellId);
-        TrainerSpellDescriptionText:SetText(GetSpellDescription(TrainerSpellPreviewButton.userData));
-        RefreshMoneyFrame("TrainerSpellCostMoney", cost, false, false, true);
-
-        TrainerFrame.selectedSpellIndex = item.id - 1;
-        TrainerSpellDescContent:Show();
-    else
-        TrainerFrame.selectedSpellIndex = nil;
-        TrainerSpellDescContent:Hide();
-    end
-    
-    -- TODO: Apply scroll offset to item id
-    if TrainerFrame_CanBuySpell(item.id - 1) then
-        TrainerBuyButton:Enable();
-    else
-        TrainerBuyButton:Disable();
-    end
+	TrainerFrame.selectedSpellId = nil;
+	TrainerFrame.selectedSpellIndex = nil;
+	HideUIPanel(self);
 end
 
 function TrainerFrame_OnLoad(self)
-    -- Initialize side panel functionality first, like the close button
-    SidePanel_OnLoad(self);
-
-    TrainerSpellCostLabel:SetWidth(TrainerSpellCostLabel:GetTextWidth() + 16);
-    TrainerSpellPreviewButton:SetOnEnterHandler(function(button)
-        GameTooltip:ClearAnchors();
-        GameTooltip:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, button, 0);
-        GameTooltip:SetAnchor(AnchorPoint.LEFT, AnchorPoint.RIGHT, button, 16);
-        GameTooltip_SetSpell(button.userData);
-        GameTooltip:Show();
-    end);
-    TrainerSpellPreviewButton:SetOnLeaveHandler(function(button)
-        GameTooltip:Hide();
-    end);
-
-    -- Register for trainer events
-    self:RegisterEvent("TRAINER_SHOW", TrainerFrame_OnTrainerShow);
-    self:RegisterEvent("TRAINER_UPDATE", TrainerFrame_OnTrainerUpdate);
-    self:RegisterEvent("TRAINER_CLOSED", TrainerFrame_OnTrainerClosed);
-    self:RegisterEvent("TRAINER_BUY_ERROR", TrainerFrame_OnTrainerBuyError);
-    self:RegisterEvent("MONEY_CHANGED", TrainerList_Update);
-    self:RegisterEvent("SPELL_LEARNED", TrainerList_Update);
-    self:RegisterEvent("PLAYER_LEVEL_CHANGED", TrainerList_Update);
-    -- Class level-ups change buyability at class trainers while the window is open.
-    self:RegisterEvent("PLAYER_KNOWN_CLASSES_CHANGED", TrainerList_Update);
+	SidePanel_OnLoad(self);
+	TrainerSpellCostLabel:SetWidth(TrainerSpellCostLabel:GetTextWidth() + 8);
+	TrainerHideLearned:SetChecked(true);
+	TrainerHideUnavailable:SetChecked(false);
+	TrainerHideLearned:SetClickedHandler(TrainerFilters_Changed);
+	TrainerHideUnavailable:SetClickedHandler(TrainerFilters_Changed);
+	local scroll = TrainerSpellListScrollBar;
+	scroll:SetMinimum(0);
+	scroll:SetMaximum(0);
+	scroll:SetStep(1);
+	scroll:SetValue(0);
+	scroll:SetOnValueChangedHandler(function(self, value)
+		if not trainerUpdating then
+			trainerOffset = math.floor(value + 0.5);
+			TrainerList_Update();
+		end
+	end);
+	TrainerSpellList:SetOnMouseWheelHandler(function(self, delta)
+		if scroll:IsEnabled(true) then
+			scroll:SetValue(scroll:GetValue() - delta);
+		end
+	end);
+	TrainerSpellPreviewButton:SetOnEnterHandler(function(button)
+		if button.userData then
+			GameTooltip:ClearAnchors();
+			GameTooltip:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, button, 0);
+			GameTooltip:SetAnchor(AnchorPoint.LEFT, AnchorPoint.RIGHT, button, 16);
+			GameTooltip_SetSpell(button.userData);
+			GameTooltip:Show();
+		end
+	end);
+	TrainerSpellPreviewButton:SetOnLeaveHandler(function() GameTooltip:Hide(); end);
+	-- Forward child clicks and hover to the selectable row, including price coins.
+	local function WireRowChild(child, row)
+		child:SetProperty("Clickable", "false");
+		child:SetOnEnterHandler(function() row:SetButtonState(ButtonState.HOVERED); end);
+		child:SetOnLeaveHandler(function() row:SetButtonState(ButtonState.NORMAL); end);
+		for i = 0, child:GetChildCount() - 1 do
+			WireRowChild(child:GetChild(i), row);
+		end
+	end
+	for slot = 1, trainerVisibleRows do
+		local row = _G["TrainerSpellButton" .. slot];
+		row:SetClickedHandler(TrainerSpellButton_OnClick);
+		for i = 0, row:GetChildCount() - 1 do
+			WireRowChild(row:GetChild(i), row);
+		end
+	end
+	self:RegisterEvent("TRAINER_SHOW", TrainerFrame_OnTrainerShow);
+	self:RegisterEvent("TRAINER_UPDATE", TrainerFrame_OnTrainerUpdate);
+	self:RegisterEvent("TRAINER_CLOSED", TrainerFrame_OnTrainerClosed);
+	self:RegisterEvent("TRAINER_BUY_ERROR", TrainerFrame_OnTrainerBuyError);
+	for _, event in ipairs({"MONEY_CHANGED", "SPELL_LEARNED", "PLAYER_LEVEL_CHANGED", "PLAYER_KNOWN_CLASSES_CHANGED"}) do
+		self:RegisterEvent(event, TrainerList_Update);
+	end
 end
-
-function TrainerList_Update(self)
-    local target = GetUnit("target");
-    if target then
-        self:GetChild(0):SetText(target:GetName());
-    end
-
-    -- Reset preview
-    TrainerSpellDescContent:Hide();
-    TrainerBuyButton:Disable();
-    TrainerFrame.selectedSpellId = nil;
-
-    local numTrainerSpells = GetNumTrainerSpells();
-
-    -- Load vendor spells
-    local maxVisibleItems = TrainerSpellListContent:GetChildCount();
-    for i = 1, maxVisibleItems do
-        local item = TrainerSpellListContent:GetChild(i - 1);
-        if not item then
-            break;
-        end
-
-        if i <= numTrainerSpells then
-            local spellId, spellName, spellIcon, cost, is_known = GetTrainerSpellInfo(i - 1);
-            item:SetText(spellName);
-
-            if is_known then
-                item:SetProperty("TextColorNormal", "FF999999");
-                item:SetProperty("TextColorHovered", "FFFFFFFF");
-                item:SetProperty("TextColorNormalChecked", "FF999999");
-                item:SetProperty("TextColorHoveredChecked", "FF999999");
-                item:SetProperty("TextColorPushedChecked", "FF999999");
-                item:SetProperty("BackgroundColorNormalChecked", "888C8C8C");
-                item:SetProperty("BackgroundColorHovered", "888C8C8C");
-            else
-                -- Check if usable
-                local is_usable = TrainerFrame_CanBuySpell(i - 1);
-                if is_usable then
-                    item:SetProperty("TextColorNormal", "FF00FF00");
-                    item:SetProperty("TextColorHovered", "FFFFFFFF");
-                    item:SetProperty("TextColorNormalChecked", "FF00FF00");
-                    item:SetProperty("TextColorHoveredChecked", "FFFFFFFF");
-                    item:SetProperty("TextColorPushedChecked", "FF3F3F3F");
-                    item:SetProperty("BackgroundColorNormalChecked", "FF033F08");
-                    item:SetProperty("BackgroundColorHovered", "FF033F08");
-                else
-                    item:SetProperty("TextColorNormal", "FFFF0000");
-                    item:SetProperty("TextColorHovered", "FFFFFFFF");
-                    item:SetProperty("TextColorNormalChecked", "FFFF0000");
-                    item:SetProperty("TextColorHoveredChecked", "FFFFFFFF");
-                    item:SetProperty("TextColorPushedChecked", "FF3F3F3F");
-                    item:SetProperty("BackgroundColorNormalChecked", "FF8C0A0A");
-                    item:SetProperty("BackgroundColorHovered", "FF8C0A0A");
-                end
-            end
-
-            item:Show();
-        else
-            item:Hide();
-        end
-    end
-
-    local money = UnitMoney("player");
-    RefreshMoneyFrame("TrainerPlayerMoneyFrame", money, false, false, true);
-end
-
 function TrainerFrame_OnShow(self)
-    TrainerList_Update(self);
+	TrainerList_Update();
 end
-
 function TrainerFrame_Toggle()
-    if TrainerFrame:IsVisible() then
-        HideUIPanel(TrainerFrame);
-    else
-        ShowUIPanel(TrainerFrame);
-    end
+	if TrainerFrame:IsVisible() then
+		HideUIPanel(TrainerFrame);
+	else
+		ShowUIPanel(TrainerFrame);
+	end
 end

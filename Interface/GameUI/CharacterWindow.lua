@@ -18,17 +18,10 @@ function CharacterWindow_OnAttributeChanged(self)
     CharacterWindow_RefreshStats(self);
 
     if GameTooltip:IsVisible() then
-        for i = 0, 4 do
-            local statFrame = _G["CharacterStatAdd" .. i];
-            if statFrame and statFrame:IsHovered() then
-                -- If the mouse is over a stat frame, we need to update the tooltip for that stat
-                CharacterWindow_AddAttributeButton_OnEnter(statFrame);
-            end
-
-            statFrame = _G["CharacterStat" .. i];
-            if statFrame and statFrame:IsHovered() then
-                -- If the mouse is over a stat frame, we need to update the tooltip for that stat
-                CharacterWindow_StatLabel_OnEnter(statFrame, i);
+        for _, entry in ipairs(self.statTooltips or {}) do
+            if entry.frame:IsHovered() then
+                entry.onEnter(entry.frame);
+                break;
             end
         end
     end
@@ -67,39 +60,33 @@ function CharacterWindow_OnLoad(self)
     -- Register the character window in the menu bar as a button
 	AddMenuBarButton("Interface/GameUI/Alestia/MenuIcons/Character.htex", CharacterWindow_Toggle, "MENUBAR_TOOLTIP_CHARACTER", "TOGGLECHARACTERWINDOW");
 
-    -- Setup tooltips for armor stat (will be added in Task 6)
-    if CharacterArmorStat then
-        CharacterArmorStat:SetOnEnterHandler(CharacterWindow_ArmorLabel_OnEnter);
-        CharacterArmorStat:SetOnLeaveHandler(CharacterWindow_HideTooltip);
+    -- Share each tooltip across its label and value, and track both for live refresh.
+    self.statTooltips = {};
+    local function bindTooltip(frame, onEnter)
+        frame:SetOnEnterHandler(onEnter);
+        frame:SetOnLeaveHandler(CharacterWindow_HideTooltip);
+        table.insert(self.statTooltips, { frame = frame, onEnter = onEnter });
     end
 
-    -- Setup tooltips for attribute stats
     for i = 0, 4 do
-        local statFrame = _G["CharacterStat" .. i];
-        if statFrame then
-            statFrame:SetOnEnterHandler(function(self) CharacterWindow_StatLabel_OnEnter(self, i); end);
-            statFrame:SetOnLeaveHandler(CharacterWindow_HideTooltip);
+        local function onEnter(frame)
+            CharacterWindow_StatLabel_OnEnter(frame, frame.id);
         end
-
-        local statFrame = _G["CharacterStatAdd" .. i];
-        if statFrame then
-            statFrame:SetOnEnterHandler(CharacterWindow_AddAttributeButton_OnEnter);
-            statFrame:SetOnLeaveHandler(CharacterWindow_HideTooltip);
-        end
+        bindTooltip(_G["CharacterStatLabel" .. i], onEnter);
+        bindTooltip(_G["CharacterStat" .. i], onEnter);
+        bindTooltip(_G["CharacterStatAdd" .. i], CharacterWindow_AddAttributeButton_OnEnter);
     end
 
-    -- Setup tooltips for secondary stats
-    CharacterArmorStat:SetOnEnterHandler(CharacterWindow_ArmorLabel_OnEnter);
-    CharacterArmorStat:SetOnLeaveHandler(CharacterWindow_HideTooltip);
-
-    CharacterDamageStat:SetOnEnterHandler(CharacterWindow_DamageLabel_OnEnter);
-    CharacterDamageStat:SetOnLeaveHandler(CharacterWindow_HideTooltip);
-
-    CharacterAttackPowerStat:SetOnEnterHandler(CharacterWindow_AttackPowerLabel_OnEnter);
-    CharacterAttackPowerStat:SetOnLeaveHandler(CharacterWindow_HideTooltip);
-
-    CharacterAttackTimeStat:SetOnEnterHandler(CharacterWindow_AttackSpeedLabel_OnEnter);
-    CharacterAttackTimeStat:SetOnLeaveHandler(CharacterWindow_HideTooltip);
+    local secondaryStats = {
+        { "CharacterArmor", CharacterWindow_ArmorLabel_OnEnter },
+        { "CharacterDamage", CharacterWindow_DamageLabel_OnEnter },
+        { "CharacterAttackPower", CharacterWindow_AttackPowerLabel_OnEnter },
+        { "CharacterAttackTime", CharacterWindow_AttackSpeedLabel_OnEnter },
+    };
+    for _, stat in ipairs(secondaryStats) do
+        bindTooltip(_G[stat[1] .. "Label"], stat[2]);
+        bindTooltip(_G[stat[1] .. "Stat"], stat[2]);
+    end
 
     CharacterWindow_EnableEquipmentQualityBorders();
 end
@@ -115,7 +102,7 @@ function CharacterWindow_AddAttributeButton_OnEnter(self)
     GameTooltip:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, self, 0);
     GameTooltip:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, self, 0);
 
-    GameTooltip_AddLine(string.format("Attribute point cost: %d", unit:GetAttributeCost(self.id)), TOOLTIP_LINE_LEFT, "FFFFD100");
+    GameTooltip_AddLine(string.format(Localize("CHARACTER_ATTRIBUTE_COST"), unit:GetAttributeCost(self.id)), TOOLTIP_LINE_LEFT, "FFFFD100");
 
     GameTooltip:Show();
 end
@@ -153,7 +140,7 @@ function CharacterWindow_DamageLabel_OnEnter(self)
     GameTooltip:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, self, 0);
 
     GameTooltip_AddLine(Localize("DAMAGE"), TOOLTIP_LINE_LEFT, "FFFFD100");
-    GameTooltip_AddLine("Weapon damage range per hit", TOOLTIP_LINE_LEFT, "FFFFFFFF");
+    GameTooltip_AddLine(Localize("CHARACTER_DAMAGE_DESCRIPTION"), TOOLTIP_LINE_LEFT, "FFFFFFFF");
 
     GameTooltip:Show();
 end
@@ -170,7 +157,7 @@ function CharacterWindow_AttackPowerLabel_OnEnter(self)
     GameTooltip:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, self, 0);
 
     GameTooltip_AddLine(Localize("ATTACK_POWER"), TOOLTIP_LINE_LEFT, "FFFFD100");
-    GameTooltip_AddLine("Increases weapon damage", TOOLTIP_LINE_LEFT, "FFFFFFFF");
+    GameTooltip_AddLine(Localize("CHARACTER_ATTACK_POWER_DESCRIPTION"), TOOLTIP_LINE_LEFT, "FFFFFFFF");
 
     GameTooltip:Show();
 end
@@ -187,7 +174,7 @@ function CharacterWindow_AttackSpeedLabel_OnEnter(self)
     GameTooltip:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, self, 0);
 
     GameTooltip_AddLine(Localize("ATTACK_SPEED"), TOOLTIP_LINE_LEFT, "FFFFD100");
-    GameTooltip_AddLine("Time between melee attacks in seconds", TOOLTIP_LINE_LEFT, "FFFFFFFF");
+    GameTooltip_AddLine(Localize("CHARACTER_ATTACK_SPEED_DESCRIPTION"), TOOLTIP_LINE_LEFT, "FFFFFFFF");
 
     GameTooltip:Show();
 end
@@ -197,14 +184,6 @@ function CharacterWindow_StatLabel_OnEnter(self, statId)
     if not unit then
         return;
     end
-
-    -- Get player class for class-specific tooltips
-    local playerClass = unit:GetClass();
-    if not playerClass then
-        return;
-    end
-    
-    playerClass = playerClass:upper();
 
     GameTooltip_Clear();
     GameTooltip:ClearAnchors();
@@ -227,8 +206,13 @@ function CharacterWindow_StatLabel_OnEnter(self, statId)
     local attackPowerIncrease = unit:GetAttackPowerFromStat(statId);
 
     -- Class-specific descriptions based on stat type
-    if statId == 4 then -- Stamina
+    if statId == 4 then -- Spirit
         GameTooltip_AddLine(Localize("SPIRIT_DESCRIPTION"), TOOLTIP_LINE_LEFT, "FFFFD100");
+    end
+
+    -- Some class/stat combinations have no derived bonus. Still explain the stat.
+    if statId ~= 4 and healthIncrease <= 0 and manaIncrease <= 0 and attackPowerIncrease <= 0 then
+        GameTooltip_AddLine(Localize("CHARACTER_STAT_NO_BONUS"), TOOLTIP_LINE_LEFT, "FFFFFFFF");
     end
 
     if healthIncrease > 0 then

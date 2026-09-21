@@ -1,459 +1,672 @@
-<?xml version="1.0" ?>
-<UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
+<?xml version='1.0' encoding='utf-8'?>
+<UiLayout xmlns="http://www.w3schools.com/Ui">
 	<Script file="TrainerFrame.lua" />
-	
-	<Frame name="TrainerSpellbutton" type="Button" renderer="CheckboxRenderer">
-		<Property name="Font" value="DefaultSmall" />
+	<Font name="TrainerNameFont" file="Fonts/FRIZQT__.TTF" size="26" outline="1" />
+	<Font name="TrainerDetailFont" file="Fonts/FRIZQT__.TTF" size="22" outline="1" />
+	<Frame name="TrainerFilterTemplate" type="Button" renderer="CheckboxRenderer">
+		<Property name="Font" value="TrainerDetailFont" />
 		<Property name="Checkable" value="true" />
-		<Property name="BackgroundColorNormal" value="FFFFFFFF" />
-		<Property name="BackgroundColorHovered" value="FFFF9B38" />
-		<Property name="BackgroundColorPushed" value="FF9E5E22" />
-		<Property name="BackgroundColorPushedChecked" value="FF9E5E22" />
-		<Property name="BackgroundColorNormalChecked" value="FF033F08" />
-		<Property name="BackgroundColorNormalHovered" value="FF033F08" />
-		<Property name="TextColorNormal" value="FFEED37C" />
-		<Property name="TextColorHovered" value="FFEED37C" />
-		<Property name="TextColorPushed" value="FFEED37C" />
-		<Property name="TextColorNormalChecked" value="FFEED37C" />
-		<Property name="TextColorHoveredChecked" value="FFEED37C" />
-		<Property name="TextColorPushedChecked" value="FFEED37C" />
-		
+		<Area>
+			<Size>
+				<AbsDimension y="48" x="432" />
+			</Size>
+		</Area>
 		<Visual>
-			<ImagerySection name="FrameNormal">
-				<ImageComponent texture="Interface/GlueUI/CharSelectButtonBackground.htex" tint="$BackgroundColorNormal" />
+			<ImagerySection name="Normal">
+				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="8" tint="FF786B55" />
 			</ImagerySection>
-			<ImagerySection name="FrameHovered">
-				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="$BackgroundColorHovered" />
-			</ImagerySection>
-			<ImagerySection name="FramePushed">
-				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="$BackgroundColorPushed">
+			<ImagerySection name="Selected">
+				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="8" tint="FFE0B55B" />
+				<ImageComponent texture="Interface/Icons/fg4_iconsGold_checkMark_result.htex">
 					<Area>
-						<Inset left="16" top="16" />
+						<Inset left="10" right="390" top="8" bottom="8" />
 					</Area>
 				</ImageComponent>
 			</ImagerySection>
-			<ImagerySection name="FrameDisabled">
-				<ImageComponent texture="Interface/GlueUI/CharSelectButtonBackground.htex" tint="88404040" />
-			</ImagerySection>
-
-			<ImagerySection name="FrameNormalChecked">
-				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="$BackgroundColorNormalChecked" />
-			</ImagerySection>
-			<ImagerySection name="FramePushedChecked">
-				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="$BackgroundColorPushedChecked">
+			<ImagerySection name="Label">
+				<TextComponent color="FFE8D8B7" vertAlign="CENTER">
 					<Area>
-						<Inset left="16" top="16" />
-					</Area>
-				</ImageComponent>
-			</ImagerySection>
-			<ImagerySection name="Text">
-				<TextComponent color="$TextColorNormal" horzAlign="LEFT" vertAlign="TOP">
-					<Area>
-						<Inset left="16" top="16" />
+						<Inset left="52" right="8" />
 					</Area>
 				</TextComponent>
 			</ImagerySection>
-			<ImagerySection name="TextPushed">
-				<TextComponent color="$TextColorPushed" horzAlign="LEFT" vertAlign="TOP">
-					<Area>
-						<Inset left="16" top="16" />
-					</Area>
-				</TextComponent>
-			</ImagerySection>
-			<ImagerySection name="TextHovered">
-				<TextComponent color="$TextColorHovered" horzAlign="LEFT" vertAlign="TOP">
-					<Area>
-						<Inset left="16" top="16" />
-					</Area>
-				</TextComponent>
-			</ImagerySection>
-			<ImagerySection name="TextChecked">
-				<TextComponent color="$TextColorNormalChecked" horzAlign="LEFT" vertAlign="TOP">
-					<Area>
-						<Inset left="16" top="16" />
-					</Area>
-				</TextComponent>
-			</ImagerySection>
-			<ImagerySection name="TextHoveredChecked">
-				<TextComponent color="$TextColorHoveredChecked" horzAlign="LEFT" vertAlign="TOP">
-					<Area>
-						<Inset left="16" top="16" />
-					</Area>
-				</TextComponent>
-			</ImagerySection>
-			<ImagerySection name="TextPushedChecked">
-				<TextComponent color="$TextColorPushedChecked" horzAlign="LEFT" vertAlign="TOP">
-					<Area>
-						<Inset left="16" top="16" />
-					</Area>
-				</TextComponent>
-			</ImagerySection>
-			<ImagerySection name="TextDisabled">
-				<TextComponent color="88404040" horzAlign="LEFT" vertAlign="TOP">
-					<Area>
-						<Inset left="16" top="16" />
-					</Area>
-				</TextComponent>
-			</ImagerySection>
-
 			<StateImagery name="Normal">
 				<Layer>
-					<Section section="FrameNormal" />
-					<Section section="Text" />
+					<Section section="Normal" />
+					<Section section="Label" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="Hovered">
 				<Layer>
-					<Section section="FrameHovered" />
-					<Section section="TextHovered" />
+					<Section section="Normal" />
+					<Section section="Label" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="Pushed">
 				<Layer>
-					<Section section="FramePushed" />
-					<Section section="TextPushed" />
+					<Section section="Normal" />
+					<Section section="Label" />
 				</Layer>
 			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer>
-					<Section section="FrameDisabled" />
-					<Section section="TextDisabled" />
-				</Layer>
-			</StateImagery>
-			
 			<StateImagery name="NormalChecked">
 				<Layer>
-					<Section section="FrameNormalChecked" />
-					<Section section="TextChecked" />
+					<Section section="Selected" />
+					<Section section="Label" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="HoveredChecked">
 				<Layer>
-					<Section section="FrameNormalChecked" />
-					<Section section="TextHoveredChecked" />
+					<Section section="Selected" />
+					<Section section="Label" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="PushedChecked">
 				<Layer>
-					<Section section="FramePushedChecked" />
-					<Section section="TextPushedChecked" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="DisabledChecked">
-				<Layer>
-					<Section section="FrameDisabled" />
-					<Section section="TextDisabled" />
+					<Section section="Selected" />
+					<Section section="Label" />
 				</Layer>
 			</StateImagery>
 		</Visual>
-		<Area>
-			<Size><AbsDimension x="128" y="64" /></Size>
-		</Area>
 	</Frame>
-
-	<Frame name="SpellPreviewButtonTemplate" type="Button" renderer="ButtonRenderer">
+	<Frame name="TrainerRowTemplate" type="Button" renderer="CheckboxRenderer">
+		<Property name="Checkable" value="true" />
 		<Property name="Icon" />
-
+		<Property name="IconTint" value="FFFFFFFF" />
+		<Area>
+			<Size>
+				<AbsDimension y="112" />
+			</Size>
+		</Area>
 		<Visual>
-			<ImagerySection name="Image">
-				<ImageComponent>
-					<Area>
-						<Inset all="16" />
-					</Area>
-					<PropertyValue property="Icon" />
-				</ImageComponent>
+			<ImagerySection name="Normal">
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF1B1B17" />
 			</ImagerySection>
-			<ImagerySection name="NormalFrame">
-				<BorderComponent texture="Interface/BW_ButtonSmall_Up.htex" borderSize="30" />
+			<ImagerySection name="Hover">
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF453820" />
 			</ImagerySection>
-			<ImagerySection name="HoveredFrame">
-				<BorderComponent texture="Interface/BW_ButtonSmall_Over.htex" borderSize="30" />
-			</ImagerySection>
-			<ImagerySection name="DisabledFrame">
-				<BorderComponent texture="Interface/BW_ButtonSmall_Up.htex" borderSize="30" />
+			<ImagerySection name="Selected">
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF66502A" />
 			</ImagerySection>
 			<StateImagery name="Normal">
 				<Layer>
-					<Section section="NormalFrame" />
-					<Section section="Image" />
+					<Section section="Normal" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="Hovered">
 				<Layer>
-					<Section section="HoveredFrame" />
-					<Section section="Image" />
+					<Section section="Hover" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="Pushed">
 				<Layer>
-					<Section section="HoveredFrame" />
-					<Section section="Image" />
+					<Section section="Hover" />
 				</Layer>
 			</StateImagery>
-			<StateImagery name="Disabled">
+			<StateImagery name="NormalChecked">
 				<Layer>
-					<Section section="DisabledFrame" />
-					<Section section="Image" />
+					<Section section="Selected" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="HoveredChecked">
+				<Layer>
+					<Section section="Selected" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="PushedChecked">
+				<Layer>
+					<Section section="Selected" />
 				</Layer>
 			</StateImagery>
 		</Visual>
-
+	</Frame>
+	<Frame name="TrainerIconTemplate" renderer="DefaultRenderer">
+		<Property name="Icon" />
+		<Property name="IconTint" value="FFFFFFFF" />
 		<Area>
 			<Size>
-				<AbsDimension x="128" y="128" />
+				<AbsDimension y="80" x="80" />
 			</Size>
 		</Area>
+		<Visual>
+			<ImagerySection name="Icon">
+				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" />
+				<ImageComponent tint="$IconTint">
+					<Area>
+						<Inset all="8" />
+					</Area>
+					<PropertyValue property="Icon" />
+				</ImageComponent>
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Icon" />
+				</Layer>
+			</StateImagery>
+		</Visual>
 	</Frame>
-
 	<Frame name="TrainerFrame" inherits="SidePanelTemplate" parent="GameParent">
-		<Property name="Visible" value="False" />
-
+		<Property name="Visible" value="false" />
+		<Frame name="TrainerHideLearned" inherits="TrainerFilterTemplate">
+			<Property name="Text" value="TRAINER_HIDE_LEARNED" />
+			<Area>
+				<Anchor point="LEFT" offset="32" />
+				<Anchor point="TOP" offset="16" relativeTo="TrainerFrame_SidePanelTitleBar" relativePoint="BOTTOM" />
+			</Area>
+		</Frame>
+		<Frame name="TrainerHideUnavailable" inherits="TrainerFilterTemplate">
+			<Property name="Text" value="TRAINER_HIDE_UNAVAILABLE" />
+			<Area>
+				<Anchor point="RIGHT" offset="-32" />
+				<Anchor point="TOP" offset="16" relativeTo="TrainerFrame_SidePanelTitleBar" relativePoint="BOTTOM" />
+			</Area>
+		</Frame>
+		<Frame name="TrainerListSummary" inherits="TextSmall">
+			<Property name="Font" value="TrainerDetailFont" />
+			<Property name="TextColor" value="FFD2C9B8" />
+			<Property name="Clickable" value="false" />
+			<Area>
+				<Size>
+					<AbsDimension y="28" />
+				</Size>
+				<Anchor point="LEFT" offset="36" />
+				<Anchor point="RIGHT" offset="-36" />
+				<Anchor point="TOP" offset="8" relativeTo="TrainerHideLearned" relativePoint="BOTTOM" />
+			</Area>
+		</Frame>
 		<Frame name="TrainerSpellList" renderer="DefaultRenderer">
+			<Area>
+				<Size>
+					<AbsDimension y="616" />
+				</Size>
+				<Anchor point="LEFT" offset="24" />
+				<Anchor point="RIGHT" offset="-24" />
+				<Anchor point="TOP" offset="8" relativeTo="TrainerListSummary" relativePoint="BOTTOM" />
+			</Area>
 			<Visual>
-				<ImagerySection name="Frame">
-					<ImageComponent texture="Interface/GlueUI/RealmListBackground.htex" tiling="BOTH">
-						<Area><Inset all="8" /></Area>
-					</ImageComponent>
-					<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" />
+				<ImagerySection name="Surface">
+					<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF10110F" />
+					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFA88A59" />
 				</ImagerySection>
 				<StateImagery name="Enabled">
 					<Layer>
-						<Section section="Frame" />
+						<Section section="Surface" />
 					</Layer>
 				</StateImagery>
 			</Visual>
-
-			<Area>
-				<Anchor point="LEFT" offset="16" />
-				<Anchor point="RIGHT" offset="-16" />
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TrainerFrame_SidePanelTitleBar" />
-				<Size><AbsDimension y="640" /></Size>		<!-- 64 px per item, 10 items -->
-			</Area>
-
+			<Frame name="TrainerEmptyLabel" inherits="TextSmall">
+				<Property name="Font" value="TrainerDetailFont" />
+				<Property name="TextColor" value="FFD2C9B8" />
+				<Property name="Clickable" value="false" />
+				<Property name="Text" value="TRAINER_FILTER_EMPTY" />
+				<Area>
+					<Size>
+						<AbsDimension y="80" />
+					</Size>
+					<Anchor point="LEFT" offset="32" />
+					<Anchor point="RIGHT" offset="-32" />
+					<Anchor point="TOP" offset="80" />
+				</Area>
+			</Frame>
 			<Frame name="TrainerSpellListContent">
 				<Area>
-					<Anchor point="LEFT" />
+					<Anchor point="LEFT" offset="12" />
 					<Anchor point="RIGHT" offset="-96" />
-					<Anchor point="TOP" />
-					<Anchor point="BOTTOM" />
+					<Anchor point="TOP" offset="12" />
+					<Anchor point="BOTTOM" offset="-12" />
 				</Area>
-				
-				<Frame name="TrainerSpellButton01" inherits="TrainerSpellbutton" id="1">
+				<Frame name="TrainerSpellButton1" inherits="TrainerRowTemplate">
 					<Area>
-						<Anchor point="LEFT" offset="8" />
-						<Anchor point="RIGHT" offset="-8" />
-						<Anchor point="TOP" offset="8" />
+						<Anchor point="LEFT" offset="0" />
+						<Anchor point="RIGHT" offset="0" />
+						<Anchor point="TOP" offset="0" />
 					</Area>
-					<Scripts><OnClick>return function(this) TrainerSpellButton_OnClick(this); end</OnClick></Scripts>
+					<Frame name="TrainerRowIcon1" inherits="TrainerIconTemplate">
+						<Property name="Clickable" value="false" />
+						<Area>
+							<Anchor point="LEFT" offset="8" />
+							<Anchor point="V_CENTER" offset="0" />
+						</Area>
+					</Frame>
+					<Frame name="TrainerRowName1" inherits="TextSmall">
+						<Property name="Font" value="TrainerNameFont" />
+						<Property name="TextColor" value="FFF3CF50" />
+						<Property name="Clickable" value="false" />
+						<Area>
+							<Size>
+								<AbsDimension y="32" />
+							</Size>
+							<Anchor point="LEFT" offset="104" />
+							<Anchor point="RIGHT" offset="-12" />
+							<Anchor point="TOP" offset="6" />
+						</Area>
+					</Frame>
+					<Frame name="TrainerRowLevel1" inherits="TextSmall">
+						<Property name="Font" value="TrainerDetailFont" />
+						<Property name="TextColor" value="FFD2C9B8" />
+						<Property name="Clickable" value="false" />
+						<Area>
+							<Size>
+								<AbsDimension y="28" />
+							</Size>
+							<Anchor point="LEFT" offset="104" />
+							<Anchor point="RIGHT" offset="-12" />
+							<Anchor point="TOP" offset="40" />
+						</Area>
+					</Frame>
+					<Frame name="TrainerRowState1" inherits="TextSmall">
+						<Property name="Font" value="TrainerDetailFont" />
+						<Property name="TextColor" value="FFD2C9B8" />
+						<Property name="Clickable" value="false" />
+						<Area>
+							<Size>
+								<AbsDimension y="28" />
+							</Size>
+							<Anchor point="LEFT" offset="104" />
+							<Anchor point="RIGHT" offset="-280" />
+							<Anchor point="TOP" offset="74" />
+						</Area>
+					</Frame>
+					<Frame name="TrainerRowMoney1" inherits="MoneyFrameTemplate">
+						<Area>
+							<Anchor point="RIGHT" offset="-8" />
+							<Anchor point="BOTTOM" offset="-6" />
+						</Area>
+					</Frame>
 				</Frame>
-				
-				<Frame name="TrainerSpellButton02" inherits="TrainerSpellbutton" id="2">
+				<Frame name="TrainerSpellButton2" inherits="TrainerRowTemplate">
 					<Area>
-						<Anchor point="LEFT" relativeTo="TrainerSpellButton01" />
-						<Anchor point="RIGHT" relativeTo="TrainerSpellButton01" />
-						<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TrainerSpellButton01" />
+						<Anchor point="LEFT" offset="0" />
+						<Anchor point="RIGHT" offset="0" />
+						<Anchor point="TOP" offset="120" />
 					</Area>
-					<Scripts><OnClick>return function(this) TrainerSpellButton_OnClick(this); end</OnClick></Scripts>
+					<Frame name="TrainerRowIcon2" inherits="TrainerIconTemplate">
+						<Property name="Clickable" value="false" />
+						<Area>
+							<Anchor point="LEFT" offset="8" />
+							<Anchor point="V_CENTER" offset="0" />
+						</Area>
+					</Frame>
+					<Frame name="TrainerRowName2" inherits="TextSmall">
+						<Property name="Font" value="TrainerNameFont" />
+						<Property name="TextColor" value="FFF3CF50" />
+						<Property name="Clickable" value="false" />
+						<Area>
+							<Size>
+								<AbsDimension y="32" />
+							</Size>
+							<Anchor point="LEFT" offset="104" />
+							<Anchor point="RIGHT" offset="-12" />
+							<Anchor point="TOP" offset="6" />
+						</Area>
+					</Frame>
+					<Frame name="TrainerRowLevel2" inherits="TextSmall">
+						<Property name="Font" value="TrainerDetailFont" />
+						<Property name="TextColor" value="FFD2C9B8" />
+						<Property name="Clickable" value="false" />
+						<Area>
+							<Size>
+								<AbsDimension y="28" />
+							</Size>
+							<Anchor point="LEFT" offset="104" />
+							<Anchor point="RIGHT" offset="-12" />
+							<Anchor point="TOP" offset="40" />
+						</Area>
+					</Frame>
+					<Frame name="TrainerRowState2" inherits="TextSmall">
+						<Property name="Font" value="TrainerDetailFont" />
+						<Property name="TextColor" value="FFD2C9B8" />
+						<Property name="Clickable" value="false" />
+						<Area>
+							<Size>
+								<AbsDimension y="28" />
+							</Size>
+							<Anchor point="LEFT" offset="104" />
+							<Anchor point="RIGHT" offset="-280" />
+							<Anchor point="TOP" offset="74" />
+						</Area>
+					</Frame>
+					<Frame name="TrainerRowMoney2" inherits="MoneyFrameTemplate">
+						<Area>
+							<Anchor point="RIGHT" offset="-8" />
+							<Anchor point="BOTTOM" offset="-6" />
+						</Area>
+					</Frame>
 				</Frame>
-				
-				<Frame name="TrainerSpellButton03" inherits="TrainerSpellbutton" id="3">
+				<Frame name="TrainerSpellButton3" inherits="TrainerRowTemplate">
 					<Area>
-						<Anchor point="LEFT" relativeTo="TrainerSpellButton01" />
-						<Anchor point="RIGHT" relativeTo="TrainerSpellButton01" />
-						<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TrainerSpellButton02" />
+						<Anchor point="LEFT" offset="0" />
+						<Anchor point="RIGHT" offset="0" />
+						<Anchor point="TOP" offset="240" />
 					</Area>
-					<Scripts><OnClick>return function(this) TrainerSpellButton_OnClick(this); end</OnClick></Scripts>
+					<Frame name="TrainerRowIcon3" inherits="TrainerIconTemplate">
+						<Property name="Clickable" value="false" />
+						<Area>
+							<Anchor point="LEFT" offset="8" />
+							<Anchor point="V_CENTER" offset="0" />
+						</Area>
+					</Frame>
+					<Frame name="TrainerRowName3" inherits="TextSmall">
+						<Property name="Font" value="TrainerNameFont" />
+						<Property name="TextColor" value="FFF3CF50" />
+						<Property name="Clickable" value="false" />
+						<Area>
+							<Size>
+								<AbsDimension y="32" />
+							</Size>
+							<Anchor point="LEFT" offset="104" />
+							<Anchor point="RIGHT" offset="-12" />
+							<Anchor point="TOP" offset="6" />
+						</Area>
+					</Frame>
+					<Frame name="TrainerRowLevel3" inherits="TextSmall">
+						<Property name="Font" value="TrainerDetailFont" />
+						<Property name="TextColor" value="FFD2C9B8" />
+						<Property name="Clickable" value="false" />
+						<Area>
+							<Size>
+								<AbsDimension y="28" />
+							</Size>
+							<Anchor point="LEFT" offset="104" />
+							<Anchor point="RIGHT" offset="-12" />
+							<Anchor point="TOP" offset="40" />
+						</Area>
+					</Frame>
+					<Frame name="TrainerRowState3" inherits="TextSmall">
+						<Property name="Font" value="TrainerDetailFont" />
+						<Property name="TextColor" value="FFD2C9B8" />
+						<Property name="Clickable" value="false" />
+						<Area>
+							<Size>
+								<AbsDimension y="28" />
+							</Size>
+							<Anchor point="LEFT" offset="104" />
+							<Anchor point="RIGHT" offset="-280" />
+							<Anchor point="TOP" offset="74" />
+						</Area>
+					</Frame>
+					<Frame name="TrainerRowMoney3" inherits="MoneyFrameTemplate">
+						<Area>
+							<Anchor point="RIGHT" offset="-8" />
+							<Anchor point="BOTTOM" offset="-6" />
+						</Area>
+					</Frame>
 				</Frame>
-				
-				<Frame name="TrainerSpellButton04" inherits="TrainerSpellbutton" id="4">
+				<Frame name="TrainerSpellButton4" inherits="TrainerRowTemplate">
 					<Area>
-						<Anchor point="LEFT" relativeTo="TrainerSpellButton01" />
-						<Anchor point="RIGHT" relativeTo="TrainerSpellButton01" />
-						<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TrainerSpellButton03" />
+						<Anchor point="LEFT" offset="0" />
+						<Anchor point="RIGHT" offset="0" />
+						<Anchor point="TOP" offset="360" />
 					</Area>
-					<Scripts><OnClick>return function(this) TrainerSpellButton_OnClick(this); end</OnClick></Scripts>
+					<Frame name="TrainerRowIcon4" inherits="TrainerIconTemplate">
+						<Property name="Clickable" value="false" />
+						<Area>
+							<Anchor point="LEFT" offset="8" />
+							<Anchor point="V_CENTER" offset="0" />
+						</Area>
+					</Frame>
+					<Frame name="TrainerRowName4" inherits="TextSmall">
+						<Property name="Font" value="TrainerNameFont" />
+						<Property name="TextColor" value="FFF3CF50" />
+						<Property name="Clickable" value="false" />
+						<Area>
+							<Size>
+								<AbsDimension y="32" />
+							</Size>
+							<Anchor point="LEFT" offset="104" />
+							<Anchor point="RIGHT" offset="-12" />
+							<Anchor point="TOP" offset="6" />
+						</Area>
+					</Frame>
+					<Frame name="TrainerRowLevel4" inherits="TextSmall">
+						<Property name="Font" value="TrainerDetailFont" />
+						<Property name="TextColor" value="FFD2C9B8" />
+						<Property name="Clickable" value="false" />
+						<Area>
+							<Size>
+								<AbsDimension y="28" />
+							</Size>
+							<Anchor point="LEFT" offset="104" />
+							<Anchor point="RIGHT" offset="-12" />
+							<Anchor point="TOP" offset="40" />
+						</Area>
+					</Frame>
+					<Frame name="TrainerRowState4" inherits="TextSmall">
+						<Property name="Font" value="TrainerDetailFont" />
+						<Property name="TextColor" value="FFD2C9B8" />
+						<Property name="Clickable" value="false" />
+						<Area>
+							<Size>
+								<AbsDimension y="28" />
+							</Size>
+							<Anchor point="LEFT" offset="104" />
+							<Anchor point="RIGHT" offset="-280" />
+							<Anchor point="TOP" offset="74" />
+						</Area>
+					</Frame>
+					<Frame name="TrainerRowMoney4" inherits="MoneyFrameTemplate">
+						<Area>
+							<Anchor point="RIGHT" offset="-8" />
+							<Anchor point="BOTTOM" offset="-6" />
+						</Area>
+					</Frame>
 				</Frame>
-				
-				<Frame name="TrainerSpellButton05" inherits="TrainerSpellbutton" id="5">
+				<Frame name="TrainerSpellButton5" inherits="TrainerRowTemplate">
 					<Area>
-						<Anchor point="LEFT" relativeTo="TrainerSpellButton01" />
-						<Anchor point="RIGHT" relativeTo="TrainerSpellButton01" />
-						<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TrainerSpellButton04" />
+						<Anchor point="LEFT" offset="0" />
+						<Anchor point="RIGHT" offset="0" />
+						<Anchor point="TOP" offset="480" />
 					</Area>
-					<Scripts><OnClick>return function(this) TrainerSpellButton_OnClick(this); end</OnClick></Scripts>
-				</Frame>
-				
-				<Frame name="TrainerSpellButton06" inherits="TrainerSpellbutton" id="6">
-					<Area>
-						<Anchor point="LEFT" relativeTo="TrainerSpellButton01" />
-						<Anchor point="RIGHT" relativeTo="TrainerSpellButton01" />
-						<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TrainerSpellButton05" />
-					</Area>
-					<Scripts><OnClick>return function(this) TrainerSpellButton_OnClick(this); end</OnClick></Scripts>
-				</Frame>
-
-				<Frame name="TrainerSpellButton07" inherits="TrainerSpellbutton" id="7">
-					<Area>
-						<Anchor point="LEFT" relativeTo="TrainerSpellButton01" />
-						<Anchor point="RIGHT" relativeTo="TrainerSpellButton01" />
-						<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TrainerSpellButton06" />
-					</Area>
-					<Scripts><OnClick>return function(this) TrainerSpellButton_OnClick(this); end</OnClick></Scripts>
-				</Frame>
-				
-				<Frame name="TrainerSpellButton08" inherits="TrainerSpellbutton" id="8">
-					<Area>
-						<Anchor point="LEFT" relativeTo="TrainerSpellButton01" />
-						<Anchor point="RIGHT" relativeTo="TrainerSpellButton01" />
-						<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TrainerSpellButton07" />
-					</Area>
-					<Scripts><OnClick>return function(this) TrainerSpellButton_OnClick(this); end</OnClick></Scripts>
-				</Frame>
-				
-				<Frame name="TrainerSpellButton09" inherits="TrainerSpellbutton" id="9">
-					<Area>
-						<Anchor point="LEFT" relativeTo="TrainerSpellButton01" />
-						<Anchor point="RIGHT" relativeTo="TrainerSpellButton01" />
-						<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TrainerSpellButton08" />
-					</Area>
-					<Scripts><OnClick>return function(this) TrainerSpellButton_OnClick(this); end</OnClick></Scripts>
-				</Frame>
-				
-				<Frame name="TrainerSpellButton10" inherits="TrainerSpellbutton" id="10">
-					<Area>
-						<Anchor point="LEFT" relativeTo="TrainerSpellButton01" />
-						<Anchor point="RIGHT" relativeTo="TrainerSpellButton01" />
-						<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TrainerSpellButton09" />
-					</Area>
-					<Scripts><OnClick>return function(this) TrainerSpellButton_OnClick(this); end</OnClick></Scripts>
+					<Frame name="TrainerRowIcon5" inherits="TrainerIconTemplate">
+						<Property name="Clickable" value="false" />
+						<Area>
+							<Anchor point="LEFT" offset="8" />
+							<Anchor point="V_CENTER" offset="0" />
+						</Area>
+					</Frame>
+					<Frame name="TrainerRowName5" inherits="TextSmall">
+						<Property name="Font" value="TrainerNameFont" />
+						<Property name="TextColor" value="FFF3CF50" />
+						<Property name="Clickable" value="false" />
+						<Area>
+							<Size>
+								<AbsDimension y="32" />
+							</Size>
+							<Anchor point="LEFT" offset="104" />
+							<Anchor point="RIGHT" offset="-12" />
+							<Anchor point="TOP" offset="6" />
+						</Area>
+					</Frame>
+					<Frame name="TrainerRowLevel5" inherits="TextSmall">
+						<Property name="Font" value="TrainerDetailFont" />
+						<Property name="TextColor" value="FFD2C9B8" />
+						<Property name="Clickable" value="false" />
+						<Area>
+							<Size>
+								<AbsDimension y="28" />
+							</Size>
+							<Anchor point="LEFT" offset="104" />
+							<Anchor point="RIGHT" offset="-12" />
+							<Anchor point="TOP" offset="40" />
+						</Area>
+					</Frame>
+					<Frame name="TrainerRowState5" inherits="TextSmall">
+						<Property name="Font" value="TrainerDetailFont" />
+						<Property name="TextColor" value="FFD2C9B8" />
+						<Property name="Clickable" value="false" />
+						<Area>
+							<Size>
+								<AbsDimension y="28" />
+							</Size>
+							<Anchor point="LEFT" offset="104" />
+							<Anchor point="RIGHT" offset="-280" />
+							<Anchor point="TOP" offset="74" />
+						</Area>
+					</Frame>
+					<Frame name="TrainerRowMoney5" inherits="MoneyFrameTemplate">
+						<Area>
+							<Anchor point="RIGHT" offset="-8" />
+							<Anchor point="BOTTOM" offset="-6" />
+						</Area>
+					</Frame>
 				</Frame>
 			</Frame>
-
 			<Frame name="TrainerSpellListScrollBar" inherits="VerticalScrollBar">
 				<Property name="Enabled" value="false" />
 				<Area>
-					<Anchor point="RIGHT" offset="0" />
-					<Anchor point="TOP" offset="0" />
-					<Anchor point="BOTTOM" offset="0" />
+					<Anchor point="RIGHT" offset="-4" />
+					<Anchor point="TOP" offset="4" />
+					<Anchor point="BOTTOM" offset="-4" />
 				</Area>
 			</Frame>
 		</Frame>
-
 		<Frame name="TrainerSpellDescFrame" renderer="DefaultRenderer">
+			<Area>
+				<Anchor point="LEFT" offset="24" />
+				<Anchor point="RIGHT" offset="-24" />
+				<Anchor point="TOP" offset="12" relativeTo="TrainerSpellList" relativePoint="BOTTOM" />
+				<Anchor point="BOTTOM" offset="-128" />
+			</Area>
 			<Visual>
-				<ImagerySection name="Frame">
-					<ImageComponent texture="Interface/GlueUI/RealmListBackground.htex" tiling="BOTH">
-						<Area><Inset all="8" /></Area>
-					</ImageComponent>
-					<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" />
+				<ImagerySection name="Surface">
+					<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF10110F" />
+					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFA88A59" />
 				</ImagerySection>
 				<StateImagery name="Enabled">
 					<Layer>
-						<Section section="Frame" />
+						<Section section="Surface" />
 					</Layer>
 				</StateImagery>
 			</Visual>
-			<Area>
-				<Anchor point="LEFT" offset="16" />
-				<Anchor point="RIGHT" offset="-16" />
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="TrainerSpellList" />
-				<Anchor point="BOTTOM" offset="-96" />
-			</Area>
-
+			<Frame name="TrainerSelectionHint" inherits="TextSmall">
+				<Property name="Font" value="TrainerDetailFont" />
+				<Property name="TextColor" value="FFD2C9B8" />
+				<Property name="Clickable" value="false" />
+				<Property name="Text" value="TRAINER_SELECT_HINT" />
+				<Area>
+					<Size>
+						<AbsDimension y="80" />
+					</Size>
+					<Anchor point="LEFT" offset="24" />
+					<Anchor point="RIGHT" offset="-24" />
+					<Anchor point="TOP" offset="40" />
+				</Area>
+			</Frame>
 			<Frame name="TrainerSpellDescContent" setAllPoints="true">
 				<Property name="Visible" value="false" />
-
-				<Frame name="TrainerSpellPreviewButton" inherits="SpellPreviewButtonTemplate">
+				<Frame name="TrainerSpellPreviewButton" inherits="TrainerIconTemplate">
 					<Area>
+						<Size>
+							<AbsDimension y="96" x="96" />
+						</Size>
 						<Anchor point="LEFT" offset="16" />
 						<Anchor point="TOP" offset="16" />
 					</Area>
 				</Frame>
-
 				<Frame name="TrainerSpellPreviewName" inherits="TextSmall">
+					<Property name="Font" value="TrainerNameFont" />
+					<Property name="TextColor" value="FFF3CF50" />
+					<Property name="Clickable" value="false" />
 					<Area>
-						<Anchor point="LEFT" relativeTo="TrainerSpellPreviewButton" relativePoint="RIGHT" offset="16" />
-						<Anchor point="TOP" relativeTo="TrainerSpellPreviewButton" />
+						<Size>
+							<AbsDimension y="34" />
+						</Size>
+						<Anchor point="LEFT" offset="128" />
+						<Anchor point="RIGHT" offset="-16" />
+						<Anchor point="TOP" offset="16" />
 					</Area>
 				</Frame>
-
+				<Frame name="TrainerPreviewState" inherits="TextSmall">
+					<Property name="Font" value="TrainerDetailFont" />
+					<Property name="TextColor" value="FFD2C9B8" />
+					<Property name="Clickable" value="false" />
+					<Area>
+						<Size>
+							<AbsDimension y="28" />
+						</Size>
+						<Anchor point="LEFT" offset="128" />
+						<Anchor point="RIGHT" offset="-16" />
+						<Anchor point="TOP" offset="52" />
+					</Area>
+				</Frame>
 				<Frame name="TrainerSpellCostLabel" inherits="TextSmall">
+					<Property name="Font" value="TrainerDetailFont" />
+					<Property name="TextColor" value="FFD2C9B8" />
+					<Property name="Clickable" value="false" />
 					<Property name="Text" value="TRAINER_SPELL_COST" />
-
 					<Area>
-						<Anchor point="TOP" relativeTo="TrainerSpellPreviewName" relativePoint="BOTTOM" offset="16" />
-						<Anchor point="LEFT" relativeTo="TrainerSpellPreviewName" />
+						<Size>
+							<AbsDimension y="32" />
+						</Size>
+						<Anchor point="LEFT" offset="128" />
+						<Anchor point="TOP" offset="86" />
 					</Area>
 				</Frame>
-
 				<Frame name="TrainerSpellCostMoney" inherits="MoneyFrameTemplate">
 					<Area>
-						<Anchor point="TOP" relativeTo="TrainerSpellPreviewName" relativePoint="BOTTOM" offset="16" />
-						<Anchor point="LEFT" relativeTo="TrainerSpellCostLabel" relativePoint="RIGHT" />
+						<Anchor point="LEFT" offset="16" relativeTo="TrainerSpellCostLabel" relativePoint="RIGHT" />
+						<Anchor point="TOP" offset="82" />
 					</Area>
 				</Frame>
-				
 				<Frame name="TrainerSpellDescriptionText" inherits="TextSmall">
+					<Property name="Font" value="TrainerDetailFont" />
+					<Property name="TextColor" value="FFE4DCC9" />
+					<Property name="Clickable" value="false" />
 					<Area>
-						<Anchor point="TOP" relativeTo="TrainerSpellPreviewButton" relativePoint="BOTTOM" offset="0" />
-						<Anchor point="LEFT" relativeTo="TrainerSpellPreviewButton" />
-						<Anchor point="RIGHT" offset="-16" />
+						<Anchor point="LEFT" offset="20" />
+						<Anchor point="RIGHT" offset="-20" />
+						<Anchor point="TOP" offset="128" />
+						<Anchor point="BOTTOM" offset="-16" />
 					</Area>
 				</Frame>
 			</Frame>
 		</Frame>
-
-        <Frame inherits="GlueButton" name="TrainerBuyButton">
+		<Frame name="TrainerFooter" renderer="DefaultRenderer">
+			<Property name="Enabled" value="false" />
+			<Property name="Clickable" value="false" />
+			<Area>
+				<Size>
+					<AbsDimension y="96" />
+				</Size>
+				<Anchor point="LEFT" offset="16" />
+				<Anchor point="RIGHT" offset="-16" />
+				<Anchor point="BOTTOM" offset="-16" />
+			</Area>
+			<Visual>
+				<ImagerySection name="Surface">
+					<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF10110F" />
+					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFA88A59" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Surface" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+		</Frame>
+		<Frame name="TrainerPlayerMoneyFrame" inherits="MoneyFrameTemplate">
+			<Area>
+				<Anchor point="LEFT" offset="36" />
+				<Anchor point="BOTTOM" offset="-40" />
+			</Area>
+		</Frame>
+		<Frame name="TrainerBuyButton" inherits="GlueButton">
 			<Property name="Text" value="TRAIN" />
 			<Property name="Enabled" value="false" />
-
-            <Area>
-                <Anchor point="BOTTOM" offset="-16" />
-                <Anchor point="RIGHT" offset="-16" />
-				<Size><AbsDimension x="256" y="80" /></Size>
-            </Area>
-			
-			<Scripts>
-				<OnClick>
-					return function(this)
-						TrainerBuyButton_OnClick(this);
-					end
-				</OnClick>
-			</Scripts>
-        </Frame>
-
-		<Frame name="TrainerPlayerMoneyBorder" inherits="LootButtonBorderTemplate">
 			<Area>
-				<Anchor point="LEFT" offset="16" />
-				<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="TrainerBuyButton" offset="-16" />
-				<Anchor point="TOP" relativeTo="TrainerBuyButton" />
-				<Anchor point="BOTTOM" relativeTo="TrainerBuyButton" />
+				<Size>
+					<AbsDimension y="72" x="256" />
+				</Size>
+				<Anchor point="RIGHT" offset="-32" />
+				<Anchor point="BOTTOM" offset="-28" />
 			</Area>
-				
-			<Frame name="TrainerPlayerMoneyFrame" inherits="MoneyFrameTemplate">
-				<Area>
-					<Anchor point="BOTTOM" offset="-16" />
-					<Anchor point="RIGHT" offset="-16" />
-				</Area>
-			</Frame>
+			<Scripts>
+				<OnClick>return function(self) TrainerBuyButton_OnClick(self); end</OnClick>
+			</Scripts>
 		</Frame>
-		
-        <Scripts>
-            <OnLoad>
-                return function(this)
-                    TrainerFrame_OnLoad(this);
-                end
-            </OnLoad>
-			<OnShow>
-				return function(this)
-					TrainerFrame_OnShow(this);
-				end
-			</OnShow>
-			<OnHide>
-				return function(this)
-					CloseTrainer();
-				end
-			</OnHide>
-        </Scripts>
+		<Scripts>
+			<OnLoad>return function(self) TrainerFrame_OnLoad(self); end</OnLoad>
+			<OnShow>return function(self) TrainerFrame_OnShow(self); end</OnShow>
+			<OnHide>return function(self) CloseTrainer(); end</OnHide>
+		</Scripts>
 	</Frame>
 </UiLayout>

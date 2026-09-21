@@ -6,6 +6,7 @@
 		<Property name="Icon" />
 		<Property name="IconColor" value="FFFFFFFF" />
 		<Property name="Background" />
+		<Property name="BackgroundColor" value="FFFFFFFF" />
 		<!-- Tint applied to the button frame. Slots that opt in to quality borders (see
 		     QualityBorder) recolor this to the equipped item's quality color. -->
 		<Property name="QualityColor" value="FFFFFFFF" />
@@ -16,7 +17,7 @@
 
 		<Visual>
 			<ImagerySection name="Background">
-				<ImageComponent>
+				<ImageComponent tint="$BackgroundColor">
 					<Area>
 						<Inset all="16" />
 					</Area>

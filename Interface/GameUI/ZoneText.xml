@@ -6,6 +6,7 @@
     <Font name="ZoneTextFontSmall" file="Fonts/FRIZQT__.TTF" size="48" outline="3" />
 	
     <Frame name="ZoneText" inherits="TextSmall" parent="GameParent">
+        <Property name="MousePassThrough" value="true" />
         <Property name="Font" value="ZoneTextFont" />
 		<Property name="HorzAlign" value="CENTER" />
 		<Property name="TextColor" value="FF19FF19" />
@@ -33,6 +34,7 @@
 		</Scripts>
     </Frame>
     <Frame name="ZoneSubText" inherits="TextSmall" parent="GameParent">
+        <Property name="MousePassThrough" value="true" />
         <Property name="Font" value="ZoneTextFontSmall" />
 		<Property name="HorzAlign" value="CENTER" />
 		<Property name="TextColor" value="FF19FF19" />

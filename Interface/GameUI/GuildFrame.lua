@@ -6,21 +6,41 @@ GUILD_COMMAND_RESULTS[4] = "GUILD_PLAYER_NOT_FOUND";
 GUILD_COMMAND_RESULTS[5] = "GUILD_ALREADY_IN_OTHER_GUILD";
 GUILD_COMMAND_RESULTS[6] = "GUILD_INVITE_PENDING";
 
--- Guild roster data
-local GUILD_ROSTER_MAX_DISPLAY = 14;
-local GUILD_ROSTER_OFFSET = 0;
-local GUILD_ROSTER_SELECTED_INDEX = nil;
-local GUILD_ROSTER_SORT_COLUMN = "name";
-local GUILD_ROSTER_SORT_ASCENDING = true;
+local GUILD_ROSTER_MAX_DISPLAY = 12;
+local guildOffset = 0;
+local guildSelectedName;
+local guildPendingRemoval;
+local guildSortColumn = "name";
+local guildSortAscending = true;
+local guildUpdating = false;
+local guildMembers = {};
 
--- Mock guild data for testing
-local GUILD_DATA = {
-    members = {}
-};
+local function GuildFindMember(name)
+	for i = 0, GetNumGuildMembers() - 1 do
+		local member = GetGuildMemberInfo(i);
+		if member and member.name == name then
+			return member;
+		end
+	end
+end
+
+local function GuildCanManage(member, action)
+	local player = GetUnit("player");
+	local own = player and GuildFindMember(player:GetName());
+	if not IsInGuild() or not member or not own or member.name == own.name or member.rankIndex <= own.rankIndex then
+		return false;
+	end
+	if action == "promote" then
+		return CanGuildPromote() and member.rankIndex > own.rankIndex + 1;
+	elseif action == "demote" then
+		return CanGuildDemote() and member.rankIndex < GetNumRanks() - 1;
+	end
+	return CanGuildRemove();
+end
 
 -- Event handlers
 function GuildFrame_OnGuildCommandResult(self, result, playername)
-    local message = string.format(Localize(GUILD_COMMAND_RESULTS[result]), playername);
+    local message = GUILD_COMMAND_RESULTS[result] and string.format(Localize(GUILD_COMMAND_RESULTS[result]), playername or "");
     if (message) then
         ChatFrame:AddMessage(message, 1.0, 1.0, 0.0);
     end  
@@ -36,10 +56,12 @@ end
 
 function GuildFrame_OnLeft(self)
     ChatFrame:AddMessage(Localize("GUILD_LEFT"), 1.0, 1.0, 0.0);
+    HideUIPanel(GuildFrame);
 end
 
 function GuildFrame_OnRemoved(self, remover)
     ChatFrame:AddMessage(string.format(Localize("GUILD_REMOVED"), remover), 1.0, 1.0, 0.0);
+    HideUIPanel(GuildFrame);
 end
 
 function GuildFrame_OnEvent(self, event, arg1, arg2, arg3)
@@ -62,272 +84,179 @@ function GuildFrame_OnEvent(self, event, arg1, arg2, arg3)
         ChatFrame:AddMessage(string.format(format, arg1, arg2, arg3), color[1], color[2], color[3]);
     end
 
-    -- Update the guild roster if the event might have changed it
-    if (event == "LOGGED_IN" or event == "LOGGED_OUT" or event == "JOINED" or event == "LEFT" or event == "REMOVED") then
-        GuildRoster_Update();
-    end
-end
-
-function GuildFrame_OnLoad(self)
-    -- Initialize side panel functionality first, like the close button
-    SidePanel_OnLoad(self);
-    
-    self:RegisterEvent("GUILD_COMMAND_RESULT", GuildFrame_OnGuildCommandResult);
-    self:RegisterEvent("GUILD_INVITE_SENT", GuildFrame_OnInviteSent);
-    self:RegisterEvent("GUILD_LEFT", GuildFrame_OnLeft);
-    self:RegisterEvent("GUILD_INVITE_DECLINED", GuildFrame_OnInviteDeclined);
-    self:RegisterEvent("GUILD_EVENT", GuildFrame_OnEvent);
-    self:RegisterEvent("GUILD_REMOVED", GuildFrame_OnRemoved);
-    self:RegisterEvent("GUILD_ROSTER_UPDATE", GuildRoster_Update);
-    
-    -- Set up the scroll frame
-    local scrollBar = GuildRosterScrollBar;
-    scrollBar:SetMinimum(0);
-    scrollBar:SetMaximum(math.max(0, #GUILD_DATA.members - GUILD_ROSTER_MAX_DISPLAY));
-    scrollBar:SetValue(0);
-    scrollBar:SetOnValueChangedHandler(function(self, value) 
-        GUILD_ROSTER_OFFSET = math.floor(value + 0.5);
-        GuildRoster_Update();
-    end);
-    
-    -- Initialize the guild info
-    GuildFrame:GetChild(0):SetText(GetGuildName());
-    GuildMOTDLabel:SetText(GetGuildMOTD());
-    
-    -- Set up the action buttons
-    GuildInviteButton:SetClickedHandler(GuildFrame_InviteClicked);
-    GuildKickButton:SetClickedHandler(GuildFrame_KickClicked);
-    
-    -- Disable action buttons initially
-    GuildFrame_UpdateActionButtons();
-end
-
-function GuildFrame_OnShow(self)
-    GuildFrame:GetChild(0):SetText(GetGuildName());
-    GuildMOTDLabel:SetText(GetGuildMOTD());
-    GuildRoster();
-end
-
--- Guild roster functions
-function GuildRoster_Update()
-    local frame = GuildFrame;
-    local listContent = GuildRosterListContent;
-    local scrollBar = GuildRosterScrollBar;
-
-    -- Refresh the MOTD label from the latest data
-    GuildMOTDLabel:SetText(GetGuildMOTD());
-    
-    -- Update guild member data
-    GUILD_DATA.members = {};
-
-    local numMembers = GetNumGuildMembers();
-    for i = 1, numMembers do
-        local member = GetGuildMemberInfo(i - 1);
-        if (member) then
-            table.insert(GUILD_DATA.members, {
-                name = member.name,
-                rank = member.rank,
-                level = member.level,
-                class = member.className,
-                race = member.raceName,
-                status = member.online and 1 or 0
-            });
-        end
-    end
-
-    -- Sort the guild roster
-    GUILD_DATA.members = GuildRoster_SortMembers();
-    
-    -- Update the scroll bar
-    local maxValue = math.max(0, #GUILD_DATA.members - GUILD_ROSTER_MAX_DISPLAY);
-    scrollBar:SetMaximum(maxValue);
-
-    if (GUILD_ROSTER_OFFSET > maxValue) then
-        GUILD_ROSTER_OFFSET = maxValue;
-        scrollBar:SetValue(maxValue);
-    end
-    
-    -- Update the member buttons
-    for i = 1, GUILD_ROSTER_MAX_DISPLAY do
-        local button = listContent:GetChild(i - 1);
-        local memberIndex = i + GUILD_ROSTER_OFFSET;
-        
-        if (memberIndex <= #GUILD_DATA.members) then
-            local member = GUILD_DATA.members[memberIndex];
-            -- Format the text to display all the member info
-            local statusColor = member.status == 1 and "FF00FF00" or "FF888888";
-
-            --button:SetText(text);
-            button:GetChild(0):SetText(member.name);
-            button:GetChild(0):SetProperty("TextColor", statusColor);
-            button:GetChild(1):SetText(tostring(member.level));
-            button:GetChild(1):SetProperty("TextColor", statusColor);
-            button:GetChild(2):SetText(member.status and "Online" or "Offline");
-            button:GetChild(2):SetProperty("TextColor", statusColor);
-
-            button:SetEnabled(true);
-            button:Show();
-            
-            -- Highlight the selected member
-            if (GUILD_ROSTER_SELECTED_INDEX and memberIndex == GUILD_ROSTER_SELECTED_INDEX) then
-                button:SetChecked(true);
-            else
-                button:SetChecked(false);
-            end
-        else
-            button:SetEnabled(false);
-            button:Hide();
-        end
-    end
-    
-    -- Update action buttons based on selection
-    GuildFrame_UpdateActionButtons();
-end
-
-function GuildRoster_SortMembers()
-    local members = {};
-    
-    -- Copy the members table
-    for i, member in ipairs(GUILD_DATA.members) do
-        members[i] = {};
-        for k, v in pairs(member) do
-            members[i][k] = v;
-        end
-    end
-    
-    -- Sort the members
-    table.sort(members, function(a, b)
-        local aValue = a[GUILD_ROSTER_SORT_COLUMN];
-        local bValue = b[GUILD_ROSTER_SORT_COLUMN];
-        
-        -- Special handling for level which should be sorted numerically
-        if (GUILD_ROSTER_SORT_COLUMN == "level") then
-            aValue = tonumber(aValue);
-            bValue = tonumber(bValue);
-        end
-        
-        if (GUILD_ROSTER_SORT_ASCENDING) then
-            return aValue < bValue;
-        else
-            return aValue > bValue;
-        end
-    end);
-    
-    return members;
-end
-
-function GuildRoster_SortByColumn(self, column)
-    -- If clicking the same column, toggle the sort direction
-    if (GUILD_ROSTER_SORT_COLUMN == column) then
-        GUILD_ROSTER_SORT_ASCENDING = not GUILD_ROSTER_SORT_ASCENDING;
-    else
-        GUILD_ROSTER_SORT_COLUMN = column;
-        GUILD_ROSTER_SORT_ASCENDING = true;
-    end
-    
-    GuildRoster_Update();
-end
-
-function GuildRoster_SelectMember(self)
-    local id = self.id;
-    GUILD_ROSTER_SELECTED_INDEX = id + GUILD_ROSTER_OFFSET;
-    GuildRoster_Update();
-	InfoUserFrame_Toggle();
-	InfoUserFrame_UpdateActionButtons();
-
-    InfoUserFrame:ClearAnchors();
-    InfoUserFrame:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, GuildFrame, 0);
-    InfoUserFrame:SetAnchor(AnchorPoint.LEFT, AnchorPoint.RIGHT, GuildFrame, 0);
-end
-
--- Guild action button functions
-function GuildFrame_UpdateActionButtons()
-    local frame = GuildFrame;
-    local actionFrame = GuildActionButtonsFrame;
-    
-    -- Enable/disable buttons based on selection
-    local hasSelection = GUILD_ROSTER_SELECTED_INDEX ~= nil;
-    
-    GuildKickButton:SetEnabled(CanGuildRemove() and hasSelection);
-    
-    -- Invite button is always enabled
-    GuildInviteButton:SetEnabled(true);
-end
-
-function GuildFrame_InviteClicked(self)
-    -- In a real implementation, this would open a dialog to enter a player name
-    -- For now, just show a message
-    ChatFrame:AddMessage("Guild invite dialog would open here", 1.0, 1.0, 0.0);
-end
-
-function GuildFrame_PromoteClicked(self)
-    if (GUILD_ROSTER_SELECTED_INDEX) then
-        local member = GUILD_DATA.members[GUILD_ROSTER_SELECTED_INDEX];
-        GuildPromoteByName(member.name);
-    end
-end
-
-function GuildFrame_DemoteClicked(self)
-    if (GUILD_ROSTER_SELECTED_INDEX) then
-        local member = GUILD_DATA.members[GUILD_ROSTER_SELECTED_INDEX];
-        GuildDemoteByName(member.name);
-    end
-end
-
-function GuildFrame_KickClicked(self)
-    if (GUILD_ROSTER_SELECTED_INDEX) then
-        local member = GUILD_DATA.members[GUILD_ROSTER_SELECTED_INDEX];
-        GuildUninviteByName(member.name);
-    end
-end
-
-function GuildFrame_Toggle()
-    if GuildFrame:IsVisible() then
+    if event == "DISBANDED" then
         HideUIPanel(GuildFrame);
-        InfoUserFrame:Hide();
-    else
-        if (IsInGuild()) then
-            ShowUIPanel(GuildFrame);
-        else
-            ChatFrame:AddMessage(Localize("GUILD_NOT_IN_GUILD"), 1.0, 1.0, 0.0);
-        end
+    elseif IsInGuild() then
+        GuildRoster();
     end
 end
 
-
-function InfoUserFrame_OnLoad(self)
-	-- Initialize side panel functionality first, like the close button
-    SidePanel_OnLoad(self);
-    
-    -- Localize quest log text
-    self:GetChild(0):SetText(Localize("INFO"));
-	
-	InfoUserFrame_UpdateActionButtons();
+function GuildFrame_UpdateActionButtons()
+	local member = GuildFindMember(guildSelectedName);
+	local player = GetUnit("player");
+	local social = member ~= nil and member.online and player ~= nil and member.name ~= player:GetName();
+	GuildInviteButton:SetEnabled(IsInGuild() and CanGuildInvite());
+	UserPromoteButton:SetEnabled(GuildCanManage(member, "promote"));
+	UserDemoteButton:SetEnabled(GuildCanManage(member, "demote"));
+	UserKickButton:SetEnabled(GuildCanManage(member, "remove"));
+	GuildWhisperButton:SetEnabled(social);
+	GuildGroupButton:SetEnabled(social);
+	if member then
+		GuildMemberDetails:Show();
+		GuildSelectionHint:Hide();
+		UserName:SetText(member.name);
+		UserDescription:SetText(string.format(Localize("GUILD_PLAYER_DESCRIPTION"), member.level, member.raceName, member.className));
+		UserRank:SetText(string.format(Localize("GUILD_PLAYER_RANK"), member.rank));
+		UserStatus:SetText(Localize(member.online and "FRIEND_ONLINE" or "FRIEND_OFFLINE"));
+		UserStatus:SetProperty("TextColor", member.online and "FF86DE56" or "FFAAA396");
+	else
+		guildSelectedName = nil;
+		GuildMemberDetails:Hide();
+		GuildSelectionHint:Show();
+	end
 end
 
-function InfoUserFrame_OnShow(self)
-	local user = GUILD_DATA.members[GUILD_ROSTER_SELECTED_INDEX];
-
-	UserName:SetText(user.name);
-	UserDescription:SetText(string.format(Localize("GUILD_PLAYER_DESCRIPTION"), user.level, user.race, user.class));
-	UserZone:SetText(string.format(Localize("GUILD_PLAYER_ZONE"), GetZoneText()));
-	UserRank:SetText(string.format(Localize("GUILD_PLAYER_RANK"), user.rank));
+function GuildRoster_Update()
+	if guildUpdating then return; end
+	guildUpdating = true;
+	guildMembers = {};
+	local online = 0;
+	for i = 0, GetNumGuildMembers() - 1 do
+		local member = GetGuildMemberInfo(i);
+		if member then
+			table.insert(guildMembers, { name=member.name, level=member.level, rank=member.rank, rankIndex=member.rankIndex, status=member.online and 1 or 0 });
+			if member.online then online = online + 1; end
+		end
+	end
+	table.sort(guildMembers, function(a,b)
+		local av = a[guildSortColumn];
+		local bv = b[guildSortColumn];
+		if av == bv then return a.name < b.name; end
+		if guildSortAscending then return av < bv; end
+		return av > bv;
+	end);
+	GuildFrame:GetChild(0):SetText(GetGuildName());
+	GuildMOTDLabel:SetText(GetGuildMOTD());
+	GuildRosterSummary:SetText(string.format(Localize("GUILD_ROSTER_SUMMARY"), online, #guildMembers));
+	local maximum = math.max(0, #guildMembers - GUILD_ROSTER_MAX_DISPLAY);
+	guildOffset = math.max(0, math.min(guildOffset, maximum));
+	GuildRosterScrollBar:SetMaximum(maximum);
+	GuildRosterScrollBar:SetValue(guildOffset);
+	GuildRosterScrollBar:SetEnabled(maximum > 0);
+	if maximum > 0 then GuildRosterScrollBar:Show(); else GuildRosterScrollBar:Hide(); end
+	for i = 1, GUILD_ROSTER_MAX_DISPLAY do
+		local row = _G["GuildMemberButton" .. i];
+		local member = guildMembers[i + guildOffset];
+		row.userData = member and member.name or nil;
+		row:SetChecked(member ~= nil and member.name == guildSelectedName);
+		if member then
+			row:GetChild(0):SetText(member.name);
+			row:GetChild(0):SetProperty("TextColor", member.status == 1 and "FFF3CF50" or "FFBDB6A8");
+			row:GetChild(1):SetText(tostring(member.level));
+			row:GetChild(2):SetText(member.rank);
+			row:GetChild(3):SetText(Localize(member.status == 1 and "FRIEND_ONLINE" or "FRIEND_OFFLINE"));
+			row:GetChild(3):SetProperty("TextColor", member.status == 1 and "FF86DE56" or "FFAAA396");
+			row:Show();
+		else row:Hide(); end
+	end
+	GuildFrame_UpdateActionButtons();
+	guildUpdating = false;
 end
 
-function InfoUserFrame_UpdateActionButtons()
-    local frame = InfoUserFrame;
-    
-    -- Enable/disable buttons based on selection
-    local hasSelection = GUILD_ROSTER_SELECTED_INDEX ~= nil;
-    
-    UserPromoteButton:SetEnabled(CanGuildPromote() and hasSelection);
-    UserKickButton:SetEnabled(CanGuildRemove() and hasSelection);
+function GuildRoster_SelectMember(row)
+	guildSelectedName = row.userData;
+	GuildRoster_Update();
 end
-
-function InfoUserFrame_Toggle()
-	if InfoUserFrame:IsVisible() then
-        InfoUserFrame:Hide();
-    else
-        InfoUserFrame:Show();
-    end
+function GuildRoster_SortByColumn(self, column)
+	if guildSortColumn == column then guildSortAscending = not guildSortAscending;
+	else guildSortColumn = column; guildSortAscending = true; end
+	guildOffset = 0;
+	GuildRoster_Update();
+end
+function GuildFrame_InviteClicked()
+	if IsInGuild() and CanGuildInvite() then StaticDialog_Show("GUILD_SEND_INVITE"); end
+end
+function GuildFrame_SendInvite()
+	if not GuildFrame:IsVisible() or not IsInGuild() or not CanGuildInvite() then return; end
+	local name = StaticDialog.editBox:GetText():match("^%s*(.-)%s*$");
+	if name ~= "" then GuildInviteByName(name); end
+end
+function GuildFrame_PromoteClicked()
+	local member = GuildFindMember(guildSelectedName);
+	if GuildCanManage(member, "promote") then GuildPromoteByName(member.name); end
+end
+function GuildFrame_DemoteClicked()
+	local member = GuildFindMember(guildSelectedName);
+	if GuildCanManage(member, "demote") then GuildDemoteByName(member.name); end
+end
+function GuildFrame_KickClicked()
+	local member = GuildFindMember(guildSelectedName);
+	if GuildCanManage(member, "remove") then
+		guildPendingRemoval = member.name;
+		StaticDialog_Show("GUILD_REMOVE_MEMBER", member.name);
+	end
+end
+function GuildFrame_ConfirmRemove()
+	local member = GuildFindMember(guildPendingRemoval);
+	guildPendingRemoval = nil;
+	if GuildFrame:IsVisible() and GuildCanManage(member, "remove") then GuildUninviteByName(member.name); end
+end
+function GuildFrame_GroupClicked()
+	local member = GuildFindMember(guildSelectedName);
+	local player = GetUnit("player");
+	if IsInGuild() and member and member.online and player and member.name ~= player:GetName() then InviteByName(member.name); end
+end
+function GuildFrame_WhisperClicked()
+	local member = GuildFindMember(guildSelectedName);
+	if member and member.online then
+		ChatFrame_WhisperTarget = member.name;
+		ChatType = "WHISPER";
+		ChatEdit_UpdateHeader();
+		if not ChatInputFrame:IsVisible() then ChatFrame_OpenChat(); end
+	end
+end
+function GuildFrame_OnHide(self)
+	guildPendingRemoval = nil;
+	if StaticDialog and StaticDialog:IsVisible() and (StaticDialog.which == "GUILD_SEND_INVITE" or StaticDialog.which == "GUILD_REMOVE_MEMBER") then
+		StaticDialog_Hide();
+	end
+end
+function GuildFrame_OnShow(self)
+	GuildRoster_Update();
+	GuildRoster();
+end
+function GuildFrame_Toggle()
+	if GuildFrame:IsVisible() then HideUIPanel(GuildFrame);
+	elseif IsInGuild() then ShowUIPanel(GuildFrame);
+	else ChatFrame:AddMessage(Localize("GUILD_NOT_IN_GUILD"), 1, 1, 0); end
+end
+function GuildFrame_OnLoad(self)
+	SidePanel_OnLoad(self);
+	self:RegisterEvent("GUILD_COMMAND_RESULT", GuildFrame_OnGuildCommandResult);
+	self:RegisterEvent("GUILD_INVITE_SENT", GuildFrame_OnInviteSent);
+	self:RegisterEvent("GUILD_LEFT", GuildFrame_OnLeft);
+	self:RegisterEvent("GUILD_INVITE_DECLINED", GuildFrame_OnInviteDeclined);
+	self:RegisterEvent("GUILD_EVENT", GuildFrame_OnEvent);
+	self:RegisterEvent("GUILD_REMOVED", GuildFrame_OnRemoved);
+	self:RegisterEvent("GUILD_ROSTER_UPDATE", GuildRoster_Update);
+	GuildRosterScrollBar:SetMinimum(0);
+	GuildRosterScrollBar:SetMaximum(0);
+	GuildRosterScrollBar:SetStep(1);
+	GuildRosterScrollBar:SetValue(0);
+	GuildRosterScrollBar:SetOnValueChangedHandler(function(self, value)
+		if not guildUpdating then guildOffset = math.floor(value + 0.5); GuildRoster_Update(); end
+	end);
+	GuildRosterFrame:SetOnMouseWheelHandler(function(self, delta)
+		if GuildRosterScrollBar:IsEnabled(true) then GuildRosterScrollBar:SetValue(GuildRosterScrollBar:GetValue() - delta); end
+	end);
+	for i = 1, GUILD_ROSTER_MAX_DISPLAY do
+		local row = _G["GuildMemberButton" .. i];
+		row:SetClickedHandler(GuildRoster_SelectMember);
+		for j = 0, row:GetChildCount()-1 do
+			local child = row:GetChild(j);
+			child:SetOnEnterHandler(function() row:SetButtonState(ButtonState.HOVERED); end);
+			child:SetOnLeaveHandler(function() row:SetButtonState(ButtonState.NORMAL); end);
+		end
+	end
+	GuildFrame_UpdateActionButtons();
 end

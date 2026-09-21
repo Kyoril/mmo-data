@@ -142,6 +142,18 @@ StaticDialogs["TRADE_REQUEST"] = {
 	whileDead = false
 };
 
+-- Outgoing guild actions are separate from the incoming GUILD_INVITE prompt.
+StaticDialogs["GUILD_SEND_INVITE"] = {
+	text = Localize("GUILD_INVITE_PROMPT"), button1 = Localize("ACCEPT"), button2 = Localize("CANCEL"),
+	hasEditBox = true, timeout = 0, exclusive = false,
+	OnAccept = function() GuildFrame_SendInvite(); end
+};
+StaticDialogs["GUILD_REMOVE_MEMBER"] = {
+	text = Localize("GUILD_REMOVE_CONFIRM"), button1 = Localize("YES"), button2 = Localize("NO"),
+	timeout = 0, exclusive = false,
+	OnAccept = function() GuildFrame_ConfirmRemove(); end
+};
+
 function StaticDialog_OnLoad(self)
 
 end

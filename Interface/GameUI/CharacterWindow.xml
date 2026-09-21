@@ -763,7 +763,7 @@
 							</Size>
 							<Anchor point="TOP" offset="68" />
 							<Anchor point="LEFT" offset="16" />
-							<Anchor point="RIGHT" offset="-176" />
+							<Anchor point="RIGHT" offset="-168" />
 						</Area>
 					</Frame>
 					<Frame name="CharacterStat0" inherits="CharacterStatValueTemplate" id="0">
@@ -802,7 +802,7 @@
 							</Size>
 							<Anchor point="TOP" offset="140" />
 							<Anchor point="LEFT" offset="16" />
-							<Anchor point="RIGHT" offset="-176" />
+							<Anchor point="RIGHT" offset="-168" />
 						</Area>
 					</Frame>
 					<Frame name="CharacterStat1" inherits="CharacterStatValueTemplate" id="1">
@@ -841,7 +841,7 @@
 							</Size>
 							<Anchor point="TOP" offset="212" />
 							<Anchor point="LEFT" offset="16" />
-							<Anchor point="RIGHT" offset="-176" />
+							<Anchor point="RIGHT" offset="-168" />
 						</Area>
 					</Frame>
 					<Frame name="CharacterStat2" inherits="CharacterStatValueTemplate" id="2">
@@ -880,7 +880,7 @@
 							</Size>
 							<Anchor point="TOP" offset="284" />
 							<Anchor point="LEFT" offset="16" />
-							<Anchor point="RIGHT" offset="-176" />
+							<Anchor point="RIGHT" offset="-168" />
 						</Area>
 					</Frame>
 					<Frame name="CharacterStat3" inherits="CharacterStatValueTemplate" id="3">
@@ -919,7 +919,7 @@
 							</Size>
 							<Anchor point="TOP" offset="356" />
 							<Anchor point="LEFT" offset="16" />
-							<Anchor point="RIGHT" offset="-176" />
+							<Anchor point="RIGHT" offset="-168" />
 						</Area>
 					</Frame>
 					<Frame name="CharacterStat4" inherits="CharacterStatValueTemplate" id="4">
@@ -1003,7 +1003,7 @@
 							</Size>
 							<Anchor point="TOP" offset="68" />
 							<Anchor point="LEFT" offset="16" />
-							<Anchor point="RIGHT" offset="-160" />
+							<Anchor point="RIGHT" offset="-152" />
 						</Area>
 					</Frame>
 					<Frame name="CharacterArmorStat" inherits="CharacterStatValueTemplate">
@@ -1025,7 +1025,7 @@
 							</Size>
 							<Anchor point="TOP" offset="132" />
 							<Anchor point="LEFT" offset="16" />
-							<Anchor point="RIGHT" offset="-160" />
+							<Anchor point="RIGHT" offset="-152" />
 						</Area>
 					</Frame>
 					<Frame name="CharacterDamageStat" inherits="CharacterStatValueTemplate">
@@ -1047,7 +1047,7 @@
 							</Size>
 							<Anchor point="TOP" offset="196" />
 							<Anchor point="LEFT" offset="16" />
-							<Anchor point="RIGHT" offset="-160" />
+							<Anchor point="RIGHT" offset="-152" />
 						</Area>
 					</Frame>
 					<Frame name="CharacterAttackPowerStat" inherits="CharacterStatValueTemplate">
@@ -1069,7 +1069,7 @@
 							</Size>
 							<Anchor point="TOP" offset="260" />
 							<Anchor point="LEFT" offset="16" />
-							<Anchor point="RIGHT" offset="-160" />
+							<Anchor point="RIGHT" offset="-152" />
 						</Area>
 					</Frame>
 					<Frame name="CharacterAttackTimeStat" inherits="CharacterStatValueTemplate">
