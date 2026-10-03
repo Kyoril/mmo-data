@@ -160,6 +160,8 @@ strings =
 
 	(key = "INSTANT", string = "Instantané")
 	(key = "CAST_FORMAT", string = "Agit en %s")
+	(key = "CHANNELED", string = "Canalisé")
+	(key = "CHANNELED_FORMAT", string = "Canalisé pendant %s")
 	(key = "MANA", string = "Mana")
 	(key = "RAGE", string = "Rage")
 	(key = "ENERGY", string = "Énergie")

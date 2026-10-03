@@ -491,7 +491,15 @@ function GameTooltip_SetSpell(spell)
         GameTooltip_AddLine(Localize("PASSIVE"), TOOLTIP_LINE_LEFT, "FF888888");
     else
         local effectiveCastTime = GetSpellEffectiveCastTime(spell.id);
-        if (effectiveCastTime == 0) then
+        if (IsChanneledSpell(spell)) then
+            -- A channel's cast time is how long it is channeled, not a wait before it goes off
+            if (effectiveCastTime == 0) then
+                GameTooltip_AddLine(Localize("CHANNELED"), TOOLTIP_LINE_LEFT);
+            else
+                local channelFormat = Localize("CHANNELED_FORMAT");
+                GameTooltip_AddLine(string.format(channelFormat, FormatDurationAmount(effectiveCastTime / 1000.0) .. " " .. Localize("SECONDS")), TOOLTIP_LINE_LEFT);
+            end
+        elseif (effectiveCastTime == 0) then
             GameTooltip_AddLine(Localize("INSTANT"), TOOLTIP_LINE_LEFT);
         else
             local castFormat = Localize("CAST_FORMAT");

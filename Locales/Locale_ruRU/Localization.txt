@@ -155,6 +155,8 @@ strings =
 	(key = "COOLDOWN_FORMAT", string = "Восстановление: %s")
 	(key = "INSTANT", string = "Instant")
 	(key = "CAST_FORMAT", string = "%s cast")
+	(key = "CHANNELED", string = "Channeled")
+	(key = "CHANNELED_FORMAT", string = "Channeled over %s")
 	(key = "LEVEL_REQUIREMENT_FORMAT", string = "Requires level %d")
 
 	(key = "MANA", string = "Mana")
