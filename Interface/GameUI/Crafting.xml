@@ -1,0 +1,1712 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!-- Copyright (C) 2019 - 2025, Kyoril. All rights reserved. -->
+<UiLayout xmlns="http://www.w3schools.com/Ui">
+	<Script file="Crafting.lua" />
+	<Script file="CraftingMockData.lua" />
+	<Font name="CraftingFont" file="Fonts/FRIZQT__.TTF" size="24" outline="0" shadowX="1" shadowY="1" />
+	<Frame name="CraftingButton" type="Button" renderer="CheckboxRenderer">
+		<Property name="CraftingTextColor" value="FFEED37C" />
+		<Property name="Font" value="CraftingFont" />
+		<Property name="Checkable" value="true" />
+		<Visual>
+			<ImagerySection name="NormalSurface">
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF29231B" />
+				<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="FFAD9470" />
+				<TextComponent color="$CraftingTextColor" horzAlign="LEFT" vertAlign="CENTER">
+					<Area>
+						<Inset left="20" right="20" />
+					</Area>
+				</TextComponent>
+			</ImagerySection>
+			<StateImagery name="Normal">
+				<Layer>
+					<Section section="NormalSurface" />
+				</Layer>
+			</StateImagery>
+			<ImagerySection name="HoveredSurface">
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF29231B" />
+				<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="FFAD9470" />
+				<TextComponent color="$CraftingTextColor" horzAlign="LEFT" vertAlign="CENTER">
+					<Area>
+						<Inset left="20" right="20" />
+					</Area>
+				</TextComponent>
+			</ImagerySection>
+			<StateImagery name="Hovered">
+				<Layer>
+					<Section section="HoveredSurface" />
+				</Layer>
+			</StateImagery>
+			<ImagerySection name="PushedSurface">
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF29231B" />
+				<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="FFAD9470" />
+				<TextComponent color="$CraftingTextColor" horzAlign="LEFT" vertAlign="CENTER">
+					<Area>
+						<Inset left="20" right="20" />
+					</Area>
+				</TextComponent>
+			</ImagerySection>
+			<StateImagery name="Pushed">
+				<Layer>
+					<Section section="PushedSurface" />
+				</Layer>
+			</StateImagery>
+			<ImagerySection name="DisabledSurface">
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF29231B" />
+				<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="FFAD9470" />
+				<TextComponent color="FF808080" horzAlign="LEFT" vertAlign="CENTER">
+					<Area>
+						<Inset left="20" right="20" />
+					</Area>
+				</TextComponent>
+			</ImagerySection>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="DisabledSurface" />
+				</Layer>
+			</StateImagery>
+			<ImagerySection name="NormalCheckedSurface">
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF513A20" />
+				<BorderComponent texture="Interface/GameUI/fg4_borders_01_28_2_result.htex" borderSize="24" tint="FFE0BB78" />
+				<TextComponent color="$CraftingTextColor" horzAlign="LEFT" vertAlign="CENTER">
+					<Area>
+						<Inset left="20" right="20" />
+					</Area>
+				</TextComponent>
+			</ImagerySection>
+			<StateImagery name="NormalChecked">
+				<Layer>
+					<Section section="NormalCheckedSurface" />
+				</Layer>
+			</StateImagery>
+			<ImagerySection name="HoveredCheckedSurface">
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF513A20" />
+				<BorderComponent texture="Interface/GameUI/fg4_borders_01_28_2_result.htex" borderSize="24" tint="FFE0BB78" />
+				<TextComponent color="$CraftingTextColor" horzAlign="LEFT" vertAlign="CENTER">
+					<Area>
+						<Inset left="20" right="20" />
+					</Area>
+				</TextComponent>
+			</ImagerySection>
+			<StateImagery name="HoveredChecked">
+				<Layer>
+					<Section section="HoveredCheckedSurface" />
+				</Layer>
+			</StateImagery>
+			<ImagerySection name="PushedCheckedSurface">
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF513A20" />
+				<BorderComponent texture="Interface/GameUI/fg4_borders_01_28_2_result.htex" borderSize="24" tint="FFE0BB78" />
+				<TextComponent color="$CraftingTextColor" horzAlign="LEFT" vertAlign="CENTER">
+					<Area>
+						<Inset left="20" right="20" />
+					</Area>
+				</TextComponent>
+			</ImagerySection>
+			<StateImagery name="PushedChecked">
+				<Layer>
+					<Section section="PushedCheckedSurface" />
+				</Layer>
+			</StateImagery>
+			<ImagerySection name="DisabledCheckedSurface">
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF513A20" />
+				<BorderComponent texture="Interface/GameUI/fg4_borders_01_28_2_result.htex" borderSize="24" tint="FFE0BB78" />
+				<TextComponent color="FF808080" horzAlign="LEFT" vertAlign="CENTER">
+					<Area>
+						<Inset left="20" right="20" />
+					</Area>
+				</TextComponent>
+			</ImagerySection>
+			<StateImagery name="DisabledChecked">
+				<Layer>
+					<Section section="DisabledCheckedSurface" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+	</Frame>
+	<Frame name="CraftingIcon" renderer="DefaultRenderer">
+		<Property name="Icon" value="" />
+		<Property name="Clickable" value="false" />
+		<Visual>
+			<ImagerySection name="Icon">
+				<ImageComponent>
+					<PropertyValue property="Icon" />
+				</ImageComponent>
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Icon" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+	</Frame>
+	<Frame name="CraftingBar" type="ProgressBar">
+		<Property name="Font" value="CraftingFont" />
+		<Property name="Clickable" value="false" />
+		<Visual>
+			<ImagerySection name="Background">
+				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Background" />
+				</Layer>
+			</StateImagery>
+			<ImagerySection name="Progress">
+				<ImageComponent texture="Interface/fg4_gradientWhiteV1_result.htex" tiling="HORZ" tint="FFFFFFFF" />
+			</ImagerySection>
+			<StateImagery name="Progress">
+				<Layer>
+					<Section section="Progress" />
+				</Layer>
+			</StateImagery>
+			<ImagerySection name="Overlay">
+				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" />
+				<TextComponent color="FFE2DCCD" horzAlign="CENTER" vertAlign="CENTER" />
+			</ImagerySection>
+			<StateImagery name="Overlay">
+				<Layer>
+					<Section section="Overlay" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+	</Frame>
+	<Frame name="CraftingRecipeButton" type="Button" renderer="CheckboxRenderer">
+		<Property name="CraftingTextColor" value="FFEED37C" />
+		<Property name="Checkable" value="false" />
+		<Property name="Font" value="CraftingFont" />
+		<Visual>
+			<ImagerySection name="NormalSurface">
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF211D17" />
+				<TextComponent color="$CraftingTextColor" horzAlign="LEFT" vertAlign="CENTER">
+					<Area>
+						<Inset left="40" right="16" />
+					</Area>
+				</TextComponent>
+			</ImagerySection>
+			<StateImagery name="Normal">
+				<Layer>
+					<Section section="NormalSurface" />
+				</Layer>
+			</StateImagery>
+			<ImagerySection name="HoveredSurface">
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF453321" />
+				<TextComponent color="$CraftingTextColor" horzAlign="LEFT" vertAlign="CENTER">
+					<Area>
+						<Inset left="40" right="16" />
+					</Area>
+				</TextComponent>
+			</ImagerySection>
+			<StateImagery name="Hovered">
+				<Layer>
+					<Section section="HoveredSurface" />
+				</Layer>
+			</StateImagery>
+			<ImagerySection name="PushedSurface">
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF302217" />
+				<TextComponent color="$CraftingTextColor" horzAlign="LEFT" vertAlign="CENTER">
+					<Area>
+						<Inset left="40" right="16" />
+					</Area>
+				</TextComponent>
+			</ImagerySection>
+			<StateImagery name="Pushed">
+				<Layer>
+					<Section section="PushedSurface" />
+				</Layer>
+			</StateImagery>
+			<ImagerySection name="DisabledSurface">
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF211D17" />
+				<TextComponent color="$CraftingTextColor" horzAlign="LEFT" vertAlign="CENTER">
+					<Area>
+						<Inset left="40" right="16" />
+					</Area>
+				</TextComponent>
+			</ImagerySection>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="DisabledSurface" />
+				</Layer>
+			</StateImagery>
+			<ImagerySection name="NormalCheckedSurface">
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF4C3820" />
+				<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="FFE0BC79" />
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FFFFD100">
+					<Area>
+						<Inset left="4" right="490" top="12" bottom="12" />
+					</Area>
+				</ImageComponent>
+				<TextComponent color="$CraftingTextColor" horzAlign="LEFT" vertAlign="CENTER">
+					<Area>
+						<Inset left="40" right="16" />
+					</Area>
+				</TextComponent>
+			</ImagerySection>
+			<StateImagery name="NormalChecked">
+				<Layer>
+					<Section section="NormalCheckedSurface" />
+				</Layer>
+			</StateImagery>
+			<ImagerySection name="HoveredCheckedSurface">
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF453321" />
+				<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="FFE0BC79" />
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FFFFD100">
+					<Area>
+						<Inset left="4" right="490" top="12" bottom="12" />
+					</Area>
+				</ImageComponent>
+				<TextComponent color="$CraftingTextColor" horzAlign="LEFT" vertAlign="CENTER">
+					<Area>
+						<Inset left="40" right="16" />
+					</Area>
+				</TextComponent>
+			</ImagerySection>
+			<StateImagery name="HoveredChecked">
+				<Layer>
+					<Section section="HoveredCheckedSurface" />
+				</Layer>
+			</StateImagery>
+			<ImagerySection name="PushedCheckedSurface">
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF302217" />
+				<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="FFE0BC79" />
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FFFFD100">
+					<Area>
+						<Inset left="4" right="490" top="12" bottom="12" />
+					</Area>
+				</ImageComponent>
+				<TextComponent color="$CraftingTextColor" horzAlign="LEFT" vertAlign="CENTER">
+					<Area>
+						<Inset left="40" right="16" />
+					</Area>
+				</TextComponent>
+			</ImagerySection>
+			<StateImagery name="PushedChecked">
+				<Layer>
+					<Section section="PushedCheckedSurface" />
+				</Layer>
+			</StateImagery>
+			<ImagerySection name="DisabledCheckedSurface">
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF4C3820" />
+				<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="FFE0BC79" />
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FFFFD100">
+					<Area>
+						<Inset left="4" right="490" top="12" bottom="12" />
+					</Area>
+				</ImageComponent>
+				<TextComponent color="$CraftingTextColor" horzAlign="LEFT" vertAlign="CENTER">
+					<Area>
+						<Inset left="40" right="16" />
+					</Area>
+				</TextComponent>
+			</ImagerySection>
+			<StateImagery name="DisabledChecked">
+				<Layer>
+					<Section section="DisabledCheckedSurface" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+	</Frame>
+	<Frame name="CraftingCategoryButton" type="Button" renderer="ButtonRenderer">
+		<Property name="CraftingTextColor" value="FFEED37C" />
+		<Property name="Checkable" value="false" />
+		<Property name="Font" value="CraftingFont" />
+		<Visual>
+			<ImagerySection name="NormalSurface">
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF3D2B1C" />
+				<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="FFB09A73" />
+				<TextComponent color="FFEED37C" horzAlign="LEFT" vertAlign="CENTER">
+					<Area>
+						<Inset left="20" right="16" />
+					</Area>
+				</TextComponent>
+			</ImagerySection>
+			<StateImagery name="Normal">
+				<Layer>
+					<Section section="NormalSurface" />
+				</Layer>
+			</StateImagery>
+			<ImagerySection name="HoveredSurface">
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF62462C" />
+				<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="FFB09A73" />
+				<TextComponent color="FFEED37C" horzAlign="LEFT" vertAlign="CENTER">
+					<Area>
+						<Inset left="20" right="16" />
+					</Area>
+				</TextComponent>
+			</ImagerySection>
+			<StateImagery name="Hovered">
+				<Layer>
+					<Section section="HoveredSurface" />
+				</Layer>
+			</StateImagery>
+			<ImagerySection name="PushedSurface">
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF302217" />
+				<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="FFB09A73" />
+				<TextComponent color="FFEED37C" horzAlign="LEFT" vertAlign="CENTER">
+					<Area>
+						<Inset left="20" right="16" />
+					</Area>
+				</TextComponent>
+			</ImagerySection>
+			<StateImagery name="Pushed">
+				<Layer>
+					<Section section="PushedSurface" />
+				</Layer>
+			</StateImagery>
+			<ImagerySection name="DisabledSurface">
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF3D2B1C" />
+				<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="FFB09A73" />
+				<TextComponent color="FFEED37C" horzAlign="LEFT" vertAlign="CENTER">
+					<Area>
+						<Inset left="20" right="16" />
+					</Area>
+				</TextComponent>
+			</ImagerySection>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="DisabledSurface" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+	</Frame>
+	<Frame name="CraftingProfessionCard" type="Button" renderer="ButtonRenderer">
+		<Property name="CraftingTextColor" value="FFEED37C" />
+		<Property name="Checkable" value="false" />
+		<Property name="Font" value="CraftingFont" />
+		<Visual>
+			<ImagerySection name="NormalSurface">
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF30291F" />
+				<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="FFB09A73" />
+			</ImagerySection>
+			<StateImagery name="Normal">
+				<Layer>
+					<Section section="NormalSurface" />
+				</Layer>
+			</StateImagery>
+			<ImagerySection name="HoveredSurface">
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF493621" />
+				<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="FFB09A73" />
+			</ImagerySection>
+			<StateImagery name="Hovered">
+				<Layer>
+					<Section section="HoveredSurface" />
+				</Layer>
+			</StateImagery>
+			<ImagerySection name="PushedSurface">
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF211A14" />
+				<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="FFB09A73" />
+			</ImagerySection>
+			<StateImagery name="Pushed">
+				<Layer>
+					<Section section="PushedSurface" />
+				</Layer>
+			</StateImagery>
+			<ImagerySection name="DisabledSurface">
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF211A14" />
+				<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="FFB09A73" />
+			</ImagerySection>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="DisabledSurface" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+	</Frame>
+	<Frame name="CraftingReagentIconTemplate" type="Button" renderer="ButtonRenderer">
+		<Property name="Icon" value="Interface/Icons/Items/Tex_meat_11_b.htex" />
+		<Property name="IconColor" value="FFFFFFFF" />
+		<Property name="Background" value="Textures/Character/T_EV_BlankWhite_01.htex" />
+		<Property name="BackgroundColor" value="FF15120F" />
+		<Property name="QualityColor" value="FFFFFFFF" />
+		<Property name="QualityBorder" value="false" />
+		<Property name="DragEnabled" value="false" />
+		<Property name="DropEnabled" value="false" />
+		<Visual>
+			<ImagerySection name="Background">
+				<ImageComponent tint="$BackgroundColor">
+					<Area>
+						<Inset all="16" />
+					</Area>
+					<PropertyValue property="Background" />
+				</ImageComponent>
+			</ImagerySection>
+			<ImagerySection name="Image">
+				<ImageComponent tint="$IconColor">
+					<Area>
+						<Inset all="16" />
+					</Area>
+					<PropertyValue property="Icon" />
+				</ImageComponent>
+			</ImagerySection>
+			<ImagerySection name="Text">
+				<TextComponent horzAlign="RIGHT" vertAlign="BOTTOM">
+					<Area>
+						<Inset all="16" />
+					</Area>
+				</TextComponent>
+			</ImagerySection>
+			<ImagerySection name="NormalFrame">
+				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="$QualityColor" />
+			</ImagerySection>
+			<ImagerySection name="HoveredFrame">
+				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="$QualityColor" />
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="30FFFFFF" />
+			</ImagerySection>
+			<ImagerySection name="PushedFrame">
+				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="$QualityColor" />
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="50000000" />
+			</ImagerySection>
+			<ImagerySection name="DisabledFrame">
+				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="$QualityColor" />
+			</ImagerySection>
+			<StateImagery name="Normal">
+				<Layer>
+					<Section section="NormalFrame" />
+					<Section section="Background" />
+					<Section section="Image" />
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Hovered">
+				<Layer>
+					<Section section="HoveredFrame" />
+					<Section section="Background" />
+					<Section section="Image" />
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Pushed">
+				<Layer>
+					<Section section="PushedFrame" />
+					<Section section="Background" />
+					<Section section="Image" />
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="DisabledFrame" />
+					<Section section="Background" />
+					<Section section="Image" />
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+	</Frame>
+	<Frame name="CraftingFrame" parent="GameParent" renderer="DefaultRenderer">
+		<Property name="Visible" value="false" />
+		<Area>
+			<Size>
+				<AbsDimension x="1480" y="1200" />
+			</Size>
+			<Anchor point="LEFT" offset="0" />
+			<Anchor point="TOP" offset="300" />
+		</Area>
+		<Visual>
+			<ImagerySection name="Surface">
+				<BorderComponent texture="Interface/GameUI/Alestia/WindowPanel.htex" borderSize="32" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Surface" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+		<Frame name="CraftingTitle" inherits="TitleBar">
+			<Property name="Text" value="CRAFT_TITLE" />
+			<Area>
+				<Size>
+					<AbsDimension x="1432" y="90" />
+				</Size>
+				<Anchor point="LEFT" offset="24" />
+				<Anchor point="TOP" offset="24" />
+			</Area>
+		</Frame>
+		<Frame name="CraftingOverview" type="Frame" renderer="DefaultRenderer">
+			<Area>
+				<Size>
+					<AbsDimension x="1416" y="970" />
+				</Size>
+				<Anchor point="LEFT" offset="32" />
+				<Anchor point="TOP" offset="126" />
+			</Area>
+			<Visual>
+				<ImagerySection name="Surface">
+					<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF181611" />
+					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFD0B68B" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Surface" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+			<Frame name="CraftingProfession1" inherits="CraftingProfessionCard">
+				<Property name="Font" value="AlestiaWindowTitleFont" />
+				<Property name="Checkable" value="false" />
+				<Area>
+					<Size>
+						<AbsDimension x="680" y="150" />
+					</Size>
+					<Anchor point="LEFT" offset="12" />
+					<Anchor point="TOP" offset="24" />
+				</Area>
+				<Frame name="CraftingProfessionName1" inherits="TextSmall">
+					<Property name="MousePassThrough" value="true" />
+					<Property name="Font" value="CraftingFont" />
+					<Property name="TextColor" value="FFE2DCCD" />
+					<Property name="Clickable" value="false" />
+					<Property name="Text" value="CRAFT_MINING" />
+					<Area>
+						<Size>
+							<AbsDimension x="520" y="44" />
+						</Size>
+						<Anchor point="LEFT" offset="132" />
+						<Anchor point="TOP" offset="24" />
+					</Area>
+				</Frame>
+				<Frame name="CraftingProfessionSkill1" inherits="CraftingBar">
+					<Property name="MousePassThrough" value="true" />
+					<Property name="Font" value="CraftingFont" />
+					<Property name="TextColor" value="FFB9A26A" />
+					<Property name="Clickable" value="false" />
+					<Area>
+						<Size>
+							<AbsDimension x="520" y="36" />
+						</Size>
+						<Anchor point="LEFT" offset="132" />
+						<Anchor point="TOP" offset="82" />
+					</Area>
+				</Frame>
+				<Frame name="CraftingProfessionIcon1" inherits="CraftingIcon">
+					<Property name="Clickable" value="false" />
+					<Property name="MousePassThrough" value="true" />
+					<Area>
+						<Size>
+							<AbsDimension x="88" y="88" />
+						</Size>
+						<Anchor point="LEFT" offset="24" />
+						<Anchor point="TOP" offset="28" />
+					</Area>
+				</Frame>
+			</Frame>
+			<Frame name="CraftingProfession2" inherits="CraftingProfessionCard">
+				<Property name="Font" value="AlestiaWindowTitleFont" />
+				<Property name="Checkable" value="false" />
+				<Area>
+					<Size>
+						<AbsDimension x="680" y="150" />
+					</Size>
+					<Anchor point="LEFT" offset="712" />
+					<Anchor point="TOP" offset="24" />
+				</Area>
+				<Frame name="CraftingProfessionName2" inherits="TextSmall">
+					<Property name="MousePassThrough" value="true" />
+					<Property name="Font" value="CraftingFont" />
+					<Property name="TextColor" value="FFE2DCCD" />
+					<Property name="Clickable" value="false" />
+					<Property name="Text" value="CRAFT_BLACKSMITH" />
+					<Area>
+						<Size>
+							<AbsDimension x="520" y="44" />
+						</Size>
+						<Anchor point="LEFT" offset="132" />
+						<Anchor point="TOP" offset="24" />
+					</Area>
+				</Frame>
+				<Frame name="CraftingProfessionSkill2" inherits="CraftingBar">
+					<Property name="MousePassThrough" value="true" />
+					<Property name="Font" value="CraftingFont" />
+					<Property name="TextColor" value="FFB9A26A" />
+					<Property name="Clickable" value="false" />
+					<Area>
+						<Size>
+							<AbsDimension x="520" y="36" />
+						</Size>
+						<Anchor point="LEFT" offset="132" />
+						<Anchor point="TOP" offset="82" />
+					</Area>
+				</Frame>
+				<Frame name="CraftingProfessionIcon2" inherits="CraftingIcon">
+					<Property name="Clickable" value="false" />
+					<Property name="MousePassThrough" value="true" />
+					<Area>
+						<Size>
+							<AbsDimension x="88" y="88" />
+						</Size>
+						<Anchor point="LEFT" offset="24" />
+						<Anchor point="TOP" offset="28" />
+					</Area>
+				</Frame>
+			</Frame>
+			<Frame name="CraftingProfession3" inherits="CraftingProfessionCard">
+				<Property name="Font" value="AlestiaWindowTitleFont" />
+				<Property name="Checkable" value="false" />
+				<Area>
+					<Size>
+						<AbsDimension x="680" y="150" />
+					</Size>
+					<Anchor point="LEFT" offset="12" />
+					<Anchor point="TOP" offset="190" />
+				</Area>
+				<Frame name="CraftingProfessionName3" inherits="TextSmall">
+					<Property name="MousePassThrough" value="true" />
+					<Property name="Font" value="CraftingFont" />
+					<Property name="TextColor" value="FFE2DCCD" />
+					<Property name="Clickable" value="false" />
+					<Property name="Text" value="CRAFT_TAILOR" />
+					<Area>
+						<Size>
+							<AbsDimension x="520" y="44" />
+						</Size>
+						<Anchor point="LEFT" offset="132" />
+						<Anchor point="TOP" offset="24" />
+					</Area>
+				</Frame>
+				<Frame name="CraftingProfessionSkill3" inherits="CraftingBar">
+					<Property name="MousePassThrough" value="true" />
+					<Property name="Font" value="CraftingFont" />
+					<Property name="TextColor" value="FFB9A26A" />
+					<Property name="Clickable" value="false" />
+					<Area>
+						<Size>
+							<AbsDimension x="520" y="36" />
+						</Size>
+						<Anchor point="LEFT" offset="132" />
+						<Anchor point="TOP" offset="82" />
+					</Area>
+				</Frame>
+				<Frame name="CraftingProfessionIcon3" inherits="CraftingIcon">
+					<Property name="Clickable" value="false" />
+					<Property name="MousePassThrough" value="true" />
+					<Area>
+						<Size>
+							<AbsDimension x="88" y="88" />
+						</Size>
+						<Anchor point="LEFT" offset="24" />
+						<Anchor point="TOP" offset="28" />
+					</Area>
+				</Frame>
+			</Frame>
+			<Frame name="CraftingProfession4" inherits="CraftingProfessionCard">
+				<Property name="Font" value="AlestiaWindowTitleFont" />
+				<Property name="Checkable" value="false" />
+				<Area>
+					<Size>
+						<AbsDimension x="680" y="150" />
+					</Size>
+					<Anchor point="LEFT" offset="712" />
+					<Anchor point="TOP" offset="190" />
+				</Area>
+				<Frame name="CraftingProfessionName4" inherits="TextSmall">
+					<Property name="MousePassThrough" value="true" />
+					<Property name="Font" value="CraftingFont" />
+					<Property name="TextColor" value="FFE2DCCD" />
+					<Property name="Clickable" value="false" />
+					<Property name="Text" value="CRAFT_LEATHERWORK" />
+					<Area>
+						<Size>
+							<AbsDimension x="520" y="44" />
+						</Size>
+						<Anchor point="LEFT" offset="132" />
+						<Anchor point="TOP" offset="24" />
+					</Area>
+				</Frame>
+				<Frame name="CraftingProfessionSkill4" inherits="CraftingBar">
+					<Property name="MousePassThrough" value="true" />
+					<Property name="Font" value="CraftingFont" />
+					<Property name="TextColor" value="FFB9A26A" />
+					<Property name="Clickable" value="false" />
+					<Area>
+						<Size>
+							<AbsDimension x="520" y="36" />
+						</Size>
+						<Anchor point="LEFT" offset="132" />
+						<Anchor point="TOP" offset="82" />
+					</Area>
+				</Frame>
+				<Frame name="CraftingProfessionIcon4" inherits="CraftingIcon">
+					<Property name="Clickable" value="false" />
+					<Property name="MousePassThrough" value="true" />
+					<Area>
+						<Size>
+							<AbsDimension x="88" y="88" />
+						</Size>
+						<Anchor point="LEFT" offset="24" />
+						<Anchor point="TOP" offset="28" />
+					</Area>
+				</Frame>
+			</Frame>
+			<Frame name="CraftingProfession5" inherits="CraftingProfessionCard">
+				<Property name="Font" value="AlestiaWindowTitleFont" />
+				<Property name="Checkable" value="false" />
+				<Area>
+					<Size>
+						<AbsDimension x="680" y="150" />
+					</Size>
+					<Anchor point="LEFT" offset="12" />
+					<Anchor point="TOP" offset="356" />
+				</Area>
+				<Frame name="CraftingProfessionName5" inherits="TextSmall">
+					<Property name="MousePassThrough" value="true" />
+					<Property name="Font" value="CraftingFont" />
+					<Property name="TextColor" value="FFE2DCCD" />
+					<Property name="Clickable" value="false" />
+					<Property name="Text" value="CRAFT_ALCHEMY" />
+					<Area>
+						<Size>
+							<AbsDimension x="520" y="44" />
+						</Size>
+						<Anchor point="LEFT" offset="132" />
+						<Anchor point="TOP" offset="24" />
+					</Area>
+				</Frame>
+				<Frame name="CraftingProfessionSkill5" inherits="CraftingBar">
+					<Property name="MousePassThrough" value="true" />
+					<Property name="Font" value="CraftingFont" />
+					<Property name="TextColor" value="FFB9A26A" />
+					<Property name="Clickable" value="false" />
+					<Area>
+						<Size>
+							<AbsDimension x="520" y="36" />
+						</Size>
+						<Anchor point="LEFT" offset="132" />
+						<Anchor point="TOP" offset="82" />
+					</Area>
+				</Frame>
+				<Frame name="CraftingProfessionIcon5" inherits="CraftingIcon">
+					<Property name="Clickable" value="false" />
+					<Property name="MousePassThrough" value="true" />
+					<Area>
+						<Size>
+							<AbsDimension x="88" y="88" />
+						</Size>
+						<Anchor point="LEFT" offset="24" />
+						<Anchor point="TOP" offset="28" />
+					</Area>
+				</Frame>
+			</Frame>
+			<Frame name="CraftingProfession6" inherits="CraftingProfessionCard">
+				<Property name="Font" value="AlestiaWindowTitleFont" />
+				<Property name="Checkable" value="false" />
+				<Area>
+					<Size>
+						<AbsDimension x="680" y="150" />
+					</Size>
+					<Anchor point="LEFT" offset="712" />
+					<Anchor point="TOP" offset="356" />
+				</Area>
+				<Frame name="CraftingProfessionName6" inherits="TextSmall">
+					<Property name="MousePassThrough" value="true" />
+					<Property name="Font" value="CraftingFont" />
+					<Property name="TextColor" value="FFE2DCCD" />
+					<Property name="Clickable" value="false" />
+					<Property name="Text" value="CRAFT_ENCHANTING" />
+					<Area>
+						<Size>
+							<AbsDimension x="520" y="44" />
+						</Size>
+						<Anchor point="LEFT" offset="132" />
+						<Anchor point="TOP" offset="24" />
+					</Area>
+				</Frame>
+				<Frame name="CraftingProfessionSkill6" inherits="CraftingBar">
+					<Property name="MousePassThrough" value="true" />
+					<Property name="Font" value="CraftingFont" />
+					<Property name="TextColor" value="FFB9A26A" />
+					<Property name="Clickable" value="false" />
+					<Area>
+						<Size>
+							<AbsDimension x="520" y="36" />
+						</Size>
+						<Anchor point="LEFT" offset="132" />
+						<Anchor point="TOP" offset="82" />
+					</Area>
+				</Frame>
+				<Frame name="CraftingProfessionIcon6" inherits="CraftingIcon">
+					<Property name="Clickable" value="false" />
+					<Property name="MousePassThrough" value="true" />
+					<Area>
+						<Size>
+							<AbsDimension x="88" y="88" />
+						</Size>
+						<Anchor point="LEFT" offset="24" />
+						<Anchor point="TOP" offset="28" />
+					</Area>
+				</Frame>
+			</Frame>
+			<Frame name="CraftingProfession7" inherits="CraftingProfessionCard">
+				<Property name="Font" value="AlestiaWindowTitleFont" />
+				<Property name="Checkable" value="false" />
+				<Area>
+					<Size>
+						<AbsDimension x="680" y="150" />
+					</Size>
+					<Anchor point="LEFT" offset="12" />
+					<Anchor point="TOP" offset="522" />
+				</Area>
+				<Frame name="CraftingProfessionName7" inherits="TextSmall">
+					<Property name="MousePassThrough" value="true" />
+					<Property name="Font" value="CraftingFont" />
+					<Property name="TextColor" value="FFE2DCCD" />
+					<Property name="Clickable" value="false" />
+					<Property name="Text" value="CRAFT_ENGINEER" />
+					<Area>
+						<Size>
+							<AbsDimension x="520" y="44" />
+						</Size>
+						<Anchor point="LEFT" offset="132" />
+						<Anchor point="TOP" offset="24" />
+					</Area>
+				</Frame>
+				<Frame name="CraftingProfessionSkill7" inherits="CraftingBar">
+					<Property name="MousePassThrough" value="true" />
+					<Property name="Font" value="CraftingFont" />
+					<Property name="TextColor" value="FFB9A26A" />
+					<Property name="Clickable" value="false" />
+					<Area>
+						<Size>
+							<AbsDimension x="520" y="36" />
+						</Size>
+						<Anchor point="LEFT" offset="132" />
+						<Anchor point="TOP" offset="82" />
+					</Area>
+				</Frame>
+				<Frame name="CraftingProfessionIcon7" inherits="CraftingIcon">
+					<Property name="Clickable" value="false" />
+					<Property name="MousePassThrough" value="true" />
+					<Area>
+						<Size>
+							<AbsDimension x="88" y="88" />
+						</Size>
+						<Anchor point="LEFT" offset="24" />
+						<Anchor point="TOP" offset="28" />
+					</Area>
+				</Frame>
+			</Frame>
+			<Frame name="CraftingProfession8" inherits="CraftingProfessionCard">
+				<Property name="Font" value="AlestiaWindowTitleFont" />
+				<Property name="Checkable" value="false" />
+				<Area>
+					<Size>
+						<AbsDimension x="680" y="150" />
+					</Size>
+					<Anchor point="LEFT" offset="712" />
+					<Anchor point="TOP" offset="522" />
+				</Area>
+				<Frame name="CraftingProfessionName8" inherits="TextSmall">
+					<Property name="MousePassThrough" value="true" />
+					<Property name="Font" value="CraftingFont" />
+					<Property name="TextColor" value="FFE2DCCD" />
+					<Property name="Clickable" value="false" />
+					<Property name="Text" value="CRAFT_COOKING" />
+					<Area>
+						<Size>
+							<AbsDimension x="520" y="44" />
+						</Size>
+						<Anchor point="LEFT" offset="132" />
+						<Anchor point="TOP" offset="24" />
+					</Area>
+				</Frame>
+				<Frame name="CraftingProfessionSkill8" inherits="CraftingBar">
+					<Property name="MousePassThrough" value="true" />
+					<Property name="Font" value="CraftingFont" />
+					<Property name="TextColor" value="FFB9A26A" />
+					<Property name="Clickable" value="false" />
+					<Area>
+						<Size>
+							<AbsDimension x="520" y="36" />
+						</Size>
+						<Anchor point="LEFT" offset="132" />
+						<Anchor point="TOP" offset="82" />
+					</Area>
+				</Frame>
+				<Frame name="CraftingProfessionIcon8" inherits="CraftingIcon">
+					<Property name="Clickable" value="false" />
+					<Property name="MousePassThrough" value="true" />
+					<Area>
+						<Size>
+							<AbsDimension x="88" y="88" />
+						</Size>
+						<Anchor point="LEFT" offset="24" />
+						<Anchor point="TOP" offset="28" />
+					</Area>
+				</Frame>
+			</Frame>
+			<Frame name="CraftingProfession9" inherits="CraftingProfessionCard">
+				<Property name="Font" value="AlestiaWindowTitleFont" />
+				<Property name="Checkable" value="false" />
+				<Area>
+					<Size>
+						<AbsDimension x="680" y="150" />
+					</Size>
+					<Anchor point="LEFT" offset="12" />
+					<Anchor point="TOP" offset="688" />
+				</Area>
+				<Frame name="CraftingProfessionName9" inherits="TextSmall">
+					<Property name="MousePassThrough" value="true" />
+					<Property name="Font" value="CraftingFont" />
+					<Property name="TextColor" value="FFE2DCCD" />
+					<Property name="Clickable" value="false" />
+					<Property name="Text" value="CRAFT_FIRST_AID" />
+					<Area>
+						<Size>
+							<AbsDimension x="520" y="44" />
+						</Size>
+						<Anchor point="LEFT" offset="132" />
+						<Anchor point="TOP" offset="24" />
+					</Area>
+				</Frame>
+				<Frame name="CraftingProfessionSkill9" inherits="CraftingBar">
+					<Property name="MousePassThrough" value="true" />
+					<Property name="Font" value="CraftingFont" />
+					<Property name="TextColor" value="FFB9A26A" />
+					<Property name="Clickable" value="false" />
+					<Area>
+						<Size>
+							<AbsDimension x="520" y="36" />
+						</Size>
+						<Anchor point="LEFT" offset="132" />
+						<Anchor point="TOP" offset="82" />
+					</Area>
+				</Frame>
+				<Frame name="CraftingProfessionIcon9" inherits="CraftingIcon">
+					<Property name="Clickable" value="false" />
+					<Property name="MousePassThrough" value="true" />
+					<Area>
+						<Size>
+							<AbsDimension x="88" y="88" />
+						</Size>
+						<Anchor point="LEFT" offset="24" />
+						<Anchor point="TOP" offset="28" />
+					</Area>
+				</Frame>
+			</Frame>
+			<Frame name="CraftingProfession10" inherits="CraftingProfessionCard">
+				<Property name="Font" value="AlestiaWindowTitleFont" />
+				<Property name="Checkable" value="false" />
+				<Area>
+					<Size>
+						<AbsDimension x="680" y="150" />
+					</Size>
+					<Anchor point="LEFT" offset="712" />
+					<Anchor point="TOP" offset="688" />
+				</Area>
+				<Frame name="CraftingProfessionName10" inherits="TextSmall">
+					<Property name="MousePassThrough" value="true" />
+					<Property name="Font" value="CraftingFont" />
+					<Property name="TextColor" value="FFE2DCCD" />
+					<Property name="Clickable" value="false" />
+					<Property name="Text" value="CRAFT_FISHING" />
+					<Area>
+						<Size>
+							<AbsDimension x="520" y="44" />
+						</Size>
+						<Anchor point="LEFT" offset="132" />
+						<Anchor point="TOP" offset="24" />
+					</Area>
+				</Frame>
+				<Frame name="CraftingProfessionSkill10" inherits="CraftingBar">
+					<Property name="MousePassThrough" value="true" />
+					<Property name="Font" value="CraftingFont" />
+					<Property name="TextColor" value="FFB9A26A" />
+					<Property name="Clickable" value="false" />
+					<Area>
+						<Size>
+							<AbsDimension x="520" y="36" />
+						</Size>
+						<Anchor point="LEFT" offset="132" />
+						<Anchor point="TOP" offset="82" />
+					</Area>
+				</Frame>
+				<Frame name="CraftingProfessionIcon10" inherits="CraftingIcon">
+					<Property name="Clickable" value="false" />
+					<Property name="MousePassThrough" value="true" />
+					<Area>
+						<Size>
+							<AbsDimension x="88" y="88" />
+						</Size>
+						<Anchor point="LEFT" offset="24" />
+						<Anchor point="TOP" offset="28" />
+					</Area>
+				</Frame>
+			</Frame>
+		</Frame>
+		<Frame name="CraftingRecipes">
+			<Property name="Visible" value="false" />
+			<Area>
+				<Size>
+					<AbsDimension x="1416" y="1008" />
+				</Size>
+				<Anchor point="LEFT" offset="32" />
+				<Anchor point="TOP" offset="126" />
+			</Area>
+			<Frame name="CraftingActionPanel" renderer="DefaultRenderer">
+				<Property name="MousePassThrough" value="true" />
+				<Area>
+					<Size>
+						<AbsDimension x="778" y="74" />
+					</Size>
+					<Anchor point="LEFT" offset="638" />
+					<Anchor point="TOP" offset="934" />
+				</Area>
+				<Visual>
+					<ImagerySection name="Surface">
+						<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF211C15" />
+						<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFD0B68B" />
+					</ImagerySection>
+					<StateImagery name="Enabled">
+						<Layer>
+							<Section section="Surface" />
+						</Layer>
+					</StateImagery>
+				</Visual>
+			</Frame>
+			<Frame name="CraftingBack" inherits="GlueButton">
+				<Property name="Font" value="CraftingFont" />
+				<Property name="Text" value="CRAFT_BACK" />
+				<Property name="Checkable" value="false" />
+				<Area>
+					<Size>
+						<AbsDimension x="380" y="68" />
+					</Size>
+					<Anchor point="LEFT" offset="12" />
+					<Anchor point="TOP" offset="0" />
+				</Area>
+			</Frame>
+			<Frame name="CraftingSkill" inherits="CraftingBar">
+				<Area>
+					<Size>
+						<AbsDimension x="992" y="46" />
+					</Size>
+					<Anchor point="LEFT" offset="412" />
+					<Anchor point="TOP" offset="10" />
+				</Area>
+			</Frame>
+			<Frame name="CraftingSearchLabel" inherits="TextSmall">
+				<Property name="Font" value="CraftingFont" />
+				<Property name="TextColor" value="FFE2DCCD" />
+				<Property name="Clickable" value="false" />
+				<Property name="Text" value="CRAFT_SEARCH" />
+				<Area>
+					<Size>
+						<AbsDimension x="240" y="40" />
+					</Size>
+					<Anchor point="LEFT" offset="24" />
+					<Anchor point="TOP" offset="82" />
+				</Area>
+			</Frame>
+			<Frame name="CraftingSearch" inherits="GameTextField">
+				<Property name="Font" value="CraftingFont" />
+				<Area>
+					<Size>
+						<AbsDimension x="450" y="64" />
+					</Size>
+					<Anchor point="LEFT" offset="12" />
+					<Anchor point="TOP" offset="122" />
+				</Area>
+			</Frame>
+			<Frame name="CraftingFilter" inherits="GlueButton">
+				<Property name="Font" value="CraftingFont" />
+				<Property name="Text" value="CRAFT_FILTER" />
+				<Property name="Checkable" value="false" />
+				<Area>
+					<Size>
+						<AbsDimension x="150" y="68" />
+					</Size>
+					<Anchor point="LEFT" offset="474" />
+					<Anchor point="TOP" offset="122" />
+				</Area>
+			</Frame>
+			<Frame name="CraftingList" type="Frame" renderer="DefaultRenderer">
+				<Area>
+					<Size>
+						<AbsDimension x="612" y="760" />
+					</Size>
+					<Anchor point="LEFT" offset="12" />
+					<Anchor point="TOP" offset="206" />
+				</Area>
+				<Visual>
+					<ImagerySection name="Surface">
+						<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF15130F" />
+						<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFD0B68B" />
+					</ImagerySection>
+					<StateImagery name="Enabled">
+						<Layer>
+							<Section section="Surface" />
+						</Layer>
+					</StateImagery>
+				</Visual>
+				<Frame name="CraftingRow1" inherits="CraftingRecipeButton">
+					<Property name="Checkable" value="false" />
+					<Area>
+						<Size>
+							<AbsDimension x="500" y="76" />
+						</Size>
+						<Anchor point="LEFT" offset="12" />
+						<Anchor point="TOP" offset="16" />
+					</Area>
+				</Frame>
+				<Frame name="CraftingRow2" inherits="CraftingRecipeButton">
+					<Property name="Checkable" value="false" />
+					<Area>
+						<Size>
+							<AbsDimension x="500" y="76" />
+						</Size>
+						<Anchor point="LEFT" offset="12" />
+						<Anchor point="TOP" offset="96" />
+					</Area>
+				</Frame>
+				<Frame name="CraftingRow3" inherits="CraftingRecipeButton">
+					<Property name="Checkable" value="false" />
+					<Area>
+						<Size>
+							<AbsDimension x="500" y="76" />
+						</Size>
+						<Anchor point="LEFT" offset="12" />
+						<Anchor point="TOP" offset="176" />
+					</Area>
+				</Frame>
+				<Frame name="CraftingRow4" inherits="CraftingRecipeButton">
+					<Property name="Checkable" value="false" />
+					<Area>
+						<Size>
+							<AbsDimension x="500" y="76" />
+						</Size>
+						<Anchor point="LEFT" offset="12" />
+						<Anchor point="TOP" offset="256" />
+					</Area>
+				</Frame>
+				<Frame name="CraftingRow5" inherits="CraftingRecipeButton">
+					<Property name="Checkable" value="false" />
+					<Area>
+						<Size>
+							<AbsDimension x="500" y="76" />
+						</Size>
+						<Anchor point="LEFT" offset="12" />
+						<Anchor point="TOP" offset="336" />
+					</Area>
+				</Frame>
+				<Frame name="CraftingRow6" inherits="CraftingRecipeButton">
+					<Property name="Checkable" value="false" />
+					<Area>
+						<Size>
+							<AbsDimension x="500" y="76" />
+						</Size>
+						<Anchor point="LEFT" offset="12" />
+						<Anchor point="TOP" offset="416" />
+					</Area>
+				</Frame>
+				<Frame name="CraftingRow7" inherits="CraftingRecipeButton">
+					<Property name="Checkable" value="false" />
+					<Area>
+						<Size>
+							<AbsDimension x="500" y="76" />
+						</Size>
+						<Anchor point="LEFT" offset="12" />
+						<Anchor point="TOP" offset="496" />
+					</Area>
+				</Frame>
+				<Frame name="CraftingRow8" inherits="CraftingRecipeButton">
+					<Property name="Checkable" value="false" />
+					<Area>
+						<Size>
+							<AbsDimension x="500" y="76" />
+						</Size>
+						<Anchor point="LEFT" offset="12" />
+						<Anchor point="TOP" offset="576" />
+					</Area>
+				</Frame>
+				<Frame name="CraftingRow9" inherits="CraftingRecipeButton">
+					<Property name="Checkable" value="false" />
+					<Area>
+						<Size>
+							<AbsDimension x="500" y="76" />
+						</Size>
+						<Anchor point="LEFT" offset="12" />
+						<Anchor point="TOP" offset="656" />
+					</Area>
+				</Frame>
+				<Frame name="CraftingEmpty" inherits="TextSmall">
+					<Property name="Font" value="CraftingFont" />
+					<Property name="TextColor" value="FFE2DCCD" />
+					<Property name="Clickable" value="false" />
+					<Property name="Text" value="CRAFT_EMPTY" />
+					<Area>
+						<Size>
+							<AbsDimension x="560" y="100" />
+						</Size>
+						<Anchor point="LEFT" offset="24" />
+						<Anchor point="TOP" offset="250" />
+					</Area>
+				</Frame>
+				<Frame name="CraftingCategory1" inherits="CraftingCategoryButton">
+					<Area>
+						<Size>
+							<AbsDimension x="500" y="76" />
+						</Size>
+						<Anchor point="LEFT" offset="12" />
+						<Anchor point="TOP" offset="16" />
+					</Area>
+				</Frame>
+				<Frame name="CraftingCategory2" inherits="CraftingCategoryButton">
+					<Area>
+						<Size>
+							<AbsDimension x="500" y="76" />
+						</Size>
+						<Anchor point="LEFT" offset="12" />
+						<Anchor point="TOP" offset="96" />
+					</Area>
+				</Frame>
+				<Frame name="CraftingCategory3" inherits="CraftingCategoryButton">
+					<Area>
+						<Size>
+							<AbsDimension x="500" y="76" />
+						</Size>
+						<Anchor point="LEFT" offset="12" />
+						<Anchor point="TOP" offset="176" />
+					</Area>
+				</Frame>
+				<Frame name="CraftingCategory4" inherits="CraftingCategoryButton">
+					<Area>
+						<Size>
+							<AbsDimension x="500" y="76" />
+						</Size>
+						<Anchor point="LEFT" offset="12" />
+						<Anchor point="TOP" offset="256" />
+					</Area>
+				</Frame>
+				<Frame name="CraftingCategory5" inherits="CraftingCategoryButton">
+					<Area>
+						<Size>
+							<AbsDimension x="500" y="76" />
+						</Size>
+						<Anchor point="LEFT" offset="12" />
+						<Anchor point="TOP" offset="336" />
+					</Area>
+				</Frame>
+				<Frame name="CraftingCategory6" inherits="CraftingCategoryButton">
+					<Area>
+						<Size>
+							<AbsDimension x="500" y="76" />
+						</Size>
+						<Anchor point="LEFT" offset="12" />
+						<Anchor point="TOP" offset="416" />
+					</Area>
+				</Frame>
+				<Frame name="CraftingCategory7" inherits="CraftingCategoryButton">
+					<Area>
+						<Size>
+							<AbsDimension x="500" y="76" />
+						</Size>
+						<Anchor point="LEFT" offset="12" />
+						<Anchor point="TOP" offset="496" />
+					</Area>
+				</Frame>
+				<Frame name="CraftingCategory8" inherits="CraftingCategoryButton">
+					<Area>
+						<Size>
+							<AbsDimension x="500" y="76" />
+						</Size>
+						<Anchor point="LEFT" offset="12" />
+						<Anchor point="TOP" offset="576" />
+					</Area>
+				</Frame>
+				<Frame name="CraftingCategory9" inherits="CraftingCategoryButton">
+					<Area>
+						<Size>
+							<AbsDimension x="500" y="76" />
+						</Size>
+						<Anchor point="LEFT" offset="12" />
+						<Anchor point="TOP" offset="656" />
+					</Area>
+				</Frame>
+				<Frame name="CraftingScrollBar" inherits="VerticalScrollBar">
+					<Area>
+						<Size>
+							<AbsDimension x="96" y="744" />
+						</Size>
+						<Anchor point="LEFT" offset="516" />
+						<Anchor point="TOP" offset="8" />
+					</Area>
+				</Frame>
+			</Frame>
+			<Frame name="CraftingDetails" type="Frame" renderer="DefaultRenderer">
+				<Area>
+					<Size>
+						<AbsDimension x="754" y="794" />
+					</Size>
+					<Anchor point="LEFT" offset="650" />
+					<Anchor point="TOP" offset="86" />
+				</Area>
+				<Visual>
+					<ImagerySection name="Surface">
+						<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF211B14" />
+						<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFD0B68B" />
+					</ImagerySection>
+					<StateImagery name="Enabled">
+						<Layer>
+							<Section section="Surface" />
+						</Layer>
+					</StateImagery>
+				</Visual>
+				<Frame name="CraftingReagentPanel" renderer="DefaultRenderer">
+					<Property name="MousePassThrough" value="true" />
+					<Area>
+						<Size>
+							<AbsDimension x="722" y="540" />
+						</Size>
+						<Anchor point="LEFT" offset="16" />
+						<Anchor point="TOP" offset="232" />
+					</Area>
+					<Visual>
+						<ImagerySection name="Surface">
+							<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF171511" />
+							<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFD0B68B" />
+						</ImagerySection>
+						<StateImagery name="Enabled">
+							<Layer>
+								<Section section="Surface" />
+							</Layer>
+						</StateImagery>
+					</Visual>
+				</Frame>
+				<Frame name="CraftingSummaryPanel" renderer="DefaultRenderer">
+					<Property name="MousePassThrough" value="true" />
+					<Area>
+						<Size>
+							<AbsDimension x="722" y="198" />
+						</Size>
+						<Anchor point="LEFT" offset="16" />
+						<Anchor point="TOP" offset="16" />
+					</Area>
+					<Visual>
+						<ImagerySection name="Surface">
+							<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF30271B" />
+							<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFD0B68B" />
+						</ImagerySection>
+						<StateImagery name="Enabled">
+							<Layer>
+								<Section section="Surface" />
+							</Layer>
+						</StateImagery>
+					</Visual>
+				</Frame>
+				<Frame name="CraftingResultIcon" inherits="CraftingIcon">
+					<Area>
+						<Size>
+							<AbsDimension x="96" y="96" />
+						</Size>
+						<Anchor point="LEFT" offset="28" />
+						<Anchor point="TOP" offset="28" />
+					</Area>
+				</Frame>
+				<Frame name="CraftingResult" inherits="TextSmall">
+					<Property name="Font" value="CraftingFont" />
+					<Property name="TextColor" value="FFEED37C" />
+					<Property name="Clickable" value="false" />
+					<Area>
+						<Size>
+							<AbsDimension x="572" y="96" />
+						</Size>
+						<Anchor point="LEFT" offset="148" />
+						<Anchor point="TOP" offset="32" />
+					</Area>
+				</Frame>
+				<Frame name="CraftingFavorite" inherits="CraftingButton">
+					<Property name="Text" value="CRAFT_FAVORITE" />
+					<Property name="Checkable" value="true" />
+					<Area>
+						<Size>
+							<AbsDimension x="694" y="58" />
+						</Size>
+						<Anchor point="LEFT" offset="28" />
+						<Anchor point="TOP" offset="146" />
+					</Area>
+				</Frame>
+				<Frame name="CraftingReagentsHeading" inherits="TextSmall">
+					<Property name="Font" value="CraftingFont" />
+					<Property name="TextColor" value="FFEED37C" />
+					<Property name="Clickable" value="false" />
+					<Property name="Text" value="CRAFT_REAGENTS" />
+					<Area>
+						<Size>
+							<AbsDimension x="680" y="46" />
+						</Size>
+						<Anchor point="LEFT" offset="28" />
+						<Anchor point="TOP" offset="254" />
+					</Area>
+				</Frame>
+				<Frame name="CraftingReagent1" inherits="TextSmall">
+					<Property name="Font" value="CraftingFont" />
+					<Property name="TextColor" value="FFE2DCCD" />
+					<Property name="Clickable" value="false" />
+					<Area>
+						<Size>
+							<AbsDimension x="556" y="42" />
+						</Size>
+						<Anchor point="LEFT" offset="164" />
+						<Anchor point="TOP" offset="330" />
+					</Area>
+				</Frame>
+				<Frame name="CraftingReagent2" inherits="TextSmall">
+					<Property name="Font" value="CraftingFont" />
+					<Property name="TextColor" value="FFE2DCCD" />
+					<Property name="Clickable" value="false" />
+					<Area>
+						<Size>
+							<AbsDimension x="556" y="42" />
+						</Size>
+						<Anchor point="LEFT" offset="164" />
+						<Anchor point="TOP" offset="440" />
+					</Area>
+				</Frame>
+				<Frame name="CraftingReagent3" inherits="TextSmall">
+					<Property name="Font" value="CraftingFont" />
+					<Property name="TextColor" value="FFE2DCCD" />
+					<Property name="Clickable" value="false" />
+					<Area>
+						<Size>
+							<AbsDimension x="556" y="42" />
+						</Size>
+						<Anchor point="LEFT" offset="164" />
+						<Anchor point="TOP" offset="550" />
+					</Area>
+				</Frame>
+				<Frame name="CraftingTarget" inherits="GlueButton">
+					<Property name="Font" value="CraftingFont" />
+					<Property name="Text" value="CRAFT_TARGET_SELECT" />
+					<Property name="Checkable" value="false" />
+					<Area>
+						<Size>
+							<AbsDimension x="694" y="46" />
+						</Size>
+						<Anchor point="LEFT" offset="28" />
+						<Anchor point="TOP" offset="746" />
+					</Area>
+				</Frame>
+				<Frame name="CraftingReagentIcon1" inherits="CraftingReagentIconTemplate">
+					<Area>
+						<Size>
+							<AbsDimension x="112" y="112" />
+						</Size>
+						<Anchor point="LEFT" offset="28" />
+						<Anchor point="TOP" offset="314" />
+					</Area>
+				</Frame>
+				<Frame name="CraftingReagentIcon2" inherits="CraftingReagentIconTemplate">
+					<Area>
+						<Size>
+							<AbsDimension x="112" y="112" />
+						</Size>
+						<Anchor point="LEFT" offset="28" />
+						<Anchor point="TOP" offset="424" />
+					</Area>
+				</Frame>
+				<Frame name="CraftingReagentIcon3" inherits="CraftingReagentIconTemplate">
+					<Area>
+						<Size>
+							<AbsDimension x="112" y="112" />
+						</Size>
+						<Anchor point="LEFT" offset="28" />
+						<Anchor point="TOP" offset="534" />
+					</Area>
+				</Frame>
+				<Frame name="CraftingReagentCount1" inherits="TextSmall">
+					<Property name="Font" value="SmallLabelFont" />
+					<Property name="TextColor" value="FFB9A26A" />
+					<Property name="Clickable" value="false" />
+					<Area>
+						<Size>
+							<AbsDimension x="556" y="32" />
+						</Size>
+						<Anchor point="LEFT" offset="164" />
+						<Anchor point="TOP" offset="376" />
+					</Area>
+				</Frame>
+				<Frame name="CraftingReagentCount2" inherits="TextSmall">
+					<Property name="Font" value="SmallLabelFont" />
+					<Property name="TextColor" value="FFB9A26A" />
+					<Property name="Clickable" value="false" />
+					<Area>
+						<Size>
+							<AbsDimension x="556" y="32" />
+						</Size>
+						<Anchor point="LEFT" offset="164" />
+						<Anchor point="TOP" offset="486" />
+					</Area>
+				</Frame>
+				<Frame name="CraftingReagentCount3" inherits="TextSmall">
+					<Property name="Font" value="SmallLabelFont" />
+					<Property name="TextColor" value="FFB9A26A" />
+					<Property name="Clickable" value="false" />
+					<Area>
+						<Size>
+							<AbsDimension x="556" y="32" />
+						</Size>
+						<Anchor point="LEFT" offset="164" />
+						<Anchor point="TOP" offset="596" />
+					</Area>
+				</Frame>
+			</Frame>
+			<!-- Mock-only castbar substitute: no crafting spellcast request is sent to the server yet.
+			     Remove this frame when real crafting spells are connected. The existing spell CastBar
+			     will show progress; the spell effect will create the item and consume its reagents. -->
+			<Frame name="CraftingWork" inherits="CraftingBar">
+				<Property name="ProgressColor" value="FF9E5E22" />
+				<Area>
+					<Size>
+						<AbsDimension x="754" y="32" />
+					</Size>
+					<Anchor point="LEFT" offset="650" />
+					<Anchor point="TOP" offset="894" />
+				</Area>
+			</Frame>
+			<Frame name="CraftingAll" inherits="GlueButton">
+				<Property name="Font" value="CraftingFont" />
+				<Property name="Text" value="CRAFT_CREATE_ALL" />
+				<Property name="Checkable" value="false" />
+				<Area>
+					<Size>
+						<AbsDimension x="270" y="62" />
+					</Size>
+					<Anchor point="LEFT" offset="650" />
+					<Anchor point="TOP" offset="946" />
+				</Area>
+			</Frame>
+			<Frame name="CraftingMinus" inherits="GlueButton">
+				<Property name="Font" value="CraftingFont" />
+				<Property name="Text" value="CRAFT_MINUS" />
+				<Property name="Checkable" value="false" />
+				<Area>
+					<Size>
+						<AbsDimension x="58" y="62" />
+					</Size>
+					<Anchor point="LEFT" offset="934" />
+					<Anchor point="TOP" offset="946" />
+				</Area>
+			</Frame>
+			<Frame name="CraftingQuantity" inherits="TextSmall">
+				<Property name="Font" value="CraftingFont" />
+				<Property name="TextColor" value="FFE2DCCD" />
+				<Property name="Clickable" value="false" />
+				<Area>
+					<Size>
+						<AbsDimension x="62" y="40" />
+					</Size>
+					<Anchor point="LEFT" offset="1002" />
+					<Anchor point="TOP" offset="960" />
+				</Area>
+			</Frame>
+			<Frame name="CraftingPlus" inherits="GlueButton">
+				<Property name="Font" value="CraftingFont" />
+				<Property name="Text" value="CRAFT_PLUS" />
+				<Property name="Checkable" value="false" />
+				<Area>
+					<Size>
+						<AbsDimension x="58" y="62" />
+					</Size>
+					<Anchor point="LEFT" offset="1068" />
+					<Anchor point="TOP" offset="946" />
+				</Area>
+			</Frame>
+			<Frame name="CraftingCreate" inherits="GlueButton">
+				<Property name="Font" value="CraftingFont" />
+				<Property name="Text" value="CRAFT_CREATE" />
+				<Property name="Checkable" value="false" />
+				<Area>
+					<Size>
+						<AbsDimension x="264" y="62" />
+					</Size>
+					<Anchor point="LEFT" offset="1140" />
+					<Anchor point="TOP" offset="946" />
+				</Area>
+			</Frame>
+			<Frame name="CraftingFilterPanel" frameLevel="10" renderer="DefaultRenderer">
+				<Property name="Visible" value="false" />
+				<Area>
+					<Size>
+						<AbsDimension x="360" y="230" />
+					</Size>
+					<Anchor point="LEFT" offset="264" />
+					<Anchor point="TOP" offset="190" />
+				</Area>
+				<Visual>
+					<ImagerySection name="Surface">
+						<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF1C1712" />
+						<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFD0B68B" />
+					</ImagerySection>
+					<StateImagery name="Enabled">
+						<Layer>
+							<Section section="Surface" />
+						</Layer>
+					</StateImagery>
+				</Visual>
+				<Frame name="CraftingAvailable" inherits="CraftingButton">
+					<Property name="Font" value="SmallLabelFont" />
+					<Property name="Text" value="CRAFT_AVAILABLE" />
+					<Property name="Checkable" value="true" />
+					<Area>
+						<Size>
+							<AbsDimension x="336" y="64" />
+						</Size>
+						<Anchor point="LEFT" offset="12" />
+						<Anchor point="TOP" offset="12" />
+					</Area>
+				</Frame>
+				<Frame name="CraftingFavorites" inherits="CraftingButton">
+					<Property name="Font" value="SmallLabelFont" />
+					<Property name="Text" value="CRAFT_FAVORITES" />
+					<Property name="Checkable" value="true" />
+					<Area>
+						<Size>
+							<AbsDimension x="336" y="64" />
+						</Size>
+						<Anchor point="LEFT" offset="12" />
+						<Anchor point="TOP" offset="82" />
+					</Area>
+				</Frame>
+				<Frame name="CraftingSkillFilter" inherits="CraftingButton">
+					<Property name="Font" value="SmallLabelFont" />
+					<Property name="Text" value="CRAFT_SKILL_FILTER" />
+					<Property name="Checkable" value="true" />
+					<Area>
+						<Size>
+							<AbsDimension x="336" y="64" />
+						</Size>
+						<Anchor point="LEFT" offset="12" />
+						<Anchor point="TOP" offset="152" />
+					</Area>
+				</Frame>
+			</Frame>
+		</Frame>
+		<Frame name="CraftingStatus" inherits="TextSmall">
+			<Property name="Font" value="CraftingFont" />
+			<Property name="TextColor" value="FFB9A26A" />
+			<Property name="Clickable" value="false" />
+			<Area>
+				<Size>
+					<AbsDimension x="880" y="36" />
+				</Size>
+				<Anchor point="LEFT" offset="40" />
+				<Anchor point="TOP" offset="1148" />
+			</Area>
+		</Frame>
+		<Frame name="CraftingReset" inherits="GlueButton">
+			<Property name="Font" value="SmallLabelFont" />
+			<Property name="Text" value="CRAFT_RESET" />
+			<Property name="Checkable" value="false" />
+			<Area>
+				<Size>
+					<AbsDimension x="280" y="56" />
+				</Size>
+				<Anchor point="LEFT" offset="956" />
+				<Anchor point="TOP" offset="1136" />
+			</Area>
+		</Frame>
+		<Scripts>
+			<OnLoad>return function(this, elapsed) Crafting_OnLoad(this); end</OnLoad>
+			<OnUpdate>return function(this, elapsed) Crafting_Update(this, elapsed); end</OnUpdate>
+			<OnHide>return function(this, elapsed) Crafting_Stop(); end</OnHide>
+		</Scripts>
+	</Frame>
+</UiLayout>
