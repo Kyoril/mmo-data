@@ -150,6 +150,9 @@ strings =
 	(key = "SECONDS", string = "sec.")
 	(key = "MINUTES", string = "min.")
 	(key = "COOLDOWN", string = "Temps de recharge")
+	(key = "PASSIVE", string = "Passif")
+	(key = "RACIAL", string = "Raciale")
+	(key = "COOLDOWN_FORMAT", string = "Temps de recharge : %s")
 
 	(key = "COPPER", string = "Cuivre")
 	(key = "SILVER", string = "Argent")

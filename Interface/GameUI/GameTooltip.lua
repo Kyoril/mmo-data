@@ -442,6 +442,15 @@ function GameTooltip_SetEmote(emote)
     end
 end
 
+-- Formats a duration amount with one decimal, but drops a trailing ".0": 2 -> "2", 2.5 -> "2.5".
+local function FormatDurationAmount(amount)
+    local text = string.format("%.1f", amount);
+    if (string.sub(text, -2) == ".0") then
+        text = string.sub(text, 1, -3);
+    end
+    return text;
+end
+
 function GameTooltip_SetSpell(spell)
     local player = GetUnit("player");
 
@@ -459,6 +468,9 @@ function GameTooltip_SetSpell(spell)
             "FFFFD100",
             "FF808080"
         );
+    elseif (IsRacialSpell(spell)) then
+        -- Racial abilities have no ranks; label them in the rank's place instead
+        GameTooltip_AddDualLine(spell.name, Localize("RACIAL"), "FFFFD100", "FF808080");
     else
         GameTooltip_AddLine(spell.name, TOOLTIP_LINE_LEFT, "FFFFD100");
     end
@@ -483,18 +495,18 @@ function GameTooltip_SetSpell(spell)
             GameTooltip_AddLine(Localize("INSTANT"), TOOLTIP_LINE_LEFT);
         else
             local castFormat = Localize("CAST_FORMAT");
-            GameTooltip_AddLine(string.format(castFormat, string.format("%.1f", effectiveCastTime / 1000.0) .. " " .. Localize("SECONDS")), TOOLTIP_LINE_LEFT);
+            GameTooltip_AddLine(string.format(castFormat, FormatDurationAmount(effectiveCastTime / 1000.0) .. " " .. Localize("SECONDS")), TOOLTIP_LINE_LEFT);
         end
 
         local effectiveCooldown = GetSpellEffectiveCooldown(spell.id);
         if (effectiveCooldown ~= 0) then
             local cooldownText = "";
             if (effectiveCooldown >= 60000) then
-                cooldownText = string.format("%.1f", effectiveCooldown / 60000.0) .. " " .. Localize("MINUTES");
+                cooldownText = FormatDurationAmount(effectiveCooldown / 60000.0) .. " " .. Localize("MINUTES");
             else
-                cooldownText = string.format("%.1f", effectiveCooldown / 1000.0) .. " " .. Localize("SECONDS");
+                cooldownText = FormatDurationAmount(effectiveCooldown / 1000.0) .. " " .. Localize("SECONDS");
             end
-            GameTooltip_AddLine(cooldownText .. Localize("COOLDOWN"), TOOLTIP_LINE_LEFT);
+            GameTooltip_AddLine(string.format(Localize("COOLDOWN_FORMAT"), cooldownText), TOOLTIP_LINE_LEFT);
         end
     end
 

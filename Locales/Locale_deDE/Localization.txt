@@ -150,6 +150,9 @@ strings =
 	(key = "SECONDS", string = "Sek.")
 	(key = "MINUTES", string = "Min.")
 	(key = "COOLDOWN", string = "Abklingzeit")
+	(key = "PASSIVE", string = "Passiv")
+	(key = "RACIAL", string = "Volksfähigkeit")
+	(key = "COOLDOWN_FORMAT", string = "%s Abklingzeit")
 	
 	(key = "COPPER", string = "Kupfer")
 	(key = "SILVER", string = "Silver")
