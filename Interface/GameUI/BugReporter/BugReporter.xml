@@ -2,6 +2,51 @@
 <UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
 	<Script file="BugReporter.lua" />
 
+	<!-- Icon in an inset well. Property-bound images only bind on frames created from a template;
+	     ButtonRenderer is used for its states, the frame is not clickable. -->
+	<Frame name="BugReportIconTemplate" type="Button" renderer="ButtonRenderer">
+		<Property name="Icon" />
+		<Property name="Clickable" value="false" />
+		<Visual>
+			<ImagerySection name="Well">
+				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" />
+			</ImagerySection>
+			<ImagerySection name="Image">
+				<ImageComponent>
+					<Area><Inset all="12" /></Area>
+					<PropertyValue property="Icon" />
+				</ImageComponent>
+			</ImagerySection>
+			<StateImagery name="Normal">
+				<Layer>
+					<Section section="Well" />
+					<Section section="Image" color="FFFFFFFF" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Hovered">
+				<Layer>
+					<Section section="Well" />
+					<Section section="Image" color="FFFFFFFF" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Pushed">
+				<Layer>
+					<Section section="Well" />
+					<Section section="Image" color="FFFFFFFF" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="Well" />
+					<Section section="Image" color="FFFFFFFF" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+		<Area>
+			<Size><AbsDimension x="128" y="128" /></Size>
+		</Area>
+	</Frame>
+
 	<!-- The bug report dialog: generic, or about one item / spell / creature / quest / aura / object. -->
 	<Frame name="BugReportFrame" parent="GameParent" renderer="DefaultRenderer">
 		<Property name="Visible" value="False" />
@@ -33,26 +78,7 @@
 			</Area>
 		</Frame>
 
-		<Frame name="BugReportSubjectIcon" renderer="DefaultRenderer">
-			<Property name="Icon" />
-			<Property name="Clickable" value="false" />
-			<Visual>
-				<ImagerySection name="Well">
-					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" />
-				</ImagerySection>
-				<ImagerySection name="Image">
-					<ImageComponent>
-						<Area><Inset all="12" /></Area>
-						<PropertyValue property="Icon" />
-					</ImageComponent>
-				</ImagerySection>
-				<StateImagery name="Enabled">
-					<Layer>
-						<Section section="Well" />
-						<Section section="Image" />
-					</Layer>
-				</StateImagery>
-			</Visual>
+		<Frame name="BugReportSubjectIcon" inherits="BugReportIconTemplate">
 			<Area>
 				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="BugReportTitleBar" offset="24" />
 				<Anchor point="LEFT" offset="48" />
@@ -79,7 +105,7 @@
 				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="BugReportSubjectIcon" offset="24" />
 				<Anchor point="LEFT" offset="48" />
 				<Anchor point="RIGHT" offset="-48" />
-				<Anchor point="BOTTOM" offset="-200" />
+				<Anchor point="BOTTOM" offset="-250" />
 			</Area>
 			<Scripts>
 				<OnTextChanged>
@@ -107,13 +133,13 @@
 		</Frame>
 
 		<Frame name="BugReportStatus" inherits="TextSmall">
-			<Property name="VertAlign" value="CENTER" />
+			<Property name="VertAlign" value="TOP" />
 			<Property name="TextColor" value="FFFFFFFF" />
 			<Area>
 				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="BugReportCommentField" offset="8" />
 				<Anchor point="LEFT" offset="48" />
 				<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="BugReportCounter" offset="-16" />
-				<Size><AbsDimension y="48" /></Size>
+				<Size><AbsDimension y="96" /></Size>
 			</Area>
 		</Frame>
 
