@@ -46,4 +46,7 @@ LootMethodFrame.xml
 ContextMenu.xml
 GameTooltip.xml
 
+# In-game bug reporter (remove this line to disable the feature on the client)
+BugReporter/BugReporter.toc
+
 #DebugUI.xml

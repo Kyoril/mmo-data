@@ -1,0 +1,3 @@
+# In-game bug reporter. Remove (or comment out) the BugReporter line in GameUI.toc to disable
+# the whole feature on the client, including its F6 key binding.
+BugReporter.xml
