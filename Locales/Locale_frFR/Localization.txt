@@ -52,6 +52,12 @@ strings =
 	(key = "WORLD_SERVER_DOWN", string = "Le serveur de ce monde est fermé.")
 	(key = "REALM_DISCONNECTED", string = "Vous avez été déconnecté du royaume.")
 	(key = "KICK_REASON_LOGGED_IN_ELSEWHERE", string = "Vous avez été déconnecté car votre compte a été connecté depuis un autre endroit.\n\nSi ce n'était pas vous, quelqu'un d'autre a peut-être accès à votre compte - veuillez changer votre mot de passe immédiatement.")
+	(key = "REALM_SHUTDOWN_IN_HOURS", string = "[Système] Arrêt du royaume dans %s heures.")
+	(key = "REALM_SHUTDOWN_IN_MINUTES", string = "[Système] Arrêt du royaume dans %s minutes.")
+	(key = "REALM_SHUTDOWN_IN_MINUTE", string = "[Système] Arrêt du royaume dans %s minute.")
+	(key = "REALM_SHUTDOWN_IN_SECONDS", string = "[Système] Arrêt du royaume dans %s secondes.")
+	(key = "REALM_SHUTDOWN_CANCELLED", string = "[Système] Arrêt du royaume annulé.")
+	(key = "KICK_REASON_REALM_SHUTDOWN", string = "Vous avez été déconnecté car le royaume s'arrête.")
 	(key = "CHAR_DISABLED", string = "Désactivé")
 
 	(key = "CLOSE", string = "Fermer")

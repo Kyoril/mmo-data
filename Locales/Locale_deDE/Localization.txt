@@ -52,6 +52,12 @@ strings =
 	(key = "WORLD_SERVER_DOWN", string = "Der Welt-Server ist nicht verfügbar.")
 	(key = "REALM_DISCONNECTED", string = "Die Verbindung zum Realm-Server wurde getrennt.")
 	(key = "KICK_REASON_LOGGED_IN_ELSEWHERE", string = "Die Verbindung wurde getrennt, weil dein Account von einem anderen Ort aus angemeldet wurde.\n\nWenn du das nicht warst, hat möglicherweise jemand anderes Zugriff auf deinen Account - bitte ändere sofort dein Passwort.")
+	(key = "REALM_SHUTDOWN_IN_HOURS", string = "[System] Herunterfahren des Realms in %s Stunden.")
+	(key = "REALM_SHUTDOWN_IN_MINUTES", string = "[System] Herunterfahren des Realms in %s Minuten.")
+	(key = "REALM_SHUTDOWN_IN_MINUTE", string = "[System] Herunterfahren des Realms in %s Minute.")
+	(key = "REALM_SHUTDOWN_IN_SECONDS", string = "[System] Herunterfahren des Realms in %s Sekunden.")
+	(key = "REALM_SHUTDOWN_CANCELLED", string = "[System] Herunterfahren des Realms abgebrochen.")
+	(key = "KICK_REASON_REALM_SHUTDOWN", string = "Die Verbindung wurde getrennt, weil der Realm heruntergefahren wird.")
 	(key = "CHAR_DISABLED", string = "Deaktiviert")
 
 	(key = "CLOSE", string = "Schließen")
