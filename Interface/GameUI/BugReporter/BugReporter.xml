@@ -1,0 +1,197 @@
+<?xml version="1.0" ?>
+<UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
+	<Script file="BugReporter.lua" />
+
+	<!-- Icon in an inset well. Property-bound images only bind on frames created from a template;
+	     ButtonRenderer is used for its states, the frame is not clickable. -->
+	<Frame name="BugReportIconTemplate" type="Button" renderer="ButtonRenderer">
+		<Property name="Icon" />
+		<Property name="Clickable" value="false" />
+		<Visual>
+			<ImagerySection name="Well">
+				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" />
+			</ImagerySection>
+			<ImagerySection name="Image">
+				<ImageComponent>
+					<Area><Inset all="12" /></Area>
+					<PropertyValue property="Icon" />
+				</ImageComponent>
+			</ImagerySection>
+			<StateImagery name="Normal">
+				<Layer>
+					<Section section="Well" />
+					<Section section="Image" color="FFFFFFFF" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Hovered">
+				<Layer>
+					<Section section="Well" />
+					<Section section="Image" color="FFFFFFFF" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Pushed">
+				<Layer>
+					<Section section="Well" />
+					<Section section="Image" color="FFFFFFFF" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="Well" />
+					<Section section="Image" color="FFFFFFFF" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+		<Area>
+			<Size><AbsDimension x="128" y="128" /></Size>
+		</Area>
+	</Frame>
+
+	<!-- The bug report dialog: generic, or about one item / spell / creature / quest / aura / object. -->
+	<Frame name="BugReportFrame" parent="GameParent" renderer="DefaultRenderer">
+		<Property name="Visible" value="False" />
+
+		<Visual>
+			<ImagerySection name="Background">
+				<BorderComponent texture="Interface/GameUI/Alestia/WindowPanel.htex" borderSize="32" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Background" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+
+		<Area>
+			<Size><AbsDimension x="1200" y="1000" /></Size>
+			<Anchor point="H_CENTER" />
+			<Anchor point="V_CENTER" offset="-80" />
+		</Area>
+
+		<!-- Child 0: title bar with close button (wired by SidePanel_OnLoad). -->
+		<Frame name="BugReportTitleBar" inherits="TitleBar">
+			<Property name="Text" value="BUGREPORT_TITLE" />
+			<Area>
+				<Anchor point="TOP" offset="24" />
+				<Anchor point="LEFT" offset="24" />
+				<Anchor point="RIGHT" offset="-24" />
+			</Area>
+		</Frame>
+
+		<Frame name="BugReportSubjectIcon" inherits="BugReportIconTemplate">
+			<Area>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="BugReportTitleBar" offset="24" />
+				<Anchor point="LEFT" offset="48" />
+				<Size><AbsDimension x="128" y="128" /></Size>
+			</Area>
+		</Frame>
+
+		<Frame name="BugReportPrompt" inherits="TextSmall">
+			<Property name="Text" value="BUGREPORT_PROMPT_GENERIC" />
+			<Property name="VertAlign" value="CENTER" />
+			<Area>
+				<Anchor point="TOP" relativeTo="BugReportSubjectIcon" />
+				<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="BugReportSubjectIcon" offset="32" />
+				<Anchor point="RIGHT" offset="-48" />
+				<Size><AbsDimension y="128" /></Size>
+			</Area>
+		</Frame>
+
+		<Frame name="BugReportCommentField" inherits="GameTextField">
+			<Property name="AcceptsTab" value="False" />
+			<Property name="MultiLine" value="True" />
+			<Property name="VertAlign" value="TOP" />
+			<Area>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="BugReportSubjectIcon" offset="24" />
+				<Anchor point="LEFT" offset="48" />
+				<Anchor point="RIGHT" offset="-48" />
+				<Anchor point="BOTTOM" offset="-250" />
+			</Area>
+			<Scripts>
+				<OnTextChanged>
+					return function(this)
+						BugReportCommentField_OnTextChanged(this);
+					end
+				</OnTextChanged>
+				<OnEscapePressed>
+					return function(this)
+						BugReportFrame_Close();
+					end
+				</OnEscapePressed>
+			</Scripts>
+		</Frame>
+
+		<Frame name="BugReportCounter" inherits="TextSmall">
+			<Property name="HorzAlign" value="RIGHT" />
+			<Property name="VertAlign" value="CENTER" />
+			<Property name="TextColor" value="FFAAAAAA" />
+			<Area>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="BugReportCommentField" offset="8" />
+				<Anchor point="RIGHT" offset="-48" />
+				<Size><AbsDimension x="300" y="48" /></Size>
+			</Area>
+		</Frame>
+
+		<Frame name="BugReportStatus" inherits="TextSmall">
+			<Property name="VertAlign" value="TOP" />
+			<Property name="TextColor" value="FFFFFFFF" />
+			<Area>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="BugReportCommentField" offset="8" />
+				<Anchor point="LEFT" offset="48" />
+				<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="BugReportCounter" offset="-16" />
+				<Size><AbsDimension y="96" /></Size>
+			</Area>
+		</Frame>
+
+		<Frame name="BugReportSubmitButton" inherits="GlueButton">
+			<Property name="Text" value="BUGREPORT_SUBMIT" />
+			<Area>
+				<Anchor point="BOTTOM" offset="-40" />
+				<Anchor point="H_CENTER" />
+				<Size><AbsDimension x="360" y="80" /></Size>
+			</Area>
+			<Scripts>
+				<OnClick>
+					return function(this)
+						BugReportFrame_Submit();
+					end
+				</OnClick>
+			</Scripts>
+		</Frame>
+
+		<Scripts>
+			<OnLoad>
+				return function(this)
+					BugReportFrame_OnLoad(this);
+				end
+			</OnLoad>
+			<OnUpdate>
+				return function(this, deltaTime)
+					BugReportFrame_OnUpdate(this, deltaTime);
+				end
+			</OnUpdate>
+			<OnHide>
+				return function(this)
+					BugReportFrame_OnHide(this);
+				end
+			</OnHide>
+		</Scripts>
+	</Frame>
+
+	<!-- "Report" button in the quest log footer, next to Abandon. -->
+	<Frame name="QuestLogReportButton" inherits="GlueButton" parent="QuestLogFooter">
+		<Property name="Text" value="BUGREPORT_REPORT_QUEST" />
+		<Area>
+			<Anchor point="BOTTOM" offset="-16" />
+			<Anchor point="LEFT" offset="16" />
+			<Size><AbsDimension x="300" y="64" /></Size>
+		</Area>
+		<Scripts>
+			<OnClick>
+				return function(this)
+					BugReporter_ReportQuestLogSelection();
+				end
+			</OnClick>
+		</Scripts>
+	</Frame>
+</UiLayout>
