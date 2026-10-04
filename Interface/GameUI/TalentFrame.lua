@@ -106,7 +106,14 @@ end
 function TalentFrame_UpdateTabs()
     TalentFrameTabContainer:RemoveAllChildren()
     local count = GetNumTalentTabs()
-    local tabWidth = math.min(360, (TalentFrameTabContainer:GetWidth() / GetUIScale().x) / math.max(1, count))
+    -- The container is anchor-sized, so GetWidth() is only valid once its rect was laid out;
+    -- before the first show it reads ~0 and the tab collapsed. GetRect() resolves on demand.
+    local rect = TalentFrameTabContainer:GetRect()
+    local containerWidth = (rect.right - rect.left) / GetUIScale().x
+    if containerWidth <= 0 then
+        containerWidth = 360 * math.max(1, count)
+    end
+    local tabWidth = math.min(360, containerWidth / math.max(1, count))
     local startX = 0
 
     for index = 1, count do
