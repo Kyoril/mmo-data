@@ -218,7 +218,7 @@ function GameTooltip_SetItemTemplate(item)
 
     -- Required level
     local requiredLevel = item.requiredLevel;
-    if (requiredLevel and requiredLevel > 0) then
+    if (requiredLevel and requiredLevel > 1) then
         local player = GetUnit("player");
         local levelColor = "FFFFFFFF";
         if (player and player:GetLevel() < requiredLevel) then
@@ -348,7 +348,7 @@ function GameTooltip_SetItem(item)
 
     -- Required level
     local requiredLevel = item:GetRequiredLevel();
-    if (requiredLevel and requiredLevel > 0) then
+    if (requiredLevel and requiredLevel > 1) then
         local levelColor = "FFFFFFFF";
         if (player and player:GetLevel() < requiredLevel) then
             levelColor = "FFFF2020";
