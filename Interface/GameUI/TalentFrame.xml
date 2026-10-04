@@ -5,6 +5,7 @@
 	<Font name="TalentPointsCounterFont" file="Fonts/FRIZQT__.TTF" size="40" outline="1" />
 	<Font name="TalentTabFont" file="Fonts/FRIZQT__.TTF" size="20" outline="0" shadowX="1.0" shadowY="1.0" />
 	<Font name="TalentRankFont" file="Fonts/FRIZQT__.TTF" size="22" outline="1" shadowX="0.5" shadowY="0.5" />
+	<Font name="TalentPathFont" file="Fonts/FRIZQT__.TTF" size="34" outline="1" shadowX="1.5" shadowY="1.5" />
 
 	<Frame name="TalentFrameTabButtonTemplate" type="Button" renderer="CheckboxRenderer">
 		<Property name="Font" value="TalentTabFont" />
@@ -60,6 +61,43 @@
 			</Visual>
 			<Area><Size><AbsDimension x="64" y="38" /></Size><Anchor point="BOTTOM" offset="-2" /><Anchor point="RIGHT" offset="-2" /></Area>
 		</Frame>
+	</Frame>
+
+	<!-- Tier rings, path dividers and star dust, centered on the hub (see tools/talent_trees/make_backdrop.py). -->
+	<Frame name="TalentFrameBackdropTemplate" renderer="DefaultRenderer">
+		<Property name="Clickable" value="false" />
+		<Visual>
+			<ImagerySection name="Art"><ImageComponent texture="Interface/GameUI/TalentConstellation.htex" tint="FFFFFFFF" /></ImagerySection>
+			<StateImagery name="Enabled"><Layer><Section section="Art" /></Layer></StateImagery>
+		</Visual>
+		<Area><Size><AbsDimension x="1600" y="1600" /></Size></Area>
+	</Frame>
+
+	<!-- The class emblem every root talent connects to. -->
+	<Frame name="TalentFrameHubTemplate" renderer="DefaultRenderer">
+		<Property name="Icon" />
+		<Property name="Clickable" value="false" />
+		<Visual>
+			<ImagerySection name="Hub">
+				<ImageComponent texture="Interface/GlueUI/GlowYellow.htex" tint="88FFD58A"><Area><Inset all="-40" /></Area></ImageComponent>
+				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="FFD9C08A" />
+				<ImageComponent tint="FFFFFFFF"><Area><Inset all="22" /></Area><PropertyValue property="Icon" /></ImageComponent>
+			</ImagerySection>
+			<StateImagery name="Enabled"><Layer><Section section="Hub" /></Layer></StateImagery>
+		</Visual>
+		<Area><Size><AbsDimension x="180" y="180" /></Size></Area>
+	</Frame>
+
+	<!-- A path name on the canvas. -->
+	<Frame name="TalentFrameLabelTemplate" renderer="DefaultRenderer">
+		<Property name="Font" value="TalentPathFont" />
+		<Property name="TextColor" value="FFFFFFFF" />
+		<Property name="Clickable" value="false" />
+		<Visual>
+			<ImagerySection name="Text"><TextComponent color="$TextColor" horzAlign="CENTER" vertAlign="CENTER" /></ImagerySection>
+			<StateImagery name="Enabled"><Layer><Section section="Text" /></Layer></StateImagery>
+		</Visual>
+		<Area><Size><AbsDimension x="420" y="60" /></Size></Area>
 	</Frame>
 
 	<Frame name="TalentFrameLineTemplate" type="Line">
