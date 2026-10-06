@@ -28,7 +28,6 @@ local OPTIONS_CATEGORIES = {
 				labelKey = "OPTIONS_VSYNC",
 				cvar = "gxVSync",
 				defaultValue = "1",
-				needsRestart = true,
 			},
 			{
 				type = "toggle",
@@ -38,21 +37,59 @@ local OPTIONS_CATEGORIES = {
 				needsRestart = true,
 			},
 			{
-				type = "toggle",
-				labelKey = "OPTIONS_SHADOWS",
-				cvar = "RenderShadows",
-				defaultValue = "1",
+				-- One choice that sets every setting on the Advanced Graphics page (graphics_presets.cpp).
+				type = "dropdown",
+				labelKey = "OPTIONS_GRAPHICS_QUALITY",
+				cvar = "gxQuality",
+				defaultValue = "custom",
+				items = {
+					{ labelKey = "OPTIONS_QUALITY_LOW",    value = "0" },
+					{ labelKey = "OPTIONS_QUALITY_MEDIUM", value = "1" },
+					{ labelKey = "OPTIONS_QUALITY_HIGH",   value = "2" },
+					{ labelKey = "OPTIONS_QUALITY_ULTRA",  value = "3" },
+					{ labelKey = "OPTIONS_QUALITY_CUSTOM", value = "custom" },
+				},
 			},
 			{
+				-- Not part of the quality presets: it trades sharpness for speed independently of
+				-- them and is the first thing to lower at high resolutions on integrated graphics.
 				type = "dropdown",
 				labelKey = "OPTIONS_RENDER_SCALE",
 				cvar = "gxRenderScale",
 				defaultValue = "1.0",
 				items = {
 					{ labelKey = "OPTIONS_SCALE_50",  value = "0.5" },
+					{ labelKey = "OPTIONS_SCALE_67",  value = "0.67" },
 					{ labelKey = "OPTIONS_SCALE_75",  value = "0.75" },
+					{ labelKey = "OPTIONS_SCALE_85",  value = "0.85" },
 					{ labelKey = "OPTIONS_SCALE_100", value = "1.0" },
 				},
+			},
+			{
+				type = "slider",
+				labelKey = "OPTIONS_BRIGHTNESS",
+				cvar = "gxExposure",
+				defaultValue = "1.0",
+				min = 0.5,
+				max = 2.0,
+				step = 0.05,
+				format = "%.2f",
+			},
+		},
+	},
+	{
+		-- Every option here is covered by the Graphics Quality presets: changing one switches the
+		-- quality to Custom (see OnOptionChanged).
+		id = "GraphicsAdvanced",
+		labelKey = "OPTIONS_GRAPHICS_ADVANCED",
+		type = "settings",
+		marksCustomQuality = true,
+		options = {
+			{
+				type = "toggle",
+				labelKey = "OPTIONS_SHADOWS",
+				cvar = "RenderShadows",
+				defaultValue = "1",
 			},
 			{
 				type = "dropdown",
@@ -76,6 +113,24 @@ local OPTIONS_CATEGORIES = {
 					{ labelKey = "OPTIONS_QUALITY_MEDIUM", value = "1" },
 					{ labelKey = "OPTIONS_QUALITY_HIGH",   value = "2" },
 				},
+			},
+			{
+				type = "dropdown",
+				labelKey = "OPTIONS_SHADOW_DISTANCE",
+				cvar = "gxShadowDistance",
+				defaultValue = "250",
+				items = {
+					{ labelKey = "OPTIONS_DISTANCE_NEAR",     value = "100" },
+					{ labelKey = "OPTIONS_DISTANCE_MEDIUM",   value = "150" },
+					{ labelKey = "OPTIONS_DISTANCE_FAR",      value = "250" },
+					{ labelKey = "OPTIONS_DISTANCE_VERY_FAR", value = "400" },
+				},
+			},
+			{
+				type = "toggle",
+				labelKey = "OPTIONS_FOLIAGE_SHADOWS",
+				cvar = "gxShadowAlphaTest",
+				defaultValue = "1",
 			},
 			{
 				type = "toggle",
@@ -162,14 +217,23 @@ local OPTIONS_CATEGORIES = {
 				},
 			},
 			{
-				type = "slider",
-				labelKey = "OPTIONS_BRIGHTNESS",
-				cvar = "gxExposure",
-				defaultValue = "1.0",
-				min = 0.5,
-				max = 2.0,
-				step = 0.05,
-				format = "%.2f",
+				type = "dropdown",
+				labelKey = "OPTIONS_TEXTURE_FILTERING",
+				cvar = "gxAnisotropy",
+				defaultValue = "8",
+				items = {
+					{ labelKey = "OPTIONS_FILTER_TRILINEAR", value = "1" },
+					{ labelKey = "OPTIONS_FILTER_ANISO_2",   value = "2" },
+					{ labelKey = "OPTIONS_FILTER_ANISO_4",   value = "4" },
+					{ labelKey = "OPTIONS_FILTER_ANISO_8",   value = "8" },
+					{ labelKey = "OPTIONS_FILTER_ANISO_16",  value = "16" },
+				},
+			},
+			{
+				type = "toggle",
+				labelKey = "OPTIONS_DEPTH_PREPASS",
+				cvar = "gxDepthPrepass",
+				defaultValue = "1",
 			},
 			{
 				type = "toggle",
@@ -435,6 +499,22 @@ local function IsCvarOn(val)
 	return val ~= nil and val ~= "0" and val ~= "" and val ~= "false"
 end
 
+-- Options of a category flagged marksCustomQuality are covered by the Graphics Quality presets, so
+-- editing one of them means the settings no longer match a preset.
+for _, cat in ipairs(OPTIONS_CATEGORIES) do
+	if cat.marksCustomQuality and cat.options then
+		for _, opt in ipairs(cat.options) do
+			opt.marksCustomQuality = true
+		end
+	end
+end
+
+local function OnOptionChanged(opt)
+	if opt.marksCustomQuality then
+		SetCVar("gxQuality", "custom");
+	end
+end
+
 local function RebuildScrollBar(contentHeight)
 	OptionsContentScrollBar:SetValue(0);
 	OptionsScrollContent:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, 0);
@@ -480,6 +560,7 @@ local function BuildToggleRow(opt, yOffset)
 			state = not state;
 			toggle:SetChecked(state);
 			SetCVar(opt.cvar, state and "1" or "0");
+			OnOptionChanged(opt);
 		end);
 	end
 end
@@ -518,6 +599,7 @@ local function BuildComboRow(opt, yOffset)
 
 		combo:SetOnSelectionChanged(function(c, idx, text, userData)
 			SetCVar(opt.cvar, userData);
+			OnOptionChanged(opt);
 		end);
 	end
 end
@@ -609,6 +691,7 @@ local function BuildSliderRow(opt, yOffset)
 		slider:SetOnValueChangedHandler(function(bar, value)
 			local snapped = Quantize(value);
 			SetCVar(opt.cvar, tostring(FromSlider(snapped)));
+			OnOptionChanged(opt);
 			UpdateValueLabel(snapped);
 		end);
 	end
@@ -1034,9 +1117,15 @@ end
 function OptionsFrame_Cancel()
 	CancelCurrentCapture();
 
-	-- Revert cvars.
+	-- Revert cvars. The quality preset goes first: applying it assigns many of the others, which the
+	-- loop below then restores to their own original values.
+	if originalValues["gxQuality"] then
+		SetCVar("gxQuality", originalValues["gxQuality"]);
+	end
 	for cvar, val in pairs(originalValues) do
-		SetCVar(cvar, val);
+		if cvar ~= "gxQuality" then
+			SetCVar(cvar, val);
+		end
 	end
 
 	-- Revert key bindings: wipe all current bindings, re-apply originals.
@@ -1065,6 +1154,10 @@ function OptionsFrame_Defaults()
 		if opt.cvar and opt.defaultValue then
 			SetCVar(opt.cvar, opt.defaultValue);
 		end
+	end
+
+	if cat.marksCustomQuality then
+		SetCVar("gxQuality", "custom");
 	end
 
 	BuildContent(cat.options);
