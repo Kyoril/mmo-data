@@ -2,6 +2,7 @@
 -- Variables
 selectedCharacter = nil			-- Selected character
 selectedCharacterIndex = -1
+enteringWorld = false			-- Set once world entry was requested, so it is not requested twice
 characters = {}
 characterButtons = {}
 
@@ -58,6 +59,7 @@ function CharList_Show()
 	-- Reset selected character
 	selectedCharacter = nil
 	selectedCharacterIndex = -1
+	enteringWorld = false
 	SelectedCharacter_Changed();
 
 	-- Remember the last cloned char list item as we need it as anchor
@@ -123,7 +125,31 @@ function CharList_Show()
 end
 
 function CharSelect_EnterWorld()
+	if enteringWorld then
+		return;
+	end
+
+	enteringWorld = true;
 	EnterWorld();
+end
+
+-- Fired by the client for the Enter key and the "enterworld" console command. Only acts while the
+-- character screen is the active screen and the selected character is allowed into the world, so
+-- it behaves exactly like clicking the enter button.
+function CharSelect_OnEnterWorldRequested()
+	if not CharSelect:IsVisible() or CharCreate:IsVisible() or DeleteConfirmation:IsVisible() then
+		return;
+	end
+
+	if GlueDialog:IsVisible() then
+		return;
+	end
+
+	if selectedCharacter == nil or not CharSelectEnterButton:IsEnabled(true) then
+		return;
+	end
+
+	CharSelect_EnterWorld();
 end
 
 function CharSelect_CreateCharacter()

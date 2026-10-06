@@ -121,6 +121,9 @@ function AccountLogin_OnLoad()
 
 	AccountLogin:RegisterEvent("REALM_LIST", AccountLogin_OnRealmList);
 	AccountLogin:RegisterEvent("CHAR_LIST", AccountLogin_OnCharList);
+	AccountLogin:RegisterEvent("ENTER_WORLD_REQUESTED", function()
+		CharSelect_OnEnterWorldRequested();
+	end);
 	AccountLogin:RegisterEvent("LOGIN_CONNECT", AccountLogin_OnConnect);
 
 	if not realmConnector:IsConnected() then
