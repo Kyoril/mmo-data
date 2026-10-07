@@ -202,13 +202,43 @@
 				</StateImagery>
 			</Visual>
 		</Frame>
+		<Frame name="TargetFrameClick" setAllPoints="true">
+			<Property name="HoverUnit" value="target" />
+			<Scripts>
+				<OnClick>
+					return function(self, button)
+						local pos = GetCursorPosition()
+						TargetFrame_OnClick(TargetFrame, button, pos.x, pos.y)
+					end
+				</OnClick>
+			</Scripts>
+		</Frame>
+		<Scripts>
+			<OnLoad>
+				return function(this)
+					TargetFrame_OnLoad();
+				end
+			</OnLoad>
+		</Scripts>
+	</Frame>
+	<!-- Target debuff icons live in their own frame below TargetFrame: hover hit-testing only
+	     descends into children that lie inside their parent's rect, so as children of TargetFrame
+	     (whose rect ends above them) the icons never received OnEnter and showed no tooltip. -->
+	<Frame name="TargetAuraFrame" parent="GameParent">
+		<Area>
+			<Size>
+				<AbsDimension x="392" y="80" />
+			</Size>
+			<Anchor point="LEFT" offset="0" relativeTo="TargetFrame" />
+			<Anchor point="TOP" offset="0" relativeTo="TargetFrame" relativePoint="BOTTOM" />
+		</Area>
 		<Frame name="TargetAuraButton1" inherits="AuraBarButtonTemplate" id="1">
 			<Area>
 				<Size>
 					<AbsDimension x="72" y="72" />
 				</Size>
 				<Anchor point="LEFT" offset="8" />
-				<Anchor point="TOP" offset="8" relativePoint="BOTTOM" />
+				<Anchor point="TOP" offset="8" />
 			</Area>
 		</Frame>
 		<Frame name="TargetAuraButton2" inherits="AuraBarButtonTemplate" id="2">
@@ -247,23 +277,5 @@
 				<Anchor point="TOP" offset="0" relativeTo="TargetAuraButton1" relativePoint="TOP" />
 			</Area>
 		</Frame>
-		<Frame name="TargetFrameClick" setAllPoints="true">
-			<Property name="HoverUnit" value="target" />
-			<Scripts>
-				<OnClick>
-					return function(self, button)
-						local pos = GetCursorPosition()
-						TargetFrame_OnClick(TargetFrame, button, pos.x, pos.y)
-					end
-				</OnClick>
-			</Scripts>
-		</Frame>
-		<Scripts>
-			<OnLoad>
-				return function(this)
-					TargetFrame_OnLoad();
-				end
-			</OnLoad>
-		</Scripts>
 	</Frame>
 </UiLayout>

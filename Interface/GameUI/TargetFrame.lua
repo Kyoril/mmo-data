@@ -148,10 +148,12 @@ function TargetFrame_Update()
         TargetManaBar:SetText(math.floor(powerPct * 100) .. "%");
 
         TargetFrame:Show();
+        TargetAuraFrame:Show();
 
         TargetFrame_UpdateAuras();
     else
         TargetFrame:Hide();
+        TargetAuraFrame:Hide();
     end
 end
 
