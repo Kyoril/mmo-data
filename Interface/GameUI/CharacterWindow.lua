@@ -331,12 +331,16 @@ end
 function CharacterClassButton_OnClick(self)
     -- The active class can't be switched to itself; only non-active known classes cast their
     -- class-change spell to switch.
-    if self.isActiveClass then
+    -- `self` is a fresh Lua wrapper per click, so plain fields set on the global row (changeSpellId,
+    -- isActiveClass) are not visible here. Resolve the row from the C++-backed userData instead.
+    local player = GetUnit("player");
+    local index = self.userData;
+    if not player or type(index) ~= "number" or player:IsKnownClassActive(index) then
 		CharacterWindow_RefreshClasses();
         return;
     end
 
-    local spellId = self.changeSpellId;
+    local spellId = player:GetKnownClassChangeSpell(index);
     if spellId and spellId > 0 then
         CastSpellById(spellId);
 		-- CheckboxRenderer toggles before invoking OnClick. Restore selection from the active class;
