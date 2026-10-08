@@ -9,7 +9,7 @@ local ROW_SPACING = 4
 local INDENT_WIDTH = 48
 
 local BIND_ROW_HEIGHT = 72
-local BIND_CAT_HEIGHT = 52
+
 local BIND_ROW_SPACING = 4
 
 local LABEL_COLOR = "FFD0D0D0"
@@ -47,6 +47,7 @@ local TOOLTIP_NOTE_COLOR = "FFAAAAAA"
 --   dependsOn    -> name of a boolean cvar, or a function returning a boolean: the row is disabled
 --                   while it is false
 --   indent       -> indent level of the label (1 for settings refining the one above)
+--   invert       -> (toggle) the checkbox shows the opposite of the boolean cvar
 --   needsRestart -> changing the setting takes effect after a client restart
 local OPTIONS_CATEGORIES;
 
@@ -520,77 +521,76 @@ OPTIONS_CATEGORIES = {
 		labelKey = "OPTIONS_SOUND",
 		type = "settings",
 		options = {
+			{ type = "header", labelKey = "OPTIONS_HEADER_SOUND_GENERAL" },
 			{
-				type = "toggle",
-				labelKey = "OPTIONS_SOUND_ENABLED",
-				cvar = "SoundEnabled",
-				defaultValue = "1",
-			},
-			{
-				type = "slider",
+				-- The volume sliders store a float in [0, 1] and show it in percent (no min/max).
+				type = "toggleslider",
 				labelKey = "OPTIONS_MASTER_VOLUME",
+				tooltipKey = "OPTIONS_TT_MASTER_VOLUME",
+				enableCvar = "SoundEnabled",
+				enableDefault = "1",
 				cvar = "MasterVolume",
 				defaultValue = "1.0",
 			},
 			{
 				type = "toggle",
-				labelKey = "OPTIONS_MUSIC_ENABLED",
-				cvar = "MusicEnabled",
+				labelKey = "OPTIONS_SOUND_IN_BACKGROUND",
+				tooltipKey = "OPTIONS_TT_SOUND_IN_BACKGROUND",
+				cvar = "SoundInBackground",
 				defaultValue = "1",
+				dependsOn = "SoundEnabled",
 			},
+
+			{ type = "header", labelKey = "OPTIONS_HEADER_SOUND_CHANNELS" },
 			{
-				type = "slider",
-				labelKey = "OPTIONS_MUSIC_VOLUME",
+				type = "toggleslider",
+				labelKey = "OPTIONS_MUSIC_ENABLED",
+				tooltipKey = "OPTIONS_TT_MUSIC",
+				enableCvar = "MusicEnabled",
+				enableDefault = "1",
 				cvar = "MusicVolume",
 				defaultValue = "0.6",
+				dependsOn = "SoundEnabled",
 			},
 			{
-				type = "toggle",
+				type = "toggleslider",
 				labelKey = "OPTIONS_AMBIENCE_ENABLED",
-				cvar = "AmbienceEnabled",
-				defaultValue = "1",
-			},
-			{
-				type = "slider",
-				labelKey = "OPTIONS_AMBIENCE_VOLUME",
+				tooltipKey = "OPTIONS_TT_AMBIENCE",
+				enableCvar = "AmbienceEnabled",
+				enableDefault = "1",
 				cvar = "AmbienceVolume",
 				defaultValue = "0.8",
+				dependsOn = "SoundEnabled",
 			},
 			{
-				type = "toggle",
+				type = "toggleslider",
 				labelKey = "OPTIONS_EFFECTS_ENABLED",
-				cvar = "EffectsEnabled",
-				defaultValue = "1",
-			},
-			{
-				type = "slider",
-				labelKey = "OPTIONS_EFFECTS_VOLUME",
+				tooltipKey = "OPTIONS_TT_EFFECTS",
+				enableCvar = "EffectsEnabled",
+				enableDefault = "1",
 				cvar = "EffectsVolume",
 				defaultValue = "1.0",
+				dependsOn = "SoundEnabled",
 			},
 			{
-				type = "toggle",
+				type = "toggleslider",
 				labelKey = "OPTIONS_UI_SOUND_ENABLED",
-				cvar = "InterfaceEnabled",
-				defaultValue = "1",
-			},
-			{
-				type = "slider",
-				labelKey = "OPTIONS_UI_SOUND_VOLUME",
+				tooltipKey = "OPTIONS_TT_UI_SOUND",
+				enableCvar = "InterfaceEnabled",
+				enableDefault = "1",
 				cvar = "InterfaceVolume",
 				defaultValue = "1.0",
+				dependsOn = "SoundEnabled",
 			},
 			{
-				type = "toggle",
+				type = "toggleslider",
 				labelKey = "OPTIONS_VOICE_ENABLED",
-				cvar = "VoiceEnabled",
-				defaultValue = "1",
-			},
-			{
-				type = "slider",
-				labelKey = "OPTIONS_VOICE_VOLUME",
+				tooltipKey = "OPTIONS_TT_VOICE",
+				enableCvar = "VoiceEnabled",
+				enableDefault = "1",
 				cvar = "VoiceVolume",
 				defaultValue = "1.0",
+				dependsOn = "SoundEnabled",
 			},
 		},
 	},
@@ -599,9 +599,11 @@ OPTIONS_CATEGORIES = {
 		labelKey = "OPTIONS_INTERFACE",
 		type = "settings",
 		options = {
+			{ type = "header", labelKey = "OPTIONS_HEADER_GENERAL" },
 			{
 				type = "dropdown",
 				labelKey = "OPTIONS_LANGUAGE",
+				tooltipKey = "OPTIONS_TT_LANGUAGE",
 				cvar = "locale",
 				defaultValue = "enUS",
 				needsRestart = true,
@@ -612,6 +614,92 @@ OPTIONS_CATEGORIES = {
 					{ labelKey = "OPTIONS_LOCALE_RURU", value = "ruRU" },
 				},
 			},
+
+			{ type = "header", labelKey = "OPTIONS_HEADER_NAMEPLATES" },
+			{
+				type = "toggle",
+				labelKey = "OPTIONS_NP_ENEMY_NPCS",
+				tooltipKey = "OPTIONS_TT_NP_ENEMY_NPCS",
+				cvar = "NameplateShowEnemyNpcs",
+				defaultValue = "1",
+			},
+			{
+				type = "toggle",
+				labelKey = "OPTIONS_NP_ENEMY_PLAYERS",
+				tooltipKey = "OPTIONS_TT_NP_ENEMY_PLAYERS",
+				cvar = "NameplateShowEnemyPlayers",
+				defaultValue = "1",
+			},
+			{
+				type = "toggle",
+				labelKey = "OPTIONS_NP_ENEMY_PETS",
+				tooltipKey = "OPTIONS_TT_NP_ENEMY_PETS",
+				cvar = "NameplateShowEnemyPets",
+				defaultValue = "0",
+			},
+			{
+				type = "toggle",
+				labelKey = "OPTIONS_NP_FRIENDLY_NPCS",
+				tooltipKey = "OPTIONS_TT_NP_FRIENDLY_NPCS",
+				cvar = "NameplateShowFriendlyNpcs",
+				defaultValue = "0",
+			},
+			{
+				type = "toggle",
+				labelKey = "OPTIONS_NP_FRIENDLY_PLAYERS",
+				tooltipKey = "OPTIONS_TT_NP_FRIENDLY_PLAYERS",
+				cvar = "NameplateShowFriendlyPlayers",
+				defaultValue = "0",
+			},
+			{
+				type = "toggle",
+				labelKey = "OPTIONS_NP_FRIENDLY_PETS",
+				tooltipKey = "OPTIONS_TT_NP_FRIENDLY_PETS",
+				cvar = "NameplateShowFriendlyPets",
+				defaultValue = "0",
+			},
+			{
+				type = "toggle",
+				labelKey = "OPTIONS_NP_CAST_BARS",
+				tooltipKey = "OPTIONS_TT_NP_CAST_BARS",
+				cvar = "NameplateShowCastBars",
+				defaultValue = "1",
+			},
+			{
+				type = "dropdown",
+				labelKey = "OPTIONS_NP_DISTANCE",
+				tooltipKey = "OPTIONS_TT_NP_DISTANCE",
+				cvar = "NameplateDistance",
+				defaultValue = "40",
+				items = {
+					{ labelKey = "OPTIONS_DISTANCE_NEAR",   value = "20", tipKey = "OPTIONS_TT_NP_DISTANCE_20" },
+					{ labelKey = "OPTIONS_DISTANCE_MEDIUM", value = "40", tipKey = "OPTIONS_TT_NP_DISTANCE_40" },
+					{ labelKey = "OPTIONS_DISTANCE_FAR",    value = "60", tipKey = "OPTIONS_TT_NP_DISTANCE_60" },
+				},
+			},
+
+			{ type = "header", labelKey = "OPTIONS_HEADER_CHAT_BUBBLES" },
+			{
+				type = "toggle",
+				labelKey = "OPTIONS_BUBBLES_SAY",
+				tooltipKey = "OPTIONS_TT_BUBBLES_SAY",
+				cvar = "ChatBubblesSay",
+				defaultValue = "1",
+			},
+			{
+				type = "toggle",
+				labelKey = "OPTIONS_BUBBLES_YELL",
+				tooltipKey = "OPTIONS_TT_BUBBLES_YELL",
+				cvar = "ChatBubblesYell",
+				defaultValue = "1",
+			},
+			{
+				type = "toggle",
+				labelKey = "OPTIONS_BUBBLES_PARTY",
+				tooltipKey = "OPTIONS_TT_BUBBLES_PARTY",
+				cvar = "ChatBubblesParty",
+				defaultValue = "1",
+			},
 		},
 	},
 	{
@@ -619,94 +707,74 @@ OPTIONS_CATEGORIES = {
 		labelKey = "OPTIONS_GAMEPLAY",
 		type = "settings",
 		options = {
-			{
-				type = "toggle",
-				labelKey = "OPTIONS_CHAT_BUBBLES_SAY",
-				cvar = "ChatBubblesSay",
-				defaultValue = "1",
-			},
-			{
-				type = "toggle",
-				labelKey = "OPTIONS_CHAT_BUBBLES_YELL",
-				cvar = "ChatBubblesYell",
-				defaultValue = "1",
-			},
-			{
-				type = "toggle",
-				labelKey = "OPTIONS_CHAT_BUBBLES_PARTY",
-				cvar = "ChatBubblesParty",
-				defaultValue = "1",
-			},
+			{ type = "header", labelKey = "OPTIONS_HEADER_COMBAT" },
 			{
 				type = "toggle",
 				labelKey = "OPTIONS_COMBAT_VIGNETTE",
+				tooltipKey = "OPTIONS_TT_COMBAT_VIGNETTE",
 				cvar = "CombatVignette",
 				defaultValue = "1",
 			},
 			{
 				type = "toggle",
 				labelKey = "OPTIONS_CAMERA_SHAKE_DAMAGE",
+				tooltipKey = "OPTIONS_TT_CAMERA_SHAKE",
 				cvar = "CombatCameraShake",
 				defaultValue = "0",
 			},
 			{
 				type = "toggle",
 				labelKey = "OPTIONS_FAST_LOOT",
+				tooltipKey = "OPTIONS_TT_FAST_LOOT",
 				cvar = "FastLoot",
 				defaultValue = "0",
 			},
+
+			{ type = "header", labelKey = "OPTIONS_HEADER_CAMERA" },
+			{
+				type = "slider",
+				labelKey = "OPTIONS_MOUSE_SENSITIVITY",
+				tooltipKey = "OPTIONS_TT_MOUSE_SENSITIVITY",
+				cvar = "MouseSensitivity",
+				defaultValue = "0.25",
+				min = 0.05,
+				max = 1.0,
+				step = 0.05,
+				format = "%.2f",
+			},
+			{
+				-- InvertVMouse = 1 is the normal camera; the checkbox shows the inverted one.
+				type = "toggle",
+				labelKey = "OPTIONS_INVERT_MOUSE",
+				tooltipKey = "OPTIONS_TT_INVERT_MOUSE",
+				cvar = "InvertVMouse",
+				defaultValue = "1",
+				invert = true,
+			},
+			{
+				type = "slider",
+				labelKey = "OPTIONS_MAX_CAMERA_DISTANCE",
+				tooltipKey = "OPTIONS_TT_MAX_CAMERA_DISTANCE",
+				cvar = "MaxCameraZoom",
+				defaultValue = "8",
+				min = 2,
+				max = 15,
+				step = 1,
+				format = "%d m",
+			},
 			{
 				type = "toggle",
-				labelKey = "OPTIONS_NAMEPLATES_ENEMY_NPCS",
-				cvar = "NameplateShowEnemyNpcs",
+				labelKey = "OPTIONS_CAMERA_ALIGN_YAW",
+				tooltipKey = "OPTIONS_TT_CAMERA_ALIGN_YAW",
+				cvar = "ResetCameraHorizontally",
 				defaultValue = "1",
 			},
 			{
 				type = "toggle",
-				labelKey = "OPTIONS_NAMEPLATES_ENEMY_PLAYERS",
-				cvar = "NameplateShowEnemyPlayers",
+				labelKey = "OPTIONS_CAMERA_ALIGN_PITCH",
+				tooltipKey = "OPTIONS_TT_CAMERA_ALIGN_PITCH",
+				cvar = "ResetCameraVertically",
 				defaultValue = "1",
-			},
-			{
-				type = "toggle",
-				labelKey = "OPTIONS_NAMEPLATES_FRIENDLY_NPCS",
-				cvar = "NameplateShowFriendlyNpcs",
-				defaultValue = "0",
-			},
-			{
-				type = "toggle",
-				labelKey = "OPTIONS_NAMEPLATES_FRIENDLY_PLAYERS",
-				cvar = "NameplateShowFriendlyPlayers",
-				defaultValue = "0",
-			},
-			{
-				type = "toggle",
-				labelKey = "OPTIONS_NAMEPLATES_ENEMY_PETS",
-				cvar = "NameplateShowEnemyPets",
-				defaultValue = "0",
-			},
-			{
-				type = "toggle",
-				labelKey = "OPTIONS_NAMEPLATES_FRIENDLY_PETS",
-				cvar = "NameplateShowFriendlyPets",
-				defaultValue = "0",
-			},
-			{
-				type = "toggle",
-				labelKey = "OPTIONS_NAMEPLATES_CAST_BARS",
-				cvar = "NameplateShowCastBars",
-				defaultValue = "1",
-			},
-			{
-				type = "dropdown",
-				labelKey = "OPTIONS_NAMEPLATE_DISTANCE",
-				cvar = "NameplateDistance",
-				defaultValue = "40",
-				items = {
-					{ labelKey = "OPTIONS_DISTANCE_NEAR",   value = "20" },
-					{ labelKey = "OPTIONS_DISTANCE_MEDIUM", value = "40" },
-					{ labelKey = "OPTIONS_DISTANCE_FAR",    value = "60" },
-				},
 			},
 		},
 	},
@@ -965,14 +1033,28 @@ local function BuildToggleRow(opt, yOffset)
 	local toggle = entry.row:GetChild(1);
 	entry.widgets = { toggle };
 
+	-- The checkbox shows the cvar, or its opposite for options flagged invert.
+	local function IsChecked()
+		local on = IsCvarOn(GetCVar(opt.cvar) or opt.defaultValue);
+		if opt.invert then
+			return not on;
+		end
+		return on;
+	end
+
 	entry.refresh = function()
-		toggle:SetChecked(IsCvarOn(GetCVar(opt.cvar) or opt.defaultValue));
+		toggle:SetChecked(IsChecked());
 	end
 
 	toggle:SetClickedHandler(function()
-		local state = not IsCvarOn(GetCVar(opt.cvar) or opt.defaultValue);
-		toggle:SetChecked(state);
-		SetCVar(opt.cvar, state and "1" or "0");
+		local checked = not IsChecked();
+		toggle:SetChecked(checked);
+
+		local on = checked;
+		if opt.invert then
+			on = not checked;
+		end
+		SetCVar(opt.cvar, on and "1" or "0");
 		OnOptionChanged(opt);
 	end);
 
@@ -1308,6 +1390,17 @@ end
 local captureActiveRow = nil;
 local captureActiveSlot = 0;
 
+-- Localized name of a key binding action (BINDING_<name>), falling back to the English description
+-- from Bindings.xml for actions that have no translation yet.
+local function GetBindingDisplayName(actionName, description)
+	local key = "BINDING_" .. actionName;
+	local text = Localize(key);
+	if text == key then
+		return description or actionName;
+	end
+	return text;
+end
+
 local function GetKeyDisplayText(keyName)
 	if keyName and keyName ~= "" then
 		return keyName;
@@ -1374,7 +1467,7 @@ local function StartBindCapture(data, slotIndex)
 			if prevData then
 				RefreshBindRow(prevData);
 			end
-			OptionsKeyWarning_Show(prevAction, keyName);
+			OptionsKeyWarning_Show(GetBindingDisplayName(prevAction, prevData and prevData.description), keyName);
 		else
 			OptionsKeyWarningFrame:Hide();
 			UpdateScrollClipTop();
@@ -1408,11 +1501,20 @@ local function BuildKeyBindingContent()
 		categories[cat][#categories[cat] + 1] = b;
 	end
 
+	-- Natural order by the displayed name, so "Action Button 2" comes before "Action Button 10".
+	local function SortKey(b)
+		local name = GetBindingDisplayName(b.name, b.description);
+		return (string.gsub(string.lower(name), "%d+", function(n) return string.format("%08d", tonumber(n)); end));
+	end
+	for _, list in pairs(categories) do
+		table.sort(list, function(a, b) return SortKey(a) < SortKey(b); end);
+	end
+
 	local yOff = 0;
 
 	for _, cat in ipairs(categoryOrder) do
-		-- Category header row.
-		local catRow = KeyBindCatRowTemplate:Clone();
+		-- Category header row, in the same style as the section headers of the other pages.
+		local catRow = OptionsHeaderRowTemplate:Clone();
 		catRow:ClearAnchors();
 		catRow:SetAnchor(AnchorPoint.TOP,   AnchorPoint.TOP,   nil, yOff);
 		catRow:SetAnchor(AnchorPoint.LEFT,  AnchorPoint.LEFT,  nil, 0);
@@ -1424,12 +1526,13 @@ local function BuildKeyBindingContent()
 			catLabel:SetText(Localize("KEYBINDING_CAT_" .. cat));
 		end
 
-		yOff = yOff + BIND_CAT_HEIGHT + BIND_ROW_SPACING;
+		yOff = yOff + HEADER_HEIGHT + BIND_ROW_SPACING;
 
 		for _, b in ipairs(categories[cat]) do
 			local keys  = GetKeysForBinding(b.name);
 			local data  = {
 				actionName = b.name,
+				description = b.description,
 				row        = nil,
 				slot1Key   = keys[1] or nil,
 				slot2Key   = keys[2] or nil,
@@ -1449,7 +1552,10 @@ local function BuildKeyBindingContent()
 			local btn1 = row:GetChild(1);
 			local btn2 = row:GetChild(2);
 
-			if lbl  then lbl:SetText(b.description); end
+			if lbl  then lbl:SetText(GetBindingDisplayName(b.name, b.description)); end
+
+			-- Same hover highlight as the settings rows (no tooltip: the name says it all).
+			BindRowHover(row, { opt = {}, row = row, label = lbl, widgets = {}, hovered = false, enabled = true });
 			if btn1 then
 				btn1:SetText(GetKeyDisplayText(data.slot1Key));
 				local capturedData = data;

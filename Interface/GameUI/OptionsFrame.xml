@@ -615,7 +615,7 @@
 				<Anchor point="LEFT" offset="16" />
 				<Anchor point="TOP" />
 				<Anchor point="BOTTOM" />
-				<Anchor point="RIGHT" offset="-440" />
+				<Anchor point="RIGHT" offset="-520" />
 			</Area>
 		</Frame>
 
@@ -625,50 +625,7 @@
 				<Anchor point="RIGHT" offset="-24" />
 				<Anchor point="TOP" offset="6" />
 				<Anchor point="BOTTOM" offset="-6" />
-				<Size><AbsDimension x="400" /></Size>
-			</Area>
-		</Frame>
-	</Frame>
-
-	<!--
-		Key-binding category header row (full-width label with gold title text).
-	-->
-	<Frame name="KeyBindCatRowTemplate">
-		<Area>
-			<Size><AbsDimension x="0" y="52" /></Size>
-		</Area>
-
-		<Frame name="KeyBindCatLabel" renderer="DefaultRenderer">
-			<Property name="Font" value="Default" />
-
-			<Visual>
-				<ImagerySection name="Bg">
-					<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="60331100" />
-				</ImagerySection>
-				<ImagerySection name="Text">
-					<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="CENTER">
-						<Area><Inset left="20" /></Area>
-					</TextComponent>
-				</ImagerySection>
-				<StateImagery name="Enabled">
-					<Layer>
-						<Section section="Bg" />
-						<Section section="Text" />
-					</Layer>
-				</StateImagery>
-				<StateImagery name="Disabled">
-					<Layer>
-						<Section section="Bg" />
-						<Section section="Text" />
-					</Layer>
-				</StateImagery>
-			</Visual>
-
-			<Area>
-				<Anchor point="TOP" offset="4" />
-				<Anchor point="BOTTOM" offset="-4" />
-				<Anchor point="LEFT" />
-				<Anchor point="RIGHT" />
+				<Size><AbsDimension x="480" /></Size>
 			</Area>
 		</Frame>
 	</Frame>
@@ -679,27 +636,27 @@
 		Child 1: binding slot-1 button (right side, second from right).
 		Child 2: binding slot-2 button (rightmost).
 	-->
-	<Frame name="KeyBindRowTemplate">
+	<Frame name="KeyBindRowTemplate" renderer="DefaultRenderer">
+		<Property name="HighlightTint" value="00000000" />
+
+		<Visual>
+			<ImagerySection name="Highlight">
+				<ImageComponent texture="Interface/fg4_gradientWhiteV1_result.htex" tint="$HighlightTint" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer><Section section="Highlight" /></Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer><Section section="Highlight" /></Layer>
+			</StateImagery>
+		</Visual>
+
 		<Area>
 			<Size><AbsDimension x="0" y="72" /></Size>
 		</Area>
 
 		<!-- Child 0: Action label -->
-		<Frame name="KeyBindRowLabel" renderer="DefaultRenderer">
-			<Property name="Font" value="DefaultSmall" />
-
-			<Visual>
-				<ImagerySection name="Text">
-					<TextComponent color="FFD0D0D0" horzAlign="LEFT" vertAlign="CENTER" />
-				</ImagerySection>
-				<StateImagery name="Enabled">
-					<Layer><Section section="Text" /></Layer>
-				</StateImagery>
-				<StateImagery name="Disabled">
-					<Layer><Section section="Text" /></Layer>
-				</StateImagery>
-			</Visual>
-
+		<Frame name="KeyBindRowLabel" inherits="OptionsRowLabelTemplate">
 			<!-- Leave 448px on the right for the two 216px buttons + gaps -->
 			<Area>
 				<Anchor point="LEFT" offset="16" />
