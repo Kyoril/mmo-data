@@ -72,22 +72,22 @@
 	</Frame>
 
 	<!--
-		Toggle row template.
-		Child 0 = label text frame.
-		Child 1 = checkbox button (icon-button style: frame border + icon when checked).
+		Section header row: a gold title over a thin gold rule, opening a group of settings.
+		Child 0 = title text.
 	-->
-	<Frame name="OptionsToggleRowTemplate">
+	<Frame name="OptionsHeaderRowTemplate">
 		<Area>
 			<Size><AbsDimension x="0" y="96" /></Size>
 		</Area>
 
-		<!-- Child 0: row label -->
-		<Frame name="OptionsToggleRowLabel" renderer="DefaultRenderer">
-			<Property name="Font" value="DefaultSmall" />
+		<Frame name="OptionsHeaderRowLabel" renderer="DefaultRenderer">
+			<Property name="Font" value="AlestiaWindowTitleFont" />
 
 			<Visual>
 				<ImagerySection name="Text">
-					<TextComponent color="FFD0D0D0" horzAlign="LEFT" vertAlign="CENTER" />
+					<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="BOTTOM">
+						<Area><Inset bottom="14" /></Area>
+					</TextComponent>
 				</ImagerySection>
 				<StateImagery name="Enabled">
 					<Layer><Section section="Text" /></Layer>
@@ -98,115 +98,270 @@
 			</Visual>
 
 			<Area>
-				<Anchor point="LEFT" offset="16" />
+				<Anchor point="LEFT" offset="8" />
+				<Anchor point="RIGHT" offset="-8" />
 				<Anchor point="TOP" />
-				<Anchor point="BOTTOM" />
-				<Size><AbsDimension x="900" /></Size>
+				<Anchor point="BOTTOM" offset="-8" />
 			</Area>
 		</Frame>
 
-		<!--
-			Child 1: icon-style checkbox button.
-			Unchecked states: frame border only (empty inside).
-			Checked states: frame border + Icon_QuestCompleted checkmark icon.
-		-->
-		<Frame name="OptionsToggleButton" type="Button" renderer="CheckboxRenderer">
-			<Property name="Checkable" value="true" />
-
+		<!-- Child 1: gold rule under the title -->
+		<Frame name="OptionsHeaderRowRule" renderer="DefaultRenderer">
 			<Visual>
-				<!-- Button frame borders (same texture set as IconButton) -->
-				<ImagerySection name="FrameNormal">
-					<BorderComponent texture="Interface/GlueUI/CharButtonUp.htex" borderSize="22" />
+				<ImagerySection name="Rule">
+					<ImageComponent texture="Interface/fg4_gradientWhiteV1_result.htex" tint="90FFD100" />
 				</ImagerySection>
-				<ImagerySection name="FrameHovered">
-					<BorderComponent texture="Interface/GlueUI/CharButtonHovered.htex" borderSize="22" />
-				</ImagerySection>
-				<ImagerySection name="FramePushed">
-					<BorderComponent texture="Interface/GlueUI/CharButtonPushed.htex" borderSize="22" />
-				</ImagerySection>
-
-				<!-- Checkmark icon shown only in checked states -->
-				<ImagerySection name="CheckIcon">
-					<ImageComponent texture="Interface/Icons/fg4_iconsGold_checkMark_result.htex" tiling="NONE">
-						<Area><Inset all="12" /></Area>
-					</ImageComponent>
-				</ImagerySection>
-
-				<!-- Unchecked: frame only, no icon -->
-				<StateImagery name="Normal">
-					<Layer>
-						<Section section="FrameNormal" />
-					</Layer>
-				</StateImagery>
-				<StateImagery name="Hovered">
-					<Layer>
-						<Section section="FrameHovered" />
-					</Layer>
-				</StateImagery>
-				<StateImagery name="Pushed">
-					<Layer>
-						<Section section="FramePushed" />
-					</Layer>
-				</StateImagery>
-
-				<!-- Checked: frame + checkmark icon -->
-				<StateImagery name="NormalChecked">
-					<Layer>
-						<Section section="FramePushed" />
-						<Section section="CheckIcon" />
-					</Layer>
-				</StateImagery>
-				<StateImagery name="HoveredChecked">
-					<Layer>
-						<Section section="FrameHovered" />
-						<Section section="CheckIcon" />
-					</Layer>
-				</StateImagery>
-				<StateImagery name="PushedChecked">
-					<Layer>
-						<Section section="FramePushed" />
-						<Section section="CheckIcon" color="FFAAAAAA" />
-					</Layer>
+				<StateImagery name="Enabled">
+					<Layer><Section section="Rule" /></Layer>
 				</StateImagery>
 			</Visual>
 
-			<!-- Square checkbox, centered vertically in the 96px row -->
+			<Area>
+				<Anchor point="LEFT" offset="8" />
+				<Anchor point="RIGHT" offset="-8" />
+				<Anchor point="BOTTOM" offset="-8" />
+				<Size><AbsDimension y="3" /></Size>
+			</Area>
+		</Frame>
+	</Frame>
+
+	<!--
+		Shared look of every setting row: a soft highlight while the row is hovered (HighlightTint is
+		set from Lua) and a label whose colour follows the row state (LabelColor: normal, hovered or
+		disabled). Rows themselves are plain frames so the widgets inside receive the clicks.
+	-->
+	<Frame name="OptionsRowLabelTemplate" renderer="DefaultRenderer">
+		<Property name="Font" value="DefaultSmall" />
+		<Property name="LabelColor" value="FFD0D0D0" />
+
+		<Visual>
+			<ImagerySection name="Text">
+				<TextComponent color="$LabelColor" horzAlign="LEFT" vertAlign="CENTER" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer><Section section="Text" /></Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer><Section section="Text" /></Layer>
+			</StateImagery>
+		</Visual>
+	</Frame>
+
+	<!--
+		Checkbox template: icon-button style.
+		Unchecked states: frame border only (empty inside).
+		Checked states: frame border + checkmark icon.
+	-->
+	<Frame name="OptionsCheckboxTemplate" type="Button" renderer="CheckboxRenderer">
+		<Property name="Checkable" value="true" />
+
+		<Visual>
+			<!-- Button frame borders (same texture set as IconButton) -->
+			<ImagerySection name="FrameNormal">
+				<BorderComponent texture="Interface/GlueUI/CharButtonUp.htex" borderSize="22" />
+			</ImagerySection>
+			<ImagerySection name="FrameHovered">
+				<BorderComponent texture="Interface/GlueUI/CharButtonHovered.htex" borderSize="22" />
+			</ImagerySection>
+			<ImagerySection name="FramePushed">
+				<BorderComponent texture="Interface/GlueUI/CharButtonPushed.htex" borderSize="22" />
+			</ImagerySection>
+			<ImagerySection name="FrameDisabled">
+				<BorderComponent texture="Interface/GlueUI/CharButtonUp.htex" borderSize="22" tint="80606060" />
+			</ImagerySection>
+
+			<!-- Checkmark icon shown only in checked states -->
+			<ImagerySection name="CheckIcon">
+				<ImageComponent texture="Interface/Icons/fg4_iconsGold_checkMark_result.htex" tiling="NONE">
+					<Area><Inset all="10" /></Area>
+				</ImageComponent>
+			</ImagerySection>
+
+			<!-- Unchecked: frame only, no icon -->
+			<StateImagery name="Normal">
+				<Layer>
+					<Section section="FrameNormal" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Hovered">
+				<Layer>
+					<Section section="FrameHovered" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Pushed">
+				<Layer>
+					<Section section="FramePushed" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="FrameDisabled" />
+				</Layer>
+			</StateImagery>
+
+			<!-- Checked: frame + checkmark icon -->
+			<StateImagery name="NormalChecked">
+				<Layer>
+					<Section section="FramePushed" />
+					<Section section="CheckIcon" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="HoveredChecked">
+				<Layer>
+					<Section section="FrameHovered" />
+					<Section section="CheckIcon" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="PushedChecked">
+				<Layer>
+					<Section section="FramePushed" />
+					<Section section="CheckIcon" color="FFAAAAAA" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="DisabledChecked">
+				<Layer>
+					<Section section="FrameDisabled" />
+					<Section section="CheckIcon" color="80808080" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+	</Frame>
+
+	<!--
+		Horizontal slider template, built from the scroll bar widget.
+		Children: left button, right button, thumb.
+	-->
+	<Frame name="OptionsSliderTemplate" type="ScrollBar" renderer="DefaultRenderer">
+		<Property name="Orientation" value="HORIZONTAL" />
+
+		<Visual>
+			<ImagerySection name="Border">
+				<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer><Section section="Border" /></Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer><Section section="Border" color="80808080" /></Layer>
+			</StateImagery>
+		</Visual>
+
+		<Frame name="OptionsSliderLeftButton" inherits="GlueButton">
+			<Property name="Icon" value="Interface/Icons/fg4_iconsGold_leftArrow.htex" />
+			<Area>
+				<Anchor point="LEFT" offset="8" />
+				<Anchor point="TOP" offset="8" />
+				<Size><AbsDimension x="64" y="64" /></Size>
+			</Area>
+		</Frame>
+
+		<Frame name="OptionsSliderRightButton" inherits="GlueButton">
+			<Property name="Icon" value="Interface/Icons/fg4_iconsGold_rightArrow.htex" />
+			<Area>
+				<Anchor point="RIGHT" offset="-8" />
+				<Anchor point="TOP" offset="8" />
+				<Size><AbsDimension x="64" y="64" /></Size>
+			</Area>
+		</Frame>
+
+		<Frame name="OptionsSliderThumb" inherits="ThumbButtonTemplate">
+			<Area>
+				<Anchor point="LEFT" offset="72" />
+				<Anchor point="TOP" offset="8" />
+				<Size><AbsDimension x="64" y="64" /></Size>
+			</Area>
+		</Frame>
+	</Frame>
+
+	<!-- Gold, right-aligned value text next to a slider (e.g. "80%"). -->
+	<Frame name="OptionsValueLabelTemplate" renderer="DefaultRenderer">
+		<Property name="Font" value="DefaultSmall" />
+
+		<Visual>
+			<ImagerySection name="Text">
+				<TextComponent color="FFFFD100" horzAlign="RIGHT" vertAlign="CENTER" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer><Section section="Text" /></Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer><Section section="Text" color="FF808080" /></Layer>
+			</StateImagery>
+		</Visual>
+	</Frame>
+
+	<!--
+		Toggle row template.
+		Child 0 = label text frame.
+		Child 1 = checkbox button (icon-button style: frame border + icon when checked).
+	-->
+	<Frame name="OptionsToggleRowTemplate" renderer="DefaultRenderer">
+		<Property name="HighlightTint" value="00000000" />
+
+		<Visual>
+			<ImagerySection name="Highlight">
+				<ImageComponent texture="Interface/fg4_gradientWhiteV1_result.htex" tint="$HighlightTint" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer><Section section="Highlight" /></Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer><Section section="Highlight" /></Layer>
+			</StateImagery>
+		</Visual>
+
+		<Area>
+			<Size><AbsDimension x="0" y="80" /></Size>
+		</Area>
+
+		<!-- Child 0: row label -->
+		<Frame name="OptionsToggleRowLabel" inherits="OptionsRowLabelTemplate">
+			<Area>
+				<Anchor point="LEFT" offset="16" />
+				<Anchor point="TOP" />
+				<Anchor point="BOTTOM" />
+				<Anchor point="RIGHT" offset="-120" />
+			</Area>
+		</Frame>
+
+		<!-- Child 1: checkbox -->
+		<Frame name="OptionsToggleButton" inherits="OptionsCheckboxTemplate">
 			<Area>
 				<Anchor point="RIGHT" offset="-24" />
 				<Anchor point="TOP" offset="8" />
 				<Anchor point="BOTTOM" offset="-8" />
-				<Size><AbsDimension x="80" /></Size>
+				<Size><AbsDimension x="64" /></Size>
 			</Area>
 		</Frame>
 	</Frame>
 
 	<!-- Dropdown row template: label (child 0) + combo box (child 1) -->
-	<Frame name="OptionsComboRowTemplate">
+	<Frame name="OptionsComboRowTemplate" renderer="DefaultRenderer">
+		<Property name="HighlightTint" value="00000000" />
+
+		<Visual>
+			<ImagerySection name="Highlight">
+				<ImageComponent texture="Interface/fg4_gradientWhiteV1_result.htex" tint="$HighlightTint" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer><Section section="Highlight" /></Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer><Section section="Highlight" /></Layer>
+			</StateImagery>
+		</Visual>
+
 		<Area>
-			<Size><AbsDimension x="0" y="96" /></Size>
+			<Size><AbsDimension x="0" y="80" /></Size>
 		</Area>
 
 		<!-- Child 0: row label -->
-		<Frame name="OptionsComboRowLabel" renderer="DefaultRenderer">
-			<Property name="Font" value="DefaultSmall" />
-
-			<Visual>
-				<ImagerySection name="Text">
-					<TextComponent color="FFD0D0D0" horzAlign="LEFT" vertAlign="CENTER" />
-				</ImagerySection>
-				<StateImagery name="Enabled">
-					<Layer><Section section="Text" /></Layer>
-				</StateImagery>
-				<StateImagery name="Disabled">
-					<Layer><Section section="Text" /></Layer>
-				</StateImagery>
-			</Visual>
-
+		<Frame name="OptionsComboRowLabel" inherits="OptionsRowLabelTemplate">
 			<Area>
 				<Anchor point="LEFT" offset="16" />
 				<Anchor point="TOP" />
 				<Anchor point="BOTTOM" />
-				<Size><AbsDimension x="700" /></Size>
+				<Anchor point="RIGHT" offset="-520" />
 			</Area>
 		</Frame>
 
@@ -229,17 +384,17 @@
 				</ImagerySection>
 				<ImagerySection name="CaptionNormal">
 					<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="CENTER">
-						<Area><Inset left="16" right="64" /></Area>
+						<Area><Inset left="16" right="56" /></Area>
 					</TextComponent>
 				</ImagerySection>
 				<ImagerySection name="CaptionHovered">
 					<TextComponent color="FFFFFFFF" horzAlign="LEFT" vertAlign="CENTER">
-						<Area><Inset left="16" right="64" /></Area>
+						<Area><Inset left="16" right="56" /></Area>
 					</TextComponent>
 				</ImagerySection>
 				<ImagerySection name="CaptionDisabled">
 					<TextComponent color="AE888888" horzAlign="LEFT" vertAlign="CENTER">
-						<Area><Inset left="16" right="64" /></Area>
+						<Area><Inset left="16" right="56" /></Area>
 					</TextComponent>
 				</ImagerySection>
 
@@ -279,9 +434,9 @@
 
 			<Area>
 				<Anchor point="RIGHT" offset="-24" />
-				<Anchor point="TOP" offset="12" />
-				<Anchor point="BOTTOM" offset="-12" />
-				<Size><AbsDimension x="400" /></Size>
+				<Anchor point="TOP" offset="10" />
+				<Anchor point="BOTTOM" offset="-10" />
+				<Size><AbsDimension x="480" /></Size>
 			</Area>
 
 			<!-- Arrow indicator child -->
@@ -290,7 +445,7 @@
 					<Anchor point="TOP" offset="12" />
 					<Anchor point="BOTTOM" offset="-12" />
 					<Anchor point="RIGHT" offset="-12" />
-					<Size><AbsDimension x="44" /></Size>
+					<Size><AbsDimension x="36" /></Size>
 				</Area>
 				<Visual>
 					<ImagerySection name="Image">
@@ -298,6 +453,9 @@
 					</ImagerySection>
 					<StateImagery name="Enabled">
 						<Layer><Section section="Image" /></Layer>
+					</StateImagery>
+					<StateImagery name="Disabled">
+						<Layer><Section section="Image" color="80808080" /></Layer>
 					</StateImagery>
 				</Visual>
 			</Frame>
@@ -310,106 +468,164 @@
 		Child 1 = horizontal ScrollBar used as slider (children: left button, right button, thumb).
 		Child 2 = value text frame (e.g. "80%").
 	-->
-	<Frame name="OptionsSliderRowTemplate">
+	<Frame name="OptionsSliderRowTemplate" renderer="DefaultRenderer">
+		<Property name="HighlightTint" value="00000000" />
+
+		<Visual>
+			<ImagerySection name="Highlight">
+				<ImageComponent texture="Interface/fg4_gradientWhiteV1_result.htex" tint="$HighlightTint" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer><Section section="Highlight" /></Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer><Section section="Highlight" /></Layer>
+			</StateImagery>
+		</Visual>
+
 		<Area>
-			<Size><AbsDimension x="0" y="96" /></Size>
+			<Size><AbsDimension x="0" y="80" /></Size>
 		</Area>
 
 		<!-- Child 0: row label -->
-		<Frame name="OptionsSliderRowLabel" renderer="DefaultRenderer">
-			<Property name="Font" value="DefaultSmall" />
-
-			<Visual>
-				<ImagerySection name="Text">
-					<TextComponent color="FFD0D0D0" horzAlign="LEFT" vertAlign="CENTER" />
-				</ImagerySection>
-				<StateImagery name="Enabled">
-					<Layer><Section section="Text" /></Layer>
-				</StateImagery>
-				<StateImagery name="Disabled">
-					<Layer><Section section="Text" /></Layer>
-				</StateImagery>
-			</Visual>
-
+		<Frame name="OptionsSliderRowLabel" inherits="OptionsRowLabelTemplate">
 			<Area>
 				<Anchor point="LEFT" offset="16" />
 				<Anchor point="TOP" />
 				<Anchor point="BOTTOM" />
-				<Size><AbsDimension x="700" /></Size>
+				<Anchor point="RIGHT" offset="-600" />
 			</Area>
 		</Frame>
 
 		<!-- Child 1: horizontal slider built from the scroll bar widget -->
-		<Frame name="OptionsSliderWidget" type="ScrollBar" renderer="DefaultRenderer">
-			<Property name="Orientation" value="HORIZONTAL" />
-
-			<Visual>
-				<ImagerySection name="Border">
-					<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" />
-				</ImagerySection>
-				<StateImagery name="Enabled">
-					<Layer><Section section="Border" /></Layer>
-				</StateImagery>
-				<StateImagery name="Disabled">
-					<Layer><Section section="Border" /></Layer>
-				</StateImagery>
-			</Visual>
-
+		<Frame name="OptionsSliderWidget" type="ScrollBar" inherits="OptionsSliderTemplate">
 			<Area>
 				<Anchor point="RIGHT" offset="-24" />
-				<Anchor point="TOP" offset="8" />
-				<Anchor point="BOTTOM" offset="-8" />
+				<Anchor point="TOP" />
+				<Anchor point="BOTTOM" />
 				<Size><AbsDimension x="400" /></Size>
 			</Area>
-
-			<Frame name="SliderLeftButton" inherits="GlueButton">
-				<Property name="Icon" value="Interface/Icons/fg4_iconsGold_leftArrow.htex" />
-				<Area>
-					<Anchor point="LEFT" offset="8" />
-					<Anchor point="TOP" offset="8" />
-					<Size><AbsDimension x="64" y="64" /></Size>
-				</Area>
-			</Frame>
-
-			<Frame name="SliderRightButton" inherits="GlueButton">
-				<Property name="Icon" value="Interface/Icons/fg4_iconsGold_rightArrow.htex" />
-				<Area>
-					<Anchor point="RIGHT" offset="-8" />
-					<Anchor point="TOP" offset="8" />
-					<Size><AbsDimension x="64" y="64" /></Size>
-				</Area>
-			</Frame>
-
-			<Frame name="SliderThumb" inherits="ThumbButtonTemplate">
-				<Area>
-					<Anchor point="LEFT" offset="72" />
-					<Anchor point="TOP" offset="8" />
-					<Size><AbsDimension x="64" y="64" /></Size>
-				</Area>
-			</Frame>
 		</Frame>
 
 		<!-- Child 2: current value label -->
-		<Frame name="OptionsSliderValueLabel" renderer="DefaultRenderer">
-			<Property name="Font" value="DefaultSmall" />
-
-			<Visual>
-				<ImagerySection name="Text">
-					<TextComponent color="FFFFD100" horzAlign="RIGHT" vertAlign="CENTER" />
-				</ImagerySection>
-				<StateImagery name="Enabled">
-					<Layer><Section section="Text" /></Layer>
-				</StateImagery>
-				<StateImagery name="Disabled">
-					<Layer><Section section="Text" /></Layer>
-				</StateImagery>
-			</Visual>
-
+		<Frame name="OptionsSliderValueLabel" inherits="OptionsValueLabelTemplate">
 			<Area>
 				<Anchor point="RIGHT" offset="-440" />
 				<Anchor point="TOP" />
 				<Anchor point="BOTTOM" />
-				<Size><AbsDimension x="140" /></Size>
+				<Size><AbsDimension x="150" /></Size>
+			</Area>
+		</Frame>
+	</Frame>
+
+	<!--
+		Checkbox + slider row, e.g. "Max. Foreground FPS": the checkbox switches the setting on, the
+		slider picks its value and is disabled while the checkbox is off.
+		Child 0 = label, child 1 = checkbox, child 2 = slider, child 3 = value text.
+	-->
+	<Frame name="OptionsToggleSliderRowTemplate" renderer="DefaultRenderer">
+		<Property name="HighlightTint" value="00000000" />
+
+		<Visual>
+			<ImagerySection name="Highlight">
+				<ImageComponent texture="Interface/fg4_gradientWhiteV1_result.htex" tint="$HighlightTint" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer><Section section="Highlight" /></Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer><Section section="Highlight" /></Layer>
+			</StateImagery>
+		</Visual>
+
+		<Area>
+			<Size><AbsDimension x="0" y="80" /></Size>
+		</Area>
+
+		<!-- Child 0: row label -->
+		<Frame name="OptionsToggleSliderRowLabel" inherits="OptionsRowLabelTemplate">
+			<Area>
+				<Anchor point="LEFT" offset="16" />
+				<Anchor point="TOP" />
+				<Anchor point="BOTTOM" />
+				<Anchor point="RIGHT" offset="-600" />
+			</Area>
+		</Frame>
+
+		<!-- Child 1: enable checkbox, left of the slider -->
+		<Frame name="OptionsToggleSliderCheck" inherits="OptionsCheckboxTemplate">
+			<Area>
+				<Anchor point="RIGHT" offset="-344" />
+				<Anchor point="TOP" offset="8" />
+				<Anchor point="BOTTOM" offset="-8" />
+				<Size><AbsDimension x="64" /></Size>
+			</Area>
+		</Frame>
+
+		<!-- Child 2: slider -->
+		<Frame name="OptionsToggleSliderWidget" type="ScrollBar" inherits="OptionsSliderTemplate">
+			<Area>
+				<Anchor point="RIGHT" offset="-24" />
+				<Anchor point="TOP" />
+				<Anchor point="BOTTOM" />
+				<Size><AbsDimension x="312" /></Size>
+			</Area>
+		</Frame>
+
+		<!-- Child 3: current value label -->
+		<Frame name="OptionsToggleSliderValueLabel" inherits="OptionsValueLabelTemplate">
+			<Area>
+				<Anchor point="RIGHT" offset="-424" />
+				<Anchor point="TOP" />
+				<Anchor point="BOTTOM" />
+				<Size><AbsDimension x="166" /></Size>
+			</Area>
+		</Frame>
+	</Frame>
+
+	<!--
+		Detected hardware row: what the game found and which quality it recommends, plus a button
+		that applies the recommendation.
+		Child 0 = info text, child 1 = button.
+	-->
+	<Frame name="OptionsHardwareRowTemplate" renderer="DefaultRenderer">
+		<Property name="HighlightTint" value="00000000" />
+
+		<Visual>
+			<ImagerySection name="Highlight">
+				<ImageComponent texture="Interface/fg4_gradientWhiteV1_result.htex" tint="$HighlightTint" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer><Section section="Highlight" /></Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer><Section section="Highlight" /></Layer>
+			</StateImagery>
+		</Visual>
+
+		<Area>
+			<Size><AbsDimension x="0" y="80" /></Size>
+		</Area>
+
+		<!-- Child 0: hardware description -->
+		<Frame name="OptionsHardwareRowLabel" inherits="OptionsRowLabelTemplate">
+			<Property name="Font" value="SmallLabelFont" />
+			<Property name="LabelColor" value="FFAAAAAA" />
+			<Area>
+				<Anchor point="LEFT" offset="16" />
+				<Anchor point="TOP" />
+				<Anchor point="BOTTOM" />
+				<Anchor point="RIGHT" offset="-440" />
+			</Area>
+		</Frame>
+
+		<!-- Child 1: apply the recommended settings -->
+		<Frame name="OptionsHardwareRowButton" inherits="GlueButton">
+			<Area>
+				<Anchor point="RIGHT" offset="-24" />
+				<Anchor point="TOP" offset="6" />
+				<Anchor point="BOTTOM" offset="-6" />
+				<Size><AbsDimension x="400" /></Size>
 			</Area>
 		</Frame>
 	</Frame>
