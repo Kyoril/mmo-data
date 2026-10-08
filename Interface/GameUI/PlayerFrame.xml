@@ -243,6 +243,7 @@
 			</Area>
 		</Frame>
 		<Frame name="PlayerFrameClick" setAllPoints="true">
+			<Property name="HoverUnit" value="player" />
 			<Scripts>
 				<OnClick>
 					return function(self, button)

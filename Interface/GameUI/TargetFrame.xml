@@ -248,6 +248,7 @@
 			</Area>
 		</Frame>
 		<Frame name="TargetFrameClick" setAllPoints="true">
+			<Property name="HoverUnit" value="target" />
 			<Scripts>
 				<OnClick>
 					return function(self, button)
