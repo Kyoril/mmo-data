@@ -1,73 +1,226 @@
 -- Copyright (C) 2019 - 2025, Kyoril. All rights reserved.
 
-local ROW_HEIGHT = 96
-local ROW_SPACING = 8
+local ROW_HEIGHT = 80
+local HEADER_HEIGHT = 96
+local ROW_SPACING = 4
+
+-- Horizontal label offset per indent level, used for settings that only matter while the setting
+-- above them is switched on.
+local INDENT_WIDTH = 48
 
 local BIND_ROW_HEIGHT = 72
-local BIND_CAT_HEIGHT = 52
+
 local BIND_ROW_SPACING = 4
 
+local LABEL_COLOR = "FFD0D0D0"
+local LABEL_COLOR_HOVERED = "FFFFFFFF"
+local LABEL_COLOR_DISABLED = "FF6A6A6A"
+local ROW_HIGHLIGHT_TINT = "30FFD100"
+local ROW_NO_HIGHLIGHT_TINT = "00000000"
+
+local TOOLTIP_WIDTH = 760
+local TOOLTIP_TITLE_COLOR = "FFFFFFFF"
+local TOOLTIP_TEXT_COLOR = "FFFFD100"
+local TOOLTIP_VALUE_COLOR = "FFD0D0D0"
+local TOOLTIP_CURRENT_COLOR = "FF40FF40"
+local TOOLTIP_NOTE_COLOR = "FFAAAAAA"
+
 -- Category and option definitions.
--- type="toggle"    -> boolean cvar, renders an On/Off icon button
--- type="dropdown"  -> cvar with a fixed set of choices, renders a ComboBox
--- type="keybinding"-> special: right panel populated from GetBindings() API
-local OPTIONS_CATEGORIES = {
+--
+-- Option types:
+--   header       -> section title; labelKey only
+--   toggle       -> boolean cvar, renders a checkbox
+--   dropdown     -> cvar with a fixed set of choices (items), renders a ComboBox
+--   slider       -> numeric cvar; see BuildSliderRow for the min/max/step/format fields
+--   toggleslider -> checkbox (enableCvar) plus a slider (cvar) that is only active while it is checked
+--   resolution   -> window size, items from the monitor's display modes
+--   monitor      -> monitor selection, items from the attached monitors
+--   hardware     -> detected graphics card plus a button applying the recommended quality
+--   keybinding   -> (category type) right panel populated from the GetBindings() API
+--
+-- Common option fields:
+--   tooltipKey   -> description shown when hovering the row; dropdown items may add a tipKey each,
+--                   which is listed below the description with the current value highlighted
+--   preset       -> the setting is part of the Graphics Quality presets (graphics_presets.cpp):
+--                   changing it switches the quality to Custom, and the tooltip names the value of
+--                   the recommended preset
+--   dependsOn    -> name of a boolean cvar, or a function returning a boolean: the row is disabled
+--                   while it is false
+--   indent       -> indent level of the label (1 for settings refining the one above)
+--   invert       -> (toggle) the checkbox shows the opposite of the boolean cvar
+--   needsRestart -> changing the setting takes effect after a client restart
+local OPTIONS_CATEGORIES;
+
+local function IsCvarOn(val)
+	return val ~= nil and val ~= "0" and val ~= "" and val ~= "false"
+end
+
+-- Compares two cvar values, numerically where both are numbers: "1.0" and "1" are the same setting.
+local function ValuesEqual(a, b)
+	if a == b then
+		return true;
+	end
+
+	local na, nb = tonumber(a), tonumber(b);
+	return na ~= nil and nb ~= nil and na == nb;
+end
+
+local function IsFullscreenWindow()
+	return not IsCvarOn(GetCVar("gxWindow") or "0");
+end
+
+-- 0-based index of the selected monitor, as stored in gxMonitor.
+local function GetMonitorIndex()
+	return tonumber(GetCVar("gxMonitor") or "0") or 0;
+end
+
+-- Monitor table { name, width, height, primary } of the selected monitor (the primary one if the
+-- selected monitor is gone).
+local function GetSelectedMonitor()
+	local monitors = GetDisplayMonitors();
+	return monitors[GetMonitorIndex() + 1] or monitors[1];
+end
+
+-- Size of the 3D view before render scaling: the monitor in fullscreen, the window size otherwise.
+local function GetOutputSize()
+	if IsFullscreenWindow() then
+		local monitor = GetSelectedMonitor();
+		if monitor then
+			return monitor.width, monitor.height;
+		end
+	end
+
+	local res = GetCVar("gxResolution") or "";
+	local w, h = string.match(res, "(%d+)x(%d+)");
+	return tonumber(w) or 0, tonumber(h) or 0;
+end
+
+local QUALITY_ITEMS = {
+	{ labelKey = "OPTIONS_QUALITY_LOW",    value = "0", tipKey = "OPTIONS_TT_QUALITY_LOW" },
+	{ labelKey = "OPTIONS_QUALITY_MEDIUM", value = "1", tipKey = "OPTIONS_TT_QUALITY_MEDIUM" },
+	{ labelKey = "OPTIONS_QUALITY_HIGH",   value = "2", tipKey = "OPTIONS_TT_QUALITY_HIGH" },
+	{ labelKey = "OPTIONS_QUALITY_ULTRA",  value = "3", tipKey = "OPTIONS_TT_QUALITY_ULTRA" },
+	{ labelKey = "OPTIONS_QUALITY_CUSTOM", value = "custom", tipKey = "OPTIONS_TT_QUALITY_CUSTOM" },
+};
+
+-- Filled on every refresh of the graphics page: what the hardware detection recommends.
+local hardwareInfo = nil;
+local recommendedPresetValues = {};
+
+local function RefreshHardwareInfo()
+	hardwareInfo = GetGraphicsHardwareInfo();
+	recommendedPresetValues = GetGraphicsPresetValues(hardwareInfo.recommendedQuality) or {};
+end
+
+OPTIONS_CATEGORIES = {
 	{
 		id = "Graphics",
 		labelKey = "OPTIONS_GRAPHICS",
 		type = "settings",
 		options = {
+			{ type = "header", labelKey = "OPTIONS_HEADER_DISPLAY" },
+			{
+				type = "monitor",
+				labelKey = "OPTIONS_MONITOR",
+				tooltipKey = "OPTIONS_TT_MONITOR",
+				cvar = "gxMonitor",
+				defaultValue = "0",
+			},
+			{
+				type = "dropdown",
+				labelKey = "OPTIONS_DISPLAY_MODE",
+				tooltipKey = "OPTIONS_TT_DISPLAY_MODE",
+				cvar = "gxWindow",
+				defaultValue = "0",
+				items = {
+					{ labelKey = "OPTIONS_DISPLAY_MODE_FULLSCREEN", value = "0", tipKey = "OPTIONS_TT_DISPLAY_MODE_FULLSCREEN" },
+					{ labelKey = "OPTIONS_DISPLAY_MODE_WINDOWED",   value = "1", tipKey = "OPTIONS_TT_DISPLAY_MODE_WINDOWED" },
+				},
+			},
 			{
 				type = "resolution",
 				labelKey = "OPTIONS_RESOLUTION",
+				tooltipKey = "OPTIONS_TT_RESOLUTION",
 				cvar = "gxResolution",
-				needsRestart = true,
-			},
-			{
-				type = "toggle",
-				labelKey = "OPTIONS_VSYNC",
-				cvar = "gxVSync",
-				defaultValue = "1",
-			},
-			{
-				type = "toggle",
-				labelKey = "OPTIONS_WINDOWED",
-				cvar = "gxWindow",
-				defaultValue = "0",
-				needsRestart = true,
-			},
-			{
-				-- One choice that sets every setting on the Advanced Graphics page (graphics_presets.cpp).
-				type = "dropdown",
-				labelKey = "OPTIONS_GRAPHICS_QUALITY",
-				cvar = "gxQuality",
-				defaultValue = "custom",
-				items = {
-					{ labelKey = "OPTIONS_QUALITY_LOW",    value = "0" },
-					{ labelKey = "OPTIONS_QUALITY_MEDIUM", value = "1" },
-					{ labelKey = "OPTIONS_QUALITY_HIGH",   value = "2" },
-					{ labelKey = "OPTIONS_QUALITY_ULTRA",  value = "3" },
-					{ labelKey = "OPTIONS_QUALITY_CUSTOM", value = "custom" },
-				},
+				indent = 1,
+				-- A fullscreen window always covers the whole monitor.
+				dependsOn = function() return not IsFullscreenWindow(); end,
 			},
 			{
 				-- Not part of the quality presets: it trades sharpness for speed independently of
 				-- them and is the first thing to lower at high resolutions on integrated graphics.
 				type = "dropdown",
 				labelKey = "OPTIONS_RENDER_SCALE",
+				tooltipKey = "OPTIONS_TT_RENDER_SCALE",
 				cvar = "gxRenderScale",
 				defaultValue = "1.0",
+				indent = 1,
 				items = {
-					{ labelKey = "OPTIONS_SCALE_50",  value = "0.5" },
-					{ labelKey = "OPTIONS_SCALE_67",  value = "0.67" },
-					{ labelKey = "OPTIONS_SCALE_75",  value = "0.75" },
-					{ labelKey = "OPTIONS_SCALE_85",  value = "0.85" },
-					{ labelKey = "OPTIONS_SCALE_100", value = "1.0" },
+					{ labelKey = "OPTIONS_SCALE_50",  value = "0.5",  scale = 0.5 },
+					{ labelKey = "OPTIONS_SCALE_67",  value = "0.67", scale = 0.67 },
+					{ labelKey = "OPTIONS_SCALE_75",  value = "0.75", scale = 0.75 },
+					{ labelKey = "OPTIONS_SCALE_85",  value = "0.85", scale = 0.85 },
+					{ labelKey = "OPTIONS_SCALE_100", value = "1.0",  scale = 1.0 },
 				},
+				-- "75% (1440x810)": the resolution the world is actually rendered at.
+				formatItem = function(item)
+					local w, h = GetOutputSize();
+					if w <= 0 or h <= 0 then
+						return Localize(item.labelKey);
+					end
+					return string.format("%s (%dx%d)", Localize(item.labelKey), math.floor(w * item.scale + 0.5), math.floor(h * item.scale + 0.5));
+				end,
+			},
+			{
+				type = "toggle",
+				labelKey = "OPTIONS_VSYNC",
+				tooltipKey = "OPTIONS_TT_VSYNC",
+				cvar = "gxVSync",
+				defaultValue = "1",
+			},
+			{
+				type = "toggleslider",
+				labelKey = "OPTIONS_MAX_FPS",
+				tooltipKey = "OPTIONS_TT_MAX_FPS",
+				enableCvar = "gxMaxFpsEnabled",
+				enableDefault = "0",
+				cvar = "gxMaxFps",
+				defaultValue = "144",
+				min = 10,
+				max = 240,
+				step = 1,
+				format = "%d FPS",
+			},
+			{
+				type = "toggleslider",
+				labelKey = "OPTIONS_MAX_FPS_BK",
+				tooltipKey = "OPTIONS_TT_MAX_FPS_BK",
+				enableCvar = "gxMaxFpsBkEnabled",
+				enableDefault = "1",
+				cvar = "gxMaxFpsBk",
+				defaultValue = "30",
+				min = 10,
+				max = 240,
+				step = 1,
+				format = "%d FPS",
+			},
+			{
+				type = "toggleslider",
+				labelKey = "OPTIONS_TARGET_FPS",
+				tooltipKey = "OPTIONS_TT_TARGET_FPS",
+				enableCvar = "gxTargetFpsEnabled",
+				enableDefault = "0",
+				cvar = "gxTargetFps",
+				defaultValue = "60",
+				min = 20,
+				max = 150,
+				step = 5,
+				format = "%d FPS",
 			},
 			{
 				type = "slider",
 				labelKey = "OPTIONS_BRIGHTNESS",
+				tooltipKey = "OPTIONS_TT_BRIGHTNESS",
 				cvar = "gxExposure",
 				defaultValue = "1.0",
 				min = 0.5,
@@ -75,118 +228,166 @@ local OPTIONS_CATEGORIES = {
 				step = 0.05,
 				format = "%.2f",
 			},
-		},
-	},
-	{
-		-- Every option here is covered by the Graphics Quality presets: changing one switches the
-		-- quality to Custom (see OnOptionChanged).
-		id = "GraphicsAdvanced",
-		labelKey = "OPTIONS_GRAPHICS_ADVANCED",
-		type = "settings",
-		marksCustomQuality = true,
-		options = {
+
+			{ type = "header", labelKey = "OPTIONS_HEADER_QUALITY" },
+			{
+				type = "hardware",
+				labelKey = "OPTIONS_RECOMMENDED_SETTINGS",
+				tooltipKey = "OPTIONS_TT_HARDWARE",
+			},
+			{
+				-- One choice that sets every setting flagged "preset" below (graphics_presets.cpp).
+				type = "dropdown",
+				labelKey = "OPTIONS_GRAPHICS_QUALITY",
+				tooltipKey = "OPTIONS_TT_GRAPHICS_QUALITY",
+				cvar = "gxQuality",
+				isQuality = true,
+				items = QUALITY_ITEMS,
+				formatItem = function(item)
+					local text = Localize(item.labelKey);
+					if hardwareInfo and item.value == tostring(hardwareInfo.recommendedQuality) then
+						text = text .. " " .. Localize("OPTIONS_RECOMMENDED_SUFFIX");
+					end
+					return text;
+				end,
+			},
+
+			{ type = "header", labelKey = "OPTIONS_HEADER_SHADOWS" },
 			{
 				type = "toggle",
 				labelKey = "OPTIONS_SHADOWS",
+				tooltipKey = "OPTIONS_TT_SHADOWS",
 				cvar = "RenderShadows",
-				defaultValue = "1",
+				preset = true,
 			},
 			{
 				type = "dropdown",
 				labelKey = "OPTIONS_SHADOW_QUALITY",
+				tooltipKey = "OPTIONS_TT_SHADOW_QUALITY",
 				cvar = "ShadowTextureSize",
-				defaultValue = "1",
+				preset = true,
+				dependsOn = "RenderShadows",
+				indent = 1,
 				items = {
-					{ labelKey = "OPTIONS_QUALITY_LOW",    value = "0" },
-					{ labelKey = "OPTIONS_QUALITY_MEDIUM", value = "1" },
-					{ labelKey = "OPTIONS_QUALITY_HIGH",   value = "2" },
-					{ labelKey = "OPTIONS_QUALITY_ULTRA",  value = "3" },
+					{ labelKey = "OPTIONS_QUALITY_LOW",    value = "0", tipKey = "OPTIONS_TT_SHADOW_QUALITY_0" },
+					{ labelKey = "OPTIONS_QUALITY_MEDIUM", value = "1", tipKey = "OPTIONS_TT_SHADOW_QUALITY_1" },
+					{ labelKey = "OPTIONS_QUALITY_HIGH",   value = "2", tipKey = "OPTIONS_TT_SHADOW_QUALITY_2" },
+					{ labelKey = "OPTIONS_QUALITY_ULTRA",  value = "3", tipKey = "OPTIONS_TT_SHADOW_QUALITY_3" },
 				},
 			},
 			{
 				type = "dropdown",
 				labelKey = "OPTIONS_SHADOW_DETAIL",
+				tooltipKey = "OPTIONS_TT_SHADOW_DETAIL",
 				cvar = "ShadowQuality",
-				defaultValue = "2",
+				preset = true,
+				dependsOn = "RenderShadows",
+				indent = 1,
 				items = {
-					{ labelKey = "OPTIONS_QUALITY_LOW",    value = "0" },
-					{ labelKey = "OPTIONS_QUALITY_MEDIUM", value = "1" },
-					{ labelKey = "OPTIONS_QUALITY_HIGH",   value = "2" },
+					{ labelKey = "OPTIONS_QUALITY_LOW",    value = "0", tipKey = "OPTIONS_TT_SHADOW_DETAIL_0" },
+					{ labelKey = "OPTIONS_QUALITY_MEDIUM", value = "1", tipKey = "OPTIONS_TT_SHADOW_DETAIL_1" },
+					{ labelKey = "OPTIONS_QUALITY_HIGH",   value = "2", tipKey = "OPTIONS_TT_SHADOW_DETAIL_2" },
 				},
 			},
 			{
 				type = "dropdown",
 				labelKey = "OPTIONS_SHADOW_DISTANCE",
+				tooltipKey = "OPTIONS_TT_SHADOW_DISTANCE",
 				cvar = "gxShadowDistance",
-				defaultValue = "250",
+				preset = true,
+				dependsOn = "RenderShadows",
+				indent = 1,
 				items = {
-					{ labelKey = "OPTIONS_DISTANCE_NEAR",     value = "100" },
-					{ labelKey = "OPTIONS_DISTANCE_MEDIUM",   value = "150" },
-					{ labelKey = "OPTIONS_DISTANCE_FAR",      value = "250" },
-					{ labelKey = "OPTIONS_DISTANCE_VERY_FAR", value = "400" },
+					{ labelKey = "OPTIONS_DISTANCE_NEAR",     value = "100", tipKey = "OPTIONS_TT_DISTANCE_100" },
+					{ labelKey = "OPTIONS_DISTANCE_MEDIUM",   value = "150", tipKey = "OPTIONS_TT_DISTANCE_150" },
+					{ labelKey = "OPTIONS_DISTANCE_FAR",      value = "250", tipKey = "OPTIONS_TT_DISTANCE_250" },
+					{ labelKey = "OPTIONS_DISTANCE_VERY_FAR", value = "400", tipKey = "OPTIONS_TT_DISTANCE_400" },
 				},
 			},
 			{
+				-- Not in the presets, so it never touches gxQuality.
 				type = "toggle",
 				labelKey = "OPTIONS_FOLIAGE_SHADOWS",
+				tooltipKey = "OPTIONS_TT_FOLIAGE_SHADOWS",
 				cvar = "gxShadowAlphaTest",
 				defaultValue = "1",
+				dependsOn = "RenderShadows",
+				indent = 1,
 			},
 			{
 				type = "toggle",
 				labelKey = "OPTIONS_CONTACT_SHADOWS",
+				tooltipKey = "OPTIONS_TT_CONTACT_SHADOWS",
 				cvar = "gxContactShadows",
-				defaultValue = "1",
+				preset = true,
 			},
 			{
 				type = "dropdown",
 				labelKey = "OPTIONS_CONTACT_SHADOW_QUALITY",
+				tooltipKey = "OPTIONS_TT_CONTACT_SHADOW_QUALITY",
 				cvar = "gxContactShadowQuality",
-				defaultValue = "1",
+				preset = true,
+				dependsOn = "gxContactShadows",
+				indent = 1,
 				items = {
-					{ labelKey = "OPTIONS_QUALITY_LOW",    value = "0" },
-					{ labelKey = "OPTIONS_QUALITY_MEDIUM", value = "1" },
-					{ labelKey = "OPTIONS_QUALITY_HIGH",   value = "2" },
+					{ labelKey = "OPTIONS_QUALITY_LOW",    value = "0", tipKey = "OPTIONS_TT_CONTACT_SHADOW_QUALITY_0" },
+					{ labelKey = "OPTIONS_QUALITY_MEDIUM", value = "1", tipKey = "OPTIONS_TT_CONTACT_SHADOW_QUALITY_1" },
+					{ labelKey = "OPTIONS_QUALITY_HIGH",   value = "2", tipKey = "OPTIONS_TT_CONTACT_SHADOW_QUALITY_2" },
 				},
 			},
 			{
 				type = "slider",
 				labelKey = "OPTIONS_CONTACT_SHADOW_LENGTH",
+				tooltipKey = "OPTIONS_TT_CONTACT_SHADOW_LENGTH",
 				cvar = "gxContactShadowLength",
 				defaultValue = "0.3",
+				dependsOn = "gxContactShadows",
+				indent = 1,
 				min = 0.05,
 				max = 1.0,
 				step = 0.05,
 				format = "%.2f m",
 			},
+
+			{ type = "header", labelKey = "OPTIONS_HEADER_LIGHTING" },
 			{
 				type = "toggle",
 				labelKey = "OPTIONS_SSAO",
+				tooltipKey = "OPTIONS_TT_SSAO",
 				cvar = "gxSsao",
-				defaultValue = "1",
+				preset = true,
 			},
 			{
 				type = "dropdown",
 				labelKey = "OPTIONS_SSAO_QUALITY",
+				tooltipKey = "OPTIONS_TT_SSAO_QUALITY",
 				cvar = "gxSsaoQuality",
-				defaultValue = "2",
+				preset = true,
+				dependsOn = "gxSsao",
+				indent = 1,
 				items = {
-					{ labelKey = "OPTIONS_QUALITY_LOW",    value = "0" },
-					{ labelKey = "OPTIONS_QUALITY_MEDIUM", value = "1" },
-					{ labelKey = "OPTIONS_QUALITY_HIGH",   value = "2" },
+					{ labelKey = "OPTIONS_QUALITY_LOW",    value = "0", tipKey = "OPTIONS_TT_SSAO_QUALITY_0" },
+					{ labelKey = "OPTIONS_QUALITY_MEDIUM", value = "1", tipKey = "OPTIONS_TT_SSAO_QUALITY_1" },
+					{ labelKey = "OPTIONS_QUALITY_HIGH",   value = "2", tipKey = "OPTIONS_TT_SSAO_QUALITY_2" },
 				},
 			},
 			{
 				type = "toggle",
 				labelKey = "OPTIONS_SSAO_HALF_RES",
+				tooltipKey = "OPTIONS_TT_SSAO_HALF_RES",
 				cvar = "gxSsaoHalfRes",
-				defaultValue = "1",
+				preset = true,
+				dependsOn = "gxSsao",
+				indent = 1,
 			},
 			{
 				type = "slider",
 				labelKey = "OPTIONS_SSAO_RADIUS",
+				tooltipKey = "OPTIONS_TT_SSAO_RADIUS",
 				cvar = "gxSsaoRadius",
 				defaultValue = "0.75",
+				dependsOn = "gxSsao",
+				indent = 1,
 				min = 0.05,
 				max = 2.0,
 				step = 0.05,
@@ -195,87 +396,123 @@ local OPTIONS_CATEGORIES = {
 			{
 				type = "dropdown",
 				labelKey = "OPTIONS_ATMOSPHERE_QUALITY",
+				tooltipKey = "OPTIONS_TT_ATMOSPHERE_QUALITY",
 				cvar = "gxAtmosphereQuality",
-				defaultValue = "3",
+				preset = true,
 				items = {
-					{ labelKey = "OPTIONS_QUALITY_OFF",    value = "0" },
-					{ labelKey = "OPTIONS_QUALITY_LOW",    value = "1" },
-					{ labelKey = "OPTIONS_QUALITY_MEDIUM", value = "2" },
-					{ labelKey = "OPTIONS_QUALITY_HIGH",   value = "3" },
-					{ labelKey = "OPTIONS_QUALITY_ULTRA",  value = "4" },
+					{ labelKey = "OPTIONS_QUALITY_OFF",    value = "0", tipKey = "OPTIONS_TT_ATMOSPHERE_QUALITY_0" },
+					{ labelKey = "OPTIONS_QUALITY_LOW",    value = "1", tipKey = "OPTIONS_TT_ATMOSPHERE_QUALITY_1" },
+					{ labelKey = "OPTIONS_QUALITY_MEDIUM", value = "2", tipKey = "OPTIONS_TT_ATMOSPHERE_QUALITY_2" },
+					{ labelKey = "OPTIONS_QUALITY_HIGH",   value = "3", tipKey = "OPTIONS_TT_ATMOSPHERE_QUALITY_3" },
+					{ labelKey = "OPTIONS_QUALITY_ULTRA",  value = "4", tipKey = "OPTIONS_TT_ATMOSPHERE_QUALITY_4" },
 				},
 			},
 			{
 				type = "dropdown",
 				labelKey = "OPTIONS_BLOOM",
+				tooltipKey = "OPTIONS_TT_BLOOM",
 				cvar = "gxBloomQuality",
-				defaultValue = "2",
+				preset = true,
 				items = {
-					{ labelKey = "OPTIONS_QUALITY_OFF",  value = "0" },
-					{ labelKey = "OPTIONS_QUALITY_LOW",  value = "1" },
-					{ labelKey = "OPTIONS_QUALITY_HIGH", value = "2" },
-				},
-			},
-			{
-				type = "dropdown",
-				labelKey = "OPTIONS_TEXTURE_FILTERING",
-				cvar = "gxAnisotropy",
-				defaultValue = "8",
-				items = {
-					{ labelKey = "OPTIONS_FILTER_TRILINEAR", value = "1" },
-					{ labelKey = "OPTIONS_FILTER_ANISO_2",   value = "2" },
-					{ labelKey = "OPTIONS_FILTER_ANISO_4",   value = "4" },
-					{ labelKey = "OPTIONS_FILTER_ANISO_8",   value = "8" },
-					{ labelKey = "OPTIONS_FILTER_ANISO_16",  value = "16" },
+					{ labelKey = "OPTIONS_QUALITY_OFF",  value = "0", tipKey = "OPTIONS_TT_BLOOM_0" },
+					{ labelKey = "OPTIONS_QUALITY_LOW",  value = "1", tipKey = "OPTIONS_TT_BLOOM_1" },
+					{ labelKey = "OPTIONS_QUALITY_HIGH", value = "2", tipKey = "OPTIONS_TT_BLOOM_2" },
 				},
 			},
 			{
 				type = "toggle",
-				labelKey = "OPTIONS_DEPTH_PREPASS",
-				cvar = "gxDepthPrepass",
+				labelKey = "OPTIONS_UNDERWATER_GOD_RAYS",
+				tooltipKey = "OPTIONS_TT_UNDERWATER_GOD_RAYS",
+				cvar = "gxUnderwaterGodRays",
 				defaultValue = "1",
+			},
+
+			{ type = "header", labelKey = "OPTIONS_HEADER_WORLD" },
+			{
+				type = "dropdown",
+				labelKey = "OPTIONS_VIEW_DISTANCE",
+				tooltipKey = "OPTIONS_TT_VIEW_DISTANCE",
+				cvar = "ViewDistance",
+				preset = true,
+				items = {
+					{ labelKey = "OPTIONS_QUALITY_LOW",    value = "250",    tipKey = "OPTIONS_TT_VIEW_DISTANCE_250" },
+					{ labelKey = "OPTIONS_QUALITY_MEDIUM", value = "400",    tipKey = "OPTIONS_TT_VIEW_DISTANCE_400" },
+					{ labelKey = "OPTIONS_QUALITY_HIGH",   value = "600",    tipKey = "OPTIONS_TT_VIEW_DISTANCE_600" },
+					{ labelKey = "OPTIONS_QUALITY_ULTRA",  value = "100000", tipKey = "OPTIONS_TT_VIEW_DISTANCE_MAX" },
+				},
+			},
+			{
+				type = "dropdown",
+				labelKey = "OPTIONS_DISTANT_TERRAIN",
+				tooltipKey = "OPTIONS_TT_DISTANT_TERRAIN",
+				cvar = "TerrainFarRadius",
+				preset = true,
+				items = {
+					{ labelKey = "OPTIONS_QUALITY_OFF",    value = "0", tipKey = "OPTIONS_TT_DISTANT_TERRAIN_0" },
+					{ labelKey = "OPTIONS_QUALITY_LOW",    value = "2", tipKey = "OPTIONS_TT_DISTANT_TERRAIN_2" },
+					{ labelKey = "OPTIONS_QUALITY_MEDIUM", value = "3", tipKey = "OPTIONS_TT_DISTANT_TERRAIN_3" },
+					{ labelKey = "OPTIONS_QUALITY_HIGH",   value = "4", tipKey = "OPTIONS_TT_DISTANT_TERRAIN_4" },
+					{ labelKey = "OPTIONS_QUALITY_ULTRA",  value = "6", tipKey = "OPTIONS_TT_DISTANT_TERRAIN_6" },
+				},
 			},
 			{
 				type = "toggle",
 				labelKey = "OPTIONS_FOLIAGE",
+				tooltipKey = "OPTIONS_TT_FOLIAGE",
 				cvar = "FoliageEnabled",
-				defaultValue = "1",
-			},
-			{
-				type = "dropdown",
-				labelKey = "OPTIONS_VIEW_DISTANCE",
-				cvar = "ViewDistance",
-				defaultValue = "600",
-				items = {
-					{ labelKey = "OPTIONS_QUALITY_LOW",    value = "250" },
-					{ labelKey = "OPTIONS_QUALITY_MEDIUM", value = "400" },
-					{ labelKey = "OPTIONS_QUALITY_HIGH",   value = "600" },
-					{ labelKey = "OPTIONS_QUALITY_ULTRA",  value = "100000" },
-				},
+				preset = true,
 			},
 			{
 				type = "dropdown",
 				labelKey = "OPTIONS_FOLIAGE_DENSITY",
+				tooltipKey = "OPTIONS_TT_FOLIAGE_DENSITY",
 				cvar = "FoliageDensity",
-				defaultValue = "1.0",
+				preset = true,
+				dependsOn = "FoliageEnabled",
+				indent = 1,
 				items = {
-					{ labelKey = "OPTIONS_QUALITY_LOW",    value = "0.25" },
-					{ labelKey = "OPTIONS_QUALITY_MEDIUM", value = "0.5" },
-					{ labelKey = "OPTIONS_QUALITY_HIGH",   value = "0.75" },
-					{ labelKey = "OPTIONS_QUALITY_ULTRA",  value = "1.0" },
+					{ labelKey = "OPTIONS_QUALITY_LOW",    value = "0.25", tipKey = "OPTIONS_TT_FOLIAGE_DENSITY_25" },
+					{ labelKey = "OPTIONS_QUALITY_MEDIUM", value = "0.5",  tipKey = "OPTIONS_TT_FOLIAGE_DENSITY_50" },
+					{ labelKey = "OPTIONS_QUALITY_HIGH",   value = "0.75", tipKey = "OPTIONS_TT_FOLIAGE_DENSITY_75" },
+					{ labelKey = "OPTIONS_QUALITY_ULTRA",  value = "1.0",  tipKey = "OPTIONS_TT_FOLIAGE_DENSITY_100" },
 				},
 			},
 			{
 				type = "toggle",
 				labelKey = "OPTIONS_TERRAIN_LOD",
+				tooltipKey = "OPTIONS_TT_TERRAIN_LOD",
 				cvar = "TerrainLodEnabled",
 				defaultValue = "1",
 			},
 			{
 				type = "toggle",
 				labelKey = "OPTIONS_TERRAIN_OCCLUSION",
+				tooltipKey = "OPTIONS_TT_TERRAIN_OCCLUSION",
 				cvar = "TerrainOcclusionCulling",
 				defaultValue = "1",
+			},
+
+			{ type = "header", labelKey = "OPTIONS_HEADER_TEXTURES" },
+			{
+				type = "dropdown",
+				labelKey = "OPTIONS_TEXTURE_FILTERING",
+				tooltipKey = "OPTIONS_TT_TEXTURE_FILTERING",
+				cvar = "gxAnisotropy",
+				preset = true,
+				items = {
+					{ labelKey = "OPTIONS_FILTER_TRILINEAR", value = "1",  tipKey = "OPTIONS_TT_FILTER_1" },
+					{ labelKey = "OPTIONS_FILTER_ANISO_2",   value = "2",  tipKey = "OPTIONS_TT_FILTER_2" },
+					{ labelKey = "OPTIONS_FILTER_ANISO_4",   value = "4",  tipKey = "OPTIONS_TT_FILTER_4" },
+					{ labelKey = "OPTIONS_FILTER_ANISO_8",   value = "8",  tipKey = "OPTIONS_TT_FILTER_8" },
+					{ labelKey = "OPTIONS_FILTER_ANISO_16",  value = "16", tipKey = "OPTIONS_TT_FILTER_16" },
+				},
+			},
+			{
+				type = "toggle",
+				labelKey = "OPTIONS_DEPTH_PREPASS",
+				tooltipKey = "OPTIONS_TT_DEPTH_PREPASS",
+				cvar = "gxDepthPrepass",
+				preset = true,
 			},
 		},
 	},
@@ -284,77 +521,76 @@ local OPTIONS_CATEGORIES = {
 		labelKey = "OPTIONS_SOUND",
 		type = "settings",
 		options = {
+			{ type = "header", labelKey = "OPTIONS_HEADER_SOUND_GENERAL" },
 			{
-				type = "toggle",
-				labelKey = "OPTIONS_SOUND_ENABLED",
-				cvar = "SoundEnabled",
-				defaultValue = "1",
-			},
-			{
-				type = "slider",
+				-- The volume sliders store a float in [0, 1] and show it in percent (no min/max).
+				type = "toggleslider",
 				labelKey = "OPTIONS_MASTER_VOLUME",
+				tooltipKey = "OPTIONS_TT_MASTER_VOLUME",
+				enableCvar = "SoundEnabled",
+				enableDefault = "1",
 				cvar = "MasterVolume",
 				defaultValue = "1.0",
 			},
 			{
 				type = "toggle",
-				labelKey = "OPTIONS_MUSIC_ENABLED",
-				cvar = "MusicEnabled",
+				labelKey = "OPTIONS_SOUND_IN_BACKGROUND",
+				tooltipKey = "OPTIONS_TT_SOUND_IN_BACKGROUND",
+				cvar = "SoundInBackground",
 				defaultValue = "1",
+				dependsOn = "SoundEnabled",
 			},
+
+			{ type = "header", labelKey = "OPTIONS_HEADER_SOUND_CHANNELS" },
 			{
-				type = "slider",
-				labelKey = "OPTIONS_MUSIC_VOLUME",
+				type = "toggleslider",
+				labelKey = "OPTIONS_MUSIC_ENABLED",
+				tooltipKey = "OPTIONS_TT_MUSIC",
+				enableCvar = "MusicEnabled",
+				enableDefault = "1",
 				cvar = "MusicVolume",
 				defaultValue = "0.6",
+				dependsOn = "SoundEnabled",
 			},
 			{
-				type = "toggle",
+				type = "toggleslider",
 				labelKey = "OPTIONS_AMBIENCE_ENABLED",
-				cvar = "AmbienceEnabled",
-				defaultValue = "1",
-			},
-			{
-				type = "slider",
-				labelKey = "OPTIONS_AMBIENCE_VOLUME",
+				tooltipKey = "OPTIONS_TT_AMBIENCE",
+				enableCvar = "AmbienceEnabled",
+				enableDefault = "1",
 				cvar = "AmbienceVolume",
 				defaultValue = "0.8",
+				dependsOn = "SoundEnabled",
 			},
 			{
-				type = "toggle",
+				type = "toggleslider",
 				labelKey = "OPTIONS_EFFECTS_ENABLED",
-				cvar = "EffectsEnabled",
-				defaultValue = "1",
-			},
-			{
-				type = "slider",
-				labelKey = "OPTIONS_EFFECTS_VOLUME",
+				tooltipKey = "OPTIONS_TT_EFFECTS",
+				enableCvar = "EffectsEnabled",
+				enableDefault = "1",
 				cvar = "EffectsVolume",
 				defaultValue = "1.0",
+				dependsOn = "SoundEnabled",
 			},
 			{
-				type = "toggle",
+				type = "toggleslider",
 				labelKey = "OPTIONS_UI_SOUND_ENABLED",
-				cvar = "InterfaceEnabled",
-				defaultValue = "1",
-			},
-			{
-				type = "slider",
-				labelKey = "OPTIONS_UI_SOUND_VOLUME",
+				tooltipKey = "OPTIONS_TT_UI_SOUND",
+				enableCvar = "InterfaceEnabled",
+				enableDefault = "1",
 				cvar = "InterfaceVolume",
 				defaultValue = "1.0",
+				dependsOn = "SoundEnabled",
 			},
 			{
-				type = "toggle",
+				type = "toggleslider",
 				labelKey = "OPTIONS_VOICE_ENABLED",
-				cvar = "VoiceEnabled",
-				defaultValue = "1",
-			},
-			{
-				type = "slider",
-				labelKey = "OPTIONS_VOICE_VOLUME",
+				tooltipKey = "OPTIONS_TT_VOICE",
+				enableCvar = "VoiceEnabled",
+				enableDefault = "1",
 				cvar = "VoiceVolume",
 				defaultValue = "1.0",
+				dependsOn = "SoundEnabled",
 			},
 		},
 	},
@@ -363,9 +599,11 @@ local OPTIONS_CATEGORIES = {
 		labelKey = "OPTIONS_INTERFACE",
 		type = "settings",
 		options = {
+			{ type = "header", labelKey = "OPTIONS_HEADER_GENERAL" },
 			{
 				type = "dropdown",
 				labelKey = "OPTIONS_LANGUAGE",
+				tooltipKey = "OPTIONS_TT_LANGUAGE",
 				cvar = "locale",
 				defaultValue = "enUS",
 				needsRestart = true,
@@ -376,6 +614,92 @@ local OPTIONS_CATEGORIES = {
 					{ labelKey = "OPTIONS_LOCALE_RURU", value = "ruRU" },
 				},
 			},
+
+			{ type = "header", labelKey = "OPTIONS_HEADER_NAMEPLATES" },
+			{
+				type = "toggle",
+				labelKey = "OPTIONS_NP_ENEMY_NPCS",
+				tooltipKey = "OPTIONS_TT_NP_ENEMY_NPCS",
+				cvar = "NameplateShowEnemyNpcs",
+				defaultValue = "1",
+			},
+			{
+				type = "toggle",
+				labelKey = "OPTIONS_NP_ENEMY_PLAYERS",
+				tooltipKey = "OPTIONS_TT_NP_ENEMY_PLAYERS",
+				cvar = "NameplateShowEnemyPlayers",
+				defaultValue = "1",
+			},
+			{
+				type = "toggle",
+				labelKey = "OPTIONS_NP_ENEMY_PETS",
+				tooltipKey = "OPTIONS_TT_NP_ENEMY_PETS",
+				cvar = "NameplateShowEnemyPets",
+				defaultValue = "0",
+			},
+			{
+				type = "toggle",
+				labelKey = "OPTIONS_NP_FRIENDLY_NPCS",
+				tooltipKey = "OPTIONS_TT_NP_FRIENDLY_NPCS",
+				cvar = "NameplateShowFriendlyNpcs",
+				defaultValue = "0",
+			},
+			{
+				type = "toggle",
+				labelKey = "OPTIONS_NP_FRIENDLY_PLAYERS",
+				tooltipKey = "OPTIONS_TT_NP_FRIENDLY_PLAYERS",
+				cvar = "NameplateShowFriendlyPlayers",
+				defaultValue = "0",
+			},
+			{
+				type = "toggle",
+				labelKey = "OPTIONS_NP_FRIENDLY_PETS",
+				tooltipKey = "OPTIONS_TT_NP_FRIENDLY_PETS",
+				cvar = "NameplateShowFriendlyPets",
+				defaultValue = "0",
+			},
+			{
+				type = "toggle",
+				labelKey = "OPTIONS_NP_CAST_BARS",
+				tooltipKey = "OPTIONS_TT_NP_CAST_BARS",
+				cvar = "NameplateShowCastBars",
+				defaultValue = "1",
+			},
+			{
+				type = "dropdown",
+				labelKey = "OPTIONS_NP_DISTANCE",
+				tooltipKey = "OPTIONS_TT_NP_DISTANCE",
+				cvar = "NameplateDistance",
+				defaultValue = "40",
+				items = {
+					{ labelKey = "OPTIONS_DISTANCE_NEAR",   value = "20", tipKey = "OPTIONS_TT_NP_DISTANCE_20" },
+					{ labelKey = "OPTIONS_DISTANCE_MEDIUM", value = "40", tipKey = "OPTIONS_TT_NP_DISTANCE_40" },
+					{ labelKey = "OPTIONS_DISTANCE_FAR",    value = "60", tipKey = "OPTIONS_TT_NP_DISTANCE_60" },
+				},
+			},
+
+			{ type = "header", labelKey = "OPTIONS_HEADER_CHAT_BUBBLES" },
+			{
+				type = "toggle",
+				labelKey = "OPTIONS_BUBBLES_SAY",
+				tooltipKey = "OPTIONS_TT_BUBBLES_SAY",
+				cvar = "ChatBubblesSay",
+				defaultValue = "1",
+			},
+			{
+				type = "toggle",
+				labelKey = "OPTIONS_BUBBLES_YELL",
+				tooltipKey = "OPTIONS_TT_BUBBLES_YELL",
+				cvar = "ChatBubblesYell",
+				defaultValue = "1",
+			},
+			{
+				type = "toggle",
+				labelKey = "OPTIONS_BUBBLES_PARTY",
+				tooltipKey = "OPTIONS_TT_BUBBLES_PARTY",
+				cvar = "ChatBubblesParty",
+				defaultValue = "1",
+			},
 		},
 	},
 	{
@@ -383,94 +707,74 @@ local OPTIONS_CATEGORIES = {
 		labelKey = "OPTIONS_GAMEPLAY",
 		type = "settings",
 		options = {
-			{
-				type = "toggle",
-				labelKey = "OPTIONS_CHAT_BUBBLES_SAY",
-				cvar = "ChatBubblesSay",
-				defaultValue = "1",
-			},
-			{
-				type = "toggle",
-				labelKey = "OPTIONS_CHAT_BUBBLES_YELL",
-				cvar = "ChatBubblesYell",
-				defaultValue = "1",
-			},
-			{
-				type = "toggle",
-				labelKey = "OPTIONS_CHAT_BUBBLES_PARTY",
-				cvar = "ChatBubblesParty",
-				defaultValue = "1",
-			},
+			{ type = "header", labelKey = "OPTIONS_HEADER_COMBAT" },
 			{
 				type = "toggle",
 				labelKey = "OPTIONS_COMBAT_VIGNETTE",
+				tooltipKey = "OPTIONS_TT_COMBAT_VIGNETTE",
 				cvar = "CombatVignette",
 				defaultValue = "1",
 			},
 			{
 				type = "toggle",
 				labelKey = "OPTIONS_CAMERA_SHAKE_DAMAGE",
+				tooltipKey = "OPTIONS_TT_CAMERA_SHAKE",
 				cvar = "CombatCameraShake",
 				defaultValue = "0",
 			},
 			{
 				type = "toggle",
 				labelKey = "OPTIONS_FAST_LOOT",
+				tooltipKey = "OPTIONS_TT_FAST_LOOT",
 				cvar = "FastLoot",
 				defaultValue = "0",
 			},
+
+			{ type = "header", labelKey = "OPTIONS_HEADER_CAMERA" },
+			{
+				type = "slider",
+				labelKey = "OPTIONS_MOUSE_SENSITIVITY",
+				tooltipKey = "OPTIONS_TT_MOUSE_SENSITIVITY",
+				cvar = "MouseSensitivity",
+				defaultValue = "0.25",
+				min = 0.05,
+				max = 1.0,
+				step = 0.05,
+				format = "%.2f",
+			},
+			{
+				-- InvertVMouse = 1 is the normal camera; the checkbox shows the inverted one.
+				type = "toggle",
+				labelKey = "OPTIONS_INVERT_MOUSE",
+				tooltipKey = "OPTIONS_TT_INVERT_MOUSE",
+				cvar = "InvertVMouse",
+				defaultValue = "1",
+				invert = true,
+			},
+			{
+				type = "slider",
+				labelKey = "OPTIONS_MAX_CAMERA_DISTANCE",
+				tooltipKey = "OPTIONS_TT_MAX_CAMERA_DISTANCE",
+				cvar = "MaxCameraZoom",
+				defaultValue = "8",
+				min = 2,
+				max = 15,
+				step = 1,
+				format = "%d m",
+			},
 			{
 				type = "toggle",
-				labelKey = "OPTIONS_NAMEPLATES_ENEMY_NPCS",
-				cvar = "NameplateShowEnemyNpcs",
+				labelKey = "OPTIONS_CAMERA_ALIGN_YAW",
+				tooltipKey = "OPTIONS_TT_CAMERA_ALIGN_YAW",
+				cvar = "ResetCameraHorizontally",
 				defaultValue = "1",
 			},
 			{
 				type = "toggle",
-				labelKey = "OPTIONS_NAMEPLATES_ENEMY_PLAYERS",
-				cvar = "NameplateShowEnemyPlayers",
+				labelKey = "OPTIONS_CAMERA_ALIGN_PITCH",
+				tooltipKey = "OPTIONS_TT_CAMERA_ALIGN_PITCH",
+				cvar = "ResetCameraVertically",
 				defaultValue = "1",
-			},
-			{
-				type = "toggle",
-				labelKey = "OPTIONS_NAMEPLATES_FRIENDLY_NPCS",
-				cvar = "NameplateShowFriendlyNpcs",
-				defaultValue = "0",
-			},
-			{
-				type = "toggle",
-				labelKey = "OPTIONS_NAMEPLATES_FRIENDLY_PLAYERS",
-				cvar = "NameplateShowFriendlyPlayers",
-				defaultValue = "0",
-			},
-			{
-				type = "toggle",
-				labelKey = "OPTIONS_NAMEPLATES_ENEMY_PETS",
-				cvar = "NameplateShowEnemyPets",
-				defaultValue = "0",
-			},
-			{
-				type = "toggle",
-				labelKey = "OPTIONS_NAMEPLATES_FRIENDLY_PETS",
-				cvar = "NameplateShowFriendlyPets",
-				defaultValue = "0",
-			},
-			{
-				type = "toggle",
-				labelKey = "OPTIONS_NAMEPLATES_CAST_BARS",
-				cvar = "NameplateShowCastBars",
-				defaultValue = "1",
-			},
-			{
-				type = "dropdown",
-				labelKey = "OPTIONS_NAMEPLATE_DISTANCE",
-				cvar = "NameplateDistance",
-				defaultValue = "40",
-				items = {
-					{ labelKey = "OPTIONS_DISTANCE_NEAR",   value = "20" },
-					{ labelKey = "OPTIONS_DISTANCE_MEDIUM", value = "40" },
-					{ labelKey = "OPTIONS_DISTANCE_FAR",    value = "60" },
-				},
 			},
 		},
 	},
@@ -489,37 +793,26 @@ local originalKeyBindings = {}
 -- Per-action row data: { actionName -> { row, slot1Key, slot2Key } }
 local bindRowData = {}
 
+-- Rows of the settings page on display: { opt, row, label, widgets, refresh, hovered, enabled }.
+local settingRows = {}
+
+-- Set while rows are brought up to date from their cvars, so that the widget setters doing that do
+-- not echo back into the cvars through the change handlers.
+local refreshingRows = false
+
 -- ─────────────────────────────────────────────────────────────
 -- Helpers
 -- ─────────────────────────────────────────────────────────────
 
 local UpdateScrollClipTop;  -- forward declared; defined in warning section
-
-local function IsCvarOn(val)
-	return val ~= nil and val ~= "0" and val ~= "" and val ~= "false"
-end
-
--- Options of a category flagged marksCustomQuality are covered by the Graphics Quality presets, so
--- editing one of them means the settings no longer match a preset.
-for _, cat in ipairs(OPTIONS_CATEGORIES) do
-	if cat.marksCustomQuality and cat.options then
-		for _, opt in ipairs(cat.options) do
-			opt.marksCustomQuality = true
-		end
-	end
-end
-
-local function OnOptionChanged(opt)
-	if opt.marksCustomQuality then
-		SetCVar("gxQuality", "custom");
-	end
-end
+local RefreshSettingRows;   -- forward declared; defined after the row builders
 
 local function RebuildScrollBar(contentHeight)
 	OptionsContentScrollBar:SetValue(0);
 	OptionsScrollContent:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, 0);
 
-	local clipH = OptionsScrollClip:GetHeight();
+	-- GetHeight reports screen pixels for an anchored frame, the content height is in UI units.
+	local clipH = OptionsScrollClip:GetHeight() / GetUIScale().y;
 	if contentHeight > clipH then
 		OptionsContentScrollBar:SetMaximum(contentHeight - clipH);
 		OptionsContentScrollBar:Enable();
@@ -529,111 +822,348 @@ local function RebuildScrollBar(contentHeight)
 	end
 end
 
--- ─────────────────────────────────────────────────────────────
--- Settings content (toggle / dropdown rows)
--- ─────────────────────────────────────────────────────────────
-
-local function BuildToggleRow(opt, yOffset)
-	local row = OptionsToggleRowTemplate:Clone();
-	row:ClearAnchors();
-	row:SetAnchor(AnchorPoint.TOP,   AnchorPoint.TOP,   nil, yOffset);
-	row:SetAnchor(AnchorPoint.LEFT,  AnchorPoint.LEFT,  nil, 0);
-	row:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, 0);
-	OptionsScrollContent:AddChild(row);
-
-	local label = row:GetChild(0);
-	if label then
-		local text = Localize(opt.labelKey);
-		if opt.needsRestart then
-			text = text .. " *";
-		end
-		label:SetText(text);
+local function OnOptionChanged(opt)
+	-- Editing a setting the presets cover means the settings no longer match a preset.
+	if opt.preset and GetCVar("gxQuality") ~= "custom" then
+		SetCVar("gxQuality", "custom");
 	end
 
-	local toggle = row:GetChild(1);
-	if toggle then
-		local val = GetCVar(opt.cvar);
-		local state = IsCvarOn(val);
-		toggle:SetChecked(state);
-
-		toggle:SetClickedHandler(function()
-			state = not state;
-			toggle:SetChecked(state);
-			SetCVar(opt.cvar, state and "1" or "0");
-			OnOptionChanged(opt);
-		end);
-	end
+	-- Other rows may depend on this one (enabled state, resolution list, render scale labels).
+	RefreshSettingRows();
 end
 
-local function BuildComboRow(opt, yOffset)
-	local row = OptionsComboRowTemplate:Clone();
-	row:ClearAnchors();
-	row:SetAnchor(AnchorPoint.TOP,   AnchorPoint.TOP,   nil, yOffset);
-	row:SetAnchor(AnchorPoint.LEFT,  AnchorPoint.LEFT,  nil, 0);
-	row:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, 0);
-	OptionsScrollContent:AddChild(row);
+local function IsOptionAvailable(opt)
+	local dep = opt.dependsOn;
+	if dep == nil then
+		return true;
+	elseif type(dep) == "function" then
+		return dep();
+	end
+	return IsCvarOn(GetCVar(dep));
+end
 
-	local label = row:GetChild(0);
-	if label then
-		local text = Localize(opt.labelKey);
-		if opt.needsRestart then
-			text = text .. " *";
-		end
-		label:SetText(text);
+local function GetOptionLabel(opt)
+	local text = Localize(opt.labelKey);
+	if opt.needsRestart then
+		text = text .. " *";
+	end
+	return text;
+end
+
+-- Text of a cvar value as the row shows it: the matching dropdown item, On/Off or the slider format.
+local function FormatOptionValue(opt, value)
+	if value == nil then
+		return nil;
 	end
 
-	local combo = row:GetChild(1);
-	if combo then
-		combo:ClearItems();
-
-		local currentVal = GetCVar(opt.cvar) or opt.defaultValue;
-		local selectedIdx = 1;
-
-		for i, item in ipairs(opt.items) do
-			combo:AddItem(Localize(item.labelKey), item.value);
-			if item.value == currentVal then
-				selectedIdx = i;
+	if opt.items then
+		for _, item in ipairs(opt.items) do
+			if ValuesEqual(item.value, value) then
+				return Localize(item.labelKey);
 			end
 		end
-		combo:SetSelectedIndex(selectedIdx);
+		return value;
+	elseif opt.type == "toggle" then
+		return Localize(IsCvarOn(value) and "OPTIONS_ON" or "OPTIONS_OFF");
+	elseif opt.format then
+		return string.format(opt.format, tonumber(value) or 0);
+	end
+	return value;
+end
 
-		combo:SetOnSelectionChanged(function(c, idx, text, userData)
-			SetCVar(opt.cvar, userData);
-			OnOptionChanged(opt);
-		end);
+-- ─────────────────────────────────────────────────────────────
+-- Tooltips and row hover
+-- ─────────────────────────────────────────────────────────────
+
+-- Places the tooltip right of the options window, level with the hovered row: the rows span the
+-- whole window, so anchoring to the row itself would cover the settings.
+local function AnchorOptionTooltip(row)
+	GameTooltip_AnchorToFrame(OptionsFrame, "RIGHT");
+
+	local scale = GetUIScale();
+	local parent = GameTooltip:GetParent();
+	local parentHeight = parent:GetHeight() / scale.y;
+	local top = row:GetRect().top / scale.y;
+	local maxTop = parentHeight - GameTooltip:GetHeight() - 8;
+	if top > maxTop then top = maxTop; end
+	if top < 8 then top = 8; end
+
+	GameTooltip:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, parent, top);
+end
+
+local function ShowOptionTooltip(entry)
+	local opt = entry.opt;
+	if not opt.tooltipKey then
+		return;
+	end
+
+	GameTooltip_Clear();
+	GameTooltip:SetWidth(TOOLTIP_WIDTH);
+
+	GameTooltip_AddLine(Localize(opt.labelKey), TOOLTIP_LINE_LEFT, TOOLTIP_TITLE_COLOR);
+	GameTooltip_AddLine(Localize(opt.tooltipKey), TOOLTIP_LINE_LEFT, TOOLTIP_TEXT_COLOR);
+
+	-- What each choice does, the current one highlighted.
+	if opt.items then
+		local current = opt.cvar and GetCVar(opt.cvar) or nil;
+		local first = true;
+		for _, item in ipairs(opt.items) do
+			if item.tipKey then
+				if first then
+					GameTooltip_AddLine(" ", TOOLTIP_LINE_LEFT, TOOLTIP_VALUE_COLOR);
+					first = false;
+				end
+				local isCurrent = current ~= nil and ValuesEqual(item.value, current);
+				GameTooltip_AddLine(Localize(item.labelKey) .. ": " .. Localize(item.tipKey), TOOLTIP_LINE_LEFT,
+					isCurrent and TOOLTIP_CURRENT_COLOR or TOOLTIP_VALUE_COLOR);
+			end
+		end
+	end
+
+	if not entry.enabled and opt.dependsOn then
+		GameTooltip_AddLine(" ", TOOLTIP_LINE_LEFT, TOOLTIP_NOTE_COLOR);
+		GameTooltip_AddLine(Localize(opt.type == "resolution" and "OPTIONS_TT_RESOLUTION_FULLSCREEN" or "OPTIONS_TT_REQUIRES_PARENT"),
+			TOOLTIP_LINE_LEFT, TOOLTIP_NOTE_COLOR);
+	end
+
+	if opt.needsRestart then
+		GameTooltip_AddLine(" ", TOOLTIP_LINE_LEFT, TOOLTIP_NOTE_COLOR);
+		GameTooltip_AddLine(Localize("OPTIONS_TT_NEEDS_RESTART"), TOOLTIP_LINE_LEFT, TOOLTIP_NOTE_COLOR);
+	end
+
+	-- What the hardware detection recommends, like the quality presets assign it.
+	local recommended = nil;
+	if (opt.isQuality or opt.type == "hardware") and hardwareInfo then
+		recommended = FormatOptionValue({ items = QUALITY_ITEMS }, tostring(hardwareInfo.recommendedQuality));
+	elseif opt.preset then
+		recommended = FormatOptionValue(opt, recommendedPresetValues[opt.cvar]);
+	end
+	if recommended then
+		GameTooltip_AddLine(" ", TOOLTIP_LINE_LEFT, TOOLTIP_VALUE_COLOR);
+		GameTooltip_AddLine(Localize("OPTIONS_TT_RECOMMENDED") .. " |c" .. TOOLTIP_CURRENT_COLOR .. recommended, TOOLTIP_LINE_LEFT, TOOLTIP_TITLE_COLOR);
+	end
+
+	AnchorOptionTooltip(entry.row);
+	GameTooltip:Show();
+end
+
+local function UpdateRowVisual(entry)
+	local color = LABEL_COLOR;
+	if not entry.enabled then
+		color = LABEL_COLOR_DISABLED;
+	elseif entry.hovered then
+		color = LABEL_COLOR_HOVERED;
+	end
+
+	if entry.label then
+		entry.label:SetProperty("LabelColor", color);
+	end
+	entry.row:SetProperty("HighlightTint", entry.hovered and ROW_HIGHLIGHT_TINT or ROW_NO_HIGHLIGHT_TINT);
+end
+
+local function OnRowEnter(entry)
+	entry.hovered = true;
+	UpdateRowVisual(entry);
+	ShowOptionTooltip(entry);
+end
+
+local function OnRowLeave(entry)
+	entry.hovered = false;
+	UpdateRowVisual(entry);
+	GameTooltip:Hide();
+end
+
+-- Hovering any part of a row (label, widget, the slider's buttons ...) counts as hovering the row.
+local function BindRowHover(frame, entry)
+	frame:SetOnEnterHandler(function() OnRowEnter(entry); end);
+	frame:SetOnLeaveHandler(function() OnRowLeave(entry); end);
+
+	for i = 0, frame:GetChildCount() - 1 do
+		BindRowHover(frame:GetChild(i), entry);
 	end
 end
 
--- Slider row: the cvar stores a float in [0, 1], the slider works in percent (0-100).
-local function BuildSliderRow(opt, yOffset)
-	local row = OptionsSliderRowTemplate:Clone();
+local function SetRowEnabled(entry, enabled)
+	entry.enabled = enabled;
+	for _, widget in ipairs(entry.widgets) do
+		widget:SetEnabled(enabled);
+	end
+	UpdateRowVisual(entry);
+end
+
+-- ─────────────────────────────────────────────────────────────
+-- Settings content (one builder per option type)
+-- ─────────────────────────────────────────────────────────────
+
+local function CreateRow(template, opt, yOffset)
+	local row = template:Clone();
 	row:ClearAnchors();
 	row:SetAnchor(AnchorPoint.TOP,   AnchorPoint.TOP,   nil, yOffset);
 	row:SetAnchor(AnchorPoint.LEFT,  AnchorPoint.LEFT,  nil, 0);
 	row:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, 0);
 	OptionsScrollContent:AddChild(row);
 
-	local label = row:GetChild(0);
-	if label then
-		local text = Localize(opt.labelKey);
-		if opt.needsRestart then
-			text = text .. " *";
+	local entry = { opt = opt, row = row, label = row:GetChild(0), widgets = {}, hovered = false, enabled = true };
+
+	if entry.label then
+		entry.label:SetText(GetOptionLabel(opt));
+		if opt.indent then
+			entry.label:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, 16 + opt.indent * INDENT_WIDTH);
 		end
-		label:SetText(text);
 	end
 
-	local slider = row:GetChild(1);
-	local valueLabel = row:GetChild(2);
+	settingRows[#settingRows + 1] = entry;
+	return entry;
+end
 
-	-- Two modes, chosen by whether the option declares an explicit range:
-	--
-	--   * No opt.min/opt.max (the original behaviour, and what every volume slider uses): the cvar
-	--     holds a float in [0, 1] and the slider works in percent (0-100, step 5), shown as "75%".
-	--     This path is deliberately identical to the pre-extension code, rounding included, so the
-	--     existing sound options cannot regress.
-	--   * With opt.min/opt.max: the slider works in the cvar's OWN units and stores the raw value.
-	--     opt.step defaults to a hundredth of the range and opt.format to "%.2f"; use opt.format to
-	--     add a unit suffix, e.g. "%.2f m".
+local function BuildHeaderRow(opt, yOffset)
+	local row = OptionsHeaderRowTemplate:Clone();
+	row:ClearAnchors();
+	row:SetAnchor(AnchorPoint.TOP,   AnchorPoint.TOP,   nil, yOffset);
+	row:SetAnchor(AnchorPoint.LEFT,  AnchorPoint.LEFT,  nil, 0);
+	row:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, 0);
+	OptionsScrollContent:AddChild(row);
+
+	row:GetChild(0):SetText(Localize(opt.labelKey));
+end
+
+local function BuildToggleRow(opt, yOffset)
+	local entry = CreateRow(OptionsToggleRowTemplate, opt, yOffset);
+
+	local toggle = entry.row:GetChild(1);
+	entry.widgets = { toggle };
+
+	-- The checkbox shows the cvar, or its opposite for options flagged invert.
+	local function IsChecked()
+		local on = IsCvarOn(GetCVar(opt.cvar) or opt.defaultValue);
+		if opt.invert then
+			return not on;
+		end
+		return on;
+	end
+
+	entry.refresh = function()
+		toggle:SetChecked(IsChecked());
+	end
+
+	toggle:SetClickedHandler(function()
+		local checked = not IsChecked();
+		toggle:SetChecked(checked);
+
+		local on = checked;
+		if opt.invert then
+			on = not checked;
+		end
+		SetCVar(opt.cvar, on and "1" or "0");
+		OnOptionChanged(opt);
+	end);
+
+	return entry;
+end
+
+-- Fills a combo box with { label, value } items and selects the one matching the current value.
+local function FillCombo(combo, items, currentValue)
+	combo:ClearItems();
+
+	local selectedIdx = 0;
+	for i, item in ipairs(items) do
+		combo:AddItem(item.label, item.value);
+		if ValuesEqual(item.value, currentValue) then
+			selectedIdx = i;
+		end
+	end
+
+	-- Keep a value set outside the options (console, config file) visible instead of showing the
+	-- first item as if it were selected.
+	if selectedIdx == 0 and currentValue ~= nil and currentValue ~= "" then
+		combo:AddItem(currentValue, currentValue);
+		selectedIdx = #items + 1;
+	end
+
+	combo:SetSelectedIndex(math.max(selectedIdx, 1));
+end
+
+local function BuildComboRow(opt, yOffset, getItems)
+	local entry = CreateRow(OptionsComboRowTemplate, opt, yOffset);
+
+	local combo = entry.row:GetChild(1);
+	entry.widgets = { combo };
+
+	getItems = getItems or function()
+		local items = {};
+		for _, item in ipairs(opt.items) do
+			items[#items + 1] = { label = opt.formatItem and opt.formatItem(item) or Localize(item.labelKey), value = item.value };
+		end
+		return items, GetCVar(opt.cvar) or opt.defaultValue;
+	end
+
+	entry.refresh = function()
+		local items, current = getItems();
+		FillCombo(combo, items, current);
+	end
+
+	combo:SetOnSelectionChanged(function(c, idx, text, userData)
+		if refreshingRows or userData == nil then
+			return;
+		end
+
+		SetCVar(opt.cvar, userData);
+		OnOptionChanged(opt);
+	end);
+
+	return entry;
+end
+
+local function BuildMonitorRow(opt, yOffset)
+	return BuildComboRow(opt, yOffset, function()
+		local items = {};
+		for i, monitor in ipairs(GetDisplayMonitors()) do
+			local name = monitor.name;
+			if name == nil or name == "" then
+				name = Localize("OPTIONS_MONITOR_GENERIC");
+			end
+			if monitor.primary then
+				name = name .. " " .. Localize("OPTIONS_MONITOR_PRIMARY");
+			end
+			items[#items + 1] = { label = string.format("%d. %s", i, name), value = tostring(i - 1) };
+		end
+		return items, tostring(GetMonitorIndex());
+	end);
+end
+
+-- The cvar stores the window size as a "WxH" string. A fullscreen window always covers its monitor,
+-- so the row then shows the monitor's resolution and stays disabled.
+local function BuildResolutionRow(opt, yOffset)
+	return BuildComboRow(opt, yOffset, function()
+		local items = {};
+		if IsFullscreenWindow() then
+			local monitor = GetSelectedMonitor();
+			if monitor then
+				local label = monitor.width .. "x" .. monitor.height;
+				items[1] = { label = label, value = label };
+				return items, label;
+			end
+		end
+
+		for _, res in ipairs(GetScreenResolutions(GetMonitorIndex())) do
+			items[#items + 1] = { label = res.label, value = res.label };
+		end
+		return items, GetCVar(opt.cvar) or "";
+	end);
+end
+
+-- Shared slider setup for slider and toggleslider rows.
+--
+-- Two modes, chosen by whether the option declares an explicit range:
+--
+--   * No opt.min/opt.max (the original behaviour, and what every volume slider uses): the cvar holds a
+--     float in [0, 1] and the slider works in percent (0-100, step 5), shown as "75%". This path is
+--     deliberately identical to the pre-extension code, rounding included, so the existing sound
+--     options cannot regress.
+--   * With opt.min/opt.max: the slider works in the cvar's OWN units and stores the raw value.
+--     opt.step defaults to a hundredth of the range and opt.format to "%.2f"; use opt.format to add a
+--     unit suffix, e.g. "%.2f m".
+local function SetupSlider(opt, slider, valueLabel)
 	local isPercent = (opt.min == nil and opt.max == nil);
 	local minVal = opt.min or 0;
 	local maxVal = opt.max or 100;
@@ -662,19 +1192,23 @@ local function BuildSliderRow(opt, yOffset)
 
 	local function UpdateValueLabel(value)
 		if valueLabel then
+			-- %d needs a whole number; the step grid can leave float dust on one.
+			if string.find(format, "%%d") then
+				value = math.floor(value + 0.5);
+			end
 			valueLabel:SetText(string.format(format, value));
 		end
 	end
 
-	if slider then
-		-- Maximum BEFORE minimum, deliberately. A freshly cloned slider is 0..100, and
-		-- ScrollBar::SetMinimumValue refuses (with an ELOG) any minimum above the current maximum -
-		-- so setting a range like 200..300 min-first would silently do nothing. Max-first is safe
-		-- for any range whose maximum is non-negative.
-		slider:SetMaximum(maxVal);
-		slider:SetMinimum(minVal);
-		slider:SetStep(step);
+	-- Maximum BEFORE minimum, deliberately. A freshly cloned slider is 0..100, and
+	-- ScrollBar::SetMinimumValue refuses (with an ELOG) any minimum above the current maximum - so
+	-- setting a range like 200..300 min-first would silently do nothing. Max-first is safe for any
+	-- range whose maximum is non-negative.
+	slider:SetMaximum(maxVal);
+	slider:SetMinimum(minVal);
+	slider:SetStep(step);
 
+	local function Refresh()
 		-- Last-resort fallback when neither the cvar nor the option declares a usable number.
 		-- Percent mode keeps the original's 1.0 (a full slider) rather than deriving one from the
 		-- range, which would silently turn an unreadable volume cvar into 0% instead of 100%.
@@ -683,74 +1217,143 @@ local function BuildSliderRow(opt, yOffset)
 		local value = Quantize(ToSlider(current));
 		slider:SetValue(value);
 		UpdateValueLabel(value);
-
-		-- Install the handler after the initial SetValue so setup doesn't echo into the cvar. This
-		-- applies to the range setters above too, not just SetValue: SetMinimum/SetMaximum call
-		-- SetValue internally when the current value falls outside the new range, which would fire
-		-- the handler and write a placeholder value over the user's cvar. Do not reorder.
-		slider:SetOnValueChangedHandler(function(bar, value)
-			local snapped = Quantize(value);
-			SetCVar(opt.cvar, tostring(FromSlider(snapped)));
-			OnOptionChanged(opt);
-			UpdateValueLabel(snapped);
-		end);
 	end
+
+	-- The handler checks refreshingRows, so neither the range setters above (which call SetValue
+	-- when the current value falls outside the new range) nor a refresh write a placeholder value
+	-- over the player's cvar.
+	slider:SetOnValueChangedHandler(function(bar, value)
+		if refreshingRows then
+			return;
+		end
+
+		local snapped = Quantize(value);
+		SetCVar(opt.cvar, tostring(FromSlider(snapped)));
+		UpdateValueLabel(snapped);
+		OnOptionChanged(opt);
+	end);
+
+	return Refresh;
 end
 
--- Resolution combo row: items are populated dynamically from the graphics API
--- rather than from a fixed list. The cvar stores the resolution as a "WxH" string.
-local function BuildResolutionRow(opt, yOffset)
-	local row = OptionsComboRowTemplate:Clone();
-	row:ClearAnchors();
-	row:SetAnchor(AnchorPoint.TOP,   AnchorPoint.TOP,   nil, yOffset);
-	row:SetAnchor(AnchorPoint.LEFT,  AnchorPoint.LEFT,  nil, 0);
-	row:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, 0);
-	OptionsScrollContent:AddChild(row);
+local function BuildSliderRow(opt, yOffset)
+	local entry = CreateRow(OptionsSliderRowTemplate, opt, yOffset);
 
-	local label = row:GetChild(0);
-	if label then
-		local text = Localize(opt.labelKey);
-		if opt.needsRestart then
-			text = text .. " *";
-		end
-		label:SetText(text);
+	local slider = entry.row:GetChild(1);
+	local valueLabel = entry.row:GetChild(2);
+	entry.widgets = { slider, valueLabel };
+
+	refreshingRows = true;
+	entry.refresh = SetupSlider(opt, slider, valueLabel);
+	refreshingRows = false;
+
+	return entry;
+end
+
+-- Checkbox (opt.enableCvar) plus slider (opt.cvar); the slider only counts while the box is checked.
+local function BuildToggleSliderRow(opt, yOffset)
+	local entry = CreateRow(OptionsToggleSliderRowTemplate, opt, yOffset);
+
+	local toggle = entry.row:GetChild(1);
+	local slider = entry.row:GetChild(2);
+	local valueLabel = entry.row:GetChild(3);
+	entry.widgets = { toggle };
+
+	refreshingRows = true;
+	local refreshSlider = SetupSlider(opt, slider, valueLabel);
+	refreshingRows = false;
+
+	local function IsOn()
+		return IsCvarOn(GetCVar(opt.enableCvar) or opt.enableDefault);
 	end
 
-	local combo = row:GetChild(1);
-	if combo then
-		combo:ClearItems();
+	entry.refresh = function()
+		toggle:SetChecked(IsOn());
+		refreshSlider();
 
-		local currentVal = GetCVar(opt.cvar) or "";
-		local resolutions = GetScreenResolutions();
-		local selectedIdx = 1;
-		local matched = false;
-
-		for i, res in ipairs(resolutions) do
-			combo:AddItem(res.label, res.label);
-			if res.label == currentVal then
-				selectedIdx = i;
-				matched = true;
-			end
-		end
-
-		-- If the current cvar value is not part of the enumerated list, add it so the
-		-- user does not lose their custom resolution.
-		if not matched and currentVal ~= "" then
-			combo:AddItem(currentVal, currentVal);
-			selectedIdx = #resolutions + 1;
-		end
-
-		combo:SetSelectedIndex(selectedIdx);
-
-		combo:SetOnSelectionChanged(function(c, idx, text, userData)
-			SetCVar(opt.cvar, userData);
-		end);
+		local active = entry.enabled and IsOn();
+		slider:SetEnabled(active);
+		valueLabel:SetEnabled(active);
 	end
+
+	toggle:SetClickedHandler(function()
+		SetCVar(opt.enableCvar, IsOn() and "0" or "1");
+		OnOptionChanged(opt);
+	end);
+
+	return entry;
+end
+
+local function BuildHardwareRow(opt, yOffset)
+	local entry = CreateRow(OptionsHardwareRowTemplate, opt, yOffset);
+
+	local button = entry.row:GetChild(1);
+	button:SetText(Localize("OPTIONS_USE_RECOMMENDED"));
+	entry.widgets = { button };
+
+	entry.refresh = function()
+		if not hardwareInfo then
+			return;
+		end
+
+		local gpu = hardwareInfo.gpu;
+		if gpu == nil or gpu == "" then
+			gpu = Localize("OPTIONS_HARDWARE_UNKNOWN");
+		elseif hardwareInfo.integrated then
+			gpu = gpu .. " " .. Localize("OPTIONS_HARDWARE_INTEGRATED");
+		elseif hardwareInfo.videoMemoryMB > 0 then
+			gpu = string.format("%s (%.0f GB)", gpu, hardwareInfo.videoMemoryMB / 1024);
+		end
+
+		local text = string.gsub(Localize("OPTIONS_HARDWARE_DETECTED"), "{gpu}", gpu);
+		entry.label:SetText(text);
+	end
+
+	button:SetClickedHandler(function()
+		if hardwareInfo then
+			SetCVar("gxQuality", tostring(hardwareInfo.recommendedQuality));
+			RefreshSettingRows();
+		end
+	end);
+
+	return entry;
+end
+
+local ROW_BUILDERS = {
+	toggle = BuildToggleRow,
+	dropdown = function(opt, yOffset) return BuildComboRow(opt, yOffset); end,
+	slider = BuildSliderRow,
+	toggleslider = BuildToggleSliderRow,
+	resolution = BuildResolutionRow,
+	monitor = BuildMonitorRow,
+	hardware = BuildHardwareRow,
+};
+
+-- Brings every row on display up to date with its cvar and dependencies. Cheap enough to run after
+-- every change: a quality preset or the display mode can change many rows at once.
+RefreshSettingRows = function()
+	if #settingRows == 0 then
+		return;
+	end
+
+	RefreshHardwareInfo();
+
+	refreshingRows = true;
+	for _, entry in ipairs(settingRows) do
+		-- Enabled state first: the toggle-slider row derives its slider state from it.
+		SetRowEnabled(entry, IsOptionAvailable(entry.opt));
+		if entry.refresh then
+			entry.refresh();
+		end
+	end
+	refreshingRows = false;
 end
 
 local function BuildContent(options)
 	ComboBox_Close();
+	GameTooltip:Hide();
 	OptionsScrollContent:RemoveAllChildren();
+	settingRows = {};
 
 	if #options == 0 then
 		OptionsScrollContent:SetHeight(80);
@@ -758,24 +1361,24 @@ local function BuildContent(options)
 		return;
 	end
 
-	local totalHeight = 0;
-	for i, opt in ipairs(options) do
-		local yOff = (i - 1) * (ROW_HEIGHT + ROW_SPACING);
-
-		if opt.type == "toggle" then
-			BuildToggleRow(opt, yOff);
-		elseif opt.type == "slider" then
-			BuildSliderRow(opt, yOff);
-		elseif opt.type == "dropdown" then
-			BuildComboRow(opt, yOff);
-		elseif opt.type == "resolution" then
-			BuildResolutionRow(opt, yOff);
+	local yOff = 0;
+	for _, opt in ipairs(options) do
+		if opt.type == "header" then
+			BuildHeaderRow(opt, yOff);
+			yOff = yOff + HEADER_HEIGHT + ROW_SPACING;
+		else
+			local builder = ROW_BUILDERS[opt.type];
+			if builder then
+				local entry = builder(opt, yOff);
+				BindRowHover(entry.row, entry);
+				yOff = yOff + ROW_HEIGHT + ROW_SPACING;
+			end
 		end
-
-		totalHeight = yOff + ROW_HEIGHT;
 	end
 
-	totalHeight = totalHeight + ROW_SPACING;
+	RefreshSettingRows();
+
+	local totalHeight = yOff + ROW_SPACING;
 	OptionsScrollContent:SetHeight(totalHeight);
 	RebuildScrollBar(totalHeight);
 end
@@ -786,6 +1389,17 @@ end
 
 local captureActiveRow = nil;
 local captureActiveSlot = 0;
+
+-- Localized name of a key binding action (BINDING_<name>), falling back to the English description
+-- from Bindings.xml for actions that have no translation yet.
+local function GetBindingDisplayName(actionName, description)
+	local key = "BINDING_" .. actionName;
+	local text = Localize(key);
+	if text == key then
+		return description or actionName;
+	end
+	return text;
+end
 
 local function GetKeyDisplayText(keyName)
 	if keyName and keyName ~= "" then
@@ -853,7 +1467,7 @@ local function StartBindCapture(data, slotIndex)
 			if prevData then
 				RefreshBindRow(prevData);
 			end
-			OptionsKeyWarning_Show(prevAction, keyName);
+			OptionsKeyWarning_Show(GetBindingDisplayName(prevAction, prevData and prevData.description), keyName);
 		else
 			OptionsKeyWarningFrame:Hide();
 			UpdateScrollClipTop();
@@ -887,11 +1501,20 @@ local function BuildKeyBindingContent()
 		categories[cat][#categories[cat] + 1] = b;
 	end
 
+	-- Natural order by the displayed name, so "Action Button 2" comes before "Action Button 10".
+	local function SortKey(b)
+		local name = GetBindingDisplayName(b.name, b.description);
+		return (string.gsub(string.lower(name), "%d+", function(n) return string.format("%08d", tonumber(n)); end));
+	end
+	for _, list in pairs(categories) do
+		table.sort(list, function(a, b) return SortKey(a) < SortKey(b); end);
+	end
+
 	local yOff = 0;
 
 	for _, cat in ipairs(categoryOrder) do
-		-- Category header row.
-		local catRow = KeyBindCatRowTemplate:Clone();
+		-- Category header row, in the same style as the section headers of the other pages.
+		local catRow = OptionsHeaderRowTemplate:Clone();
 		catRow:ClearAnchors();
 		catRow:SetAnchor(AnchorPoint.TOP,   AnchorPoint.TOP,   nil, yOff);
 		catRow:SetAnchor(AnchorPoint.LEFT,  AnchorPoint.LEFT,  nil, 0);
@@ -903,12 +1526,13 @@ local function BuildKeyBindingContent()
 			catLabel:SetText(Localize("KEYBINDING_CAT_" .. cat));
 		end
 
-		yOff = yOff + BIND_CAT_HEIGHT + BIND_ROW_SPACING;
+		yOff = yOff + HEADER_HEIGHT + BIND_ROW_SPACING;
 
 		for _, b in ipairs(categories[cat]) do
 			local keys  = GetKeysForBinding(b.name);
 			local data  = {
 				actionName = b.name,
+				description = b.description,
 				row        = nil,
 				slot1Key   = keys[1] or nil,
 				slot2Key   = keys[2] or nil,
@@ -928,7 +1552,10 @@ local function BuildKeyBindingContent()
 			local btn1 = row:GetChild(1);
 			local btn2 = row:GetChild(2);
 
-			if lbl  then lbl:SetText(b.description); end
+			if lbl  then lbl:SetText(GetBindingDisplayName(b.name, b.description)); end
+
+			-- Same hover highlight as the settings rows (no tooltip: the name says it all).
+			BindRowHover(row, { opt = {}, row = row, label = lbl, widgets = {}, hovered = false, enabled = true });
 			if btn1 then
 				btn1:SetText(GetKeyDisplayText(data.slot1Key));
 				local capturedData = data;
@@ -971,6 +1598,8 @@ function OptionsFrame_SelectCategory(index)
 	local cat = OPTIONS_CATEGORIES[index];
 	if cat then
 		if cat.type == "keybinding" then
+			settingRows = {};
+			GameTooltip:Hide();
 			BuildKeyBindingContent();
 		else
 			BuildContent(cat.options);
@@ -1027,6 +1656,23 @@ end
 -- Frame lifecycle
 -- ─────────────────────────────────────────────────────────────
 
+-- Calls fn(cvar, defaultValue) for every cvar an option stores, including the switch of a
+-- toggle-slider row.
+local function ForEachOptionCvar(fn)
+	for _, cat in ipairs(OPTIONS_CATEGORIES) do
+		if cat.options then
+			for _, opt in ipairs(cat.options) do
+				if opt.cvar then
+					fn(opt.cvar, opt.defaultValue, opt);
+				end
+				if opt.enableCvar then
+					fn(opt.enableCvar, opt.enableDefault, opt);
+				end
+			end
+		end
+	end
+end
+
 function OptionsFrame_OnLoad(self)
 	OptionsTitleBar:GetChild(0):SetClickedHandler(function()
 		OptionsFrame_Cancel();
@@ -1035,7 +1681,7 @@ function OptionsFrame_OnLoad(self)
 	OptionsContentScrollBar:SetMinimum(0);
 	OptionsContentScrollBar:SetMaximum(0);
 	OptionsContentScrollBar:SetValue(0);
-	OptionsContentScrollBar:SetStep(ROW_HEIGHT);
+	OptionsContentScrollBar:SetStep(ROW_HEIGHT + ROW_SPACING);
 	OptionsContentScrollBar:SetOnValueChangedHandler(function(bar, value)
 		OptionsScrollContent:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, -value);
 	end);
@@ -1053,15 +1699,9 @@ end
 function OptionsFrame_OnShow(self)
 	-- Snapshot original cvar values so Cancel can revert them.
 	originalValues = {};
-	for _, cat in ipairs(OPTIONS_CATEGORIES) do
-		if cat.options then
-			for _, opt in ipairs(cat.options) do
-				if opt.cvar then
-					originalValues[opt.cvar] = GetCVar(opt.cvar) or opt.defaultValue or "";
-				end
-			end
-		end
-	end
+	ForEachOptionCvar(function(cvar, defaultValue)
+		originalValues[cvar] = GetCVar(cvar) or defaultValue or "";
+	end);
 
 	-- Snapshot key bindings.
 	originalKeyBindings = GetKeyBindings() or {};
@@ -1083,31 +1723,31 @@ function OptionsFrame_Toggle()
 	end
 end
 
+local function CloseOptions()
+	ComboBox_Close();
+	GameTooltip:Hide();
+	settingRows = {};
+	HideUIPanel(OptionsFrame);
+end
+
 function OptionsFrame_Okay()
 	CancelCurrentCapture();
 
 	-- Check whether any option that requires a client restart was modified.
 	local restartNeeded = false;
-	for _, cat in ipairs(OPTIONS_CATEGORIES) do
-		if cat.options then
-			for _, opt in ipairs(cat.options) do
-				if opt.needsRestart and opt.cvar then
-					local current  = GetCVar(opt.cvar) or opt.defaultValue or "";
-					local original = originalValues[opt.cvar] or opt.defaultValue or "";
-					if current ~= original then
-						restartNeeded = true;
-						break;
-					end
-				end
+	ForEachOptionCvar(function(cvar, defaultValue, opt)
+		if opt.needsRestart then
+			local current  = GetCVar(cvar) or defaultValue or "";
+			local original = originalValues[cvar] or defaultValue or "";
+			if current ~= original then
+				restartNeeded = true;
 			end
 		end
-		if restartNeeded then break; end
-	end
+	end);
 
 	RunConsoleCommand("saveconfig");
 	SaveBindings();
-	ComboBox_Close();
-	HideUIPanel(OptionsFrame);
+	CloseOptions();
 
 	if restartNeeded then
 		StaticDialog_Show("RESTART_REQUIRED");
@@ -1123,7 +1763,7 @@ function OptionsFrame_Cancel()
 		SetCVar("gxQuality", originalValues["gxQuality"]);
 	end
 	for cvar, val in pairs(originalValues) do
-		if cvar ~= "gxQuality" then
+		if cvar ~= "gxQuality" and GetCVar(cvar) ~= val then
 			SetCVar(cvar, val);
 		end
 	end
@@ -1137,8 +1777,7 @@ function OptionsFrame_Cancel()
 		SetBinding(key, action);
 	end
 
-	ComboBox_Close();
-	HideUIPanel(OptionsFrame);
+	CloseOptions();
 end
 
 function OptionsFrame_Defaults()
@@ -1150,15 +1789,24 @@ function OptionsFrame_Defaults()
 		return;
 	end
 
+	local hasPresetOptions = false;
 	for _, opt in ipairs(cat.options) do
+		if opt.preset or opt.isQuality then
+			hasPresetOptions = true;
+		end
 		if opt.cvar and opt.defaultValue then
 			SetCVar(opt.cvar, opt.defaultValue);
 		end
+		if opt.enableCvar and opt.enableDefault then
+			SetCVar(opt.enableCvar, opt.enableDefault);
+		end
 	end
 
-	if cat.marksCustomQuality then
-		SetCVar("gxQuality", "custom");
+	-- The defaults of the preset-covered settings are whatever suits this machine.
+	if hasPresetOptions then
+		local info = GetGraphicsHardwareInfo();
+		SetCVar("gxQuality", tostring(info.recommendedQuality));
 	end
 
-	BuildContent(cat.options);
+	RefreshSettingRows();
 end
