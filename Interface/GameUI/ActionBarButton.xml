@@ -40,6 +40,15 @@
 			<ImagerySection name="PushedFrame">
 				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="FF91806A" />
 			</ImagerySection>
+			<!-- Darkens the icon while the button is held (mouse or key binding), so the pushed state
+                 reads clearly against both the normal and the hovered state. -->
+			<ImagerySection name="PushedOverlay">
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="60000000">
+					<Area>
+						<Inset all="10" />
+					</Area>
+				</ImageComponent>
+			</ImagerySection>
 			<ImagerySection name="DisabledFrame">
 				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="FF998D7C" />
 			</ImagerySection>
@@ -64,6 +73,7 @@
 					<Section section="ActiveGlow" />
 					<Section section="PushedFrame" />
 					<Section section="Image" />
+					<Section section="PushedOverlay" />
 					<Section section="Counter" />
 				</Layer>
 			</StateImagery>
