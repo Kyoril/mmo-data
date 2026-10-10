@@ -74,7 +74,11 @@ function ActionButton_Up(id)
     end
 
     local button = _G["ActionButton"..id];
-    button:SetButtonState(ButtonState.NORMAL);
+    if (button:IsHovered()) then
+        button:SetButtonState(ButtonState.HOVERED);
+    else
+        button:SetButtonState(ButtonState.NORMAL);
+    end
 
     ActionButton_OnClick(button, "LEFT");
 end
