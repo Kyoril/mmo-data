@@ -72,12 +72,31 @@ function InventoryItemButton_OnEnter(this)
         GameTooltip:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, this, 0);
     end
 
-    -- Show the tooltip above the button if it fits on screen, below otherwise
-    if (this:GetY() >= GameTooltip:GetHeight() + 16) then
-        GameTooltip:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.TOP, this, -16);
-    else
-        GameTooltip:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, this, 16);
+    -- Show the tooltip above the button if it fits on screen, below otherwise, and keep it
+    -- inside the screen vertically. GetRect() reports screen pixels while the tooltip size and
+    -- anchor offsets are UI units, so convert first (see GameTooltip_AnchorToFrame).
+    local scale = GetUIScale();
+    local parent = GameTooltip:GetParent();
+    local parentHeight = parent:GetHeight() / scale.y;
+    local rect = this:GetRect();
+    local tooltipHeight = GameTooltip:GetHeight();
+    local gap = 16.0;
+    local margin = 8.0;
+
+    local top = rect.top / scale.y - gap - tooltipHeight;
+    if (top < margin) then
+        top = rect.bottom / scale.y + gap;
     end
+
+    local maxTop = parentHeight - tooltipHeight - margin;
+    if (top > maxTop) then
+        top = maxTop;
+    end
+    if (top < margin) then
+        top = margin;
+    end
+
+    GameTooltip:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, parent, top);
 
     GameTooltip:Show();
 end
