@@ -328,7 +328,15 @@ function rgbToHex(r, g, b)
     return "FF" .. string.format("%02X%02X%02X", ri, gi, bi);
 end
 
+-- Interface sound entry ids (data/editor sounds.data, category Interface, 2D). Only the player
+-- who gained the level receives PLAYER_LEVEL_UP, so the fanfare never plays for bystanders.
+local SOUND_UI_LEVEL_UP = 169;
+local SOUND_UI_QUEST_ACCEPTED = 170;
+local SOUND_UI_QUEST_COMPLETED = 171;
+
 function ChatFrame_OnPlayerLevelUp(self, newLevel, health, mana, stamina, strength, agility, intellect, spirit, tp, ap)
+    PlaySoundEntry(SOUND_UI_LEVEL_UP);
+
     -- Add level up notification
     ChatFrame:AddMessage(string.format(Localize("LEVEL_UP"), newLevel), 1.0, 1.0, 0.0);
 
@@ -370,6 +378,7 @@ function ChatFrame_OnPlayerLevelUp(self, newLevel, health, mana, stamina, streng
 end
 
 function ChatFrame_OnQuestRewarded(self, questTitle, rewardXp, rewardMoney)
+    PlaySoundEntry(SOUND_UI_QUEST_COMPLETED);
     ChatFrame:AddMessage(string.format(Localize("QUEST_REWARDED_TITLE"), questTitle), 1.0, 1.0, 0.0);
     if rewardXp and rewardXp > 0 then
         ChatFrame:AddMessage(string.format(Localize("QUEST_REWARDED_XP"), rewardXp), 1.0, 1.0, 0.0);
@@ -393,6 +402,7 @@ function ChatFrame_OnQuestRewarded(self, questTitle, rewardXp, rewardMoney)
 end
 
 function ChatFrame_OnQuestAccepted(self, questTitle)
+    PlaySoundEntry(SOUND_UI_QUEST_ACCEPTED);
     ChatFrame:AddMessage(string.format(Localize("QUEST_ACCEPTED_TITLE"), questTitle), 1.0, 1.0, 0.0);
 end
 
