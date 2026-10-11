@@ -14,26 +14,54 @@ PowerTypeNames[0] = "MANA";
 PowerTypeNames[1] = "RAGE";
 PowerTypeNames[2] = "ENERGY";
 
-function GameTooltip_Clear()
-    GameTooltipLines:RemoveAllChildren();
+-- Distance between the item tooltip and the comparison tooltip, in UI units.
+ITEM_COMPARE_TOOLTIP_GAP = 8.0;
+
+-- Frames the GameTooltip_* fill functions write into. This is the GameTooltip, except while
+-- the item comparison tooltip is filled with the same functions. Frames are looked up by name
+-- on use because this script loads before they exist.
+local TOOLTIP_TARGET_MAIN = { frame = "GameTooltip", lines = "GameTooltipLines", money = "TooltipMoneyFrame", moneyText = "TooltipMoneyText" };
+local TOOLTIP_TARGET_COMPARE = { frame = "ItemCompareTooltip", lines = "ItemCompareTooltipLines", money = "ItemCompareTooltipMoneyFrame", moneyText = "ItemCompareTooltipMoneyText" };
+local tooltipTarget = TOOLTIP_TARGET_MAIN;
+
+local function ClearTooltip()
+    local tooltip = _G[tooltipTarget.frame];
+    _G[tooltipTarget.lines]:RemoveAllChildren();
 
     TooltipHeight = 40;
-    GameTooltip:SetHeight(TooltipHeight);
+    tooltip:SetHeight(TooltipHeight);
 
     -- Restore the default width. The world object tooltip may have shrunk it; every other
     -- tooltip type (items, spells, units, ...) expects the full default width.
-    if (GameTooltip.defaultWidth) then
-        GameTooltip:SetWidth(GameTooltip.defaultWidth);
+    if (tooltip.defaultWidth) then
+        tooltip:SetWidth(tooltip.defaultWidth);
     end
 
-    TooltipMoneyFrame:Hide(); 
-    TooltipMoneyText:Hide();
+    _G[tooltipTarget.money]:Hide();
+    _G[tooltipTarget.moneyText]:Hide();
 
-    GameTooltip.fadeOut = false;
-    GameTooltip:SetOpacity(1.0);
+    tooltip.fadeOut = false;
+    tooltip:SetOpacity(1.0);
+
+    -- Whatever the main tooltip shows next is no item until GameTooltip_SetItem* says so.
+    if (tooltipTarget == TOOLTIP_TARGET_MAIN) then
+        GameTooltip.compareInventoryType = nil;
+        GameTooltip.compareSourceItem = nil;
+        if (ItemCompareTooltip) then
+            ItemCompareTooltip.item = nil;
+            ItemCompareTooltip:Hide();
+        end
+    end
+end
+
+function GameTooltip_Clear()
+    ClearTooltip();
 end
 
 function GameTooltip_AddLine(line, alignment, color)
+    local tooltip = _G[tooltipTarget.frame];
+    local GameTooltipLines = _G[tooltipTarget.lines];
+
 	-- Create a new button from the template and add it to the window
 	local lineFrame = GameTooltipLineTemplate:Clone();
 	lineFrame:SetText(line);
@@ -56,10 +84,13 @@ function GameTooltip_AddLine(line, alignment, color)
     TooltipHeight = TooltipHeight + textHeight + 8;
     lineFrame:SetHeight(textHeight);
 
-    GameTooltip:SetHeight(TooltipHeight);
+    tooltip:SetHeight(TooltipHeight);
 end
 
 function GameTooltip_AddIconLine(line, icon, color)
+	local tooltip = _G[tooltipTarget.frame];
+	local GameTooltipLines = _G[tooltipTarget.lines];
+
 	local lineFrame = GameTooltipIconLineTemplate:Clone();
 	local iconFrame = lineFrame:GetChild(0);
 	local textFrame = lineFrame:GetChild(1);
@@ -85,10 +116,13 @@ function GameTooltip_AddIconLine(line, icon, color)
 	lineFrame:SetHeight(lineHeight);
 	textFrame:SetHeight(lineHeight);
 	TooltipHeight = TooltipHeight + lineHeight + 8;
-	GameTooltip:SetHeight(TooltipHeight);
+	tooltip:SetHeight(TooltipHeight);
 end
 
 function GameTooltip_AddDualLine(leftText, rightText, leftColor, rightColor)
+	local tooltip = _G[tooltipTarget.frame];
+	local GameTooltipLines = _G[tooltipTarget.lines];
+
 	-- Create left-aligned text frame
 	local leftFrame = GameTooltipLineTemplate:Clone();
 	leftFrame:SetText(leftText);
@@ -133,17 +167,55 @@ function GameTooltip_AddDualLine(leftText, rightText, leftColor, rightColor)
     local textHeight = math.max(leftHeight, rightHeight);
     TooltipHeight = TooltipHeight + textHeight + 8;
 
-    GameTooltip:SetHeight(TooltipHeight);
+    tooltip:SetHeight(TooltipHeight);
 end
 
 function GameTooltip_SetMoney(money)
-    TooltipHeight = TooltipHeight + TooltipMoneyFrame:GetHeight() + 8;
-    
-    RefreshMoneyFrame("TooltipMoneyFrame", money, false, false, true);
-    TooltipMoneyFrame:Show();
-    TooltipMoneyText:Show();
+    local tooltip = _G[tooltipTarget.frame];
+    local moneyFrame = _G[tooltipTarget.money];
 
-    GameTooltip:SetHeight(TooltipHeight);
+    TooltipHeight = TooltipHeight + moneyFrame:GetHeight() + 8;
+
+    RefreshMoneyFrame(tooltipTarget.money, money, false, false, true);
+    moneyFrame:Show();
+    _G[tooltipTarget.moneyText]:Show();
+
+    tooltip:SetHeight(TooltipHeight);
+end
+
+-- Finds the equipped item an item of the given inventory type is compared against: the first
+-- occupied equipment slot the item fits into, skipping the item itself (sourceItem, an item
+-- handle or nil). Returns nil if there is nothing to compare against.
+function GameTooltip_FindComparisonItem(inventoryType, sourceItem)
+    if (inventoryType == nil or inventoryType == INVENTORY_TYPE_NONEQUIP) then
+        return nil;
+    end
+
+    for index = 0, 1 do
+        local slot = GetComparisonInventorySlot(inventoryType, index);
+        if (slot < 0) then
+            break;
+        end
+
+        local equipped = GetInventorySlotItem("player", slot);
+        if (equipped and not (sourceItem and equipped:IsSameItem(sourceItem))) then
+            return equipped;
+        end
+    end
+
+    return nil;
+end
+
+-- Remembers which item the main tooltip shows so holding Alt can compare it with the equipped
+-- one, and tells the player about it.
+local function SetupItemComparison(inventoryType, sourceItem)
+    if (GameTooltip_FindComparisonItem(inventoryType, sourceItem) == nil) then
+        return;
+    end
+
+    GameTooltip.compareInventoryType = inventoryType;
+    GameTooltip.compareSourceItem = sourceItem;
+    GameTooltip_AddLine(Localize("ITEM_COMPARE_HINT"), TOOLTIP_LINE_LEFT, "FF808080");
 end
 
 function GameTooltip_SetItemTemplate(item)
@@ -268,16 +340,19 @@ function GameTooltip_SetItemTemplate(item)
             break;
         end
     end
+
+    SetupItemComparison(inventoryType, nil);
 end
 
-function GameTooltip_SetItem(item)
-    if (item == nil) then
-        return
-    end
-
+-- Fills the current tooltip target with an item instance. The optional header line is shown
+-- above the item name.
+local function FillItemTooltip(item, header)
     local player = GetUnit("player");
 
-    GameTooltip_Clear();
+    ClearTooltip();
+    if (header ~= nil) then
+        GameTooltip_AddLine(header, TOOLTIP_LINE_LEFT, "FF808080");
+    end
     GameTooltip_AddLine(item:GetName(), TOOLTIP_LINE_LEFT, ItemQualityColors[item:GetQuality()]);
 
     -- Binding line: bound instance takes priority, otherwise fall back to entry hint
@@ -406,11 +481,23 @@ function GameTooltip_SetItem(item)
         end
     end
 
+    if (tooltipTarget == TOOLTIP_TARGET_MAIN) then
+        SetupItemComparison(inventoryType, item);
+    end
+
     local sellPrice = item:GetSellPrice();
     if (sellPrice > 0) then
         local count = item:GetStackCount();
         GameTooltip_SetMoney(sellPrice * count);
     end
+end
+
+function GameTooltip_SetItem(item)
+    if (item == nil) then
+        return
+    end
+
+    FillItemTooltip(item, nil);
 end
 
 function GameTooltip_SetAura(spell)
@@ -629,7 +716,91 @@ function GameTooltip_OnLoad(self)
     GameTooltip.defaultWidth = GameTooltip:GetWidth();
 end
 
+-- Fills the comparison tooltip with the equipped item, using the same functions as the main
+-- tooltip. The target is restored even if filling fails, or the main tooltip would break.
+local function FillComparisonTooltip(item)
+    local mainHeight = TooltipHeight;
+    tooltipTarget = TOOLTIP_TARGET_COMPARE;
+    local ok, err = pcall(FillItemTooltip, item, Localize("ITEM_COMPARE_EQUIPPED"));
+    tooltipTarget = TOOLTIP_TARGET_MAIN;
+    TooltipHeight = mainHeight;
+
+    if (not ok) then
+        error(err, 0);
+    end
+
+    ItemCompareTooltip.item = item;
+end
+
+-- Places the comparison tooltip right of the main tooltip, or left of it when there is no room.
+local function AnchorComparisonTooltip()
+    -- GetRect() reports screen pixels while anchor offsets and the tooltip size are expressed in
+    -- UI units, see GameTooltip_AnchorToFrame.
+    local scale = GetUIScale();
+    local parent = ItemCompareTooltip:GetParent();
+    local parentWidth = parent:GetWidth() / scale.x;
+    local parentHeight = parent:GetHeight() / scale.y;
+
+    local rect = GameTooltip:GetRect();
+    local width = ItemCompareTooltip:GetWidth();
+    local height = ItemCompareTooltip:GetHeight();
+    local margin = 8.0;
+
+    local left = rect.right / scale.x + ITEM_COMPARE_TOOLTIP_GAP;
+    if (left + width > parentWidth - margin) then
+        left = rect.left / scale.x - ITEM_COMPARE_TOOLTIP_GAP - width;
+    end
+    if (left < margin) then left = margin; end
+
+    local top = rect.top / scale.y;
+    local maxTop = parentHeight - height - margin;
+    if (maxTop > margin and top > maxTop) then top = maxTop; end
+    if (top < margin) then top = margin; end
+
+    ItemCompareTooltip:ClearAnchors();
+    ItemCompareTooltip:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, parent, left);
+    ItemCompareTooltip:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, parent, top);
+end
+
+-- Shows the equipped item next to the item tooltip while Alt is held, hides it otherwise.
+function GameTooltip_UpdateComparison()
+    local item = nil;
+    if (GameTooltip.compareInventoryType ~= nil and IsAltKeyDown()) then
+        item = GameTooltip_FindComparisonItem(GameTooltip.compareInventoryType, GameTooltip.compareSourceItem);
+    end
+
+    if (item == nil) then
+        if (ItemCompareTooltip:IsVisible()) then
+            ItemCompareTooltip:Hide();
+        end
+        return;
+    end
+
+    -- Refill only when the equipped item changed, not every frame.
+    if (ItemCompareTooltip.item == nil or not ItemCompareTooltip.item:IsSameItem(item)) then
+        FillComparisonTooltip(item);
+    end
+
+    AnchorComparisonTooltip();
+    ItemCompareTooltip:SetOpacity(GameTooltip:GetOpacity(false));
+    ItemCompareTooltip:Show();
+end
+
+function ItemCompareTooltip_OnLoad(self)
+    self.defaultWidth = self:GetWidth();
+end
+
+function ItemCompareTooltip_OnUpdate(self, deltaTime)
+    -- The GameTooltip only updates while it is shown, so the comparison hides itself with it.
+    if (not GameTooltip:IsVisible()) then
+        self.item = nil;
+        self:Hide();
+    end
+end
+
 function GameTooltip_OnUpdate(self, deltaTime)
+    GameTooltip_UpdateComparison();
+
     -- While a world object is hovered, keep the tooltip stuck to the mouse cursor. As soon as
     -- the object is no longer hovered, hide the tooltip immediately (no fade out).
     if (GameTooltip.followWorldObject) then
