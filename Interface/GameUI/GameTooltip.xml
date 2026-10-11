@@ -142,4 +142,72 @@
 			</OnUpdate>
 		</Scripts>
 	</Frame>
+
+	<!-- Shows the equipped item next to an item tooltip while Alt is held. -->
+	<Frame name="ItemCompareTooltip" renderer="DefaultRenderer" parent="GameParent">
+		<Property name="Visible" value="False" />
+
+		<Visual>
+			<ImagerySection name="Background">
+				<ImageComponent texture="Interface/GlueUI/TransparentBorder.htex" tiling="NONE">
+					<Area><Inset all="8" /></Area>
+				</ImageComponent>
+				<BorderComponent texture="Interface/GameUI/fg4_borders_stone_edges_result.htex" borderSize="32" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Background" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+
+		<Frame name="ItemCompareTooltipLines">
+			<Area>
+				<Anchor point="TOP" relativePoint="TOP" offset="16" />
+				<Anchor point="LEFT" offset="8" />
+				<Anchor point="RIGHT" offset="-8" />
+				<Anchor point="BOTTOM" offset="-8" />
+			</Area>
+		</Frame>
+
+		<Frame name="ItemCompareTooltipMoneyText" inherits="TextSmall">
+			<Property name="Text" value="SELL_PRICE" />
+			<Property name="Font" value="SmallLabelFont" />
+
+			<Area>
+				<Anchor point="LEFT" offset="16" />
+				<Anchor point="RIGHT" offset="-16" />
+				<Anchor point="BOTTOM" offset="-16" />
+			</Area>
+		</Frame>
+
+		<Frame name="ItemCompareTooltipMoneyFrame" inherits="MoneyFrameTemplate">
+			<Property name="Visible" value="False" />
+
+			<Area>
+				<Anchor point="BOTTOM" offset="-16" />
+				<Anchor point="LEFT" offset="16" />
+				<Anchor point="RIGHT" offset="-16" />
+			</Area>
+		</Frame>
+
+		<Area>
+			<Size><AbsDimension x="540" y="96" /></Size>
+			<Anchor point="RIGHT" offset="-64" />
+			<Anchor point="BOTTOM" offset="-64" />
+		</Area>
+
+		<Scripts>
+			<OnLoad>
+				return function(self)
+					ItemCompareTooltip_OnLoad(self);
+				end
+			</OnLoad>
+			<OnUpdate>
+				return function(self, deltaTime)
+					ItemCompareTooltip_OnUpdate(self, deltaTime);
+				end
+			</OnUpdate>
+		</Scripts>
+	</Frame>
 </UiLayout>

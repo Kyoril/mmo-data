@@ -731,6 +731,8 @@ strings =
 	(key = "ITEM_BINDS_WHEN_PICKED_UP", string = "Binds when picked up")
 	(key = "ITEM_BINDS_WHEN_EQUIPPED", string = "Binds when equipped")
 	(key = "ITEM_STARTS_QUEST", string = "This Item Begins a Quest")
+	(key = "ITEM_COMPARE_HINT", string = "Hold Alt to compare")
+	(key = "ITEM_COMPARE_EQUIPPED", string = "Currently Equipped")
 
 	(key = "REQUIRES", string = "Requires")
 	(key = "TIME_PLAYED_DAYS", string = "Total time played: %d days, %d hours, %d minutes, %02d seconds")

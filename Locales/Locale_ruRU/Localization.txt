@@ -677,6 +677,8 @@ strings =
 	(key = "ITEM_BINDS_WHEN_PICKED_UP", string = "Привязывается при подборе")
 	(key = "ITEM_BINDS_WHEN_EQUIPPED", string = "Привязывается при надевании")
 	(key = "ITEM_STARTS_QUEST", string = "Этот предмет начинает задание")
+	(key = "ITEM_COMPARE_HINT", string = "Удерживайте Alt для сравнения")
+	(key = "ITEM_COMPARE_EQUIPPED", string = "Надето сейчас")
 
 	(key = "COMBAT_IMMUNE", string = "Иммунитет")
 
