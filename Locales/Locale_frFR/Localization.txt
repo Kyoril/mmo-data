@@ -834,6 +834,8 @@ strings =
 	(key = "TRAINER_STATE_LEARNED", string = "Appris")
 	(key = "TRAINER_STATE_LOCKED", string = "Niveau insuffisant")
 	(key = "TRAINER_STATE_MONEY", string = "Fonds insuffisants")
+	(key = "TRAINER_STATE_TALENT", string = "Talent manquant")
+	(key = "TRAINER_REQUIRES_TALENT", string = "Nécessite le talent : %s")
 	(key = "TRAINER_CLASS_LEVEL", string = "Niveau de classe requis : %d")
 	(key = "TRAINER_REQUIRED_LEVEL", string = "Niveau requis : %d")
 	(key = "TRAINER_SELECT_HINT", string = "Sélectionnez un sort pour voir ses détails.")

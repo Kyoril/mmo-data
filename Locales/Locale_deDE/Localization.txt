@@ -833,6 +833,8 @@ strings =
 	(key = "TRAINER_STATE_LEARNED", string = "Erlernt")
 	(key = "TRAINER_STATE_LOCKED", string = "Stufe zu niedrig")
 	(key = "TRAINER_STATE_MONEY", string = "Nicht genug Geld")
+	(key = "TRAINER_STATE_TALENT", string = "Talent fehlt")
+	(key = "TRAINER_REQUIRES_TALENT", string = "Benötigt Talent: %s")
 	(key = "TRAINER_CLASS_LEVEL", string = "Benötigt Klassenstufe %d")
 	(key = "TRAINER_REQUIRED_LEVEL", string = "Benötigt Stufe %d")
 	(key = "TRAINER_SELECT_HINT", string = "Wähle einen Zauber, um die Details zu sehen.")

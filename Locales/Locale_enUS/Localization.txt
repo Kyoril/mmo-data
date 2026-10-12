@@ -864,6 +864,8 @@ strings =
 	(key = "TRAINER_STATE_LEARNED", string = "Learned")
 	(key = "TRAINER_STATE_LOCKED", string = "Level too low")
 	(key = "TRAINER_STATE_MONEY", string = "Not enough money")
+	(key = "TRAINER_STATE_TALENT", string = "Talent missing")
+	(key = "TRAINER_REQUIRES_TALENT", string = "Requires talent: %s")
 	(key = "TRAINER_CLASS_LEVEL", string = "Requires class level %d")
 	(key = "TRAINER_REQUIRED_LEVEL", string = "Requires level %d")
 	(key = "TRAINER_SELECT_HINT", string = "Select a spell to view its details.")

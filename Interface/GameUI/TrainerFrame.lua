@@ -9,6 +9,7 @@ local trainerVisibleRows = 5;
 local function TrainerSpellState(index)
 	local id, name, icon, cost, known = GetTrainerSpellInfo(index);
 	local requiredLevel = GetTrainerSpellReqLevel(index) or 0;
+	local talentName, talentLearned = GetTrainerSpellRequiredTalent(index);
 	local player = GetUnit("player");
 	local level = 0;
 	if player then
@@ -17,13 +18,19 @@ local function TrainerSpellState(index)
 	local state = "TRAINER_STATE_AVAILABLE";
 	if known then
 		state = "TRAINER_STATE_LEARNED";
+	elseif talentName ~= "" and not talentLearned then
+		state = "TRAINER_STATE_TALENT";
 	elseif not player or level < requiredLevel then
 		state = "TRAINER_STATE_LOCKED";
 	elseif UnitMoney("player") < cost then
 		state = "TRAINER_STATE_MONEY";
 	end
+	local stateText = Localize(state);
+	if state == "TRAINER_STATE_TALENT" then
+		stateText = string.format(Localize("TRAINER_REQUIRES_TALENT"), talentName);
+	end
 	return { index = index, id = id, name = name, icon = icon, cost = cost,
-		known = known, requiredLevel = requiredLevel, state = state,
+		known = known, requiredLevel = requiredLevel, state = state, stateText = stateText,
 		available = id > 0 and state == "TRAINER_STATE_AVAILABLE" };
 end
 
@@ -47,7 +54,7 @@ local function TrainerUpdatePreview(entry)
 	TrainerSpellPreviewButton.userData = gameData.spells:GetById(entry.id);
 	TrainerSpellDescriptionText:SetText(GetSpellDescription(TrainerSpellPreviewButton.userData));
 	RefreshMoneyFrame("TrainerSpellCostMoney", entry.cost, false, false, true);
-	TrainerPreviewState:SetText(Localize(entry.state));
+	TrainerPreviewState:SetText(entry.stateText);
 	TrainerPreviewState:SetProperty("TextColor", entry.available and "FF86DE56" or (entry.known and "FFAAA396" or "FFFF8770"));
 	TrainerSpellDescContent:Show();
 	TrainerSelectionHint:Hide();
@@ -125,7 +132,7 @@ function TrainerList_Update(self)
 			_G["TrainerRowName" .. slot]:SetText(entry.name);
 			_G["TrainerRowName" .. slot]:SetProperty("TextColor", color);
 			_G["TrainerRowLevel" .. slot]:SetText(string.format(Localize(IsTrainerClassTrainer() and "TRAINER_CLASS_LEVEL" or "TRAINER_REQUIRED_LEVEL"), entry.requiredLevel));
-			_G["TrainerRowState" .. slot]:SetText(Localize(entry.state));
+			_G["TrainerRowState" .. slot]:SetText(entry.stateText);
 			_G["TrainerRowState" .. slot]:SetProperty("TextColor", entry.available and "FF86DE56" or (entry.known and "FFAAA396" or "FFFF8770"));
 			RefreshMoneyFrame("TrainerRowMoney" .. slot, entry.cost, false, false, true);
 			_G["TrainerRowState" .. slot]:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.LEFT, _G["TrainerRowMoney" .. slot], -12);
@@ -228,7 +235,7 @@ function TrainerFrame_OnLoad(self)
 	self:RegisterEvent("TRAINER_UPDATE", TrainerFrame_OnTrainerUpdate);
 	self:RegisterEvent("TRAINER_CLOSED", TrainerFrame_OnTrainerClosed);
 	self:RegisterEvent("TRAINER_BUY_ERROR", TrainerFrame_OnTrainerBuyError);
-	for _, event in ipairs({"MONEY_CHANGED", "SPELL_LEARNED", "PLAYER_LEVEL_CHANGED", "PLAYER_KNOWN_CLASSES_CHANGED"}) do
+	for _, event in ipairs({"MONEY_CHANGED", "SPELL_LEARNED", "PLAYER_LEVEL_CHANGED", "PLAYER_KNOWN_CLASSES_CHANGED", "PLAYER_TALENT_UPDATE"}) do
 		self:RegisterEvent(event, TrainerList_Update);
 	end
 end

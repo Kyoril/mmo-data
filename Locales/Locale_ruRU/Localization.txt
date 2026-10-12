@@ -745,6 +745,8 @@ strings =
 	(key = "TRAINER_STATE_LEARNED", string = "Изучено")
 	(key = "TRAINER_STATE_LOCKED", string = "Низкий уровень")
 	(key = "TRAINER_STATE_MONEY", string = "Недостаточно денег")
+	(key = "TRAINER_STATE_TALENT", string = "Нет таланта")
+	(key = "TRAINER_REQUIRES_TALENT", string = "Требуется талант: %s")
 	(key = "TRAINER_CLASS_LEVEL", string = "Уровень класса: %d")
 	(key = "TRAINER_REQUIRED_LEVEL", string = "Требуемый уровень: %d")
 	(key = "TRAINER_SELECT_HINT", string = "Выберите заклинание, чтобы увидеть подробности.")
