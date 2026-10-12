@@ -1,7 +1,7 @@
 -- Copyright (C) 2019 - 2025, Kyoril. All rights reserved.
 -- Profession window: data comes from the client's profession API (GetProfessions, GetRecipes, ...);
 -- crafting itself is a normal spell cast (CastSpellById), repeated by a small local queue.
-Crafting = { professions = {}, profession = nil, recipes = {}, categories = {}, collapsed = {}, favorites = {}, queue = 0, queueSpell = nil, selected = nil, quantity = 1, offset = 0 };
+Crafting = { professions = {}, profession = nil, recipes = {}, categories = {}, collapsed = {}, favorites = {}, queue = 0, queueSpell = nil, recastDelay = nil, lastStarted = nil, selected = nil, quantity = 1, offset = 0 };
 
 local visibleRowCount = 9;
 local rowEntries = {};
@@ -12,6 +12,9 @@ local itemRetry = 0;
 local itemsPending = false;
 local menuButton = nil;
 local MAX_AVAILABLE = 99;
+-- Seconds to wait after a finished cast before the next one of a queue is started: the client only
+-- clears its "currently casting" state right after PLAYER_SPELL_CAST_FINISH has been dispatched.
+local RECAST_DELAY = 0.1;
 
 local DIFFICULTY_COLORS = {
 	orange = "FFFF8040",
@@ -142,6 +145,8 @@ end
 function Crafting_StopQueue()
 	Crafting.queue = 0;
 	Crafting.queueSpell = nil;
+	Crafting.recastDelay = nil;
+	Crafting.lastStarted = nil;
 	Crafting_UpdateButtons();
 end
 
@@ -323,6 +328,8 @@ function Crafting_Start(all)
 	end
 	Crafting.queue = count;
 	Crafting.queueSpell = recipe.spellId;
+	Crafting.recastDelay = nil;
+	Crafting.lastStarted = nil;
 	CastSpellById(recipe.spellId);
 	Crafting_UpdateButtons();
 end
@@ -338,16 +345,30 @@ function Crafting_RefreshVisible()
 	end
 end
 
--- PLAYER_SPELL_CAST_FINISH carries only a success flag, so the queue is tracked by queueSpell alone.
+-- PLAYER_SPELL_CAST_START remembers which spell the client began casting, since
+-- PLAYER_SPELL_CAST_FINISH carries only a success flag.
+function Crafting_OnCastStart(self, spell)
+	Crafting.lastStarted = spell and spell.id or nil;
+end
+
+-- FINISH fires while the client still counts as casting, so recasting here would be rejected
+-- (and the resulting failure would wipe the queue). Only count the craft and arm a pending recast;
+-- Crafting_Update performs it on a later frame.
 function Crafting_OnCastFinish(self, success)
 	if (not Crafting.queueSpell or Crafting.queue <= 0 or not success) then
 		return;
 	end
+	-- Ignore finishes of other spells cast while the queue is running.
+	if (Crafting.lastStarted ~= nil and Crafting.lastStarted ~= Crafting.queueSpell) then
+		return;
+	end
+	Crafting.lastStarted = nil;
 	Crafting.queue = Crafting.queue - 1;
 	if (Crafting.queue > 0) then
-		CastSpellById(Crafting.queueSpell);
+		Crafting.recastDelay = RECAST_DELAY;
 	else
 		Crafting.queueSpell = nil;
+		Crafting.recastDelay = nil;
 	end
 	Crafting_UpdateButtons();
 end
@@ -391,6 +412,16 @@ function Crafting_OnItemsChanged()
 end
 
 function Crafting_Update(self, elapsed)
+	-- Start the next craft of a running queue once the previous cast has fully ended.
+	if Crafting.recastDelay then
+		Crafting.recastDelay = Crafting.recastDelay - elapsed;
+		if Crafting.recastDelay <= 0 then
+			Crafting.recastDelay = nil;
+			if Crafting.queueSpell and Crafting.queue > 0 then
+				CastSpellById(Crafting.queueSpell);
+			end
+		end
+	end
 	-- Retry while the tooltip or item names/icons are waiting for the item cache.
 	if hovered and tooltipRetry then
 		tooltipRetry = tooltipRetry - elapsed;
@@ -492,6 +523,7 @@ function Crafting_OnLoad(self)
 	self:RegisterEvent("SPELL_LEARNED", Crafting_OnTradeSkillsChanged);
 	self:RegisterEvent("ITEM_COUNT_CHANGED", Crafting_OnItemsChanged);
 	self:RegisterEvent("INVENTORY_CHANGED", Crafting_OnItemsChanged);
+	self:RegisterEvent("PLAYER_SPELL_CAST_START", Crafting_OnCastStart);
 	self:RegisterEvent("PLAYER_SPELL_CAST_FINISH", Crafting_OnCastFinish);
 	self:RegisterEvent("PLAYER_SPELL_CAST_FAILED", Crafting_OnCastFailed);
 
