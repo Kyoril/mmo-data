@@ -115,6 +115,14 @@
         end
 	</Binding>
 
+	<Binding name="TOGGLEPROFESSIONS" description="Toggle the professions window" category="INTERFACE">
+		return function(key, keystate)
+            if keystate == "DOWN" then
+                Crafting_Toggle();
+            end
+        end
+	</Binding>
+
     <Binding name="TOGGLEINVENTORY" description="Toggle the inventory" category="INTERFACE">
 		return function(key, keystate)
             if keystate == "DOWN" then

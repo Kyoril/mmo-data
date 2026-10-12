@@ -2,7 +2,6 @@
 <!-- Copyright (C) 2019 - 2025, Kyoril. All rights reserved. -->
 <UiLayout xmlns="http://www.w3schools.com/Ui">
 	<Script file="Crafting.lua" />
-	<Script file="CraftingMockData.lua" />
 	<Font name="CraftingFont" file="Fonts/FRIZQT__.TTF" size="24" outline="0" shadowX="1" shadowY="1" />
 	<Frame name="CraftingButton" type="Button" renderer="CheckboxRenderer">
 		<Property name="CraftingTextColor" value="FFEED37C" />
@@ -555,7 +554,6 @@
 					<Property name="Font" value="CraftingFont" />
 					<Property name="TextColor" value="FFE2DCCD" />
 					<Property name="Clickable" value="false" />
-					<Property name="Text" value="CRAFT_MINING" />
 					<Area>
 						<Size>
 							<AbsDimension x="520" y="44" />
@@ -604,7 +602,6 @@
 					<Property name="Font" value="CraftingFont" />
 					<Property name="TextColor" value="FFE2DCCD" />
 					<Property name="Clickable" value="false" />
-					<Property name="Text" value="CRAFT_BLACKSMITH" />
 					<Area>
 						<Size>
 							<AbsDimension x="520" y="44" />
@@ -653,7 +650,6 @@
 					<Property name="Font" value="CraftingFont" />
 					<Property name="TextColor" value="FFE2DCCD" />
 					<Property name="Clickable" value="false" />
-					<Property name="Text" value="CRAFT_TAILOR" />
 					<Area>
 						<Size>
 							<AbsDimension x="520" y="44" />
@@ -702,7 +698,6 @@
 					<Property name="Font" value="CraftingFont" />
 					<Property name="TextColor" value="FFE2DCCD" />
 					<Property name="Clickable" value="false" />
-					<Property name="Text" value="CRAFT_LEATHERWORK" />
 					<Area>
 						<Size>
 							<AbsDimension x="520" y="44" />
@@ -751,7 +746,6 @@
 					<Property name="Font" value="CraftingFont" />
 					<Property name="TextColor" value="FFE2DCCD" />
 					<Property name="Clickable" value="false" />
-					<Property name="Text" value="CRAFT_ALCHEMY" />
 					<Area>
 						<Size>
 							<AbsDimension x="520" y="44" />
@@ -800,7 +794,6 @@
 					<Property name="Font" value="CraftingFont" />
 					<Property name="TextColor" value="FFE2DCCD" />
 					<Property name="Clickable" value="false" />
-					<Property name="Text" value="CRAFT_ENCHANTING" />
 					<Area>
 						<Size>
 							<AbsDimension x="520" y="44" />
@@ -849,7 +842,6 @@
 					<Property name="Font" value="CraftingFont" />
 					<Property name="TextColor" value="FFE2DCCD" />
 					<Property name="Clickable" value="false" />
-					<Property name="Text" value="CRAFT_ENGINEER" />
 					<Area>
 						<Size>
 							<AbsDimension x="520" y="44" />
@@ -898,7 +890,6 @@
 					<Property name="Font" value="CraftingFont" />
 					<Property name="TextColor" value="FFE2DCCD" />
 					<Property name="Clickable" value="false" />
-					<Property name="Text" value="CRAFT_COOKING" />
 					<Area>
 						<Size>
 							<AbsDimension x="520" y="44" />
@@ -947,7 +938,6 @@
 					<Property name="Font" value="CraftingFont" />
 					<Property name="TextColor" value="FFE2DCCD" />
 					<Property name="Clickable" value="false" />
-					<Property name="Text" value="CRAFT_FIRST_AID" />
 					<Area>
 						<Size>
 							<AbsDimension x="520" y="44" />
@@ -996,7 +986,6 @@
 					<Property name="Font" value="CraftingFont" />
 					<Property name="TextColor" value="FFE2DCCD" />
 					<Property name="Clickable" value="false" />
-					<Property name="Text" value="CRAFT_FISHING" />
 					<Area>
 						<Size>
 							<AbsDimension x="520" y="44" />
@@ -1392,6 +1381,7 @@
 					</Visual>
 				</Frame>
 				<Frame name="CraftingResultIcon" inherits="CraftingIcon">
+					<Property name="Clickable" value="true" />
 					<Area>
 						<Size>
 							<AbsDimension x="96" y="96" />
@@ -1472,18 +1462,6 @@
 						<Anchor point="TOP" offset="550" />
 					</Area>
 				</Frame>
-				<Frame name="CraftingTarget" inherits="GlueButton">
-					<Property name="Font" value="CraftingFont" />
-					<Property name="Text" value="CRAFT_TARGET_SELECT" />
-					<Property name="Checkable" value="false" />
-					<Area>
-						<Size>
-							<AbsDimension x="694" y="46" />
-						</Size>
-						<Anchor point="LEFT" offset="28" />
-						<Anchor point="TOP" offset="746" />
-					</Area>
-				</Frame>
 				<Frame name="CraftingReagentIcon1" inherits="CraftingReagentIconTemplate">
 					<Area>
 						<Size>
@@ -1547,19 +1525,6 @@
 						<Anchor point="TOP" offset="596" />
 					</Area>
 				</Frame>
-			</Frame>
-			<!-- Mock-only castbar substitute: no crafting spellcast request is sent to the server yet.
-			     Remove this frame when real crafting spells are connected. The existing spell CastBar
-			     will show progress; the spell effect will create the item and consume its reagents. -->
-			<Frame name="CraftingWork" inherits="CraftingBar">
-				<Property name="ProgressColor" value="FF9E5E22" />
-				<Area>
-					<Size>
-						<AbsDimension x="754" y="32" />
-					</Size>
-					<Anchor point="LEFT" offset="650" />
-					<Anchor point="TOP" offset="894" />
-				</Area>
 			</Frame>
 			<Frame name="CraftingAll" inherits="GlueButton">
 				<Property name="Font" value="CraftingFont" />
@@ -1689,18 +1654,6 @@
 				</Size>
 				<Anchor point="LEFT" offset="40" />
 				<Anchor point="TOP" offset="1148" />
-			</Area>
-		</Frame>
-		<Frame name="CraftingReset" inherits="GlueButton">
-			<Property name="Font" value="SmallLabelFont" />
-			<Property name="Text" value="CRAFT_RESET" />
-			<Property name="Checkable" value="false" />
-			<Area>
-				<Size>
-					<AbsDimension x="280" y="56" />
-				</Size>
-				<Anchor point="LEFT" offset="956" />
-				<Anchor point="TOP" offset="1136" />
 			</Area>
 		</Frame>
 		<Scripts>
