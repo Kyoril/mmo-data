@@ -174,6 +174,18 @@ RegisterContextMenu("PLAYER_FRAME", {
             end
         end
         
+        -- Resetting dungeon instances is the leader's call, so it is only offered to a leader
+        -- or to a character which is in no group at all.
+        if GetPartySize() == 0 or IsPartyLeader() then
+            table.insert(items, {
+                text = Localize("RESET_INSTANCES"),
+                callback = function()
+                    ResetInstances()
+                end,
+                enabled = true
+            })
+        end
+
         -- Add more player frame options here in the future
         -- For example: Set Focus, etc.
         

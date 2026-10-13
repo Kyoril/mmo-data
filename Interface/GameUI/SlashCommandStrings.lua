@@ -83,3 +83,5 @@ SLASH_CHATLIST2 = "/chatwho";  -- List joined chat channels
 SLASH_POSE1 = "/pose";        -- Cycle the pose of the current stand state (idle/sit/sleep)
 SLASH_EMOTELIST1 = "/emotes"; -- Toggle the emote list window
 SLASH_EMOTELIST2 = "/em";     -- Toggle the emote list window
+SLASH_RESETINSTANCES1 = "/resetinstance";  -- Reset the dungeon instances you are bound to
+SLASH_RESETINSTANCES2 = "/resetinstances"; -- Reset the dungeon instances you are bound to

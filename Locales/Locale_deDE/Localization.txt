@@ -500,6 +500,12 @@ strings =
 	
 	(key = "LEAVE_PARTY", string = "Gruppe verlassen")
 	(key = "DISBAND_PARTY", string = "Gruppe auflösen")
+	(key = "RESET_INSTANCES", string = "Instanzen zurücksetzen")
+	(key = "INSTANCE_RESET_SUCCESS", string = "%s wurde zurückgesetzt.")
+	(key = "INSTANCE_RESET_PLAYERS_INSIDE", string = "Ihr könnt %s nicht zurücksetzen, solange sich noch Spieler in der Instanz befinden.")
+	(key = "INSTANCE_RESET_BLOCKED_BY_YOU", string = "Euer Gruppenanführer hat versucht, %s zurückzusetzen. Das ist nicht möglich, solange sich noch Spieler in der Instanz befinden. Bitte verlasst die Instanz!")
+	(key = "INSTANCE_RESET_NOT_LEADER", string = "Nur der Gruppenanführer kann Instanzen zurücksetzen.")
+	(key = "INSTANCE_RESET_NOTHING", string = "Ihr seid an keine Instanz gebunden.")
 	(key = "KICK_FROM_PARTY", string = "Aus Gruppe entfernen")
 	(key = "PROMOTE_TO_LEADER", string = "Zum Gruppenleiter befördern")
 	(key = "INVITE_TO_PARTY", string = "Einladen")
