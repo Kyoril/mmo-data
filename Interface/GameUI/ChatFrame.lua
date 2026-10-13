@@ -476,6 +476,46 @@ function ChatFrame_OnMemberItemReceived(this, memberName, itemName, itemId, qual
     end
 end
 
+function ChatFrame_OnItemCreated(this, itemName, itemId, quality, amount)
+    local info = ChatTypeInfo["LOOT"];
+
+    local itemLink = ChatFrame_GetItemNameLinkText(itemName, itemId, quality);
+    if amount and amount > 1 then
+        ChatFrame:AddMessage(string.format(Localize("YOU_CREATE_ITEM_MULTI"), itemLink, amount), info.r, info.g, info.b);
+    else
+        ChatFrame:AddMessage(string.format(Localize("YOU_CREATE_ITEM_SINGLE"), itemLink), info.r, info.g, info.b);
+    end
+end
+
+function ChatFrame_OnMemberItemCreated(this, memberName, itemName, itemId, quality, amount)
+    local info = ChatTypeInfo["LOOT"];
+
+    local itemLink = ChatFrame_GetItemNameLinkText(itemName, itemId, quality);
+    if amount and amount > 1 then
+        ChatFrame:AddMessage(string.format(Localize("MEMBER_CREATE_ITEM_MULTI"), memberName, itemLink, amount), info.r, info.g, info.b);
+    else
+        ChatFrame:AddMessage(string.format(Localize("MEMBER_CREATE_ITEM_SINGLE"), memberName, itemLink), info.r, info.g, info.b);
+    end
+end
+
+-- Fired by the client only when a known profession skill actually rose (not on learn or cap changes).
+function ChatFrame_OnTradeSkillIncreased(this, skillId, value)
+    local skillName = nil;
+    for _, profession in ipairs(GetProfessions() or {}) do
+        if profession.skillId == skillId then
+            skillName = profession.name;
+            break;
+        end
+    end
+
+    if not skillName then
+        return;
+    end
+
+    local info = ChatTypeInfo["SYSTEM"];
+    ChatFrame:AddMessage(string.format(Localize("SKILL_INCREASED"), skillName, value), info.r, info.g, info.b);
+end
+
 function ChatFrame_OnLootMoneyNotify(this, goldAmount)
     local info = ChatTypeInfo["LOOT"];
     ChatFrame:AddMessage(string.format(Localize("LOOT_MONEY_NOTIFY"), goldAmount), info.r, info.g, info.b);
@@ -562,6 +602,9 @@ function ChatFrame_OnLoad(this)
     this:RegisterEvent("ITEM_RECEIVED", ChatFrame_OnItemReceived);
     this:RegisterEvent("MEMBER_LOOT_ITEM_RECEIVED", ChatFrame_OnMemberLootItemReceived);
     this:RegisterEvent("MEMBER_ITEM_RECEIVED", ChatFrame_OnMemberItemReceived);
+    this:RegisterEvent("ITEM_CREATED", ChatFrame_OnItemCreated);
+    this:RegisterEvent("MEMBER_ITEM_CREATED", ChatFrame_OnMemberItemCreated);
+    this:RegisterEvent("TRADE_SKILL_INCREASED", ChatFrame_OnTradeSkillIncreased);
     this:RegisterEvent("LOOT_MONEY_NOTIFY", ChatFrame_OnLootMoneyNotify);
     
     this:RegisterEvent("TIME_PLAYED_UPDATED", ChatFrame_OnTimePlayedUpdated);

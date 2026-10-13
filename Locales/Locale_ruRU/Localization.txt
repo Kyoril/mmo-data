@@ -637,6 +637,11 @@ strings =
 	(key = "LOOT_MONEY_NOTIFY", string = "Вы получаете свою долю добычи: %d меди.")
 	(key = "MEMBER_RECEIVE_ITEM_SINGLE", string = "%s received item: %s.")
 	(key = "MEMBER_RECEIVE_ITEM_MULTI", string = "%s received item: %sx%d.")
+	(key = "SKILL_INCREASED", string = "Ваш навык «%s» повысился до %d.")
+	(key = "YOU_CREATE_ITEM_SINGLE", string = "Вы создаёте: %s.")
+	(key = "YOU_CREATE_ITEM_MULTI", string = "Вы создаёте: %sx%d.")
+	(key = "MEMBER_CREATE_ITEM_SINGLE", string = "%s создаёт: %s.")
+	(key = "MEMBER_CREATE_ITEM_MULTI", string = "%s создаёт: %sx%d.")
 
 	(key = "TRADE_TITLE", string = "Обмен")
 	(key = "TRADE_YOUR_OFFER", string = "Ваше предложение")

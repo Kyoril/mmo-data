@@ -229,6 +229,7 @@ function ActionBar_OnLoad(self)
     
     self:RegisterEvent("LOOT_ITEM_RECEIVED", ActionBar_UpdateButtons);
     self:RegisterEvent("ITEM_RECEIVED", ActionBar_UpdateButtons);
+    self:RegisterEvent("ITEM_CREATED", ActionBar_UpdateButtons);
     self:RegisterEvent("MEMBER_LOOT_ITEM_RECEIVED", ActionBar_UpdateButtons);
     self:RegisterEvent("MEMBER_ITEM_RECEIVED", ActionBar_UpdateButtons);
     

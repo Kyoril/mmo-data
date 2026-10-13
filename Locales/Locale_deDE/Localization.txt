@@ -635,6 +635,11 @@ strings =
 	(key = "LOOT_MONEY_NOTIFY", string = "Du erhältst deinen Anteil der Beute: %d Kupfer.")
 	(key = "MEMBER_RECEIVE_ITEM_SINGLE", string = "%s received item: %s.")
 	(key = "MEMBER_RECEIVE_ITEM_MULTI", string = "%s received item: %sx%d.")
+	(key = "SKILL_INCREASED", string = "Eure Fertigkeit in %s hat sich auf %d erhöht.")
+	(key = "YOU_CREATE_ITEM_SINGLE", string = "Ihr stellt her: %s.")
+	(key = "YOU_CREATE_ITEM_MULTI", string = "Ihr stellt her: %sx%d.")
+	(key = "MEMBER_CREATE_ITEM_SINGLE", string = "%s stellt her: %s.")
+	(key = "MEMBER_CREATE_ITEM_MULTI", string = "%s stellt her: %sx%d.")
 	
 	(key = "EQUIP_ERR_OK", string = "Okay")
 	(key = "EQUIP_ERR_CANT_EQUIP_LEVEL_I", string = "Eure Stufe ist zu niedrig, um diesen Gegenstand anzulegen.")

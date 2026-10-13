@@ -635,6 +635,11 @@ strings =
 	(key = "LOOT_MONEY_NOTIFY", string = "Vous recevez votre part du butin : %d cuivres.")
 	(key = "MEMBER_RECEIVE_ITEM_SINGLE", string = "%s a reçu l'objet : %s.")
 	(key = "MEMBER_RECEIVE_ITEM_MULTI", string = "%s a reçu l'objet : %sx%d.")
+	(key = "SKILL_INCREASED", string = "Votre compétence en %s a augmenté à %d.")
+	(key = "YOU_CREATE_ITEM_SINGLE", string = "Vous fabriquez : %s.")
+	(key = "YOU_CREATE_ITEM_MULTI", string = "Vous fabriquez : %sx%d.")
+	(key = "MEMBER_CREATE_ITEM_SINGLE", string = "%s fabrique : %s.")
+	(key = "MEMBER_CREATE_ITEM_MULTI", string = "%s fabrique : %sx%d.")
 
 	(key = "EQUIP_ERR_OK", string = "D'accord")
 	(key = "EQUIP_ERR_CANT_EQUIP_LEVEL_I", string = "Votre niveau est trop bas pour équiper cet objet.")

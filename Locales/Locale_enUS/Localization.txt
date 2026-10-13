@@ -645,6 +645,11 @@ strings =
 	(key = "LOOT_MONEY_NOTIFY", string = "You receive your share of the loot: %d copper.")
 	(key = "MEMBER_RECEIVE_ITEM_SINGLE", string = "%s received item: %s.")
 	(key = "MEMBER_RECEIVE_ITEM_MULTI", string = "%s received item: %sx%d.")
+	(key = "SKILL_INCREASED", string = "Your skill in %s has increased to %d.")
+	(key = "YOU_CREATE_ITEM_SINGLE", string = "You create: %s.")
+	(key = "YOU_CREATE_ITEM_MULTI", string = "You create: %sx%d.")
+	(key = "MEMBER_CREATE_ITEM_SINGLE", string = "%s creates: %s.")
+	(key = "MEMBER_CREATE_ITEM_MULTI", string = "%s creates: %sx%d.")
 	
 	(key = "EQUIP_ERR_OK", string = "Okay")
 	(key = "EQUIP_ERR_CANT_EQUIP_LEVEL_I", string = "Your level is too low to equip this item.")
