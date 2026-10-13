@@ -757,6 +757,8 @@ strings =
 	(key = "TRAINER_STATE_SKILL", string = "Низкий навык")
 	(key = "TRAINER_REQUIRES_SKILL", string = "Требуется %s %d")
 	(key = "TOOLTIP_REAGENTS", string = "Реагенты: %s")
+	(key = "TOOLTIP_REAGENT_ENTRY", string = "%dx %s")
+	(key = "TOOLTIP_UNKNOWN_ITEM", string = "Предмет #%d")
 	(key = "TRAINER_SELECT_HINT", string = "Выберите заклинание, чтобы увидеть подробности.")
 	(key = "CHARACTER_ATTRIBUTE_COST", string = "Attribute point cost: %d")
 	(key = "CHARACTER_DAMAGE_DESCRIPTION", string = "Weapon damage range per hit.")

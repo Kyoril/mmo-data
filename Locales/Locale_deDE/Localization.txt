@@ -845,6 +845,8 @@ strings =
 	(key = "TRAINER_STATE_SKILL", string = "Fertigkeit zu niedrig")
 	(key = "TRAINER_REQUIRES_SKILL", string = "Benötigt %s %d")
 	(key = "TOOLTIP_REAGENTS", string = "Reagenzien: %s")
+	(key = "TOOLTIP_REAGENT_ENTRY", string = "%dx %s")
+	(key = "TOOLTIP_UNKNOWN_ITEM", string = "Gegenstand #%d")
 	(key = "TRAINER_SELECT_HINT", string = "Wähle einen Zauber, um die Details zu sehen.")
 	(key = "CHARACTER_ATTRIBUTE_COST", string = "Attribute point cost: %d")
 	(key = "CHARACTER_DAMAGE_DESCRIPTION", string = "Weapon damage range per hit.")

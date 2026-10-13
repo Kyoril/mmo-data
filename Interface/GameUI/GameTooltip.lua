@@ -581,11 +581,11 @@ local function AppendRecipeLines(spell)
             if (reagent) then
                 name = reagent.name;
             else
-                name = "#" .. itemId;
+                name = string.format(Localize("TOOLTIP_UNKNOWN_ITEM"), itemId);
                 itemsPending = true;
             end
 
-            local part = count .. "x " .. name;
+            local part = string.format(Localize("TOOLTIP_REAGENT_ENTRY"), count, name);
             if (GetItemCount(itemId) < count) then
                 part = "|cFFFF2020" .. part .. "|r";
             end
