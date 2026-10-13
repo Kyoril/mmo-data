@@ -45,6 +45,7 @@ local function ClearTooltip()
 
     -- Whatever the main tooltip shows next is no item until GameTooltip_SetItem* says so.
     if (tooltipTarget == TOOLTIP_TARGET_MAIN) then
+        GameTooltip.pendingSpell = nil;
         GameTooltip.compareInventoryType = nil;
         GameTooltip.compareSourceItem = nil;
         if (ItemCompareTooltip) then
@@ -218,12 +219,10 @@ local function SetupItemComparison(inventoryType, sourceItem)
     GameTooltip_AddLine(Localize("ITEM_COMPARE_HINT"), TOOLTIP_LINE_LEFT, "FF808080");
 end
 
-function GameTooltip_SetItemTemplate(item)
-    if (item == nil) then
-        return
-    end
-
-    GameTooltip_Clear();
+-- Appends the lines of an item template tooltip (name, binding, stats, ...) to the current
+-- tooltip without clearing it. When embedded is true the item is only a part of a bigger
+-- tooltip (e.g. the item a recipe creates), so the equipment comparison hint is left out.
+local function AppendItemTemplateLines(item, embedded)
     GameTooltip_AddLine(item.name, TOOLTIP_LINE_LEFT, ItemQualityColors[item.quality]);
 
     -- Binding line from static entry data
@@ -341,7 +340,18 @@ function GameTooltip_SetItemTemplate(item)
         end
     end
 
-    SetupItemComparison(inventoryType, nil);
+    if (not embedded) then
+        SetupItemComparison(inventoryType, nil);
+    end
+end
+
+function GameTooltip_SetItemTemplate(item)
+    if (item == nil) then
+        return
+    end
+
+    GameTooltip_Clear();
+    AppendItemTemplateLines(item, false);
 end
 
 -- Fills the current tooltip target with an item instance. The optional header line is shown
@@ -538,6 +548,68 @@ local function FormatDurationAmount(amount)
     return text;
 end
 
+-- Seconds between attempts to complete a recipe tooltip while item data is still loading, and
+-- how many attempts are made before giving up.
+local RECIPE_TOOLTIP_RETRY_INTERVAL = 0.2;
+local RECIPE_TOOLTIP_MAX_RETRIES = 25;
+
+-- Appends the recipe part of a spell tooltip: the full tooltip of the created item, the reagent
+-- list (red when the player lacks them) and the required profession skill (red when too low).
+-- Does nothing for spells that create no item and need no reagents or skill. When item data is
+-- not cached yet, the tooltip is rebuilt from GameTooltip_OnUpdate until it has arrived.
+local function AppendRecipeLines(spell)
+    local itemsPending = false;
+
+    local createdItemId = spell:GetCreatedItem();
+    if (createdItemId ~= 0) then
+        local item = GetCachedItemInfo(createdItemId);
+        if (item) then
+            GameTooltip_AddLine(" ", TOOLTIP_LINE_LEFT);
+            AppendItemTemplateLines(item, true);
+        else
+            itemsPending = true;
+        end
+    end
+
+    local reagentCount = spell:GetNumReagents();
+    if (reagentCount > 0) then
+        local parts = {};
+        for i = 0, reagentCount - 1 do
+            local itemId, count = spell:GetReagent(i);
+            local reagent = GetCachedItemInfo(itemId);
+            local name;
+            if (reagent) then
+                name = reagent.name;
+            else
+                name = "#" .. itemId;
+                itemsPending = true;
+            end
+
+            local part = count .. "x " .. name;
+            if (GetItemCount(itemId) < count) then
+                part = "|cFFFF2020" .. part .. "|r";
+            end
+            table.insert(parts, part);
+        end
+        GameTooltip_AddLine(string.format(Localize("TOOLTIP_REAGENTS"), table.concat(parts, ", ")), TOOLTIP_LINE_LEFT, "FFFFFFFF");
+    end
+
+    local skillId, skillValue, skillName = spell:GetRequiredSkill();
+    if (skillId ~= 0 and skillName ~= "") then
+        local current = GetTradeSkillValue(skillId);
+        local color = current < skillValue and "FFFF2020" or "FFFFFFFF";
+        GameTooltip_AddLine(string.format(Localize("TRAINER_REQUIRES_SKILL"), skillName, skillValue), TOOLTIP_LINE_LEFT, color);
+    end
+
+    if (tooltipTarget == TOOLTIP_TARGET_MAIN) then
+        if (itemsPending) then
+            GameTooltip.pendingSpell = spell;
+            GameTooltip.pendingSpellRetries = GameTooltip.rebuildRetries or 0;
+            GameTooltip.pendingSpellDelay = RECIPE_TOOLTIP_RETRY_INTERVAL;
+        end
+    end
+end
+
 function GameTooltip_SetSpell(spell)
     local player = GetUnit("player");
 
@@ -611,6 +683,8 @@ function GameTooltip_SetSpell(spell)
 
     -- Line 3: Description
     GameTooltip_AddLine(GetSpellDescription(spell), TOOLTIP_LINE_LEFT, "FFFFD100");
+
+    AppendRecipeLines(spell);
 end
 
 -- Shrinks the tooltip width to fit its widest line of text, clamped to the default width.
@@ -800,6 +874,23 @@ end
 
 function GameTooltip_OnUpdate(self, deltaTime)
     GameTooltip_UpdateComparison();
+
+    -- A recipe tooltip waiting for item data is rebuilt until the items are cached.
+    if (self.pendingSpell) then
+        self.pendingSpellDelay = self.pendingSpellDelay - deltaTime;
+        if (self.pendingSpellDelay <= 0) then
+            local spell = self.pendingSpell;
+            local retries = (self.pendingSpellRetries or 0) + 1;
+            if (retries > RECIPE_TOOLTIP_MAX_RETRIES) then
+                self.pendingSpell = nil;
+                self.pendingSpellRetries = 0;
+            else
+                self.rebuildRetries = retries;
+                GameTooltip_SetSpell(spell);
+                self.rebuildRetries = nil;
+            end
+        end
+    end
 
     -- While a world object is hovered, keep the tooltip stuck to the mouse cursor. As soon as
     -- the object is no longer hovered, hide the tooltip immediately (no fade out).

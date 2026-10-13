@@ -10,6 +10,7 @@ local function TrainerSpellState(index)
 	local id, name, icon, cost, known = GetTrainerSpellInfo(index);
 	local requiredLevel = GetTrainerSpellReqLevel(index) or 0;
 	local talentName, talentLearned = GetTrainerSpellRequiredTalent(index);
+	local reqSkillId, reqSkillValue, reqSkillName = GetTrainerSpellReqSkill(index);
 	local player = GetUnit("player");
 	local level = 0;
 	if player then
@@ -20,6 +21,9 @@ local function TrainerSpellState(index)
 		state = "TRAINER_STATE_LEARNED";
 	elseif talentName ~= "" and not talentLearned then
 		state = "TRAINER_STATE_TALENT";
+	elseif reqSkillId ~= 0 and (GetTradeSkillValue(reqSkillId)) < reqSkillValue then
+		-- Also covers professions the player has not learned (value 0).
+		state = "TRAINER_STATE_SKILL";
 	elseif not player or level < requiredLevel then
 		state = "TRAINER_STATE_LOCKED";
 	elseif UnitMoney("player") < cost then
@@ -29,8 +33,14 @@ local function TrainerSpellState(index)
 	if state == "TRAINER_STATE_TALENT" then
 		stateText = string.format(Localize("TRAINER_REQUIRES_TALENT"), talentName);
 	end
+	local requirementText;
+	if reqSkillId ~= 0 then
+		requirementText = string.format(Localize("TRAINER_REQUIRES_SKILL"), reqSkillName, reqSkillValue);
+	else
+		requirementText = string.format(Localize(IsTrainerClassTrainer() and "TRAINER_CLASS_LEVEL" or "TRAINER_REQUIRED_LEVEL"), requiredLevel);
+	end
 	return { index = index, id = id, name = name, icon = icon, cost = cost,
-		known = known, requiredLevel = requiredLevel, state = state, stateText = stateText,
+		known = known, requiredLevel = requiredLevel, requirementText = requirementText, state = state, stateText = stateText,
 		available = id > 0 and state == "TRAINER_STATE_AVAILABLE" };
 end
 
@@ -54,7 +64,8 @@ local function TrainerUpdatePreview(entry)
 	TrainerSpellPreviewButton.userData = gameData.spells:GetById(entry.id);
 	TrainerSpellDescriptionText:SetText(GetSpellDescription(TrainerSpellPreviewButton.userData));
 	RefreshMoneyFrame("TrainerSpellCostMoney", entry.cost, false, false, true);
-	TrainerPreviewState:SetText(entry.stateText);
+	-- A missing skill is explained by the concrete requirement ("Requires Tailoring 15").
+	TrainerPreviewState:SetText(entry.state == "TRAINER_STATE_SKILL" and entry.requirementText or entry.stateText);
 	TrainerPreviewState:SetProperty("TextColor", entry.available and "FF86DE56" or (entry.known and "FFAAA396" or "FFFF8770"));
 	TrainerSpellDescContent:Show();
 	TrainerSelectionHint:Hide();
@@ -131,7 +142,7 @@ function TrainerList_Update(self)
 			_G["TrainerRowIcon" .. slot]:SetProperty("IconTint", entry.available and "FFFFFFFF" or "FF888888");
 			_G["TrainerRowName" .. slot]:SetText(entry.name);
 			_G["TrainerRowName" .. slot]:SetProperty("TextColor", color);
-			_G["TrainerRowLevel" .. slot]:SetText(string.format(Localize(IsTrainerClassTrainer() and "TRAINER_CLASS_LEVEL" or "TRAINER_REQUIRED_LEVEL"), entry.requiredLevel));
+			_G["TrainerRowLevel" .. slot]:SetText(entry.requirementText);
 			_G["TrainerRowState" .. slot]:SetText(entry.stateText);
 			_G["TrainerRowState" .. slot]:SetProperty("TextColor", entry.available and "FF86DE56" or (entry.known and "FFAAA396" or "FFFF8770"));
 			RefreshMoneyFrame("TrainerRowMoney" .. slot, entry.cost, false, false, true);
@@ -236,7 +247,7 @@ function TrainerFrame_OnLoad(self)
 	self:RegisterEvent("TRAINER_UPDATE", TrainerFrame_OnTrainerUpdate);
 	self:RegisterEvent("TRAINER_CLOSED", TrainerFrame_OnTrainerClosed);
 	self:RegisterEvent("TRAINER_BUY_ERROR", TrainerFrame_OnTrainerBuyError);
-	for _, event in ipairs({"MONEY_CHANGED", "SPELL_LEARNED", "PLAYER_LEVEL_CHANGED", "PLAYER_KNOWN_CLASSES_CHANGED", "PLAYER_TALENT_UPDATE"}) do
+	for _, event in ipairs({"MONEY_CHANGED", "SPELL_LEARNED", "PLAYER_LEVEL_CHANGED", "PLAYER_KNOWN_CLASSES_CHANGED", "PLAYER_TALENT_UPDATE", "TRADE_SKILL_UPDATE", "TRADE_SKILLS_CHANGED"}) do
 		self:RegisterEvent(event, TrainerList_Update);
 	end
 end
