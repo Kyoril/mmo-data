@@ -16,6 +16,14 @@
 					<PropertyValue property="Icon" />
 				</ImageComponent>
 			</ImagerySection>
+			<ImagerySection name="DisabledImage">
+				<ImageComponent tint="FF5A5A5A">
+					<Area>
+						<Inset left="10" right="10" top="18" bottom="18" />
+					</Area>
+					<PropertyValue property="Icon" />
+				</ImageComponent>
+			</ImagerySection>
 			<ImagerySection name="NormalFrame">
 				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="8" tint="FF7E817F"><Area><Inset top="0" bottom="0" /></Area></BorderComponent>
 			</ImagerySection>
@@ -26,7 +34,7 @@
 				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="8" tint="FF665C49"><Area><Inset top="0" bottom="0" /></Area></BorderComponent>
 			</ImagerySection>
 			<ImagerySection name="DisabledFrame">
-				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="8" tint="FF7E817F"><Area><Inset top="0" bottom="0" /></Area></BorderComponent>
+				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="8" tint="FF4A4C4B"><Area><Inset top="0" bottom="0" /></Area></BorderComponent>
 			</ImagerySection>
 			<StateImagery name="Normal">
 				<Layer>
@@ -49,7 +57,7 @@
 			<StateImagery name="Disabled">
 				<Layer>
 					<Section section="DisabledFrame" />
-					<Section section="Image" />
+					<Section section="DisabledImage" />
 				</Layer>
 			</StateImagery>
 		</Visual>
