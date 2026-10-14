@@ -611,8 +611,6 @@ local function AppendRecipeLines(spell)
 end
 
 function GameTooltip_SetSpell(spell)
-    local player = GetUnit("player");
-
     GameTooltip_Clear();
 
     if (spell == nil) then
@@ -633,7 +631,16 @@ function GameTooltip_SetSpell(spell)
     else
         GameTooltip_AddLine(spell.name, TOOLTIP_LINE_LEFT, "FFFFD100");
     end
-    
+
+    GameTooltip_AddSpellDetails(spell);
+end
+
+-- Everything of a spell tooltip below its name line: cost, cast time (or passive), cooldown,
+-- level requirement and description. Shared by the common spell tooltip and the talent tree,
+-- which puts its own header (no spell rank, talent rank X/Y instead) above it.
+function GameTooltip_AddSpellDetails(spell)
+    local player = GetUnit("player");
+
     -- Line 1: Cost (use mod-adjusted cost so talents/auras are reflected)
     if ( spell.cost ~= 0 ) then
         local effectiveCost = GetSpellEffectiveCost(spell.id);

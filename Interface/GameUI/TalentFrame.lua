@@ -414,8 +414,9 @@ function TalentFrameTalent_OnEnter(self)
         return
     end
 
+    -- The talent's rank replaces the spell's own rank line; the rest is the common spell tooltip.
     GameTooltip_AddLine(string.format(Localize("TALENT_RANK_OF_MAX_RANK"), talent.rank, talent.maxRank), TOOLTIP_LINE_LEFT, "FFB8BEC8")
-    GameTooltip_AddLine(GetSpellDescription(talent.spell), TOOLTIP_LINE_LEFT, "FFFFD100")
+    GameTooltip_AddSpellDetails(talent.spell)
 
     if talent.rank < talent.maxRank and talent.rank > 0 and talent.nextRankSpell ~= nil then
         GameTooltip_AddLine("", TOOLTIP_LINE_LEFT, "FFFFFFFF")
