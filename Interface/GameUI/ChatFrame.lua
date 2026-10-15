@@ -165,6 +165,10 @@ SlashCmdList["LOOTMETHOD"] = function(msg)
 	SetLootMethod(methodId, "");
 end
 
+SlashCmdList["RESETINSTANCES"] = function(msg)
+	ResetInstances();
+end
+
 SlashCmdList["FRIENDINVITE"] = function(msg)
 	if ( GetSlashCmdTarget(msg) ) then
 		FriendInviteByName(GetSlashCmdTarget(msg));
@@ -333,6 +337,29 @@ end
 local SOUND_UI_LEVEL_UP = 169;
 local SOUND_UI_QUEST_ACCEPTED = 170;
 local SOUND_UI_QUEST_COMPLETED = 171;
+
+-- Result codes of an instance reset request (game::instance_reset_result).
+INSTANCE_RESET_RESULT_SUCCESS = 0;
+INSTANCE_RESET_RESULT_PLAYERS_INSIDE = 1;
+INSTANCE_RESET_RESULT_BLOCKED_BY_YOU = 2;
+INSTANCE_RESET_RESULT_NOT_GROUP_LEADER = 3;
+INSTANCE_RESET_RESULT_NOTHING_TO_RESET = 4;
+
+function ChatFrame_OnInstanceResetResult(self, result, mapName)
+    local info = ChatTypeInfo["SYSTEM"];
+
+    if ( result == INSTANCE_RESET_RESULT_SUCCESS ) then
+        ChatFrame:AddMessage(string.format(Localize("INSTANCE_RESET_SUCCESS"), mapName), info.r, info.g, info.b);
+    elseif ( result == INSTANCE_RESET_RESULT_PLAYERS_INSIDE ) then
+        ChatFrame:AddMessage(string.format(Localize("INSTANCE_RESET_PLAYERS_INSIDE"), mapName), 1.0, 0.5, 0.5);
+    elseif ( result == INSTANCE_RESET_RESULT_BLOCKED_BY_YOU ) then
+        ChatFrame:AddMessage(string.format(Localize("INSTANCE_RESET_BLOCKED_BY_YOU"), mapName), 1.0, 0.5, 0.5);
+    elseif ( result == INSTANCE_RESET_RESULT_NOT_GROUP_LEADER ) then
+        ChatFrame:AddMessage(Localize("INSTANCE_RESET_NOT_LEADER"), 1.0, 0.5, 0.5);
+    elseif ( result == INSTANCE_RESET_RESULT_NOTHING_TO_RESET ) then
+        ChatFrame:AddMessage(Localize("INSTANCE_RESET_NOTHING"), 1.0, 0.5, 0.5);
+    end
+end
 
 function ChatFrame_OnPlayerLevelUp(self, newLevel, health, mana, stamina, strength, agility, intellect, spirit, tp, ap)
     PlaySoundEntry(SOUND_UI_LEVEL_UP);
@@ -608,6 +635,7 @@ function ChatFrame_OnLoad(this)
     this:RegisterEvent("LOOT_MONEY_NOTIFY", ChatFrame_OnLootMoneyNotify);
     
     this:RegisterEvent("TIME_PLAYED_UPDATED", ChatFrame_OnTimePlayedUpdated);
+    this:RegisterEvent("INSTANCE_RESET_RESULT", ChatFrame_OnInstanceResetResult);
 
     this:RegisterEvent("CHAT_MSG_WHISPER", function(this, senderName, message)
         ChatFrame_ReplyTarget = senderName;

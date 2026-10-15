@@ -508,6 +508,12 @@ strings =
 	
 	(key = "LEAVE_PARTY", string = "Leave Group")
 	(key = "DISBAND_PARTY", string = "Disband Group")
+	(key = "RESET_INSTANCES", string = "Reset Instances")
+	(key = "INSTANCE_RESET_SUCCESS", string = "%s has been reset.")
+	(key = "INSTANCE_RESET_PLAYERS_INSIDE", string = "You cannot reset %s while players are still inside the instance.")
+	(key = "INSTANCE_RESET_BLOCKED_BY_YOU", string = "Your group leader tried to reset %s, which is not possible while there are still players inside. Please leave the instance!")
+	(key = "INSTANCE_RESET_NOT_LEADER", string = "Only the group leader can reset instances.")
+	(key = "INSTANCE_RESET_NOTHING", string = "You are not bound to any instance.")
 	(key = "KICK_FROM_PARTY", string = "Remove from Group")
 	(key = "PROMOTE_TO_LEADER", string = "Make Group Leader")
 	(key = "INVITE_TO_PARTY", string = "Invite")
