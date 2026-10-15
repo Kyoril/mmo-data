@@ -82,13 +82,56 @@ function CharacterWindow_OnLoad(self)
         { "CharacterDamage", CharacterWindow_DamageLabel_OnEnter },
         { "CharacterAttackPower", CharacterWindow_AttackPowerLabel_OnEnter },
         { "CharacterAttackTime", CharacterWindow_AttackSpeedLabel_OnEnter },
+        { "CharacterMeleeCrit", CharacterWindow_MeleeCritLabel_OnEnter },
+        { "CharacterSpellDamage", CharacterWindow_SpellDamageLabel_OnEnter },
+        { "CharacterSpellHealing", CharacterWindow_SpellHealingLabel_OnEnter },
+        { "CharacterSpellCrit", CharacterWindow_SpellCritLabel_OnEnter },
+        { "CharacterManaRegen", CharacterWindow_ManaRegenLabel_OnEnter },
     };
     for _, stat in ipairs(secondaryStats) do
         bindTooltip(_G[stat[1] .. "Label"], stat[2]);
         bindTooltip(_G[stat[1] .. "Stat"], stat[2]);
     end
 
+    -- The stat list is taller than the page, so it scrolls. The scroll bar moves the content
+    -- frame inside its clipping parent; the mouse wheel drives the same bar.
+    CharacterAttributesScrollBar:SetMinimum(0);
+    CharacterAttributesScrollBar:SetMaximum(0);
+    CharacterAttributesScrollBar:SetValue(0);
+    CharacterAttributesScrollBar:SetStep(CHARACTER_STAT_ROW_STEP);
+    CharacterAttributesScrollBar:SetOnValueChangedHandler(function(bar, value)
+        CharacterAttributesContent:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, -value);
+    end);
+    CharacterAttributesScrollBar:Disable();
+
+    CharacterAttributesPage:SetOnMouseWheelHandler(function(frame, delta)
+        CharacterAttributesScrollBar:SetValue(CharacterAttributesScrollBar:GetValue() - delta * CharacterAttributesScrollBar:GetStep());
+    end);
+
     CharacterWindow_EnableEquipmentQualityBorders();
+end
+
+-- Height of one stat row plus the gap below it, in UI units. Kept in sync with the row offsets
+-- in CharacterWindow.xml so one wheel notch scrolls by exactly one row.
+CHARACTER_STAT_ROW_STEP = 56;
+
+-- Matches the content frame height declared in CharacterWindow.xml. The scroll range is the
+-- part of it that does not fit into the clipping frame.
+CHARACTER_STAT_CONTENT_HEIGHT = 996;
+
+function CharacterWindow_UpdateScrollRange()
+    CharacterAttributesScrollBar:SetValue(0);
+    CharacterAttributesContent:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, 0);
+
+    -- GetHeight reports screen pixels for an anchored frame, the content height is in UI units.
+    local clipHeight = CharacterAttributesClip:GetHeight() / GetUIScale().y;
+    if CHARACTER_STAT_CONTENT_HEIGHT > clipHeight then
+        CharacterAttributesScrollBar:SetMaximum(CHARACTER_STAT_CONTENT_HEIGHT - clipHeight);
+        CharacterAttributesScrollBar:Enable();
+    else
+        CharacterAttributesScrollBar:SetMaximum(0);
+        CharacterAttributesScrollBar:Disable();
+    end
 end
 
 function CharacterWindow_AddAttributeButton_OnEnter(self)
@@ -145,21 +188,91 @@ function CharacterWindow_DamageLabel_OnEnter(self)
     GameTooltip:Show();
 end
 
+-- Localization keys of the five primary attributes, indexed by stat id + 1.
+local CHARACTER_ATTRIBUTE_KEYS = { "STAMINA", "STRENGTH", "AGILITY", "INTELLECT", "SPIRIT" };
+
+-- Opens the shared game tooltip below a combat stat row.
+-- @param self The hovered stat label or value frame the tooltip is anchored to.
+-- @param titleKey Localization key of the stat name shown as the tooltip header.
+-- @param lines List of already localized description lines shown underneath.
+function CharacterWindow_ShowStatTooltip(self, titleKey, lines)
+    GameTooltip_Clear();
+    GameTooltip:ClearAnchors();
+    GameTooltip:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, self, 0);
+    GameTooltip:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, self, 0);
+
+    GameTooltip_AddLine(Localize(titleKey), TOOLTIP_LINE_LEFT, "FFFFD100");
+    for _, line in ipairs(lines) do
+        GameTooltip_AddLine(line, TOOLTIP_LINE_LEFT, "FFFFFFFF");
+    end
+
+    GameTooltip:Show();
+end
+
+-- Builds one "<amount> from <attribute>" line per attribute that contributes to a stat, so the
+-- tooltip names where the value actually comes from.
+local function CharacterWindow_AttributeSourceLines(lines, unit, getAmount)
+    for statId = 0, 4 do
+        local amount = getAmount(unit, statId);
+        if amount and amount > 0 then
+            table.insert(lines, string.format(Localize("CHARACTER_STAT_FROM_ATTRIBUTE"), amount, Localize(CHARACTER_ATTRIBUTE_KEYS[statId + 1])));
+        end
+    end
+end
+
 function CharacterWindow_AttackPowerLabel_OnEnter(self)
     local unit = GetUnit("player");
     if not unit then
         return;
     end
 
-    GameTooltip_Clear();
-    GameTooltip:ClearAnchors();
-    GameTooltip:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, self, 0);
-    GameTooltip:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, self, 0);
+    local lines = { Localize("CHARACTER_ATTACK_POWER_DESCRIPTION") };
+    CharacterWindow_AttributeSourceLines(lines, unit, function(u, statId) return u:GetAttackPowerFromStat(statId); end);
 
-    GameTooltip_AddLine(Localize("ATTACK_POWER"), TOOLTIP_LINE_LEFT, "FFFFD100");
-    GameTooltip_AddLine(Localize("CHARACTER_ATTACK_POWER_DESCRIPTION"), TOOLTIP_LINE_LEFT, "FFFFFFFF");
+    CharacterWindow_ShowStatTooltip(self, "ATTACK_POWER", lines);
+end
 
-    GameTooltip:Show();
+function CharacterWindow_MeleeCritLabel_OnEnter(self)
+    if not GetUnit("player") then
+        return;
+    end
+
+    CharacterWindow_ShowStatTooltip(self, "CHARACTER_MELEE_CRIT", { Localize("CHARACTER_MELEE_CRIT_DESCRIPTION") });
+end
+
+function CharacterWindow_SpellDamageLabel_OnEnter(self)
+    if not GetUnit("player") then
+        return;
+    end
+
+    CharacterWindow_ShowStatTooltip(self, "CHARACTER_SPELL_DAMAGE", { Localize("CHARACTER_SPELL_DAMAGE_DESCRIPTION") });
+end
+
+function CharacterWindow_SpellHealingLabel_OnEnter(self)
+    if not GetUnit("player") then
+        return;
+    end
+
+    CharacterWindow_ShowStatTooltip(self, "CHARACTER_SPELL_HEALING", { Localize("CHARACTER_SPELL_HEALING_DESCRIPTION") });
+end
+
+function CharacterWindow_SpellCritLabel_OnEnter(self)
+    if not GetUnit("player") then
+        return;
+    end
+
+    CharacterWindow_ShowStatTooltip(self, "CHARACTER_SPELL_CRIT", { Localize("CHARACTER_SPELL_CRIT_DESCRIPTION") });
+end
+
+function CharacterWindow_ManaRegenLabel_OnEnter(self)
+    if not GetUnit("player") then
+        return;
+    end
+
+    CharacterWindow_ShowStatTooltip(self, "CHARACTER_MANA_REGEN", {
+        Localize("CHARACTER_MANA_REGEN_DESCRIPTION"),
+        Localize("CHARACTER_MANA_REGEN_COMBAT_NOTE"),
+    });
 end
 
 function CharacterWindow_AttackSpeedLabel_OnEnter(self)
@@ -229,6 +342,10 @@ function CharacterWindow_StatLabel_OnEnter(self, statId)
 end
 
 function CharacterWindow_OnShow(this)
+    -- The clipping frame is only correctly sized once the window is laid out, so the scroll
+    -- range is derived here rather than in OnLoad.
+    CharacterWindow_UpdateScrollRange();
+
     CharacterWindow_RefreshStats();
     CharacterWindow_RefreshClasses();
 	CharacterWindow_UpdateTabs();
@@ -491,7 +608,7 @@ function CharacterWindow_RefreshStats()
         end
     end
 
-    -- Secondary stats (will be added in Task 6)
+    -- Combat statistics
     if CharacterAttackTimeStat then
         local attackTimeSeconds = player:GetAttackTime() / 1000.0;
         CharacterAttackTimeStat:SetText(string.format("%.2f", attackTimeSeconds));
@@ -521,6 +638,27 @@ function CharacterWindow_RefreshStats()
         else
             CharacterArmorStat:SetProperty("Color", "FFFFFFFF")
         end
+    end
+
+    if CharacterMeleeCritStat then
+        CharacterMeleeCritStat:SetText(string.format(Localize("CHARACTER_PERCENT_FORMAT"), player:GetMeleeCritChance()));
+    end
+
+    -- Caster and healer statistics
+    if CharacterSpellDamageStat then
+        CharacterSpellDamageStat:SetText(string.format("%.0f", player:GetSpellDamage()));
+    end
+
+    if CharacterSpellHealingStat then
+        CharacterSpellHealingStat:SetText(string.format("%.0f", player:GetSpellHealing()));
+    end
+
+    if CharacterSpellCritStat then
+        CharacterSpellCritStat:SetText(string.format(Localize("CHARACTER_PERCENT_FORMAT"), player:GetSpellCritChance()));
+    end
+
+    if CharacterManaRegenStat then
+        CharacterManaRegenStat:SetText(string.format("%.0f", player:GetManaRegen()));
     end
 
 end

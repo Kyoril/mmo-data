@@ -22,7 +22,7 @@
 		</Visual>
 		<Area>
 			<Size>
-				<AbsDimension y="52" />
+				<AbsDimension y="44" />
 			</Size>
 		</Area>
 	</Frame>
@@ -45,7 +45,7 @@
 		</Visual>
 		<Area>
 			<Size>
-				<AbsDimension y="52" />
+				<AbsDimension y="44" />
 			</Size>
 		</Area>
 	</Frame>
@@ -704,407 +704,566 @@
 				<Anchor point="RIGHT" offset="-32" />
 				<Anchor point="BOTTOM" offset="-40" />
 			</Area>
-			<Frame name="CharacterAttributesContent" renderer="DefaultRenderer">
+			<!-- The stat list no longer fits the page, so it scrolls. CharacterWindow_OnShow
+			     derives the scroll range from the content height below. -->
+			<Frame name="CharacterAttributesScrollBar" inherits="VerticalScrollBar">
 				<Area>
-					<Anchor point="TOP" offset="24" />
-					<Anchor point="LEFT" offset="24" />
-					<Anchor point="RIGHT" offset="-24" />
-					<Anchor point="BOTTOM" offset="-24" />
+					<Anchor point="RIGHT" offset="-8" />
+					<Anchor point="TOP" offset="16" />
+					<Anchor point="BOTTOM" offset="-16" />
 				</Area>
-				<Frame name="CharacterWindowAttributePointsHeader" inherits="StatSectionHeaderTemplate">
-					<Property name="Text" value="CHARACTER_AVAILABLE_POINTS" />
+			</Frame>
+			<!-- Clipping frame: anything scrolled out of view is cut off here. -->
+			<Frame name="CharacterAttributesClip">
+				<Area>
+					<Anchor point="TOP" offset="16" />
+					<Anchor point="LEFT" offset="24" />
+					<Anchor point="BOTTOM" offset="-16" />
+					<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CharacterAttributesScrollBar" offset="-8" />
+				</Area>
+				<Frame name="CharacterAttributesContent" renderer="DefaultRenderer">
+					<Property name="ClippedByParent" value="true" />
 					<Area>
 						<Size>
-							<AbsDimension y="52" />
+							<AbsDimension y="996" />
 						</Size>
 						<Anchor point="TOP" offset="0" />
-						<Anchor point="LEFT" offset="16" />
-						<Anchor point="RIGHT" offset="-96" />
-					</Area>
-				</Frame>
-				<Frame name="CharacterWindowAttributePointsLabel" inherits="CharacterStatValueTemplate">
-					<Property name="Font" value="CharacterBodyFont" />
-					<Property name="Text" value="0" />
-					<Area>
-						<Size>
-							<AbsDimension x="72" y="52" />
-						</Size>
-						<Anchor point="TOP" offset="0" />
-						<Anchor point="RIGHT" offset="-16" />
-					</Area>
-				</Frame>
-				<!-- Primary Stats Bordered Container -->
-				<Frame name="CharacterWindowPrimaryStatsFrame" renderer="DefaultRenderer">
-					<Area>
-						<Size>
-							<AbsDimension y="432" />
-						</Size>
-						<Anchor point="TOP" offset="88" />
 						<Anchor point="LEFT" offset="0" />
 						<Anchor point="RIGHT" offset="0" />
 					</Area>
-					<Frame name="CharacterWindowPrimaryStatsHeader" inherits="StatSectionHeaderTemplate">
-						<Property name="Text" value="CHARACTER_PRIMARY_ATTRIBUTES" />
+					<Frame name="CharacterWindowAttributePointsHeader" inherits="StatSectionHeaderTemplate">
+						<Property name="Text" value="CHARACTER_AVAILABLE_POINTS" />
 						<Area>
 							<Size>
-								<AbsDimension y="36" />
+								<AbsDimension y="44" />
 							</Size>
-							<Anchor point="TOP" offset="16" />
+							<Anchor point="TOP" offset="0" />
 							<Anchor point="LEFT" offset="16" />
-							<Anchor point="RIGHT" offset="-16" />
+							<Anchor point="RIGHT" offset="-96" />
 						</Area>
 					</Frame>
-					<!-- Stamina (0) -->
-					<Frame name="CharacterStatLabel0" inherits="CharacterStatLabelTemplate" id="0">
-						<Property name="Text" value="STAMINA" />
-						<Area>
-							<Size>
-								<AbsDimension y="52" />
-							</Size>
-							<Anchor point="TOP" offset="68" />
-							<Anchor point="LEFT" offset="16" />
-							<Anchor point="RIGHT" offset="-168" />
-						</Area>
-					</Frame>
-					<Frame name="CharacterStat0" inherits="CharacterStatValueTemplate" id="0">
+					<Frame name="CharacterWindowAttributePointsLabel" inherits="CharacterStatValueTemplate">
+						<Property name="Font" value="CharacterBodyFont" />
 						<Property name="Text" value="0" />
 						<Area>
 							<Size>
-								<AbsDimension x="80" y="52" />
+								<AbsDimension x="72" y="44" />
 							</Size>
-							<Anchor point="TOP" offset="68" />
-							<Anchor point="RIGHT" offset="-88" />
-						</Area>
-					</Frame>
-					<Frame name="CharacterStatAdd0" type="Button" inherits="CharacterAttributeButtonTemplate" id="0">
-						<Property name="Text" value="+" />
-						<Area>
-							<Size>
-								<AbsDimension x="52" y="52" />
-							</Size>
-							<Anchor point="TOP" offset="68" />
+							<Anchor point="TOP" offset="0" />
 							<Anchor point="RIGHT" offset="-16" />
 						</Area>
-						<Scripts>
-							<OnClick>
-							return function(self)
-								CharacterWindow_AddAttributeClicked(self);
-							end
-						</OnClick>
-						</Scripts>
 					</Frame>
-					<!-- Strength (1) -->
-					<Frame name="CharacterStatLabel1" inherits="CharacterStatLabelTemplate" id="1">
-						<Property name="Text" value="STRENGTH" />
+					<Frame name="CharacterWindowPrimaryStatsFrame" renderer="DefaultRenderer">
 						<Area>
 							<Size>
-								<AbsDimension y="52" />
+								<AbsDimension y="328" />
 							</Size>
-							<Anchor point="TOP" offset="140" />
-							<Anchor point="LEFT" offset="16" />
-							<Anchor point="RIGHT" offset="-168" />
-						</Area>
-					</Frame>
-					<Frame name="CharacterStat1" inherits="CharacterStatValueTemplate" id="1">
-						<Property name="Text" value="0" />
-						<Area>
-							<Size>
-								<AbsDimension x="80" y="52" />
-							</Size>
-							<Anchor point="TOP" offset="140" />
-							<Anchor point="RIGHT" offset="-88" />
-						</Area>
-					</Frame>
-					<Frame name="CharacterStatAdd1" type="Button" inherits="CharacterAttributeButtonTemplate" id="1">
-						<Property name="Text" value="+" />
-						<Area>
-							<Size>
-								<AbsDimension x="52" y="52" />
-							</Size>
-							<Anchor point="TOP" offset="140" />
-							<Anchor point="RIGHT" offset="-16" />
-						</Area>
-						<Scripts>
-							<OnClick>
-							return function(self)
-								CharacterWindow_AddAttributeClicked(self);
-							end
-						</OnClick>
-						</Scripts>
-					</Frame>
-					<!-- Agility (2) -->
-					<Frame name="CharacterStatLabel2" inherits="CharacterStatLabelTemplate" id="2">
-						<Property name="Text" value="AGILITY" />
-						<Area>
-							<Size>
-								<AbsDimension y="52" />
-							</Size>
-							<Anchor point="TOP" offset="212" />
-							<Anchor point="LEFT" offset="16" />
-							<Anchor point="RIGHT" offset="-168" />
-						</Area>
-					</Frame>
-					<Frame name="CharacterStat2" inherits="CharacterStatValueTemplate" id="2">
-						<Property name="Text" value="0" />
-						<Area>
-							<Size>
-								<AbsDimension x="80" y="52" />
-							</Size>
-							<Anchor point="TOP" offset="212" />
-							<Anchor point="RIGHT" offset="-88" />
-						</Area>
-					</Frame>
-					<Frame name="CharacterStatAdd2" type="Button" inherits="CharacterAttributeButtonTemplate" id="2">
-						<Property name="Text" value="+" />
-						<Area>
-							<Size>
-								<AbsDimension x="52" y="52" />
-							</Size>
-							<Anchor point="TOP" offset="212" />
-							<Anchor point="RIGHT" offset="-16" />
-						</Area>
-						<Scripts>
-							<OnClick>
-							return function(self)
-								CharacterWindow_AddAttributeClicked(self);
-							end
-						</OnClick>
-						</Scripts>
-					</Frame>
-					<!-- Intellect (3) -->
-					<Frame name="CharacterStatLabel3" inherits="CharacterStatLabelTemplate" id="3">
-						<Property name="Text" value="INTELLECT" />
-						<Area>
-							<Size>
-								<AbsDimension y="52" />
-							</Size>
-							<Anchor point="TOP" offset="284" />
-							<Anchor point="LEFT" offset="16" />
-							<Anchor point="RIGHT" offset="-168" />
-						</Area>
-					</Frame>
-					<Frame name="CharacterStat3" inherits="CharacterStatValueTemplate" id="3">
-						<Property name="Text" value="0" />
-						<Area>
-							<Size>
-								<AbsDimension x="80" y="52" />
-							</Size>
-							<Anchor point="TOP" offset="284" />
-							<Anchor point="RIGHT" offset="-88" />
-						</Area>
-					</Frame>
-					<Frame name="CharacterStatAdd3" type="Button" inherits="CharacterAttributeButtonTemplate" id="3">
-						<Property name="Text" value="+" />
-						<Area>
-							<Size>
-								<AbsDimension x="52" y="52" />
-							</Size>
-							<Anchor point="TOP" offset="284" />
-							<Anchor point="RIGHT" offset="-16" />
-						</Area>
-						<Scripts>
-							<OnClick>
-							return function(self)
-								CharacterWindow_AddAttributeClicked(self);
-							end
-						</OnClick>
-						</Scripts>
-					</Frame>
-					<!-- Spirit (4) -->
-					<Frame name="CharacterStatLabel4" inherits="CharacterStatLabelTemplate" id="4">
-						<Property name="Text" value="SPIRIT" />
-						<Area>
-							<Size>
-								<AbsDimension y="52" />
-							</Size>
-							<Anchor point="TOP" offset="356" />
-							<Anchor point="LEFT" offset="16" />
-							<Anchor point="RIGHT" offset="-168" />
-						</Area>
-					</Frame>
-					<Frame name="CharacterStat4" inherits="CharacterStatValueTemplate" id="4">
-						<Property name="Text" value="0" />
-						<Area>
-							<Size>
-								<AbsDimension x="80" y="52" />
-							</Size>
-							<Anchor point="TOP" offset="356" />
-							<Anchor point="RIGHT" offset="-88" />
-						</Area>
-					</Frame>
-					<Frame name="CharacterStatAdd4" type="Button" inherits="CharacterAttributeButtonTemplate" id="4">
-						<Property name="Text" value="+" />
-						<Area>
-							<Size>
-								<AbsDimension x="52" y="52" />
-							</Size>
-							<Anchor point="TOP" offset="356" />
-							<Anchor point="RIGHT" offset="-16" />
-						</Area>
-						<Scripts>
-							<OnClick>
-							return function(self)
-								CharacterWindow_AddAttributeClicked(self);
-							end
-						</OnClick>
-						</Scripts>
-					</Frame>
-					<Frame name="CharacterWindowPrimaryStatsFrameDivider" renderer="DefaultRenderer">
-						<Property name="Clickable" value="false" />
-						<Area>
-							<Size>
-								<AbsDimension y="2" />
-							</Size>
+							<Anchor point="TOP" offset="52" />
 							<Anchor point="LEFT" offset="0" />
 							<Anchor point="RIGHT" offset="0" />
-							<Anchor point="TOP" offset="0" />
 						</Area>
-						<Visual>
-							<ImagerySection name="Line">
-								<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="806F5B3C" />
-							</ImagerySection>
-							<StateImagery name="Enabled">
-								<Layer>
-									<Section section="Line" />
-								</Layer>
-							</StateImagery>
-						</Visual>
+						<Frame name="CharacterWindowPrimaryStatsFrameDivider" renderer="DefaultRenderer">
+							<Property name="Clickable" value="false" />
+							<Area>
+								<Size>
+									<AbsDimension y="2" />
+								</Size>
+								<Anchor point="LEFT" offset="0" />
+								<Anchor point="RIGHT" offset="0" />
+								<Anchor point="TOP" offset="0" />
+							</Area>
+							<Visual>
+								<ImagerySection name="Line">
+									<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="806F5B3C" />
+								</ImagerySection>
+								<StateImagery name="Enabled">
+									<Layer>
+										<Section section="Line" />
+									</Layer>
+								</StateImagery>
+							</Visual>
+						</Frame>
+						<Frame name="CharacterWindowPrimaryStatsHeader" inherits="StatSectionHeaderTemplate">
+							<Property name="Text" value="CHARACTER_PRIMARY_ATTRIBUTES" />
+							<Area>
+								<Size>
+									<AbsDimension y="32" />
+								</Size>
+								<Anchor point="TOP" offset="8" />
+								<Anchor point="LEFT" offset="16" />
+								<Anchor point="RIGHT" offset="-16" />
+							</Area>
+						</Frame>
+						<!-- Stamina (0) -->
+						<Frame name="CharacterStatLabel0" inherits="CharacterStatLabelTemplate" id="0">
+							<Property name="Text" value="STAMINA" />
+							<Area>
+								<Size>
+									<AbsDimension y="44" />
+								</Size>
+								<Anchor point="TOP" offset="48" />
+								<Anchor point="LEFT" offset="16" />
+								<Anchor point="RIGHT" offset="-160" />
+							</Area>
+						</Frame>
+						<Frame name="CharacterStat0" inherits="CharacterStatValueTemplate" id="0">
+							<Property name="Text" value="0" />
+							<Area>
+								<Size>
+									<AbsDimension x="76" y="44" />
+								</Size>
+								<Anchor point="TOP" offset="48" />
+								<Anchor point="RIGHT" offset="-72" />
+							</Area>
+						</Frame>
+						<Frame name="CharacterStatAdd0" type="Button" inherits="CharacterAttributeButtonTemplate" id="0">
+							<Property name="Text" value="+" />
+							<Area>
+								<Size>
+									<AbsDimension x="44" y="44" />
+								</Size>
+								<Anchor point="TOP" offset="48" />
+								<Anchor point="RIGHT" offset="-16" />
+							</Area>
+							<Scripts>
+								<OnClick>
+									return function(self)
+										CharacterWindow_AddAttributeClicked(self);
+									end
+								</OnClick>
+							</Scripts>
+						</Frame>
+						<!-- Strength (1) -->
+						<Frame name="CharacterStatLabel1" inherits="CharacterStatLabelTemplate" id="1">
+							<Property name="Text" value="STRENGTH" />
+							<Area>
+								<Size>
+									<AbsDimension y="44" />
+								</Size>
+								<Anchor point="TOP" offset="104" />
+								<Anchor point="LEFT" offset="16" />
+								<Anchor point="RIGHT" offset="-160" />
+							</Area>
+						</Frame>
+						<Frame name="CharacterStat1" inherits="CharacterStatValueTemplate" id="1">
+							<Property name="Text" value="0" />
+							<Area>
+								<Size>
+									<AbsDimension x="76" y="44" />
+								</Size>
+								<Anchor point="TOP" offset="104" />
+								<Anchor point="RIGHT" offset="-72" />
+							</Area>
+						</Frame>
+						<Frame name="CharacterStatAdd1" type="Button" inherits="CharacterAttributeButtonTemplate" id="1">
+							<Property name="Text" value="+" />
+							<Area>
+								<Size>
+									<AbsDimension x="44" y="44" />
+								</Size>
+								<Anchor point="TOP" offset="104" />
+								<Anchor point="RIGHT" offset="-16" />
+							</Area>
+							<Scripts>
+								<OnClick>
+									return function(self)
+										CharacterWindow_AddAttributeClicked(self);
+									end
+								</OnClick>
+							</Scripts>
+						</Frame>
+						<!-- Agility (2) -->
+						<Frame name="CharacterStatLabel2" inherits="CharacterStatLabelTemplate" id="2">
+							<Property name="Text" value="AGILITY" />
+							<Area>
+								<Size>
+									<AbsDimension y="44" />
+								</Size>
+								<Anchor point="TOP" offset="160" />
+								<Anchor point="LEFT" offset="16" />
+								<Anchor point="RIGHT" offset="-160" />
+							</Area>
+						</Frame>
+						<Frame name="CharacterStat2" inherits="CharacterStatValueTemplate" id="2">
+							<Property name="Text" value="0" />
+							<Area>
+								<Size>
+									<AbsDimension x="76" y="44" />
+								</Size>
+								<Anchor point="TOP" offset="160" />
+								<Anchor point="RIGHT" offset="-72" />
+							</Area>
+						</Frame>
+						<Frame name="CharacterStatAdd2" type="Button" inherits="CharacterAttributeButtonTemplate" id="2">
+							<Property name="Text" value="+" />
+							<Area>
+								<Size>
+									<AbsDimension x="44" y="44" />
+								</Size>
+								<Anchor point="TOP" offset="160" />
+								<Anchor point="RIGHT" offset="-16" />
+							</Area>
+							<Scripts>
+								<OnClick>
+									return function(self)
+										CharacterWindow_AddAttributeClicked(self);
+									end
+								</OnClick>
+							</Scripts>
+						</Frame>
+						<!-- Intellect (3) -->
+						<Frame name="CharacterStatLabel3" inherits="CharacterStatLabelTemplate" id="3">
+							<Property name="Text" value="INTELLECT" />
+							<Area>
+								<Size>
+									<AbsDimension y="44" />
+								</Size>
+								<Anchor point="TOP" offset="216" />
+								<Anchor point="LEFT" offset="16" />
+								<Anchor point="RIGHT" offset="-160" />
+							</Area>
+						</Frame>
+						<Frame name="CharacterStat3" inherits="CharacterStatValueTemplate" id="3">
+							<Property name="Text" value="0" />
+							<Area>
+								<Size>
+									<AbsDimension x="76" y="44" />
+								</Size>
+								<Anchor point="TOP" offset="216" />
+								<Anchor point="RIGHT" offset="-72" />
+							</Area>
+						</Frame>
+						<Frame name="CharacterStatAdd3" type="Button" inherits="CharacterAttributeButtonTemplate" id="3">
+							<Property name="Text" value="+" />
+							<Area>
+								<Size>
+									<AbsDimension x="44" y="44" />
+								</Size>
+								<Anchor point="TOP" offset="216" />
+								<Anchor point="RIGHT" offset="-16" />
+							</Area>
+							<Scripts>
+								<OnClick>
+									return function(self)
+										CharacterWindow_AddAttributeClicked(self);
+									end
+								</OnClick>
+							</Scripts>
+						</Frame>
+						<!-- Spirit (4) -->
+						<Frame name="CharacterStatLabel4" inherits="CharacterStatLabelTemplate" id="4">
+							<Property name="Text" value="SPIRIT" />
+							<Area>
+								<Size>
+									<AbsDimension y="44" />
+								</Size>
+								<Anchor point="TOP" offset="272" />
+								<Anchor point="LEFT" offset="16" />
+								<Anchor point="RIGHT" offset="-160" />
+							</Area>
+						</Frame>
+						<Frame name="CharacterStat4" inherits="CharacterStatValueTemplate" id="4">
+							<Property name="Text" value="0" />
+							<Area>
+								<Size>
+									<AbsDimension x="76" y="44" />
+								</Size>
+								<Anchor point="TOP" offset="272" />
+								<Anchor point="RIGHT" offset="-72" />
+							</Area>
+						</Frame>
+						<Frame name="CharacterStatAdd4" type="Button" inherits="CharacterAttributeButtonTemplate" id="4">
+							<Property name="Text" value="+" />
+							<Area>
+								<Size>
+									<AbsDimension x="44" y="44" />
+								</Size>
+								<Anchor point="TOP" offset="272" />
+								<Anchor point="RIGHT" offset="-16" />
+							</Area>
+							<Scripts>
+								<OnClick>
+									return function(self)
+										CharacterWindow_AddAttributeClicked(self);
+									end
+								</OnClick>
+							</Scripts>
+						</Frame>
 					</Frame>
-				</Frame>
-				<!-- End Primary Stats Frame -->
-				<!-- Secondary Stats Bordered Container -->
-				<Frame name="CharacterWindowSecondaryStatsFrame" renderer="DefaultRenderer">
-					<Area>
-						<Size>
-							<AbsDimension y="340" />
-						</Size>
-						<Anchor point="TOP" offset="552" />
-						<Anchor point="LEFT" offset="0" />
-						<Anchor point="RIGHT" offset="0" />
-					</Area>
-					<!-- Secondary Stats Section -->
-					<Frame name="CharacterWindowSecondaryStatsHeader" inherits="StatSectionHeaderTemplate">
-						<Property name="Text" value="CHARACTER_SECONDARY_STATS" />
+					<Frame name="CharacterWindowSecondaryStatsFrame" renderer="DefaultRenderer">
 						<Area>
 							<Size>
-								<AbsDimension y="36" />
+								<AbsDimension y="328" />
 							</Size>
-							<Anchor point="TOP" offset="16" />
-							<Anchor point="LEFT" offset="16" />
-							<Anchor point="RIGHT" offset="-16" />
-						</Area>
-					</Frame>
-					<!-- Armor -->
-					<Frame name="CharacterArmorLabel" inherits="CharacterStatLabelTemplate">
-						<Property name="Text" value="ARMOR" />
-						<Area>
-							<Size>
-								<AbsDimension y="52" />
-							</Size>
-							<Anchor point="TOP" offset="68" />
-							<Anchor point="LEFT" offset="16" />
-							<Anchor point="RIGHT" offset="-152" />
-						</Area>
-					</Frame>
-					<Frame name="CharacterArmorStat" inherits="CharacterStatValueTemplate">
-						<Property name="Text" value="0" />
-						<Area>
-							<Size>
-								<AbsDimension x="136" y="52" />
-							</Size>
-							<Anchor point="TOP" offset="68" />
-							<Anchor point="RIGHT" offset="-16" />
-						</Area>
-					</Frame>
-					<!-- Damage -->
-					<Frame name="CharacterDamageLabel" inherits="CharacterStatLabelTemplate">
-						<Property name="Text" value="DAMAGE" />
-						<Area>
-							<Size>
-								<AbsDimension y="52" />
-							</Size>
-							<Anchor point="TOP" offset="132" />
-							<Anchor point="LEFT" offset="16" />
-							<Anchor point="RIGHT" offset="-152" />
-						</Area>
-					</Frame>
-					<Frame name="CharacterDamageStat" inherits="CharacterStatValueTemplate">
-						<Property name="Text" value="0" />
-						<Area>
-							<Size>
-								<AbsDimension x="136" y="52" />
-							</Size>
-							<Anchor point="TOP" offset="132" />
-							<Anchor point="RIGHT" offset="-16" />
-						</Area>
-					</Frame>
-					<!-- Attack Power -->
-					<Frame name="CharacterAttackPowerLabel" inherits="CharacterStatLabelTemplate">
-						<Property name="Text" value="ATTACK_POWER" />
-						<Area>
-							<Size>
-								<AbsDimension y="52" />
-							</Size>
-							<Anchor point="TOP" offset="196" />
-							<Anchor point="LEFT" offset="16" />
-							<Anchor point="RIGHT" offset="-152" />
-						</Area>
-					</Frame>
-					<Frame name="CharacterAttackPowerStat" inherits="CharacterStatValueTemplate">
-						<Property name="Text" value="0" />
-						<Area>
-							<Size>
-								<AbsDimension x="136" y="52" />
-							</Size>
-							<Anchor point="TOP" offset="196" />
-							<Anchor point="RIGHT" offset="-16" />
-						</Area>
-					</Frame>
-					<!-- Attack Speed -->
-					<Frame name="CharacterAttackTimeLabel" inherits="CharacterStatLabelTemplate">
-						<Property name="Text" value="ATTACK_SPEED" />
-						<Area>
-							<Size>
-								<AbsDimension y="52" />
-							</Size>
-							<Anchor point="TOP" offset="260" />
-							<Anchor point="LEFT" offset="16" />
-							<Anchor point="RIGHT" offset="-152" />
-						</Area>
-					</Frame>
-					<Frame name="CharacterAttackTimeStat" inherits="CharacterStatValueTemplate">
-						<Property name="Text" value="0" />
-						<Area>
-							<Size>
-								<AbsDimension x="136" y="52" />
-							</Size>
-							<Anchor point="TOP" offset="260" />
-							<Anchor point="RIGHT" offset="-16" />
-						</Area>
-					</Frame>
-					<Frame name="CharacterWindowSecondaryStatsFrameDivider" renderer="DefaultRenderer">
-						<Property name="Clickable" value="false" />
-						<Area>
-							<Size>
-								<AbsDimension y="2" />
-							</Size>
+							<Anchor point="TOP" offset="388" />
 							<Anchor point="LEFT" offset="0" />
 							<Anchor point="RIGHT" offset="0" />
-							<Anchor point="TOP" offset="0" />
 						</Area>
-						<Visual>
-							<ImagerySection name="Line">
-								<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="806F5B3C" />
-							</ImagerySection>
-							<StateImagery name="Enabled">
-								<Layer>
-									<Section section="Line" />
-								</Layer>
-							</StateImagery>
-						</Visual>
+						<Frame name="CharacterWindowSecondaryStatsFrameDivider" renderer="DefaultRenderer">
+							<Property name="Clickable" value="false" />
+							<Area>
+								<Size>
+									<AbsDimension y="2" />
+								</Size>
+								<Anchor point="LEFT" offset="0" />
+								<Anchor point="RIGHT" offset="0" />
+								<Anchor point="TOP" offset="0" />
+							</Area>
+							<Visual>
+								<ImagerySection name="Line">
+									<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="806F5B3C" />
+								</ImagerySection>
+								<StateImagery name="Enabled">
+									<Layer>
+										<Section section="Line" />
+									</Layer>
+								</StateImagery>
+							</Visual>
+						</Frame>
+						<Frame name="CharacterWindowSecondaryStatsHeader" inherits="StatSectionHeaderTemplate">
+							<Property name="Text" value="CHARACTER_SECONDARY_STATS" />
+							<Area>
+								<Size>
+									<AbsDimension y="32" />
+								</Size>
+								<Anchor point="TOP" offset="8" />
+								<Anchor point="LEFT" offset="16" />
+								<Anchor point="RIGHT" offset="-16" />
+							</Area>
+						</Frame>
+						<Frame name="CharacterArmorLabel" inherits="CharacterStatLabelTemplate">
+							<Property name="Text" value="ARMOR" />
+							<Area>
+								<Size>
+									<AbsDimension y="44" />
+								</Size>
+								<Anchor point="TOP" offset="48" />
+								<Anchor point="LEFT" offset="16" />
+								<Anchor point="RIGHT" offset="-148" />
+							</Area>
+						</Frame>
+						<Frame name="CharacterArmorStat" inherits="CharacterStatValueTemplate">
+							<Property name="Text" value="0" />
+							<Area>
+								<Size>
+									<AbsDimension x="132" y="44" />
+								</Size>
+								<Anchor point="TOP" offset="48" />
+								<Anchor point="RIGHT" offset="-16" />
+							</Area>
+						</Frame>
+						<Frame name="CharacterDamageLabel" inherits="CharacterStatLabelTemplate">
+							<Property name="Text" value="DAMAGE" />
+							<Area>
+								<Size>
+									<AbsDimension y="44" />
+								</Size>
+								<Anchor point="TOP" offset="104" />
+								<Anchor point="LEFT" offset="16" />
+								<Anchor point="RIGHT" offset="-148" />
+							</Area>
+						</Frame>
+						<Frame name="CharacterDamageStat" inherits="CharacterStatValueTemplate">
+							<Property name="Text" value="0" />
+							<Area>
+								<Size>
+									<AbsDimension x="132" y="44" />
+								</Size>
+								<Anchor point="TOP" offset="104" />
+								<Anchor point="RIGHT" offset="-16" />
+							</Area>
+						</Frame>
+						<Frame name="CharacterAttackPowerLabel" inherits="CharacterStatLabelTemplate">
+							<Property name="Text" value="ATTACK_POWER" />
+							<Area>
+								<Size>
+									<AbsDimension y="44" />
+								</Size>
+								<Anchor point="TOP" offset="160" />
+								<Anchor point="LEFT" offset="16" />
+								<Anchor point="RIGHT" offset="-148" />
+							</Area>
+						</Frame>
+						<Frame name="CharacterAttackPowerStat" inherits="CharacterStatValueTemplate">
+							<Property name="Text" value="0" />
+							<Area>
+								<Size>
+									<AbsDimension x="132" y="44" />
+								</Size>
+								<Anchor point="TOP" offset="160" />
+								<Anchor point="RIGHT" offset="-16" />
+							</Area>
+						</Frame>
+						<Frame name="CharacterAttackTimeLabel" inherits="CharacterStatLabelTemplate">
+							<Property name="Text" value="ATTACK_SPEED" />
+							<Area>
+								<Size>
+									<AbsDimension y="44" />
+								</Size>
+								<Anchor point="TOP" offset="216" />
+								<Anchor point="LEFT" offset="16" />
+								<Anchor point="RIGHT" offset="-148" />
+							</Area>
+						</Frame>
+						<Frame name="CharacterAttackTimeStat" inherits="CharacterStatValueTemplate">
+							<Property name="Text" value="0" />
+							<Area>
+								<Size>
+									<AbsDimension x="132" y="44" />
+								</Size>
+								<Anchor point="TOP" offset="216" />
+								<Anchor point="RIGHT" offset="-16" />
+							</Area>
+						</Frame>
+						<Frame name="CharacterMeleeCritLabel" inherits="CharacterStatLabelTemplate">
+							<Property name="Text" value="CHARACTER_MELEE_CRIT" />
+							<Area>
+								<Size>
+									<AbsDimension y="44" />
+								</Size>
+								<Anchor point="TOP" offset="272" />
+								<Anchor point="LEFT" offset="16" />
+								<Anchor point="RIGHT" offset="-148" />
+							</Area>
+						</Frame>
+						<Frame name="CharacterMeleeCritStat" inherits="CharacterStatValueTemplate">
+							<Property name="Text" value="0" />
+							<Area>
+								<Size>
+									<AbsDimension x="132" y="44" />
+								</Size>
+								<Anchor point="TOP" offset="272" />
+								<Anchor point="RIGHT" offset="-16" />
+							</Area>
+						</Frame>
+					</Frame>
+					<Frame name="CharacterWindowCasterStatsFrame" renderer="DefaultRenderer">
+						<Area>
+							<Size>
+								<AbsDimension y="272" />
+							</Size>
+							<Anchor point="TOP" offset="724" />
+							<Anchor point="LEFT" offset="0" />
+							<Anchor point="RIGHT" offset="0" />
+						</Area>
+						<Frame name="CharacterWindowCasterStatsFrameDivider" renderer="DefaultRenderer">
+							<Property name="Clickable" value="false" />
+							<Area>
+								<Size>
+									<AbsDimension y="2" />
+								</Size>
+								<Anchor point="LEFT" offset="0" />
+								<Anchor point="RIGHT" offset="0" />
+								<Anchor point="TOP" offset="0" />
+							</Area>
+							<Visual>
+								<ImagerySection name="Line">
+									<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="806F5B3C" />
+								</ImagerySection>
+								<StateImagery name="Enabled">
+									<Layer>
+										<Section section="Line" />
+									</Layer>
+								</StateImagery>
+							</Visual>
+						</Frame>
+						<Frame name="CharacterWindowCasterStatsHeader" inherits="StatSectionHeaderTemplate">
+							<Property name="Text" value="CHARACTER_CASTER_STATS" />
+							<Area>
+								<Size>
+									<AbsDimension y="32" />
+								</Size>
+								<Anchor point="TOP" offset="8" />
+								<Anchor point="LEFT" offset="16" />
+								<Anchor point="RIGHT" offset="-16" />
+							</Area>
+						</Frame>
+						<Frame name="CharacterSpellDamageLabel" inherits="CharacterStatLabelTemplate">
+							<Property name="Text" value="CHARACTER_SPELL_DAMAGE" />
+							<Area>
+								<Size>
+									<AbsDimension y="44" />
+								</Size>
+								<Anchor point="TOP" offset="48" />
+								<Anchor point="LEFT" offset="16" />
+								<Anchor point="RIGHT" offset="-148" />
+							</Area>
+						</Frame>
+						<Frame name="CharacterSpellDamageStat" inherits="CharacterStatValueTemplate">
+							<Property name="Text" value="0" />
+							<Area>
+								<Size>
+									<AbsDimension x="132" y="44" />
+								</Size>
+								<Anchor point="TOP" offset="48" />
+								<Anchor point="RIGHT" offset="-16" />
+							</Area>
+						</Frame>
+						<Frame name="CharacterSpellHealingLabel" inherits="CharacterStatLabelTemplate">
+							<Property name="Text" value="CHARACTER_SPELL_HEALING" />
+							<Area>
+								<Size>
+									<AbsDimension y="44" />
+								</Size>
+								<Anchor point="TOP" offset="104" />
+								<Anchor point="LEFT" offset="16" />
+								<Anchor point="RIGHT" offset="-148" />
+							</Area>
+						</Frame>
+						<Frame name="CharacterSpellHealingStat" inherits="CharacterStatValueTemplate">
+							<Property name="Text" value="0" />
+							<Area>
+								<Size>
+									<AbsDimension x="132" y="44" />
+								</Size>
+								<Anchor point="TOP" offset="104" />
+								<Anchor point="RIGHT" offset="-16" />
+							</Area>
+						</Frame>
+						<Frame name="CharacterSpellCritLabel" inherits="CharacterStatLabelTemplate">
+							<Property name="Text" value="CHARACTER_SPELL_CRIT" />
+							<Area>
+								<Size>
+									<AbsDimension y="44" />
+								</Size>
+								<Anchor point="TOP" offset="160" />
+								<Anchor point="LEFT" offset="16" />
+								<Anchor point="RIGHT" offset="-148" />
+							</Area>
+						</Frame>
+						<Frame name="CharacterSpellCritStat" inherits="CharacterStatValueTemplate">
+							<Property name="Text" value="0" />
+							<Area>
+								<Size>
+									<AbsDimension x="132" y="44" />
+								</Size>
+								<Anchor point="TOP" offset="160" />
+								<Anchor point="RIGHT" offset="-16" />
+							</Area>
+						</Frame>
+						<Frame name="CharacterManaRegenLabel" inherits="CharacterStatLabelTemplate">
+							<Property name="Text" value="CHARACTER_MANA_REGEN" />
+							<Area>
+								<Size>
+									<AbsDimension y="44" />
+								</Size>
+								<Anchor point="TOP" offset="216" />
+								<Anchor point="LEFT" offset="16" />
+								<Anchor point="RIGHT" offset="-148" />
+							</Area>
+						</Frame>
+						<Frame name="CharacterManaRegenStat" inherits="CharacterStatValueTemplate">
+							<Property name="Text" value="0" />
+							<Area>
+								<Size>
+									<AbsDimension x="132" y="44" />
+								</Size>
+								<Anchor point="TOP" offset="216" />
+								<Anchor point="RIGHT" offset="-16" />
+							</Area>
+						</Frame>
 					</Frame>
 				</Frame>
-				<!-- End Secondary Stats Frame -->
 			</Frame>
 		</Frame>
 		<Frame name="CharacterClassesPage" renderer="DefaultRenderer">
