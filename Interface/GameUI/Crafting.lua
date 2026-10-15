@@ -379,7 +379,10 @@ end
 
 function Crafting_LockedTooltip(self)
 	GameTooltip_Clear();
-	GameTooltip_AddLine("|cFFFFD100" .. Localize("MENUBAR_TOOLTIP_PROFESSIONS_LOCKED"), TOOLTIP_LINE_LEFT);
+	-- The color goes in as the line color, not as an inline |c run: inline markup routes the line
+	-- through the markup renderer, which cannot word-wrap. This sentence is wider than the tooltip,
+	-- so it would run past the border while the measured height still reserved the wrapped line.
+	GameTooltip_AddLine(Localize("MENUBAR_TOOLTIP_PROFESSIONS_LOCKED"), TOOLTIP_LINE_LEFT, "FFFFD100");
 	GameTooltip_ShrinkToTextWidth();
 	GameTooltip:ClearAnchors();
 	GameTooltip:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.TOP, self, -16);
