@@ -193,6 +193,16 @@ function MenuBarButton_OnEnter(self)
 
 	GameTooltip_Clear();
 	GameTooltip_AddLine(text, TOOLTIP_LINE_LEFT);
+
+	-- While the attention badge is up, say what is waiting behind the button. The badge itself is
+	-- non-clickable, so hovering it lands here on the button.
+	if (data.badgeTooltipKey ~= nil) then
+		local badge = self:GetChild(0);
+		if (badge ~= nil and badge:IsVisible()) then
+			GameTooltip_AddLine(Localize(data.badgeTooltipKey), TOOLTIP_LINE_LEFT, "FFF3CF50");
+		end
+	end
+
 	GameTooltip_ShrinkToTextWidth();
 
 	-- Anchor above the button and right-aligned to it. The menu bar sits in the bottom-right
@@ -209,7 +219,7 @@ end
 
 -- Shows an attention badge with a count in the top right corner of a menu bar button, so the
 -- player keeps seeing that the window behind the button has something waiting for them (e.g.
--- unspent talent points). A count of zero or less hides the badge again.
+-- unspent talent or attribute points). A count of zero or less hides the badge again.
 function MenuBarButton_SetBadge(button, count)
 	if button == nil then
 		return;
@@ -232,7 +242,9 @@ end
 
 -- tooltipKey (optional): localization key for the hover label.
 -- bindingName (optional): keybinding action name to query for the displayed shortcut key.
-function AddMenuBarButton(icon, callback, tooltipKey, bindingName)
+-- badgeTooltipKey (optional): localization key of an extra tooltip line shown only while the
+--                  attention badge set by MenuBarButton_SetBadge is visible.
+function AddMenuBarButton(icon, callback, tooltipKey, bindingName, badgeTooltipKey)
 	-- Create a new button from the template and add it to the window
 	local button = GameMenuBarImageButton:Clone();
 	button:SetText(Localize(icon));
@@ -241,7 +253,7 @@ function AddMenuBarButton(icon, callback, tooltipKey, bindingName)
 
 	-- Remember tooltip metadata for the shared hover handler. Uses userData (C++-backed) so
 	-- it survives being read from the handler's frame wrapper.
-	button.userData = { tooltipKey = tooltipKey, bindingName = bindingName };
+	button.userData = { tooltipKey = tooltipKey, bindingName = bindingName, badgeTooltipKey = badgeTooltipKey };
 	button:SetOnEnterHandler(MenuBarButton_OnEnter);
 	button:SetOnLeaveHandler(MenuBarButton_OnLeave);
 
