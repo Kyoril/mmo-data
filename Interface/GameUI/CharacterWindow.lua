@@ -1,4 +1,42 @@
 
+-- The menu bar button that opens this window, kept so the attribute point badge can be updated
+-- while the window itself is closed.
+local characterMenuBarButton = nil;
+
+-- Latched hint state. It is raised when the server grants new attribute points and lowered again
+-- when the player closes the character window - deliberately not driven by "points > 0", because
+-- saving points up for a more expensive attribute is a valid choice that must not be nagged about.
+local attributePointHintActive = false;
+
+-- Last replicated attribute point count, so only an increase counts as a grant. nil until the
+-- player object is known (PLAYER_ENTER_WORLD establishes the baseline without raising the hint).
+local lastKnownAttributePoints = nil;
+
+-- Mirrors the latched hint onto the menu bar button. The badge shows how many points are waiting.
+local function CharacterWindow_UpdateAttributePointBadge()
+    local player = GetUnit("player");
+    local points = player and player:GetAvailableAttributePoints() or 0;
+
+    MenuBarButton_SetBadge(characterMenuBarButton, attributePointHintActive and points or 0);
+end
+
+-- Raises the hint when the available attribute points went up since the last update. Spending
+-- points lowers the count and must never re-raise it.
+local function CharacterWindow_TrackAttributePointGrant()
+    local player = GetUnit("player");
+    if not player then
+        return;
+    end
+
+    local points = player:GetAvailableAttributePoints();
+    if lastKnownAttributePoints ~= nil and points > lastKnownAttributePoints then
+        attributePointHintActive = true;
+    end
+
+    lastKnownAttributePoints = points;
+    CharacterWindow_UpdateAttributePointBadge();
+end
+
 function CharacterWindow_Toggle()
     if (CharacterWindow:IsVisible()) then
         HideUIPanel(CharacterWindow);
@@ -15,6 +53,7 @@ function CharacterWindow_Toggle()
 end
 
 function CharacterWindow_OnAttributeChanged(self)
+    CharacterWindow_TrackAttributePointGrant();
     CharacterWindow_RefreshStats(self);
 
     if GameTooltip:IsVisible() then
@@ -58,7 +97,7 @@ function CharacterWindow_OnLoad(self)
     end
 
     -- Register the character window in the menu bar as a button
-	AddMenuBarButton("Interface/GameUI/Alestia/MenuIcons/Character.htex", CharacterWindow_Toggle, "MENUBAR_TOOLTIP_CHARACTER", "TOGGLECHARACTERWINDOW");
+	characterMenuBarButton = AddMenuBarButton("Interface/GameUI/Alestia/MenuIcons/Character.htex", CharacterWindow_Toggle, "MENUBAR_TOOLTIP_CHARACTER", "TOGGLECHARACTERWINDOW", "CHARACTER_ATTRIBUTE_POINTS_AVAILABLE");
 
     -- Share each tooltip across its label and value, and track both for live refresh.
     self.statTooltips = {};
@@ -140,12 +179,21 @@ function CharacterWindow_AddAttributeButton_OnEnter(self)
         return;
     end
 
+    local cost = unit:GetAttributeCost(self.id);
+    local available = unit:GetAvailableAttributePoints();
+
     GameTooltip_Clear();
     GameTooltip:ClearAnchors();
     GameTooltip:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, self, 0);
     GameTooltip:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, self, 0);
 
-    GameTooltip_AddLine(string.format(Localize("CHARACTER_ATTRIBUTE_COST"), unit:GetAttributeCost(self.id)), TOOLTIP_LINE_LEFT, "FFFFD100");
+    GameTooltip_AddLine(string.format(Localize("CHARACTER_ATTRIBUTE_COST"), cost), TOOLTIP_LINE_LEFT, "FFFFD100");
+
+    -- A disabled button gives no feedback on click, so the tooltip has to say why: name the cost
+    -- the attribute needs and what the player actually has, in red.
+    if (cost > available) then
+        GameTooltip_AddLine(string.format(Localize("CHARACTER_ATTRIBUTE_NOT_ENOUGH_POINTS"), cost, available), TOOLTIP_LINE_LEFT, "FFFF4040");
+    end
 
     GameTooltip:Show();
 end
@@ -356,6 +404,13 @@ function CharacterWindow_OnShow(this)
     if player then
         CharacterLevelLabel:SetText(string.format(Localize("LEVEL_FORMAT"), player:GetLevel()));
     end
+end
+
+function CharacterWindow_OnHide(this)
+    -- Seeing the character sheet is all the hint was for. Leaving points unspent on purpose is
+    -- fine, so closing the window clears the badge even while points remain.
+    attributePointHintActive = false;
+    CharacterWindow_UpdateAttributePointBadge();
 end
 
 function CharacterWindow_OnKnownClassesChanged(self)
@@ -569,6 +624,13 @@ end
 
 function CharacterWindow_OnEnterWorld(this)
     CharacterFrameModel:SetUnit("player");
+
+    -- Points already on the character when entering the world were not granted just now, so they
+    -- only set the baseline; the badge stays down until the next grant.
+    local player = GetUnit("player");
+    lastKnownAttributePoints = player and player:GetAvailableAttributePoints() or nil;
+    attributePointHintActive = false;
+    CharacterWindow_UpdateAttributePointBadge();
 end
 
 function CharacterWindow_OnPlayerModelChanged(self)
@@ -588,7 +650,13 @@ function CharacterWindow_RefreshStats()
         end
     end
 
+    -- Unspent points are called out wherever they can be seen: a glowing gold counter and a gold
+    -- "Unspent attribute points" header in here, and the menu bar badge while this window is shut.
+    local hasUnspentPoints = attributePointsAvailable > 0;
+    CharacterWindowAttributePointsHeader:SetText(Localize(hasUnspentPoints and "CHARACTER_UNSPENT_POINTS" or "CHARACTER_AVAILABLE_POINTS"));
     CharacterWindowAttributePointsLabel:SetText(tostring(attributePointsAvailable));
+    CharacterWindowAttributePointsLabel:SetProperty("TextColor", hasUnspentPoints and "FFF3CF50" or "FF99958C");
+    CharacterWindowAttributePointsLabel:SetProperty("GlowTint", hasUnspentPoints and "FFFFD100" or "00000000");
 
     for i = 0, 4 do
         local base, modifier = UnitStat("player", i);

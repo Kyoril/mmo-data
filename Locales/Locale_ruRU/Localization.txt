@@ -722,6 +722,9 @@ strings =
 
 	// Character sheet sections
 	(key = "CHARACTER_AVAILABLE_POINTS", string = "Доступные очки")
+	(key = "CHARACTER_UNSPENT_POINTS", string = "Нераспределённые очки характеристик")
+	(key = "CHARACTER_ATTRIBUTE_POINTS_AVAILABLE", string = "У вас есть очки характеристик для распределения")
+	(key = "CHARACTER_ATTRIBUTE_NOT_ENOUGH_POINTS", string = "Требуется %d очков характеристик, у вас %d")
 	(key = "CHARACTER_PRIMARY_ATTRIBUTES", string = "Основные характеристики")
 	(key = "CHARACTER_SECONDARY_STATS", string = "Боевые характеристики")
 	(key = "HUD_QUEST_TRACKER", string = "Задания")
