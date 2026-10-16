@@ -841,12 +841,16 @@ strings =
 
 	// Character sheet sections
 	(key = "CHARACTER_AVAILABLE_POINTS", string = "Available points")
+	(key = "CHARACTER_UNSPENT_POINTS", string = "Unspent attribute points")
+	(key = "CHARACTER_ATTRIBUTE_POINTS_AVAILABLE", string = "You have attribute points to spend")
+	(key = "CHARACTER_ATTRIBUTE_NOT_ENOUGH_POINTS", string = "Requires %d attribute points, you have %d")
 	(key = "CHARACTER_PRIMARY_ATTRIBUTES", string = "Primary attributes")
 	(key = "CHARACTER_SECONDARY_STATS", string = "Combat statistics")
 	(key = "HUD_QUEST_TRACKER", string = "Quests")
 	(key = "HUD_QUEST_READY", string = "Ready to turn in")
 	(key = "HUD_EXPERIENCE_FORMAT", string = "%s: %d / %d")
 	(key = "TALENT_POINTS_LABEL", string = "Available talent points")
+	(key = "TALENT_POINTS_UNSPENT_LABEL", string = "Unspent talent points")
 	(key = "TALENT_COMING_SOON", string = "Coming soon")
 	(key = "TALENT_PATH_ARCANE", string = "Aether")
 	(key = "TALENT_PATH_FROST", string = "Rime")

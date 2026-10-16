@@ -163,8 +163,8 @@
 		</Scripts>
 	</Frame>
 	<Frame name="TalentFramePointsCounter" parent="TalentFrame" renderer="DefaultRenderer">
-		<Property name="Font" value="TalentPointsCounterFont" /><Property name="TextColor" value="FFF3CF50" /><Property name="Clickable" value="false" />
+		<Property name="Font" value="TalentPointsCounterFont" /><Property name="TextColor" value="FFF3CF50" /><Property name="GlowTint" value="00000000" /><Property name="Clickable" value="false" />
 		<Area><Size><AbsDimension x="88" y="76" /></Size><Anchor point="TOP" offset="134" /><Anchor point="RIGHT" offset="-64" /></Area>
-		<Visual><ImagerySection name="Counter"><BorderComponent texture="Interface/GameUI/Alestia/WindowPanel.htex" borderSize="32" /><TextComponent color="$TextColor" horzAlign="CENTER" vertAlign="CENTER" /></ImagerySection><StateImagery name="Enabled"><Layer><Section section="Counter" /></Layer></StateImagery></Visual>
+		<Visual><ImagerySection name="Counter"><ImageComponent texture="Interface/GlueUI/GlowYellow.htex" tint="$GlowTint"><Area><Inset all="-26" /></Area></ImageComponent><BorderComponent texture="Interface/GameUI/Alestia/WindowPanel.htex" borderSize="32" /><TextComponent color="$TextColor" horzAlign="CENTER" vertAlign="CENTER" /></ImagerySection><StateImagery name="Enabled"><Layer><Section section="Counter" /></Layer></StateImagery></Visual>
 	</Frame>
 </UiLayout>

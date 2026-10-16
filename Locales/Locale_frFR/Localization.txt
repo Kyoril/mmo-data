@@ -811,12 +811,16 @@ strings =
 
 	// Character sheet sections
 	(key = "CHARACTER_AVAILABLE_POINTS", string = "Points disponibles")
+	(key = "CHARACTER_UNSPENT_POINTS", string = "Points d'attribut non dépensés")
+	(key = "CHARACTER_ATTRIBUTE_POINTS_AVAILABLE", string = "Vous avez des points d'attribut à dépenser")
+	(key = "CHARACTER_ATTRIBUTE_NOT_ENOUGH_POINTS", string = "Nécessite %d points d'attribut, vous en avez %d")
 	(key = "CHARACTER_PRIMARY_ATTRIBUTES", string = "Attributs principaux")
 	(key = "CHARACTER_SECONDARY_STATS", string = "Statistiques de combat")
 	(key = "HUD_QUEST_TRACKER", string = "Quêtes")
 	(key = "HUD_QUEST_READY", string = "Prête à être rendue")
 	(key = "HUD_EXPERIENCE_FORMAT", string = "%s: %d / %d")
 	(key = "TALENT_POINTS_LABEL", string = "Points de talent disponibles")
+	(key = "TALENT_POINTS_UNSPENT_LABEL", string = "Points de talent non dépensés")
 	(key = "TALENT_COMING_SOON", string = "Bientôt disponible")
 	(key = "TALENT_PATH_ARCANE", string = "Éther")
 	(key = "TALENT_PATH_FROST", string = "Givre")
