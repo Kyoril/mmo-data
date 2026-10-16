@@ -810,6 +810,9 @@ strings =
 
 	// Character sheet sections
 	(key = "CHARACTER_AVAILABLE_POINTS", string = "Verfügbare Punkte")
+	(key = "CHARACTER_UNSPENT_POINTS", string = "Nicht vergebene Attributpunkte")
+	(key = "CHARACTER_ATTRIBUTE_POINTS_AVAILABLE", string = "Du hast Attributpunkte zu vergeben")
+	(key = "CHARACTER_ATTRIBUTE_NOT_ENOUGH_POINTS", string = "Benötigt %d Attributpunkte, du hast %d")
 	(key = "CHARACTER_PRIMARY_ATTRIBUTES", string = "Primäre Attribute")
 	(key = "CHARACTER_SECONDARY_STATS", string = "Kampfwerte")
 	(key = "HUD_QUEST_TRACKER", string = "Quests")

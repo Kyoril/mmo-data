@@ -3,6 +3,7 @@
 	<Script file="CharacterWindow.lua" />
 	<Font name="CharacterTitleFont" file="Fonts/FRIZQT__.TTF" size="32" outline="0" shadowX="1.0" shadowY="1.0" />
 	<Font name="CharacterBodyFont" file="Fonts/FRIZQT__.TTF" size="24" outline="0" shadowX="1.0" shadowY="1.0" />
+	<Font name="CharacterAttributeButtonFont" file="Fonts/FRIZQT__.TTF" size="30" outline="0" />
 	<Frame name="CharacterStatLabelTemplate" renderer="DefaultRenderer">
 		<Property name="Font" value="CharacterBodyFont" />
 		<Visual>
@@ -317,8 +318,11 @@
 			</Visual>
 		</Frame>
 	</Frame>
+	<!-- The "+" buttons used to be a thin outline in every state, which made it guesswork whether
+	     a point could be spent. Affordable attributes now get a filled gold key with a dark glyph
+	     and a glow, while unaffordable ones are a flat, sunken dark plate. -->
 	<Frame name="CharacterAttributeButtonTemplate" type="Button" renderer="ButtonRenderer">
-		<Property name="Font" value="DefaultSmall" />
+		<Property name="Font" value="CharacterAttributeButtonFont" />
 		<Area>
 			<Size>
 				<AbsDimension x="52" y="52" />
@@ -326,8 +330,10 @@
 		</Area>
 		<Visual>
 			<ImagerySection name="NormalSurface">
-				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFB9AD96" />
-				<TextComponent color="FFEED37C" horzAlign="CENTER" vertAlign="CENTER" />
+				<ImageComponent texture="Interface/GlueUI/GlowYellow.htex" tint="66FFD100"><Area><Inset all="-6" /></Area></ImageComponent>
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FFE0BC5E"><Area><Inset all="4" /></Area></ImageComponent>
+				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FF2B1F10" />
+				<TextComponent color="FF241A09" horzAlign="CENTER" vertAlign="CENTER" />
 			</ImagerySection>
 			<StateImagery name="Normal">
 				<Layer>
@@ -335,8 +341,10 @@
 				</Layer>
 			</StateImagery>
 			<ImagerySection name="HoveredSurface">
-				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFFFFFFF" />
-				<TextComponent color="FFFFFFFF" horzAlign="CENTER" vertAlign="CENTER" />
+				<ImageComponent texture="Interface/GlueUI/GlowYellow.htex" tint="CCFFE9A0"><Area><Inset all="-6" /></Area></ImageComponent>
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FFFFE9A0"><Area><Inset all="4" /></Area></ImageComponent>
+				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FF2B1F10" />
+				<TextComponent color="FF241A09" horzAlign="CENTER" vertAlign="CENTER" />
 			</ImagerySection>
 			<StateImagery name="Hovered">
 				<Layer>
@@ -344,8 +352,9 @@
 				</Layer>
 			</StateImagery>
 			<ImagerySection name="PushedSurface">
-				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FF78664C" />
-				<TextComponent color="FFB9AD96" horzAlign="CENTER" vertAlign="CENTER" />
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF9A7F3A"><Area><Inset all="4" /></Area></ImageComponent>
+				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FF2B1F10" />
+				<TextComponent color="FF1A1205" horzAlign="CENTER" vertAlign="CENTER" />
 			</ImagerySection>
 			<StateImagery name="Pushed">
 				<Layer>
@@ -353,8 +362,9 @@
 				</Layer>
 			</StateImagery>
 			<ImagerySection name="DisabledSurface">
-				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FF55514A" />
-				<TextComponent color="FF77736B" horzAlign="CENTER" vertAlign="CENTER" />
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF201C17"><Area><Inset all="4" /></Area></ImageComponent>
+				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FF4A4740" />
+				<TextComponent color="FF6B6760" horzAlign="CENTER" vertAlign="CENTER" />
 			</ImagerySection>
 			<StateImagery name="Disabled">
 				<Layer>
@@ -393,6 +403,11 @@
 					CharacterWindow_OnShow(this);
 				end
 			</OnShow>
+			<OnHide>
+				return function(this)
+					CharacterWindow_OnHide(this);
+				end
+			</OnHide>
 		</Scripts>
 		<Frame name="CharacterWindowTitle" renderer="DefaultRenderer">
 			<Property name="Font" value="CharacterTitleFont" />
@@ -742,9 +757,30 @@
 							<Anchor point="RIGHT" offset="-96" />
 						</Area>
 					</Frame>
-					<Frame name="CharacterWindowAttributePointsLabel" inherits="CharacterStatValueTemplate">
+					<!-- Not a plain stat value: unspent points are a call to action, so the counter
+					     carries its own text colour and a glow that CharacterWindow_RefreshStats
+					     switches on while there is anything left to spend. -->
+					<Frame name="CharacterWindowAttributePointsLabel" renderer="DefaultRenderer">
 						<Property name="Font" value="CharacterBodyFont" />
 						<Property name="Text" value="0" />
+						<Property name="TextColor" value="FFFFFFFF" />
+						<Property name="GlowTint" value="00000000" />
+						<Visual>
+							<ImagerySection name="Counter">
+								<ImageComponent texture="Interface/GlueUI/GlowYellow.htex" tint="$GlowTint" />
+								<TextComponent color="$TextColor" horzAlign="RIGHT" vertAlign="CENTER" />
+							</ImagerySection>
+							<StateImagery name="Enabled">
+								<Layer>
+									<Section section="Counter" />
+								</Layer>
+							</StateImagery>
+							<StateImagery name="Disabled">
+								<Layer>
+									<Section section="Counter" />
+								</Layer>
+							</StateImagery>
+						</Visual>
 						<Area>
 							<Size>
 								<AbsDimension x="72" y="44" />
