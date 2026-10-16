@@ -816,6 +816,7 @@ strings =
 	(key = "HUD_QUEST_READY", string = "Bereit zur Abgabe")
 	(key = "HUD_EXPERIENCE_FORMAT", string = "%s: %d / %d")
 	(key = "TALENT_POINTS_LABEL", string = "Verfügbare Talentpunkte")
+	(key = "TALENT_POINTS_UNSPENT_LABEL", string = "Nicht vergebene Talentpunkte")
 	(key = "TALENT_COMING_SOON", string = "Demnächst verfügbar")
 	(key = "TALENT_PATH_ARCANE", string = "Äther")
 	(key = "TALENT_PATH_FROST", string = "Raureif")

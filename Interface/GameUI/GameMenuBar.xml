@@ -3,6 +3,7 @@
 	<Script file="GameMenuBar.lua" />
 	<Font name="ExperienceHudFont" file="Fonts/FRIZQT__.TTF" size="22" outline="1" shadowX="1.0" shadowY="1.0" />
 	<Font name="ActionShortcutFont" file="Fonts/FRIZQT__.TTF" size="16" outline="1" shadowX="1.0" shadowY="1.0" />
+	<Font name="MenuBarBadgeFont" file="Fonts/FRIZQT__.TTF" size="22" outline="1" />
 	<Font name="CombatHudNameFont" file="Fonts/FRIZQT__.TTF" size="24" outline="1" shadowX="1.0" shadowY="1.0" />
 	<Font name="CombatHudTextFont" file="Fonts/FRIZQT__.TTF" size="22" outline="1" shadowX="1.0" shadowY="1.0" />
 	<Frame name="GameMenuBarImageButton" type="Button" renderer="ButtonRenderer">
@@ -66,6 +67,25 @@
 				<AbsDimension x="80" y="96" />
 			</Size>
 		</Area>
+		<!-- Attention badge in the icon's top right corner, hidden until MenuBarButton_SetBadge
+		     gives it a count. Part of the template so that Clone() carries it into every button. -->
+		<Frame name="Badge" renderer="DefaultRenderer">
+			<Property name="Font" value="MenuBarBadgeFont" />
+			<Property name="Visible" value="false" />
+			<Property name="Clickable" value="false" />
+			<Property name="Enabled" value="false" />
+			<Visual>
+				<ImagerySection name="Badge">
+					<ImageComponent texture="Interface/GlueUI/GlowYellow.htex" tint="AAFFD100"><Area><Inset all="-12" /></Area></ImageComponent>
+					<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FFF3CF50" />
+					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="6" tint="FF2B1F10" />
+					<TextComponent color="FF241A09" horzAlign="CENTER" vertAlign="CENTER" />
+				</ImagerySection>
+				<StateImagery name="Enabled"><Layer><Section section="Badge" /></Layer></StateImagery>
+				<StateImagery name="Disabled"><Layer><Section section="Badge" /></Layer></StateImagery>
+			</Visual>
+			<Area><Size><AbsDimension x="38" y="32" /></Size><Anchor point="TOP" offset="12" /><Anchor point="RIGHT" offset="-6" /></Area>
+		</Frame>
 	</Frame>
 	<Frame name="GameMenuBarButtonTemplate" inherits="GlueButton">
 		<Area>

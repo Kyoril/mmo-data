@@ -728,6 +728,7 @@ strings =
 	(key = "HUD_QUEST_READY", string = "Можно сдать")
 	(key = "HUD_EXPERIENCE_FORMAT", string = "%s: %d / %d")
 	(key = "TALENT_POINTS_LABEL", string = "Доступные очки талантов")
+	(key = "TALENT_POINTS_UNSPENT_LABEL", string = "Нераспределённые очки талантов")
 	(key = "TALENT_COMING_SOON", string = "Скоро")
 	(key = "TALENT_PATH_ARCANE", string = "Эфир")
 	(key = "TALENT_PATH_FROST", string = "Иней")
