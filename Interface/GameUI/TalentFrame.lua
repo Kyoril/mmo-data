@@ -8,6 +8,9 @@ local viewInitialized = false
 local visibleNodes = {}
 local talentsById = {}
 local talentIndexById = {}
+-- The menu bar button that opens this frame, kept so its unspent-point badge can be updated
+-- even while the frame itself is hidden.
+local talentMenuBarButton = nil
 
 local TALENT_NODE_SIZE = 128
 local TALENT_HUB_SIZE = 190
@@ -374,9 +377,17 @@ function TalentFrame_Update(self)
 
     local player = GetUnit("player")
     playerTalentPoints = player and player:GetTalentPoints() or 0
-    TalentFramePointsText:SetText(Localize("TALENT_POINTS_LABEL"))
+
+    -- Unspent points are called out everywhere they can be seen: a glowing gold counter and a
+    -- gold label in this frame, and a badge on the menu bar button while the frame is closed.
+    -- Players should keep being prompted until every point is spent.
+    local hasUnspentPoints = playerTalentPoints > 0
+    TalentFramePointsText:SetText(Localize(hasUnspentPoints and "TALENT_POINTS_UNSPENT_LABEL" or "TALENT_POINTS_LABEL"))
+    TalentFramePointsText:SetProperty("TextColor", hasUnspentPoints and "FFF3CF50" or "FFF0E7D6")
     TalentFramePointsCounter:SetText(tostring(playerTalentPoints))
-    TalentFramePointsCounter:SetProperty("TextColor", playerTalentPoints > 0 and "FFF3CF50" or "FF99958C")
+    TalentFramePointsCounter:SetProperty("TextColor", hasUnspentPoints and "FFF3CF50" or "FF99958C")
+    TalentFramePointsCounter:SetProperty("GlowTint", hasUnspentPoints and "FFFFD100" or "00000000")
+    MenuBarButton_SetBadge(talentMenuBarButton, playerTalentPoints)
     TalentFrame_UpdateTabs()
     TalentFrame_UpdateTalents()
 end
@@ -498,6 +509,6 @@ function TalentFrame_OnLoad(self)
     TalentFrameCanvasViewport:SetOnMouseMoveHandler(TalentFrameCanvas_OnMouseMove)
     TalentFrameCanvasViewport:SetOnMouseWheelHandler(TalentFrameCanvas_OnMouseWheel)
 
-    AddMenuBarButton("Interface/GameUI/Alestia/MenuIcons/Talents.htex", TalentFrame_Toggle, "MENUBAR_TOOLTIP_TALENTS", "TOGGLETALENTS")
+    talentMenuBarButton = AddMenuBarButton("Interface/GameUI/Alestia/MenuIcons/Talents.htex", TalentFrame_Toggle, "MENUBAR_TOOLTIP_TALENTS", "TOGGLETALENTS")
     TalentFrame_ResetView()
 end

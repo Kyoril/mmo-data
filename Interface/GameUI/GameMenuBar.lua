@@ -207,6 +207,29 @@ function MenuBarButton_OnLeave(self)
 	GameTooltip:Hide();
 end
 
+-- Shows an attention badge with a count in the top right corner of a menu bar button, so the
+-- player keeps seeing that the window behind the button has something waiting for them (e.g.
+-- unspent talent points). A count of zero or less hides the badge again.
+function MenuBarButton_SetBadge(button, count)
+	if button == nil then
+		return;
+	end
+
+	-- The badge is the button template's only child, so Clone() carried it into this button.
+	local badge = button:GetChild(0);
+	if badge == nil then
+		return;
+	end
+
+	if count == nil or count <= 0 then
+		badge:Hide();
+		return;
+	end
+
+	badge:SetText(tostring(count));
+	badge:Show();
+end
+
 -- tooltipKey (optional): localization key for the hover label.
 -- bindingName (optional): keybinding action name to query for the displayed shortcut key.
 function AddMenuBarButton(icon, callback, tooltipKey, bindingName)
@@ -237,4 +260,6 @@ function AddMenuBarButton(icon, callback, tooltipKey, bindingName)
 		child:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.BOTTOM, nil, -8);
 		child:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, -16 - (childCount - i - 1) * (child:GetWidth() + MENUBAR_H_PADDING));
 	end
+
+	return button;
 end

@@ -847,6 +847,7 @@ strings =
 	(key = "HUD_QUEST_READY", string = "Ready to turn in")
 	(key = "HUD_EXPERIENCE_FORMAT", string = "%s: %d / %d")
 	(key = "TALENT_POINTS_LABEL", string = "Available talent points")
+	(key = "TALENT_POINTS_UNSPENT_LABEL", string = "Unspent talent points")
 	(key = "TALENT_COMING_SOON", string = "Coming soon")
 	(key = "TALENT_PATH_ARCANE", string = "Aether")
 	(key = "TALENT_PATH_FROST", string = "Rime")

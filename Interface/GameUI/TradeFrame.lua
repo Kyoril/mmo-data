@@ -127,8 +127,18 @@ function TradeFrame_OnLoad(self)
 		end
 	end
 
-	-- Other player's slot borders (buttons are disabled and may not fire events)
+	-- The other player's slot buttons are disabled so they cannot be clicked, but a disabled
+	-- button is still clickable in the hit test sense, so it - not its border - is what hover
+	-- lands on. The handler therefore belongs on the button; the border only covers the 8px
+	-- ring around it.
 	for index = 1, TRADE_NUM_SLOTS, 1 do
+		local button = getglobal("TradeOtherSlot"..index);
+		if button then
+			button.id = index;
+			button:SetOnEnterHandler(TradeOtherSlot_OnEnter);
+			button:SetOnLeaveHandler(TradeSlot_OnLeave);
+		end
+
 		local border = getglobal("TradeOtherSlot"..index.."Border");
 		if border then
 			border.id = index;
@@ -459,8 +469,8 @@ function TradeSlot_OnEnter(button)
 	TradeSlot_ShowTooltip(button, button.id - 1, true);
 end
 
-function TradeOtherSlot_OnEnter(border)
-	TradeSlot_ShowTooltip(border, border.id - 1, false);
+function TradeOtherSlot_OnEnter(frame)
+	TradeSlot_ShowTooltip(frame, frame.id - 1, false);
 end
 
 function TradeSlot_OnLeave(button)
