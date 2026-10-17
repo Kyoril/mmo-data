@@ -146,6 +146,21 @@ function ContextMenu_Toggle(menuType, x, y, data)
 end
 
 --------------------------------------------------------------------------------
+-- Loot rules entry, shared by the player and party member menus. Every party member can
+-- open the loot rules window; only the leader can change them there.
+--------------------------------------------------------------------------------
+
+function LootMethodMenuItem()
+    return {
+        text = Localize(IsPartyLeader() and "SET_LOOT_METHOD" or "VIEW_LOOT_METHOD"),
+        callback = function()
+            LootMethodFrame_Toggle();
+        end,
+        enabled = true
+    }
+end
+
+--------------------------------------------------------------------------------
 -- Player Frame Context Menu
 --------------------------------------------------------------------------------
 
@@ -172,6 +187,8 @@ RegisterContextMenu("PLAYER_FRAME", {
                     enabled = true
                 })
             end
+
+            table.insert(items, LootMethodMenuItem())
         end
         
         -- Resetting dungeon instances is the leader's call, so it is only offered to a leader
@@ -236,17 +253,9 @@ RegisterContextMenu("PARTY_MEMBER", {
                     end,
                     enabled = true
                 })
-
-                -- Set Loot Method submenu (leader only)
-                table.insert(items, {
-                    text = Localize("SET_LOOT_METHOD"),
-                    callback = function(menuData)
-                        ContextMenu_Hide();
-                        LootMethodFrame_Toggle();
-                    end,
-                    enabled = true
-                })
             end
+
+            table.insert(items, LootMethodMenuItem())
         end
         
         return items
@@ -278,6 +287,43 @@ RegisterContextMenu("LOOT_METHOD", {
                 enabled = true
             },
         };
+    end
+})
+
+
+--------------------------------------------------------------------------------
+-- Master Loot: the loot master picks who receives an item. data = loot slot.
+--------------------------------------------------------------------------------
+
+RegisterContextMenu("MASTER_LOOT", {
+    items = function(data)
+        local slot = data
+        local items = {}
+
+        -- Candidate 0 is the loot master, 1..n the party members (see GiveMasterLoot). The server
+        -- refuses anyone who was not near the kill and reports why.
+        local player = GetUnit("player")
+        if player then
+            table.insert(items, {
+                text = player:GetName(),
+                callback = function() GiveMasterLoot(slot, 0); end,
+                enabled = true
+            })
+        end
+
+        for i = 1, GetPartySize() do
+            local name = GetPartyMemberName(i)
+            if name and name ~= "" then
+                local candidate = i
+                table.insert(items, {
+                    text = name,
+                    callback = function() GiveMasterLoot(slot, candidate); end,
+                    enabled = true
+                })
+            end
+        end
+
+        return items
     end
 })
 

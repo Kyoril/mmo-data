@@ -1,6 +1,6 @@
 -- Copyright (C) 2019 - 2025, Kyoril. All rights reserved.
 
--- Loot method definitions (display order)
+-- Loot method definitions (display order). Ids match the server's loot_method enum.
 local LOOT_METHODS = {
 	{
 		id = 0,
@@ -19,12 +19,15 @@ local LOOT_METHODS = {
 		nameKey = "LOOT_GROUP_LOOT",
 		descKey = "LOOT_GROUP_LOOT_DESC",
 		icon = "Interface/Icons/fg4_icons_shieldSword_result.htex",
+		usesThreshold = true,
 	},
 	{
 		id = 2,
 		nameKey = "LOOT_MASTER_LOOT",
 		descKey = "LOOT_MASTER_LOOT_DESC",
 		icon = "Interface/Icons/fg4_icons_emblemShield_result.htex",
+		usesThreshold = true,
+		usesMaster = true,
 	},
 };
 
@@ -38,14 +41,61 @@ local QUALITY_ITEMS = {
 	{ id = 5, key = "QUALITY_LEGENDARY" },
 };
 
+-- Quality colors matching ItemQualityColors from GameParent.lua
+local QUALITY_COLORS = {
+	"FF9C9C9C", -- Poor
+	"FFFFFFFF", -- Common
+	"FF20FF00", -- Uncommon
+	"FF0070DD", -- Rare
+	"FFA335EE", -- Epic
+	"FFFF8000", -- Legendary
+};
+
+local ACTIVE_CAPTION_COLOR = "FFFFD100";
+local INACTIVE_CAPTION_COLOR = "FFEED37C";
+
 local selectedRowIndex = nil;
 
 local function GetRowFrames()
 	return { LootMethodRow1, LootMethodRow2, LootMethodRow3, LootMethodRow4 };
 end
 
+-- Only the party leader may change the loot rules; everybody else reads them.
+local function CanEdit()
+	return GetPartySize() > 0 and IsPartyLeader();
+end
+
+local function GetActiveRowIndex()
+	local current = GetLootMethod();
+	for i, method in ipairs(LOOT_METHODS) do
+		if method.id == current then
+			return i;
+		end
+	end
+	return 1;
+end
+
 -- ─────────────────────────────────────────────────────────────
--- Detail panel helpers
+-- Row captions: the active method is marked so a reader can tell it apart from the one they are
+-- looking at (the checked row).
+-- ─────────────────────────────────────────────────────────────
+
+local function RefreshRowCaptions()
+	local activeIndex = GetActiveRowIndex();
+	for i, row in ipairs(GetRowFrames()) do
+		local method = LOOT_METHODS[i];
+		if i == activeIndex then
+			row:SetText(string.format(Localize("LOOT_METHOD_ROW_ACTIVE"), Localize(method.nameKey)));
+			row:SetProperty("CaptionColor", ACTIVE_CAPTION_COLOR);
+		else
+			row:SetText(Localize(method.nameKey));
+			row:SetProperty("CaptionColor", INACTIVE_CAPTION_COLOR);
+		end
+	end
+end
+
+-- ─────────────────────────────────────────────────────────────
+-- Detail panel
 -- ─────────────────────────────────────────────────────────────
 
 local function UpdateDetailPanel(rowIndex)
@@ -56,13 +106,30 @@ local function UpdateDetailPanel(rowIndex)
 	LootMethodDetailName:SetText(Localize(method.nameKey));
 	LootMethodDetailDesc:SetText(Localize(method.descKey));
 
-	-- Show/hide loot master controls only for Master Loot
-	local isMasterLoot = (method.id == 2);
-	if isMasterLoot then
+	if rowIndex == GetActiveRowIndex() then
+		LootMethodDetailStatus:SetText(Localize("LOOT_METHOD_STATUS_ACTIVE"));
+		LootMethodDetailStatus:SetProperty("TextColor", "FF20FF00");
+	else
+		LootMethodDetailStatus:SetText(Localize("LOOT_METHOD_STATUS_INACTIVE"));
+		LootMethodDetailStatus:SetProperty("TextColor", "FFAA9B80");
+	end
+
+	-- The threshold only matters where items are distributed (rolls, loot master)
+	if method.usesThreshold then
+		LootThresholdLabel:Show();
+		LootThresholdComboBox:Show();
+	else
+		if LootThresholdComboBox:IsOpen() then
+			ComboBox_Close();
+		end
+		LootThresholdLabel:Hide();
+		LootThresholdComboBox:Hide();
+	end
+
+	if method.usesMaster then
 		LootMasterLabel:Show();
 		LootMasterComboBox:Show();
 	else
-		-- Close master dropdown if it was open
 		if LootMasterComboBox:IsOpen() then
 			ComboBox_Close();
 		end
@@ -72,8 +139,7 @@ local function UpdateDetailPanel(rowIndex)
 end
 
 local function SelectRow(rowIndex)
-	local rows = GetRowFrames();
-	for i, row in ipairs(rows) do
+	for i, row in ipairs(GetRowFrames()) do
 		row:SetChecked(i == rowIndex);
 	end
 	selectedRowIndex = rowIndex;
@@ -83,16 +149,6 @@ end
 -- ─────────────────────────────────────────────────────────────
 -- Threshold ComboBox
 -- ─────────────────────────────────────────────────────────────
-
--- Quality colors matching ItemQualityColors from GameParent.lua
-local QUALITY_COLORS = {
-	"FF9C9C9C", -- Poor
-	"FFFFFFFF", -- Common
-	"FF20FF00", -- Uncommon
-	"FF0070DD", -- Rare
-	"FFA335EE", -- Epic
-	"FFFF8000", -- Legendary
-};
 
 local function SetupThresholdCombo()
 	LootThresholdComboBox:ClearItems();
@@ -127,6 +183,13 @@ end
 
 local function SetupMasterCombo()
 	LootMasterComboBox:ClearItems();
+
+	-- The local player first, then the other party members
+	local player = GetUnit("player");
+	if player then
+		LootMasterComboBox:AddItem(player:GetName(), player:GetName());
+	end
+
 	local count = GetPartySize();
 	for i = 1, count do
 		local name = GetPartyMemberName(i);
@@ -134,20 +197,17 @@ local function SetupMasterCombo()
 			LootMasterComboBox:AddItem(name, name);
 		end
 	end
-	-- Also add the local player
-	local player = GetUnit("player");
-	if player then
-		LootMasterComboBox:AddItem(player:GetName(), player:GetName());
-	end
+
 	LootMasterComboBox:SetOnSelectionChanged(function(combo, index, text, userData)
 		-- Nothing to do live
 	end);
 end
 
 local function SyncMasterCombo()
+	-- GetLootMasterIndex() only knows the other party members; -1 means it is the local player
+	-- (or nobody), who is the first entry.
 	local masterIndex = GetLootMasterIndex();
 	if masterIndex and masterIndex > 0 then
-		-- Find matching name in combo items
 		local masterName = GetPartyMemberName(masterIndex);
 		local count = LootMasterComboBox:GetItemCount();
 		for i = 1, count do
@@ -157,16 +217,69 @@ local function SyncMasterCombo()
 			end
 		end
 	end
-	-- Default to first item
+
 	if LootMasterComboBox:GetItemCount() > 0 then
 		LootMasterComboBox:SetSelectedIndex(1);
 	end
 end
 
 -- ─────────────────────────────────────────────────────────────
+-- Read-only mode
+-- ─────────────────────────────────────────────────────────────
+
+local function ApplyEditMode()
+	if CanEdit() then
+		LootThresholdComboBox:Enable();
+		LootMasterComboBox:Enable();
+		LootMethodApplyButton:Show();
+		LootMethodReadOnlyNotice:Hide();
+		LootMethodCancelButton:SetText(Localize("CANCEL"));
+	else
+		if LootThresholdComboBox:IsOpen() or LootMasterComboBox:IsOpen() then
+			ComboBox_Close();
+		end
+		LootThresholdComboBox:Disable();
+		LootMasterComboBox:Disable();
+		LootMethodApplyButton:Hide();
+		LootMethodReadOnlyNotice:Show();
+		LootMethodCancelButton:SetText(Localize("CLOSE"));
+	end
+end
+
+-- Re-reads everything from the party state; also used when it changes while the window is open.
+local function Refresh()
+	ComboBox_Close();
+
+	RefreshRowCaptions();
+	SelectRow(GetActiveRowIndex());
+
+	SyncThresholdCombo();
+
+	SetupMasterCombo();
+	SyncMasterCombo();
+
+	ApplyEditMode();
+end
+
+local function OnPartyStateChanged(self)
+	if not LootMethodFrame:IsVisible() then
+		return;
+	end
+
+	-- Leaving the party leaves no loot rules to show
+	if GetPartySize() == 0 then
+		LootMethodFrame_Cancel();
+		return;
+	end
+
+	Refresh();
+end
+
+-- ─────────────────────────────────────────────────────────────
 -- Event handlers
 -- ─────────────────────────────────────────────────────────────
 
+-- Rows stay clickable when read-only: picking one shows what that method does.
 function LootMethodRow_OnClick(self)
 	SelectRow(self.id);
 end
@@ -177,40 +290,20 @@ function LootMethodFrame_OnLoad(self)
 		LootMethodFrame_Cancel();
 	end);
 
-	-- Set up method row labels and icons
-	local rows = GetRowFrames();
-	for i, row in ipairs(rows) do
-		local method = LOOT_METHODS[i];
-		row:SetText(Localize(method.nameKey));
-		row:SetProperty("Icon", method.icon);
+	for i, row in ipairs(GetRowFrames()) do
+		row:SetProperty("Icon", LOOT_METHODS[i].icon);
 	end
 
 	-- Set up threshold dropdown (items are fixed)
 	SetupThresholdCombo();
+
+	self:RegisterEvent("PARTY_LOOT_METHOD_CHANGED", OnPartyStateChanged);
+	self:RegisterEvent("PARTY_LEADER_CHANGED", OnPartyStateChanged);
+	self:RegisterEvent("PARTY_MEMBERS_CHANGED", OnPartyStateChanged);
 end
 
 function LootMethodFrame_OnShow(self)
-	-- Close any open dropdown
-	ComboBox_Close();
-
-	-- Pre-select current loot method
-	local current = GetLootMethod();
-	local found = false;
-	for i, method in ipairs(LOOT_METHODS) do
-		if method.id == current then
-			SelectRow(i);
-			found = true;
-			break;
-		end
-	end
-	if not found then SelectRow(1); end
-
-	-- Sync threshold dropdown to current value
-	SyncThresholdCombo();
-
-	-- Rebuild master combo with current party members and sync selection
-	SetupMasterCombo();
-	SyncMasterCombo();
+	Refresh();
 end
 
 function LootMethodFrame_Toggle()
@@ -227,7 +320,8 @@ function LootMethodFrame_Cancel()
 end
 
 function LootMethodFrame_Apply()
-	if not selectedRowIndex then
+	-- The server ignores non-leaders anyway; the button is hidden for them.
+	if not CanEdit() or not selectedRowIndex then
 		LootMethodFrame_Cancel();
 		return;
 	end
@@ -248,7 +342,7 @@ function LootMethodFrame_Apply()
 
 	-- Gather loot master name (only relevant for Master Loot)
 	local masterName = "";
-	if method.id == 2 then
+	if method.usesMaster then
 		masterName = LootMasterComboBox:GetSelectedText() or "";
 	end
 

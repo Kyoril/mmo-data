@@ -5,6 +5,13 @@ LOOT_SLOT_ROLL_ONGOING = 1;
 LOOT_SLOT_MASTER = 2;
 LOOT_SLOT_LOCKED = 3;
 
+-- Caption of an item the player cannot take right now, by slot type ("%s" = item name).
+LOOT_SLOT_STATUS_KEYS = {
+    [LOOT_SLOT_ROLL_ONGOING] = "LOOT_SLOT_ROLLING",
+    [LOOT_SLOT_MASTER] = "LOOT_SLOT_MASTER",
+    [LOOT_SLOT_LOCKED] = "LOOT_SLOT_LOCKED",
+};
+
 local function IsCvarOn(val)
     return val ~= nil and val ~= "0" and val ~= "" and val ~= "false";
 end
@@ -169,6 +176,14 @@ function LootButton_OnClick(button)
 
 	local slot = (numLootToShow * ((LootFrame.page or 1) - 1)) + button.id;
 	local slotType = GetLootSlotType(slot);
+
+	-- Master loot items are handed out, never looted: the loot master picks who gets it.
+	if slotType == LOOT_SLOT_MASTER and IsLootMaster() then
+		local pos = GetCursorPosition();
+		ContextMenu_Show("MASTER_LOOT", pos.x, pos.y, slot);
+		return;
+	end
+
 	if slotType == LOOT_SLOT_ROLL_ONGOING or slotType == LOOT_SLOT_LOCKED or slotType == LOOT_SLOT_MASTER then
 		return;
 	end
@@ -211,12 +226,17 @@ function LootFrame_OnUpdate(self, elapsed)
 				local slotType = GetLootSlotType(slot);
 				texture, item, quantity = GetLootSlotInfo(slot);
 				button:SetProperty("Icon", texture);
-				local isLocked = (slotType == LOOT_SLOT_ROLL_ONGOING or slotType == LOOT_SLOT_LOCKED or slotType == LOOT_SLOT_MASTER);
+				-- The loot master's master loot items stay bright: clicking them hands them out.
+				local canAssign = (slotType == LOOT_SLOT_MASTER and IsLootMaster());
+				local isLocked = not canAssign and (slotType == LOOT_SLOT_ROLL_ONGOING or slotType == LOOT_SLOT_LOCKED or slotType == LOOT_SLOT_MASTER);
 
 				if LootSlotIsItem(slot) then
 					local entry = GetLootSlotItem(slot);
-					if isLocked then
-						text:SetText(item .. " (Rolling)");
+					if canAssign then
+						text:SetText(string.format(Localize("LOOT_SLOT_ASSIGN"), item));
+						text:SetProperty("Color", ItemQualityColors[entry.quality]);
+					elseif isLocked then
+						text:SetText(string.format(Localize(LOOT_SLOT_STATUS_KEYS[slotType] or "LOOT_SLOT_LOCKED"), item));
 						text:SetProperty("Color", "FF808080");
 					else
 						text:SetText(item);

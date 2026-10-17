@@ -1,64 +1,72 @@
 <?xml version="1.0" ?>
+<!-- Copyright (C) 2019 - 2025, Kyoril. All rights reserved. -->
 <UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
 	<Script file="LootMethodFrame.lua" />
 
 	<!--
-		Selectable loot method row.
-		Uses CheckboxRenderer: "NormalChecked" / "HoveredChecked" / "PushedChecked" are rendered
-		when the button is checked (= the currently active method).
+		Party loot rules. Every party member can open it to read what the loot methods do and which one
+		is active; only the party leader can change them (the Lua side switches the window to read-only
+		for everybody else). Styled like the Alestia windows (Crafting, Talents): WindowPanel frame,
+		dark inset wells with a gold rim, warm brown selectable rows.
 	-->
+
+	<!-- Selectable loot method row. Checked = the method shown in the detail panel. -->
 	<Frame name="LootMethodRowTemplate" type="Button" renderer="CheckboxRenderer">
 		<Property name="Font" value="DefaultSmall" />
 		<Property name="Checkable" value="true" />
 		<Property name="Icon" />
+		<Property name="CaptionColor" value="FFEED37C" />
 
 		<Visual>
-			<ImagerySection name="NormalBg">
-				<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="50000000" />
+			<ImagerySection name="NormalSurface">
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF29231B" />
+				<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="FFAD9470" />
 			</ImagerySection>
-			<ImagerySection name="HoveredBg">
-				<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="A0553300" />
+			<ImagerySection name="HoveredSurface">
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF493621" />
+				<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="FFB09A73" />
 			</ImagerySection>
-			<ImagerySection name="PushedBg">
-				<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="A0221100" />
+			<ImagerySection name="PushedSurface">
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF211A14" />
+				<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="FFAD9470" />
 			</ImagerySection>
-			<ImagerySection name="SelectedBg">
-				<BorderComponent texture="Interface/GameUI/fg4_borders_01_28_2_result.htex" borderSize="24" />
+			<ImagerySection name="CheckedSurface">
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF513A20" />
+				<BorderComponent texture="Interface/GameUI/fg4_borders_01_28_2_result.htex" borderSize="24" tint="FFE0BB78" />
 			</ImagerySection>
 			<ImagerySection name="IconSlot">
-				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11">
-					<Area><Inset all="12" /><Size><AbsDimension x="120" y="120" /></Size></Area>
+				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFD0B68B">
+					<Area><Inset left="16" top="14" /><Size><AbsDimension x="104" y="104" /></Size></Area>
 				</BorderComponent>
 			</ImagerySection>
 			<ImagerySection name="IconImage">
 				<ImageComponent tiling="NONE">
-					<Area><Inset all="26" /><Size><AbsDimension x="96" y="96" /></Size></Area>
+					<Area><Inset left="26" top="24" /><Size><AbsDimension x="84" y="84" /></Size></Area>
 					<PropertyValue property="Icon" />
 				</ImageComponent>
 			</ImagerySection>
-			<ImagerySection name="CaptionNormal">
-				<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="CENTER">
-					<Area><Inset left="148" top="8" right="12" bottom="8" /></Area>
+			<ImagerySection name="Caption">
+				<TextComponent color="$CaptionColor" horzAlign="LEFT" vertAlign="CENTER" wrap="false">
+					<Area><Inset left="140" top="8" right="16" bottom="8" /></Area>
 				</TextComponent>
 			</ImagerySection>
 			<ImagerySection name="CaptionHovered">
-				<TextComponent color="FFFFFFFF" horzAlign="LEFT" vertAlign="CENTER">
-					<Area><Inset left="148" top="8" right="12" bottom="8" /></Area>
+				<TextComponent color="FFFFFFFF" horzAlign="LEFT" vertAlign="CENTER" wrap="false">
+					<Area><Inset left="140" top="8" right="16" bottom="8" /></Area>
 				</TextComponent>
 			</ImagerySection>
 
-			<!-- unchecked states -->
 			<StateImagery name="Normal">
 				<Layer>
-					<Section section="NormalBg" />
+					<Section section="NormalSurface" />
 					<Section section="IconSlot" />
 					<Section section="IconImage" />
-					<Section section="CaptionNormal" />
+					<Section section="Caption" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="Hovered">
 				<Layer>
-					<Section section="HoveredBg" />
+					<Section section="HoveredSurface" />
 					<Section section="IconSlot" />
 					<Section section="IconImage" />
 					<Section section="CaptionHovered" />
@@ -66,24 +74,23 @@
 			</StateImagery>
 			<StateImagery name="Pushed">
 				<Layer>
-					<Section section="PushedBg" />
+					<Section section="PushedSurface" />
 					<Section section="IconSlot" />
 					<Section section="IconImage" />
-					<Section section="CaptionNormal" color="FFAAAAAA" />
+					<Section section="Caption" color="FFAAAAAA" />
 				</Layer>
 			</StateImagery>
-			<!-- checked (selected) states -->
 			<StateImagery name="NormalChecked">
 				<Layer>
-					<Section section="SelectedBg" />
+					<Section section="CheckedSurface" />
 					<Section section="IconSlot" />
 					<Section section="IconImage" />
-					<Section section="CaptionNormal" />
+					<Section section="CaptionHovered" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="HoveredChecked">
 				<Layer>
-					<Section section="SelectedBg" />
+					<Section section="CheckedSurface" />
 					<Section section="IconSlot" />
 					<Section section="IconImage" />
 					<Section section="CaptionHovered" />
@@ -91,53 +98,54 @@
 			</StateImagery>
 			<StateImagery name="PushedChecked">
 				<Layer>
-					<Section section="SelectedBg" />
+					<Section section="CheckedSurface" />
 					<Section section="IconSlot" />
 					<Section section="IconImage" />
-					<Section section="CaptionNormal" color="FFAAAAAA" />
+					<Section section="Caption" color="FFAAAAAA" />
 				</Layer>
 			</StateImagery>
 		</Visual>
 
 		<Area>
-			<Size><AbsDimension x="520" y="148" /></Size>
+			<Size><AbsDimension x="536" y="132" /></Size>
 		</Area>
 	</Frame>
 
-	<!-- ComboBox visual: the collapsed bar that the user clicks to open the dropdown.
-	     All states use the same border texture — only the tint changes — so hover/open
-	     transitions look consistent.  The down-arrow is a child frame on each instance
-	     so it can use RIGHT anchoring correctly. -->
+	<!-- Collapsed dropdown bar. The arrow is a child frame on each instance so it can anchor RIGHT. -->
 	<Frame name="LootComboBoxTemplate" type="ComboBox" renderer="ComboBoxRenderer">
 		<Property name="Font" value="DefaultSmall" />
 
 		<Visual>
 			<ImagerySection name="NormalBg">
-				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" />
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF29231B" />
+				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFD0B68B" />
 			</ImagerySection>
 			<ImagerySection name="HoveredBg">
-				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFB07030" />
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF493621" />
+				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFE0BB78" />
 			</ImagerySection>
 			<ImagerySection name="OpenBg">
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF513A20" />
 				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFFFD100" />
 			</ImagerySection>
 			<ImagerySection name="DisabledBg">
-				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="80404040" />
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF211A14" />
+				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FF77654E" />
 			</ImagerySection>
 			<!-- Text leaves room on the right for the arrow child frame -->
 			<ImagerySection name="CaptionNormal">
-				<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="CENTER">
-					<Area><Inset left="16" right="80" /></Area>
+				<TextComponent color="FFEED37C" horzAlign="LEFT" vertAlign="CENTER" wrap="false">
+					<Area><Inset left="20" right="80" /></Area>
 				</TextComponent>
 			</ImagerySection>
 			<ImagerySection name="CaptionHovered">
-				<TextComponent color="FFFFFFFF" horzAlign="LEFT" vertAlign="CENTER">
-					<Area><Inset left="16" right="80" /></Area>
+				<TextComponent color="FFFFFFFF" horzAlign="LEFT" vertAlign="CENTER" wrap="false">
+					<Area><Inset left="20" right="80" /></Area>
 				</TextComponent>
 			</ImagerySection>
 			<ImagerySection name="CaptionDisabled">
-				<TextComponent color="AE888888" horzAlign="LEFT" vertAlign="CENTER">
-					<Area><Inset left="16" right="80" /></Area>
+				<TextComponent color="FFAA9B80" horzAlign="LEFT" vertAlign="CENTER" wrap="false">
+					<Area><Inset left="20" right="80" /></Area>
 				</TextComponent>
 			</ImagerySection>
 
@@ -172,6 +180,22 @@
 		</Area>
 	</Frame>
 
+	<!-- Thin gold rule separating sections inside a well. -->
+	<Frame name="LootMethodDividerTemplate" renderer="DefaultRenderer">
+		<Property name="Clickable" value="false" />
+		<Visual>
+			<ImagerySection name="Line">
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="60D0B68B" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer><Section section="Line" /></Layer>
+			</StateImagery>
+		</Visual>
+		<Area>
+			<Size><AbsDimension y="2" /></Size>
+		</Area>
+	</Frame>
+
 	<!-- ══════════════════════════════════════════════════════════
 	     Main frame
 	     ══════════════════════════════════════════════════════════ -->
@@ -179,11 +203,11 @@
 		<Property name="Visible" value="false" />
 
 		<Visual>
-			<ImagerySection name="Background">
-				<BorderComponent texture="Interface/GameUI/fg4_borders_simple.htex" borderSize="250" />
+			<ImagerySection name="Surface">
+				<BorderComponent texture="Interface/GameUI/Alestia/WindowPanel.htex" borderSize="32" />
 			</ImagerySection>
 			<StateImagery name="Enabled">
-				<Layer><Section section="Background" /></Layer>
+				<Layer><Section section="Surface" /></Layer>
 			</StateImagery>
 		</Visual>
 
@@ -201,7 +225,7 @@
 		</Scripts>
 
 		<Area>
-			<Size><AbsDimension x="1800" y="1300" /></Size>
+			<Size><AbsDimension x="1640" y="1060" /></Size>
 			<Anchor point="H_CENTER" />
 			<Anchor point="V_CENTER" offset="-60" />
 		</Area>
@@ -216,282 +240,279 @@
 			</Area>
 		</Frame>
 
-		<!-- ══ LEFT PANEL: four method rows ══ -->
-
-		<Frame name="LootMethodRow1" inherits="LootMethodRowTemplate" id="1">
+		<!-- ══ LEFT: method list well ══ -->
+		<Frame name="LootMethodList" renderer="DefaultRenderer">
 			<Area>
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="LootMethodTitleBar" offset="24" />
-				<Anchor point="LEFT" offset="24" />
-				<Size><AbsDimension x="520" y="148" /></Size>
-			</Area>
-			<Scripts>
-				<OnClick>return function(self) LootMethodRow_OnClick(self); end</OnClick>
-			</Scripts>
-		</Frame>
-
-		<Frame name="LootMethodRow2" inherits="LootMethodRowTemplate" id="2">
-			<Area>
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="LootMethodRow1" offset="10" />
-				<Anchor point="LEFT" offset="24" />
-				<Size><AbsDimension x="520" y="148" /></Size>
-			</Area>
-			<Scripts>
-				<OnClick>return function(self) LootMethodRow_OnClick(self); end</OnClick>
-			</Scripts>
-		</Frame>
-
-		<Frame name="LootMethodRow3" inherits="LootMethodRowTemplate" id="3">
-			<Area>
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="LootMethodRow2" offset="10" />
-				<Anchor point="LEFT" offset="24" />
-				<Size><AbsDimension x="520" y="148" /></Size>
-			</Area>
-			<Scripts>
-				<OnClick>return function(self) LootMethodRow_OnClick(self); end</OnClick>
-			</Scripts>
-		</Frame>
-
-		<Frame name="LootMethodRow4" inherits="LootMethodRowTemplate" id="4">
-			<Area>
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="LootMethodRow3" offset="10" />
-				<Anchor point="LEFT" offset="24" />
-				<Size><AbsDimension x="520" y="148" /></Size>
-			</Area>
-			<Scripts>
-				<OnClick>return function(self) LootMethodRow_OnClick(self); end</OnClick>
-			</Scripts>
-		</Frame>
-
-		<!-- ══ VERTICAL SEPARATOR ══ -->
-		<Frame name="LootMethodSeparator" renderer="DefaultRenderer">
-			<Area>
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="LootMethodTitleBar" offset="24" />
-				<Anchor point="BOTTOM" offset="-128" />
-				<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="LootMethodRow1" offset="20" />
-				<Size><AbsDimension x="4" /></Size>
+				<Anchor point="TOP" offset="126" />
+				<Anchor point="LEFT" offset="32" />
+				<Size><AbsDimension x="576" y="616" /></Size>
 			</Area>
 			<Visual>
-				<ImagerySection name="Line">
-					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" />
+				<ImagerySection name="Surface">
+					<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF181611" />
+					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFD0B68B" />
 				</ImagerySection>
 				<StateImagery name="Enabled">
-					<Layer><Section section="Line" /></Layer>
+					<Layer><Section section="Surface" /></Layer>
 				</StateImagery>
 			</Visual>
-		</Frame>
 
-		<!-- ══ RIGHT PANEL ══ -->
-
-		<!-- Large icon for the selected method -->
-		<Frame name="LootMethodDetailIcon" renderer="DefaultRenderer">
-			<Property name="Icon" value="" />
-			<Area>
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="LootMethodTitleBar" offset="24" />
-				<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="LootMethodSeparator" offset="24" />
-				<Size><AbsDimension x="132" y="132" /></Size>
-			</Area>
-			<Visual>
-				<ImagerySection name="SlotBg">
-					<BorderComponent texture="Interface/GameUI/fg4_iconsSlot.htex" borderSize="64" />
-				</ImagerySection>
-				<ImagerySection name="Image">
-					<ImageComponent tiling="NONE">
-						<Area><Inset all="24" /></Area>
-						<PropertyValue property="Icon" />
-					</ImageComponent>
-				</ImagerySection>
-				<StateImagery name="Enabled">
-					<Layer>
-						<Section section="SlotBg" />
-						<Section section="Image" />
-					</Layer>
-				</StateImagery>
-			</Visual>
-		</Frame>
-
-		<!-- Selected method name -->
-		<Frame name="LootMethodDetailName" renderer="DefaultRenderer">
-			<Property name="Font" value="DefaultHeader" />
-			<Area>
-				<Anchor point="TOP" relativeTo="LootMethodDetailIcon" />
-				<Anchor point="BOTTOM" relativeTo="LootMethodDetailIcon" />
-				<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="LootMethodDetailIcon" offset="20" />
-				<Anchor point="RIGHT" offset="-24" />
-			</Area>
-			<Visual>
-				<ImagerySection name="Text">
-					<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="CENTER" />
-				</ImagerySection>
-				<StateImagery name="Enabled">
-					<Layer><Section section="Text" /></Layer>
-				</StateImagery>
-			</Visual>
-		</Frame>
-
-		<!-- Divider below icon + name -->
-		<Frame name="LootMethodDetailDivider" renderer="DefaultRenderer">
-			<Area>
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="LootMethodDetailIcon" offset="20" />
-				<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="LootMethodSeparator" offset="24" />
-				<Anchor point="RIGHT" offset="-24" />
-				<Size><AbsDimension y="4" /></Size>
-			</Area>
-			<Visual>
-				<ImagerySection name="Line">
-					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" />
-				</ImagerySection>
-				<StateImagery name="Enabled">
-					<Layer><Section section="Line" /></Layer>
-				</StateImagery>
-			</Visual>
-		</Frame>
-
-		<!-- Description text -->
-		<Frame name="LootMethodDetailDesc" renderer="DefaultRenderer">
-			<Property name="Font" value="DefaultSmall" />
-			<Area>
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="LootMethodDetailDivider" offset="20" />
-				<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="LootMethodSeparator" offset="24" />
-				<Anchor point="RIGHT" offset="-24" />
-				<Size><AbsDimension y="280" /></Size>
-			</Area>
-			<Visual>
-				<ImagerySection name="Text">
-					<TextComponent color="FFD0D0D0" horzAlign="LEFT" vertAlign="TOP" />
-				</ImagerySection>
-				<StateImagery name="Enabled">
-					<Layer><Section section="Text" /></Layer>
-				</StateImagery>
-			</Visual>
-		</Frame>
-
-		<!-- Divider above loot options -->
-		<Frame name="LootMethodOptionsDivider" renderer="DefaultRenderer">
-			<Area>
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="LootMethodDetailDesc" offset="24" />
-				<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="LootMethodSeparator" offset="24" />
-				<Anchor point="RIGHT" offset="-24" />
-				<Size><AbsDimension y="4" /></Size>
-			</Area>
-			<Visual>
-				<ImagerySection name="Line">
-					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" />
-				</ImagerySection>
-				<StateImagery name="Enabled">
-					<Layer><Section section="Line" /></Layer>
-				</StateImagery>
-			</Visual>
-		</Frame>
-
-		<!-- ── LOOT OPTIONS SECTION ── -->
-
-		<!-- "Loot Options" header label -->
-		<Frame name="LootMethodOptionsHeader" inherits="TextSmall">
-			<Property name="Text" value="LOOT_OPTIONS_HEADER" />
-			<Area>
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="LootMethodOptionsDivider" offset="16" />
-				<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="LootMethodSeparator" offset="24" />
-				<Anchor point="RIGHT" offset="-24" />
-				<Size><AbsDimension y="48" /></Size>
-			</Area>
-		</Frame>
-
-		<!-- Threshold label -->
-		<Frame name="LootThresholdLabel" inherits="TextSmall">
-			<Property name="Text" value="LOOT_THRESHOLD_LABEL" />
-			<Property name="HorzAlign" value="LEFT" />
-			<Property name="TextColor" value="FFD0D0D0" />
-			<Area>
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="LootMethodOptionsHeader" offset="12" />
-				<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="LootMethodSeparator" offset="24" />
-				<Size><AbsDimension x="320" y="72" /></Size>
-			</Area>
-		</Frame>
-
-		<!-- Threshold ComboBox -->
-		<Frame name="LootThresholdComboBox" inherits="LootComboBoxTemplate">
-			<Area>
-				<Anchor point="TOP" relativeTo="LootThresholdLabel" />
-				<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="LootThresholdLabel" offset="16" />
-				<Anchor point="RIGHT" offset="-24" />
-				<Size><AbsDimension y="72" /></Size>
-			</Area>
-			<Scripts>
-				<OnClick>return function(self) ComboBox_Toggle(self); end</OnClick>
-			</Scripts>
-
-			<!-- Arrow icon — anchored to RIGHT so it sits flush with the right edge -->
-			<Frame name="LootThresholdArrow" renderer="DefaultRenderer">
+			<Frame name="LootMethodRow1" inherits="LootMethodRowTemplate" id="1">
 				<Area>
-					<Anchor point="TOP" offset="12" />
-					<Anchor point="BOTTOM" offset="-12" />
-					<Anchor point="RIGHT" offset="-12" />
-					<Size><AbsDimension x="44" /></Size>
+					<Anchor point="TOP" offset="20" />
+					<Anchor point="LEFT" offset="20" />
 				</Area>
-				<Visual>
-					<ImagerySection name="Image">
-						<ImageComponent texture="Interface/Icons/IconGold_ArrowDown.htex" tiling="NONE" />
-					</ImagerySection>
-					<StateImagery name="Enabled">
-						<Layer><Section section="Image" /></Layer>
-					</StateImagery>
-				</Visual>
+				<Scripts>
+					<OnClick>return function(self) LootMethodRow_OnClick(self); end</OnClick>
+				</Scripts>
+			</Frame>
+
+			<Frame name="LootMethodRow2" inherits="LootMethodRowTemplate" id="2">
+				<Area>
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="LootMethodRow1" offset="12" />
+					<Anchor point="LEFT" offset="20" />
+				</Area>
+				<Scripts>
+					<OnClick>return function(self) LootMethodRow_OnClick(self); end</OnClick>
+				</Scripts>
+			</Frame>
+
+			<Frame name="LootMethodRow3" inherits="LootMethodRowTemplate" id="3">
+				<Area>
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="LootMethodRow2" offset="12" />
+					<Anchor point="LEFT" offset="20" />
+				</Area>
+				<Scripts>
+					<OnClick>return function(self) LootMethodRow_OnClick(self); end</OnClick>
+				</Scripts>
+			</Frame>
+
+			<Frame name="LootMethodRow4" inherits="LootMethodRowTemplate" id="4">
+				<Area>
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="LootMethodRow3" offset="12" />
+					<Anchor point="LEFT" offset="20" />
+				</Area>
+				<Scripts>
+					<OnClick>return function(self) LootMethodRow_OnClick(self); end</OnClick>
+				</Scripts>
 			</Frame>
 		</Frame>
 
-		<!-- Loot master label (visible only for Master Loot method) -->
-		<Frame name="LootMasterLabel" inherits="TextSmall">
-			<Property name="Text" value="LOOT_MASTER_LABEL" />
-			<Property name="HorzAlign" value="LEFT" />
-			<Property name="TextColor" value="FFD0D0D0" />
-			<Property name="Visible" value="false" />
+		<!-- Gold is shared under every loot method, so it is stated once, under the list. -->
+		<Frame name="LootMethodGoldHint" inherits="TextSmall">
+			<Property name="Text" value="LOOT_GOLD_SHARED_HINT" />
+			<Property name="TextColor" value="FFAA9B80" />
 			<Area>
-				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="LootThresholdLabel" offset="16" />
-				<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="LootMethodSeparator" offset="24" />
-				<Size><AbsDimension x="320" y="72" /></Size>
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="LootMethodList" offset="20" />
+				<Anchor point="LEFT" offset="40" />
+				<Size><AbsDimension x="560" y="160" /></Size>
 			</Area>
 		</Frame>
 
-		<!-- Loot master ComboBox (visible only for Master Loot method) -->
-		<Frame name="LootMasterComboBox" inherits="LootComboBoxTemplate">
-			<Property name="Visible" value="false" />
+		<!-- ══ RIGHT: detail well ══ -->
+		<Frame name="LootMethodDetail" renderer="DefaultRenderer">
 			<Area>
-				<Anchor point="TOP" relativeTo="LootMasterLabel" />
-				<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="LootMasterLabel" offset="16" />
-				<Anchor point="RIGHT" offset="-24" />
-				<Size><AbsDimension y="72" /></Size>
+				<Anchor point="TOP" offset="126" />
+				<Anchor point="LEFT" offset="632" />
+				<Anchor point="RIGHT" offset="-32" />
+				<Anchor point="BOTTOM" offset="-136" />
 			</Area>
-			<Scripts>
-				<OnClick>return function(self) ComboBox_Toggle(self); end</OnClick>
-			</Scripts>
+			<Visual>
+				<ImagerySection name="Surface">
+					<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF181611" />
+					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFD0B68B" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer><Section section="Surface" /></Layer>
+				</StateImagery>
+			</Visual>
 
-			<!-- Arrow icon — anchored to RIGHT -->
-			<Frame name="LootMasterArrow" renderer="DefaultRenderer">
+			<!-- Large icon for the shown method -->
+			<Frame name="LootMethodDetailIcon" renderer="DefaultRenderer">
+				<Property name="Icon" value="" />
+				<Property name="Clickable" value="false" />
 				<Area>
-					<Anchor point="TOP" offset="12" />
-					<Anchor point="BOTTOM" offset="-12" />
-					<Anchor point="RIGHT" offset="-12" />
-					<Size><AbsDimension x="44" /></Size>
+					<Anchor point="TOP" offset="28" />
+					<Anchor point="LEFT" offset="28" />
+					<Size><AbsDimension x="128" y="128" /></Size>
 				</Area>
 				<Visual>
+					<ImagerySection name="SlotBg">
+						<BorderComponent texture="Interface/GameUI/fg4_iconsSlot.htex" borderSize="64" />
+					</ImagerySection>
 					<ImagerySection name="Image">
-						<ImageComponent texture="Interface/Icons/IconGold_ArrowDown.htex" tiling="NONE" />
+						<ImageComponent tiling="NONE">
+							<Area><Inset all="22" /></Area>
+							<PropertyValue property="Icon" />
+						</ImageComponent>
 					</ImagerySection>
 					<StateImagery name="Enabled">
-						<Layer><Section section="Image" /></Layer>
+						<Layer>
+							<Section section="SlotBg" />
+							<Section section="Image" />
+						</Layer>
 					</StateImagery>
 				</Visual>
 			</Frame>
+
+			<!-- Shown method name -->
+			<Frame name="LootMethodDetailName" inherits="TextSmall">
+				<Property name="Font" value="AlestiaWindowTitleFont" />
+				<Property name="TextColor" value="FFF0E7D6" />
+				<Property name="VertAlign" value="BOTTOM" />
+				<Area>
+					<Anchor point="TOP" relativeTo="LootMethodDetailIcon" offset="8" />
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="LootMethodDetailIcon" offset="24" />
+					<Anchor point="RIGHT" offset="-28" />
+					<Size><AbsDimension y="60" /></Size>
+				</Area>
+			</Frame>
+
+			<!-- "Active loot method" / "Not active" under the name -->
+			<Frame name="LootMethodDetailStatus" inherits="TextSmall">
+				<Area>
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="LootMethodDetailName" offset="8" />
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="LootMethodDetailIcon" offset="24" />
+					<Anchor point="RIGHT" offset="-28" />
+					<Size><AbsDimension y="44" /></Size>
+				</Area>
+			</Frame>
+
+			<Frame name="LootMethodDetailDivider" inherits="LootMethodDividerTemplate">
+				<Area>
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="LootMethodDetailIcon" offset="24" />
+					<Anchor point="LEFT" offset="28" />
+					<Anchor point="RIGHT" offset="-28" />
+				</Area>
+			</Frame>
+
+			<!-- Description text -->
+			<Frame name="LootMethodDetailDesc" inherits="TextSmall">
+				<Property name="TextColor" value="FFD0D0D0" />
+				<Area>
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="LootMethodDetailDivider" offset="24" />
+					<Anchor point="LEFT" offset="32" />
+					<Anchor point="RIGHT" offset="-32" />
+					<Size><AbsDimension y="300" /></Size>
+				</Area>
+			</Frame>
+
+			<Frame name="LootMethodOptionsDivider" inherits="LootMethodDividerTemplate">
+				<Area>
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="LootMethodDetailDesc" offset="12" />
+					<Anchor point="LEFT" offset="28" />
+					<Anchor point="RIGHT" offset="-28" />
+				</Area>
+			</Frame>
+
+			<!-- Threshold (Group Loot and Master Loot only) -->
+			<Frame name="LootThresholdLabel" inherits="TextSmall">
+				<Property name="Text" value="LOOT_THRESHOLD_LABEL" />
+				<Property name="VertAlign" value="CENTER" />
+				<Area>
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="LootMethodOptionsDivider" offset="28" />
+					<Anchor point="LEFT" offset="32" />
+					<Size><AbsDimension x="300" y="72" /></Size>
+				</Area>
+			</Frame>
+
+			<Frame name="LootThresholdComboBox" inherits="LootComboBoxTemplate">
+				<Area>
+					<Anchor point="TOP" relativeTo="LootThresholdLabel" />
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="LootThresholdLabel" offset="16" />
+					<Anchor point="RIGHT" offset="-32" />
+					<Size><AbsDimension y="72" /></Size>
+				</Area>
+				<Scripts>
+					<OnClick>return function(self) ComboBox_Toggle(self); end</OnClick>
+				</Scripts>
+
+				<Frame name="LootThresholdArrow" renderer="DefaultRenderer">
+					<Property name="Clickable" value="false" />
+					<Area>
+						<Anchor point="TOP" offset="14" />
+						<Anchor point="BOTTOM" offset="-14" />
+						<Anchor point="RIGHT" offset="-16" />
+						<Size><AbsDimension x="44" /></Size>
+					</Area>
+					<Visual>
+						<ImagerySection name="Image">
+							<ImageComponent texture="Interface/Icons/IconGold_ArrowDown.htex" tiling="NONE" />
+						</ImagerySection>
+						<StateImagery name="Enabled">
+							<Layer><Section section="Image" /></Layer>
+						</StateImagery>
+					</Visual>
+				</Frame>
+			</Frame>
+
+			<!-- Loot master (Master Loot only) -->
+			<Frame name="LootMasterLabel" inherits="TextSmall">
+				<Property name="Text" value="LOOT_MASTER_LABEL" />
+				<Property name="VertAlign" value="CENTER" />
+				<Property name="Visible" value="false" />
+				<Area>
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="LootThresholdLabel" offset="20" />
+					<Anchor point="LEFT" offset="32" />
+					<Size><AbsDimension x="300" y="72" /></Size>
+				</Area>
+			</Frame>
+
+			<Frame name="LootMasterComboBox" inherits="LootComboBoxTemplate">
+				<Property name="Visible" value="false" />
+				<Area>
+					<Anchor point="TOP" relativeTo="LootMasterLabel" />
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="LootMasterLabel" offset="16" />
+					<Anchor point="RIGHT" offset="-32" />
+					<Size><AbsDimension y="72" /></Size>
+				</Area>
+				<Scripts>
+					<OnClick>return function(self) ComboBox_Toggle(self); end</OnClick>
+				</Scripts>
+
+				<Frame name="LootMasterArrow" renderer="DefaultRenderer">
+					<Property name="Clickable" value="false" />
+					<Area>
+						<Anchor point="TOP" offset="14" />
+						<Anchor point="BOTTOM" offset="-14" />
+						<Anchor point="RIGHT" offset="-16" />
+						<Size><AbsDimension x="44" /></Size>
+					</Area>
+					<Visual>
+						<ImagerySection name="Image">
+							<ImageComponent texture="Interface/Icons/IconGold_ArrowDown.htex" tiling="NONE" />
+						</ImagerySection>
+						<StateImagery name="Enabled">
+							<Layer><Section section="Image" /></Layer>
+						</StateImagery>
+					</Visual>
+				</Frame>
+			</Frame>
 		</Frame>
 
-		<!-- ══ BOTTOM BUTTONS ══ -->
+		<!-- ══ FOOTER ══ -->
+
+		<!-- Shown instead of Apply to party members who are not the leader -->
+		<Frame name="LootMethodReadOnlyNotice" inherits="TextSmall">
+			<Property name="Text" value="LOOT_METHOD_READ_ONLY" />
+			<Property name="TextColor" value="FFAA9B80" />
+			<Property name="HorzAlign" value="RIGHT" />
+			<Property name="VertAlign" value="CENTER" />
+			<Property name="Visible" value="false" />
+			<Area>
+				<Anchor point="BOTTOM" offset="-32" />
+				<Anchor point="LEFT" offset="360" />
+				<Anchor point="RIGHT" offset="-40" />
+				<Size><AbsDimension y="80" /></Size>
+			</Area>
+		</Frame>
 
 		<Frame name="LootMethodCancelButton" inherits="GlueButton">
 			<Property name="Text" value="CANCEL" />
 			<Area>
-				<Anchor point="BOTTOM" offset="-24" />
-				<Anchor point="LEFT" offset="24" />
-				<Size><AbsDimension x="280" y="96" /></Size>
+				<Anchor point="BOTTOM" offset="-32" />
+				<Anchor point="LEFT" offset="32" />
+				<Size><AbsDimension x="300" y="80" /></Size>
 			</Area>
 			<Scripts>
 				<OnClick>return function(self) LootMethodFrame_Cancel(); end</OnClick>
@@ -501,9 +522,9 @@
 		<Frame name="LootMethodApplyButton" inherits="GlueButton">
 			<Property name="Text" value="APPLY" />
 			<Area>
-				<Anchor point="BOTTOM" offset="-24" />
-				<Anchor point="RIGHT" offset="-24" />
-				<Size><AbsDimension x="280" y="96" /></Size>
+				<Anchor point="BOTTOM" offset="-32" />
+				<Anchor point="RIGHT" offset="-32" />
+				<Size><AbsDimension x="300" y="80" /></Size>
 			</Area>
 			<Scripts>
 				<OnClick>return function(self) LootMethodFrame_Apply(); end</OnClick>

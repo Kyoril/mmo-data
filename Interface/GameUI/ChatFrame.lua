@@ -411,20 +411,7 @@ function ChatFrame_OnQuestRewarded(self, questTitle, rewardXp, rewardMoney)
         ChatFrame:AddMessage(string.format(Localize("QUEST_REWARDED_XP"), rewardXp), 1.0, 1.0, 0.0);
     end
     if rewardMoney and rewardMoney > 0 then
-        local copper = rewardMoney % 100;
-        local silver = math.floor(rewardMoney / 100) % 100;
-        local gold = math.floor(rewardMoney / 10000);
-        local moneyString = "";
-
-        if gold > 0 then
-            moneyString = string.format(Localize("MONEY_GOLD_SILVER_COPPER"), gold, silver, copper);
-        elseif silver > 0 then
-            moneyString = string.format(Localize("MONEY_SILVER_COPPER"), silver, copper);
-        else
-            moneyString = string.format(Localize("MONEY_COPPER"), copper);
-        end
-
-        ChatFrame:AddMessage(string.format(Localize("QUEST_REWARDED_MONEY"), moneyString), 1.0, 1.0, 0.0);
+        ChatFrame:AddMessage(string.format(Localize("QUEST_REWARDED_MONEY"), ChatFrame_FormatMoney(rewardMoney)), 1.0, 1.0, 0.0);
     end
 end
 
@@ -543,9 +530,26 @@ function ChatFrame_OnTradeSkillIncreased(this, skillId, value)
     ChatFrame:AddMessage(string.format(Localize("SKILL_INCREASED"), skillName, value), info.r, info.g, info.b);
 end
 
+-- Formats an amount of copper as "x Gold, y Silver, z Copper", leaving out empty leading denominations.
+function ChatFrame_FormatMoney(money)
+    local copper = money % 100;
+    local silver = math.floor(money / 100) % 100;
+    local gold = math.floor(money / 10000);
+
+    if gold > 0 then
+        return string.format(Localize("MONEY_GOLD_SILVER_COPPER"), gold, silver, copper);
+    elseif silver > 0 then
+        return string.format(Localize("MONEY_SILVER_COPPER"), silver, copper);
+    end
+
+    return string.format(Localize("MONEY_COPPER"), copper);
+end
+
+-- Every party member who shares in a corpse's gold gets this, the looter included.
 function ChatFrame_OnLootMoneyNotify(this, goldAmount)
     local info = ChatTypeInfo["LOOT"];
-    ChatFrame:AddMessage(string.format(Localize("LOOT_MONEY_NOTIFY"), goldAmount), info.r, info.g, info.b);
+    ChatFrame:AddMessage(string.format(Localize("LOOT_MONEY_NOTIFY"), ChatFrame_FormatMoney(goldAmount)), info.r, info.g, info.b);
+    PlaySound("Sound/Interface/Coins_1.wav");
 end
 
 function ChatFrame_OnTimePlayedUpdated(this, timePlayedSeconds)
