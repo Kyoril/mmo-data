@@ -1223,4 +1223,9 @@ strings =
 	(key = "BOT_API_DISABLED", string = "Bot API is disabled. Enter 'set botApiEnabled 1' in the console.")
 	(key = "BOT_NO_NAVMESH", string = "Bot: no navmesh for this map.")
 	(key = "BOT_STATUS", string = "Bot state: %s, movement: %s")
+	// Minimap compass directions
+	(key = "MINIMAP_COMPASS_NORTH", string = "N")
+	(key = "MINIMAP_COMPASS_EAST", string = "E")
+	(key = "MINIMAP_COMPASS_SOUTH", string = "S")
+	(key = "MINIMAP_COMPASS_WEST", string = "W")
 }
