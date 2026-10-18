@@ -1189,4 +1189,10 @@ strings =
 	(key = "BINDING_TOGGLENAMEPLATES", string = "Feindliche Namensplaketten ein-/ausblenden")
 	(key = "BINDING_TARGETSELF", string = "Sich selbst anvisieren")
 	(key = "BINDING_TARGETNEARESTENEMY", string = "Nächsten Feind anvisieren")
+
+	// Minimap compass directions
+	(key = "MINIMAP_COMPASS_NORTH", string = "N")
+	(key = "MINIMAP_COMPASS_EAST", string = "O")
+	(key = "MINIMAP_COMPASS_SOUTH", string = "S")
+	(key = "MINIMAP_COMPASS_WEST", string = "W")
 }

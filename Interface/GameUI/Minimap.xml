@@ -1,6 +1,7 @@
 <?xml version="1.0" ?>
 <UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
 	<Script file="Minimap.lua" />
+	<Font name="MinimapCompassFont" file="Fonts/FRIZQT__.TTF" size="26" outline="2" shadowX="1.0" shadowY="1.0" />
 	<Frame name="Minimap" parent="GameParent">
 		<Scripts>
 			<OnLoad>
@@ -112,6 +113,63 @@
                         end
                     </OnUpdate>
 				</Scripts>
+			</Frame>
+			<!-- Compass letters follow the fixed north-up map and pass mouse input through. -->
+			<Frame name="MinimapCompassNorth" inherits="TextSmall">
+				<Property name="Text" value="MINIMAP_COMPASS_NORTH" />
+				<Property name="Font" value="MinimapCompassFont" />
+				<Property name="TextColor" value="FFEED37C" />
+				<Property name="HorzAlign" value="CENTER" />
+				<Property name="VertAlign" value="CENTER" />
+				<Property name="Clickable" value="false" />
+				<Property name="MousePassThrough" value="true" />
+				<Area>
+					<Size><AbsDimension x="36" y="36" /></Size>
+					<Anchor point="TOP" offset="0" />
+					<Anchor point="H_CENTER" offset="0" />
+				</Area>
+			</Frame>
+			<Frame name="MinimapCompassEast" inherits="TextSmall">
+				<Property name="Text" value="MINIMAP_COMPASS_EAST" />
+				<Property name="Font" value="MinimapCompassFont" />
+				<Property name="TextColor" value="FFF0E7D6" />
+				<Property name="HorzAlign" value="CENTER" />
+				<Property name="VertAlign" value="CENTER" />
+				<Property name="Clickable" value="false" />
+				<Property name="MousePassThrough" value="true" />
+				<Area>
+					<Size><AbsDimension x="36" y="36" /></Size>
+					<Anchor point="RIGHT" offset="0" />
+					<Anchor point="V_CENTER" offset="0" />
+				</Area>
+			</Frame>
+			<Frame name="MinimapCompassSouth" inherits="TextSmall">
+				<Property name="Text" value="MINIMAP_COMPASS_SOUTH" />
+				<Property name="Font" value="MinimapCompassFont" />
+				<Property name="TextColor" value="FFF0E7D6" />
+				<Property name="HorzAlign" value="CENTER" />
+				<Property name="VertAlign" value="CENTER" />
+				<Property name="Clickable" value="false" />
+				<Property name="MousePassThrough" value="true" />
+				<Area>
+					<Size><AbsDimension x="36" y="36" /></Size>
+					<Anchor point="BOTTOM" offset="0" />
+					<Anchor point="H_CENTER" offset="0" />
+				</Area>
+			</Frame>
+			<Frame name="MinimapCompassWest" inherits="TextSmall">
+				<Property name="Text" value="MINIMAP_COMPASS_WEST" />
+				<Property name="Font" value="MinimapCompassFont" />
+				<Property name="TextColor" value="FFF0E7D6" />
+				<Property name="HorzAlign" value="CENTER" />
+				<Property name="VertAlign" value="CENTER" />
+				<Property name="Clickable" value="false" />
+				<Property name="MousePassThrough" value="true" />
+				<Area>
+					<Size><AbsDimension x="36" y="36" /></Size>
+					<Anchor point="LEFT" offset="0" />
+					<Anchor point="V_CENTER" offset="0" />
+				</Area>
 			</Frame>
 			<Frame name="MinimapZoomIn" inherits="RoundIconButton">
 				<Property name="Icon" value="Interface/Icons/fg4_iconsBrown_plus_result.htex" />

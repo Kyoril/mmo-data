@@ -1102,4 +1102,10 @@ strings =
 	(key = "BINDING_TOGGLENAMEPLATES", string = "Показать / скрыть индикаторы противников")
 	(key = "BINDING_TARGETSELF", string = "Выбрать себя")
 	(key = "BINDING_TARGETNEARESTENEMY", string = "Выбрать ближайшего противника")
+
+	// Minimap compass directions
+	(key = "MINIMAP_COMPASS_NORTH", string = "С")
+	(key = "MINIMAP_COMPASS_EAST", string = "В")
+	(key = "MINIMAP_COMPASS_SOUTH", string = "Ю")
+	(key = "MINIMAP_COMPASS_WEST", string = "З")
 }

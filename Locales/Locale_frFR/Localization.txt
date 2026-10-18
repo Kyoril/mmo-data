@@ -1190,4 +1190,10 @@ strings =
 	(key = "BINDING_TOGGLENAMEPLATES", string = "Afficher / masquer les plaques ennemies")
 	(key = "BINDING_TARGETSELF", string = "Se cibler")
 	(key = "BINDING_TARGETNEARESTENEMY", string = "Cibler l'ennemi le plus proche")
+
+	// Minimap compass directions
+	(key = "MINIMAP_COMPASS_NORTH", string = "N")
+	(key = "MINIMAP_COMPASS_EAST", string = "E")
+	(key = "MINIMAP_COMPASS_SOUTH", string = "S")
+	(key = "MINIMAP_COMPASS_WEST", string = "O")
 }
