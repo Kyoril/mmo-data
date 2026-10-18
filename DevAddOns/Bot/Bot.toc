@@ -1,0 +1,3 @@
+# Dev-only playtest bot. Loaded by the client only in builds with MMO_WITH_CLIENT_BOT_API, and
+# DevAddOns is not part of the player patch. See docs/playtest-bot.md.
+Bot.xml

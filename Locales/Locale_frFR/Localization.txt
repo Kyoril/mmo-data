@@ -815,6 +815,7 @@ strings =
 	(key = "ATTACK_SWING_NOT_STANDING", string = "Vous devez être debout pour attaquer.")
 	(key = "ATTACK_SWING_OUT_OF_RANGE", string = "Votre cible est hors de portée.")
 
+	(key = "SPELL_CAST_FAILED_PASSIVE", string = "Cette capacité est passive.")
 	(key = "SPELL_CAST_FAILED_NO_POWER", string = "Pas assez de mana.")
 	(key = "SPELL_CAST_FAILED_NO_POWER_MANA", string = "Pas assez de mana.")
 	(key = "SPELL_CAST_FAILED_NO_POWER_RAGE", string = "Pas assez de rage.")
@@ -1190,4 +1191,10 @@ strings =
 	(key = "BINDING_TOGGLENAMEPLATES", string = "Afficher / masquer les plaques ennemies")
 	(key = "BINDING_TARGETSELF", string = "Se cibler")
 	(key = "BINDING_TARGETNEARESTENEMY", string = "Cibler l'ennemi le plus proche")
+
+	(key = "BOT_STARTED", string = "Bot started.")
+	(key = "BOT_STOPPED", string = "Bot stopped.")
+	(key = "BOT_API_DISABLED", string = "Bot API is disabled. Enter 'set botApiEnabled 1' in the console.")
+	(key = "BOT_NO_NAVMESH", string = "Bot: no navmesh for this map.")
+	(key = "BOT_STATUS", string = "Bot state: %s, movement: %s")
 }

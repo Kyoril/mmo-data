@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+<UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
+	<Script file="BotConfig.lua" />
+	<Script file="BotCombat.lua" />
+	<Script file="Bot.lua" />
+
+	<!-- Draws nothing; it exists for its events and OnUpdate, which only run for visible frames. -->
+	<Frame name="BotFrame" parent="GameParent">
+		<Property name="MousePassThrough" value="true" />
+		<Area>
+			<Anchor point="TOP" />
+			<Anchor point="LEFT" />
+			<Size>
+				<AbsDimension x="1" y="1" />
+			</Size>
+		</Area>
+		<Scripts>
+			<OnLoad>
+				return function(this)
+					Bot_OnLoad(this);
+				end
+			</OnLoad>
+			<OnUpdate>
+				return function(this, elapsed)
+					Bot_OnUpdate(this, elapsed);
+				end
+			</OnUpdate>
+		</Scripts>
+	</Frame>
+</UiLayout>
