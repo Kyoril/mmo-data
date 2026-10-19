@@ -167,8 +167,11 @@ function TrainerFrame_OnTrainerShow(self)
 	trainerOffset = 0;
 	TrainerFrame.selectedSpellId = nil;
 	local target = GetUnit("target");
-	local title = GetTrainerTitle();
-	self:GetChild(0):SetText(target and target:GetName() or title);
+	if target then
+		SidePanel_SetUnitTitle(self, target);
+	else
+		SidePanel_SetTitle(self, GetTrainerTitle());
+	end
 	ShowUIPanel(self);
 	TrainerList_Update();
 end

@@ -321,6 +321,21 @@
 			<Area><Size><AbsDimension y="2" /></Size><Anchor point="LEFT" offset="8" /><Anchor point="RIGHT" offset="-8" /><Anchor point="BOTTOM" offset="-4" /></Area>
 			<Visual><ImagerySection name="Line"><ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="806F5B3C" /></ImagerySection><StateImagery name="Enabled"><Layer><Section section="Line" /></Layer></StateImagery></Visual>
 		</Frame>
+		<!-- Optional second header line below the title, for example the subname of the NPC an
+		     interaction window belongs to. Stays empty until a script fills it in. -->
+		<Frame name="TitleSubtext" inherits="TextSmall">
+			<Property name="Clickable" value="false" />
+			<Property name="Enabled" value="false" />
+			<Property name="Font" value="SmallLabelFont" />
+			<Property name="TextColor" value="FFC9B188" />
+			<Property name="VertAlign" value="BOTTOM" />
+			<Area>
+				<Anchor point="LEFT" offset="16" />
+				<Anchor point="RIGHT" offset="-96" />
+				<Anchor point="BOTTOM" offset="-10" />
+				<Size><AbsDimension y="26" /></Size>
+			</Area>
+		</Frame>
 	</Frame>
 
 	<!-- Large label (headline) -->

@@ -328,7 +328,7 @@ function QuestFrame_OnQuestGreeting(self)
 	-- Show NPC name in title bar (per CONTEXT.md locked decision: NPC name/portrait header)
 	local target = GetUnit("target");
 	if target then
-		self:GetChild(0):SetText(target:GetName());
+		SidePanel_SetUnitTitle(self, target);
 	end
 
 	-- Ensure the quest frame is visible as in every event
@@ -717,7 +717,7 @@ function QuestFrame_OnLoad(self)
     SidePanel_OnLoad(self);
 
     -- Localize quest log text
-    self:GetChild(0):SetText(Localize("QUESTS"));
+    SidePanel_SetTitle(self, Localize("QUESTS"));
 
     -- Register for events
     self:RegisterEvent("QUEST_GREETING", QuestFrame_OnQuestGreeting);
