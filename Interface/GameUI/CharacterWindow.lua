@@ -313,12 +313,22 @@ function CharacterWindow_SpellCritLabel_OnEnter(self)
 end
 
 function CharacterWindow_ManaRegenLabel_OnEnter(self)
-    if not GetUnit("player") then
+    local unit = GetUnit("player");
+    if not unit then
         return;
+    end
+
+    local regen = unit:GetManaRegen();
+    local castingRegen = unit:GetManaRegenCasting();
+    local castingPercent = 0;
+    if regen > 0 then
+        castingPercent = castingRegen / regen * 100;
     end
 
     CharacterWindow_ShowStatTooltip(self, "CHARACTER_MANA_REGEN", {
         Localize("CHARACTER_MANA_REGEN_DESCRIPTION"),
+        string.format(Localize("CHARACTER_MANA_REGEN_NOT_CASTING"), regen),
+        string.format(Localize("CHARACTER_MANA_REGEN_CASTING"), castingRegen, castingPercent),
         Localize("CHARACTER_MANA_REGEN_COMBAT_NOTE"),
     });
 end
