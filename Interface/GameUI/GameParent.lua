@@ -240,6 +240,33 @@ function SidePanel_OnLoad(self)
 	self.titleBar.closeButton:SetClickedHandler(SidePanel_OnClose);
 end
 
+-- Index of the optional second header line within a side panel's title bar (see the TitleBar
+-- template in GameTemplates.xml).
+local SIDE_PANEL_TITLE_SUBTEXT_CHILD = 2;
+
+-- Sets a side panel's title bar text and clears the second header line below it.
+function SidePanel_SetTitle(self, text)
+	local titleBar = self:GetChild(0);
+	titleBar:SetText(text);
+
+	local subtext = titleBar:GetChild(SIDE_PANEL_TITLE_SUBTEXT_CHILD);
+	if subtext then
+		subtext:SetText("");
+	end
+end
+
+-- Sets a side panel's title bar to an interacted unit's name and puts the unit's creature
+-- subtitle ("<General Goods>") on the line below it, when the creature defines a subname.
+function SidePanel_SetUnitTitle(self, unit)
+	local titleBar = self:GetChild(0);
+	titleBar:SetText(unit:GetName());
+
+	local subtext = titleBar:GetChild(SIDE_PANEL_TITLE_SUBTEXT_CHILD);
+	if subtext then
+		subtext:SetText(unit:GetSubtitle());
+	end
+end
+
 function GameParent_OnSpellError(self, spellError)
 	UIErrorFrame_OnErrorMessage(ErrorFrame, Localize(spellError));
 end

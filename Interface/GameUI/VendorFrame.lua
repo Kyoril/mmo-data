@@ -82,7 +82,7 @@ end
 function VendorFrame_Show(self)
     local target = GetUnit("target");
     if target then
-        self:GetChild(0):SetText(target:GetName());
+        SidePanel_SetUnitTitle(self, target);
     end
 
     VendorFrame.page = 1;
