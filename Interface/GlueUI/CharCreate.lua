@@ -258,15 +258,21 @@ function CharCreate_ToggleOutfit(this)
 	SetCharCreateOutfitVisible(this:IsChecked());
 end
 
+-- Number of characters in a UTF-8 string. string.len counts bytes, and an umlaut is two.
+function CharCreate_NameLength(text)
+	local _, count = string.gsub(text, "[^\128-\191]", "");
+	return count;
+end
+
 function CharCreate_Submit()
 	-- Ensure that the character name is at least 3 characters long
-	if (string.len(NewCharacterNameBox:GetText()) < 3) then
+	if (CharCreate_NameLength(NewCharacterNameBox:GetText()) < 3) then
 		GlueDialog_Show("CHAR_CREATE_NAME_TOO_SHORT");
 		return;
 	end
 
 	-- Ensure that the character name is at most 12 characters long
-	if (string.len(NewCharacterNameBox:GetText()) > 12) then
+	if (CharCreate_NameLength(NewCharacterNameBox:GetText()) > 12) then
 		GlueDialog_Show("CHAR_CREATE_NAME_TOO_LONG");
 		return;
 	end
