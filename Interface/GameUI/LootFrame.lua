@@ -35,6 +35,10 @@ local AUTOLOOT_MAX_INTERVAL = 0.35;		-- ...and never slower than this per slot
 local AUTOLOOT_CLOSE_DELAY = 0.4;		-- empty window lingers this long before it closes
 local AUTOLOOT_REQUEST_TIMEOUT = 1.0;	-- a request unanswered this long failed (e.g. bags full)
 
+-- Fast loot state. It must not live on 'self': every handler call gets a new wrapper of the frame,
+-- and fields set on one wrapper are invisible through the next.
+local autoLoot = { active = false };
+
 -- Returns the UI slot of the next slot fast loot should take, ignoring the first 'skip' lootable
 -- slots (requests for those were never answered, so they stay for the player). Slots that cannot
 -- be looted (locked, being rolled on, master-looter controlled) are never taken.
@@ -66,27 +70,27 @@ function LootFrame_AutoLootAll(self)
         interval = math.max(AUTOLOOT_MIN_INTERVAL, math.min(AUTOLOOT_MAX_INTERVAL, AUTOLOOT_TOTAL_DURATION / (numLootable - 1)));
     end
 
-    self.autoLooting = true;
-    self.autoLootClosing = false;
-    self.autoLootInterval = interval;
-    self.autoLootTimer = AUTOLOOT_START_DELAY;
-    self.autoLootPending = false;
-    self.autoLootPendingTime = 0;
-    self.autoLootSkip = 0;
+    autoLoot.active = true;
+    autoLoot.closing = false;
+    autoLoot.interval = interval;
+    autoLoot.timer = AUTOLOOT_START_DELAY;
+    autoLoot.pending = false;
+    autoLoot.pendingTime = 0;
+    autoLoot.skip = 0;
 end
 
 -- Advances fast looting. Only one loot request is in flight at a time: UI slots shift as slots are
 -- cleared, so the next slot is only picked once the previous request was answered. Returns true
 -- if the loot was closed.
 function LootFrame_AutoLootTick(self, elapsed)
-    if not self.autoLooting then
+    if not autoLoot.active then
         return false;
     end
 
-    if self.autoLootClosing then
-        self.autoLootTimer = self.autoLootTimer - elapsed;
-        if self.autoLootTimer <= 0 then
-            self.autoLooting = false;
+    if autoLoot.closing then
+        autoLoot.timer = autoLoot.timer - elapsed;
+        if autoLoot.timer <= 0 then
+            autoLoot.active = false;
             CloseLoot();
             return true;
         end
@@ -94,39 +98,39 @@ function LootFrame_AutoLootTick(self, elapsed)
     end
 
     -- The interval runs while a request is in flight, so server latency overlaps it.
-    self.autoLootTimer = self.autoLootTimer - elapsed;
+    autoLoot.timer = autoLoot.timer - elapsed;
 
-    if self.autoLootPending then
-        self.autoLootPendingTime = self.autoLootPendingTime + elapsed;
-        if self.autoLootPendingTime < AUTOLOOT_REQUEST_TIMEOUT then
+    if autoLoot.pending then
+        autoLoot.pendingTime = autoLoot.pendingTime + elapsed;
+        if autoLoot.pendingTime < AUTOLOOT_REQUEST_TIMEOUT then
             return false;
         end
 
         -- No answer: the slot could not be looted (an error was shown). Leave it to the player.
-        self.autoLootPending = false;
-        self.autoLootSkip = self.autoLootSkip + 1;
+        autoLoot.pending = false;
+        autoLoot.skip = autoLoot.skip + 1;
     end
 
-    if self.autoLootTimer > 0 then
+    if autoLoot.timer > 0 then
         return false;
     end
 
-    local slot = FindNextAutoLootSlot(self.autoLootSkip);
+    local slot = FindNextAutoLootSlot(autoLoot.skip);
     if slot then
         LootSlot(slot, false);
-        self.autoLootPending = true;
-        self.autoLootPendingTime = 0;
-        self.autoLootTimer = self.autoLootInterval;
+        autoLoot.pending = true;
+        autoLoot.pendingTime = 0;
+        autoLoot.timer = autoLoot.interval;
         return false;
     end
 
     -- Nothing left to take. An empty window lingers briefly, then closes; if items remain (locked by
     -- party loot rules, or bags full), the window stays open so the player can handle them.
     if GetNumLootItems() == 0 then
-        self.autoLootClosing = true;
-        self.autoLootTimer = AUTOLOOT_CLOSE_DELAY;
+        autoLoot.closing = true;
+        autoLoot.timer = AUTOLOOT_CLOSE_DELAY;
     else
-        self.autoLooting = false;
+        autoLoot.active = false;
     end
     return false;
 end
@@ -134,7 +138,7 @@ end
 function LootFrame_OnLootOpened(self)
     self.page = 1;
     LootFrame.page = 1; -- Keep global reference for button handlers
-    self.autoLooting = false;
+    autoLoot.active = false;
 
     ShowUIPanel(self);
 
@@ -176,10 +180,10 @@ function LootFrame_OnLootSlotCleared(self, absoluteSlot)
 
 	-- Fast loot's request was answered. With nothing left to take, let the next tick start closing
 	-- right away instead of waiting out the interval.
-	if self.autoLooting and self.autoLootPending then
-		self.autoLootPending = false;
-		if not FindNextAutoLootSlot(self.autoLootSkip) then
-			self.autoLootTimer = 0;
+	if autoLoot.active and autoLoot.pending then
+		autoLoot.pending = false;
+		if not FindNextAutoLootSlot(autoLoot.skip) then
+			autoLoot.timer = 0;
 		end
 	end
 
@@ -188,7 +192,7 @@ function LootFrame_OnLootSlotCleared(self, absoluteSlot)
 end
 
 function LootFrame_OnLootClosed(self)
-    LootFrame.autoLooting = false;
+    autoLoot.active = false;
     HideUIPanel(LootFrame);
 end
 
