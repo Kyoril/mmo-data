@@ -3,14 +3,9 @@
 	<Script file="AuraBar.lua" />
 
     <Frame name="AuraBar" parent="GameParent">
-        <!-- Right offset keeps the aura rows clear of the whole top-right HUD column, not just
-             the minimap: the quest tracker hangs below the minimap but is 560 wide (QuestTracker.xml),
-             so it reaches further left than the 384 wide minimap. With the minimap collapsed the
-             tracker rises next to the aura rows, and a smaller offset would put its heading on top
-             of the first buff's duration label. 24 (tracker margin) + 560 (tracker) + 8 (gap) = 592. -->
         <Area>
 			<Anchor point="TOP" offset="8" />
-			<Anchor point="RIGHT" offset="-592" />
+			<Anchor point="RIGHT" offset="-416" />
             <Size>
                 <AbsDimension x="1024" y="256" />
             </Size>

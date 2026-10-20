@@ -24,6 +24,11 @@ local OBJ_INDENT   = 36   -- indent for objective text
 local MAX_QUESTS   = 5
 local MAX_OBJS     = 4
 
+-- How far the aura rows reach past the bottom edge of the AuraBar frame: the bar is 256 high
+-- (AuraBar.xml), but its debuff row starts 164 below the bar's top and ends with a duration
+-- label 164 + 128 + 4 + 32 = 328 further down (AuraButton.xml), so 72 units stick out.
+local AURA_ROWS_OVERHANG = 72
+
 -- Per-quest collapse state: questId -> bool (true = collapsed)
 local collapsed = {}
 
@@ -45,6 +50,21 @@ end
 -- Pool of pre-built slot data (filled in OnLoad)
 local slots = {}   -- slots[i] = { toggle, title, objs = {o1..o4} }
 
+-- Keeps the tracker below the minimap without ever letting it rise into the aura rows, which
+-- share this corner of the screen: the bar sits left of the minimap, but the tracker is wider
+-- than the minimap and reaches under it. A collapsed minimap (Minimap_Toggle shrinks it to 56)
+-- would otherwise pull the "Quest" heading onto the first buff's icon and duration text, so in
+-- that state the tracker hangs below the aura rows instead.
+function QuestTracker_UpdateAnchor()
+    if not QuestTrackerFrame then return end
+
+    if AuraBar and MinimapContent and not MinimapContent:IsVisible() then
+        QuestTrackerFrame:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, AuraBar, AURA_ROWS_OVERHANG + PAD)
+    elseif Minimap then
+        QuestTrackerFrame:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, Minimap, PAD)
+    end
+end
+
 function QuestTracker_OnLoad(self)
     -- Build slot references from the pre-named XML frames
     for qi = 1, MAX_QUESTS do
@@ -63,6 +83,7 @@ function QuestTracker_OnLoad(self)
     self:RegisterEvent("QUEST_LOG_UPDATE", QuestTracker_Refresh)
     self:RegisterEvent("QUEST_ACCEPTED",   QuestTracker_Refresh)
     self:RegisterEvent("QUEST_ABANDONED",  QuestTracker_Refresh)
+    QuestTracker_UpdateAnchor()
     QuestTracker_Refresh()
 end
 
