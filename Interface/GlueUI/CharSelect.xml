@@ -206,11 +206,29 @@
 				</Scripts>
 			</Frame>
 
+			<!-- Past the login screen this is the only way out besides closing the window. -->
+			<Frame name="CharSelectQuitButton" inherits="GlueButton">
+				<Property name="Text" value="QUIT" />
+
+				<Area>
+					<Anchor point="LEFT" offset="48" />
+					<Anchor point="BOTTOM" offset="-48" />
+				</Area>
+
+				<Scripts>
+					<OnClick>
+						return function(this)
+							RunConsoleCommand("quit");
+						end
+					</OnClick>
+				</Scripts>
+			</Frame>
+
 			<Frame name="ChangeRealmButton" inherits="GlueButton">
 				<Property name="Text" value="CHANGE_REALM" />
 
 				<Area>
-					<Anchor point="LEFT" offset="48" />
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CharSelectQuitButton" offset="24" />
 					<Anchor point="BOTTOM" offset="-48" />
 				</Area>
 				

@@ -166,7 +166,7 @@ end
 
 function CharSelect_ChangeRealm()
 	CharSelect:Hide()
-	RealmList_Show()
+	RealmList_Show(true)
 end
 
 function CharSelect_ConfirmDelete()

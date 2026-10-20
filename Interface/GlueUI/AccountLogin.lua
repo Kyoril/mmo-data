@@ -16,6 +16,18 @@ end
 
 -- Called when the realm list was received — fade out, then show realm selection.
 function AccountLogin_OnRealmList()
+	-- The list is re-sent every few seconds while the realm list is open: update it in place so
+	-- the selection, scroll position and screen stay put.
+	if RealmListFrame:IsVisible() then
+		RealmList_Update();
+		return;
+	end
+
+	-- A refresh that lands while a realm connection is in progress must not replace its dialog.
+	if GlueDialog:IsVisible() and GlueDialog.which == "CONNECTING_TO_REALM" then
+		return;
+	end
+
 	GlueDialog_Hide();
 	local anim = AccountLogin:GetAnimation("FadeOut")
 	if anim and not anim:IsPlaying() then
