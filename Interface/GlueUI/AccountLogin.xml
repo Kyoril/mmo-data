@@ -48,7 +48,7 @@
 				<Area>
 					<Anchor point="H_CENTER" />
 					<Anchor point="V_CENTER" offset="16" />
-					<Size><AbsDimension x="740" y="620" /></Size>
+					<Size><AbsDimension x="740" y="740" /></Size>
 				</Area>
 			</Frame>
 
@@ -74,9 +74,9 @@
 			<Frame name="AccountPasswordField" inherits="GlueTextField">
 				<Property name="Masked" value="true" />
 				<Area>
-					<Anchor point="BOTTOM" relativePoint="V_CENTER" offset="100" />
+					<Anchor point="BOTTOM" relativePoint="V_CENTER" offset="130" />
 					<Anchor point="H_CENTER" />
-					<Size><AbsDimension x="600" y="90" /></Size>
+					<Size><AbsDimension x="600" y="128" /></Size>
 				</Area>
 				<Scripts>
 					<OnTabPressed>
@@ -102,7 +102,7 @@
 				<Area>
 					<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="AccountPasswordLabel" offset="-16" />
 					<Anchor point="H_CENTER" />
-					<Size><AbsDimension x="600" y="90" /></Size>
+					<Size><AbsDimension x="600" y="128" /></Size>
 				</Area>
 				<Scripts>
 					<OnTabPressed>

@@ -17,6 +17,7 @@ CLASS_ICONS[4] = "Interface/Icons/Spells/S_Class_Scout.htex"
 charCreateBackdropZoomed = false;
 
 function CharCreate_OnLoad(this)
+	GlueTextField_ApplySkin(NewCharacterNameBox);
 	SetCharCustomizeFrame(CharCreateModel);
 end
 
