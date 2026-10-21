@@ -19,5 +19,5 @@
 		{ "position": [-685.0, 2.6, 1022.5], "facing": 110.0, "pose": "EmoteTalk" },
 		{ "position": [-692.5, 2.6, 1026.5], "facing": 95.0, "pose": "EmoteSitLoop01" }
 	],
-	"entrance": [-722.0, 2.6, 1022.0]
+	"entrance": [-702.0, 2.6, 1018.0]
 }
