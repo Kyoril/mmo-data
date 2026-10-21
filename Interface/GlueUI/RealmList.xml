@@ -7,7 +7,7 @@
 		<Property name="Font" value="DefaultSmall" />
 		<Property name="Enabled" value="false" />
 		<Property name="Clickable" value="false" />
-		<Property name="TextColor" value="FF9A9384" />
+		<Property name="TextColor" value="FF9AA89E" />
 		<Property name="HorzAlign" value="LEFT" />
 
 		<Visual>
@@ -236,7 +236,7 @@
 			<Frame name="RealmListHeaderSubLabel" inherits="GlueTextSmall">
 				<Property name="Text" value="CHOOSE_A_REALM" />
 				<Property name="HorzAlign" value="CENTER" />
-				<Property name="TextColor" value="FFB8AE96" />
+				<Property name="TextColor" value="FFCFE0D4" />
 				<Area>
 					<Anchor point="LEFT" offset="56" />
 					<Anchor point="RIGHT" offset="-56" />
@@ -294,7 +294,7 @@
 			</Frame>
 			<Frame name="RealmListCountLabel" inherits="GlueTextSmall">
 				<Property name="HorzAlign" value="CENTER" />
-				<Property name="TextColor" value="FFC8B98C" />
+				<Property name="TextColor" value="FFF3EEE2" />
 				<Area>
 					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="RealmListBackButton" offset="24" />
 					<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="RealmListButton01" offset="-24" />
@@ -304,7 +304,7 @@
 			<Frame name="RealmListHintLabel" inherits="GlueTextSmall">
 				<Property name="Text" value="REALM_LIST_HINT" />
 				<Property name="HorzAlign" value="CENTER" />
-				<Property name="TextColor" value="FF857C6B" />
+				<Property name="TextColor" value="FF9AA89E" />
 				<Area>
 					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="RealmListBackButton" offset="24" />
 					<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="RealmListButton01" offset="-24" />
@@ -389,7 +389,7 @@
 				<Frame name="RealmListEmptyLabel" inherits="GlueTextSmall">
 					<Property name="Text" value="REALM_LIST_EMPTY" />
 					<Property name="HorzAlign" value="CENTER" />
-					<Property name="TextColor" value="FFA09682" />
+					<Property name="TextColor" value="FF9AA89E" />
 					<Property name="Visible" value="false" />
 					<Area>
 						<Anchor point="LEFT" offset="80" />
@@ -411,7 +411,7 @@
 			<!-- Column headers sit above the well and line up with the row content. -->
 			<Frame name="RealmListColumnName" inherits="GlueTextSmall">
 				<Property name="Text" value="REALM_COLUMN_NAME" />
-				<Property name="TextColor" value="FF9C8F70" />
+				<Property name="TextColor" value="FFCFE0D4" />
 				<Area>
 					<Size><AbsDimension x="800" y="44" /></Size>
 					<Anchor point="LEFT" relativePoint="LEFT" relativeTo="RealmListContent" offset="150" />
@@ -420,7 +420,7 @@
 			</Frame>
 			<Frame name="RealmListColumnPopulation" inherits="GlueTextSmall">
 				<Property name="Text" value="REALM_COLUMN_POPULATION" />
-				<Property name="TextColor" value="FF9C8F70" />
+				<Property name="TextColor" value="FFCFE0D4" />
 				<Property name="HorzAlign" value="RIGHT" />
 				<Area>
 					<Size><AbsDimension x="600" y="44" /></Size>

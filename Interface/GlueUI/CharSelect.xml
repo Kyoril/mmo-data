@@ -12,10 +12,10 @@
 				<ImageComponent texture="Interface/GlueUI/CharSelectButtonBackground.htex" />
 			</ImagerySection>
 			<ImagerySection name="FrameHovered">
-				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="FFFF9B38" />
+				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="FFCFE0D4" />
 			</ImagerySection>
 			<ImagerySection name="FramePushed">
-				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="FF9E5E22">
+				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="FF8FA396">
 					<Area>
 						<Inset left="16" top="16" />
 					</Area>
