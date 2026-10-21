@@ -241,6 +241,10 @@ function RealmList_Show(fromCharSelect)
 	returnToCharSelect = fromCharSelect == true
 	lastClickRealmId = nil
 
+	-- The realm list stands at the gate: never leave it covered by a fade held for the plaza (the
+	-- character list request it waited for may have been cancelled).
+	GlueSceneFade_Release()
+
 	RealmListFrame:Show()
 	RealmList_Update()
 	RealmListFrame:PlayAnimation("FadeIn")
@@ -272,6 +276,9 @@ end
 function RealmList_Cancel()
 	if returnToCharSelect and realmConnector:IsConnected() then
 		RealmList_Hide()
+		-- Back to the plaza of the realm that is still connected: fly in again. The character
+		-- screen keeps its chrome hidden until the flight has finished.
+		GlueFlyToPlaza()
 		CharList_Show()
 		return
 	end

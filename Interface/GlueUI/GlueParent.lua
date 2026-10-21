@@ -8,11 +8,45 @@ PENDING_GLUE_SCREEN = nil;
 -- Set to an error code string when we need to show an error after the char list loads.
 pendingCharListError = nil;
 
--- Seconds the dark fill takes to reveal the glue scene once its gate view is ready.
-local GLUE_SCENE_FADE_SECONDS = 1.0;
+-- Seconds the dark fill takes to reveal the glue scene, and to cover it again for a hold.
+local GLUE_SCENE_FADE_OUT_SECONDS = 1.0;
+local GLUE_SCENE_FADE_IN_SECONDS = 0.4;
 
--- Remaining fade time; nil while the scene is not ready yet or once the fade has finished.
-local glueSceneFadeRemaining = nil;
+-- Current and wanted opacity of the dark fill over the scene.
+local glueSceneFadeOpacity = 1.0;
+local glueSceneFadeTarget = 1.0;
+
+-- Whether the gate view is ready: the fill never lifts before that.
+local glueSceneReady = false;
+
+-- Whether the client asked to keep the scene covered (GLUE_FADE_HOLD), e.g. until the plaza is
+-- ready when coming back from the world.
+local glueSceneFadeHeld = false;
+
+local function GlueSceneFade_SetTarget(target)
+	glueSceneFadeTarget = target;
+	if target > 0 then
+		GlueSceneFade:Show();
+	end
+end
+
+-- Covers the scene (fading in) until GlueSceneFade_Release.
+function GlueSceneFade_Hold()
+	glueSceneFadeHeld = true;
+	GlueSceneFade_SetTarget(1.0);
+end
+
+-- Lifts a hold; the fill fades out once the scene is ready.
+function GlueSceneFade_Release()
+	if not glueSceneFadeHeld then
+		return;
+	end
+
+	glueSceneFadeHeld = false;
+	if glueSceneReady then
+		GlueSceneFade_SetTarget(0.0);
+	end
+end
 
 function SetGlueScreen(name)
 end
@@ -20,10 +54,24 @@ end
 function GlueParent_OnLoad(this)
 	-- The scene behind the screens starts behind an opaque fill that fades out once the gate
 	-- view has loaded.
+	glueSceneFadeOpacity = 1.0;
+	glueSceneFadeTarget = 1.0;
 	GlueSceneFade:SetOpacity(1.0);
 	GlueSceneFade:Show();
 	this:RegisterEvent("GLUE_SCENE_READY", function(frame)
-		glueSceneFadeRemaining = GLUE_SCENE_FADE_SECONDS;
+		glueSceneReady = true;
+		if not glueSceneFadeHeld then
+			GlueSceneFade_SetTarget(0.0);
+		end
+	end);
+
+	-- The client keeps the scene covered while it cannot show the right view yet (back from the
+	-- world, or the plaza still loading when the character list arrives) and releases it after.
+	this:RegisterEvent("GLUE_FADE_HOLD", function(frame)
+		GlueSceneFade_Hold();
+	end);
+	this:RegisterEvent("GLUE_FADE_RELEASE", function(frame)
+		GlueSceneFade_Release();
 	end);
 
 	-- REQUEST_CHAR_LIST is fired by C++ when returning from the world (normal logout or world
@@ -55,16 +103,18 @@ function GlueParent_OnLoad(this)
 end
 
 function GlueParentFadeUpdate(this, elapsed)
-	if not glueSceneFadeRemaining then
+	if glueSceneFadeOpacity == glueSceneFadeTarget then
 		return;
 	end
 
-	glueSceneFadeRemaining = glueSceneFadeRemaining - elapsed;
-	if glueSceneFadeRemaining <= 0 then
-		glueSceneFadeRemaining = nil;
+	if glueSceneFadeTarget > glueSceneFadeOpacity then
+		glueSceneFadeOpacity = math.min(glueSceneFadeTarget, glueSceneFadeOpacity + elapsed / GLUE_SCENE_FADE_IN_SECONDS);
+	else
+		glueSceneFadeOpacity = math.max(glueSceneFadeTarget, glueSceneFadeOpacity - elapsed / GLUE_SCENE_FADE_OUT_SECONDS);
+	end
+
+	GlueSceneFade:SetOpacity(glueSceneFadeOpacity);
+	if glueSceneFadeOpacity <= 0 then
 		GlueSceneFade:Hide();
-		return;
 	end
-
-	GlueSceneFade:SetOpacity(glueSceneFadeRemaining / GLUE_SCENE_FADE_SECONDS);
 end

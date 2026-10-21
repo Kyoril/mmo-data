@@ -72,6 +72,13 @@ strings =
 	(key = "REALM_SHUTDOWN_CANCELLED", string = "[System] Herunterfahren des Realms abgebrochen.")
 	(key = "KICK_REASON_REALM_SHUTDOWN", string = "Die Verbindung wurde getrennt, weil der Realm heruntergefahren wird.")
 	(key = "CHAR_DISABLED", string = "Deaktiviert")
+	(key = "CHAR_COUNT_FORMAT", string = "Charaktere: %d")
+	(key = "CHAR_LEVEL_CLASS_FORMAT", string = "Stufe %d %s")
+	(key = "ALL_CHARACTERS", string = "Alle Charaktere (%d)")
+	(key = "NEW_CHARACTER_SPOT", string = "Neuer Charakter")
+	(key = "ON_THE_PLAZA", string = "Auf dem Platz")
+	(key = "NOT_ON_THE_PLAZA", string = "Nicht auf dem Platz")
+	(key = "DRAG_TO_REORDER", string = "Zum Sortieren ziehen")
 
 	(key = "CLOSE", string = "Schließen")
 	(key = "MENU", string = "Menü")

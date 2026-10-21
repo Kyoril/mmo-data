@@ -144,52 +144,136 @@
 				<Size><AbsDimension x="128" y="128" /></Size>
 			</Area>
 		</Frame>
+
+		<!-- "On the plaza" marker of the first five rows, top right. -->
+		<Frame name="CharPlazaMark" inherits="GlueTextSmall">
+			<Property name="Enabled" value="false" />
+			<Property name="Clickable" value="false" />
+			<Property name="HorzAlign" value="RIGHT" />
+			<Property name="TextColor" value="FFA0A0A0" />
+			<Area>
+				<Anchor point="TOP" offset="16" />
+				<Anchor point="RIGHT" offset="-24" />
+				<Size><AbsDimension x="400" y="44" /></Size>
+			</Area>
+		</Frame>
 	</Frame>
 
-	<!-- This is the character selection screen frame. It covers the whole screen. -->
-	<Frame name="CharSelect" parent="GlueParent" setAllPoints="true" renderer="DefaultRenderer">
+	<!-- Virtual nameplate over a character on the plaza: name, "Level N Class" and, for the front
+	     character, the zone. Its bottom centre is placed over the character's head every frame.
+	     The lines are stacked by offsets from the bottom: anchors between template children would
+	     resolve to the template's own children, not the copy's. -->
+	<Frame name="CharNameplateTemplate">
+		<Property name="Visible" value="false" />
+		<Property name="MousePassThrough" value="true" />
+		<Area>
+			<Size><AbsDimension x="1200" y="160" /></Size>
+		</Area>
+
+		<Frame name="CharNameplateZone" inherits="GlueTextSmall">
+			<Property name="HorzAlign" value="CENTER" />
+			<Property name="TextColor" value="FFA0A0A0" />
+			<Area>
+				<Anchor point="LEFT" />
+				<Anchor point="RIGHT" />
+				<Anchor point="BOTTOM" />
+			</Area>
+		</Frame>
+		<Frame name="CharNameplateLevel" inherits="GlueTextSmall">
+			<Property name="HorzAlign" value="CENTER" />
+			<Property name="TextColor" value="FFE0E0E0" />
+			<Area>
+				<Anchor point="LEFT" />
+				<Anchor point="RIGHT" />
+				<Anchor point="BOTTOM" offset="-48" />
+			</Area>
+		</Frame>
+		<Frame name="CharNameplateName" inherits="GlueTextLarge">
+			<Area>
+				<Anchor point="LEFT" />
+				<Anchor point="RIGHT" />
+				<Anchor point="BOTTOM" offset="-96" />
+			</Area>
+		</Frame>
+	</Frame>
+
+	<!-- The character screen: minimal chrome over the glue scene's plaza. Covers the whole screen;
+	     a drag on empty space turns the front character (CharSelect.lua). -->
+	<Frame name="CharSelect" parent="GlueParent" setAllPoints="true">
 		<Property name="Visible" value="false" />
 
-		<!-- For now, only a placeholder image is rendered in the background -->
-		<Visual>
-			<ImagerySection name="Background">
-				<ImageComponent texture="Interface/GlueUI/BackgroundPH.htex" tiling="NONE" />
-			</ImagerySection>
-			<StateImagery name="Enabled">
-				<Layer>
-					<Section section="Background" />
-				</Layer>
-			</StateImagery>
-		</Visual>
-		
-		<Frame name="BackgroundFrame" renderer="DefaultRenderer">
-			<Area>
-				<Anchor point="LEFT"/>
-				<Anchor point="RIGHT"/>
-				<Anchor point="BOTTOM"/>
-				<Size><AbsDimension y="400" /></Size>
-			</Area>
-			<Visual>
-				<ImagerySection name="Background">
-					<ImageComponent texture="Interface/GlueUI/GradientBlack.htex" tiling="HORZ" />
-				</ImagerySection>
+		<!-- Nameplates of the five plaza characters (1-5, by order index) and of a selected visitor (6). -->
+		<Frame name="CharSelectNameplates" setAllPoints="true">
+			<Property name="MousePassThrough" value="true" />
 
-				<StateImagery name="Enabled">
-					<Layer>
-						<Section section="Background" />
-					</Layer>
-				</StateImagery>
-			</Visual>
+			<Frame name="CharNameplate1" inherits="CharNameplateTemplate" />
+			<Frame name="CharNameplate2" inherits="CharNameplateTemplate" />
+			<Frame name="CharNameplate3" inherits="CharNameplateTemplate" />
+			<Frame name="CharNameplate4" inherits="CharNameplateTemplate" />
+			<Frame name="CharNameplate5" inherits="CharNameplateTemplate" />
+			<Frame name="CharNameplate6" inherits="CharNameplateTemplate" />
+		</Frame>
+
+		<!-- Everything clickable. Not clickable itself, so a click on empty space reaches CharSelect. -->
+		<Frame name="CharSelectChrome" setAllPoints="true">
+			<Property name="Clickable" value="false" />
+
+			<!-- "New character" markers at empty plaza spots (fewer than five characters). -->
+			<Frame name="NewCharMarker1" inherits="GlueButton">
+				<Property name="Text" value="NEW_CHARACTER_SPOT" />
+				<Property name="Visible" value="false" />
+				<Scripts><OnClick>return function(this) CharSelect_CreateCharacter(); end</OnClick></Scripts>
+			</Frame>
+			<Frame name="NewCharMarker2" inherits="GlueButton">
+				<Property name="Text" value="NEW_CHARACTER_SPOT" />
+				<Property name="Visible" value="false" />
+				<Scripts><OnClick>return function(this) CharSelect_CreateCharacter(); end</OnClick></Scripts>
+			</Frame>
+			<Frame name="NewCharMarker3" inherits="GlueButton">
+				<Property name="Text" value="NEW_CHARACTER_SPOT" />
+				<Property name="Visible" value="false" />
+				<Scripts><OnClick>return function(this) CharSelect_CreateCharacter(); end</OnClick></Scripts>
+			</Frame>
+			<Frame name="NewCharMarker4" inherits="GlueButton">
+				<Property name="Text" value="NEW_CHARACTER_SPOT" />
+				<Property name="Visible" value="false" />
+				<Scripts><OnClick>return function(this) CharSelect_CreateCharacter(); end</OnClick></Scripts>
+			</Frame>
+			<Frame name="NewCharMarker5" inherits="GlueButton">
+				<Property name="Text" value="NEW_CHARACTER_SPOT" />
+				<Property name="Visible" value="false" />
+				<Scripts><OnClick>return function(this) CharSelect_CreateCharacter(); end</OnClick></Scripts>
+			</Frame>
+
+			<!-- Bottom bar: a soft gradient behind the buttons. Not clickable, so drags on it still turn
+			     the front character. -->
+			<Frame name="CharSelectBottomBar" renderer="DefaultRenderer">
+				<Property name="Clickable" value="false" />
+				<Area>
+					<Anchor point="LEFT"/>
+					<Anchor point="RIGHT"/>
+					<Anchor point="BOTTOM"/>
+					<Size><AbsDimension y="400" /></Size>
+				</Area>
+				<Visual>
+					<ImagerySection name="Background">
+						<ImageComponent texture="Interface/GlueUI/GradientBlack.htex" tiling="HORZ" />
+					</ImagerySection>
+					<StateImagery name="Enabled">
+						<Layer>
+							<Section section="Background" />
+						</Layer>
+					</StateImagery>
+				</Visual>
+			</Frame>
 
 			<Frame name="CharSelectEnterButton" inherits="GlueButtonPrimary">
 				<Property name="Text" value="ENTER_WORLD" />
 				<Property name="Enabled" value="False" />
-
 				<Area>
 					<Anchor point="BOTTOM" offset="-48" />
 					<Anchor point="H_CENTER" />
 				</Area>
-
 				<Scripts>
 					<OnClick>
 						return function(this)
@@ -202,12 +286,10 @@
 			<!-- Past the login screen this is the only way out besides closing the window. -->
 			<Frame name="CharSelectQuitButton" inherits="GlueButton">
 				<Property name="Text" value="QUIT" />
-
 				<Area>
 					<Anchor point="LEFT" offset="48" />
 					<Anchor point="BOTTOM" offset="-48" />
 				</Area>
-
 				<Scripts>
 					<OnClick>
 						return function(this)
@@ -219,12 +301,10 @@
 
 			<Frame name="ChangeRealmButton" inherits="GlueButton">
 				<Property name="Text" value="CHANGE_REALM" />
-
 				<Area>
 					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CharSelectQuitButton" offset="24" />
 					<Anchor point="BOTTOM" offset="-48" />
 				</Area>
-				
 				<Scripts>
 					<OnClick>
 						return function(this)
@@ -234,15 +314,29 @@
 				</Scripts>
 			</Frame>
 
-			<Frame name="CharDeleteButton" inherits="GlueButton">
-				<Property name="Text" value="DELETE_CHARACTER" />
-				<Property name="Enabled" value="False" />
-
+			<!-- "All characters (N)": opens and closes the roster panel. The text is set from Lua. -->
+			<Frame name="CharRosterButton" inherits="GlueButton">
+				<Property name="Text" value="" />
 				<Area>
 					<Anchor point="RIGHT" offset="-48" />
 					<Anchor point="BOTTOM" offset="-48" />
 				</Area>
-				
+				<Scripts>
+					<OnClick>
+						return function(this)
+							CharSelect_ToggleRoster();
+						end
+					</OnClick>
+				</Scripts>
+			</Frame>
+
+			<Frame name="CharDeleteButton" inherits="GlueButton">
+				<Property name="Text" value="DELETE_CHARACTER" />
+				<Property name="Enabled" value="False" />
+				<Area>
+					<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CharRosterButton" offset="-24" />
+					<Anchor point="BOTTOM" offset="-48" />
+				</Area>
 				<Scripts>
 					<OnClick>
 						return function(this)
@@ -252,13 +346,14 @@
 				</Scripts>
 			</Frame>
 
+			<!-- Only shown with five or more characters; below that the plaza markers create characters. -->
 			<Frame name="CharCreateButton" inherits="GlueButton">
 				<Property name="Text" value="CREATE_CHARACTER" />
+				<Property name="Visible" value="false" />
 				<Area>
 					<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CharDeleteButton" offset="-24" />
-					<Anchor point="BOTTOM" relativePoint="BOTTOM" relativeTo="CharDeleteButton" />
+					<Anchor point="BOTTOM" offset="-48" />
 				</Area>
-
 				<Scripts>
 					<OnClick>
 						return function(this)
@@ -268,79 +363,90 @@
 				</Scripts>
 			</Frame>
 
-		</Frame>
-
-		<!-- Character list -->
-		<Frame name="CharListFrame" inherits="GlueBorderFrame">
-			<Property name="Visible" value="true" />
-
-			<Area>
-				<Anchor point="TOP" offset="24" />
-				<Anchor point="RIGHT" offset="-24" />
-				<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="CharDeleteButton" offset="-24" />
-				<Size>
-					<AbsDimension x="720" />
-				</Size>
-			</Area>
-
-			<Frame name="RealmNameLabel" inherits="GlueTextLarge">
-				<Property name="Text" value="REALM" />
+			<!-- Roster: every character, the first five marked as standing on the plaza. Rows are
+			     cloned from CharButton by CharSelect.lua and reordered by dragging. -->
+			<Frame name="CharRosterPanel" inherits="GlueBorderFrame">
+				<Property name="Visible" value="false" />
 				<Area>
-					<Anchor point="LEFT" offset="48" />
-					<Anchor point="RIGHT" offset="-48" />
 					<Anchor point="TOP" offset="48" />
-				</Area>
-			</Frame>
-			<Frame name="CharCountLabel" inherits="GlueTextSmall">
-				<Property name="Text" value="" />
-				<Property name="HorzAlign" value="CENTER" />
-				<Property name="TextColor" value="FFA0A0A0" />
-				<Area>
-					<Anchor point="LEFT" offset="48" />
 					<Anchor point="RIGHT" offset="-48" />
-					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmNameLabel" offset="4" />
-				</Area>
-			</Frame>
-
-			<Frame name="CharList" renderer="DefaultRenderer">
-				<Visual>
-					<ImagerySection name="Frame">
-						<ImageComponent texture="Interface/GlueUI/RealmListBackground.htex" tiling="BOTH">
-							<Area><Inset all="8" /></Area>
-						</ImageComponent>
-						<!--<BorderComponent texture="Interface/GlueUI/RealmListBorder.htex" borderSize="8" />-->
-						<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" />
-					</ImagerySection>
-					<StateImagery name="Enabled">
-						<Layer>
-							<Section section="Frame" />
-						</Layer>
-					</StateImagery>
-				</Visual>
-				<Area>
-					<Anchor point="LEFT" offset="16" />
-					<Anchor point="RIGHT" offset="-16" />
-					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmNameLabel" offset="40" />
-					<Anchor point="BOTTOM" offset="-16" />
+					<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="CharRosterButton" offset="-32" />
+					<Size><AbsDimension x="960" /></Size>
 				</Area>
 
-				<Frame name="CharListContent">
+				<Frame name="RealmNameLabel" inherits="GlueTextLarge">
+					<Property name="Text" value="REALM" />
 					<Area>
-						<Anchor point="LEFT" />
-						<Anchor point="RIGHT" offset="-96" />
-						<Anchor point="TOP" />
-						<Anchor point="BOTTOM" />
+						<Anchor point="LEFT" offset="48" />
+						<Anchor point="RIGHT" offset="-48" />
+						<Anchor point="TOP" offset="48" />
 					</Area>
 				</Frame>
-			</Frame>
-			
-			<Frame name="TestScrollBar" inherits="VerticalScrollBar">
-				<Property name="Enabled" value="false" />
-				<Area>
-					<Anchor point="RIGHT" offset="-16" />
-					<Anchor point="TOP" relativeTo="CharList" />
-					<Anchor point="BOTTOM" relativeTo="CharList" />
-				</Area>
+				<Frame name="CharCountLabel" inherits="GlueTextSmall">
+					<Property name="Text" value="" />
+					<Property name="HorzAlign" value="CENTER" />
+					<Property name="TextColor" value="FFA0A0A0" />
+					<Area>
+						<Anchor point="LEFT" offset="48" />
+						<Anchor point="RIGHT" offset="-48" />
+						<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmNameLabel" offset="4" />
+					</Area>
+				</Frame>
+
+				<Frame name="CharRosterList">
+					<Area>
+						<Anchor point="LEFT" offset="32" />
+						<Anchor point="RIGHT" offset="-32" />
+						<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharCountLabel" offset="32" />
+						<Anchor point="BOTTOM" offset="-112" />
+					</Area>
+
+					<!-- Divider before the characters that are not on the plaza; anchored below the fifth
+					     row from Lua. -->
+					<Frame name="CharRosterDivider" renderer="DefaultRenderer">
+						<Property name="Visible" value="false" />
+						<Property name="Clickable" value="false" />
+						<Area>
+							<Anchor point="LEFT" offset="16" />
+							<Anchor point="RIGHT" offset="-16" />
+							<Anchor point="TOP" />
+							<Size><AbsDimension y="4" /></Size>
+						</Area>
+						<Visual>
+							<ImagerySection name="Line">
+								<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="60FFFFFF" />
+							</ImagerySection>
+							<StateImagery name="Enabled">
+								<Layer>
+									<Section section="Line" />
+								</Layer>
+							</StateImagery>
+						</Visual>
+					</Frame>
+					<Frame name="CharRosterDividerLabel" inherits="GlueTextSmall">
+						<Property name="Text" value="NOT_ON_THE_PLAZA" />
+						<Property name="Visible" value="false" />
+						<Property name="Clickable" value="false" />
+						<Property name="HorzAlign" value="CENTER" />
+						<Property name="TextColor" value="FFA0A0A0" />
+						<Area>
+							<Anchor point="LEFT" offset="16" />
+							<Anchor point="RIGHT" offset="-16" />
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharRosterDivider" offset="8" />
+						</Area>
+					</Frame>
+				</Frame>
+
+				<Frame name="CharRosterHint" inherits="GlueTextSmall">
+					<Property name="Text" value="DRAG_TO_REORDER" />
+					<Property name="HorzAlign" value="CENTER" />
+					<Property name="TextColor" value="FFA0A0A0" />
+					<Area>
+						<Anchor point="LEFT" offset="48" />
+						<Anchor point="RIGHT" offset="-48" />
+						<Anchor point="BOTTOM" offset="-48" />
+					</Area>
+				</Frame>
 			</Frame>
 		</Frame>
 
@@ -373,7 +479,7 @@
 						<Anchor point="RIGHT" relativePoint="H_CENTER" offset="-24" />
 						<Anchor point="BOTTOM" offset="-48" />
 					</Area>
-						
+
 					<Scripts>
 						<OnClick>
 							return function(this)
@@ -409,6 +515,11 @@
 					CharSelect_OnLoad(this);
 				end
 			</OnLoad>
+			<OnUpdate>
+				return function(this, elapsed)
+					CharSelect_OnUpdate(this, elapsed);
+				end
+			</OnUpdate>
 		</Scripts>
 	</Frame>
 </UiLayout>

@@ -72,6 +72,13 @@ strings =
 	(key = "REALM_SHUTDOWN_CANCELLED", string = "[Système] Arrêt du royaume annulé.")
 	(key = "KICK_REASON_REALM_SHUTDOWN", string = "Vous avez été déconnecté car le royaume s'arrête.")
 	(key = "CHAR_DISABLED", string = "Désactivé")
+	(key = "CHAR_COUNT_FORMAT", string = "Personnages : %d")
+	(key = "CHAR_LEVEL_CLASS_FORMAT", string = "Niveau %d %s")
+	(key = "ALL_CHARACTERS", string = "Tous les personnages (%d)")
+	(key = "NEW_CHARACTER_SPOT", string = "Nouveau personnage")
+	(key = "ON_THE_PLAZA", string = "Sur la place")
+	(key = "NOT_ON_THE_PLAZA", string = "Pas sur la place")
+	(key = "DRAG_TO_REORDER", string = "Glisser pour réordonner")
 
 	(key = "CLOSE", string = "Fermer")
 	(key = "MENU", string = "Menu")
