@@ -84,7 +84,7 @@ local function RealmList_Refresh()
 
 	local lastRealmId = GetLastRealmId()
 	local playersFormat = Localize("REALM_PLAYERS_ONLINE")
-	local lastPlayedText = "|cFFFFD100" .. Localize("REALM_LAST_PLAYED") .. "|r     "
+	local lastPlayedText = "|cFFCFE0D4" .. Localize("REALM_LAST_PLAYED") .. "|r     "
 
 	for i = 1, VISIBLE_ROWS do
 		local row = _G["RealmListRow" .. i]

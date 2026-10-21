@@ -2,8 +2,8 @@
 
 <!-- This file contains frame templates that are often used by the GlueUI part. -->
 <UiLayout xmlns="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://mmo-dev.net/ Ui.xsd">
-	<Font name="DefaultSmall" file="Fonts/FRIZQT__.TTF" size="28" outline="0" shadowX="1.0" shadowY="1.0" />
-	<Font name="DefaultHeader" file="Fonts/FRIZQT__.TTF" size="36" outline="0" shadowX="1.0" shadowY="1.0" />
+	<Font name="DefaultSmall" file="Fonts/EBGaramond-Regular.ttf" size="32" outline="0" shadowX="1.0" shadowY="1.0" />
+	<Font name="DefaultHeader" file="Fonts/EBGaramond-Regular.ttf" size="41" outline="0" shadowX="1.0" shadowY="1.0" />
 	
 	<!-- GlueButton template: Common buttons -->
 	<Frame name="GlueButton" type="Button" renderer="ButtonRenderer">
@@ -12,19 +12,23 @@
 
 		<Visual>
 			<ImagerySection name="NormalFrame">
-				<BorderComponent texture="Interface/GlueUI/ButtonNormal.htex" borderSize="30" />
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="40F3EEE2" />
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="C0151A1F"><Area><Inset all="2" /></Area></ImageComponent>
 			</ImagerySection>
 			<ImagerySection name="HoveredFrame">
-				<BorderComponent texture="Interface/GlueUI/ButtonHovered.htex" borderSize="30" />
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="80F3EEE2" />
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="C0243029"><Area><Inset all="2" /></Area></ImageComponent>
 			</ImagerySection>
 			<ImagerySection name="PushedFrame">
-				<BorderComponent texture="Interface/GlueUI/ButtonPushed.htex" borderSize="30" />
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="60F3EEE2" />
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="C00E1215"><Area><Inset all="2" /></Area></ImageComponent>
 			</ImagerySection>
 			<ImagerySection name="DisabledFrame">
-				<BorderComponent texture="Interface/GlueUI/ButtonDisabled.htex" borderSize="30" />
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="20F3EEE2" />
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="80151A1F"><Area><Inset all="2" /></Area></ImageComponent>
 			</ImagerySection>
 			<ImagerySection name="Caption">
-				<TextComponent color="FFEDE1B1" horzAlign="CENTER" vertAlign="CENTER" />
+				<TextComponent color="FFF3EEE2" horzAlign="CENTER" vertAlign="CENTER" />
 			</ImagerySection>
 			<!-- TODO: Remove these sections and only use the Caption section with overridden color values -->
 			<ImagerySection name="HoveredCaption">
@@ -53,7 +57,7 @@
 				<Layer>
 					<Section section="NormalFrame" />
 					<Section section="Image" />
-					<Section section="Caption" color="FFEDE1B1" />
+					<Section section="Caption" color="FFF3EEE2" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="Hovered">
@@ -89,19 +93,23 @@
 	<Frame name="GlueButtonPrimary" type="Button" renderer="ButtonRenderer">
 		<Visual>
 			<ImagerySection name="NormalFrame">
-				<BorderComponent texture="Interface/GlueUI/PrimaryButtonNormal.htex" borderSize="64" />
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="60F3EEE2" />
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="CC2C3A30"><Area><Inset all="2" /></Area></ImageComponent>
 			</ImagerySection>
 			<ImagerySection name="HoveredFrame">
-				<BorderComponent texture="Interface/GlueUI/PrimaryButtonHovered.htex" borderSize="64" />
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="A0F3EEE2" />
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="CC3B4F40"><Area><Inset all="2" /></Area></ImageComponent>
 			</ImagerySection>
 			<ImagerySection name="PushedFrame">
-				<BorderComponent texture="Interface/GlueUI/PrimaryButtonPushed.htex" borderSize="64" />
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="80F3EEE2" />
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="CC222D25"><Area><Inset all="2" /></Area></ImageComponent>
 			</ImagerySection>
 			<ImagerySection name="DisabledFrame">
-				<BorderComponent texture="Interface/GlueUI/PrimaryButtonDisabled.htex" borderSize="64" />
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="20F3EEE2" />
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="80202622"><Area><Inset all="2" /></Area></ImageComponent>
 			</ImagerySection>
 			<ImagerySection name="Caption">
-				<TextComponent color="FFEDE1B1" horzAlign="CENTER" vertAlign="CENTER" />
+				<TextComponent color="FFF3EEE2" horzAlign="CENTER" vertAlign="CENTER" />
 			</ImagerySection>
 			<!-- TODO: Remove these sections and only use the Caption section with overridden color values -->
 			<ImagerySection name="HoveredCaption">
@@ -113,7 +121,7 @@
 			<StateImagery name="Normal">
 				<Layer>
 					<Section section="NormalFrame" />
-					<Section section="Caption" color="FFEDE1B1" />
+					<Section section="Caption" color="FFF3EEE2" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="Hovered">
@@ -147,7 +155,7 @@
 		<Property name="Font" value="DefaultSmall" />
 		<Property name="HorzAlign" value="LEFT" />
 		<Property name="VertAlign" value="TOP" />
-		<Property name="TextColor" value="FFFFD100" />
+		<Property name="TextColor" value="FFCFE0D4" />
 
 		<Visual>
 			<ImagerySection name="Text">
@@ -176,7 +184,7 @@
 		
 		<Visual>
 			<ImagerySection name="Text">
-				<TextComponent color="FFEED37C" horzAlign="CENTER" />
+				<TextComponent color="FFF3EEE2" horzAlign="CENTER" />
 			</ImagerySection>
 			<StateImagery name="Enabled">
 				<Layer>
@@ -202,9 +210,8 @@
 	
 		<Visual>
 			<ImagerySection name="Frame">
-				<BorderComponent texture="Interface/GlueUI/TextFieldBorder.htex" borderSize="12">
-					<Area></Area>
-				</BorderComponent>
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="60F3EEE2" />
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="E00E1215"><Area><Inset all="2" /></Area></ImageComponent>
 			</ImagerySection>
 			<ImagerySection name="Caret">
 				<ImageComponent texture="Interface/GlueUI/Caret.htex" />
@@ -234,12 +241,8 @@
 	<Frame name="GlueBorderFrame" renderer="DefaultRenderer">
 		<Visual>
 			<ImagerySection name="Background">
-				<ImageComponent texture="Interface/GlueUI/DefaultFrameBorderBack.htex" tiling="BOTH" tint="FFFFE3B0">
-					<Area><Inset all="8" /></Area>
-				</ImageComponent>
-				<BorderComponent texture="Interface/GlueUI/DefaultFrameBorderTop.htex" borderSize="45">
-					<Area></Area>
-				</BorderComponent>
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="40F3EEE2" />
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="C0151A1F"><Area><Inset all="2" /></Area></ImageComponent>
 			</ImagerySection>
 			<StateImagery name="Enabled">
 				<Layer>
@@ -252,16 +255,20 @@
 	<Frame name="ThumbButtonTemplate" type="Thumb" renderer="ButtonRenderer">
 		<Visual>
 			<ImagerySection name="NormalFrame">
-				<BorderComponent texture="Interface/GlueUI/ButtonNormal.htex" borderSize="30" />
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="40F3EEE2" />
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="C0151A1F"><Area><Inset all="2" /></Area></ImageComponent>
 			</ImagerySection>
 			<ImagerySection name="HoveredFrame">
-				<BorderComponent texture="Interface/GlueUI/ButtonHovered.htex" borderSize="30" />
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="80F3EEE2" />
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="C0243029"><Area><Inset all="2" /></Area></ImageComponent>
 			</ImagerySection>
 			<ImagerySection name="PushedFrame">
-				<BorderComponent texture="Interface/GlueUI/ButtonPushed.htex" borderSize="30" />
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="60F3EEE2" />
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="C00E1215"><Area><Inset all="2" /></Area></ImageComponent>
 			</ImagerySection>
 			<ImagerySection name="DisabledFrame">
-				<BorderComponent texture="Interface/GlueUI/ButtonDisabled.htex" borderSize="30" />
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="20F3EEE2" />
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="80151A1F"><Area><Inset all="2" /></Area></ImageComponent>
 			</ImagerySection>
 			<StateImagery name="Normal">
 				<Layer>

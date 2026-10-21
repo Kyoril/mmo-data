@@ -36,7 +36,7 @@
 				</ImageComponent>
 			</ImagerySection>
 			<ImagerySection name="Text">
-				<TextComponent color="FFEED37C" horzAlign="LEFT" vertAlign="TOP">
+				<TextComponent color="FFF3EEE2" horzAlign="LEFT" vertAlign="TOP">
 					<Area>
 						<Inset left="8" top="8" />
 					</Area>

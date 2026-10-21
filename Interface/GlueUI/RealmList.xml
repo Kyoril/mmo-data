@@ -44,15 +44,15 @@
 				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="40000000" />
 			</ImagerySection>
 			<ImagerySection name="HoveredSurface">
-				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="C0453321" />
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="C02C3A30" />
 			</ImagerySection>
 			<ImagerySection name="PushedSurface">
-				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="C0302217" />
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="C01C2620" />
 			</ImagerySection>
 			<ImagerySection name="CheckedSurface">
-				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="E04C3820" />
-				<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="FFE0BC79" />
-				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FFFFD100">
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="E02C3A30" />
+				<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="FFCFE0D4" />
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FFCFE0D4">
 					<Area>
 						<Inset left="12" top="18" />
 						<Size><AbsDimension x="8" y="114" /></Size>
@@ -60,9 +60,9 @@
 				</ImageComponent>
 			</ImagerySection>
 			<ImagerySection name="HoveredCheckedSurface">
-				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="E05A4428" />
-				<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="FFF5D59A" />
-				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FFFFD100">
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="E03B4F40" />
+				<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="FFCFE0D4" />
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FFCFE0D4">
 					<Area>
 						<Inset left="12" top="18" />
 						<Size><AbsDimension x="8" y="114" /></Size>
@@ -70,7 +70,7 @@
 				</ImageComponent>
 			</ImagerySection>
 			<ImagerySection name="Name">
-				<TextComponent color="FFEED37C" horzAlign="LEFT" vertAlign="$NameVertAlign">
+				<TextComponent color="FFF3EEE2" horzAlign="LEFT" vertAlign="$NameVertAlign">
 					<Area><Inset left="150" top="26" right="560" bottom="26" /></Area>
 				</TextComponent>
 			</ImagerySection>
@@ -246,7 +246,7 @@
 			<Frame name="RealmListHeaderDivider" renderer="DefaultRenderer">
 				<Visual>
 					<ImagerySection name="Line">
-						<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="70E0BC79" />
+						<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="40F3EEE2" />
 					</ImagerySection>
 					<StateImagery name="Enabled">
 						<Layer>

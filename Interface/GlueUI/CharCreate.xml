@@ -10,12 +10,12 @@
 			<Size><AbsDimension x="396" y="104" /></Size>
 		</Area>
 		<Visual>
-			<ImagerySection name="NormalFrame"><BorderComponent texture="Interface/GlueUI/CharButtonUp.htex" borderSize="22" tint="D0201810" /></ImagerySection>
-			<ImagerySection name="HoveredFrame"><BorderComponent texture="Interface/GlueUI/CharButtonHovered.htex" borderSize="22" /></ImagerySection>
-			<ImagerySection name="PushedFrame"><BorderComponent texture="Interface/GlueUI/CharButtonPushed.htex" borderSize="22" /></ImagerySection>
-			<ImagerySection name="DisabledFrame"><BorderComponent texture="Interface/GlueUI/CharButtonDisabled.htex" borderSize="22" tint="88707070" /></ImagerySection>
-			<ImagerySection name="SelectedFrame"><BorderComponent texture="Interface/GlueUI/CharButtonHovered.htex" borderSize="22" tint="FFFFD67A" /></ImagerySection>
-			<ImagerySection name="Caption"><TextComponent color="FFEDE1B1" horzAlign="CENTER" vertAlign="CENTER"><Area><Inset left="20" top="8" right="20" bottom="8" /></Area></TextComponent></ImagerySection>
+			<ImagerySection name="NormalFrame"><ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="40F3EEE2" /><ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="C0151A1F"><Area><Inset all="2" /></Area></ImageComponent></ImagerySection>
+			<ImagerySection name="HoveredFrame"><ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="80F3EEE2" /><ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="C0243029"><Area><Inset all="2" /></Area></ImageComponent></ImagerySection>
+			<ImagerySection name="PushedFrame"><ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="60F3EEE2" /><ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="C00E1215"><Area><Inset all="2" /></Area></ImageComponent></ImagerySection>
+			<ImagerySection name="DisabledFrame"><ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="20F3EEE2" /><ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="80151A1F"><Area><Inset all="2" /></Area></ImageComponent></ImagerySection>
+			<ImagerySection name="SelectedFrame"><ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FFCFE0D4" /><ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="E02C3A30"><Area><Inset all="2" /></Area></ImageComponent></ImagerySection>
+			<ImagerySection name="Caption"><TextComponent color="FFF3EEE2" horzAlign="CENTER" vertAlign="CENTER"><Area><Inset left="20" top="8" right="20" bottom="8" /></Area></TextComponent></ImagerySection>
 			<ImagerySection name="HoveredCaption"><TextComponent color="FFFFFFFF" horzAlign="CENTER" vertAlign="CENTER"><Area><Inset left="20" top="8" right="20" bottom="8" /></Area></TextComponent></ImagerySection>
 			<ImagerySection name="DisabledCaption"><TextComponent color="FF777777" horzAlign="CENTER" vertAlign="CENTER"><Area><Inset left="20" top="8" right="20" bottom="8" /></Area></TextComponent></ImagerySection>
 			<StateImagery name="Normal"><Layer><Section section="NormalFrame" /><Section section="Caption" /></Layer></StateImagery>
@@ -37,12 +37,12 @@
 			<Size><AbsDimension x="396" y="144" /></Size>
 		</Area>
 		<Visual>
-			<ImagerySection name="NormalFrame"><BorderComponent texture="Interface/GlueUI/CharButtonUp.htex" borderSize="22" tint="D0201810" /></ImagerySection>
-			<ImagerySection name="HoveredFrame"><BorderComponent texture="Interface/GlueUI/CharButtonHovered.htex" borderSize="22" /></ImagerySection>
-			<ImagerySection name="PushedFrame"><BorderComponent texture="Interface/GlueUI/CharButtonPushed.htex" borderSize="22" /></ImagerySection>
-			<ImagerySection name="DisabledFrame"><BorderComponent texture="Interface/GlueUI/CharButtonDisabled.htex" borderSize="22" tint="88707070" /></ImagerySection>
-			<ImagerySection name="SelectedFrame"><BorderComponent texture="Interface/GlueUI/CharButtonHovered.htex" borderSize="22" tint="FFFFD67A" /></ImagerySection>
-			<ImagerySection name="Caption"><TextComponent color="FFEDE1B1" horzAlign="LEFT" vertAlign="CENTER"><Area><Inset left="152" top="8" right="20" bottom="8" /></Area></TextComponent></ImagerySection>
+			<ImagerySection name="NormalFrame"><ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="40F3EEE2" /><ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="C0151A1F"><Area><Inset all="2" /></Area></ImageComponent></ImagerySection>
+			<ImagerySection name="HoveredFrame"><ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="80F3EEE2" /><ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="C0243029"><Area><Inset all="2" /></Area></ImageComponent></ImagerySection>
+			<ImagerySection name="PushedFrame"><ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="60F3EEE2" /><ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="C00E1215"><Area><Inset all="2" /></Area></ImageComponent></ImagerySection>
+			<ImagerySection name="DisabledFrame"><ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="20F3EEE2" /><ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="80151A1F"><Area><Inset all="2" /></Area></ImageComponent></ImagerySection>
+			<ImagerySection name="SelectedFrame"><ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FFCFE0D4" /><ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="E02C3A30"><Area><Inset all="2" /></Area></ImageComponent></ImagerySection>
+			<ImagerySection name="Caption"><TextComponent color="FFF3EEE2" horzAlign="LEFT" vertAlign="CENTER"><Area><Inset left="152" top="8" right="20" bottom="8" /></Area></TextComponent></ImagerySection>
 			<ImagerySection name="HoveredCaption"><TextComponent color="FFFFFFFF" horzAlign="LEFT" vertAlign="CENTER"><Area><Inset left="152" top="8" right="20" bottom="8" /></Area></TextComponent></ImagerySection>
 			<ImagerySection name="DisabledCaption"><TextComponent color="FF777777" horzAlign="LEFT" vertAlign="CENTER"><Area><Inset left="152" top="8" right="20" bottom="8" /></Area></TextComponent></ImagerySection>
 			<StateImagery name="Normal"><Layer><Section section="NormalFrame" /><Section section="Caption" /></Layer></StateImagery>
@@ -172,7 +172,7 @@
 				<Frame name="CharRaceSection">
 					<Area><Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharCreateSelectionTitle" offset="12" /><Anchor point="LEFT" offset="32" /><Anchor point="RIGHT" offset="-32" /><Size><AbsDimension y="188" /></Size></Area>
 					<Frame name="CharRaceLabel" inherits="GlueTextSmall">
-						<Property name="Text" value="RACE" /><Property name="TextColor" value="FFEED37C" />
+						<Property name="Text" value="RACE" /><Property name="TextColor" value="FFF3EEE2" />
 						<Area><Anchor point="TOP" /><Anchor point="LEFT" offset="12" /><Anchor point="RIGHT" offset="-12" /></Area>
 					</Frame>
 					<Frame name="CharRaceList" renderer="DefaultRenderer">
@@ -184,7 +184,7 @@
 				<Frame name="CharClassSection">
 					<Area><Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharRaceSection" offset="16" /><Anchor point="LEFT" offset="32" /><Anchor point="RIGHT" offset="-32" /><Size><AbsDimension y="532" /></Size></Area>
 					<Frame name="CharClassLabel" inherits="GlueTextSmall">
-						<Property name="Text" value="STARTING_CLASS" /><Property name="TextColor" value="FFEED37C" />
+						<Property name="Text" value="STARTING_CLASS" /><Property name="TextColor" value="FFF3EEE2" />
 						<Area><Anchor point="TOP" /><Anchor point="LEFT" offset="12" /><Anchor point="RIGHT" offset="-12" /></Area>
 					</Frame>
 					<Frame name="CharClassList" renderer="DefaultRenderer">
@@ -196,7 +196,7 @@
 				<Frame name="CharGenderSection">
 					<Area><Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharClassSection" offset="16" /><Anchor point="LEFT" offset="32" /><Anchor point="RIGHT" offset="-32" /><Size><AbsDimension y="188" /></Size></Area>
 					<Frame name="CharGenderLabel" inherits="GlueTextSmall">
-						<Property name="Text" value="GENDER" /><Property name="TextColor" value="FFEED37C" />
+						<Property name="Text" value="GENDER" /><Property name="TextColor" value="FFF3EEE2" />
 						<Area><Anchor point="TOP" /><Anchor point="LEFT" offset="12" /><Anchor point="RIGHT" offset="-12" /></Area>
 					</Frame>
 					<Frame name="CharGenderList" renderer="DefaultRenderer">
@@ -262,7 +262,7 @@
 					<Area><Anchor point="H_CENTER" /><Anchor point="BOTTOM" offset="-48" /><Size><AbsDimension x="600" y="90" /></Size></Area>
 				</Frame>
 				<Frame name="CharacterNameLabel" inherits="GlueTextSmall">
-					<Property name="Text" value="NAME" /><Property name="HorzAlign" value="CENTER" /><Property name="TextColor" value="FFEED37C" />
+					<Property name="Text" value="NAME" /><Property name="HorzAlign" value="CENTER" /><Property name="TextColor" value="FFF3EEE2" />
 					<Area><Anchor point="H_CENTER" /><Anchor point="BOTTOM" relativePoint="TOP" relativeTo="NewCharacterNameBox" offset="-8" /><Size><AbsDimension x="600" y="44" /></Size></Area>
 				</Frame>
 				<Frame name="CharCreationPage2BackButton" inherits="GlueButton">
