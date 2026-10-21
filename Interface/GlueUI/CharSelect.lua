@@ -498,16 +498,21 @@ end
 function CharSelect_ConfirmDelete()
 	DeleteConfirmation:Hide()
 
+	-- Closing the roster can save the order, which moves the client's character views: close it
+	-- before looking the character up, and keep only its guid, never the view.
+	CharSelect_CloseRoster()
+
 	local character = selectedIndex >= 0 and GetCharacterInfo(selectedIndex) or nil
 	if not character then
 		return
 	end
+	local guid = character.guid
+	character = nil
 
 	-- The character walks out first; the delete is sent once it is on its way (CharSelect_OnUpdate).
-	CharSelect_CloseRoster()
 	SetChromeVisible(false)
 	PlazaCharacterLeave(selectedIndex)
-	pendingDelete = { guid = character.guid, remaining = DELETE_WALK_SECONDS }
+	pendingDelete = { guid = guid, remaining = DELETE_WALK_SECONDS }
 	selectedGuid = nil
 end
 
