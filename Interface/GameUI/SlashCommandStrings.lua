@@ -85,3 +85,7 @@ SLASH_EMOTELIST1 = "/emotes"; -- Toggle the emote list window
 SLASH_EMOTELIST2 = "/em";     -- Toggle the emote list window
 SLASH_RESETINSTANCES1 = "/resetinstance";  -- Reset the dungeon instances you are bound to
 SLASH_RESETINSTANCES2 = "/resetinstances"; -- Reset the dungeon instances you are bound to
+
+SLASH_HELP1 = "/help";        -- List the most important chat commands
+SLASH_HELP2 = "/hilfe";       -- List the most important chat commands (deDE wording)
+SLASH_HELP3 = "/commands";    -- List the most important chat commands
