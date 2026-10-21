@@ -278,6 +278,11 @@
 			</Frame>
 		</Frame>
 
-		<Scripts><OnLoad>return function(this) CharCreate_OnLoad(this); end</OnLoad></Scripts>
+		<Scripts>
+			<OnLoad>return function(this) CharCreate_OnLoad(this); end</OnLoad>
+			<!-- The opaque backdrop hides the 3D glue scene: skip rendering it while this screen shows. -->
+			<OnShow>return function(this) GlueScene_UpdateVisibility(); end</OnShow>
+			<OnHide>return function(this) GlueScene_UpdateVisibility(); end</OnHide>
+		</Scripts>
 	</Frame>
 </UiLayout>

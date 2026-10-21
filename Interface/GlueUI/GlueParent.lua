@@ -51,6 +51,21 @@ end
 function SetGlueScreen(name)
 end
 
+-- The character creation screen's opaque backdrop covers the 3D scene: hide the scene frame
+-- while it shows, so the scene is not rendered for nothing. Called from CharCreate's OnShow and
+-- OnHide, which also fire when an ancestor shows or hides, so this looks at the actual state.
+function GlueScene_UpdateVisibility()
+	if not GlueSceneFrame then
+		return;
+	end
+
+	if CharCreate and CharCreate:IsVisible() then
+		GlueSceneFrame:Hide();
+	else
+		GlueSceneFrame:Show();
+	end
+end
+
 function GlueParent_OnLoad(this)
 	-- The scene behind the screens starts behind an opaque fill that fades out once the gate
 	-- view has loaded.
