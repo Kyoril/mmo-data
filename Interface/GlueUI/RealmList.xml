@@ -40,15 +40,16 @@
 		<Property name="NameVertAlign" value="CENTER" />
 
 		<Visual>
-			<!-- Steel-framed cards in the glue skin: dark stone at rest, the steel-blue button fill on
-			     hover, the brighter Checked fill (as the character creation choices) when selected.
-			     Frame 36 over a fill inset 14, like GlueButton. -->
+			<!-- Steel-framed cards in the glue skin: dark stone at rest, lifted stone on hover, the
+			     Checked steel-blue fill inside the bright selected frame (ivory inner line) when selected,
+			     so selection never reads as hover. Frame 36 over a fill inset 14, like GlueButton. The
+			     roster rows (CharButton, CharSelect.xml) use the same states. -->
 			<ImagerySection name="NormalSurface">
 				<ImageComponent texture="Interface/GlueUI/GlueSkinFieldFill.htex"><Area><Inset all="14" /></Area></ImageComponent>
 				<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" />
 			</ImagerySection>
 			<ImagerySection name="HoveredSurface">
-				<ImageComponent texture="Interface/GlueUI/GlueSkinButtonNormal.htex"><Area><Inset all="14" /></Area></ImageComponent>
+				<ImageComponent texture="Interface/GlueUI/GlueSkinRowHovered.htex"><Area><Inset all="14" /></Area></ImageComponent>
 				<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" />
 			</ImagerySection>
 			<ImagerySection name="PushedSurface">
@@ -61,7 +62,7 @@
 			</ImagerySection>
 			<ImagerySection name="CheckedSurface">
 				<ImageComponent texture="Interface/GlueUI/GlueSkinButtonChecked.htex"><Area><Inset all="14" /></Area></ImageComponent>
-				<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" />
+				<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrameSelected.htex" borderSize="36" />
 			</ImagerySection>
 			<ImagerySection name="Name">
 				<TextComponent color="FFF3EEE2" horzAlign="LEFT" vertAlign="$NameVertAlign">

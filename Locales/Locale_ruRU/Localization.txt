@@ -60,7 +60,7 @@ strings =
 	(key = "CHANGE_REALM", string = "Change Realm")
 
 	(key = "DELETE", string = "Delete")
-	(key = "CONFIRM_CHAR_DELETE", string = "Do you really want to delete your character?\n\nYou will loose any progress you made!")
+	(key = "CONFIRM_CHAR_DELETE", string = "Do you really want to delete your character?\n\nYou will lose any progress you made!")
 
 	(key = "WORLD_SERVER_DOWN", string = "World server is down.")
 	(key = "REALM_DISCONNECTED", string = "Соединение с игровым миром было потеряно.")

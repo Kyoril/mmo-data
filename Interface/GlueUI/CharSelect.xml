@@ -2,127 +2,109 @@
 <UiLayout xmlns="http://mmo-dev.net/ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://mmo-dev.net/ui UI.xsd">
 	<Script file="CharSelect.lua" />
 
-	<!-- Virtual character button -->
+	<!-- Virtual roster row (cloned by CharSelect.lua). The same steel-framed card as the realm rows:
+	     dark stone at rest, lifted stone on hover, the Checked steel-blue fill inside the bright
+	     selected frame (ivory inner line) for the selected character. Frame 36 over a fill inset 14,
+	     so text keeps 40 UI from the left and right edges and about 20 from the top and bottom.
+	     Children are: 0 = level/class line, 1 = "on the plaza" marker. -->
 	<Frame name="CharButton" type="Button" renderer="CheckboxRenderer">
 		<Property name="Font" value="DefaultHeader" />
 		<Property name="Checkable" value="true" />
 
 		<Visual>
-			<ImagerySection name="FrameNormal">
-				<ImageComponent texture="Interface/GlueUI/CharSelectButtonBackground.htex" />
+			<ImagerySection name="NormalSurface">
+				<ImageComponent texture="Interface/GlueUI/GlueSkinFieldFill.htex"><Area><Inset all="14" /></Area></ImageComponent>
+				<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" />
 			</ImagerySection>
-			<ImagerySection name="FrameHovered">
-				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="FFCFE0D4" />
+			<ImagerySection name="HoveredSurface">
+				<ImageComponent texture="Interface/GlueUI/GlueSkinRowHovered.htex"><Area><Inset all="14" /></Area></ImageComponent>
+				<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" />
 			</ImagerySection>
-			<ImagerySection name="FramePushed">
-				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="FF8FA396">
-					<Area>
-						<Inset left="16" top="16" />
-					</Area>
-				</ImageComponent>
+			<ImagerySection name="PushedSurface">
+				<ImageComponent texture="Interface/GlueUI/GlueSkinButtonPushed.htex"><Area><Inset all="14" /></Area></ImageComponent>
+				<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" />
 			</ImagerySection>
-			<ImagerySection name="FrameDisabled">
-				<ImageComponent texture="Interface/GlueUI/CharSelectButtonBackground.htex" tint="88404040" />
+			<ImagerySection name="DisabledSurface">
+				<ImageComponent texture="Interface/GlueUI/GlueSkinFieldFill.htex"><Area><Inset all="14" /></Area></ImageComponent>
+				<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" tint="FF8C8C8C" />
 			</ImagerySection>
-
-			<ImagerySection name="FrameNormalChecked">
-				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="FF033F08" />
+			<ImagerySection name="CheckedSurface">
+				<ImageComponent texture="Interface/GlueUI/GlueSkinButtonChecked.htex"><Area><Inset all="14" /></Area></ImageComponent>
+				<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrameSelected.htex" borderSize="36" />
 			</ImagerySection>
-			<ImagerySection name="FramePushedChecked">
-				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="FF033F08">
-					<Area>
-						<Inset left="16" top="16" />
-					</Area>
-				</ImageComponent>
+			<ImagerySection name="PushedCheckedSurface">
+				<ImageComponent texture="Interface/GlueUI/GlueSkinButtonPushed.htex"><Area><Inset all="14" /></Area></ImageComponent>
+				<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrameSelected.htex" borderSize="36" />
 			</ImagerySection>
-			<ImagerySection name="Text">
+			<!-- The right inset leaves room for the "on the plaza" marker. -->
+			<ImagerySection name="Name">
 				<TextComponent color="FFF3EEE2" horzAlign="LEFT" vertAlign="TOP">
-					<Area>
-						<Inset left="8" top="8" />
-					</Area>
-				</TextComponent>
-			</ImagerySection>
-			<ImagerySection name="TextDisabled">
-				<TextComponent color="88404040" horzAlign="LEFT" vertAlign="TOP">
-					<Area>
-						<Inset left="8" top="8" />
-					</Area>
+					<Area><Inset left="40" top="18" right="320" /></Area>
 				</TextComponent>
 			</ImagerySection>
 
 			<StateImagery name="Normal">
 				<Layer>
-					<Section section="FrameNormal" />
-					<Section section="Text" />
+					<Section section="NormalSurface" />
+					<Section section="Name" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="Hovered">
 				<Layer>
-					<Section section="FrameHovered" />
-					<Section section="Text" />
+					<Section section="HoveredSurface" />
+					<Section section="Name" color="FFFFFFFF" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="Pushed">
 				<Layer>
-					<Section section="FramePushed" />
-					<Section section="Text" />
+					<Section section="PushedSurface" />
+					<Section section="Name" color="FFDDDDDD" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="Disabled">
 				<Layer>
-					<Section section="FrameDisabled" />
-					<Section section="TextDisabled" />
+					<Section section="DisabledSurface" />
+					<Section section="Name" color="FF8A867E" />
 				</Layer>
 			</StateImagery>
-			
 			<StateImagery name="NormalChecked">
 				<Layer>
-					<Section section="FrameNormalChecked" />
-					<Section section="Text" />
+					<Section section="CheckedSurface" />
+					<Section section="Name" color="FFFFFFFF" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="HoveredChecked">
 				<Layer>
-					<Section section="FrameNormalChecked" />
-					<Section section="Text" />
+					<Section section="CheckedSurface" />
+					<Section section="Name" color="FFFFFFFF" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="PushedChecked">
 				<Layer>
-					<Section section="FramePushedChecked" />
-					<Section section="Text" />
+					<Section section="PushedCheckedSurface" />
+					<Section section="Name" color="FFDDDDDD" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="DisabledChecked">
 				<Layer>
-					<Section section="FrameDisabled" />
-					<Section section="TextDisabled" />
+					<Section section="DisabledSurface" />
+					<Section section="Name" color="FF8A867E" />
 				</Layer>
 			</StateImagery>
 		</Visual>
 		<Area>
-			<Size><AbsDimension x="128" y="128" /></Size>
+			<Size><AbsDimension x="128" y="144" /></Size>
 		</Area>
 
+		<!-- Level and class, beneath the name. -->
 		<Frame name="CharSubtext" renderer="DefaultRenderer">
 			<Property name="Font" value="DefaultSmall" />
 			<Property name="Enabled" value="false" />
 			<Property name="Clickable" value="false" />
-			
+
 			<Visual>
 				<ImagerySection name="Text">
-					<TextComponent color="FF808080" horzAlign="LEFT" vertAlign="TOP">
-						<Area>
-							<Inset left="8" top="8" />
-						</Area>
-					</TextComponent>
-				</ImagerySection>
-				<ImagerySection name="TextDisabled">
-					<TextComponent color="FF808080" horzAlign="LEFT" vertAlign="TOP">
-						<Area>
-							<Inset left="8" top="8" />
-						</Area>
-					</TextComponent>
+					<TextComponent color="FFBCC6BE" horzAlign="LEFT" vertAlign="CENTER" />
 				</ImagerySection>
 
 				<StateImagery name="Enabled">
@@ -132,29 +114,29 @@
 				</StateImagery>
 				<StateImagery name="Disabled">
 					<Layer>
-						<Section section="TextDisabled" />
+						<Section section="Text" />
 					</Layer>
 				</StateImagery>
 			</Visual>
 
 			<Area>
-				<Anchor point="TOP" offset="64" />
-				<Anchor point="LEFT" offset="8" />
-				<Anchor point="RIGHT" offset="-8" />
-				<Size><AbsDimension x="128" y="128" /></Size>
+				<Anchor point="LEFT" offset="40" />
+				<Anchor point="RIGHT" offset="-40" />
+				<Anchor point="BOTTOM" offset="-20" />
+				<Size><AbsDimension y="44" /></Size>
 			</Area>
 		</Frame>
 
-		<!-- "On the plaza" marker of the first five rows, top right. -->
+		<!-- "On the plaza" marker of the first five rows, top right, on the name's baseline. -->
 		<Frame name="CharPlazaMark" inherits="GlueTextSmall">
 			<Property name="Enabled" value="false" />
 			<Property name="Clickable" value="false" />
 			<Property name="HorzAlign" value="RIGHT" />
-			<Property name="TextColor" value="FFA0A0A0" />
+			<Property name="TextColor" value="FFB4C2D0" />
 			<Area>
-				<Anchor point="TOP" offset="16" />
-				<Anchor point="RIGHT" offset="-24" />
-				<Size><AbsDimension x="400" y="44" /></Size>
+				<Anchor point="TOP" offset="30" />
+				<Anchor point="RIGHT" offset="-40" />
+				<Size><AbsDimension x="280" y="44" /></Size>
 			</Area>
 		</Frame>
 	</Frame>

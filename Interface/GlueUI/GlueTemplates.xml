@@ -5,6 +5,35 @@
 	<Font name="DefaultSmall" file="Fonts/EBGaramond-Regular.ttf" size="32" outline="0" shadowX="1.0" shadowY="1.0" />
 	<Font name="DefaultHeader" file="Fonts/EBGaramond-Regular.ttf" size="41" outline="0" shadowX="1.0" shadowY="1.0" />
 	
+	<!-- GlueSkin textures (Interface/GlueUI/GlueSkin*.htex): how they were made. They were baked once
+	     with a throwaway Pillow script and imported with .agents/skills/mmo-item-designer/scripts/
+	     import_item_icon.py (texconv, full mips); there is no generator in the repo. To change one,
+	     decode its source with htex_tool.py preview, apply the recipe and import it again.
+	     - Why 2x: a BorderComponent draws its corners as many UI units wide as it cuts source px, and
+	       the UI is authored at 4K, so the panel and the steel frame are their sources doubled (LANCZOS)
+	       to keep the approved size at 1080p (1 original px = 1 screen px).
+	     - GlueSkinPanel (1024, DXT1, borderSize 64): GameUI/Alestia/WindowPanel.htex at 2x, opaque.
+	     - GlueSkinSteelFrame (512, DXT5, borderSize 36): GameUI/fg4_borders_stone_edges_result.htex at
+	       2x. Drawn over a fill inset 14, so the fill never leaks past the frame.
+	     - GlueSkinButton{Normal,Hovered,Pushed,Disabled,Checked} (512x128, DXT1): vertical gradient
+	       #4E6684 to #1A2232, GameUI/fg4_borders_stone_bg_01_result.htex at 24% opacity on top (a crop
+	       from (64,160) of half the fill size, upscaled 2x), then a white top gloss fading from alpha 55
+	       to 0 over the upper half. Hovered brightness x1.25; Pushed x0.72 with 35% gloss; Disabled
+	       x0.5 with 40% gloss and 25% saturation; Checked x1.35 with 130% gloss and an ivory (F3EEE2)
+	       glow rising quadratically to alpha 70 over the lower half.
+	     - GlueSkinFieldFill (512x128, DXT1): the same stone crop at 25% brightness.
+	     - GlueSkinRowHovered (512x128, DXT1): that stone crop at 42% brightness, the button gradient at
+	       18% over it and 45% gloss. Hover of realm and roster rows.
+	     - GlueSkinSteelFrameSelected (512, DXT5, borderSize 36): GlueSkinSteelFrame x1.6 brightness,
+	       multiplied by ivory F3EEE2 and x1.08, plus a 3 px ivory line just inside the steel band
+	       (alpha 190/120/50). Selected realm rows, roster rows and creation choices.
+	     - GlueSkinWellFrame (256, DXT5, borderSize 18): GlueSkinSteelFrame at 1x, a thin rim for wells.
+	     - GlueSkinWellFill (256, DXT1, tiling BOTH, inset 6): a 128 px stone crop from (64,160) at 22%
+	       brightness, mirrored to a seamless 256 tile.
+	     - GlueSkinArrow{Up,Down,Left,Right} (128, DXT5): grey copies of IconGold_ArrowUp/Down and
+	       fg4_iconsGold_left/rightArrow (luminance scaled so the 98th percentile is white), tinted per
+	       state in GlueArrowButton. -->
+
 	<!-- GlueButton template: Common buttons -->
 	<Frame name="GlueButton" type="Button" renderer="ButtonRenderer">
 		<Property name="Font" value="DefaultSmall" />
@@ -153,7 +182,7 @@
 	</Frame>
 	
 	<!-- Arrow button (scroll bars, character customization): the GlueButton frame with a neutral grey
-	     arrow (GlueSkinArrow*, tools/glue_skin) tinted per state, so it follows the ivory palette instead
+	     arrow (GlueSkinArrow*, see the GlueSkin note above) tinted per state, so it follows the ivory palette instead
 	     of the gold icon set. Set the arrow with the Icon property. -->
 	<Frame name="GlueArrowButton" type="Button" renderer="ButtonRenderer">
 		<Property name="Icon" />
@@ -352,7 +381,7 @@
 
 	<Frame name="GlueBorderFrame" renderer="DefaultRenderer">
 		<Visual>
-			<!-- Dark wood with a bronze edge and corner ornaments: WindowPanel baked at 2x (tools/glue_skin). -->
+			<!-- Dark wood with a bronze edge and corner ornaments: WindowPanel baked at 2x (GlueSkin note above). -->
 			<ImagerySection name="Background">
 				<BorderComponent texture="Interface/GlueUI/GlueSkinPanel.htex" borderSize="64" />
 			</ImagerySection>
@@ -417,8 +446,10 @@
 		<Property name="Orientation" value="VERTICAL" />
 
 		<Visual>
+			<!-- Track: the glue well (dark stone tile in the thin steel rim), as the character creation lists. -->
 			<ImagerySection name="Border">
-				<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" />
+				<ImageComponent texture="Interface/GlueUI/GlueSkinWellFill.htex" tiling="BOTH"><Area><Inset all="6" /></Area></ImageComponent>
+				<BorderComponent texture="Interface/GlueUI/GlueSkinWellFrame.htex" borderSize="18" />
 			</ImagerySection>
 			<StateImagery name="Enabled">
 				<Layer>

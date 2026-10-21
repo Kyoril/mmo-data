@@ -14,7 +14,7 @@
 			<ImagerySection name="HoveredFrame"><ImageComponent texture="Interface/GlueUI/GlueSkinButtonHovered.htex"><Area><Inset all="14" /></Area></ImageComponent><BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" /></ImagerySection>
 			<ImagerySection name="PushedFrame"><ImageComponent texture="Interface/GlueUI/GlueSkinButtonPushed.htex"><Area><Inset all="14" /></Area></ImageComponent><BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" /></ImagerySection>
 			<ImagerySection name="DisabledFrame"><ImageComponent texture="Interface/GlueUI/GlueSkinButtonDisabled.htex"><Area><Inset all="14" /></Area></ImageComponent><BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" tint="FF8C8C8C" /></ImagerySection>
-			<ImagerySection name="SelectedFrame"><ImageComponent texture="Interface/GlueUI/GlueSkinButtonChecked.htex"><Area><Inset all="14" /></Area></ImageComponent><BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" /></ImagerySection>
+			<ImagerySection name="SelectedFrame"><ImageComponent texture="Interface/GlueUI/GlueSkinButtonChecked.htex"><Area><Inset all="14" /></Area></ImageComponent><BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrameSelected.htex" borderSize="36" /></ImagerySection>
 			<ImagerySection name="Caption"><TextComponent color="FFF3EEE2" horzAlign="CENTER" vertAlign="CENTER"><Area><Inset left="36" top="8" right="36" bottom="8" /></Area></TextComponent></ImagerySection>
 			<ImagerySection name="HoveredCaption"><TextComponent color="FFFFFFFF" horzAlign="CENTER" vertAlign="CENTER"><Area><Inset left="36" top="8" right="36" bottom="8" /></Area></TextComponent></ImagerySection>
 			<ImagerySection name="DisabledCaption"><TextComponent color="FF8A867E" horzAlign="CENTER" vertAlign="CENTER"><Area><Inset left="36" top="8" right="36" bottom="8" /></Area></TextComponent></ImagerySection>
@@ -41,7 +41,7 @@
 			<ImagerySection name="HoveredFrame"><ImageComponent texture="Interface/GlueUI/GlueSkinButtonHovered.htex"><Area><Inset all="14" /></Area></ImageComponent><BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" /></ImagerySection>
 			<ImagerySection name="PushedFrame"><ImageComponent texture="Interface/GlueUI/GlueSkinButtonPushed.htex"><Area><Inset all="14" /></Area></ImageComponent><BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" /></ImagerySection>
 			<ImagerySection name="DisabledFrame"><ImageComponent texture="Interface/GlueUI/GlueSkinButtonDisabled.htex"><Area><Inset all="14" /></Area></ImageComponent><BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" tint="FF8C8C8C" /></ImagerySection>
-			<ImagerySection name="SelectedFrame"><ImageComponent texture="Interface/GlueUI/GlueSkinButtonChecked.htex"><Area><Inset all="14" /></Area></ImageComponent><BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" /></ImagerySection>
+			<ImagerySection name="SelectedFrame"><ImageComponent texture="Interface/GlueUI/GlueSkinButtonChecked.htex"><Area><Inset all="14" /></Area></ImageComponent><BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrameSelected.htex" borderSize="36" /></ImagerySection>
 			<ImagerySection name="Caption"><TextComponent color="FFF3EEE2" horzAlign="LEFT" vertAlign="CENTER"><Area><Inset left="152" top="8" right="36" bottom="8" /></Area></TextComponent></ImagerySection>
 			<ImagerySection name="HoveredCaption"><TextComponent color="FFFFFFFF" horzAlign="LEFT" vertAlign="CENTER"><Area><Inset left="152" top="8" right="36" bottom="8" /></Area></TextComponent></ImagerySection>
 			<ImagerySection name="DisabledCaption"><TextComponent color="FF8A867E" horzAlign="LEFT" vertAlign="CENTER"><Area><Inset left="152" top="8" right="36" bottom="8" /></Area></TextComponent></ImagerySection>
@@ -77,8 +77,8 @@
 		</Area>
 		<Visual>
 			<ImagerySection name="Background">
-				<ImageComponent texture="Interface/GlueUI/RealmListBackground.htex" tiling="BOTH"><Area><Inset all="8" /></Area></ImageComponent>
-				<BorderComponent texture="Interface/GlueUI/RealmListBorder.htex" borderSize="8" />
+				<ImageComponent texture="Interface/GlueUI/GlueSkinWellFill.htex" tiling="BOTH"><Area><Inset all="6" /></Area></ImageComponent>
+				<BorderComponent texture="Interface/GlueUI/GlueSkinWellFrame.htex" borderSize="18" />
 			</ImagerySection>
 			<StateImagery name="Enabled"><Layer><Section section="Background" /></Layer></StateImagery>
 		</Visual>
@@ -179,7 +179,7 @@
 					</Frame>
 					<Frame name="CharRaceList" renderer="DefaultRenderer">
 						<Area><Anchor point="LEFT" /><Anchor point="RIGHT" /><Anchor point="TOP" offset="52" /><Anchor point="BOTTOM" /></Area>
-						<Visual><ImagerySection name="Frame"><ImageComponent texture="Interface/GlueUI/RealmListBackground.htex" tiling="BOTH"><Area><Inset all="8" /></Area></ImageComponent><BorderComponent texture="Interface/GlueUI/RealmListBorder.htex" borderSize="8" /></ImagerySection><StateImagery name="Enabled"><Layer><Section section="Frame" /></Layer></StateImagery></Visual>
+						<Visual><ImagerySection name="Frame"><ImageComponent texture="Interface/GlueUI/GlueSkinWellFill.htex" tiling="BOTH"><Area><Inset all="6" /></Area></ImageComponent><BorderComponent texture="Interface/GlueUI/GlueSkinWellFrame.htex" borderSize="18" /></ImagerySection><StateImagery name="Enabled"><Layer><Section section="Frame" /></Layer></StateImagery></Visual>
 					</Frame>
 				</Frame>
 
@@ -191,7 +191,7 @@
 					</Frame>
 					<Frame name="CharClassList" renderer="DefaultRenderer">
 						<Area><Anchor point="LEFT" /><Anchor point="RIGHT" /><Anchor point="TOP" offset="52" /><Anchor point="BOTTOM" /></Area>
-						<Visual><ImagerySection name="Frame"><ImageComponent texture="Interface/GlueUI/RealmListBackground.htex" tiling="BOTH"><Area><Inset all="8" /></Area></ImageComponent><BorderComponent texture="Interface/GlueUI/RealmListBorder.htex" borderSize="8" /></ImagerySection><StateImagery name="Enabled"><Layer><Section section="Frame" /></Layer></StateImagery></Visual>
+						<Visual><ImagerySection name="Frame"><ImageComponent texture="Interface/GlueUI/GlueSkinWellFill.htex" tiling="BOTH"><Area><Inset all="6" /></Area></ImageComponent><BorderComponent texture="Interface/GlueUI/GlueSkinWellFrame.htex" borderSize="18" /></ImagerySection><StateImagery name="Enabled"><Layer><Section section="Frame" /></Layer></StateImagery></Visual>
 					</Frame>
 				</Frame>
 
@@ -203,7 +203,7 @@
 					</Frame>
 					<Frame name="CharGenderList" renderer="DefaultRenderer">
 						<Area><Anchor point="LEFT" /><Anchor point="RIGHT" /><Anchor point="TOP" offset="52" /><Anchor point="BOTTOM" /></Area>
-						<Visual><ImagerySection name="Frame"><ImageComponent texture="Interface/GlueUI/RealmListBackground.htex" tiling="BOTH"><Area><Inset all="8" /></Area></ImageComponent><BorderComponent texture="Interface/GlueUI/RealmListBorder.htex" borderSize="8" /></ImagerySection><StateImagery name="Enabled"><Layer><Section section="Frame" /></Layer></StateImagery></Visual>
+						<Visual><ImagerySection name="Frame"><ImageComponent texture="Interface/GlueUI/GlueSkinWellFill.htex" tiling="BOTH"><Area><Inset all="6" /></Area></ImageComponent><BorderComponent texture="Interface/GlueUI/GlueSkinWellFrame.htex" borderSize="18" /></ImagerySection><StateImagery name="Enabled"><Layer><Section section="Frame" /></Layer></StateImagery></Visual>
 						<Frame name="GenderMaleButton" inherits="ListCheckButtonBase" id="0">
 							<Property name="Text" value="MALE" /><Property name="Checked" value="true" />
 							<Area><Anchor point="LEFT" offset="12" /><Anchor point="TOP" offset="12" /></Area>
