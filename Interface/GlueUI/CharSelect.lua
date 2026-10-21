@@ -10,7 +10,7 @@ rotationDirection = 0
 
 
 function CharSelect_OnLoad(self)
-	SetCharSelectModelFrame(CharModel);
+	-- The characters stand on the plaza of the glue scene; nothing to bind here.
 end
 
 function CharListItem_Clicked(item)
