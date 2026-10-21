@@ -133,12 +133,3 @@ function GlueParentFadeUpdate(this, elapsed)
 		GlueSceneFade:Hide();
 	end
 end
-
--- Glue text fields draw a steel frame (GlueTemplates.xml, borderSize 36) whose band and inner shadow
--- reach about 28 UI units into the field; the TextField default offset of 10 puts text and caret on
--- top of it. Left/right keep 34 units of padding. Top/bottom are sized for the 128-unit field height
--- every glue field uses: DefaultSmall (EB Garamond 32 pt) is 56 units from ascender to descender, so
--- (128 - 56) / 2 = 36 centres the text and makes the single-line caret exactly one line tall.
-function GlueTextField_ApplySkin(field)
-	field:SetTextAreaOffset(Rect(34, 36, 34, 36));
-end

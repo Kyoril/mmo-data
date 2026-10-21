@@ -17,12 +17,16 @@ CLASS_ICONS[4] = "Interface/Icons/Spells/S_Class_Scout.htex"
 charCreateBackdropZoomed = false;
 
 function CharCreate_OnLoad(this)
-	GlueTextField_ApplySkin(NewCharacterNameBox);
 	SetCharCustomizeFrame(CharCreateModel);
 end
 
+-- Everything in CharCreateSelectionPanel besides the race and class sections (CharCreate.xml): the
+-- 72 UI margins at top and bottom, the title (60) and its 12 gap, the two 16 gaps between sections
+-- and the gender section (188). 72 + 60 + 12 + 16 + 16 + 188 + 72 = 436.
+local SELECTION_PANEL_FIXED_HEIGHT = 436;
+
 function UpdateSelectionPanelHeight()
-	local contentHeight = 352 + CharRaceSection:GetHeight() + CharClassSection:GetHeight();
+	local contentHeight = SELECTION_PANEL_FIXED_HEIGHT + CharRaceSection:GetHeight() + CharClassSection:GetHeight();
 	CharCreateSelectionPanel:SetHeight(contentHeight);
 end
 
@@ -39,6 +43,10 @@ end
 -- plus its 16px TOP anchor offset from the list's BOTTOM in CharCreate.xml. Keep this in sync
 -- with both of those values.
 local SHOW_OUTFIT_CHECKBOX_RESERVED_HEIGHT = 104 + 16;
+
+-- The rest of CharCreatePropertiesFrame (CharCreate.xml): the 72 UI top margin, the title (60) and its
+-- 16 gap, the list's own 8 top padding and the 72 UI bottom margin. 72 + 60 + 16 + 8 + 72 = 228.
+local PROPERTIES_FRAME_FIXED_HEIGHT = 228;
 
 function SetupCustomization()
 	local propertyCount = GetNumCustomizationProperties();
@@ -64,7 +72,7 @@ function SetupCustomization()
 	end
 
 	CharCreatePropertyList:SetHeight(8 + propertyCount * 136);
-	CharCreatePropertiesFrame:SetHeight(128 + propertyCount * 136 + SHOW_OUTFIT_CHECKBOX_RESERVED_HEIGHT);
+	CharCreatePropertiesFrame:SetHeight(PROPERTIES_FRAME_FIXED_HEIGHT + propertyCount * 136 + SHOW_OUTFIT_CHECKBOX_RESERVED_HEIGHT);
 end
 
 function OnRaceChanged()

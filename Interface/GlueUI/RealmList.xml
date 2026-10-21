@@ -40,38 +40,32 @@
 		<Property name="NameVertAlign" value="CENTER" />
 
 		<Visual>
+			<!-- Steel-framed cards in the glue skin: dark stone at rest, the steel-blue button fill on
+			     hover, the brighter Checked fill (as the character creation choices) when selected.
+			     Frame 36 over a fill inset 14, like GlueButton. -->
 			<ImagerySection name="NormalSurface">
-				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="40000000" />
+				<ImageComponent texture="Interface/GlueUI/GlueSkinFieldFill.htex"><Area><Inset all="14" /></Area></ImageComponent>
+				<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" />
 			</ImagerySection>
 			<ImagerySection name="HoveredSurface">
-				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="C02C3A30" />
+				<ImageComponent texture="Interface/GlueUI/GlueSkinButtonNormal.htex"><Area><Inset all="14" /></Area></ImageComponent>
+				<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" />
 			</ImagerySection>
 			<ImagerySection name="PushedSurface">
-				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="C01C2620" />
+				<ImageComponent texture="Interface/GlueUI/GlueSkinButtonPushed.htex"><Area><Inset all="14" /></Area></ImageComponent>
+				<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" />
+			</ImagerySection>
+			<ImagerySection name="DisabledSurface">
+				<ImageComponent texture="Interface/GlueUI/GlueSkinFieldFill.htex"><Area><Inset all="14" /></Area></ImageComponent>
+				<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" tint="FF8C8C8C" />
 			</ImagerySection>
 			<ImagerySection name="CheckedSurface">
-				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="E02C3A30" />
-				<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="FFCFE0D4" />
-				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FFCFE0D4">
-					<Area>
-						<Inset left="12" top="18" />
-						<Size><AbsDimension x="8" y="114" /></Size>
-					</Area>
-				</ImageComponent>
-			</ImagerySection>
-			<ImagerySection name="HoveredCheckedSurface">
-				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="E03B4F40" />
-				<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="FFCFE0D4" />
-				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FFCFE0D4">
-					<Area>
-						<Inset left="12" top="18" />
-						<Size><AbsDimension x="8" y="114" /></Size>
-					</Area>
-				</ImageComponent>
+				<ImageComponent texture="Interface/GlueUI/GlueSkinButtonChecked.htex"><Area><Inset all="14" /></Area></ImageComponent>
+				<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" />
 			</ImagerySection>
 			<ImagerySection name="Name">
 				<TextComponent color="FFF3EEE2" horzAlign="LEFT" vertAlign="$NameVertAlign">
-					<Area><Inset left="150" top="26" right="560" bottom="26" /></Area>
+					<Area><Inset left="150" top="30" right="560" bottom="30" /></Area>
 				</TextComponent>
 			</ImagerySection>
 
@@ -90,13 +84,13 @@
 			<StateImagery name="Pushed">
 				<Layer>
 					<Section section="PushedSurface" />
-					<Section section="Name" color="FFAAAAAA" />
+					<Section section="Name" color="FFDDDDDD" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="Disabled">
 				<Layer>
-					<Section section="NormalSurface" />
-					<Section section="Name" color="FF808080" />
+					<Section section="DisabledSurface" />
+					<Section section="Name" color="FF8A867E" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="NormalChecked">
@@ -107,25 +101,25 @@
 			</StateImagery>
 			<StateImagery name="HoveredChecked">
 				<Layer>
-					<Section section="HoveredCheckedSurface" />
+					<Section section="CheckedSurface" />
 					<Section section="Name" color="FFFFFFFF" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="PushedChecked">
 				<Layer>
-					<Section section="CheckedSurface" />
-					<Section section="Name" color="FFAAAAAA" />
+					<Section section="PushedSurface" />
+					<Section section="Name" color="FFDDDDDD" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="DisabledChecked">
 				<Layer>
-					<Section section="CheckedSurface" />
-					<Section section="Name" color="FF808080" />
+					<Section section="DisabledSurface" />
+					<Section section="Name" color="FF8A867E" />
 				</Layer>
 			</StateImagery>
 		</Visual>
 		<Area>
-			<Size><AbsDimension y="150" /></Size>
+			<Size><AbsDimension y="160" /></Size>
 		</Area>
 
 		<!-- Population gem: a soft glow tinted by the realm's population. -->
@@ -153,7 +147,7 @@
 			</Visual>
 			<Area>
 				<Size><AbsDimension x="80" y="80" /></Size>
-				<Anchor point="LEFT" offset="44" />
+				<Anchor point="LEFT" offset="48" />
 				<Anchor point="V_CENTER" />
 			</Area>
 		</Frame>
@@ -163,7 +157,7 @@
 			<Area>
 				<Anchor point="LEFT" offset="150" />
 				<Anchor point="RIGHT" offset="-560" />
-				<Anchor point="BOTTOM" offset="-24" />
+				<Anchor point="BOTTOM" offset="-30" />
 			</Area>
 		</Frame>
 
@@ -220,7 +214,7 @@
 
 		<Frame name="RealmListBorder" inherits="GlueBorderFrame">
 			<Area>
-				<Size><AbsDimension x="2000" y="1500" /></Size>
+				<Size><AbsDimension x="2000" y="1580" /></Size>
 				<Anchor point="V_CENTER" />
 				<Anchor point="H_CENTER" />
 			</Area>
@@ -228,9 +222,9 @@
 			<Frame name="RealmListHeaderLabel" inherits="GlueTextLarge">
 				<Property name="Text" value="REALM_LIST" />
 				<Area>
-					<Anchor point="LEFT" offset="56" />
-					<Anchor point="RIGHT" offset="-56" />
-					<Anchor point="TOP" offset="56" />
+					<Anchor point="LEFT" offset="72" />
+					<Anchor point="RIGHT" offset="-72" />
+					<Anchor point="TOP" offset="72" />
 				</Area>
 			</Frame>
 			<Frame name="RealmListHeaderSubLabel" inherits="GlueTextSmall">
@@ -238,24 +232,14 @@
 				<Property name="HorzAlign" value="CENTER" />
 				<Property name="TextColor" value="FFCFE0D4" />
 				<Area>
-					<Anchor point="LEFT" offset="56" />
-					<Anchor point="RIGHT" offset="-56" />
+					<Anchor point="LEFT" offset="72" />
+					<Anchor point="RIGHT" offset="-72" />
 					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmListHeaderLabel" offset="4" />
 				</Area>
 			</Frame>
-			<Frame name="RealmListHeaderDivider" renderer="DefaultRenderer">
-				<Visual>
-					<ImagerySection name="Line">
-						<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="40F3EEE2" />
-					</ImagerySection>
-					<StateImagery name="Enabled">
-						<Layer>
-							<Section section="Line" />
-						</Layer>
-					</StateImagery>
-				</Visual>
+			<Frame name="RealmListHeaderDivider" inherits="GlueDivider">
 				<Area>
-					<Size><AbsDimension x="900" y="3" /></Size>
+					<Size><AbsDimension x="900" y="12" /></Size>
 					<Anchor point="H_CENTER" />
 					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmListHeaderSubLabel" offset="20" />
 				</Area>
@@ -266,8 +250,8 @@
 				<Property name="Text" value="REALM_BACK" />
 				<Area>
 					<Size><AbsDimension x="440" y="128" /></Size>
-					<Anchor point="LEFT" offset="56" />
-					<Anchor point="BOTTOM" offset="-56" />
+					<Anchor point="LEFT" offset="72" />
+					<Anchor point="BOTTOM" offset="-72" />
 				</Area>
 				<Scripts>
 					<OnClick>
@@ -281,8 +265,8 @@
 				<Property name="Text" value="REALM_ENTER" />
 				<Area>
 					<Size><AbsDimension x="560" y="128" /></Size>
-					<Anchor point="RIGHT" offset="-56" />
-					<Anchor point="BOTTOM" offset="-56" />
+					<Anchor point="RIGHT" offset="-72" />
+					<Anchor point="BOTTOM" offset="-72" />
 				</Area>
 				<Scripts>
 					<OnClick>
@@ -312,34 +296,24 @@
 				</Area>
 			</Frame>
 
-			<!-- The realm list well. Rows are a fixed pool scrolled by data offset. -->
-			<Frame name="RealmList" renderer="DefaultRenderer">
-				<Visual>
-					<ImagerySection name="Frame">
-						<ImageComponent texture="Interface/GlueUI/RealmListBackground.htex" tiling="BOTH">
-							<Area><Inset all="8" /></Area>
-						</ImageComponent>
-						<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" />
-					</ImagerySection>
-					<StateImagery name="Enabled">
-						<Layer>
-							<Section section="Frame" />
-						</Layer>
-					</StateImagery>
-				</Visual>
+			<!-- The realm list. Rows are a fixed pool scrolled by data offset; each row is its own
+			     steel-framed card, so the list itself draws nothing. Six rows of 160 with 12 between
+			     them need 1020; the panel height leaves 1030. -->
+			<Frame name="RealmList">
 				<Area>
-					<Anchor point="LEFT" offset="56" />
-					<Anchor point="RIGHT" offset="-56" />
+					<Anchor point="LEFT" offset="72" />
+					<Anchor point="RIGHT" offset="-72" />
 					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmListHeaderDivider" offset="100" />
 					<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="RealmListBackButton" offset="-40" />
 				</Area>
 
+				<!-- RealmList.lua moves the right edge in by 112 while the scroll bar shows. -->
 				<Frame name="RealmListContent">
 					<Area>
-						<Anchor point="LEFT" offset="16" />
-						<Anchor point="RIGHT" offset="-16" />
-						<Anchor point="TOP" offset="16" />
-						<Anchor point="BOTTOM" offset="-16" />
+						<Anchor point="LEFT" />
+						<Anchor point="RIGHT" />
+						<Anchor point="TOP" />
+						<Anchor point="BOTTOM" />
 					</Area>
 
 					<Frame name="RealmListRow1" inherits="RealmListRowTemplate">
@@ -353,35 +327,35 @@
 						<Area>
 							<Anchor point="LEFT" />
 							<Anchor point="RIGHT" />
-							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmListRow1" offset="8" />
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmListRow1" offset="12" />
 						</Area>
 					</Frame>
 					<Frame name="RealmListRow3" inherits="RealmListRowTemplate">
 						<Area>
 							<Anchor point="LEFT" />
 							<Anchor point="RIGHT" />
-							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmListRow2" offset="8" />
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmListRow2" offset="12" />
 						</Area>
 					</Frame>
 					<Frame name="RealmListRow4" inherits="RealmListRowTemplate">
 						<Area>
 							<Anchor point="LEFT" />
 							<Anchor point="RIGHT" />
-							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmListRow3" offset="8" />
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmListRow3" offset="12" />
 						</Area>
 					</Frame>
 					<Frame name="RealmListRow5" inherits="RealmListRowTemplate">
 						<Area>
 							<Anchor point="LEFT" />
 							<Anchor point="RIGHT" />
-							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmListRow4" offset="8" />
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmListRow4" offset="12" />
 						</Area>
 					</Frame>
 					<Frame name="RealmListRow6" inherits="RealmListRowTemplate">
 						<Area>
 							<Anchor point="LEFT" />
 							<Anchor point="RIGHT" />
-							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmListRow5" offset="8" />
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmListRow5" offset="12" />
 						</Area>
 					</Frame>
 				</Frame>
@@ -401,9 +375,9 @@
 				<Frame name="RealmListScrollBar" inherits="VerticalScrollBar">
 					<Property name="Visible" value="false" />
 					<Area>
-						<Anchor point="RIGHT" offset="-16" />
-						<Anchor point="TOP" offset="16" />
-						<Anchor point="BOTTOM" offset="-16" />
+						<Anchor point="RIGHT" />
+						<Anchor point="TOP" />
+						<Anchor point="BOTTOM" />
 					</Area>
 				</Frame>
 			</Frame>

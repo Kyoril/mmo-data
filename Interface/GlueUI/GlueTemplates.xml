@@ -279,7 +279,7 @@
 		<Property name="VertAlign" value="CENTER" />
 	
 		<Visual>
-			<!-- Same steel frame as the buttons around dark stone; text padding is set by GlueTextField_ApplySkin. -->
+			<!-- Same steel frame as the buttons around dark stone; text padding is set by the OnLoad below. -->
 			<ImagerySection name="Frame">
 				<ImageComponent texture="Interface/GlueUI/GlueSkinFieldFill.htex"><Area><Inset all="14" /></Area></ImageComponent>
 				<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" />
@@ -307,8 +307,49 @@
 		<Area>
 			<Size><AbsDimension x="440" y="128" /></Size>
 		</Area>
+
+		<!-- Text padding for the steel frame. There is no XML property for it, so the template sets it
+		     on load. Inheriting frames get this handler (unless they declare their own OnLoad), and so do
+		     Lua clones: Copy() carries the handler and AddChild() runs it. Insets in UI units: 34 sideways
+		     clears the steel band and its inner shadow (about 28); 36 above and below centres one line of
+		     DefaultSmall (56 UI from ascender to descender) in a 128 tall field, and the caret is one line
+		     tall because it spans the whole text area. -->
+		<Scripts>
+			<OnLoad>
+				return function(this)
+					this:SetTextAreaOffset(Rect(34, 36, 34, 36));
+				end
+			</OnLoad>
+		</Scripts>
 	</Frame>
-	
+
+	<!-- Thin steel rule (dividers): the straight metal strip of GlueSkinSteelFrame's top band, source
+	     rows 6-18 between the 36 px corners. Without borderSize a BorderComponent draws its corners and
+	     edges zero units wide and only its centre, which maps the source rect (left, top) to
+	     (width - right, height - bottom) onto the whole frame, so the sizes below crop that strip.
+	     Give it a width and about 12 UI of height. -->
+	<Frame name="GlueDivider" renderer="DefaultRenderer">
+		<Property name="Clickable" value="false" />
+		<Visual>
+			<ImagerySection name="Line">
+				<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" leftSize="36" topSize="6" rightSize="36" bottomSize="494" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Line" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="Line" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+		<Area>
+			<Size><AbsDimension y="12" /></Size>
+		</Area>
+	</Frame>
+
 	<Frame name="GlueBorderFrame" renderer="DefaultRenderer">
 		<Visual>
 			<!-- Dark wood with a bronze edge and corner ornaments: WindowPanel baked at 2x (tools/glue_skin). -->

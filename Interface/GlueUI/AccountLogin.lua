@@ -63,9 +63,6 @@ end
 
 -- Called when the AccountLogin frame is loaded.
 function AccountLogin_OnLoad()
-	GlueTextField_ApplySkin(AccountNameField);
-	GlueTextField_ApplySkin(AccountPasswordField);
-
 	AccountLogin:RegisterEvent("AUTH_SUCCESS", function()
 		GlueDialog_Show("RETRIEVE_REALM_LIST");
 	end);

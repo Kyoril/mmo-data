@@ -3,8 +3,9 @@ GlueDialogs = {}
 
 -- Vertical layout of GlueDialog, in UI units. The width stays as GlueDialog.xml sets it; the height
 -- follows the content each time a dialog is shown (GlueDialog_Layout).
-local GLUE_DIALOG_PADDING_TOP = 64;
-local GLUE_DIALOG_PADDING_BOTTOM = 56;
+-- 72 above and below, like every glue panel: clear of the bronze edge and the corner ornaments.
+local GLUE_DIALOG_PADDING_TOP = 72;
+local GLUE_DIALOG_PADDING_BOTTOM = 72;
 local GLUE_DIALOG_TEXT_BUTTON_SPACING = 40;
 local GLUE_DIALOG_BUTTON_SPACING = 20;
 -- The wood panel's corner ornaments (GlueBorderFrame, borderSize 64) are 64 tall each; a shorter

@@ -74,7 +74,7 @@ local function RealmList_Refresh()
 	scrollOffset = math.max(0, math.min(scrollOffset, MaxScrollOffset()))
 
 	-- Make room for the scroll bar only when it is needed; the column headers follow the content.
-	RealmListContent:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, hasScroll and -128 or -16)
+	RealmListContent:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, hasScroll and -112 or 0)
 	RealmListScrollBar:SetProperty("Visible", hasScroll and "true" or "false")
 	updatingScroll = true
 	RealmListScrollBar:SetMinimum(0)

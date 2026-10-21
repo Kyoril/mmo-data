@@ -158,19 +158,21 @@
 		</Frame>
 
 		<Frame name="CharCreatePage1" setAllPoints="true">
+			<!-- Content keeps 72 UI from the panel edge (bronze edge and corner ornaments): 1000 wide leaves
+			     the sections 856 for two 396 wide choices. The height is set by UpdateSelectionPanelHeight. -->
 			<Frame name="CharCreateSelectionPanel" inherits="GlueBorderFrame">
 				<Area>
 					<Anchor point="TOP" offset="32" />
 					<Anchor point="RIGHT" offset="-32" />
-					<Size><AbsDimension x="920" y="1240" /></Size>
+					<Size><AbsDimension x="1000" y="1240" /></Size>
 				</Area>
 				<Frame name="CharCreateSelectionTitle" inherits="GlueTextLarge">
 					<Property name="Text" value="CREATE_CHARACTER" />
-					<Area><Anchor point="LEFT" offset="40" /><Anchor point="RIGHT" offset="-40" /><Anchor point="TOP" offset="28" /></Area>
+					<Area><Anchor point="LEFT" offset="72" /><Anchor point="RIGHT" offset="-72" /><Anchor point="TOP" offset="72" /></Area>
 				</Frame>
 
 				<Frame name="CharRaceSection">
-					<Area><Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharCreateSelectionTitle" offset="12" /><Anchor point="LEFT" offset="32" /><Anchor point="RIGHT" offset="-32" /><Size><AbsDimension y="188" /></Size></Area>
+					<Area><Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharCreateSelectionTitle" offset="12" /><Anchor point="LEFT" offset="72" /><Anchor point="RIGHT" offset="-72" /><Size><AbsDimension y="188" /></Size></Area>
 					<Frame name="CharRaceLabel" inherits="GlueTextSmall">
 						<Property name="Text" value="RACE" /><Property name="TextColor" value="FFF3EEE2" />
 						<Area><Anchor point="TOP" /><Anchor point="LEFT" offset="12" /><Anchor point="RIGHT" offset="-12" /></Area>
@@ -182,7 +184,7 @@
 				</Frame>
 
 				<Frame name="CharClassSection">
-					<Area><Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharRaceSection" offset="16" /><Anchor point="LEFT" offset="32" /><Anchor point="RIGHT" offset="-32" /><Size><AbsDimension y="532" /></Size></Area>
+					<Area><Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharRaceSection" offset="16" /><Anchor point="LEFT" offset="72" /><Anchor point="RIGHT" offset="-72" /><Size><AbsDimension y="532" /></Size></Area>
 					<Frame name="CharClassLabel" inherits="GlueTextSmall">
 						<Property name="Text" value="STARTING_CLASS" /><Property name="TextColor" value="FFF3EEE2" />
 						<Area><Anchor point="TOP" /><Anchor point="LEFT" offset="12" /><Anchor point="RIGHT" offset="-12" /></Area>
@@ -194,7 +196,7 @@
 				</Frame>
 
 				<Frame name="CharGenderSection">
-					<Area><Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharClassSection" offset="16" /><Anchor point="LEFT" offset="32" /><Anchor point="RIGHT" offset="-32" /><Size><AbsDimension y="188" /></Size></Area>
+					<Area><Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharClassSection" offset="16" /><Anchor point="LEFT" offset="72" /><Anchor point="RIGHT" offset="-72" /><Size><AbsDimension y="188" /></Size></Area>
 					<Frame name="CharGenderLabel" inherits="GlueTextSmall">
 						<Property name="Text" value="GENDER" /><Property name="TextColor" value="FFF3EEE2" />
 						<Area><Anchor point="TOP" /><Anchor point="LEFT" offset="12" /><Anchor point="RIGHT" offset="-12" /></Area>
@@ -236,13 +238,13 @@
 			<Property name="Visible" value="false" />
 			<Frame name="CharCreatePropertiesFrame" inherits="GlueBorderFrame">
 				<!-- y=680 is a placeholder: SetupCustomization() in CharCreate.lua computes the real height from the property count and overwrites it before this page is ever shown. -->
-				<Area><Anchor point="TOP" offset="32" /><Anchor point="RIGHT" offset="-32" /><Size><AbsDimension x="920" y="680" /></Size></Area>
+				<Area><Anchor point="TOP" offset="32" /><Anchor point="RIGHT" offset="-32" /><Size><AbsDimension x="1000" y="680" /></Size></Area>
 				<Frame name="CharCreatePropertiesLabel" inherits="GlueTextLarge">
 					<Property name="Text" value="CUSTOMIZATION" />
-					<Area><Anchor point="LEFT" offset="40" /><Anchor point="RIGHT" offset="-40" /><Anchor point="TOP" offset="28" /></Area>
+					<Area><Anchor point="LEFT" offset="72" /><Anchor point="RIGHT" offset="-72" /><Anchor point="TOP" offset="72" /></Area>
 				</Frame>
 				<Frame name="CharCreatePropertyList" renderer="DefaultRenderer">
-					<Area><Anchor point="LEFT" offset="32" /><Anchor point="RIGHT" offset="-32" /><Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharCreatePropertiesLabel" offset="16" /><Size><AbsDimension y="416" /></Size></Area>
+					<Area><Anchor point="LEFT" offset="72" /><Anchor point="RIGHT" offset="-72" /><Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharCreatePropertiesLabel" offset="16" /><Size><AbsDimension y="416" /></Size></Area>
 				</Frame>
 				<Frame name="CharCreateShowOutfitButton" inherits="ListCheckButtonBase">
 					<Property name="Text" value="SHOW_OUTFIT" />

@@ -18,7 +18,7 @@
 				<Area>
 					<Anchor point="LEFT" offset="80" />
 					<Anchor point="RIGHT" offset="-80" />
-					<Anchor point="TOP" offset="64" />
+					<Anchor point="TOP" offset="72" />
 				</Area>
 			</Frame>
 			
@@ -27,7 +27,7 @@
 				
 				<Area>
 					<Anchor point="H_CENTER" />
-					<Anchor point="BOTTOM" relativeTo="GlueDialog" offset="-56" />
+					<Anchor point="BOTTOM" relativeTo="GlueDialog" offset="-72" />
 				</Area>
 				
 				<Scripts>
@@ -45,7 +45,7 @@
 				
 				<Area>
 					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="GlueButton01" offset="20" />
-					<Anchor point="BOTTOM" relativeTo="GlueDialog" offset="-56" />
+					<Anchor point="BOTTOM" relativeTo="GlueDialog" offset="-72" />
 				</Area>
 
 				<Scripts>
