@@ -123,10 +123,13 @@ function InventoryItemButton_OnClick(this, button)
         elseif (BankFrame:IsVisible()) then
             -- Bank window is open: move the item between inventory and bank
             BankFrame_OnItemRightClicked(this.id);
-        else
+        elseif (VendorFrame:IsVisible()) then
+            -- Vendor window is open: UseContainerItem sells the item, so the coin sound belongs here.
             UseContainerItem(this.id);
-            -- TODO: If is vendor item, sell it
             PlaySound("Sound/Interface/Coins_1.wav");
+        else
+            -- No merchant involved: use or equip the item without the money sound.
+            UseContainerItem(this.id);
         end
     end
 end
