@@ -152,6 +152,74 @@
 		</Area>
 	</Frame>
 	
+	<!-- Arrow button (scroll bars, character customization): the GlueButton frame with a neutral grey
+	     arrow (GlueSkinArrow*, tools/glue_skin) tinted per state, so it follows the ivory palette instead
+	     of the gold icon set. Set the arrow with the Icon property. -->
+	<Frame name="GlueArrowButton" type="Button" renderer="ButtonRenderer">
+		<Property name="Icon" />
+
+		<Visual>
+			<ImagerySection name="NormalFrame">
+				<ImageComponent texture="Interface/GlueUI/GlueSkinButtonNormal.htex"><Area><Inset all="14" /></Area></ImageComponent>
+				<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" />
+			</ImagerySection>
+			<ImagerySection name="HoveredFrame">
+				<ImageComponent texture="Interface/GlueUI/GlueSkinButtonHovered.htex"><Area><Inset all="14" /></Area></ImageComponent>
+				<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" />
+			</ImagerySection>
+			<ImagerySection name="PushedFrame">
+				<ImageComponent texture="Interface/GlueUI/GlueSkinButtonPushed.htex"><Area><Inset all="14" /></Area></ImageComponent>
+				<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" />
+			</ImagerySection>
+			<ImagerySection name="DisabledFrame">
+				<ImageComponent texture="Interface/GlueUI/GlueSkinButtonDisabled.htex"><Area><Inset all="14" /></Area></ImageComponent>
+				<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" tint="FF8C8C8C" />
+			</ImagerySection>
+			<!-- Arrow tints: ivory, white on hover, ivory x DDDDDD pushed, the disabled caption colour faded. -->
+			<ImagerySection name="Arrow">
+				<ImageComponent tint="FFF3EEE2"><Area><Inset all="20" /></Area><PropertyValue property="Icon" /></ImageComponent>
+			</ImagerySection>
+			<ImagerySection name="ArrowHovered">
+				<ImageComponent tint="FFFFFFFF"><Area><Inset all="20" /></Area><PropertyValue property="Icon" /></ImageComponent>
+			</ImagerySection>
+			<ImagerySection name="ArrowPushed">
+				<ImageComponent tint="FFD2CEC4"><Area><Inset all="20" /></Area><PropertyValue property="Icon" /></ImageComponent>
+			</ImagerySection>
+			<ImagerySection name="ArrowDisabled">
+				<ImageComponent tint="A08A867E"><Area><Inset all="20" /></Area><PropertyValue property="Icon" /></ImageComponent>
+			</ImagerySection>
+			<StateImagery name="Normal">
+				<Layer>
+					<Section section="NormalFrame" />
+					<Section section="Arrow" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Hovered">
+				<Layer>
+					<Section section="HoveredFrame" />
+					<Section section="ArrowHovered" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Pushed">
+				<Layer>
+					<Section section="PushedFrame" />
+					<Section section="ArrowPushed" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="DisabledFrame" />
+					<Section section="ArrowDisabled" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+		<Area>
+			<Size>
+				<AbsDimension x="80" y="80" />
+			</Size>
+		</Area>
+	</Frame>
+
 	<!-- Small label -->
 	<Frame name="GlueTextSmall" renderer="DefaultRenderer">
 		<Property name="Font" value="DefaultSmall" />
@@ -330,8 +398,8 @@
 			</Size>
 		</Area>
 
-		<Frame name="ScrollUpButton" inherits="GlueButton">
-			<Property name="Icon" value="Interface/Icons/IconGold_ArrowUp.htex" />
+		<Frame name="ScrollUpButton" inherits="GlueArrowButton">
+			<Property name="Icon" value="Interface/GlueUI/GlueSkinArrowUp.htex" />
 			<Area>
 				<Anchor point="TOP" offset="8" />
 				<Anchor point="LEFT" offset="8" />
@@ -341,8 +409,8 @@
 			</Area>
 		</Frame>
 		
-		<Frame name="ScrollDownButton" inherits="GlueButton">
-			<Property name="Icon" value="Interface/Icons/IconGold_ArrowDown.htex" />
+		<Frame name="ScrollDownButton" inherits="GlueArrowButton">
+			<Property name="Icon" value="Interface/GlueUI/GlueSkinArrowDown.htex" />
 			<Area>
 				<Anchor point="BOTTOM" offset="-8" />
 				<Anchor point="LEFT" offset="8" />

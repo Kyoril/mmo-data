@@ -7,7 +7,8 @@
 	
 		<Frame name="GlueDialog" inherits="GlueBorderFrame">
 			<Area>
-				<Size><AbsDimension x="1600" y="490" /></Size>
+				<!-- The height is a placeholder: GlueDialog_Layout sizes it to the content on every show. -->
+				<Size><AbsDimension x="1600" y="360" /></Size>
 				<Anchor point="H_CENTER" />
 				<Anchor point="V_CENTER" />
 			</Area>
@@ -15,9 +16,9 @@
 			<Frame name="GlueDialogLabel" inherits="GlueTextLarge">
 				<Property name="Text" value="CONNECTING" />
 				<Area>
-					<Anchor point="LEFT" offset="40" />
-					<Anchor point="RIGHT" offset="-40" />
-					<Anchor point="TOP" offset="60" />
+					<Anchor point="LEFT" offset="80" />
+					<Anchor point="RIGHT" offset="-80" />
+					<Anchor point="TOP" offset="64" />
 				</Area>
 			</Frame>
 			
@@ -26,7 +27,7 @@
 				
 				<Area>
 					<Anchor point="H_CENTER" />
-					<Anchor point="BOTTOM" relativeTo="GlueDialog" offset="-40" />
+					<Anchor point="BOTTOM" relativeTo="GlueDialog" offset="-56" />
 				</Area>
 				
 				<Scripts>
@@ -44,7 +45,7 @@
 				
 				<Area>
 					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="GlueButton01" offset="20" />
-					<Anchor point="BOTTOM" relativeTo="GlueDialog" offset="-40" />
+					<Anchor point="BOTTOM" relativeTo="GlueDialog" offset="-56" />
 				</Area>
 
 				<Scripts>

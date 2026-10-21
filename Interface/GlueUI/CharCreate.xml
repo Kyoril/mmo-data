@@ -94,8 +94,8 @@
 				<Size><AbsDimension x="260" /></Size>
 			</Area>
 		</Frame>
-		<Frame inherits="GlueButton" name="PrevButton">
-			<Property name="Icon" value="Interface/Icons/fg4_iconsGold_leftArrow.htex" />
+		<Frame inherits="GlueArrowButton" name="PrevButton">
+			<Property name="Icon" value="Interface/GlueUI/GlueSkinArrowLeft.htex" />
 			<Area>
 				<Anchor point="LEFT" offset="304" />
 				<Anchor point="V_CENTER" />
@@ -103,8 +103,8 @@
 			</Area>
 			<Scripts><OnClick>return function(this) CycleCustomizationProperty(this:GetParent().userData, false); CustomizationPropertyButton_UpdateValue(this:GetParent()); end</OnClick></Scripts>
 		</Frame>
-		<Frame inherits="GlueButton" name="NextButton">
-			<Property name="Icon" value="Interface/Icons/fg4_iconsGold_rightArrow.htex" />
+		<Frame inherits="GlueArrowButton" name="NextButton">
+			<Property name="Icon" value="Interface/GlueUI/GlueSkinArrowRight.htex" />
 			<Area>
 				<Anchor point="RIGHT" offset="-20" />
 				<Anchor point="V_CENTER" />

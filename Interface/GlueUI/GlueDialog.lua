@@ -1,6 +1,16 @@
 
 GlueDialogs = {}
 
+-- Vertical layout of GlueDialog, in UI units. The width stays as GlueDialog.xml sets it; the height
+-- follows the content each time a dialog is shown (GlueDialog_Layout).
+local GLUE_DIALOG_PADDING_TOP = 64;
+local GLUE_DIALOG_PADDING_BOTTOM = 56;
+local GLUE_DIALOG_TEXT_BUTTON_SPACING = 40;
+local GLUE_DIALOG_BUTTON_SPACING = 20;
+-- The wood panel's corner ornaments (GlueBorderFrame, borderSize 64) are 64 tall each; a shorter
+-- panel would make the top and bottom corners overlap.
+local GLUE_DIALOG_MIN_HEIGHT = 2 * 64;
+
 GlueDialogs["CONNECTING"] = {
 	text = "CONNECTING",
 	button1 = "CANCEL",
@@ -250,17 +260,35 @@ function GlueDialog_Show(which, text, data)
 
 	GlueDialogLabel:SetText(message)
 
-	-- Check if there is a second button requested
-	if GlueDialogs[which].button2 then
-		-- TODO
+	-- Buttons: one centred, or two centred as a pair.
+	local info = GlueDialogs[which]
+	GlueButton01:ClearAnchors()
+	GlueButton01:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.BOTTOM, GlueDialog, -GLUE_DIALOG_PADDING_BOTTOM)
+	if info.button1 then
+		GlueButton01:SetText(Localize(info.button1))
+		GlueButton01:Show()
 	else
-		-- TODO
+		GlueButton01:Hide()
 	end
 
-	GlueDialog:SetHeight(GlueDialogLabel:GetTextHeight() + 128 + 128);
+	if info.button2 then
+		GlueButton02:SetText(Localize(info.button2))
+		GlueButton02:Show()
+		GlueButton01:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.H_CENTER, GlueDialog, -GLUE_DIALOG_BUTTON_SPACING / 2)
+	else
+		GlueButton02:Hide()
+		GlueButton01:SetAnchor(AnchorPoint.H_CENTER, AnchorPoint.H_CENTER, GlueDialog, 0)
+	end
 
-	-- Change button text
-	GlueButton01:SetText(Localize(GlueDialogs[which].button1))
+	-- The dialog is still hidden here, so IsVisible cannot tell which buttons will show.
+	local buttonHeight = 0
+	if info.button1 then
+		buttonHeight = GlueButton01:GetHeight()
+	end
+	if info.button2 then
+		buttonHeight = math.max(buttonHeight, GlueButton02:GetHeight())
+	end
+	GlueDialog_Layout(buttonHeight)
 
 	-- Save parameters
 	GlueDialog.which = which
@@ -268,6 +296,24 @@ function GlueDialog_Show(which, text, data)
 
 	-- Show the glue dialog
 	GlueDialogBackground:Show()
+end
+
+-- Sizes GlueDialog's height to its content: top padding, the message word-wrapped at the label's
+-- width, spacing and the button row when a button shows, bottom padding. Never shorter than the
+-- panel's corner ornaments allow. Runs on every GlueDialog_Show, after the text is set.
+-- buttonHeight is the height of the button row, or 0 when no button shows.
+function GlueDialog_Layout(buttonHeight)
+	-- GetTextHeight measures the wrapped text in UI units at the label's current width (the label
+	-- spans the dialog, whose width never changes).
+	local textHeight = GlueDialogLabel:GetTextHeight()
+	GlueDialogLabel:SetHeight(textHeight)
+
+	local height = GLUE_DIALOG_PADDING_TOP + textHeight + GLUE_DIALOG_PADDING_BOTTOM
+	if buttonHeight > 0 then
+		height = height + GLUE_DIALOG_TEXT_BUTTON_SPACING + buttonHeight
+	end
+
+	GlueDialog:SetHeight(math.max(height, GLUE_DIALOG_MIN_HEIGHT))
 end
 
 -- Programmatically hide the dialog without firing any callbacks.
