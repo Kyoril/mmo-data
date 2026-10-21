@@ -233,6 +233,68 @@ SlashCmdList["TRADE"] = function(msg)
 	end
 end
 
+-- The commands "/help" lists, in the order they are printed. "name" is the slash command name,
+-- so the aliases shown are read from the SLASH_<NAME><index> globals and stay in sync with them.
+-- "description" is the localization key of the one line explaining the command.
+ChatFrame_HelpCommands = {
+	{ name = "HELP",       description = "HELP_CMD_HELP" },
+	{ name = "SAY",        description = "HELP_CMD_SAY" },
+	{ name = "YELL",       description = "HELP_CMD_YELL" },
+	{ name = "EMOTE",      description = "HELP_CMD_EMOTE" },
+	{ name = "WHISPER",    description = "HELP_CMD_WHISPER" },
+	{ name = "REPLY",      description = "HELP_CMD_REPLY" },
+	{ name = "PARTY",      description = "HELP_CMD_PARTY" },
+	{ name = "RAID",       description = "HELP_CMD_RAID" },
+	{ name = "GUILD",      description = "HELP_CMD_GUILD" },
+	{ name = "JOIN",       description = "HELP_CMD_JOIN" },
+	{ name = "LEAVE",      description = "HELP_CMD_LEAVE" },
+	{ name = "CHATLIST",   description = "HELP_CMD_CHATLIST" },
+	{ name = "INVITE",     description = "HELP_CMD_INVITE" },
+	{ name = "UNINVITE",   description = "HELP_CMD_UNINVITE" },
+	{ name = "FRIENDLIST", description = "HELP_CMD_FRIENDLIST" },
+	{ name = "RANDOM",     description = "HELP_CMD_RANDOM" },
+	{ name = "EMOTELIST",  description = "HELP_CMD_EMOTELIST" },
+	{ name = "PLAYED",     description = "HELP_CMD_PLAYED" },
+	{ name = "LOGOUT",     description = "HELP_CMD_LOGOUT" },
+};
+
+-- Returns the aliases of a slash command as a single string ("/i, /inv, /invite"), or nil if
+-- the command has no alias at all. Aliases defined twice are only listed once.
+function ChatFrame_GetCommandAliases(name)
+	local aliases = nil;
+	local seen = { };
+
+	local i = 1;
+	local cmdString = _G["SLASH_"..name..i];
+	while ( cmdString ) do
+		if ( not seen[cmdString] ) then
+			seen[cmdString] = true;
+			if ( aliases ) then
+				aliases = aliases..", "..cmdString;
+			else
+				aliases = cmdString;
+			end
+		end
+
+		i = i + 1;
+		cmdString = _G["SLASH_"..name..i];
+	end
+
+	return aliases;
+end
+
+SlashCmdList["HELP"] = function(msg)
+	local info = ChatTypeInfo["SYSTEM"];
+	ChatFrame:AddMessage(Localize("HELP_LIST_HEADER"), info.r, info.g, info.b);
+
+	for _, entry in ipairs(ChatFrame_HelpCommands) do
+		local aliases = ChatFrame_GetCommandAliases(entry.name);
+		if ( aliases ) then
+			ChatFrame:AddMessage(string.format(Localize("HELP_LIST_ENTRY"), aliases, Localize(entry.description)), info.r, info.g, info.b);
+		end
+	end
+end
+
 
 -- Applies an opacity value to every frame that makes up the chat cluster (the message
 -- text plus the scroll/bubble buttons).

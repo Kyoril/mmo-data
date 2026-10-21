@@ -219,6 +219,38 @@ local function SetupItemComparison(inventoryType, sourceItem)
     GameTooltip_AddLine(Localize("ITEM_COMPARE_HINT"), TOOLTIP_LINE_LEFT, "FF808080");
 end
 
+-- Formats the mod-adjusted cooldown of a spell as its tooltip line, or nil if the spell has
+-- no cooldown. Shared by the spell tooltip and the "Use:" line of item tooltips.
+local function FormatSpellCooldownLine(spellId)
+    local effectiveCooldown = GetSpellEffectiveCooldown(spellId);
+    if (effectiveCooldown == 0) then
+        return nil;
+    end
+
+    local cooldownText = "";
+    if (effectiveCooldown >= 60000) then
+        cooldownText = FormatDurationAmount(effectiveCooldown / 60000.0) .. " " .. Localize("MINUTES");
+    else
+        cooldownText = FormatDurationAmount(effectiveCooldown / 1000.0) .. " " .. Localize("SECONDS");
+    end
+
+    return string.format(Localize("COOLDOWN_FORMAT"), cooldownText);
+end
+
+-- Adds the cooldown line of an item's "On Use" spell, which is what actually gates using the
+-- item (see ActionButton_GetItemUseSpell). Other trigger types are procs, so their cooldown is
+-- internal and not shown.
+local function AppendItemSpellCooldownLine(trigger, spell)
+    if (trigger ~= "ON_USE" or spell == nil) then
+        return;
+    end
+
+    local cooldownLine = FormatSpellCooldownLine(spell.id);
+    if (cooldownLine ~= nil) then
+        GameTooltip_AddLine(cooldownLine, TOOLTIP_LINE_LEFT);
+    end
+end
+
 -- Appends the lines of an item template tooltip (name, binding, stats, ...) to the current
 -- tooltip without clearing it. When embedded is true the item is only a part of a bigger
 -- tooltip (e.g. the item a recipe creates), so the equipment comparison hint is left out.
@@ -333,6 +365,7 @@ local function AppendItemTemplateLines(item, embedded)
                 local itemTrigger = item:GetSpellTriggerType(i);
                 if itemTrigger then
                     GameTooltip_AddLine(Localize(itemTrigger) .. ": " .. GetSpellDescription(itemSpell), TOOLTIP_LINE_LEFT, "FF00FF00");
+                    AppendItemSpellCooldownLine(itemTrigger, itemSpell);
                 end
             end
         else
@@ -475,6 +508,7 @@ local function FillItemTooltip(item, header)
             local itemTrigger = item:GetSpellTriggerType(i);
             if itemTrigger then
                 GameTooltip_AddLine(Localize(itemTrigger) .. ": " .. GetSpellDescription(itemSpell), TOOLTIP_LINE_LEFT, "FF00FF00");
+                AppendItemSpellCooldownLine(itemTrigger, itemSpell);
             end
 
             if (itemSpell.level > 1) then
@@ -672,15 +706,9 @@ function GameTooltip_AddSpellDetails(spell)
             GameTooltip_AddLine(string.format(castFormat, FormatDurationAmount(effectiveCastTime / 1000.0) .. " " .. Localize("SECONDS")), TOOLTIP_LINE_LEFT);
         end
 
-        local effectiveCooldown = GetSpellEffectiveCooldown(spell.id);
-        if (effectiveCooldown ~= 0) then
-            local cooldownText = "";
-            if (effectiveCooldown >= 60000) then
-                cooldownText = FormatDurationAmount(effectiveCooldown / 60000.0) .. " " .. Localize("MINUTES");
-            else
-                cooldownText = FormatDurationAmount(effectiveCooldown / 1000.0) .. " " .. Localize("SECONDS");
-            end
-            GameTooltip_AddLine(string.format(Localize("COOLDOWN_FORMAT"), cooldownText), TOOLTIP_LINE_LEFT);
+        local cooldownLine = FormatSpellCooldownLine(spell.id);
+        if (cooldownLine ~= nil) then
+            GameTooltip_AddLine(cooldownLine, TOOLTIP_LINE_LEFT);
         end
     end
 
