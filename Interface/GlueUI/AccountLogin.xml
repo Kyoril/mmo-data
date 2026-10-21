@@ -22,18 +22,6 @@
 			</Animation>
 		</Animations>
 
-		<!-- For now, only a placeholder image is rendered in the background -->
-		<Visual>
-			<ImagerySection name="Background">
-				<ImageComponent texture="Interface/GlueUI/LoginBackgroundPH.htex" tiling="NONE" />
-			</ImagerySection>
-			<StateImagery name="Enabled">
-				<Layer>
-					<Section section="Background" />
-				</Layer>
-			</StateImagery>
-		</Visual>
-
 		<Frame name="AccountLoginContent" setAllPoints="true">
 			<Frame name="LoginBackgroundFrameBottom" renderer="DefaultRenderer">
 				<Area>

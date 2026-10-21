@@ -4,7 +4,27 @@
 	
 	<Frame name="GlueParent" parent="TopFrame" setAllPoints="true">
 		<Property name="Font" value="DefaultSmall" />
-	
+
+		<!-- The live 3D scene behind every glue screen. First child, so it is drawn below them. -->
+		<Frame name="GlueSceneFrame" renderer="GlueSceneRenderer" setAllPoints="true">
+			<Property name="MousePassThrough" value="true" />
+		</Frame>
+
+		<!-- Dark fill over the scene until its gate view is ready; GlueParent.lua fades it out. -->
+		<Frame name="GlueSceneFade" renderer="DefaultRenderer" setAllPoints="true">
+			<Property name="MousePassThrough" value="true" />
+			<Visual>
+				<ImagerySection name="Fill">
+					<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tiling="NONE" tint="FF000000" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Fill" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+		</Frame>
+
 		<Scripts>
 			<OnLoad>
 				return function(this)

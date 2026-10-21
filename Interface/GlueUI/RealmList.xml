@@ -182,17 +182,6 @@
 	<Frame name="RealmListFrame" parent="GlueParent" setAllPoints="true" renderer="DefaultRenderer">
 		<Property name="Visible" value="false" />
 
-		<Visual>
-			<ImagerySection name="Background">
-				<ImageComponent texture="Interface/GlueUI/LoginBackgroundPH.htex" tiling="NONE" tint="FF5A5A5A" />
-			</ImagerySection>
-			<StateImagery name="Enabled">
-				<Layer>
-					<Section section="Background" />
-				</Layer>
-			</StateImagery>
-		</Visual>
-
 		<Animations>
 			<Animation name="FadeIn" duration="0.4" loop="false">
 				<Track property="Opacity" target="RealmListBorder">

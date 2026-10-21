@@ -8,10 +8,24 @@ PENDING_GLUE_SCREEN = nil;
 -- Set to an error code string when we need to show an error after the char list loads.
 pendingCharListError = nil;
 
+-- Seconds the dark fill takes to reveal the glue scene once its gate view is ready.
+local GLUE_SCENE_FADE_SECONDS = 1.0;
+
+-- Remaining fade time; nil while the scene is not ready yet or once the fade has finished.
+local glueSceneFadeRemaining = nil;
+
 function SetGlueScreen(name)
 end
 
 function GlueParent_OnLoad(this)
+	-- The scene behind the screens starts behind an opaque fill that fades out once the gate
+	-- view has loaded.
+	GlueSceneFade:SetOpacity(1.0);
+	GlueSceneFade:Show();
+	this:RegisterEvent("GLUE_SCENE_READY", function(frame)
+		glueSceneFadeRemaining = GLUE_SCENE_FADE_SECONDS;
+	end);
+
 	-- REQUEST_CHAR_LIST is fired by C++ when returning from the world (normal logout or world
 	-- server down). The char list request is already sent by C++; we just show the loading
 	-- dialog and hide other screens. An optional errorCode means an error dialog should be
@@ -41,4 +55,16 @@ function GlueParent_OnLoad(this)
 end
 
 function GlueParentFadeUpdate(this, elapsed)
+	if not glueSceneFadeRemaining then
+		return;
+	end
+
+	glueSceneFadeRemaining = glueSceneFadeRemaining - elapsed;
+	if glueSceneFadeRemaining <= 0 then
+		glueSceneFadeRemaining = nil;
+		GlueSceneFade:Hide();
+		return;
+	end
+
+	GlueSceneFade:SetOpacity(glueSceneFadeRemaining / GLUE_SCENE_FADE_SECONDS);
 end

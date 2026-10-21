@@ -1,0 +1,20 @@
+{
+	"world": "Worlds/Development/Development",
+	"gatePages": [[30, 33]],
+	"plazaPages": [[30, 34], [29, 33], [31, 33]],
+	"environmentProfile": 1,
+	"flightPath": [
+		{ "position": [-689.0, 300.0, 940.0], "lookAt": [-689.0, 0.0, 1010.0] },
+		{ "position": [-683.0, 8.0, 790.0], "lookAt": [-683.0, 5.0, 950.0] }
+	],
+	"flightSeconds": 5.0,
+	"front": { "position": [-689.0, 2.5, 1025.0], "facing": 180.0, "pose": "Stand" },
+	"spots": [
+		{ "position": [-695.0, 2.5, 1030.0], "facing": 180.0, "pose": "Stand" },
+		{ "position": [-683.0, 2.5, 1030.0], "facing": 180.0, "pose": "Stand" },
+		{ "position": [-699.0, 2.5, 1036.0], "facing": 180.0, "pose": "Stand" },
+		{ "position": [-679.0, 2.5, 1036.0], "facing": 180.0, "pose": "Stand" },
+		{ "position": [-689.0, 2.5, 1040.0], "facing": 180.0, "pose": "Stand" }
+	],
+	"entrance": [-689.0, 2.5, 990.0]
+}
