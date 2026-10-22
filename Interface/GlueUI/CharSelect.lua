@@ -12,23 +12,32 @@ local ROTATE_DEGREES_PER_PIXEL = 0.4
 local ROW_DRAG_THRESHOLD = 12		-- UI units the cursor moves before a row press becomes a drag
 local PLAZA_DRAG_THRESHOLD = 16	-- UI units the cursor moves before a plaza press turns the character instead of picking
 local DELETE_WALK_SECONDS = 1.5	-- The character runs out before the delete is sent
-local NAMEPLATE_CARD_PADDING = 80	-- UI units the nameplate cards reach beyond the widest line
+local NAMEPLATE_PADDING = 24		-- UI units kept free beside the widest line when plates make way
+local NAMEPLATE_HEIGHT = 172		-- CharNameplateTemplate's height: bottom to the top of the name
+local NAMEPLATE_ZONE_LINE = 48		-- Height of the zone line at the bottom, empty unless selected
 
--- Nameplate text colours: at rest, and brighter while the character is hovered.
+-- Nameplate text colours: at rest, brighter while hovered, white-ivory for the selected character.
 local NAME_COLOR = "FFF3EEE2"
 local NAME_COLOR_HOVERED = "FFFFFDF6"
+local NAME_COLOR_SELECTED = "FFFFFCF4"
 local LEVEL_COLOR = "FFE0E0E0"
 local LEVEL_COLOR_HOVERED = "FFFFFFFF"
-local ZONE_COLOR = "FFA0A0A0"
-local ZONE_COLOR_SELECTED = "FFD2DCE6"
+local LEVEL_COLOR_SELECTED = "FFF3EEE2"
+local ZONE_COLOR_SELECTED = "FFCFC8B8"
+
+-- Nameplate fonts: at rest (GlueTemplates.xml), and with a deeper shadow while hovered or
+-- selected (CharSelect.xml); the selected name is also larger.
+local NAME_FONT = "DefaultHeader"
+local NAME_FONT_HOVERED = "CharNameplateNameHovered"
+local NAME_FONT_SELECTED = "CharNameplateNameSelected"
+local SMALL_FONT = "DefaultSmall"
+local SMALL_FONT_HOVERED = "CharNameplateSmallHovered"
 
 -- Nameplate children (CharNameplateTemplate in CharSelect.xml).
-local PLATE_HOVER_BACKDROP = 0
-local PLATE_SELECTED_FRAME = 1
-local PLATE_ZONE = 2
-local PLATE_LEVEL = 3
-local PLATE_NAME = 4
-local PLATE_SELECTED_MARK = 5
+local PLATE_ZONE = 0
+local PLATE_LEVEL = 1
+local PLATE_NAME = 2
+local PLATE_SELECTED_MARK = 3
 
 -- Order index of the selected character, or -1.
 local selectedIndex = -1
@@ -73,6 +82,9 @@ local rosterDrag = nil
 -- Order index shown by each nameplate, or -1.
 local nameplateIndex = {}
 
+-- Width in UI units each nameplate's lines need, measured when their text or style changes.
+local nameplateWidth = {}
+
 
 local function FindCharacterIndex(guid)
 	if guid == nil then
@@ -102,9 +114,9 @@ local function CursorScreenY()
 	return GetCursorPosition().y * GetUIScale().y
 end
 
--- Styles the nameplates for the selection and the hover: the selected character's plate carries
--- the roster's steel-blue selected card, its underline and the zone line; the hovered one a faint
--- card and brighter text.
+-- Styles the nameplates for the selection and the hover. Text only, no card: the selected
+-- character's plate has a larger white-ivory name over a short ivory underline, an ivory level line
+-- and the zone line; a hovered one brightens its name and level and deepens their shadow.
 local function RefreshNameplateStyles()
 	for plate = 1, NAMEPLATE_COUNT do
 		local frame = _G["CharNameplate" .. plate]
@@ -116,18 +128,28 @@ local function RefreshNameplateStyles()
 		local levelFrame = frame:GetChild(PLATE_LEVEL)
 		local zoneFrame = frame:GetChild(PLATE_ZONE)
 
-		nameFrame:SetProperty("TextColor", hovered and NAME_COLOR_HOVERED or NAME_COLOR)
-		levelFrame:SetProperty("TextColor", hovered and LEVEL_COLOR_HOVERED or LEVEL_COLOR)
-		zoneFrame:SetProperty("TextColor", selected and ZONE_COLOR_SELECTED or ZONE_COLOR)
+		if selected then
+			nameFrame:SetProperty("Font", NAME_FONT_SELECTED)
+			nameFrame:SetProperty("TextColor", NAME_COLOR_SELECTED)
+			levelFrame:SetProperty("Font", hovered and SMALL_FONT_HOVERED or SMALL_FONT)
+			levelFrame:SetProperty("TextColor", hovered and LEVEL_COLOR_HOVERED or LEVEL_COLOR_SELECTED)
+		elseif hovered then
+			nameFrame:SetProperty("Font", NAME_FONT_HOVERED)
+			nameFrame:SetProperty("TextColor", NAME_COLOR_HOVERED)
+			levelFrame:SetProperty("Font", SMALL_FONT_HOVERED)
+			levelFrame:SetProperty("TextColor", LEVEL_COLOR_HOVERED)
+		else
+			nameFrame:SetProperty("Font", NAME_FONT)
+			nameFrame:SetProperty("TextColor", NAME_COLOR)
+			levelFrame:SetProperty("Font", SMALL_FONT)
+			levelFrame:SetProperty("TextColor", LEVEL_COLOR)
+		end
+		zoneFrame:SetProperty("TextColor", ZONE_COLOR_SELECTED)
 
-		-- Both cards hug the widest line.
-		local width = math.max(nameFrame:GetTextWidth(), levelFrame:GetTextWidth(), zoneFrame:GetTextWidth()) + 2 * NAMEPLATE_CARD_PADDING
-		frame:GetChild(PLATE_HOVER_BACKDROP):SetWidth(width)
-		frame:GetChild(PLATE_SELECTED_FRAME):SetWidth(width)
-
-		frame:GetChild(PLATE_HOVER_BACKDROP):SetProperty("Visible", (hovered and not selected) and "true" or "false")
-		frame:GetChild(PLATE_SELECTED_FRAME):SetProperty("Visible", selected and "true" or "false")
 		frame:GetChild(PLATE_SELECTED_MARK):SetProperty("Visible", selected and "true" or "false")
+
+		-- What the plate needs beside other plates (see CharSelect_OnUpdate).
+		nameplateWidth[plate] = math.max(nameFrame:GetTextWidth(), levelFrame:GetTextWidth(), zoneFrame:GetTextWidth()) + 2 * NAMEPLATE_PADDING
 	end
 end
 
@@ -410,8 +432,9 @@ local function CharSelect_OnMouseUp(self, button)
 	plazaPress = nil
 	hoverDirty = true
 
-	-- A drag that turned the character is not a click.
-	if press.rotating or not PlazaInputAllowed() then
+	-- A drag that turned the character is not a click, and neither is a release over the chrome
+	-- or a frame that opened in the meantime.
+	if press.rotating or not PlazaInputAllowed() or not CharSelect:IsMouseClickTarget() then
 		return
 	end
 
@@ -459,6 +482,19 @@ local function CharSelect_OnPushInFinished(self)
 	end
 end
 
+-- A character stopped running: it may now be under a cursor that did not move.
+local function CharSelect_OnPlazaArrival(self)
+	hoverDirty = true
+end
+
+-- Leaving the character screen (or its parent hiding) drops the hover and any plaza press, so the
+-- character does not keep reacting and a later release does not pick or turn anyone.
+function CharSelect_OnHide(self)
+	plazaPress = nil
+	SetHoveredCharacter(-1)
+	hoverDirty = true
+end
+
 function CharSelect_OnLoad(self)
 	CharSelect:SetOnMouseDownHandler(CharSelect_OnMouseDown)
 	CharSelect:SetOnMouseUpHandler(CharSelect_OnMouseUp)
@@ -466,9 +502,11 @@ function CharSelect_OnLoad(self)
 
 	CharSelect:RegisterEvent("GLUE_FLIGHT_FINISHED", CharSelect_OnFlightFinished)
 	CharSelect:RegisterEvent("GLUE_PUSHIN_FINISHED", CharSelect_OnPushInFinished)
+	CharSelect:RegisterEvent("GLUE_PLAZA_ARRIVAL", CharSelect_OnPlazaArrival)
 
 	for plate = 1, NAMEPLATE_COUNT do
 		nameplateIndex[plate] = -1
+		nameplateWidth[plate] = 0
 	end
 end
 
@@ -501,14 +539,18 @@ function CharSelect_OnUpdate(self, elapsed)
 
 	UpdateHover()
 
-	-- Nameplates follow the characters, including while they run.
+	-- Nameplates follow the characters, including while they run. Plates that would overlap make
+	-- way (the farther character's moves up; the selected one keeps its place), eased by the client.
+	for plate = 1, NAMEPLATE_COUNT do
+		local index = nameplateIndex[plate]
+		local selected = index >= 0 and index == selectedIndex
+		SetPlazaNameplateBox(plate, index, nameplateWidth[plate] or 0, NAMEPLATE_HEIGHT, selected and 0 or NAMEPLATE_ZONE_LINE)
+	end
+	UpdatePlazaNameplates(elapsed)
+
 	for plate = 1, NAMEPLATE_COUNT do
 		local frame = _G["CharNameplate" .. plate]
-		local index = nameplateIndex[plate]
-		local x, y, visible = false, false, false
-		if index >= 0 then
-			x, y, visible = GetPlazaNameplatePosition(index)
-		end
+		local x, y, visible = GetPlazaNameplateLayout(plate)
 
 		if visible then
 			PlaceAbove(frame, x, y)

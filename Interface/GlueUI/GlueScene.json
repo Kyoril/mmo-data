@@ -11,6 +11,7 @@
 		{ "position": [-689.0, 4.1, 1006.5], "lookAt": [-689.0, 3.3, 1018.0] }
 	],
 	"flightSeconds": 3.0,
+	"flyOutSeconds": 2.5,
 	"front": { "position": [-689.0, 2.6, 1012.5], "facing": 90.0, "pose": "Idle" },
 	"spots": [
 		{ "position": [-692.8, 2.6, 1016.0], "facing": 75.0, "pose": "EmoteTalk" },

@@ -2,6 +2,12 @@
 <UiLayout xmlns="http://mmo-dev.net/ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://mmo-dev.net/ui UI.xsd">
 	<Script file="CharSelect.lua" />
 
+	<!-- Nameplate names: hovered (deeper shadow) and selected (larger, deeper shadow). The resting
+	     name uses DefaultHeader, the resting level line DefaultSmall. -->
+	<Font name="CharNameplateNameHovered" file="Fonts/EBGaramond-Regular.ttf" size="41" outline="0" shadowX="2.0" shadowY="2.0" />
+	<Font name="CharNameplateNameSelected" file="Fonts/EBGaramond-Regular.ttf" size="47" outline="0" shadowX="2.0" shadowY="2.0" />
+	<Font name="CharNameplateSmallHovered" file="Fonts/EBGaramond-Regular.ttf" size="32" outline="0" shadowX="2.0" shadowY="2.0" />
+
 	<!-- Virtual roster row (cloned by CharSelect.lua). The same steel-framed card as the realm rows:
 	     dark stone at rest, lifted stone on hover, the Checked steel-blue fill inside the bright
 	     selected frame (ivory inner line) for the selected character. Frame 36 over a fill inset 14,
@@ -142,74 +148,20 @@
 	</Frame>
 
 	<!-- Virtual nameplate over a character on the plaza: name, "Level N Class" and, for the selected
-	     character, the zone. Its bottom centre is placed over the character's head every frame.
+	     character, the zone. Text only, no card: the selected plate has a larger, white-ivory name
+	     with a short ivory underline flourish and shows the zone line; a hovered plate brightens its
+	     name and level and deepens their shadow. Its bottom centre is placed over the character's
+	     head every frame (moved up when it would overlap another plate, see CharSelect.lua).
 	     The lines are stacked by offsets from the bottom: anchors between template children would
 	     resolve to the template's own children, not the copy's.
-	     Children (CharSelect.lua uses the indices): 0 = hover backdrop, 1 = selected frame (the
-	     roster's steel-blue selected card), 2 = zone, 3 = level/class, 4 = name, 5 = selected
-	     underline. Both backdrops are sized to the text from Lua. -->
+	     Children (CharSelect.lua uses the indices): 0 = zone, 1 = level/class, 2 = name,
+	     3 = selected underline flourish. -->
 	<Frame name="CharNameplateTemplate">
 		<Property name="Visible" value="false" />
 		<Property name="MousePassThrough" value="true" />
 		<Area>
-			<Size><AbsDimension x="1200" y="160" /></Size>
+			<Size><AbsDimension x="1200" y="172" /></Size>
 		</Area>
-
-		<!-- Hovered (not selected): a faint lifted-stone card behind the lines. -->
-		<Frame name="CharNameplateHoverBackdrop" renderer="DefaultRenderer">
-			<Property name="Visible" value="false" />
-			<Property name="Clickable" value="false" />
-			<Visual>
-				<ImagerySection name="Card">
-					<ImageComponent texture="Interface/GlueUI/GlueSkinRowHovered.htex" tint="80FFFFFF"><Area><Inset all="14" /></Area></ImageComponent>
-					<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" tint="A0FFFFFF" />
-				</ImagerySection>
-				<StateImagery name="Enabled">
-					<Layer>
-						<Section section="Card" />
-					</Layer>
-				</StateImagery>
-				<StateImagery name="Disabled">
-					<Layer>
-						<Section section="Card" />
-					</Layer>
-				</StateImagery>
-			</Visual>
-			<Area>
-				<Anchor point="H_CENTER" />
-				<Anchor point="TOP" offset="-24" />
-				<Anchor point="BOTTOM" offset="24" />
-				<Size><AbsDimension x="600" /></Size>
-			</Area>
-		</Frame>
-
-		<!-- Selected: the roster's selected card, the steel-blue fill inside the bright frame. -->
-		<Frame name="CharNameplateSelectedFrame" renderer="DefaultRenderer">
-			<Property name="Visible" value="false" />
-			<Property name="Clickable" value="false" />
-			<Visual>
-				<ImagerySection name="Card">
-					<ImageComponent texture="Interface/GlueUI/GlueSkinButtonChecked.htex" tint="C0FFFFFF"><Area><Inset all="14" /></Area></ImageComponent>
-					<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrameSelected.htex" borderSize="36" />
-				</ImagerySection>
-				<StateImagery name="Enabled">
-					<Layer>
-						<Section section="Card" />
-					</Layer>
-				</StateImagery>
-				<StateImagery name="Disabled">
-					<Layer>
-						<Section section="Card" />
-					</Layer>
-				</StateImagery>
-			</Visual>
-			<Area>
-				<Anchor point="H_CENTER" />
-				<Anchor point="TOP" offset="-24" />
-				<Anchor point="BOTTOM" offset="24" />
-				<Size><AbsDimension x="600" /></Size>
-			</Area>
-		</Frame>
 
 		<Frame name="CharNameplateZone" inherits="GlueTextSmall">
 			<Property name="HorzAlign" value="CENTER" />
@@ -229,7 +181,8 @@
 				<Anchor point="BOTTOM" offset="-48" />
 			</Area>
 		</Frame>
-		<!-- The headline font with a settable colour, so a hovered name can brighten. -->
+		<!-- The headline font with a settable colour and font, so a hovered or selected name can
+		     brighten and grow. -->
 		<Frame name="CharNameplateName" inherits="GlueTextSmall">
 			<Property name="Font" value="DefaultHeader" />
 			<Property name="HorzAlign" value="CENTER" />
@@ -237,23 +190,24 @@
 			<Area>
 				<Anchor point="LEFT" />
 				<Anchor point="RIGHT" />
-				<Anchor point="BOTTOM" offset="-96" />
-				<Size><AbsDimension y="60" /></Size>
+				<Anchor point="BOTTOM" offset="-108" />
+				<Size><AbsDimension y="64" /></Size>
 			</Area>
 		</Frame>
 
-		<!-- Selected: a short bright underline below the card. -->
+		<!-- Selected: a short, thin ivory line under the name (the divider strip of the selected
+		     steel frame, tinted). -->
 		<Frame name="CharNameplateSelectedMark" renderer="DefaultRenderer">
 			<Property name="Visible" value="false" />
 			<Property name="Clickable" value="false" />
 			<Area>
 				<Anchor point="H_CENTER" />
-				<Anchor point="TOP" relativePoint="BOTTOM" offset="40" />
-				<Size><AbsDimension x="240" y="12" /></Size>
+				<Anchor point="BOTTOM" offset="-97" />
+				<Size><AbsDimension x="220" y="6" /></Size>
 			</Area>
 			<Visual>
 				<ImagerySection name="Line">
-					<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrameSelected.htex" leftSize="36" topSize="6" rightSize="36" bottomSize="494" />
+					<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrameSelected.htex" leftSize="36" topSize="6" rightSize="36" bottomSize="494" tint="FFFFF8EC" />
 				</ImagerySection>
 				<StateImagery name="Enabled">
 					<Layer>
@@ -586,6 +540,11 @@
 					CharSelect_OnUpdate(this, elapsed);
 				end
 			</OnUpdate>
+			<OnHide>
+				return function(this)
+					CharSelect_OnHide(this);
+				end
+			</OnHide>
 		</Scripts>
 	</Frame>
 </UiLayout>
