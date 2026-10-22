@@ -32,7 +32,17 @@
 	       brightness, mirrored to a seamless 256 tile.
 	     - GlueSkinArrow{Up,Down,Left,Right} (128, DXT5): grey copies of IconGold_ArrowUp/Down and
 	       fg4_iconsGold_left/rightArrow (luminance scaled so the 98th percentile is white), tinted per
-	       state in GlueArrowButton. -->
+	       state in GlueArrowButton.
+	     List style (realm list, roster; baked the same way, no generator in the repo):
+	     - GlueListWell (128, DXT5, borderSize 32): sunken list well. Near-black brown fill (11 0C 08) at
+	       alpha 238, a 4 px rim (dark bronze, two bronze px, dark bronze: about 2 px at 1080p) and an
+	       inner shadow 28 px deep under the top rim and 10 px at the sides.
+	     - GlueListFade (256x16, DXT5): white, alpha 1 at the left falling as (1 - t)^1.6 to 0 at 85% of
+	       the width. Tinted for the hover (warm ivory) and selected (red) row glows.
+	     - GlueListAccent (32, DXT5): white in the left 12 columns, transparent elsewhere. With
+	       borderSize 12 it draws a 12 UI bar down the left edge of any row (selected accent); a crop
+	       of the bar's centre (left 2, top 14, right 22, bottom 14, no borderSize) is a solid fill for
+	       row separators and the scroll track. -->
 
 	<!-- GlueButton template: Common buttons -->
 	<Frame name="GlueButton" type="Button" renderer="ButtonRenderer">
@@ -342,16 +352,18 @@
 		</Scripts>
 	</Frame>
 
-	<!-- Thin steel rule (dividers): the straight metal strip of GlueSkinSteelFrame's top band, source
+	<!-- Thin bronze rule (dividers): the straight metal strip of GlueSkinSteelFrame's top band, source
 	     rows 6-18 between the 36 px corners. Without borderSize a BorderComponent draws its corners and
 	     edges zero units wide and only its centre, which maps the source rect (left, top) to
 	     (width - right, height - bottom) onto the whole frame, so the sizes below crop that strip.
 	     Give it a width and about 12 UI of height. -->
 	<Frame name="GlueDivider" renderer="DefaultRenderer">
 		<Property name="Clickable" value="false" />
+		<Property name="LineColor" value="FFDEA660" />
 		<Visual>
+			<!-- Tinted bronze, to sit with the wood panels and the red buttons. -->
 			<ImagerySection name="Line">
-				<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" leftSize="36" topSize="6" rightSize="36" bottomSize="494" />
+				<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" leftSize="36" topSize="6" rightSize="36" bottomSize="494" tint="$LineColor" />
 			</ImagerySection>
 			<StateImagery name="Enabled">
 				<Layer>
@@ -369,6 +381,27 @@
 		</Area>
 	</Frame>
 
+	<!-- Sunken list well (realm list, roster): clearly darker than the wood, with a thin bronze rim and
+	     an inner shadow under the top edge (GlueListWell, see the note above). Content belongs 8 UI
+	     inside it. -->
+	<Frame name="GlueListWell" renderer="DefaultRenderer">
+		<Visual>
+			<ImagerySection name="Well">
+				<BorderComponent texture="Interface/GlueUI/GlueListWell.htex" borderSize="32" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Well" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="Well" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+	</Frame>
+
 	<Frame name="GlueBorderFrame" renderer="DefaultRenderer">
 		<Visual>
 			<!-- Dark wood with a bronze edge and corner ornaments: WindowPanel baked at 2x (GlueSkin note above). -->
@@ -383,24 +416,20 @@
 		</Visual>
 	</Frame>
 
+	<!-- Scroll thumb: the red glue button art, 9-sliced (30) like GlueButton. -->
 	<Frame name="ThumbButtonTemplate" type="Thumb" renderer="ButtonRenderer">
 		<Visual>
-			<!-- Steel frame (9-slice, 36) over a baked fill inset 14 so the fill never leaks past the frame. -->
 			<ImagerySection name="NormalFrame">
-				<ImageComponent texture="Interface/GlueUI/GlueSkinButtonNormal.htex"><Area><Inset all="14" /></Area></ImageComponent>
-				<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" />
+				<BorderComponent texture="Interface/GlueUI/ButtonNormal.htex" borderSize="30" />
 			</ImagerySection>
 			<ImagerySection name="HoveredFrame">
-				<ImageComponent texture="Interface/GlueUI/GlueSkinButtonHovered.htex"><Area><Inset all="14" /></Area></ImageComponent>
-				<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" />
+				<BorderComponent texture="Interface/GlueUI/ButtonHovered.htex" borderSize="30" />
 			</ImagerySection>
 			<ImagerySection name="PushedFrame">
-				<ImageComponent texture="Interface/GlueUI/GlueSkinButtonPushed.htex"><Area><Inset all="14" /></Area></ImageComponent>
-				<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" />
+				<BorderComponent texture="Interface/GlueUI/ButtonPushed.htex" borderSize="30" />
 			</ImagerySection>
 			<ImagerySection name="DisabledFrame">
-				<ImageComponent texture="Interface/GlueUI/GlueSkinButtonDisabled.htex"><Area><Inset all="14" /></Area></ImageComponent>
-				<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" tint="FF8C8C8C" />
+				<BorderComponent texture="Interface/GlueUI/ButtonDisabled.htex" borderSize="30" />
 			</ImagerySection>
 			<StateImagery name="Normal">
 				<Layer>
@@ -422,7 +451,7 @@
 					<Section section="DisabledFrame" />
 				</Layer>
 			</StateImagery>
-		</Visual>		
+		</Visual>
 		<Area>
 			<Anchor point="TOP" offset="80" />
 			<Anchor point="LEFT" offset="8" />
@@ -431,15 +460,79 @@
 			</Size>
 		</Area>
 	</Frame>
-	
+
+	<!-- Scroll bar arrow: the red glue button art with an ivory arrow (GlueSkinArrow*) tinted per state.
+	     Set the arrow with the Icon property. GlueArrowButton (character creation) keeps the steel look. -->
+	<Frame name="GlueScrollArrowButton" type="Button" renderer="ButtonRenderer">
+		<Property name="Icon" />
+
+		<Visual>
+			<ImagerySection name="NormalFrame">
+				<BorderComponent texture="Interface/GlueUI/ButtonNormal.htex" borderSize="30" />
+			</ImagerySection>
+			<ImagerySection name="HoveredFrame">
+				<BorderComponent texture="Interface/GlueUI/ButtonHovered.htex" borderSize="30" />
+			</ImagerySection>
+			<ImagerySection name="PushedFrame">
+				<BorderComponent texture="Interface/GlueUI/ButtonPushed.htex" borderSize="30" />
+			</ImagerySection>
+			<ImagerySection name="DisabledFrame">
+				<BorderComponent texture="Interface/GlueUI/ButtonDisabled.htex" borderSize="30" />
+			</ImagerySection>
+			<ImagerySection name="Arrow">
+				<ImageComponent tint="FFF3EEE2"><Area><Inset all="20" /></Area><PropertyValue property="Icon" /></ImageComponent>
+			</ImagerySection>
+			<ImagerySection name="ArrowHovered">
+				<ImageComponent tint="FFFFFFFF"><Area><Inset all="20" /></Area><PropertyValue property="Icon" /></ImageComponent>
+			</ImagerySection>
+			<ImagerySection name="ArrowPushed">
+				<ImageComponent tint="FFD2CEC4"><Area><Inset all="22" /></Area><PropertyValue property="Icon" /></ImageComponent>
+			</ImagerySection>
+			<ImagerySection name="ArrowDisabled">
+				<ImageComponent tint="A08A867E"><Area><Inset all="20" /></Area><PropertyValue property="Icon" /></ImageComponent>
+			</ImagerySection>
+			<StateImagery name="Normal">
+				<Layer>
+					<Section section="NormalFrame" />
+					<Section section="Arrow" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Hovered">
+				<Layer>
+					<Section section="HoveredFrame" />
+					<Section section="ArrowHovered" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Pushed">
+				<Layer>
+					<Section section="PushedFrame" />
+					<Section section="ArrowPushed" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="DisabledFrame" />
+					<Section section="ArrowDisabled" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+		<Area>
+			<Size>
+				<AbsDimension x="80" y="80" />
+			</Size>
+		</Area>
+	</Frame>
+
 	<Frame name="VerticalScrollBar" type="ScrollBar" renderer="DefaultRenderer">
 		<Property name="Orientation" value="VERTICAL" />
 
 		<Visual>
-			<!-- Track: the glue well (dark stone tile in the thin steel rim), as the character creation lists. -->
+			<!-- Track: a dark slot inside the list well between the arrow buttons (a solid crop of
+			     GlueListAccent, tinted near-black). -->
 			<ImagerySection name="Border">
-				<ImageComponent texture="Interface/GlueUI/GlueSkinWellFill.htex" tiling="BOTH"><Area><Inset all="6" /></Area></ImageComponent>
-				<BorderComponent texture="Interface/GlueUI/GlueSkinWellFrame.htex" borderSize="18" />
+				<BorderComponent texture="Interface/GlueUI/GlueListAccent.htex" leftSize="2" topSize="14" rightSize="22" bottomSize="14" tint="B4050302">
+					<Area><Inset left="12" top="40" right="12" bottom="40" /></Area>
+				</BorderComponent>
 			</ImagerySection>
 			<StateImagery name="Enabled">
 				<Layer>
@@ -460,7 +553,7 @@
 			</Size>
 		</Area>
 
-		<Frame name="ScrollUpButton" inherits="GlueArrowButton">
+		<Frame name="ScrollUpButton" inherits="GlueScrollArrowButton">
 			<Property name="Icon" value="Interface/GlueUI/GlueSkinArrowUp.htex" />
 			<Area>
 				<Anchor point="TOP" offset="8" />
@@ -471,7 +564,7 @@
 			</Area>
 		</Frame>
 		
-		<Frame name="ScrollDownButton" inherits="GlueArrowButton">
+		<Frame name="ScrollDownButton" inherits="GlueScrollArrowButton">
 			<Property name="Icon" value="Interface/GlueUI/GlueSkinArrowDown.htex" />
 			<Area>
 				<Anchor point="BOTTOM" offset="-8" />

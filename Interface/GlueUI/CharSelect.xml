@@ -8,39 +8,35 @@
 	<Font name="CharNameplateNameSelected" file="Fonts/EBGaramond-Regular.ttf" size="47" outline="0" shadowX="2.0" shadowY="2.0" />
 	<Font name="CharNameplateSmallHovered" file="Fonts/EBGaramond-Regular.ttf" size="32" outline="0" shadowX="2.0" shadowY="2.0" />
 
-	<!-- Virtual roster row (cloned by CharSelect.lua). The same steel-framed card as the realm rows:
-	     dark stone at rest, lifted stone on hover, the Checked steel-blue fill inside the bright
-	     selected frame (ivory inner line) for the selected character. Frame 36 over a fill inset 14,
-	     so text keeps 40 UI from the left and right edges and about 20 from the top and bottom.
-	     Children are: 0 = level/class line, 1 = "on the plaza" marker. -->
-	<Frame name="CharButton" type="Button" renderer="CheckboxRenderer">
+	<!-- Roster row: CharRosterRow1..N are a fixed pool showing a window of the character order
+	     (CharSelect.lua). List style B, like the realm rows (RealmList.xml): no box at rest, a thin
+	     bronze separator along the bottom (SeparatorColor, cleared from Lua under the last character
+	     and above the plaza divider), a faint warm-ivory fade on hover, and for the selected character
+	     a red glow fading out by 85% of the width with a bronze accent bar on the left edge.
+	     Children are: 0 = level/class line, 1 = "on the plaza" marker, 2 and 3 = the divider line and
+	     label before the first character who is not on the plaza. Those two sit in the
+	     ROSTER_DIVIDER_GAP (80) above the row and are shown only on the row of that character; the Lua
+	     opens the gap by anchoring the row 80 lower. -->
+	<Frame name="CharRosterRowTemplate" type="Button" renderer="CheckboxRenderer">
 		<Property name="Font" value="DefaultHeader" />
 		<Property name="Checkable" value="true" />
+		<Property name="SeparatorColor" value="598C6234" />
 
 		<Visual>
-			<ImagerySection name="NormalSurface">
-				<ImageComponent texture="Interface/GlueUI/GlueSkinFieldFill.htex"><Area><Inset all="14" /></Area></ImageComponent>
-				<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" />
+			<ImagerySection name="Separator">
+				<BorderComponent texture="Interface/GlueUI/GlueListAccent.htex" leftSize="2" topSize="14" rightSize="22" bottomSize="14" tint="$SeparatorColor">
+					<Area><Inset left="32" top="140" right="32" bottom="0" /></Area>
+				</BorderComponent>
 			</ImagerySection>
-			<ImagerySection name="HoveredSurface">
-				<ImageComponent texture="Interface/GlueUI/GlueSkinRowHovered.htex"><Area><Inset all="14" /></Area></ImageComponent>
-				<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" />
+			<ImagerySection name="HoverFade">
+				<ImageComponent texture="Interface/GlueUI/GlueListFade.htex" tint="1AFFF0DC" />
 			</ImagerySection>
-			<ImagerySection name="PushedSurface">
-				<ImageComponent texture="Interface/GlueUI/GlueSkinButtonPushed.htex"><Area><Inset all="14" /></Area></ImageComponent>
-				<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" />
+			<ImagerySection name="PushedFade">
+				<ImageComponent texture="Interface/GlueUI/GlueListFade.htex" tint="2EFFF0DC" />
 			</ImagerySection>
-			<ImagerySection name="DisabledSurface">
-				<ImageComponent texture="Interface/GlueUI/GlueSkinFieldFill.htex"><Area><Inset all="14" /></Area></ImageComponent>
-				<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" tint="FF8C8C8C" />
-			</ImagerySection>
-			<ImagerySection name="CheckedSurface">
-				<ImageComponent texture="Interface/GlueUI/GlueSkinButtonChecked.htex"><Area><Inset all="14" /></Area></ImageComponent>
-				<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrameSelected.htex" borderSize="36" />
-			</ImagerySection>
-			<ImagerySection name="PushedCheckedSurface">
-				<ImageComponent texture="Interface/GlueUI/GlueSkinButtonPushed.htex"><Area><Inset all="14" /></Area></ImageComponent>
-				<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrameSelected.htex" borderSize="36" />
+			<ImagerySection name="SelectedFade">
+				<ImageComponent texture="Interface/GlueUI/GlueListFade.htex" tint="CC96241A" />
+				<BorderComponent texture="Interface/GlueUI/GlueListAccent.htex" borderSize="12" tint="FFDEA660" />
 			</ImagerySection>
 			<!-- The right inset leaves room for the "on the plaza" marker. -->
 			<ImagerySection name="Name">
@@ -51,55 +47,63 @@
 
 			<StateImagery name="Normal">
 				<Layer>
-					<Section section="NormalSurface" />
+					<Section section="Separator" />
 					<Section section="Name" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="Hovered">
 				<Layer>
-					<Section section="HoveredSurface" />
+					<Section section="HoverFade" />
+					<Section section="Separator" />
 					<Section section="Name" color="FFFFFFFF" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="Pushed">
 				<Layer>
-					<Section section="PushedSurface" />
+					<Section section="PushedFade" />
+					<Section section="Separator" />
 					<Section section="Name" color="FFDDDDDD" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="Disabled">
 				<Layer>
-					<Section section="DisabledSurface" />
+					<Section section="Separator" />
 					<Section section="Name" color="FF8A867E" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="NormalChecked">
 				<Layer>
-					<Section section="CheckedSurface" />
+					<Section section="SelectedFade" />
+					<Section section="Separator" />
 					<Section section="Name" color="FFFFFFFF" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="HoveredChecked">
 				<Layer>
-					<Section section="CheckedSurface" />
+					<Section section="SelectedFade" />
+					<Section section="HoverFade" />
+					<Section section="Separator" />
 					<Section section="Name" color="FFFFFFFF" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="PushedChecked">
 				<Layer>
-					<Section section="PushedCheckedSurface" />
+					<Section section="SelectedFade" />
+					<Section section="PushedFade" />
+					<Section section="Separator" />
 					<Section section="Name" color="FFDDDDDD" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="DisabledChecked">
 				<Layer>
-					<Section section="DisabledSurface" />
+					<Section section="SelectedFade" />
+					<Section section="Separator" />
 					<Section section="Name" color="FF8A867E" />
 				</Layer>
 			</StateImagery>
 		</Visual>
 		<Area>
-			<Size><AbsDimension x="128" y="144" /></Size>
+			<Size><AbsDimension y="144" /></Size>
 		</Area>
 
 		<!-- Level and class, beneath the name. -->
@@ -110,7 +114,7 @@
 
 			<Visual>
 				<ImagerySection name="Text">
-					<TextComponent color="FFBCC6BE" horzAlign="LEFT" vertAlign="CENTER" />
+					<TextComponent color="FFB5A892" horzAlign="LEFT" vertAlign="CENTER" />
 				</ImagerySection>
 
 				<StateImagery name="Enabled">
@@ -133,16 +137,40 @@
 			</Area>
 		</Frame>
 
-		<!-- "On the plaza" marker of the first five rows, top right, on the name's baseline. -->
+		<!-- "On the plaza" marker of the first five characters, top right, on the name's baseline. -->
 		<Frame name="CharPlazaMark" inherits="GlueTextSmall">
 			<Property name="Enabled" value="false" />
 			<Property name="Clickable" value="false" />
 			<Property name="HorzAlign" value="RIGHT" />
-			<Property name="TextColor" value="FFB4C2D0" />
+			<Property name="TextColor" value="FFCDAE7E" />
 			<Area>
 				<Anchor point="TOP" offset="30" />
 				<Anchor point="RIGHT" offset="-40" />
 				<Size><AbsDimension x="280" y="44" /></Size>
+			</Area>
+		</Frame>
+
+		<!-- Divider before the characters who are not on the plaza, in the gap above the row. -->
+		<Frame name="CharRosterDivider" inherits="GlueDivider">
+			<Property name="Visible" value="false" />
+			<Area>
+				<Anchor point="LEFT" offset="16" />
+				<Anchor point="RIGHT" offset="-16" />
+				<Anchor point="TOP" offset="-72" />
+				<Size><AbsDimension y="12" /></Size>
+			</Area>
+		</Frame>
+		<Frame name="CharRosterDividerLabel" inherits="GlueTextSmall">
+			<Property name="Text" value="NOT_ON_THE_PLAZA" />
+			<Property name="Visible" value="false" />
+			<Property name="Enabled" value="false" />
+			<Property name="Clickable" value="false" />
+			<Property name="HorzAlign" value="CENTER" />
+			<Property name="TextColor" value="FFB5A892" />
+			<Area>
+				<Anchor point="LEFT" offset="16" />
+				<Anchor point="RIGHT" offset="-16" />
+				<Anchor point="TOP" offset="-52" />
 			</Area>
 		</Frame>
 	</Frame>
@@ -391,10 +419,10 @@
 				</Scripts>
 			</Frame>
 
-			<!-- Roster: every character, the first five marked as standing on the plaza. Rows are
-			     cloned from CharButton by CharSelect.lua and reordered by dragging. -->
-			<!-- Content keeps 72 UI from the panel edge (bronze edge and corner ornaments); 1040 wide
-			     leaves the rows 896, as before the glue skin. -->
+			<!-- Roster: every character, the first five marked as standing on the plaza, in a sunken list
+			     well. The rows are a fixed pool scrolled by data offset (CharSelect.lua) and reordered
+			     by dragging. Content keeps 72 UI from the panel edge (bronze edge and corner ornaments);
+			     1040 wide leaves the well 896. -->
 			<Frame name="CharRosterPanel" inherits="GlueBorderFrame">
 				<Property name="Visible" value="false" />
 				<Area>
@@ -415,7 +443,7 @@
 				<Frame name="CharCountLabel" inherits="GlueTextSmall">
 					<Property name="Text" value="" />
 					<Property name="HorzAlign" value="CENTER" />
-					<Property name="TextColor" value="FFA0A0A0" />
+					<Property name="TextColor" value="FFB5A892" />
 					<Area>
 						<Anchor point="LEFT" offset="72" />
 						<Anchor point="RIGHT" offset="-72" />
@@ -423,7 +451,9 @@
 					</Area>
 				</Frame>
 
-				<Frame name="CharRosterList">
+				<!-- The well is 1552 tall at the 2160 UI height: ten rows of 144 and the 80 divider gap
+				     need 1520 plus the 16 of insets. -->
+				<Frame name="CharRosterList" inherits="GlueListWell">
 					<Area>
 						<Anchor point="LEFT" offset="72" />
 						<Anchor point="RIGHT" offset="-72" />
@@ -431,27 +461,93 @@
 						<Anchor point="BOTTOM" offset="-140" />
 					</Area>
 
-					<!-- Divider before the characters that are not on the plaza; anchored below the fifth
-					     row from Lua. -->
-					<Frame name="CharRosterDivider" inherits="GlueDivider">
-						<Property name="Visible" value="false" />
+					<!-- CharSelect.lua moves the right edge in to 112 while the scroll bar shows. -->
+					<Frame name="CharRosterContent">
 						<Area>
-							<Anchor point="LEFT" offset="16" />
-							<Anchor point="RIGHT" offset="-16" />
-							<Anchor point="TOP" />
-							<Size><AbsDimension y="12" /></Size>
+							<Anchor point="LEFT" offset="8" />
+							<Anchor point="RIGHT" offset="-8" />
+							<Anchor point="TOP" offset="8" />
+							<Anchor point="BOTTOM" offset="-8" />
 						</Area>
+
+						<Frame name="CharRosterRow1" inherits="CharRosterRowTemplate">
+							<Area>
+								<Anchor point="LEFT" />
+								<Anchor point="RIGHT" />
+								<Anchor point="TOP" />
+							</Area>
+						</Frame>
+						<Frame name="CharRosterRow2" inherits="CharRosterRowTemplate">
+							<Area>
+								<Anchor point="LEFT" />
+								<Anchor point="RIGHT" />
+								<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharRosterRow1" />
+							</Area>
+						</Frame>
+						<Frame name="CharRosterRow3" inherits="CharRosterRowTemplate">
+							<Area>
+								<Anchor point="LEFT" />
+								<Anchor point="RIGHT" />
+								<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharRosterRow2" />
+							</Area>
+						</Frame>
+						<Frame name="CharRosterRow4" inherits="CharRosterRowTemplate">
+							<Area>
+								<Anchor point="LEFT" />
+								<Anchor point="RIGHT" />
+								<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharRosterRow3" />
+							</Area>
+						</Frame>
+						<Frame name="CharRosterRow5" inherits="CharRosterRowTemplate">
+							<Area>
+								<Anchor point="LEFT" />
+								<Anchor point="RIGHT" />
+								<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharRosterRow4" />
+							</Area>
+						</Frame>
+						<Frame name="CharRosterRow6" inherits="CharRosterRowTemplate">
+							<Area>
+								<Anchor point="LEFT" />
+								<Anchor point="RIGHT" />
+								<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharRosterRow5" />
+							</Area>
+						</Frame>
+						<Frame name="CharRosterRow7" inherits="CharRosterRowTemplate">
+							<Area>
+								<Anchor point="LEFT" />
+								<Anchor point="RIGHT" />
+								<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharRosterRow6" />
+							</Area>
+						</Frame>
+						<Frame name="CharRosterRow8" inherits="CharRosterRowTemplate">
+							<Area>
+								<Anchor point="LEFT" />
+								<Anchor point="RIGHT" />
+								<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharRosterRow7" />
+							</Area>
+						</Frame>
+						<Frame name="CharRosterRow9" inherits="CharRosterRowTemplate">
+							<Area>
+								<Anchor point="LEFT" />
+								<Anchor point="RIGHT" />
+								<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharRosterRow8" />
+							</Area>
+						</Frame>
+						<Frame name="CharRosterRow10" inherits="CharRosterRowTemplate">
+							<Area>
+								<Anchor point="LEFT" />
+								<Anchor point="RIGHT" />
+								<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharRosterRow9" />
+							</Area>
+						</Frame>
 					</Frame>
-					<Frame name="CharRosterDividerLabel" inherits="GlueTextSmall">
-						<Property name="Text" value="NOT_ON_THE_PLAZA" />
+
+					<Frame name="CharRosterScrollBar" inherits="VerticalScrollBar">
 						<Property name="Visible" value="false" />
-						<Property name="Clickable" value="false" />
-						<Property name="HorzAlign" value="CENTER" />
-						<Property name="TextColor" value="FFA0A0A0" />
 						<Area>
-							<Anchor point="LEFT" offset="16" />
-							<Anchor point="RIGHT" offset="-16" />
-							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharRosterDivider" offset="8" />
+							<Anchor point="RIGHT" offset="-8" />
+							<Anchor point="TOP" offset="8" />
+							<Anchor point="BOTTOM" offset="-8" />
 						</Area>
 					</Frame>
 				</Frame>
@@ -459,7 +555,7 @@
 				<Frame name="CharRosterHint" inherits="GlueTextSmall">
 					<Property name="Text" value="DRAG_TO_REORDER" />
 					<Property name="HorzAlign" value="CENTER" />
-					<Property name="TextColor" value="FFA0A0A0" />
+					<Property name="TextColor" value="FFB5A892" />
 					<Area>
 						<Anchor point="LEFT" offset="72" />
 						<Anchor point="RIGHT" offset="-72" />

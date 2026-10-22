@@ -7,7 +7,7 @@
 		<Property name="Font" value="DefaultSmall" />
 		<Property name="Enabled" value="false" />
 		<Property name="Clickable" value="false" />
-		<Property name="TextColor" value="FF9AA89E" />
+		<Property name="TextColor" value="FFB5A892" />
 		<Property name="HorzAlign" value="LEFT" />
 
 		<Visual>
@@ -32,95 +32,100 @@
 
 	<!-- One realm row. Checkable only so IsChecked() reports true: the click toggle is overwritten
 	     by the Lua refresh, which checks exactly the selected realm. Children are:
-	     0 = population gem, 1 = info line, 2 = population label. -->
+	     0 = population gem, 1 = info line, 2 = population label.
+	     List style B (the roster rows in CharSelect.xml use the same states): no box at rest, a thin
+	     bronze separator along the bottom (SeparatorColor; the Lua clears it under the last row), a
+	     faint warm-ivory fade from the left on hover, and for the selected realm a red glow fading out
+	     by 85% of the width with a solid bronze accent bar on the left edge. Disabled only dims the
+	     text. Textures: GlueListFade, GlueListAccent (GlueTemplates.xml note). -->
 	<Frame name="RealmListRowTemplate" type="Button" renderer="CheckboxRenderer">
 		<Property name="Font" value="DefaultHeader" />
 		<Property name="Checkable" value="true" />
 		<!-- TOP when the row shows an info line beneath the name, CENTER when the name stands alone. -->
 		<Property name="NameVertAlign" value="CENTER" />
+		<Property name="SeparatorColor" value="598C6234" />
 
 		<Visual>
-			<!-- Steel-framed cards in the glue skin: dark stone at rest, lifted stone on hover, the
-			     Checked steel-blue fill inside the bright selected frame (ivory inner line) when selected,
-			     so selection never reads as hover. Frame 36 over a fill inset 14, like GlueButton. The
-			     roster rows (CharButton, CharSelect.xml) use the same states. -->
-			<ImagerySection name="NormalSurface">
-				<ImageComponent texture="Interface/GlueUI/GlueSkinFieldFill.htex"><Area><Inset all="14" /></Area></ImageComponent>
-				<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" />
+			<ImagerySection name="Separator">
+				<BorderComponent texture="Interface/GlueUI/GlueListAccent.htex" leftSize="2" topSize="14" rightSize="22" bottomSize="14" tint="$SeparatorColor">
+					<Area><Inset left="40" top="164" right="40" bottom="0" /></Area>
+				</BorderComponent>
 			</ImagerySection>
-			<ImagerySection name="HoveredSurface">
-				<ImageComponent texture="Interface/GlueUI/GlueSkinRowHovered.htex"><Area><Inset all="14" /></Area></ImageComponent>
-				<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" />
+			<ImagerySection name="HoverFade">
+				<ImageComponent texture="Interface/GlueUI/GlueListFade.htex" tint="1AFFF0DC" />
 			</ImagerySection>
-			<ImagerySection name="PushedSurface">
-				<ImageComponent texture="Interface/GlueUI/GlueSkinButtonPushed.htex"><Area><Inset all="14" /></Area></ImageComponent>
-				<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" />
+			<ImagerySection name="PushedFade">
+				<ImageComponent texture="Interface/GlueUI/GlueListFade.htex" tint="2EFFF0DC" />
 			</ImagerySection>
-			<ImagerySection name="DisabledSurface">
-				<ImageComponent texture="Interface/GlueUI/GlueSkinFieldFill.htex"><Area><Inset all="14" /></Area></ImageComponent>
-				<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" tint="FF8C8C8C" />
-			</ImagerySection>
-			<ImagerySection name="CheckedSurface">
-				<ImageComponent texture="Interface/GlueUI/GlueSkinButtonChecked.htex"><Area><Inset all="14" /></Area></ImageComponent>
-				<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrameSelected.htex" borderSize="36" />
+			<ImagerySection name="SelectedFade">
+				<ImageComponent texture="Interface/GlueUI/GlueListFade.htex" tint="CC96241A" />
+				<BorderComponent texture="Interface/GlueUI/GlueListAccent.htex" borderSize="12" tint="FFDEA660" />
 			</ImagerySection>
 			<ImagerySection name="Name">
 				<TextComponent color="FFF3EEE2" horzAlign="LEFT" vertAlign="$NameVertAlign">
-					<Area><Inset left="150" top="30" right="560" bottom="30" /></Area>
+					<Area><Inset left="150" top="34" right="560" bottom="34" /></Area>
 				</TextComponent>
 			</ImagerySection>
 
 			<StateImagery name="Normal">
 				<Layer>
-					<Section section="NormalSurface" />
+					<Section section="Separator" />
 					<Section section="Name" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="Hovered">
 				<Layer>
-					<Section section="HoveredSurface" />
+					<Section section="HoverFade" />
+					<Section section="Separator" />
 					<Section section="Name" color="FFFFFFFF" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="Pushed">
 				<Layer>
-					<Section section="PushedSurface" />
+					<Section section="PushedFade" />
+					<Section section="Separator" />
 					<Section section="Name" color="FFDDDDDD" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="Disabled">
 				<Layer>
-					<Section section="DisabledSurface" />
+					<Section section="Separator" />
 					<Section section="Name" color="FF8A867E" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="NormalChecked">
 				<Layer>
-					<Section section="CheckedSurface" />
+					<Section section="SelectedFade" />
+					<Section section="Separator" />
 					<Section section="Name" color="FFFFFFFF" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="HoveredChecked">
 				<Layer>
-					<Section section="CheckedSurface" />
+					<Section section="SelectedFade" />
+					<Section section="HoverFade" />
+					<Section section="Separator" />
 					<Section section="Name" color="FFFFFFFF" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="PushedChecked">
 				<Layer>
-					<Section section="PushedSurface" />
+					<Section section="SelectedFade" />
+					<Section section="PushedFade" />
+					<Section section="Separator" />
 					<Section section="Name" color="FFDDDDDD" />
 				</Layer>
 			</StateImagery>
 			<StateImagery name="DisabledChecked">
 				<Layer>
-					<Section section="DisabledSurface" />
+					<Section section="SelectedFade" />
+					<Section section="Separator" />
 					<Section section="Name" color="FF8A867E" />
 				</Layer>
 			</StateImagery>
 		</Visual>
 		<Area>
-			<Size><AbsDimension y="160" /></Size>
+			<Size><AbsDimension y="168" /></Size>
 		</Area>
 
 		<!-- Population gem: a soft glow tinted by the realm's population. -->
@@ -158,7 +163,7 @@
 			<Area>
 				<Anchor point="LEFT" offset="150" />
 				<Anchor point="RIGHT" offset="-560" />
-				<Anchor point="BOTTOM" offset="-30" />
+				<Anchor point="BOTTOM" offset="-34" />
 			</Area>
 		</Frame>
 
@@ -297,10 +302,10 @@
 				</Area>
 			</Frame>
 
-			<!-- The realm list. Rows are a fixed pool scrolled by data offset; each row is its own
-			     steel-framed card, so the list itself draws nothing. Six rows of 160 with 12 between
-			     them need 1020; the panel height leaves 1030. -->
-			<Frame name="RealmList">
+			<!-- The realm list: a sunken well (GlueListWell). Rows are a fixed pool scrolled by data
+			     offset, 8 inside the well and touching (separators divide them). Six rows of 168 plus
+			     the insets need 1024; the panel height leaves 1028. -->
+			<Frame name="RealmList" inherits="GlueListWell">
 				<Area>
 					<Anchor point="LEFT" offset="72" />
 					<Anchor point="RIGHT" offset="-72" />
@@ -308,13 +313,13 @@
 					<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="RealmListBackButton" offset="-40" />
 				</Area>
 
-				<!-- RealmList.lua moves the right edge in by 112 while the scroll bar shows. -->
+				<!-- RealmList.lua moves the right edge in to 112 while the scroll bar shows. -->
 				<Frame name="RealmListContent">
 					<Area>
-						<Anchor point="LEFT" />
-						<Anchor point="RIGHT" />
-						<Anchor point="TOP" />
-						<Anchor point="BOTTOM" />
+						<Anchor point="LEFT" offset="8" />
+						<Anchor point="RIGHT" offset="-8" />
+						<Anchor point="TOP" offset="8" />
+						<Anchor point="BOTTOM" offset="-8" />
 					</Area>
 
 					<Frame name="RealmListRow1" inherits="RealmListRowTemplate">
@@ -328,35 +333,35 @@
 						<Area>
 							<Anchor point="LEFT" />
 							<Anchor point="RIGHT" />
-							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmListRow1" offset="12" />
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmListRow1" />
 						</Area>
 					</Frame>
 					<Frame name="RealmListRow3" inherits="RealmListRowTemplate">
 						<Area>
 							<Anchor point="LEFT" />
 							<Anchor point="RIGHT" />
-							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmListRow2" offset="12" />
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmListRow2" />
 						</Area>
 					</Frame>
 					<Frame name="RealmListRow4" inherits="RealmListRowTemplate">
 						<Area>
 							<Anchor point="LEFT" />
 							<Anchor point="RIGHT" />
-							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmListRow3" offset="12" />
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmListRow3" />
 						</Area>
 					</Frame>
 					<Frame name="RealmListRow5" inherits="RealmListRowTemplate">
 						<Area>
 							<Anchor point="LEFT" />
 							<Anchor point="RIGHT" />
-							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmListRow4" offset="12" />
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmListRow4" />
 						</Area>
 					</Frame>
 					<Frame name="RealmListRow6" inherits="RealmListRowTemplate">
 						<Area>
 							<Anchor point="LEFT" />
 							<Anchor point="RIGHT" />
-							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmListRow5" offset="12" />
+							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmListRow5" />
 						</Area>
 					</Frame>
 				</Frame>
@@ -376,9 +381,9 @@
 				<Frame name="RealmListScrollBar" inherits="VerticalScrollBar">
 					<Property name="Visible" value="false" />
 					<Area>
-						<Anchor point="RIGHT" />
-						<Anchor point="TOP" />
-						<Anchor point="BOTTOM" />
+						<Anchor point="RIGHT" offset="-8" />
+						<Anchor point="TOP" offset="8" />
+						<Anchor point="BOTTOM" offset="-8" />
 					</Area>
 				</Frame>
 			</Frame>

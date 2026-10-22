@@ -18,6 +18,10 @@ local POPULATION_BANDS = {
 	[3] = { key = "REALM_POP_FULL", color = "FFFF4B4B" },
 }
 
+-- Row separators (RealmListRowTemplate): thin bronze, cleared under the last realm.
+local SEPARATOR_COLOR = "598C6234"
+local NO_SEPARATOR = "00000000"
+
 -- auth::HiddenRealmPlayerCount: the exact count is only sent to game master accounts.
 local HIDDEN_PLAYER_COUNT = 4294967295
 
@@ -74,7 +78,8 @@ local function RealmList_Refresh()
 	scrollOffset = math.max(0, math.min(scrollOffset, MaxScrollOffset()))
 
 	-- Make room for the scroll bar only when it is needed; the column headers follow the content.
-	RealmListContent:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, hasScroll and -112 or 0)
+	-- Content keeps 8 from the well's edge, and clears the scroll bar (96 wide, 8 in) by 8.
+	RealmListContent:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, hasScroll and -112 or -8)
 	RealmListScrollBar:SetProperty("Visible", hasScroll and "true" or "false")
 	updatingScroll = true
 	RealmListScrollBar:SetMinimum(0)
@@ -84,7 +89,7 @@ local function RealmList_Refresh()
 
 	local lastRealmId = GetLastRealmId()
 	local playersFormat = Localize("REALM_PLAYERS_ONLINE")
-	local lastPlayedText = "|cFFCFE0D4" .. Localize("REALM_LAST_PLAYED") .. "|r     "
+	local lastPlayedText = "|cFFE6D6BA" .. Localize("REALM_LAST_PLAYED") .. "|r     "
 
 	for i = 1, VISIBLE_ROWS do
 		local row = _G["RealmListRow" .. i]
@@ -105,6 +110,7 @@ local function RealmList_Refresh()
 			row:GetChild(1):SetText(info)
 			row:GetChild(2):SetText(Localize(band.key))
 			row:GetChild(2):SetProperty("TextColor", band.color)
+			row:SetProperty("SeparatorColor", scrollOffset + i == #realmEntries and NO_SEPARATOR or SEPARATOR_COLOR)
 			row:SetChecked(realm.id == selectedRealmId)
 			row:Show()
 		else

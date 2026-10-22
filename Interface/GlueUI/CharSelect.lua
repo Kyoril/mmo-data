@@ -16,6 +16,20 @@ local NAMEPLATE_PADDING = 24		-- UI units kept free beside the widest line when 
 local NAMEPLATE_HEIGHT = 172		-- CharNameplateTemplate's height: bottom to the top of the name
 local NAMEPLATE_ZONE_LINE = 48		-- Height of the zone line at the bottom, empty unless selected
 
+-- Roster list (CharSelect.xml): a fixed pool of rows (CharRosterRow1..N) showing a window of the
+-- character order, like the realm list (RealmList.lua).
+local VISIBLE_ROWS = 10
+local ROSTER_DIVIDER_GAP = 80		-- UI units above the first character not on the plaza (divider and label)
+local ROSTER_AUTOSCROLL_SECONDS = 0.18	-- One row per step while a drag is held past the top or bottom row
+local SEPARATOR_COLOR = "598C6234"
+local NO_SEPARATOR = "00000000"
+
+-- Roster row children (CharRosterRowTemplate in CharSelect.xml).
+local ROW_SUBTEXT = 0
+local ROW_PLAZA_MARK = 1
+local ROW_DIVIDER = 2
+local ROW_DIVIDER_LABEL = 3
+
 -- Nameplate text colours: ivory at rest, brighter ivory while hovered, soft steel blue for the
 -- selected character (name, level, underline; the zone a slightly dimmer blue).
 local NAME_COLOR = "FFF3EEE2"
@@ -74,11 +88,19 @@ local hoverOverPlaza = false
 -- Forces the next hover evaluation (the roster or selection changed under a still cursor).
 local hoverDirty = true
 
--- Roster rows, cloned from CharButton. Row i shows order index i - 1.
-local rosterRows = {}
+-- Characters scrolled past the top of the roster: row i shows order index scrollOffset + i - 1.
+local scrollOffset = 0
 
--- { index, startY, moved } while a roster row is pressed. index is the dragged character's row.
+-- Set while the Lua moves the roster scroll bar, so its value handler does not scroll back.
+local updatingScroll = false
+
+-- { index, startY, moved, edge } while a roster row is pressed. index is the dragged character's
+-- position in the order (1-based); edge is -1 / 1 while the cursor is above / below the rows, which
+-- auto-scrolls the list (CharSelect_OnUpdate), and 0 otherwise.
 local rosterDrag = nil
+
+-- Time since the last auto-scroll step of a drag.
+local autoScrollElapsed = 0
 
 -- Order index shown by each nameplate, or -1.
 local nameplateIndex = {}
@@ -260,36 +282,162 @@ local function RefreshNameplates()
 	RefreshNameplateStyles()
 end
 
-local function CreateRosterRow(rowIndex)
-	local row = CharButton:Clone()
-	CharRosterList:AddChild(row)
+local function RosterRow(rowIndex)
+	return _G["CharRosterRow" .. rowIndex]
+end
 
-	if rowIndex == 1 then
-		row:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, 0)
-	elseif rowIndex == PLAZA_SPOTS + 1 then
-		-- The first character who is not on the plaza comes after the divider.
-		row:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, CharRosterDividerLabel, 8)
+local function MaxScrollOffset()
+	return math.max(0, GetNumCharacters() - VISIBLE_ROWS)
+end
+
+-- Scrolls just far enough to bring the given order position (1-based) into view.
+local function EnsureVisible(index)
+	if index == nil then
+		return
+	end
+	if index <= scrollOffset then
+		scrollOffset = index - 1
+	elseif index > scrollOffset + VISIBLE_ROWS then
+		scrollOffset = index - VISIBLE_ROWS
+	end
+	scrollOffset = math.max(0, math.min(scrollOffset, MaxScrollOffset()))
+end
+
+-- Fills the roster rows from the current order and scroll offset.
+function CharRoster_Refresh()
+	local numCharacters = GetNumCharacters()
+
+	CharCountLabel:SetText(string.format(Localize("CHAR_COUNT_FORMAT"), numCharacters))
+
+	local hasScroll = numCharacters > VISIBLE_ROWS
+	scrollOffset = math.max(0, math.min(scrollOffset, MaxScrollOffset()))
+
+	-- Make room for the scroll bar only when it is needed (96 wide, 8 in from the well, 8 clear).
+	CharRosterContent:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, hasScroll and -112 or -8)
+	CharRosterScrollBar:SetProperty("Visible", hasScroll and "true" or "false")
+	updatingScroll = true
+	CharRosterScrollBar:SetMinimum(0)
+	CharRosterScrollBar:SetMaximum(MaxScrollOffset())
+	CharRosterScrollBar:SetValue(scrollOffset)
+	updatingScroll = false
+
+	local onThePlaza = Localize("ON_THE_PLAZA")
+	for rowIndex = 1, VISIBLE_ROWS do
+		local row = RosterRow(rowIndex)
+		local index = scrollOffset + rowIndex - 1
+		local character = index < numCharacters and GetCharacterInfo(index) or nil
+
+		-- The divider before the first character who is not on the plaza belongs to that character's
+		-- row: it sits in a gap opened above the row, wherever the row is in the window.
+		local dividerAbove = character ~= nil and index == PLAZA_SPOTS
+		if rowIndex == 1 then
+			row:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, dividerAbove and ROSTER_DIVIDER_GAP or 0)
+		else
+			row:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, RosterRow(rowIndex - 1), dividerAbove and ROSTER_DIVIDER_GAP or 0)
+		end
+		row:GetChild(ROW_DIVIDER):SetProperty("Visible", dividerAbove and "true" or "false")
+		row:GetChild(ROW_DIVIDER_LABEL):SetProperty("Visible", dividerAbove and "true" or "false")
+
+		if character then
+			row:SetText(character.name)
+			row:GetChild(ROW_SUBTEXT):SetText(LevelClassText(character, index))
+			row:GetChild(ROW_PLAZA_MARK):SetText(index < PLAZA_SPOTS and onThePlaza or "")
+			-- No separator under the last character, nor above the plaza divider.
+			local lastOfGroup = index == numCharacters - 1 or index == PLAZA_SPOTS - 1
+			row:SetProperty("SeparatorColor", lastOfGroup and NO_SEPARATOR or SEPARATOR_COLOR)
+			row:SetChecked(index == selectedIndex)
+			row:Show()
+		else
+			row:SetChecked(false)
+			row:Hide()
+		end
+	end
+end
+
+-- Moves the dragged character to an order position (1-based). Live: characters dragged into or out
+-- of the top five run in or out right away.
+local function RosterDragTo(target)
+	if target ~= rosterDrag.index then
+		MoveCharacterInOrder(rosterDrag.index - 1, target - 1)
+		rosterDrag.index = target
+		selectedIndex = GetSelectedCharacterIndex()
+		RefreshNameplates()
+	end
+	CharRoster_Refresh()
+end
+
+-- The row under the cursor during a drag, clamped to the visible characters, and whether the
+-- cursor is above the list (-1), below the last row (1) or on the rows (0).
+local function RosterRowAtCursor()
+	local visible = math.min(VISIBLE_ROWS, GetNumCharacters() - scrollOffset)
+	if visible <= 0 then
+		return nil, 0
+	end
+
+	local cursorY = CursorScreenY()
+	if cursorY < CharRosterContent:GetRect().top then
+		return 1, -1
+	end
+	for rowIndex = 1, visible do
+		if cursorY < RosterRow(rowIndex):GetRect().bottom then
+			return rowIndex, 0
+		end
+	end
+	return visible, 1
+end
+
+-- One auto-scroll step of a drag held past the top or bottom row: scroll by one row and keep the
+-- dragged character on the edge row.
+local function RosterAutoScroll(elapsed)
+	if not rosterDrag or not rosterDrag.moved or rosterDrag.edge == 0 then
+		autoScrollElapsed = 0
+		return
+	end
+
+	autoScrollElapsed = autoScrollElapsed + elapsed
+	if autoScrollElapsed < ROSTER_AUTOSCROLL_SECONDS then
+		return
+	end
+	autoScrollElapsed = autoScrollElapsed - ROSTER_AUTOSCROLL_SECONDS
+
+	local offset = math.max(0, math.min(scrollOffset + rosterDrag.edge, MaxScrollOffset()))
+	if offset == scrollOffset then
+		return
+	end
+	scrollOffset = offset
+
+	if rosterDrag.edge < 0 then
+		RosterDragTo(scrollOffset + 1)
 	else
-		row:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, rosterRows[rowIndex - 1], 8)
+		RosterDragTo(math.min(scrollOffset + VISIBLE_ROWS, GetNumCharacters()))
 	end
-	row:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, 0)
-	row:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, 0)
+end
 
-	if rowIndex == PLAZA_SPOTS then
-		CharRosterDivider:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, row, 16)
+local function Roster_OnMouseWheel(frame, delta)
+	if GetNumCharacters() <= VISIBLE_ROWS then
+		return
 	end
+	scrollOffset = scrollOffset - delta
+	CharRoster_Refresh()
+end
+
+-- Wires a pool row's handlers. The row's index is captured in its handlers: fields set on a frame
+-- from Lua do not survive between handler calls.
+local function SetupRosterRow(rowIndex)
+	local row = RosterRow(rowIndex)
 
 	row:SetClickedHandler(function()
 		-- The release that ends a drag is not a click.
 		if rosterDrag and rosterDrag.moved then
 			return
 		end
-		CharSelect_SelectIndex(rowIndex - 1)
+		CharSelect_SelectIndex(scrollOffset + rowIndex - 1)
 	end)
 
 	row:SetOnMouseDownHandler(function(frame, button)
-		if button == LEFT_MOUSE_BUTTON then
-			rosterDrag = { index = rowIndex, startY = GetCursorPosition().y, moved = false }
+		if button == LEFT_MOUSE_BUTTON and scrollOffset + rowIndex <= GetNumCharacters() then
+			rosterDrag = { index = scrollOffset + rowIndex, startY = GetCursorPosition().y, moved = false, edge = 0 }
+			autoScrollElapsed = 0
 		end
 	end)
 
@@ -307,30 +455,16 @@ local function CreateRosterRow(rowIndex)
 			rosterDrag.moved = true
 		end
 
-		-- Find the row under the cursor, clamped to the first and last character.
-		local numCharacters = math.min(GetNumCharacters(), #rosterRows)
-		if numCharacters == 0 then
+		local targetRow, edge = RosterRowAtCursor()
+		if not targetRow then
 			return
 		end
-
-		local cursorY = CursorScreenY()
-		local target = nil
-		for i = 1, numCharacters do
-			local rect = rosterRows[i]:GetRect()
-			if cursorY < rect.bottom then
-				target = i
-				break
-			end
+		rosterDrag.edge = edge
+		if edge == 0 then
+			autoScrollElapsed = 0
 		end
-		target = target or numCharacters
-
-		if target ~= rosterDrag.index then
-			-- Live: characters dragged into or out of the top five run in or out right away.
-			MoveCharacterInOrder(rosterDrag.index - 1, target - 1)
-			rosterDrag.index = target
-			selectedIndex = GetSelectedCharacterIndex()
-			CharRoster_Refresh()
-			RefreshNameplates()
+		if scrollOffset + targetRow ~= rosterDrag.index then
+			RosterDragTo(scrollOffset + targetRow)
 		end
 	end)
 
@@ -342,38 +476,7 @@ local function CreateRosterRow(rowIndex)
 		end
 	end)
 
-	rosterRows[rowIndex] = row
-	return row
-end
-
--- Fills the roster rows from the current order.
-function CharRoster_Refresh()
-	local numCharacters = GetNumCharacters()
-
-	CharCountLabel:SetText(string.format(Localize("CHAR_COUNT_FORMAT"), numCharacters))
-
-	for rowIndex = #rosterRows + 1, numCharacters do
-		CreateRosterRow(rowIndex)
-	end
-
-	for rowIndex, row in ipairs(rosterRows) do
-		local index = rowIndex - 1
-		local character = index < numCharacters and GetCharacterInfo(index) or nil
-		if character then
-			row:SetText(character.name)
-			row:GetChild(0):SetText(LevelClassText(character, index))
-			row:GetChild(1):SetText(rowIndex <= PLAZA_SPOTS and Localize("ON_THE_PLAZA") or "")
-			row:SetChecked(index == selectedIndex)
-			row:Show()
-		else
-			row:SetChecked(false)
-			row:Hide()
-		end
-	end
-
-	local hasVisitors = numCharacters > PLAZA_SPOTS and "true" or "false"
-	CharRosterDivider:SetProperty("Visible", hasVisitors)
-	CharRosterDividerLabel:SetProperty("Visible", hasVisitors)
+	row:SetOnMouseWheelHandler(Roster_OnMouseWheel)
 end
 
 -- Selects a character by order index (-1 for none) and updates everything showing it.
@@ -388,6 +491,9 @@ function CharSelect_SelectIndex(index)
 
 	SelectCharacter(index)
 	UpdateButtons()
+	if index >= 0 then
+		EnsureVisible(index + 1)
+	end
 	CharRoster_Refresh()
 	RefreshNameplates()
 end
@@ -398,6 +504,9 @@ function CharSelect_ToggleRoster()
 		return
 	end
 
+	if selectedIndex >= 0 then
+		EnsureVisible(selectedIndex + 1)
+	end
 	CharRoster_Refresh()
 	CharRosterPanel:Show()
 end
@@ -509,6 +618,20 @@ function CharSelect_OnLoad(self)
 		nameplateIndex[plate] = -1
 		nameplateWidth[plate] = 0
 	end
+
+	for rowIndex = 1, VISIBLE_ROWS do
+		SetupRosterRow(rowIndex)
+	end
+	CharRosterList:SetOnMouseWheelHandler(Roster_OnMouseWheel)
+
+	CharRosterScrollBar:SetStep(1)
+	CharRosterScrollBar:SetOnValueChangedHandler(function(bar, value)
+		if updatingScroll then
+			return
+		end
+		scrollOffset = math.floor(value + 0.5)
+		CharRoster_Refresh()
+	end)
 end
 
 -- Places a frame's bottom centre at a point given in UI units.
@@ -538,6 +661,7 @@ function CharSelect_OnUpdate(self, elapsed)
 		return
 	end
 
+	RosterAutoScroll(elapsed)
 	UpdateHover()
 
 	-- Nameplates follow the characters, including while they run. Plates that would overlap make
