@@ -34,11 +34,11 @@ local ROW_DIVIDER_LABEL = 3
 -- selected character (name, level, underline; the zone a slightly dimmer blue).
 local NAME_COLOR = "FFF3EEE2"
 local NAME_COLOR_HOVERED = "FFFFFDF6"
-local NAME_COLOR_SELECTED = "FFA8D4FF"
+local NAME_COLOR_SELECTED = "FFFFC266"
 local LEVEL_COLOR = "FFE0E0E0"
 local LEVEL_COLOR_HOVERED = "FFFFFFFF"
-local LEVEL_COLOR_SELECTED = "FFA8D4FF"
-local ZONE_COLOR_SELECTED = "FF8FB8E0"
+local LEVEL_COLOR_SELECTED = "FFFFC266"
+local ZONE_COLOR_SELECTED = "FFE0A458"
 
 -- Nameplate fonts: at rest (GlueTemplates.xml), and with a deeper shadow while hovered or
 -- selected (CharSelect.xml); the selected name is also larger.

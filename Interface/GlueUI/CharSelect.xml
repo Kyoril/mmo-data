@@ -235,7 +235,7 @@
 			</Area>
 			<Visual>
 				<ImagerySection name="Line">
-					<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrameSelected.htex" leftSize="36" topSize="6" rightSize="36" bottomSize="494" tint="FFA8D4FF" />
+					<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrameSelected.htex" leftSize="36" topSize="6" rightSize="36" bottomSize="494" tint="FFFFB84D" />
 				</ImagerySection>
 				<StateImagery name="Enabled">
 					<Layer>
