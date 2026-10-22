@@ -96,6 +96,12 @@ function Minimap_Toggle(self)
         MinimapTime:Show();
         Minimap:SetHeight(512);
     end
+
+    -- The quest tracker hangs below the minimap, so it has to re-anchor: collapsed, the
+    -- minimap no longer reaches past the aura rows it shares this corner with.
+    if QuestTracker_UpdateAnchor then
+        QuestTracker_UpdateAnchor();
+    end
 end
 
 function Minimap_OnShow(self)
