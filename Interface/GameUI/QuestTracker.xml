@@ -196,8 +196,12 @@
 			</Size>
 		</Area>
 	</Frame>
-	<!-- Quest Tracker panel: anchored below the Minimap, right-aligned -->
-	<Frame name="QuestTrackerFrame" parent="GameParent" renderer="DefaultRenderer">
+	<!-- Quest Tracker panel: anchored below the Minimap, right-aligned.
+	     It is a passive HUD readout, so it stays below the game windows that share the right
+	     half of the screen (the inventory window reaches up into this column): loaded last, it
+	     would otherwise cover their title bars and swallow the clicks on their close buttons.
+	     Only the world viewport sits below it. -->
+	<Frame name="QuestTrackerFrame" parent="GameParent" renderer="DefaultRenderer" frameLevel="-10">
 		<Property name="Clickable" value="false" />
 		<Scripts>
 			<OnLoad>

@@ -6,7 +6,10 @@
 	<Frame name="GameParent" parent="TopGameFrame" setAllPoints="true">
 		<Property name="Font" value="DefaultSmall" />
 
-		<Frame name="WorldFrame" type="World" renderer="WorldRenderer" setAllPoints="true">
+		<!-- The world viewport is always the backdrop of the game UI. The explicit frame level
+		     keeps it below every sibling, including HUD overlays that use a negative level to
+		     stay underneath the game windows. -->
+		<Frame name="WorldFrame" type="World" renderer="WorldRenderer" setAllPoints="true" frameLevel="-1000">
 			<Scripts>
 				<OnMouseDown>
 					return function(this, button)
