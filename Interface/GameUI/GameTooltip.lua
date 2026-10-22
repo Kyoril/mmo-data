@@ -219,6 +219,17 @@ local function SetupItemComparison(inventoryType, sourceItem)
     GameTooltip_AddLine(Localize("ITEM_COMPARE_HINT"), TOOLTIP_LINE_LEFT, "FF808080");
 end
 
+-- Formats a duration amount with one decimal, but drops a trailing ".0": 2 -> "2", 2.5 -> "2.5".
+-- Declared before its first use: a local is only visible to the code below it, so a call from
+-- further up the file would compile into a nil global instead.
+local function FormatDurationAmount(amount)
+    local text = string.format("%.1f", amount);
+    if (string.sub(text, -2) == ".0") then
+        text = string.sub(text, 1, -3);
+    end
+    return text;
+end
+
 -- Formats the mod-adjusted cooldown of a spell as its tooltip line, or nil if the spell has
 -- no cooldown. Shared by the spell tooltip and the "Use:" line of item tooltips.
 local function FormatSpellCooldownLine(spellId)
@@ -571,15 +582,6 @@ function GameTooltip_SetEmote(emote)
     if (emote.command ~= nil and emote.command ~= "") then
         GameTooltip_AddLine("/" .. emote.command, TOOLTIP_LINE_LEFT, "FF808080");
     end
-end
-
--- Formats a duration amount with one decimal, but drops a trailing ".0": 2 -> "2", 2.5 -> "2.5".
-local function FormatDurationAmount(amount)
-    local text = string.format("%.1f", amount);
-    if (string.sub(text, -2) == ".0") then
-        text = string.sub(text, 1, -3);
-    end
-    return text;
 end
 
 -- Seconds between attempts to complete a recipe tooltip while item data is still loading, and
