@@ -52,10 +52,10 @@
 				</BorderComponent>
 			</ImagerySection>
 			<ImagerySection name="HoverFade">
-				<ImageComponent texture="Interface/GlueUI/GlueListFade.htex" tint="1AFFF0DC" />
+				<ImageComponent texture="Interface/GlueUI/GlueListFade.htex" tint="5AC8642E" />
 			</ImagerySection>
 			<ImagerySection name="PushedFade">
-				<ImageComponent texture="Interface/GlueUI/GlueListFade.htex" tint="2EFFF0DC" />
+				<ImageComponent texture="Interface/GlueUI/GlueListFade.htex" tint="80B4502A" />
 			</ImagerySection>
 			<ImagerySection name="SelectedFade">
 				<ImageComponent texture="Interface/GlueUI/GlueListFade.htex" tint="CC96241A" />
