@@ -40,22 +40,17 @@
 		<Property name="Icon" />
 
 		<Visual>
-			<!-- Steel frame (9-slice, 36) over a baked fill inset 14 so the fill never leaks past the frame. -->
 			<ImagerySection name="NormalFrame">
-				<ImageComponent texture="Interface/GlueUI/GlueSkinButtonNormal.htex"><Area><Inset all="14" /></Area></ImageComponent>
-				<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" />
+				<BorderComponent texture="Interface/GlueUI/ButtonNormal.htex" borderSize="30" />
 			</ImagerySection>
 			<ImagerySection name="HoveredFrame">
-				<ImageComponent texture="Interface/GlueUI/GlueSkinButtonHovered.htex"><Area><Inset all="14" /></Area></ImageComponent>
-				<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" />
+				<BorderComponent texture="Interface/GlueUI/ButtonHovered.htex" borderSize="30" />
 			</ImagerySection>
 			<ImagerySection name="PushedFrame">
-				<ImageComponent texture="Interface/GlueUI/GlueSkinButtonPushed.htex"><Area><Inset all="14" /></Area></ImageComponent>
-				<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" />
+				<BorderComponent texture="Interface/GlueUI/ButtonPushed.htex" borderSize="30" />
 			</ImagerySection>
 			<ImagerySection name="DisabledFrame">
-				<ImageComponent texture="Interface/GlueUI/GlueSkinButtonDisabled.htex"><Area><Inset all="14" /></Area></ImageComponent>
-				<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" tint="FF8C8C8C" />
+				<BorderComponent texture="Interface/GlueUI/ButtonDisabled.htex" borderSize="30" />
 			</ImagerySection>
 			<ImagerySection name="Caption">
 				<TextComponent color="FFF3EEE2" horzAlign="CENTER" vertAlign="CENTER" />
@@ -70,7 +65,7 @@
 			<ImagerySection name="Image">
 				<ImageComponent>
 					<Area>
-						<Inset all="20" />
+						<Inset all="16" />
 					</Area>
 					<PropertyValue property="Icon" />
 				</ImageComponent>
@@ -78,7 +73,7 @@
 			<ImagerySection name="ImageDisabled">
 				<ImageComponent tint="80888888">
 					<Area>
-						<Inset all="20" />
+						<Inset all="16" />
 					</Area>
 					<PropertyValue property="Icon" />
 				</ImageComponent>
@@ -122,22 +117,17 @@
 	<!-- Primary glue button -->
 	<Frame name="GlueButtonPrimary" type="Button" renderer="ButtonRenderer">
 		<Visual>
-			<!-- Steel frame (9-slice, 36) over a baked fill inset 14 so the fill never leaks past the frame. -->
 			<ImagerySection name="NormalFrame">
-				<ImageComponent texture="Interface/GlueUI/GlueSkinButtonNormal.htex"><Area><Inset all="14" /></Area></ImageComponent>
-				<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" />
+				<BorderComponent texture="Interface/GlueUI/PrimaryButtonNormal.htex" borderSize="64" />
 			</ImagerySection>
 			<ImagerySection name="HoveredFrame">
-				<ImageComponent texture="Interface/GlueUI/GlueSkinButtonHovered.htex"><Area><Inset all="14" /></Area></ImageComponent>
-				<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" />
+				<BorderComponent texture="Interface/GlueUI/PrimaryButtonHovered.htex" borderSize="64" />
 			</ImagerySection>
 			<ImagerySection name="PushedFrame">
-				<ImageComponent texture="Interface/GlueUI/GlueSkinButtonPushed.htex"><Area><Inset all="14" /></Area></ImageComponent>
-				<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" />
+				<BorderComponent texture="Interface/GlueUI/PrimaryButtonPushed.htex" borderSize="64" />
 			</ImagerySection>
 			<ImagerySection name="DisabledFrame">
-				<ImageComponent texture="Interface/GlueUI/GlueSkinButtonDisabled.htex"><Area><Inset all="14" /></Area></ImageComponent>
-				<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" tint="FF8C8C8C" />
+				<BorderComponent texture="Interface/GlueUI/PrimaryButtonDisabled.htex" borderSize="64" />
 			</ImagerySection>
 			<ImagerySection name="Caption">
 				<TextComponent color="FFF3EEE2" horzAlign="CENTER" vertAlign="CENTER" />
