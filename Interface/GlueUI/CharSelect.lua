@@ -10,7 +10,25 @@ local NAMEPLATE_COUNT = 6			-- One per plaza spot, plus a selected visitor
 local LEFT_MOUSE_BUTTON = 1
 local ROTATE_DEGREES_PER_PIXEL = 0.4
 local ROW_DRAG_THRESHOLD = 12		-- UI units the cursor moves before a row press becomes a drag
-local DELETE_WALK_SECONDS = 1.5	-- The character walks out before the delete is sent
+local PLAZA_DRAG_THRESHOLD = 16	-- UI units the cursor moves before a plaza press turns the character instead of picking
+local DELETE_WALK_SECONDS = 1.5	-- The character runs out before the delete is sent
+local NAMEPLATE_CARD_PADDING = 80	-- UI units the nameplate cards reach beyond the widest line
+
+-- Nameplate text colours: at rest, and brighter while the character is hovered.
+local NAME_COLOR = "FFF3EEE2"
+local NAME_COLOR_HOVERED = "FFFFFDF6"
+local LEVEL_COLOR = "FFE0E0E0"
+local LEVEL_COLOR_HOVERED = "FFFFFFFF"
+local ZONE_COLOR = "FFA0A0A0"
+local ZONE_COLOR_SELECTED = "FFD2DCE6"
+
+-- Nameplate children (CharNameplateTemplate in CharSelect.xml).
+local PLATE_HOVER_BACKDROP = 0
+local PLATE_SELECTED_FRAME = 1
+local PLATE_ZONE = 2
+local PLATE_LEVEL = 3
+local PLATE_NAME = 4
+local PLATE_SELECTED_MARK = 5
 
 -- Order index of the selected character, or -1.
 local selectedIndex = -1
@@ -27,11 +45,24 @@ local chromeVisible = false
 -- "realmlist" while flying out to show the realm list at the gate.
 local afterFlight = nil
 
--- { guid, remaining } while a deleted character walks out.
+-- { guid, remaining } while a deleted character runs out.
 local pendingDelete = nil
 
--- Whether a drag on empty space turns the front character.
-local rotating = false
+-- { x, y, rotating } while the left button is held on the plaza (empty space). A press that moves
+-- less than PLAZA_DRAG_THRESHOLD is a click and picks the character under the cursor; beyond it,
+-- the drag turns the selected character and never selects.
+local plazaPress = nil
+
+-- Order index of the plaza character under the cursor, or -1.
+local hoveredIndex = -1
+
+-- What the hover was last evaluated for: cursor position and whether the plaza had the cursor.
+local hoverCursorX = nil
+local hoverCursorY = nil
+local hoverOverPlaza = false
+
+-- Forces the next hover evaluation (the roster or selection changed under a still cursor).
+local hoverDirty = true
 
 -- Roster rows, cloned from CharButton. Row i shows order index i - 1.
 local rosterRows = {}
@@ -71,13 +102,84 @@ local function CursorScreenY()
 	return GetCursorPosition().y * GetUIScale().y
 end
 
+-- Styles the nameplates for the selection and the hover: the selected character's plate carries
+-- the roster's steel-blue selected card, its underline and the zone line; the hovered one a faint
+-- card and brighter text.
+local function RefreshNameplateStyles()
+	for plate = 1, NAMEPLATE_COUNT do
+		local frame = _G["CharNameplate" .. plate]
+		local index = nameplateIndex[plate] or -1
+		local selected = index >= 0 and index == selectedIndex
+		local hovered = index >= 0 and index == hoveredIndex
+
+		local nameFrame = frame:GetChild(PLATE_NAME)
+		local levelFrame = frame:GetChild(PLATE_LEVEL)
+		local zoneFrame = frame:GetChild(PLATE_ZONE)
+
+		nameFrame:SetProperty("TextColor", hovered and NAME_COLOR_HOVERED or NAME_COLOR)
+		levelFrame:SetProperty("TextColor", hovered and LEVEL_COLOR_HOVERED or LEVEL_COLOR)
+		zoneFrame:SetProperty("TextColor", selected and ZONE_COLOR_SELECTED or ZONE_COLOR)
+
+		-- Both cards hug the widest line.
+		local width = math.max(nameFrame:GetTextWidth(), levelFrame:GetTextWidth(), zoneFrame:GetTextWidth()) + 2 * NAMEPLATE_CARD_PADDING
+		frame:GetChild(PLATE_HOVER_BACKDROP):SetWidth(width)
+		frame:GetChild(PLATE_SELECTED_FRAME):SetWidth(width)
+
+		frame:GetChild(PLATE_HOVER_BACKDROP):SetProperty("Visible", (hovered and not selected) and "true" or "false")
+		frame:GetChild(PLATE_SELECTED_FRAME):SetProperty("Visible", selected and "true" or "false")
+		frame:GetChild(PLATE_SELECTED_MARK):SetProperty("Visible", selected and "true" or "false")
+	end
+end
+
+-- Sets the plaza character under the cursor (-1 for none): it reacts on the plaza and its
+-- nameplate brightens.
+local function SetHoveredCharacter(index, force)
+	if index == hoveredIndex and not force then
+		return
+	end
+
+	hoveredIndex = index
+	SetPlazaHoverCharacter(index)
+	RefreshNameplateStyles()
+end
+
+-- Whether the plaza takes mouse input: the character screen is showing with nothing over it.
+local function PlazaInputAllowed()
+	return chromeVisible and not IsGlueFlightActive()
+		and not DeleteConfirmation:IsVisible() and not CharCreate:IsVisible() and not GlueDialog:IsVisible()
+end
+
+-- Re-picks the character under the cursor when the cursor moved, or when the plaza gained or
+-- lost the cursor (a frame opened over it, a flight started). Not during a turning drag.
+local function UpdateHover()
+	if plazaPress and plazaPress.rotating then
+		return
+	end
+
+	local overPlaza = PlazaInputAllowed() and CharSelect:IsMouseClickTarget()
+	local cursor = GetCursorPosition()
+	if not hoverDirty and overPlaza == hoverOverPlaza and cursor.x == hoverCursorX and cursor.y == hoverCursorY then
+		return
+	end
+
+	local force = hoverDirty
+	hoverDirty = false
+	hoverOverPlaza = overPlaza
+	hoverCursorX = cursor.x
+	hoverCursorY = cursor.y
+
+	SetHoveredCharacter(overPlaza and GetPlazaCharacterAtCursor() or -1, force)
+end
+
 local function SetChromeVisible(visible)
 	chromeVisible = visible
 	CharSelectChrome:SetProperty("Visible", visible and "true" or "false")
 	CharSelectNameplates:SetProperty("Visible", visible and "true" or "false")
 	if not visible then
-		rotating = false
+		plazaPress = nil
+		SetHoveredCharacter(-1)
 	end
+	hoverDirty = true
 end
 
 -- Enables the buttons for the current selection and character count.
@@ -121,14 +223,18 @@ local function RefreshNameplates()
 		local character = index >= 0 and GetCharacterInfo(index) or nil
 		if character then
 			nameplateIndex[plate] = index
-			frame:GetChild(2):SetText(character.name)
-			frame:GetChild(1):SetText(LevelClassText(character, index))
-			frame:GetChild(0):SetText(index == selectedIndex and GetCharacterZoneName(index) or "")
+			frame:GetChild(PLATE_NAME):SetText(character.name)
+			frame:GetChild(PLATE_LEVEL):SetText(LevelClassText(character, index))
+			frame:GetChild(PLATE_ZONE):SetText(index == selectedIndex and GetCharacterZoneName(index) or "")
 		else
 			nameplateIndex[plate] = -1
 			frame:Hide()
 		end
 	end
+
+	-- Order indices may now name other characters: pick the hovered one again.
+	hoverDirty = true
+	RefreshNameplateStyles()
 end
 
 local function CreateRosterRow(rowIndex)
@@ -196,7 +302,7 @@ local function CreateRosterRow(rowIndex)
 		target = target or numCharacters
 
 		if target ~= rosterDrag.index then
-			-- Live: characters dragged into or out of the top five walk in or out right away.
+			-- Live: characters dragged into or out of the top five run in or out right away.
 			MoveCharacterInOrder(rosterDrag.index - 1, target - 1)
 			rosterDrag.index = target
 			selectedIndex = GetSelectedCharacterIndex()
@@ -282,26 +388,55 @@ function CharSelect_CloseRoster()
 	end
 end
 
+-- Only clicks no frame took reach CharSelect (it covers the screen behind the chrome), so a press
+-- here is a press on the plaza itself.
 local function CharSelect_OnMouseDown(self, button)
 	-- During a flight the click is left to the client, which skips the flight.
-	if button ~= LEFT_MOUSE_BUTTON or not chromeVisible or IsGlueFlightActive() then
+	if button ~= LEFT_MOUSE_BUTTON or not PlazaInputAllowed() then
 		return false
 	end
 
-	rotating = true
+	local cursor = GetCursorPosition()
+	plazaPress = { x = cursor.x, y = cursor.y, rotating = false }
 	return true
 end
 
 local function CharSelect_OnMouseUp(self, button)
-	if button == LEFT_MOUSE_BUTTON then
-		rotating = false
+	if button ~= LEFT_MOUSE_BUTTON or not plazaPress then
+		return
+	end
+
+	local press = plazaPress
+	plazaPress = nil
+	hoverDirty = true
+
+	-- A drag that turned the character is not a click.
+	if press.rotating or not PlazaInputAllowed() then
+		return
+	end
+
+	local index = GetPlazaCharacterAtCursor()
+	if index >= 0 and index ~= selectedIndex then
+		CharSelect_SelectIndex(index)
 	end
 end
 
+-- Also called while the cursor is over the chrome (moves bubble up to CharSelect); only a press
+-- that started on the plaza acts on it.
 local function CharSelect_OnMouseMove(self, x, y, deltaX, deltaY)
-	if rotating then
-		RotateCharacter(deltaX * ROTATE_DEGREES_PER_PIXEL)
+	if not plazaPress then
+		return
 	end
+
+	if not plazaPress.rotating then
+		local cursor = GetCursorPosition()
+		if math.abs(cursor.x - plazaPress.x) < PLAZA_DRAG_THRESHOLD and math.abs(cursor.y - plazaPress.y) < PLAZA_DRAG_THRESHOLD then
+			return
+		end
+		plazaPress.rotating = true
+	end
+
+	RotateCharacter(deltaX * ROTATE_DEGREES_PER_PIXEL)
 end
 
 local function CharSelect_OnFlightFinished(self, destination)
@@ -364,7 +499,9 @@ function CharSelect_OnUpdate(self, elapsed)
 		return
 	end
 
-	-- Nameplates follow the characters, including while they walk.
+	UpdateHover()
+
+	-- Nameplates follow the characters, including while they run.
 	for plate = 1, NAMEPLATE_COUNT do
 		local frame = _G["CharNameplate" .. plate]
 		local index = nameplateIndex[plate]
@@ -410,6 +547,8 @@ function CharList_Show()
 	pendingDelete = nil
 	afterFlight = nil
 	rosterDrag = nil
+	plazaPress = nil
+	hoverDirty = true
 	CharRosterPanel:Hide()
 
 	RealmNameLabel:SetText(realmConnector:GetRealmName())
@@ -509,7 +648,7 @@ function CharSelect_ConfirmDelete()
 	local guid = character.guid
 	character = nil
 
-	-- The character walks out first; the delete is sent once it is on its way (CharSelect_OnUpdate).
+	-- The character runs out first; the delete is sent once it is on its way (CharSelect_OnUpdate).
 	SetChromeVisible(false)
 	PlazaCharacterLeave(selectedIndex)
 	pendingDelete = { guid = guid, remaining = DELETE_WALK_SECONDS }

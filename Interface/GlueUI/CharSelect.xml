@@ -141,16 +141,75 @@
 		</Frame>
 	</Frame>
 
-	<!-- Virtual nameplate over a character on the plaza: name, "Level N Class" and, for the front
+	<!-- Virtual nameplate over a character on the plaza: name, "Level N Class" and, for the selected
 	     character, the zone. Its bottom centre is placed over the character's head every frame.
 	     The lines are stacked by offsets from the bottom: anchors between template children would
-	     resolve to the template's own children, not the copy's. -->
+	     resolve to the template's own children, not the copy's.
+	     Children (CharSelect.lua uses the indices): 0 = hover backdrop, 1 = selected frame (the
+	     roster's steel-blue selected card), 2 = zone, 3 = level/class, 4 = name, 5 = selected
+	     underline. Both backdrops are sized to the text from Lua. -->
 	<Frame name="CharNameplateTemplate">
 		<Property name="Visible" value="false" />
 		<Property name="MousePassThrough" value="true" />
 		<Area>
 			<Size><AbsDimension x="1200" y="160" /></Size>
 		</Area>
+
+		<!-- Hovered (not selected): a faint lifted-stone card behind the lines. -->
+		<Frame name="CharNameplateHoverBackdrop" renderer="DefaultRenderer">
+			<Property name="Visible" value="false" />
+			<Property name="Clickable" value="false" />
+			<Visual>
+				<ImagerySection name="Card">
+					<ImageComponent texture="Interface/GlueUI/GlueSkinRowHovered.htex" tint="80FFFFFF"><Area><Inset all="14" /></Area></ImageComponent>
+					<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" tint="A0FFFFFF" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Card" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="Disabled">
+					<Layer>
+						<Section section="Card" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+			<Area>
+				<Anchor point="H_CENTER" />
+				<Anchor point="TOP" offset="-24" />
+				<Anchor point="BOTTOM" offset="24" />
+				<Size><AbsDimension x="600" /></Size>
+			</Area>
+		</Frame>
+
+		<!-- Selected: the roster's selected card, the steel-blue fill inside the bright frame. -->
+		<Frame name="CharNameplateSelectedFrame" renderer="DefaultRenderer">
+			<Property name="Visible" value="false" />
+			<Property name="Clickable" value="false" />
+			<Visual>
+				<ImagerySection name="Card">
+					<ImageComponent texture="Interface/GlueUI/GlueSkinButtonChecked.htex" tint="C0FFFFFF"><Area><Inset all="14" /></Area></ImageComponent>
+					<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrameSelected.htex" borderSize="36" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Card" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="Disabled">
+					<Layer>
+						<Section section="Card" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+			<Area>
+				<Anchor point="H_CENTER" />
+				<Anchor point="TOP" offset="-24" />
+				<Anchor point="BOTTOM" offset="24" />
+				<Size><AbsDimension x="600" /></Size>
+			</Area>
+		</Frame>
 
 		<Frame name="CharNameplateZone" inherits="GlueTextSmall">
 			<Property name="HorzAlign" value="CENTER" />
@@ -170,17 +229,49 @@
 				<Anchor point="BOTTOM" offset="-48" />
 			</Area>
 		</Frame>
-		<Frame name="CharNameplateName" inherits="GlueTextLarge">
+		<!-- The headline font with a settable colour, so a hovered name can brighten. -->
+		<Frame name="CharNameplateName" inherits="GlueTextSmall">
+			<Property name="Font" value="DefaultHeader" />
+			<Property name="HorzAlign" value="CENTER" />
+			<Property name="TextColor" value="FFF3EEE2" />
 			<Area>
 				<Anchor point="LEFT" />
 				<Anchor point="RIGHT" />
 				<Anchor point="BOTTOM" offset="-96" />
+				<Size><AbsDimension y="60" /></Size>
 			</Area>
+		</Frame>
+
+		<!-- Selected: a short bright underline below the card. -->
+		<Frame name="CharNameplateSelectedMark" renderer="DefaultRenderer">
+			<Property name="Visible" value="false" />
+			<Property name="Clickable" value="false" />
+			<Area>
+				<Anchor point="H_CENTER" />
+				<Anchor point="TOP" relativePoint="BOTTOM" offset="40" />
+				<Size><AbsDimension x="240" y="12" /></Size>
+			</Area>
+			<Visual>
+				<ImagerySection name="Line">
+					<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrameSelected.htex" leftSize="36" topSize="6" rightSize="36" bottomSize="494" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Line" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="Disabled">
+					<Layer>
+						<Section section="Line" />
+					</Layer>
+				</StateImagery>
+			</Visual>
 		</Frame>
 	</Frame>
 
 	<!-- The character screen: minimal chrome over the glue scene's plaza. Covers the whole screen;
-	     a drag on empty space turns the front character (CharSelect.lua). -->
+	     a click on a character there selects it, a drag on empty space turns the selected character
+	     (CharSelect.lua). -->
 	<Frame name="CharSelect" parent="GlueParent" setAllPoints="true">
 		<Property name="Visible" value="false" />
 
@@ -228,7 +319,7 @@
 			</Frame>
 
 			<!-- Bottom bar: a soft gradient behind the buttons. Not clickable, so drags on it still turn
-			     the front character. -->
+			     the selected character. -->
 			<Frame name="CharSelectBottomBar" renderer="DefaultRenderer">
 				<Property name="Clickable" value="false" />
 				<Area>
