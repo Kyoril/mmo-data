@@ -148,10 +148,10 @@
 	</Frame>
 
 	<!-- Virtual nameplate over a character on the plaza: name, "Level N Class" and, for the selected
-	     character, the zone. Text only, no card: the selected plate has a larger, white-ivory name
-	     with a short ivory underline flourish and shows the zone line; a hovered plate brightens its
-	     name and level and deepens their shadow. Its bottom centre is placed over the character's
-	     head every frame (moved up when it would overlap another plate, see CharSelect.lua).
+	     character, the zone. Text only, no card: the selected plate has a larger name, a short
+	     underline flourish and its level line in soft steel blue, and shows the zone line; a hovered
+	     plate brightens its name and level and deepens their shadow. Its bottom centre is placed over
+	     the character's head every frame (moved up when it would overlap another plate, see CharSelect.lua).
 	     The lines are stacked by offsets from the bottom: anchors between template children would
 	     resolve to the template's own children, not the copy's.
 	     Children (CharSelect.lua uses the indices): 0 = zone, 1 = level/class, 2 = name,
@@ -195,7 +195,7 @@
 			</Area>
 		</Frame>
 
-		<!-- Selected: a short, thin ivory line under the name (the divider strip of the selected
+		<!-- Selected: a short, thin steel-blue line under the name (the divider strip of the selected
 		     steel frame, tinted). -->
 		<Frame name="CharNameplateSelectedMark" renderer="DefaultRenderer">
 			<Property name="Visible" value="false" />
@@ -207,7 +207,7 @@
 			</Area>
 			<Visual>
 				<ImagerySection name="Line">
-					<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrameSelected.htex" leftSize="36" topSize="6" rightSize="36" bottomSize="494" tint="FFFFF8EC" />
+					<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrameSelected.htex" leftSize="36" topSize="6" rightSize="36" bottomSize="494" tint="FFA8D4FF" />
 				</ImagerySection>
 				<StateImagery name="Enabled">
 					<Layer>

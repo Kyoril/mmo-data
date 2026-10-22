@@ -16,14 +16,15 @@ local NAMEPLATE_PADDING = 24		-- UI units kept free beside the widest line when 
 local NAMEPLATE_HEIGHT = 172		-- CharNameplateTemplate's height: bottom to the top of the name
 local NAMEPLATE_ZONE_LINE = 48		-- Height of the zone line at the bottom, empty unless selected
 
--- Nameplate text colours: at rest, brighter while hovered, white-ivory for the selected character.
+-- Nameplate text colours: ivory at rest, brighter ivory while hovered, soft steel blue for the
+-- selected character (name, level, underline; the zone a slightly dimmer blue).
 local NAME_COLOR = "FFF3EEE2"
 local NAME_COLOR_HOVERED = "FFFFFDF6"
-local NAME_COLOR_SELECTED = "FFFFFCF4"
+local NAME_COLOR_SELECTED = "FFA8D4FF"
 local LEVEL_COLOR = "FFE0E0E0"
 local LEVEL_COLOR_HOVERED = "FFFFFFFF"
-local LEVEL_COLOR_SELECTED = "FFF3EEE2"
-local ZONE_COLOR_SELECTED = "FFCFC8B8"
+local LEVEL_COLOR_SELECTED = "FFA8D4FF"
+local ZONE_COLOR_SELECTED = "FF8FB8E0"
 
 -- Nameplate fonts: at rest (GlueTemplates.xml), and with a deeper shadow while hovered or
 -- selected (CharSelect.xml); the selected name is also larger.
@@ -115,8 +116,8 @@ local function CursorScreenY()
 end
 
 -- Styles the nameplates for the selection and the hover. Text only, no card: the selected
--- character's plate has a larger white-ivory name over a short ivory underline, an ivory level line
--- and the zone line; a hovered one brightens its name and level and deepens their shadow.
+-- character's plate has a larger name over a short underline and a level line, all soft steel
+-- blue, plus the zone line; a hovered one brightens its name and level and deepens their shadow.
 local function RefreshNameplateStyles()
 	for plate = 1, NAMEPLATE_COUNT do
 		local frame = _G["CharNameplate" .. plate]
@@ -132,7 +133,7 @@ local function RefreshNameplateStyles()
 			nameFrame:SetProperty("Font", NAME_FONT_SELECTED)
 			nameFrame:SetProperty("TextColor", NAME_COLOR_SELECTED)
 			levelFrame:SetProperty("Font", hovered and SMALL_FONT_HOVERED or SMALL_FONT)
-			levelFrame:SetProperty("TextColor", hovered and LEVEL_COLOR_HOVERED or LEVEL_COLOR_SELECTED)
+			levelFrame:SetProperty("TextColor", LEVEL_COLOR_SELECTED)
 		elseif hovered then
 			nameFrame:SetProperty("Font", NAME_FONT_HOVERED)
 			nameFrame:SetProperty("TextColor", NAME_COLOR_HOVERED)
