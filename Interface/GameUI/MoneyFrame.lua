@@ -81,7 +81,7 @@ function MoneyFrame_UpdateMoney()
 	end
 end
 
-function RefreshMoneyFrame(frameName, money, small, collapse, showSmallerCoins)
+function RefreshMoneyFrame(frameName, money, small, collapse, showSmallerCoins, layoutScale)
 	local gold = math.floor(money / (COPPER_PER_SILVER * SILVER_PER_GOLD));
 	local silver = math.floor((money - (gold * COPPER_PER_SILVER * SILVER_PER_GOLD)) / COPPER_PER_SILVER);
 	local copper = math.fmod(money, COPPER_PER_SILVER);
@@ -100,6 +100,13 @@ function RefreshMoneyFrame(frameName, money, small, collapse, showSmallerCoins)
 		iconWidth = MONEY_ICON_WIDTH_SMALL;
 		spacing = MONEY_BUTTON_SPACING_SMALL;
 	end
+
+	layoutScale = layoutScale or 1.0;
+	iconWidth = iconWidth * layoutScale;
+	spacing = spacing * layoutScale;
+	goldIcon:SetSize(iconWidth, iconWidth);
+	silverIcon:SetSize(iconWidth, iconWidth);
+	copperIcon:SetSize(iconWidth, iconWidth);
 
 	goldButton:SetText(tostring(gold));
 	goldButton:SetWidth(goldButton:GetTextWidth() + iconWidth);
@@ -134,7 +141,7 @@ function RefreshMoneyFrame(frameName, money, small, collapse, showSmallerCoins)
 		return;
 	end
 
-	local width = 13;
+	local width = 13 * layoutScale;
 	local showLowerDenominations;
 	if ( gold > 0 ) then
 		width = width + goldButton:GetWidth();
