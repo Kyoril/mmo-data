@@ -136,4 +136,141 @@
 			</StateImagery>
 		</Visual>
 	</Frame>
+	<!-- Second action bar (slots 13-24). It floats above the main bar instead of extending the
+	     oak-bronze plate, and stays hidden until the player enables it in the interface options. -->
+	<Frame name="ActionBar2" parent="GameMenuBar" renderer="DefaultRenderer">
+		<Property name="Visible" value="false" />
+		<Area>
+			<Size>
+				<AbsDimension x="1432" y="112" />
+			</Size>
+			<Anchor point="LEFT" relativeTo="ActionBar" relativePoint="LEFT" offset="0" />
+			<Anchor point="BOTTOM" relativeTo="ActionBar" relativePoint="TOP" offset="-8" />
+		</Area>
+		<Frame name="ActionButton13" inherits="ActionBarButtonTemplate" id="13">
+			<Area>
+				<Size>
+					<AbsDimension x="112" y="112" />
+				</Size>
+				<Anchor point="LEFT" offset="0" />
+				<Anchor point="TOP" offset="0" />
+			</Area>
+		</Frame>
+		<Frame name="ActionButton14" inherits="ActionBarButtonTemplate" id="14">
+			<Area>
+				<Size>
+					<AbsDimension x="112" y="112" />
+				</Size>
+				<Anchor point="LEFT" offset="8" relativeTo="ActionButton13" relativePoint="RIGHT" />
+				<Anchor point="TOP" offset="0" />
+			</Area>
+		</Frame>
+		<Frame name="ActionButton15" inherits="ActionBarButtonTemplate" id="15">
+			<Area>
+				<Size>
+					<AbsDimension x="112" y="112" />
+				</Size>
+				<Anchor point="LEFT" offset="8" relativeTo="ActionButton14" relativePoint="RIGHT" />
+				<Anchor point="TOP" offset="0" />
+			</Area>
+		</Frame>
+		<Frame name="ActionButton16" inherits="ActionBarButtonTemplate" id="16">
+			<Area>
+				<Size>
+					<AbsDimension x="112" y="112" />
+				</Size>
+				<Anchor point="LEFT" offset="8" relativeTo="ActionButton15" relativePoint="RIGHT" />
+				<Anchor point="TOP" offset="0" />
+			</Area>
+		</Frame>
+		<Frame name="ActionButton17" inherits="ActionBarButtonTemplate" id="17">
+			<Area>
+				<Size>
+					<AbsDimension x="112" y="112" />
+				</Size>
+				<Anchor point="LEFT" offset="8" relativeTo="ActionButton16" relativePoint="RIGHT" />
+				<Anchor point="TOP" offset="0" />
+			</Area>
+		</Frame>
+		<Frame name="ActionButton18" inherits="ActionBarButtonTemplate" id="18">
+			<Area>
+				<Size>
+					<AbsDimension x="112" y="112" />
+				</Size>
+				<Anchor point="LEFT" offset="8" relativeTo="ActionButton17" relativePoint="RIGHT" />
+				<Anchor point="TOP" offset="0" />
+			</Area>
+		</Frame>
+		<Frame name="ActionButton19" inherits="ActionBarButtonTemplate" id="19">
+			<Area>
+				<Size>
+					<AbsDimension x="112" y="112" />
+				</Size>
+				<Anchor point="LEFT" offset="8" relativeTo="ActionButton18" relativePoint="RIGHT" />
+				<Anchor point="TOP" offset="0" />
+			</Area>
+		</Frame>
+		<Frame name="ActionButton20" inherits="ActionBarButtonTemplate" id="20">
+			<Area>
+				<Size>
+					<AbsDimension x="112" y="112" />
+				</Size>
+				<Anchor point="LEFT" offset="8" relativeTo="ActionButton19" relativePoint="RIGHT" />
+				<Anchor point="TOP" offset="0" />
+			</Area>
+		</Frame>
+		<Frame name="ActionButton21" inherits="ActionBarButtonTemplate" id="21">
+			<Area>
+				<Size>
+					<AbsDimension x="112" y="112" />
+				</Size>
+				<Anchor point="LEFT" offset="8" relativeTo="ActionButton20" relativePoint="RIGHT" />
+				<Anchor point="TOP" offset="0" />
+			</Area>
+		</Frame>
+		<Frame name="ActionButton22" inherits="ActionBarButtonTemplate" id="22">
+			<Area>
+				<Size>
+					<AbsDimension x="112" y="112" />
+				</Size>
+				<Anchor point="LEFT" offset="8" relativeTo="ActionButton21" relativePoint="RIGHT" />
+				<Anchor point="TOP" offset="0" />
+			</Area>
+		</Frame>
+		<Frame name="ActionButton23" inherits="ActionBarButtonTemplate" id="23">
+			<Area>
+				<Size>
+					<AbsDimension x="112" y="112" />
+				</Size>
+				<Anchor point="LEFT" offset="8" relativeTo="ActionButton22" relativePoint="RIGHT" />
+				<Anchor point="TOP" offset="0" />
+			</Area>
+		</Frame>
+		<Frame name="ActionButton24" inherits="ActionBarButtonTemplate" id="24">
+			<Area>
+				<Size>
+					<AbsDimension x="112" y="112" />
+				</Size>
+				<Anchor point="LEFT" offset="8" relativeTo="ActionButton23" relativePoint="RIGHT" />
+				<Anchor point="TOP" offset="0" />
+			</Area>
+		</Frame>
+		<Scripts>
+			<OnLoad>
+                return function(this)
+                    ActionBar2_OnLoad(this)
+                end
+            </OnLoad>
+		</Scripts>
+		<Visual>
+			<ImagerySection name="Surface">
+				<!-- Deliberately empty: the second bar has no backing plate of its own. -->
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Surface" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+	</Frame>
 </UiLayout>
