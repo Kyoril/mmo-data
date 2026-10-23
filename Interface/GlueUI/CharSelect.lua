@@ -233,9 +233,6 @@ local function UpdateButtons()
 
 	CharRosterButton:SetText(string.format(Localize("ALL_CHARACTERS"), numCharacters))
 
-	-- Below five characters the empty plaza spots carry "new character" markers instead.
-	CharCreateButton:SetProperty("Visible", numCharacters >= PLAZA_SPOTS and "true" or "false")
-
 	if selectedIndex >= 0 and GetCharacterInfo(selectedIndex) then
 		-- Allow deletion regardless of disabled status, but block world entry for disabled characters
 		CharDeleteButton:Enable()
@@ -682,23 +679,6 @@ function CharSelect_OnUpdate(self, elapsed)
 			frame:Show()
 		else
 			frame:Hide()
-		end
-	end
-
-	-- "New character" markers on the empty spots.
-	local numCharacters = GetNumCharacters()
-	for spot = 1, PLAZA_SPOTS do
-		local marker = _G["NewCharMarker" .. spot]
-		local x, y, visible = false, false, false
-		if spot > numCharacters then
-			x, y, visible = GetPlazaSpotPosition(spot - 1)
-		end
-
-		if visible then
-			PlaceAbove(marker, x, y)
-			marker:Show()
-		else
-			marker:Hide()
 		end
 	end
 end

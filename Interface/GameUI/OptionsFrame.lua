@@ -48,6 +48,8 @@ local TOOLTIP_NOTE_COLOR = "FFAAAAAA"
 --                   while it is false
 --   indent       -> indent level of the label (1 for settings refining the one above)
 --   invert       -> (toggle) the checkbox shows the opposite of the boolean cvar
+--   onChange     -> function called after the cvar was written, for settings the UI has to
+--                   apply itself (the engine only watches its own console variables)
 --   needsRestart -> changing the setting takes effect after a client restart
 local OPTIONS_CATEGORIES;
 
@@ -615,6 +617,16 @@ OPTIONS_CATEGORIES = {
 				},
 			},
 
+			{ type = "header", labelKey = "OPTIONS_HEADER_ACTION_BARS" },
+			{
+				type = "toggle",
+				labelKey = "OPTIONS_SHOW_ACTION_BAR_2",
+				tooltipKey = "OPTIONS_TT_SHOW_ACTION_BAR_2",
+				cvar = "ShowActionBar2",
+				defaultValue = "0",
+				onChange = function() ActionBar_UpdateSecondBarVisibility(); end,
+			},
+
 			{ type = "header", labelKey = "OPTIONS_HEADER_NAMEPLATES" },
 			{
 				type = "toggle",
@@ -826,6 +838,10 @@ local function OnOptionChanged(opt)
 	-- Editing a setting the presets cover means the settings no longer match a preset.
 	if opt.preset and GetCVar("gxQuality") ~= "custom" then
 		SetCVar("gxQuality", "custom");
+	end
+
+	if opt.onChange then
+		opt.onChange();
 	end
 
 	-- Other rows may depend on this one (enabled state, resolution list, render scale labels).

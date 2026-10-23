@@ -1,5 +1,10 @@
 
-MAX_ACTION_BUTTONS = 12;
+-- Slots per bar and in total. Slots 1-12 are the main bar, 13-24 the second bar above it.
+ACTION_BUTTONS_PER_BAR = 12;
+MAX_ACTION_BUTTONS = 24;
+
+-- Console variable deciding whether the second action bar is shown.
+ACTION_BAR_2_CVAR = "ShowActionBar2";
 
 -- Tint used for the "active" glow shown on toggled ("Disabled While Active") spells such as Stealth.
 ACTION_BUTTON_ACTIVE_GLOW = "FFFFD100";
@@ -7,6 +12,23 @@ ACTION_BUTTON_INACTIVE_GLOW = "00000000";
 
 -- Fallback icon for emotes without an authored icon.
 EMOTE_FALLBACK_ICON = "Interface/Icons/fg4_iconsFlat_dialogue.htex";
+
+-- Shows or hides the second action bar according to the interface option. Called on load and
+-- whenever the option is toggled. The bar may be passed in explicitly, because its own OnLoad
+-- runs before the frame is reachable through its global name.
+function ActionBar_UpdateSecondBarVisibility(bar)
+    bar = bar or ActionBar2;
+    if bar == nil then
+        return;
+    end
+
+    local value = GetCVar(ACTION_BAR_2_CVAR);
+    if value ~= nil and value ~= "" and value ~= "0" then
+        bar:Show();
+    else
+        bar:Hide();
+    end
+end
 
 function ActionButton_OnEnter(self)
     if IsActionButtonSpell(self.id - 1) then
@@ -65,6 +87,10 @@ function ActionButton_Down(id)
     end
 
     local button = _G["ActionButton"..id];
+    if (button == nil) then
+        return;
+    end
+
     button:SetButtonState(ButtonState.PUSHED);
 end
 
@@ -78,6 +104,10 @@ function ActionButton_Up(id)
     end
 
     local button = _G["ActionButton"..id];
+    if (button == nil) then
+        return;
+    end
+
     if (button:IsHovered()) then
         button:SetButtonState(ButtonState.HOVERED);
     else
@@ -98,49 +128,51 @@ end
 function ActionBar_UpdateButtons(self)
     for i = 1, MAX_ACTION_BUTTONS do
         local button = _G["ActionButton"..i];
+        if button ~= nil then
 
-        button:SetOpacity(1.0);
+            button:SetOpacity(1.0);
         
-        if IsActionButtonSpell(i - 1) then
-            local spell = GetActionButtonSpell(i - 1);
-            if (spell ~= nil) then
-                button:SetProperty("Icon", spell.icon);
+            if IsActionButtonSpell(i - 1) then
+                local spell = GetActionButtonSpell(i - 1);
+                if (spell ~= nil) then
+                    button:SetProperty("Icon", spell.icon);
+                else
+                    button:SetProperty("Icon", "");
+                end
+
+                button:SetText("");
+            elseif IsActionButtonItem(i - 1) then
+                local item = GetActionButtonItem(i - 1);
+
+                if (item ~= nil) then
+                    button:SetProperty("Icon", item.GetIcon(item));
+
+                    local itemCount = GetItemCount(item.id);
+                    button:SetText(tostring(itemCount));
+                else
+                    button:SetProperty("Icon", "");
+                    button:SetText("");
+                end
+            elseif IsActionButtonEmote(i - 1) then
+                local emote = GetActionButtonEmote(i - 1);
+
+                if (emote ~= nil and emote.icon ~= "") then
+                    button:SetProperty("Icon", emote.icon);
+                else
+                    button:SetProperty("Icon", EMOTE_FALLBACK_ICON);
+                end
+                button:SetText("");
             else
-                button:SetProperty("Icon", "");
-            end
-
-            button:SetText("");
-        elseif IsActionButtonItem(i - 1) then
-            local item = GetActionButtonItem(i - 1);
-
-            if (item ~= nil) then
-                button:SetProperty("Icon", item.GetIcon(item));
-
-                local itemCount = GetItemCount(item.id);
-                button:SetText(tostring(itemCount));
-            else
+                -- Clear icon!
                 button:SetProperty("Icon", "");
                 button:SetText("");
+                -- Empty slots keep an opaque interior so terrain does not muddy the bar.
             end
-        elseif IsActionButtonEmote(i - 1) then
-            local emote = GetActionButtonEmote(i - 1);
 
-            if (emote ~= nil and emote.icon ~= "") then
-                button:SetProperty("Icon", emote.icon);
-            else
-                button:SetProperty("Icon", EMOTE_FALLBACK_ICON);
-            end
-            button:SetText("");
-        else
-            -- Clear icon!
-            button:SetProperty("Icon", "");
-            button:SetText("");
-            -- Empty slots keep an opaque interior so terrain does not muddy the bar.
+            -- Recompute the usable tint as well, so that changes which only affect usability
+            -- (e.g. consuming the last item: count 1 -> 0) are reflected immediately.
+            ActionButton_OnUpdate(button);
         end
-
-        -- Recompute the usable tint as well, so that changes which only affect usability
-        -- (e.g. consuming the last item: count 1 -> 0) are reflected immediately.
-        ActionButton_OnUpdate(button);
     end
 end
 
@@ -221,7 +253,9 @@ end
 function ActionBar_UpdateCooldowns()
     for i = 1, MAX_ACTION_BUTTONS do
         local button = _G["ActionButton"..i];
-        ActionButton_UpdateCooldown(button);
+        if button ~= nil then
+            ActionButton_UpdateCooldown(button);
+        end
     end
 end
 
@@ -248,19 +282,34 @@ function ActionBar_OnLoad(self)
     -- toggled "Disabled While Active" spell such as Stealth is applied or fades.
     self:RegisterEvent("PLAYER_AURA_UPDATE", ActionBar_UpdateButtons);
 
-    for i = 1, MAX_ACTION_BUTTONS do
+    ActionBar_SetupButtons(1, ACTION_BUTTONS_PER_BAR);
+end
+
+-- Wires the handlers and per-button events of one bar's buttons.
+function ActionBar_SetupButtons(firstId, lastId)
+    for i = firstId, lastId do
         local button = _G["ActionButton"..i];
-        button:SetClickedHandler(ActionButton_OnClick);
-        button:SetOnEnterHandler(ActionButton_OnEnter);
-        button:SetOnLeaveHandler(ActionButton_OnLeave);
-        button:SetOnDragHandler(ActionBarButton_OnDrag);
-        button:SetOnDropHandler(ActionBarButton_OnDrop);
+        if button ~= nil then
+            button:SetClickedHandler(ActionButton_OnClick);
+            button:SetOnEnterHandler(ActionButton_OnEnter);
+            button:SetOnLeaveHandler(ActionButton_OnLeave);
+            button:SetOnDragHandler(ActionBarButton_OnDrag);
+            button:SetOnDropHandler(ActionBarButton_OnDrop);
 
-        button:RegisterEvent("PLAYER_POWER_CHANGED", ActionButton_OnUpdate);
-        button:RegisterEvent("ACTION_BAR_CHANGED", ActionButton_OnUpdate);
+            button:RegisterEvent("PLAYER_POWER_CHANGED", ActionButton_OnUpdate);
+            button:RegisterEvent("ACTION_BAR_CHANGED", ActionButton_OnUpdate);
 
-        ActionButton_OnUpdate(button);
+            ActionButton_OnUpdate(button);
+        end
     end
+end
+
+function ActionBar2_OnLoad(self)
+    ActionBar_SetupButtons(ACTION_BUTTONS_PER_BAR + 1, MAX_ACTION_BUTTONS);
+
+    -- The second bar loads after the main bar, so its buttons missed that bar's refresh.
+    ActionBar_UpdateButtons(self);
+    ActionBar_UpdateSecondBarVisibility(self);
 end
 
 -- Binding changes have no UI event; refresh these small captions once per second.
@@ -276,7 +325,9 @@ function ActionBar_UpdateShortcutLabels(elapsed)
         local text = keys and keys[1] or "";
         text = text:gsub("CTRL%-", "C-"):gsub("SHIFT%-", "S-"):gsub("ALT%-", "A-");
         text = text:gsub("MINUS$", "-"):gsub("PLUS$", "+");
-        local label = _G["ActionButton" .. i]:GetChild(1);
-        label:SetText(text);
+        local button = _G["ActionButton" .. i];
+        if button ~= nil then
+            button:GetChild(1):SetText(text);
+        end
     end
 end

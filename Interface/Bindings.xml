@@ -240,6 +240,114 @@
             end
         end
 	</Binding>
+	<Binding name="ACTIONBUTTON13" description="Trigger action button 13" category="ACTIONBAR">
+		return function(key, keystate)
+            if keystate == "DOWN" then
+                ActionButton_Down(13);
+            elseif keystate == "UP" then
+                ActionButton_Up(13);
+            end
+        end
+	</Binding>
+	<Binding name="ACTIONBUTTON14" description="Trigger action button 14" category="ACTIONBAR">
+		return function(key, keystate)
+            if keystate == "DOWN" then
+                ActionButton_Down(14);
+            elseif keystate == "UP" then
+                ActionButton_Up(14);
+            end
+        end
+	</Binding>
+	<Binding name="ACTIONBUTTON15" description="Trigger action button 15" category="ACTIONBAR">
+		return function(key, keystate)
+            if keystate == "DOWN" then
+                ActionButton_Down(15);
+            elseif keystate == "UP" then
+                ActionButton_Up(15);
+            end
+        end
+	</Binding>
+	<Binding name="ACTIONBUTTON16" description="Trigger action button 16" category="ACTIONBAR">
+		return function(key, keystate)
+            if keystate == "DOWN" then
+                ActionButton_Down(16);
+            elseif keystate == "UP" then
+                ActionButton_Up(16);
+            end
+        end
+	</Binding>
+	<Binding name="ACTIONBUTTON17" description="Trigger action button 17" category="ACTIONBAR">
+		return function(key, keystate)
+            if keystate == "DOWN" then
+                ActionButton_Down(17);
+            elseif keystate == "UP" then
+                ActionButton_Up(17);
+            end
+        end
+	</Binding>
+	<Binding name="ACTIONBUTTON18" description="Trigger action button 18" category="ACTIONBAR">
+		return function(key, keystate)
+            if keystate == "DOWN" then
+                ActionButton_Down(18);
+            elseif keystate == "UP" then
+                ActionButton_Up(18);
+            end
+        end
+	</Binding>
+	<Binding name="ACTIONBUTTON19" description="Trigger action button 19" category="ACTIONBAR">
+		return function(key, keystate)
+            if keystate == "DOWN" then
+                ActionButton_Down(19);
+            elseif keystate == "UP" then
+                ActionButton_Up(19);
+            end
+        end
+	</Binding>
+	<Binding name="ACTIONBUTTON20" description="Trigger action button 20" category="ACTIONBAR">
+		return function(key, keystate)
+            if keystate == "DOWN" then
+                ActionButton_Down(20);
+            elseif keystate == "UP" then
+                ActionButton_Up(20);
+            end
+        end
+	</Binding>
+	<Binding name="ACTIONBUTTON21" description="Trigger action button 21" category="ACTIONBAR">
+		return function(key, keystate)
+            if keystate == "DOWN" then
+                ActionButton_Down(21);
+            elseif keystate == "UP" then
+                ActionButton_Up(21);
+            end
+        end
+	</Binding>
+	<Binding name="ACTIONBUTTON22" description="Trigger action button 22" category="ACTIONBAR">
+		return function(key, keystate)
+            if keystate == "DOWN" then
+                ActionButton_Down(22);
+            elseif keystate == "UP" then
+                ActionButton_Up(22);
+            end
+        end
+	</Binding>
+	<Binding name="ACTIONBUTTON23" description="Trigger action button 23" category="ACTIONBAR">
+		return function(key, keystate)
+            if keystate == "DOWN" then
+                ActionButton_Down(23);
+            elseif keystate == "UP" then
+                ActionButton_Up(23);
+            end
+        end
+	</Binding>
+	<Binding name="ACTIONBUTTON24" description="Trigger action button 24" category="ACTIONBAR">
+		return function(key, keystate)
+            if keystate == "DOWN" then
+                ActionButton_Down(24);
+            elseif keystate == "UP" then
+                ActionButton_Up(24);
+            end
+        end
+	</Binding>
     
 	<Binding name="TARGETSELF" description="Target yourself" category="TARGET">
         return function(key, keystate)
