@@ -1,0 +1,408 @@
+<?xml version='1.0' encoding='utf-8'?>
+<UiLayout xmlns="http://www.w3schools.com/Ui">
+	<Script file="InspectWindow.lua" />
+	<Frame name="InspectSlotTemplate" type="Button" renderer="ButtonRenderer">
+		<Property name="Icon" />
+		<Property name="IconColor" value="FFFFFFFF" />
+		<Property name="Background" />
+		<Property name="BackgroundColor" value="FFFFFFFF" />
+		<Property name="QualityColor" value="FFFFFFFF" />
+		<Property name="QualityBorder" value="false" />
+		<Property name="DragEnabled" value="false" />
+		<Property name="DropEnabled" value="false" />
+		<Visual>
+			<ImagerySection name="Background">
+				<ImageComponent tint="$BackgroundColor">
+					<Area>
+						<Inset all="16" />
+					</Area>
+					<PropertyValue property="Background" />
+				</ImageComponent>
+			</ImagerySection>
+			<ImagerySection name="Image">
+				<ImageComponent tint="$IconColor">
+					<Area>
+						<Inset all="16" />
+					</Area>
+					<PropertyValue property="Icon" />
+				</ImageComponent>
+			</ImagerySection>
+			<ImagerySection name="Text">
+				<TextComponent horzAlign="RIGHT" vertAlign="BOTTOM">
+					<Area>
+						<Inset all="16" />
+					</Area>
+				</TextComponent>
+			</ImagerySection>
+			<ImagerySection name="NormalFrame">
+				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="$QualityColor" />
+			</ImagerySection>
+			<ImagerySection name="HoveredFrame">
+				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="$QualityColor" />
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="30FFFFFF" />
+			</ImagerySection>
+			<ImagerySection name="PushedFrame">
+				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="$QualityColor" />
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="50000000" />
+			</ImagerySection>
+			<ImagerySection name="DisabledFrame">
+				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="$QualityColor" />
+			</ImagerySection>
+			<StateImagery name="Normal">
+				<Layer>
+					<Section section="NormalFrame" />
+					<Section section="Background" />
+					<Section section="Image" />
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Hovered">
+				<Layer>
+					<Section section="HoveredFrame" />
+					<Section section="Background" />
+					<Section section="Image" />
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Pushed">
+				<Layer>
+					<Section section="PushedFrame" />
+					<Section section="Background" />
+					<Section section="Image" />
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="DisabledFrame" />
+					<Section section="Background" />
+					<Section section="Image" />
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+		<Area>
+			<Size>
+				<AbsDimension x="128" y="128" />
+			</Size>
+		</Area>
+	</Frame>
+	<Frame name="InspectWindow" renderer="DefaultRenderer" parent="GameParent">
+		<Property name="Visible" value="False" />
+		<Visual>
+			<ImagerySection name="Background">
+				<BorderComponent texture="Interface/GameUI/Alestia/WindowPanel.htex" borderSize="32" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Background" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+		<Area>
+			<Size>
+				<AbsDimension x="848" y="1280" />
+			</Size>
+			<Anchor point="LEFT" offset="1480" />
+			<Anchor point="TOP" offset="300" />
+		</Area>
+		<Scripts>
+			<OnLoad>return function(this) InspectWindow_OnLoad(this); end</OnLoad>
+			<OnUpdate>return function(this, elapsed) InspectWindow_OnUpdate(this, elapsed); end</OnUpdate>
+			<OnHide>return function(this) InspectWindow_OnHide(); end</OnHide>
+			<OnMouseDown>return function(this) return true; end</OnMouseDown>
+		</Scripts>
+		<Frame name="InspectWindowTitle" renderer="DefaultRenderer">
+			<Property name="Clickable" value="true" />
+			<Property name="Focusable" value="true" />
+			<Property name="Font" value="CharacterTitleFont" />
+			<Property name="Text" value="CHARACTER" />
+			<Visual>
+				<ImagerySection name="Surface">
+					<TextComponent color="FFF0E7D6" horzAlign="LEFT" vertAlign="CENTER">
+						<Area>
+							<Inset right="80" />
+						</Area>
+					</TextComponent>
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Surface" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+			<Area>
+				<Size>
+					<AbsDimension y="64" />
+				</Size>
+				<Anchor point="TOP" offset="24" />
+				<Anchor point="LEFT" offset="32" />
+				<Anchor point="RIGHT" offset="-32" />
+			</Area>
+			<Frame name="InspectWindowCloseButton" inherits="IconButton">
+				<Property name="Icon" value="Interface/Icons/fg4_iconsGold_close_result.htex" />
+				<Area>
+					<Size>
+						<AbsDimension x="64" y="64" />
+					</Size>
+					<Anchor point="TOP" offset="0" />
+					<Anchor point="RIGHT" offset="0" />
+				</Area>
+			</Frame>
+			<Frame name="InspectWindowTitleDivider" renderer="DefaultRenderer">
+				<Property name="Clickable" value="false" />
+				<Area>
+					<Size>
+						<AbsDimension y="2" />
+					</Size>
+					<Anchor point="LEFT" offset="0" />
+					<Anchor point="RIGHT" offset="0" />
+					<Anchor point="BOTTOM" offset="12" />
+				</Area>
+				<Visual>
+					<ImagerySection name="Line">
+						<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="806F5B3C" />
+					</ImagerySection>
+					<StateImagery name="Enabled">
+						<Layer>
+							<Section section="Line" />
+						</Layer>
+					</StateImagery>
+				</Visual>
+			</Frame>
+		</Frame>
+		<Frame name="InspectSlot0" inherits="InspectSlotTemplate" id="0">
+			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_helmet.htex" />
+			<Area>
+				<Size>
+					<AbsDimension x="112" y="112" />
+				</Size>
+				<Anchor point="LEFT" offset="32" />
+				<Anchor point="TOP" offset="144" />
+			</Area>
+		</Frame>
+		<Frame name="InspectSlot1" inherits="InspectSlotTemplate" id="1">
+			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_necklace.htex" />
+			<Area>
+				<Size>
+					<AbsDimension x="112" y="112" />
+				</Size>
+				<Anchor point="LEFT" offset="32" />
+				<Anchor point="TOP" offset="272" />
+			</Area>
+		</Frame>
+		<Frame name="InspectSlot2" inherits="InspectSlotTemplate" id="2">
+			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_spaulders.htex" />
+			<Area>
+				<Size>
+					<AbsDimension x="112" y="112" />
+				</Size>
+				<Anchor point="LEFT" offset="32" />
+				<Anchor point="TOP" offset="400" />
+			</Area>
+		</Frame>
+		<Frame name="InspectSlot14" inherits="InspectSlotTemplate" id="14">
+			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_cape.htex" />
+			<Area>
+				<Size>
+					<AbsDimension x="112" y="112" />
+				</Size>
+				<Anchor point="LEFT" offset="32" />
+				<Anchor point="TOP" offset="528" />
+			</Area>
+		</Frame>
+		<Frame name="InspectSlot3" inherits="InspectSlotTemplate" id="3">
+			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_chest.htex" />
+			<Area>
+				<Size>
+					<AbsDimension x="112" y="112" />
+				</Size>
+				<Anchor point="LEFT" offset="32" />
+				<Anchor point="TOP" offset="656" />
+			</Area>
+		</Frame>
+		<Frame name="InspectSlot4" inherits="InspectSlotTemplate" id="4">
+			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_shirt.htex" />
+			<Area>
+				<Size>
+					<AbsDimension x="112" y="112" />
+				</Size>
+				<Anchor point="LEFT" offset="32" />
+				<Anchor point="TOP" offset="784" />
+			</Area>
+		</Frame>
+		<Frame name="InspectSlot18" inherits="InspectSlotTemplate" id="18">
+			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_shirt.htex" />
+			<Area>
+				<Size>
+					<AbsDimension x="112" y="112" />
+				</Size>
+				<Anchor point="LEFT" offset="32" />
+				<Anchor point="TOP" offset="912" />
+			</Area>
+		</Frame>
+		<Frame name="InspectSlot8" inherits="InspectSlotTemplate" id="8">
+			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_arms.htex" />
+			<Area>
+				<Size>
+					<AbsDimension x="112" y="112" />
+				</Size>
+				<Anchor point="LEFT" offset="32" />
+				<Anchor point="TOP" offset="1040" />
+			</Area>
+		</Frame>
+		<Frame name="InspectSlot9" inherits="InspectSlotTemplate" id="9">
+			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_gloves.htex" />
+			<Area>
+				<Size>
+					<AbsDimension x="112" y="112" />
+				</Size>
+				<Anchor point="LEFT" offset="704" />
+				<Anchor point="TOP" offset="144" />
+			</Area>
+		</Frame>
+		<Frame name="InspectSlot5" inherits="InspectSlotTemplate" id="5">
+			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_belt.htex" />
+			<Area>
+				<Size>
+					<AbsDimension x="112" y="112" />
+				</Size>
+				<Anchor point="LEFT" offset="704" />
+				<Anchor point="TOP" offset="272" />
+			</Area>
+		</Frame>
+		<Frame name="InspectSlot6" inherits="InspectSlotTemplate" id="6">
+			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_pants.htex" />
+			<Area>
+				<Size>
+					<AbsDimension x="112" y="112" />
+				</Size>
+				<Anchor point="LEFT" offset="704" />
+				<Anchor point="TOP" offset="400" />
+			</Area>
+		</Frame>
+		<Frame name="InspectSlot7" inherits="InspectSlotTemplate" id="7">
+			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_boots.htex" />
+			<Area>
+				<Size>
+					<AbsDimension x="112" y="112" />
+				</Size>
+				<Anchor point="LEFT" offset="704" />
+				<Anchor point="TOP" offset="528" />
+			</Area>
+		</Frame>
+		<Frame name="InspectSlot10" inherits="InspectSlotTemplate" id="10">
+			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_ring.htex" />
+			<Area>
+				<Size>
+					<AbsDimension x="112" y="112" />
+				</Size>
+				<Anchor point="LEFT" offset="704" />
+				<Anchor point="TOP" offset="656" />
+			</Area>
+		</Frame>
+		<Frame name="InspectSlot11" inherits="InspectSlotTemplate" id="11">
+			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_ring.htex" />
+			<Area>
+				<Size>
+					<AbsDimension x="112" y="112" />
+				</Size>
+				<Anchor point="LEFT" offset="704" />
+				<Anchor point="TOP" offset="784" />
+			</Area>
+		</Frame>
+		<Frame name="InspectSlot12" inherits="InspectSlotTemplate" id="12">
+			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_trinket.htex" />
+			<Area>
+				<Size>
+					<AbsDimension x="112" y="112" />
+				</Size>
+				<Anchor point="LEFT" offset="704" />
+				<Anchor point="TOP" offset="912" />
+			</Area>
+		</Frame>
+		<Frame name="InspectSlot13" inherits="InspectSlotTemplate" id="13">
+			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_trinket.htex" />
+			<Area>
+				<Size>
+					<AbsDimension x="112" y="112" />
+				</Size>
+				<Anchor point="LEFT" offset="704" />
+				<Anchor point="TOP" offset="1040" />
+			</Area>
+		</Frame>
+		<Frame name="InspectSlot16" inherits="InspectSlotTemplate" id="16">
+			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_shield.htex" />
+			<Area>
+				<Size>
+					<AbsDimension x="112" y="112" />
+				</Size>
+				<Anchor point="LEFT" offset="368" />
+				<Anchor point="BOTTOM" offset="-64" />
+			</Area>
+		</Frame>
+		<Frame name="InspectSlot15" inherits="InspectSlotTemplate" id="15">
+			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_sword.htex" />
+			<Area>
+				<Size>
+					<AbsDimension x="112" y="112" />
+				</Size>
+				<Anchor point="LEFT" offset="240" />
+				<Anchor point="BOTTOM" offset="-64" />
+			</Area>
+		</Frame>
+		<Frame name="InspectSlot17" inherits="InspectSlotTemplate" id="17">
+			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_bow.htex" />
+			<Area>
+				<Size>
+					<AbsDimension x="112" y="112" />
+				</Size>
+				<Anchor point="LEFT" offset="496" />
+				<Anchor point="BOTTOM" offset="-64" />
+			</Area>
+		</Frame>
+		<Frame name="InspectLevelLabel" inherits="TextSmall">
+			<Property name="TextColor" value="FFB9AD96" />
+			<Property name="Font" value="SmallLabelFont" />
+			<Property name="HorzAlign" value="CENTER" />
+			<Area>
+				<Size>
+					<AbsDimension y="36" />
+				</Size>
+				<Anchor point="TOP" offset="100" />
+				<Anchor point="LEFT" offset="152" />
+				<Anchor point="RIGHT" offset="-152" />
+			</Area>
+		</Frame>
+		<Frame name="InspectModelBorder" renderer="DefaultRenderer">
+			<Area>
+				<Anchor point="LEFT" offset="160" />
+				<Anchor point="RIGHT" offset="-160" />
+				<Anchor point="TOP" offset="152" />
+				<Anchor point="BOTTOM" offset="-192" />
+			</Area>
+			<Visual>
+				<ImagerySection name="Surface">
+					<BorderComponent texture="Interface/GameUI/Alestia/WindowPanel.htex" borderSize="32" tint="FF807568" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Surface" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+			<Frame name="InspectModel" type="UnitModel" renderer="ModelRenderer">
+				<Property name="Yaw" value="-120" />
+				<Property name="Zoom" value="2.75" />
+				<Property name="OffsetY" value="1.0" />
+				<Property name="Animation" value="Idle" />
+				<Area>
+					<Anchor point="LEFT" offset="8" />
+					<Anchor point="RIGHT" offset="-8" />
+					<Anchor point="TOP" offset="8" />
+					<Anchor point="BOTTOM" offset="-8" />
+				</Area>
+			</Frame>
+		</Frame>
+	</Frame>
+</UiLayout>

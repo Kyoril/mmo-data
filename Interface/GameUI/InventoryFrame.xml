@@ -116,7 +116,7 @@
 			<OnMouseDown>
 				return function(this, button)
 					-- If clicking on inventory frame background (not a button), handle as invalid drop
-					if CursorHasItem() then
+					if CursorHasPayload() then
 						HandleInvalidItemDrop();
 						return true;  -- Event consumed
 					end

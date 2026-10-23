@@ -99,6 +99,10 @@ StaticDialogs["DESTROY_ITEM"] = {
 	button2 = Localize("NO"),
 	OnAccept = function()
 		-- This will be called when user confirms destruction
+		if not CursorHasItem() then
+			ClearCursorItem();
+			return;
+		end
 		local slotId = GetCursorItemSlot();
 		if slotId then
 			local item = GetInventorySlotItem("player", slotId);

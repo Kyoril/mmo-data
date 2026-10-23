@@ -23,7 +23,7 @@
 			</OnHide>
 			<OnMouseDown>
 				return function(this, button)
-					if CursorHasItem() then
+					if CursorHasPayload() then
 						HandleInvalidItemDrop();
 						return true;
 					end

@@ -7,7 +7,7 @@ local inventoryDragOffset = nil;
 local INVENTORY_SCALE = 0.8;
 
 function InventoryFrame_OnTitleMouseDown(self, button)
-    if CursorHasItem() then
+    if CursorHasPayload() then
         HandleInvalidItemDrop();
         return true;
     end

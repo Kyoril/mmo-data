@@ -10,7 +10,13 @@
 		     keeps it below every sibling, including HUD overlays that use a negative level to
 		     stay underneath the game windows. -->
 		<Frame name="WorldFrame" type="World" renderer="WorldRenderer" setAllPoints="true" frameLevel="-1000">
+			<Property name="DropEnabled" value="true" />
 			<Scripts>
+				<OnDrop>
+					return function(this, button, position)
+						HandleInvalidItemDrop();
+					end
+				</OnDrop>
 				<OnMouseDown>
 					return function(this, button)
 						return WorldFrame_OnMouseDown(this, button);

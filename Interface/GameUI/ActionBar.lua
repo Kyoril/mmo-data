@@ -40,11 +40,15 @@ function ActionButton_OnEnter(self)
 end
 
 function ActionBarButton_OnDrag(this, button, position)
-    PickupActionButton(this.id - 1);
+    if button == "LEFT" and IsShiftKeyDown() then
+        PickupActionButton(this.id - 1);
+    end
 end
 
 function ActionBarButton_OnDrop(this, button, position)
-    PickupActionButton(this.id - 1);
+    if CursorHasPayload() then
+        PickupActionButton(this.id - 1);
+    end
 end
 
 function ActionButton_OnLeave(self)

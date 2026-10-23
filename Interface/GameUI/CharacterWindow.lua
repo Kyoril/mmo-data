@@ -67,6 +67,7 @@ function CharacterWindow_OnAttributeChanged(self)
 end
 
 function CharacterWindow_OnLoad(self)
+	CharacterWindow_StopMoving = EnableWindowDragging(CharacterWindow, CharacterWindowTitle);
 	-- Bind the named control so decorative header changes cannot break closing.
 	CharacterWindowCloseButton:SetClickedHandler(CharacterWindow_Toggle);
 
@@ -417,6 +418,7 @@ function CharacterWindow_OnShow(this)
 end
 
 function CharacterWindow_OnHide(this)
+	CharacterWindow_StopMoving();
     -- Seeing the character sheet is all the hint was for. Leaving points unspent on purpose is
     -- fine, so closing the window clears the badge even while points remain.
     attributePointHintActive = false;
