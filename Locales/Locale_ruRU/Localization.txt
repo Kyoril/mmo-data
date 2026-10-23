@@ -75,7 +75,6 @@ strings =
 	(key = "CHAR_COUNT_FORMAT", string = "Персонажей: %d")
 	(key = "CHAR_LEVEL_CLASS_FORMAT", string = "Уровень %d %s")
 	(key = "ALL_CHARACTERS", string = "Все персонажи (%d)")
-	(key = "NEW_CHARACTER_SPOT", string = "Новый персонаж")
 	(key = "ON_THE_PLAZA", string = "На площади")
 	(key = "NOT_ON_THE_PLAZA", string = "Не на площади")
 	(key = "DRAG_TO_REORDER", string = "Перетащите, чтобы изменить порядок")
