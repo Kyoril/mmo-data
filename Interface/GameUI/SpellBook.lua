@@ -126,7 +126,7 @@ function SpellButton_OnClick(self, button)
 
     local spellIndex = id + (SpellBookPage - 1) * SPELLS_PER_PAGE;
     local spell = SpellBook_GetSpellAtPageIndex(spellIndex);
-    if (spell == nil) then
+    if (spell == nil or IsPassiveSpell(spell)) then
         return;
     end
 
@@ -172,7 +172,7 @@ function SpellButton_OnDrag(self)
 
     local spellIndex = id + (SpellBookPage - 1) * SPELLS_PER_PAGE;
     local spell = SpellBook_GetSpellAtPageIndex(spellIndex);
-    if (spell == nil) then
+    if (spell == nil or IsPassiveSpell(spell)) then
         return;
     end
 
@@ -209,6 +209,7 @@ function SpellButton_Update(button)
         button:GetChild(1):SetText("");
     end
     button:SetProperty("icon", spell.icon);
+    button:SetProperty("DragEnabled", IsPassiveSpell(spell) and "false" or "true");
     button:Enable();
 
 end

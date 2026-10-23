@@ -50,8 +50,7 @@
 			<Frame name="TargetPortraitModel" type="UnitModel" renderer="ModelRenderer">
 				<Property name="Animation" value="Idle" />
 				<Property name="Yaw" value="-90" />
-				<Property name="Zoom" value="0.55" />
-				<Property name="OffsetY" value="1.7" />
+				<Property name="Portrait" value="true" />
 				<Area>
 					<Anchor point="TOP" offset="16" />
 					<Anchor point="LEFT" offset="16" />

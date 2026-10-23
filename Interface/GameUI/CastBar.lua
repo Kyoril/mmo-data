@@ -23,7 +23,7 @@ function CastBar_OnCastStart(self, spell, castTime)
     end
 
     CastBarEndTime = castTime / 1000.0;
-    PlayerCastBar:SetProperty("Progress", "0.0");
+    PlayerCastBar:SetProgress(0.0);
     PlayerCastBar:SetText(CastBarSpell.name);
 
     PlayerCastBar:Show();
@@ -48,7 +48,7 @@ function CastBar_OnChannelStart(self, spell, duration)
     end
 
     CastBarEndTime = duration / 1000.0;
-    PlayerCastBar:SetProperty("Progress", "1.0");
+    PlayerCastBar:SetProgress(1.0);
     PlayerCastBar:SetText(CastBarSpell.name);
 
     PlayerCastBar:Show();
@@ -73,10 +73,10 @@ function CastBar_OnUpdate(self, elapsed)
         if (remaining < 0.0) then
             remaining = 0.0;
         end
-        PlayerCastBar:SetProperty("Progress", string.format("%.2f", remaining));
+        PlayerCastBar:SetProgress(remaining);
     else
         -- Normal cast: progress goes from 0.0 up to 1.0
-        PlayerCastBar:SetProperty("Progress", string.format("%.2f", CastBarProgress / CastBarEndTime));
+        PlayerCastBar:SetProgress(CastBarProgress / CastBarEndTime);
     end
 end
 
