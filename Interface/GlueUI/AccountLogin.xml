@@ -3,6 +3,32 @@
 	<!-- Reference lua script file here -->
 	<Script file="AccountLogin.lua" />
 
+	<!--
+		Checkbox used by the login form: a frame border when unchecked, plus a checkmark icon when
+		checked. Mirrors GameUI's OptionsCheckboxTemplate, which the glue UI does not load.
+	-->
+	<Frame name="GlueCheckbox" type="Button" renderer="CheckboxRenderer">
+		<Property name="Checkable" value="true" />
+		<Area>
+			<Size><AbsDimension x="44" y="44" /></Size>
+		</Area>
+		<Visual>
+			<ImagerySection name="FrameNormal"><BorderComponent texture="Interface/GlueUI/CharButtonUp.htex" borderSize="22" /></ImagerySection>
+			<ImagerySection name="FrameHovered"><BorderComponent texture="Interface/GlueUI/CharButtonHovered.htex" borderSize="22" /></ImagerySection>
+			<ImagerySection name="FramePushed"><BorderComponent texture="Interface/GlueUI/CharButtonPushed.htex" borderSize="22" /></ImagerySection>
+			<ImagerySection name="FrameDisabled"><BorderComponent texture="Interface/GlueUI/CharButtonUp.htex" borderSize="22" tint="80606060" /></ImagerySection>
+			<ImagerySection name="CheckIcon"><ImageComponent texture="Interface/Icons/fg4_iconsGold_checkMark_result.htex" tiling="NONE"><Area><Inset all="10" /></Area></ImageComponent></ImagerySection>
+			<StateImagery name="Normal"><Layer><Section section="FrameNormal" /></Layer></StateImagery>
+			<StateImagery name="Hovered"><Layer><Section section="FrameHovered" /></Layer></StateImagery>
+			<StateImagery name="Pushed"><Layer><Section section="FramePushed" /></Layer></StateImagery>
+			<StateImagery name="Disabled"><Layer><Section section="FrameDisabled" /></Layer></StateImagery>
+			<StateImagery name="NormalChecked"><Layer><Section section="FramePushed" /><Section section="CheckIcon" /></Layer></StateImagery>
+			<StateImagery name="HoveredChecked"><Layer><Section section="FrameHovered" /><Section section="CheckIcon" /></Layer></StateImagery>
+			<StateImagery name="PushedChecked"><Layer><Section section="FramePushed" /><Section section="CheckIcon" color="FFAAAAAA" /></Layer></StateImagery>
+			<StateImagery name="DisabledChecked"><Layer><Section section="FrameDisabled" /><Section section="CheckIcon" color="80808080" /></Layer></StateImagery>
+		</Visual>
+	</Frame>
+
 	<!-- Account login frame -->
 	<Frame name="AccountLogin" parent="GlueParent" setAllPoints="true" renderer="DefaultRenderer">
 		<Property name="Focusable" value="true" />
@@ -125,10 +151,35 @@
 				</Area>
 			</Frame>
 
+			<!-- Remembers the account name (never the password) between sessions. -->
+			<Frame name="RememberAccountNameCheck" inherits="GlueCheckbox">
+				<Area>
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="AccountPasswordField" offset="16" />
+					<Anchor point="LEFT" relativePoint="LEFT" relativeTo="AccountPasswordField" />
+					<Size><AbsDimension x="44" y="44" /></Size>
+				</Area>
+				<Scripts>
+					<OnClick>
+						return function(this)
+							AccountLogin_OnRememberAccountNameToggled();
+						end
+					</OnClick>
+				</Scripts>
+			</Frame>
+			<Frame name="RememberAccountNameLabel" inherits="GlueTextSmall">
+				<Property name="Text" value="REMEMBER_ACCOUNT_NAME" />
+				<Property name="VertAlign" value="CENTER" />
+				<Area>
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="RememberAccountNameCheck" offset="12" />
+					<Anchor point="V_CENTER" relativePoint="V_CENTER" relativeTo="RememberAccountNameCheck" />
+					<Size><AbsDimension x="520" y="44" /></Size>
+				</Area>
+			</Frame>
+
 			<Frame name="LoginButton" inherits="GlueButtonPrimary">
 				<Property name="Text" value="LOGIN" />
 				<Area>
-					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="AccountPasswordField" offset="56" />
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RememberAccountNameCheck" offset="24" />
 					<Anchor point="H_CENTER" />
 					<Size><AbsDimension x="600" y="128"/></Size>
 				</Area>
