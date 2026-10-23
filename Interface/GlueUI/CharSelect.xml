@@ -273,33 +273,6 @@
 		<Frame name="CharSelectChrome" setAllPoints="true">
 			<Property name="Clickable" value="false" />
 
-			<!-- "New character" markers at empty plaza spots (fewer than five characters). -->
-			<Frame name="NewCharMarker1" inherits="GlueButton">
-				<Property name="Text" value="NEW_CHARACTER_SPOT" />
-				<Property name="Visible" value="false" />
-				<Scripts><OnClick>return function(this) CharSelect_CreateCharacter(); end</OnClick></Scripts>
-			</Frame>
-			<Frame name="NewCharMarker2" inherits="GlueButton">
-				<Property name="Text" value="NEW_CHARACTER_SPOT" />
-				<Property name="Visible" value="false" />
-				<Scripts><OnClick>return function(this) CharSelect_CreateCharacter(); end</OnClick></Scripts>
-			</Frame>
-			<Frame name="NewCharMarker3" inherits="GlueButton">
-				<Property name="Text" value="NEW_CHARACTER_SPOT" />
-				<Property name="Visible" value="false" />
-				<Scripts><OnClick>return function(this) CharSelect_CreateCharacter(); end</OnClick></Scripts>
-			</Frame>
-			<Frame name="NewCharMarker4" inherits="GlueButton">
-				<Property name="Text" value="NEW_CHARACTER_SPOT" />
-				<Property name="Visible" value="false" />
-				<Scripts><OnClick>return function(this) CharSelect_CreateCharacter(); end</OnClick></Scripts>
-			</Frame>
-			<Frame name="NewCharMarker5" inherits="GlueButton">
-				<Property name="Text" value="NEW_CHARACTER_SPOT" />
-				<Property name="Visible" value="false" />
-				<Scripts><OnClick>return function(this) CharSelect_CreateCharacter(); end</OnClick></Scripts>
-			</Frame>
-
 			<!-- Bottom bar: a soft gradient behind the buttons. Not clickable, so drags on it still turn
 			     the selected character. -->
 			<Frame name="CharSelectBottomBar" renderer="DefaultRenderer">
@@ -405,7 +378,6 @@
 			<!-- Only shown with five or more characters; below that the plaza markers create characters. -->
 			<Frame name="CharCreateButton" inherits="GlueButton">
 				<Property name="Text" value="CREATE_CHARACTER" />
-				<Property name="Visible" value="false" />
 				<Area>
 					<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CharDeleteButton" offset="-24" />
 					<Anchor point="BOTTOM" offset="-48" />

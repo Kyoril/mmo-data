@@ -75,7 +75,6 @@ strings =
 	(key = "CHAR_COUNT_FORMAT", string = "Characters: %d")
 	(key = "CHAR_LEVEL_CLASS_FORMAT", string = "Level %d %s")
 	(key = "ALL_CHARACTERS", string = "All characters (%d)")
-	(key = "NEW_CHARACTER_SPOT", string = "New character")
 	(key = "ON_THE_PLAZA", string = "On the plaza")
 	(key = "NOT_ON_THE_PLAZA", string = "Not on the plaza")
 	(key = "DRAG_TO_REORDER", string = "Drag to reorder")
