@@ -692,6 +692,11 @@
 					QuestFrame_OnShow(this);
 				end
 			</OnShow>
+			<OnUpdate>
+				return function(this, elapsed)
+					QuestFrame_UpdateLayout();
+				end
+			</OnUpdate>
 			<OnHide>
 				return function(this)
 					NotifyQuestDialogClosed();

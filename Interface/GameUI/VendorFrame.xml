@@ -99,6 +99,11 @@
 					VendorFrame_OnShow(this);
 				end
 			</OnShow>
+			<OnUpdate>
+				return function(this, elapsed)
+					VendorFrame_UpdateLayout();
+				end
+			</OnUpdate>
 			<OnHide>
 				return function(this)
 					print("Hiding vendor frame");

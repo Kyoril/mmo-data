@@ -12,6 +12,7 @@ PlayerFrame.xml
 PartyFrame.xml
 InventoryButton.xml
 CharacterWindow.xml
+InspectWindow.xml
 SpellBook.xml
 Crafting.xml
 EmoteList.xml
@@ -44,6 +45,7 @@ GameMenu.xml
 OptionsFrame.xml
 LootMethodFrame.xml
 ContextMenu.xml
+Duel.xml
 GameTooltip.xml
 
 # In-game bug reporter (remove this line to disable the feature on the client)

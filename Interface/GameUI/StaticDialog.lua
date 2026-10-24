@@ -93,26 +93,31 @@ StaticDialogs["DELETE_ITEM"] = {
 	exclusive = false
 };
 
+local function ClearConfirmedItemCursor(item)
+	if item and CursorHasItem() then
+		local cursorItem = GetInventorySlotItem("player", GetCursorItemSlot());
+		if cursorItem and item:IsSameItem(cursorItem) then
+			ClearCursorItem();
+		end
+	end
+end
+
 StaticDialogs["DESTROY_ITEM"] = {
 	text = Localize("DESTROY_ITEM"),
 	button1 = Localize("YES"),
 	button2 = Localize("NO"),
 	OnAccept = function()
-		-- This will be called when user confirms destruction
-		local slotId = GetCursorItemSlot();
-		if slotId then
-			local item = GetInventorySlotItem("player", slotId);
-			if item then
-				-- Destroy the entire stack
-				local count = item:GetStackCount();
-				DestroyItem(slotId, count);
-			end
+		local item = StaticDialog.data;
+		StaticDialog.data = nil;
+		if item then
+			ClearConfirmedItemCursor(item);
+			DestroyItemInstance(item);
 		end
-		ClearCursorItem();
 	end,
 	OnCancel = function()
-		-- User cancelled, just clear the cursor
-		ClearCursorItem();
+		local item = StaticDialog.data;
+		StaticDialog.data = nil;
+		ClearConfirmedItemCursor(item);
 	end,
 	timeout = 0,
 	exclusive = false

@@ -420,6 +420,14 @@
             end
         end
 	</Binding>
+
+    <Binding name="TARGETNEARESTPLAYER" description="Target Nearest Player" category="TARGET">
+        return function(key, keystate)
+            if keystate == "DOWN" then
+                TargetNearestFriendlyPlayer();
+            end
+        end
+    </Binding>
     
     <Binding name="TOGGLEGUILD" description="Toggle the guild ui." category="INTERFACE">
 		return function(key, keystate)

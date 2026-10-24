@@ -163,6 +163,7 @@ strings =
 	(key = "KEYBINDING_CAT_MOVEMENT", string = "Movement")
 	(key = "KEYBINDING_CAT_CHAT", string = "Chat")
 	(key = "KEYBINDING_CAT_INTERFACE", string = "Interface")
+	(key = "BINDING_MOVEACTIONBAR", string = "Move Action Bar Skills/Items (Hold)")
 	(key = "KEYBINDING_CAT_ACTIONBAR", string = "Action Bar")
 	(key = "KEYBINDING_CAT_TARGET", string = "Targeting")
 	(key = "KEYBINDING_CAT_OTHER", string = "Other")
@@ -1273,10 +1274,27 @@ strings =
 	(key = "BINDING_TOGGLENAMEPLATES", string = "Show / Hide Enemy Nameplates")
 	(key = "BINDING_TARGETSELF", string = "Target Self")
 	(key = "BINDING_TARGETNEARESTENEMY", string = "Target Nearest Enemy")
+	(key = "BINDING_TARGETNEARESTPLAYER", string = "Target Nearest Player")
 
 	// Minimap compass directions
 	(key = "MINIMAP_COMPASS_NORTH", string = "N")
 	(key = "MINIMAP_COMPASS_EAST", string = "E")
 	(key = "MINIMAP_COMPASS_SOUTH", string = "S")
 	(key = "MINIMAP_COMPASS_WEST", string = "W")
+
+	// Player duels
+	(key = "DUEL", string = "Duel")
+	(key = "DUEL_INVITATION", string = "%s has challenged you to a duel.")
+	(key = "DUEL_REQUEST_SENT", string = "Duel request sent to %s.")
+	(key = "DUEL_COUNTDOWN", string = "Duel will start in %d...")
+	(key = "DUEL_START", string = "Fight!")
+	(key = "DUEL_CANCELLED", string = "Duel cancelled.")
+	(key = "DUEL_WON", string = "You won the duel against %s!")
+	(key = "DUEL_LOST", string = "%s won the duel.")
+	(key = "DUEL_DECLINED", string = "Duel declined.")
+	(key = "DUEL_EXPIRED", string = "Duel invitation expired.")
+	(key = "DUEL_UNAVAILABLE", string = "Cannot start a duel. Both players must be nearby, alive, out of combat, and available.")
+	(key = "CHAT_FORMAT_DUEL", string = "[Duel] %s")
+	(key = "INSPECT", string = "Inspect")
+	(key = "BAG_SLOT", string = "Bag Slot")
 }

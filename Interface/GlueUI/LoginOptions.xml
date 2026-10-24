@@ -1,0 +1,186 @@
+<?xml version="1.0" ?>
+<!-- Copyright (C) 2019 - 2025, Kyoril. All rights reserved. -->
+<UiLayout>
+	<Font name="TooltipFont" file="Fonts/FRIZQT__.TTF" size="24" outline="0" shadowX="1.0" shadowY="1.0" />
+	<Font name="SmallLabelFont" file="Fonts/FRIZQT__.TTF" size="20" outline="0" shadowX="1.0" shadowY="1.0" />
+	<Script file="../GameUI/GameTooltip.lua" />
+	<Font name="AlestiaWindowTitleFont" file="Fonts/FRIZQT__.TTF" size="32" outline="0" shadowX="1.0" shadowY="1.0" />
+	<Frame name="TextSmall" renderer="DefaultRenderer">
+		<Property name="Font" value="DefaultSmall" />
+		<Property name="HorzAlign" value="LEFT" />
+		<Property name="VertAlign" value="TOP" />
+		<Property name="TextColor" value="FFFFD100" />
+
+		<Visual>
+			<ImagerySection name="Text">
+				<TextComponent color="$TextColor" horzAlign="$HorzAlign" vertAlign="$VertAlign" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+		<Area>
+			<Size><AbsDimension x="0" y="44" /></Size>
+		</Area>
+	</Frame>
+	<Frame name="IconButton" type="Button" renderer="ButtonRenderer">
+		<Property name="Icon" />
+
+		<Visual>
+			<ImagerySection name="NormalFrame">
+				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Up_result.htex" borderSize="22" />
+			</ImagerySection>
+			<ImagerySection name="HoveredFrame">
+				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Over_result.htex" borderSize="22" />
+			</ImagerySection>
+			<ImagerySection name="PushedFrame">
+				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Down_result.htex" borderSize="22" />
+			</ImagerySection>
+			<ImagerySection name="DisabledFrame">
+				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall2_Disabled_result.htex" borderSize="22" />
+			</ImagerySection>
+			<ImagerySection name="Caption">
+				<ImageComponent>
+					<Area>
+						<Inset all="16" />
+					</Area>
+					<PropertyValue property="Icon" />
+				</ImageComponent>
+			</ImagerySection>
+			<StateImagery name="Normal">
+				<Layer>
+					<Section section="NormalFrame" />
+					<Section section="Caption" color="FFFFFFFF" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Hovered">
+				<Layer>
+					<Section section="HoveredFrame" />
+					<Section section="Caption" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Pushed">
+				<Layer>
+					<Section section="PushedFrame" />
+					<Section section="Caption" color="FFAAAAAA" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="DisabledFrame" />
+					<Section section="Caption" color="AE888888" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+		<Area>
+			<Size>
+				<AbsDimension x="440" y="128" />
+			</Size>
+		</Area>
+	</Frame>
+	<Frame name="TitleBar" renderer="DefaultRenderer">
+		<Property name="Font" value="AlestiaWindowTitleFont" />
+
+		<Visual>
+			<ImagerySection name="Background">
+				<!-- The outer window supplies the frame; the header stays unboxed. -->
+				<TextComponent color="FFF0E7D6" horzAlign="LEFT">
+					<Area><Inset left="16" right="96" top="8" bottom="8" /></Area>
+				</TextComponent>
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Background" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+
+		<Area>
+			<Size><AbsDimension x="1000" y="90" /></Size>
+		</Area>
+
+		<Frame name="CloseButton" inherits="IconButton">
+			<Property name="Icon" value="Interface/Icons/fg4_iconsGold_close_result.htex" />
+
+			<Area>
+				<Anchor point="TOP" offset="8" />
+				<Anchor point="RIGHT" offset="0" />
+				<Anchor point="BOTTOM" offset="-18" />
+				<Size><AbsDimension x="64" y="64" /></Size>
+			</Area>
+		</Frame>
+		<Frame name="TitleTrim" renderer="DefaultRenderer">
+			<Property name="Clickable" value="false" />
+			<Property name="Enabled" value="false" />
+			<Area><Size><AbsDimension y="2" /></Size><Anchor point="LEFT" offset="8" /><Anchor point="RIGHT" offset="-8" /><Anchor point="BOTTOM" offset="-4" /></Area>
+			<Visual><ImagerySection name="Line"><ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="806F5B3C" /></ImagerySection><StateImagery name="Enabled"><Layer><Section section="Line" /></Layer></StateImagery></Visual>
+		</Frame>
+		<!-- Optional second header line below the title, for example the subname of the NPC an
+		     interaction window belongs to. Stays empty until a script fills it in. -->
+		<Frame name="TitleSubtext" inherits="TextSmall">
+			<Property name="Clickable" value="false" />
+			<Property name="Enabled" value="false" />
+			<Property name="Font" value="SmallLabelFont" />
+			<Property name="TextColor" value="FFC9B188" />
+			<Property name="VertAlign" value="BOTTOM" />
+			<Area>
+				<Anchor point="LEFT" offset="16" />
+				<Anchor point="RIGHT" offset="-96" />
+				<Anchor point="BOTTOM" offset="-10" />
+				<Size><AbsDimension y="26" /></Size>
+			</Area>
+		</Frame>
+	</Frame>
+    <Frame name="GameTooltipLineTemplate" renderer="DefaultRenderer">
+		<Property name="Font" value="TooltipFont" />
+
+        <Visual>
+			<ImagerySection name="Text">
+				<TextComponent color="FFFFFFFF" horzAlign="LEFT" vertAlign="TOP" />
+            </ImagerySection>
+
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+        </Visual>
+        <Area>
+            <Size><AbsDimension x="512" y="32" /></Size>
+        </Area>
+    </Frame>
+	<!-- Text-only tooltip support for the shared options page. -->
+	<Frame name="GameTooltip" parent="TopFrame" renderer="DefaultRenderer" frameLevel="100">
+		<Property name="Visible" value="false" />
+		<Property name="MousePassThrough" value="true" />
+		<Area><Size><AbsDimension x="760" y="96" /></Size></Area>
+		<Visual>
+			<ImagerySection name="Background">
+				<BorderComponent texture="Interface/GameUI/fg4_borders_tooltip.htex" borderSize="64" />
+			</ImagerySection>
+			<StateImagery name="Enabled"><Layer><Section section="Background" /></Layer></StateImagery>
+		</Visual>
+		<Frame name="GameTooltipLines">
+			<Property name="MousePassThrough" value="true" />
+			<Area>
+				<Anchor point="TOP" offset="16" /><Anchor point="BOTTOM" offset="-16" />
+				<Anchor point="LEFT" offset="16" /><Anchor point="RIGHT" offset="-16" />
+			</Area>
+		</Frame>
+		<Frame name="TooltipMoneyFrame"><Property name="Visible" value="false" /></Frame>
+		<Frame name="TooltipMoneyText"><Property name="Visible" value="false" /></Frame>
+		<Scripts><OnLoad>return function(self) GameTooltip_OnLoad(self); end</OnLoad></Scripts>
+	</Frame>
+</UiLayout>

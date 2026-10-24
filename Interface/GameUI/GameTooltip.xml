@@ -76,7 +76,7 @@
         </Area>
     </Frame>
     
-    <Frame name="GameTooltip" renderer="DefaultRenderer" parent="GameParent" frameLevel="100">
+    <Frame name="GameTooltip" renderer="DefaultRenderer" parent="TopFrame" frameLevel="100">
 		<Property name="Visible" value="False" />
 		<Property name="MousePassThrough" value="true" />
 		
@@ -145,7 +145,7 @@
 	</Frame>
 
 	<!-- Shows the equipped item next to an item tooltip while Alt is held. -->
-	<Frame name="ItemCompareTooltip" renderer="DefaultRenderer" parent="GameParent" frameLevel="100">
+	<Frame name="ItemCompareTooltip" renderer="DefaultRenderer" parent="TopFrame" frameLevel="100">
 		<Property name="Visible" value="False" />
 		<Property name="MousePassThrough" value="true" />
 

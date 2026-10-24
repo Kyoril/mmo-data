@@ -10,3 +10,8 @@ CharSelect.xml
 CharCreate.xml
 
 GlueDialog.xml
+
+# Shared settings: graphics and sound are available without a character or connection.
+LoginOptions.xml
+../GameUI/ComboBoxDropdown.xml
+../GameUI/OptionsFrame.xml

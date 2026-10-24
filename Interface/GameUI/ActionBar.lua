@@ -6,6 +6,33 @@ MAX_ACTION_BUTTONS = 24;
 -- Console variable deciding whether the second action bar is shown.
 ACTION_BAR_2_CVAR = "ShowActionBar2";
 
+ACTION_BAR_MOVE_BINDING = "MOVEACTIONBAR";
+local actionBarMoveKeys = {};
+
+function ActionBar_MoveKeyBinding(key, state)
+	actionBarMoveKeys[key] = state ~= "UP";
+end
+
+function ActionBar_IsMoveKeyDown()
+	for _, key in ipairs(GetKeysForBinding(ACTION_BAR_MOVE_BINDING) or {}) do
+		-- Read modifiers directly so releasing one while a text field or menu has
+		-- keyboard focus cannot leave the action bar unlocked.
+		if key == "SHIFT" then
+			if IsShiftKeyDown() then return true; end
+		elseif key == "CONTROL" then
+			if IsControlKeyDown() then return true; end
+		elseif key == "ALT" then
+			if IsAltKeyDown() then return true; end
+		elseif actionBarMoveKeys[key] then
+			local modifiersHeld = (not key:find("CTRL-", 1, true) or IsControlKeyDown())
+				and (not key:find("SHIFT-", 1, true) or IsShiftKeyDown())
+				and (not key:find("ALT-", 1, true) or IsAltKeyDown());
+			if modifiersHeld then return true; end
+		end
+	end
+	return false;
+end
+
 -- Tint used for the "active" glow shown on toggled ("Disabled While Active") spells such as Stealth.
 ACTION_BUTTON_ACTIVE_GLOW = "FFFFD100";
 ACTION_BUTTON_INACTIVE_GLOW = "00000000";
@@ -62,11 +89,15 @@ function ActionButton_OnEnter(self)
 end
 
 function ActionBarButton_OnDrag(this, button, position)
-    PickupActionButton(this.id - 1);
+    if button == "LEFT" and ActionBar_IsMoveKeyDown() then
+        PickupActionButton(this.id - 1);
+    end
 end
 
 function ActionBarButton_OnDrop(this, button, position)
-    PickupActionButton(this.id - 1);
+    if CursorHasPayload() then
+        PickupActionButton(this.id - 1);
+    end
 end
 
 function ActionButton_OnLeave(self)
@@ -114,7 +145,7 @@ function ActionButton_Up(id)
 end
 
 function ActionButton_OnClick(self, button)
-    if (IsShiftKeyDown()) then
+    if (ActionBar_IsMoveKeyDown()) then
         PickupActionButton(self.id - 1);
     else
         UseActionButton(self.id - 1);
@@ -256,6 +287,9 @@ function ActionBar_UpdateCooldowns()
 end
 
 function ActionBar_OnLoad(self)
+	RegisterBinding(ACTION_BAR_MOVE_BINDING, Localize("BINDING_MOVEACTIONBAR"), "ACTIONBAR",
+		ActionBar_MoveKeyBinding, "SHIFT");
+
     self:RegisterEvent("SPELL_LEARNED", ActionBar_UpdateButtons);
     self:RegisterEvent("PLAYER_SPELLS_CHANGED", ActionBar_UpdateButtons);
     self:RegisterEvent("PLAYER_ENTER_WORLD", ActionBar_UpdateButtons);

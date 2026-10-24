@@ -46,7 +46,8 @@ UIPanelWindows = {};
 UIPanelWindows["GameMenu"] = { area = "center", pushable = 0 };
 UIPanelWindows["OptionsFrame"] = { area = "center", pushable = 0 };
 UIPanelWindows["SpellBook"] = { area = "left", pushable = 0 };
-UIPanelWindows["CharacterWindow"] = { area = "left", pushable = 2 };
+UIPanelWindows["CharacterWindow"] = { area = "free", pushable = 2 };
+UIPanelWindows["InspectWindow"] = { area = "free", pushable = 0 };
 UIPanelWindows["TrainerFrame"] = { area = "left", pushable = 0 };
 UIPanelWindows["VendorFrame"] = { area = "left", pushable = 0 };
 UIPanelWindows["BankFrame"] = { area = "left", pushable = 0 };
@@ -61,6 +62,92 @@ UIPanelWindows["TradeFrame"] = { area = "left", pushable = 0 };
 UIPanelWindows["EmoteList"] = { area = "left", pushable = 0 };
 
 local menuOffsetY = BUTTON_V_PADDING
+
+local responsiveWindowSizes = {
+	CharacterWindow = { width = 1440, height = 1280 },
+	InspectWindow = { width = 848, height = 1280 },
+	SpellBook = { width = 960, height = 1280 },
+	QuestFrame = { width = 960, height = 1280 },
+	VendorFrame = { width = 960, height = 1280 }
+};
+
+-- Compact the window artwork and controls, keeping fonts at the normal readable UI size.
+-- Window positions remain in the parent's coordinates so title-bar dragging stays consistent.
+function UpdateResponsiveWindow(window)
+	local size = responsiveWindowSizes[window:GetName()];
+	if not size then return; end
+	local screen = window:GetParent():GetRect();
+	local scale = GetUIScale();
+	local margin = 24 * scale.y;
+	local bottom = screen.bottom - margin;
+	for _, hud in ipairs({GameMenuBar, ExperienceDock, ActionBar2}) do
+		if hud:IsVisible() then
+			bottom = math.min(bottom, hud:GetRect().top - margin);
+		end
+	end
+	local width = screen.right - screen.left;
+	if width <= 0 or bottom <= screen.top + margin then return; end
+	local compact = 0.85 + 0.15 * math.max(0, math.min(1, (width - 1280) / 640));
+	local factor = math.min(compact, (width - 2 * margin) / (size.width * scale.x),
+		(bottom - screen.top - margin) / (size.height * scale.y));
+	local changed = math.abs(window:GetLayoutScale() - factor) > 0.001;
+	if changed then window:SetLayoutScale(factor); end
+
+	local rect = window:GetRect();
+	local left = math.max(screen.left + margin, math.min(rect.left, screen.right - margin - (rect.right - rect.left)));
+	local top = math.max(screen.top + margin, math.min(rect.top, bottom - (rect.bottom - rect.top)));
+	if math.abs(left - rect.left) > 0.1 or math.abs(top - rect.top) > 0.1 then
+		window:ClearAnchors();
+		window:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, window:GetParent(), (left - screen.left) / scale.x);
+		window:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, window:GetParent(), (top - screen.top) / scale.y);
+	end
+	if changed and window:GetName() == "CharacterWindow" and window:IsVisible() then
+		CharacterWindow_UpdateScrollRange();
+	end
+	if changed and window:GetName() == "SpellBook" and window:IsVisible() then
+		SpellBook_UpdateLabelLayout();
+	end
+end
+
+function GameParent_UpdateWindowLayout()
+	for name in pairs(responsiveWindowSizes) do
+		local window = _G[name];
+		if window and window:IsVisible() then UpdateResponsiveWindow(window); end
+	end
+end
+
+-- Title-bar dragging uses UI coordinates, while frame rectangles are in screen pixels.
+-- Each window owns its drag state so Character and Inspect can move independently.
+function EnableWindowDragging(window, title)
+	local offset = nil;
+	local function stop()
+		offset = nil;
+		if title:HasInputCaptured() then title:ReleaseInput(); end
+	end
+	title:SetOnMouseDownHandler(function(self, button)
+		if button == 1 then
+			local cursor, scale, rect = GetCursorPosition(), GetUIScale(), window:GetRect();
+			offset = { x = cursor.x - rect.left / scale.x, y = cursor.y - rect.top / scale.y };
+			window:BringToFront();
+		end
+		return true;
+	end);
+	title:SetOnMouseMoveHandler(function()
+		if not offset or not window:IsVisible() then return; end
+		local cursor, scale = GetCursorPosition(), GetUIScale();
+		local parent = window:GetParent();
+		local bounds, rect = parent:GetRect(), window:GetRect();
+		local maxLeft = math.max(0, (bounds.right - bounds.left - rect.right + rect.left) / scale.x);
+		local maxTop = math.max(0, (bounds.bottom - bounds.top - rect.bottom + rect.top) / scale.y);
+		local left = math.max(0, math.min(maxLeft, cursor.x - offset.x - bounds.left / scale.x));
+		local top = math.max(0, math.min(maxTop, cursor.y - offset.y - bounds.top / scale.y));
+		window:ClearAnchors();
+		window:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, parent, left);
+		window:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, parent, top);
+	end);
+	title:SetOnMouseUpHandler(function(self, button) if button == 1 then stop(); end end);
+	return stop;
+end
 
 function SidePanel_OnClose(closeButton)
 	-- Parent of the button is the titlebar, whose parent is the frame
@@ -218,6 +305,8 @@ end
 
 function HandleInvalidItemDrop()
 	if not CursorHasItem() then
+		-- Dropping an action shortcut only discards the shortcut.
+		ClearCursorItem();
 		return;
 	end
 	
@@ -231,7 +320,11 @@ function HandleInvalidItemDrop()
 	end
 	
 	-- Show confirmation dialog
-	StaticDialog_Show("DESTROY_ITEM", item:GetName());
+	local dialog = StaticDialog_Show("DESTROY_ITEM", item:GetName());
+	if dialog then
+		-- Keep the item instance even if it is put down or moved before confirmation.
+		dialog.data = item;
+	end
 end
 
 function SidePanel_OnLoad(self)
@@ -414,7 +507,7 @@ end
 
 function WorldFrame_OnMouseDown(this, button)
 	-- If user clicks on world while dragging an item, handle as invalid drop
-	if CursorHasItem() then
+	if CursorHasPayload() then
 		HandleInvalidItemDrop();
 		return true;  -- Event consumed, prevent camera rotation
 	end
@@ -426,10 +519,12 @@ function ShowUIPanel(frame, force)
 	if ( not frame or frame:IsVisible() ) then
 		return;
 	end
+	UpdateResponsiveWindow(frame);
 
 	local info = UIPanelWindows[frame:GetName()];
-	if ( not info ) then
+	if ( not info or info.area == "free" ) then
 		frame:Show();
+		frame:BringToFront();
 		return;
 	end
 
@@ -675,6 +770,13 @@ end
 function CloseAllWindows(ignoreCenter)
 	local windowsVisible = nil;
 	windowsVisible = CloseWindows(ignoreCenter);
+	for name, info in pairs(UIPanelWindows) do
+		local frame = info.area == "free" and _G[name];
+		if frame and frame:IsVisible() then
+			HideUIPanel(frame);
+			windowsVisible = true;
+		end
+	end
 
 	if (InventoryFrame:IsVisible()) then
 		InventoryFrame:Hide();

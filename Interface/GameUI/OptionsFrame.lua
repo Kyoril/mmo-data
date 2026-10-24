@@ -798,6 +798,7 @@ OPTIONS_CATEGORIES = {
 }
 
 local currentCategoryIndex = 1
+local loginSettings = false
 local categoryButtons = {}
 local originalValues = {}
 local originalKeyBindings = {}
@@ -1690,6 +1691,17 @@ local function ForEachOptionCvar(fn)
 end
 
 function OptionsFrame_OnLoad(self)
+	loginSettings = self:GetParent():GetProperty("LoginSettings") == "true";
+	if loginSettings then
+		local categories = {};
+		for _, cat in ipairs(OPTIONS_CATEGORIES) do
+			if cat.id == "Graphics" or cat.id == "Sound" then
+				categories[#categories + 1] = cat;
+			end
+		end
+		OPTIONS_CATEGORIES = categories;
+	end
+
 	OptionsTitleBar:GetChild(0):SetClickedHandler(function()
 		OptionsFrame_Cancel();
 	end);
@@ -1720,7 +1732,9 @@ function OptionsFrame_OnShow(self)
 	end);
 
 	-- Snapshot key bindings.
-	originalKeyBindings = GetKeyBindings() or {};
+	if not loginSettings then
+		originalKeyBindings = GetKeyBindings() or {};
+	end
 
 	OptionsKeyWarningFrame:Hide();
 	UpdateScrollClipTop();
@@ -1734,6 +1748,10 @@ end
 function OptionsFrame_Toggle()
 	if OptionsFrame:IsVisible() then
 		OptionsFrame_Cancel();
+	elseif loginSettings then
+		AccountLogin:Hide();
+		OptionsFrame:Show();
+		OptionsFrame:CaptureInput();
 	else
 		ShowUIPanel(OptionsFrame);
 	end
@@ -1743,7 +1761,13 @@ local function CloseOptions()
 	ComboBox_Close();
 	GameTooltip:Hide();
 	settingRows = {};
-	HideUIPanel(OptionsFrame);
+	if loginSettings then
+		OptionsFrame:Hide();
+		AccountLogin:Show();
+		AccountNameField:CaptureInput();
+	else
+		HideUIPanel(OptionsFrame);
+	end
 end
 
 function OptionsFrame_Okay()
@@ -1762,7 +1786,9 @@ function OptionsFrame_Okay()
 	end);
 
 	RunConsoleCommand("saveconfig");
-	SaveBindings();
+	if not loginSettings then
+		SaveBindings();
+	end
 	CloseOptions();
 
 	if restartNeeded then
@@ -1785,12 +1811,14 @@ function OptionsFrame_Cancel()
 	end
 
 	-- Revert key bindings: wipe all current bindings, re-apply originals.
-	local currentBindings = GetKeyBindings() or {};
-	for key, _ in pairs(currentBindings) do
-		UnbindKey(key);
-	end
-	for key, action in pairs(originalKeyBindings) do
-		SetBinding(key, action);
+	if not loginSettings then
+		local currentBindings = GetKeyBindings() or {};
+		for key, _ in pairs(currentBindings) do
+			UnbindKey(key);
+		end
+		for key, action in pairs(originalKeyBindings) do
+			SetBinding(key, action);
+		end
 	end
 
 	CloseOptions();

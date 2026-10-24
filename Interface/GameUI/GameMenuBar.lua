@@ -31,6 +31,12 @@ function GameMenuBar_UpdateExperienceBarLayout()
 	else
 		PlayerClassExperienceBar:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.BOTTOM, ExperienceDock, 0);
 	end
+	-- Keep the extra action slots clear of both experience bars, including when
+	-- either bar disappears at its maximum level.
+	if (ActionBar2 ~= nil) then
+		local anchor = visibleBars > 0 and ExperienceDock or ActionBar;
+		ActionBar2:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.TOP, anchor, -8);
+	end
 end
 
 function GameMenuBar_OnPlayerXpChanged(self)

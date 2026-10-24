@@ -116,6 +116,8 @@
     <xs:attribute name="texture" use="optional" type="xs:string" />
     <xs:attribute name="tint" use="optional" type="xs:string" />
     <xs:attribute name="tiling" use="optional" type="TilingType" />
+    <xs:attribute name="relativeInset" use="optional" type="xs:decimal" />
+    <xs:attribute name="cornerCut" use="optional" type="xs:decimal" />
   </xs:complexType>
 
   <xs:complexType name="TextComponentType">

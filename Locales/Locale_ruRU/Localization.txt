@@ -163,6 +163,7 @@ strings =
 	(key = "KEYBINDING_CAT_MOVEMENT", string = "Движение")
 	(key = "KEYBINDING_CAT_CHAT", string = "Чат")
 	(key = "KEYBINDING_CAT_INTERFACE", string = "Интерфейс")
+	(key = "BINDING_MOVEACTIONBAR", string = "Перемещение ячеек панели (удерживать)")
 	(key = "KEYBINDING_CAT_ACTIONBAR", string = "Панель действий")
 	(key = "KEYBINDING_CAT_TARGET", string = "Цель")
 	(key = "KEYBINDING_CAT_OTHER", string = "Прочее")
@@ -1159,10 +1160,27 @@ strings =
 	(key = "BINDING_TOGGLENAMEPLATES", string = "Показать / скрыть индикаторы противников")
 	(key = "BINDING_TARGETSELF", string = "Выбрать себя")
 	(key = "BINDING_TARGETNEARESTENEMY", string = "Выбрать ближайшего противника")
+	(key = "BINDING_TARGETNEARESTPLAYER", string = "Выбрать ближайшего игрока")
 
 	// Minimap compass directions
 	(key = "MINIMAP_COMPASS_NORTH", string = "С")
 	(key = "MINIMAP_COMPASS_EAST", string = "В")
 	(key = "MINIMAP_COMPASS_SOUTH", string = "Ю")
 	(key = "MINIMAP_COMPASS_WEST", string = "З")
+
+	// Player duels
+	(key = "DUEL", string = "Дуэль")
+	(key = "DUEL_INVITATION", string = "%s вызывает вас на дуэль.")
+	(key = "DUEL_REQUEST_SENT", string = "Вызов на дуэль отправлен игроку %s.")
+	(key = "DUEL_COUNTDOWN", string = "Дуэль начнётся через %d...")
+	(key = "DUEL_START", string = "В бой!")
+	(key = "DUEL_CANCELLED", string = "Дуэль отменена.")
+	(key = "DUEL_WON", string = "Вы одержали победу в дуэли против %s!")
+	(key = "DUEL_LOST", string = "Победитель дуэли: %s.")
+	(key = "DUEL_DECLINED", string = "Вызов на дуэль отклонён.")
+	(key = "DUEL_EXPIRED", string = "Время ожидания ответа на вызов истекло.")
+	(key = "DUEL_UNAVAILABLE", string = "Невозможно начать дуэль. Оба игрока должны быть рядом, живы, вне боя и доступны.")
+	(key = "CHAT_FORMAT_DUEL", string = "[Дуэль] %s")
+	(key = "INSPECT", string = "Inspect")
+	(key = "BAG_SLOT", string = "Ячейка для сумки")
 }
