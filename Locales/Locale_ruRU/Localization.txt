@@ -904,6 +904,7 @@ strings =
 	(key = "BINDING_TOGGLEPROFESSIONS", string = "Профессии")
 	(key = "SPELL_CAST_FAILED_SKILL_TOO_LOW", string = "Ваш навык слишком низок.")
 	(key = "SPELL_CAST_FAILED_INVENTORY_FULL", string = "Ваш инвентарь полон.")
+	(key = "SPELL_CAST_FAILED_PASSIVE", string = "Эта способность пассивна.")
 	(key = "TRAINER_ERROR_SKILL_TOO_LOW", string = "Ваш навык слишком низок, чтобы изучить это.")
 	(key = "BUGREPORT_TITLE", string = "Отчёт об ошибке")
 	(key = "BUGREPORT_TITLE_SUBJECT", string = "Сообщить о проблеме: %s")
@@ -1160,6 +1161,11 @@ strings =
 	(key = "BINDING_TARGETSELF", string = "Выбрать себя")
 	(key = "BINDING_TARGETNEARESTENEMY", string = "Выбрать ближайшего противника")
 
+	(key = "BOT_STARTED", string = "Bot started.")
+	(key = "BOT_STOPPED", string = "Bot stopped.")
+	(key = "BOT_API_DISABLED", string = "Bot API is disabled. Enter 'set botApiEnabled 1' in the console.")
+	(key = "BOT_NO_NAVMESH", string = "Bot: no navmesh for this map.")
+	(key = "BOT_STATUS", string = "Bot state: %s, movement: %s")
 	// Minimap compass directions
 	(key = "MINIMAP_COMPASS_NORTH", string = "С")
 	(key = "MINIMAP_COMPASS_EAST", string = "В")
