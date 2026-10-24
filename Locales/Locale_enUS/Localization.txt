@@ -163,6 +163,7 @@ strings =
 	(key = "KEYBINDING_CAT_MOVEMENT", string = "Movement")
 	(key = "KEYBINDING_CAT_CHAT", string = "Chat")
 	(key = "KEYBINDING_CAT_INTERFACE", string = "Interface")
+	(key = "BINDING_MOVEACTIONBAR", string = "Move Action Bar Skills/Items (Hold)")
 	(key = "KEYBINDING_CAT_ACTIONBAR", string = "Action Bar")
 	(key = "KEYBINDING_CAT_TARGET", string = "Targeting")
 	(key = "KEYBINDING_CAT_OTHER", string = "Other")
@@ -1295,4 +1296,5 @@ strings =
 	(key = "DUEL_UNAVAILABLE", string = "Cannot start a duel. Both players must be nearby, alive, out of combat, and available.")
 	(key = "CHAT_FORMAT_DUEL", string = "[Duel] %s")
 	(key = "INSPECT", string = "Inspect")
+	(key = "BAG_SLOT", string = "Bag Slot")
 }

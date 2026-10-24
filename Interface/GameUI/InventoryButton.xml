@@ -7,6 +7,8 @@
 		<Property name="IconColor" value="FFFFFFFF" />
 		<Property name="Background" />
 		<Property name="BackgroundColor" value="FFFFFFFF" />
+		<Property name="BagSlot" value="false" />
+		<Property name="EmptyBagColor" value="00FFFFFF" />
 		<!-- Tint applied to the button frame. Slots that opt in to quality borders (see
 		     QualityBorder) recolor this to the equipped item's quality color. -->
 		<Property name="QualityColor" value="FFFFFFFF" />
@@ -17,18 +19,16 @@
 
 		<Visual>
 			<ImagerySection name="Background">
-				<ImageComponent tint="$BackgroundColor">
-					<Area>
-						<Inset all="16" />
-					</Area>
+				<ImageComponent tint="$BackgroundColor" relativeInset="0.125" cornerCut="0.08">
 					<PropertyValue property="Background" />
 				</ImageComponent>
 			</ImagerySection>
+			<ImagerySection name="EmptyBagOverlay">
+				<!-- The mask follows the inner bevel and leaves the bronze rim untouched. -->
+				<ImageComponent texture="Interface/GameUI/Alestia/EmptyBagGlow.htex" tint="$EmptyBagColor" />
+			</ImagerySection>
 			<ImagerySection name="Image">
-				<ImageComponent tint="$IconColor">
-					<Area>
-						<Inset all="16" />
-					</Area>
+				<ImageComponent tint="$IconColor" relativeInset="0.125" cornerCut="0.08">
 					<PropertyValue property="Icon" />
 				</ImageComponent>
 			</ImagerySection>
@@ -57,6 +57,7 @@
 				<Layer>
 					<Section section="NormalFrame" />
 					<Section section="Background" />
+					<Section section="EmptyBagOverlay" />
 					<Section section="Image" />
 					<Section section="Text" />
 				</Layer>
@@ -65,6 +66,7 @@
 				<Layer>
 					<Section section="HoveredFrame" />
 					<Section section="Background" />
+					<Section section="EmptyBagOverlay" />
 					<Section section="Image" />
 					<Section section="Text" />
 				</Layer>
@@ -73,6 +75,7 @@
 				<Layer>
 					<Section section="PushedFrame" />
 					<Section section="Background" />
+					<Section section="EmptyBagOverlay" />
 					<Section section="Image" />
 					<Section section="Text" />
 				</Layer>
@@ -81,6 +84,7 @@
 				<Layer>
 					<Section section="DisabledFrame" />
 					<Section section="Background" />
+					<Section section="EmptyBagOverlay" />
 					<Section section="Image" />
 					<Section section="Text" />
 				</Layer>

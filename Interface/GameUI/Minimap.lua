@@ -154,11 +154,11 @@ function Minimap_OnUpdate(self, elapsed)
     -- (same behavior as the world object tooltip).
     GameTooltip_ShrinkToTextWidth();
 
-    -- Position tooltip at cursor with a small offset, flipping sides if it would
-    -- overflow the right or bottom edge of the 4K logical screen (3840×2160).
+    -- Flip at the actual logical screen edge, including small and non-widescreen windows.
     local TIP_OFFSET = 20;
-    local SCREEN_W   = 3840;
-    local SCREEN_H   = 2160;
+    local screen = GameParent:GetRect();
+    local SCREEN_W = (screen.right - screen.left) / scale.x;
+    local SCREEN_H = (screen.bottom - screen.top) / scale.y;
 
     local tipW = GameTooltip:GetWidth();
     local tipH = GameTooltip:GetHeight();

@@ -3,7 +3,7 @@
 	<Script file="FadingFrame.lua" />
 	<Script file="GameParent.lua" />
 	
-	<Frame name="GameParent" parent="TopGameFrame" setAllPoints="true">
+	<Frame name="GameParent" parent="TopFrame" setAllPoints="true">
 		<Property name="Font" value="DefaultSmall" />
 
 		<!-- The world viewport is always the backdrop of the game UI. The explicit frame level
@@ -113,6 +113,11 @@
 					GameParent_OnLoad(this);
 				end
 			</OnLoad>
+			<OnUpdate>
+				return function(this, elapsed)
+					GameParent_UpdateWindowLayout();
+				end
+			</OnUpdate>
 		</Scripts>
 	</Frame>
 </UiLayout>

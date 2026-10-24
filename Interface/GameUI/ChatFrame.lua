@@ -321,7 +321,50 @@ function ChatFrame_ResetActivity()
     ChatFrame_ApplyOpacity(1);
 end
 
+local chatDockBottomOffset = nil;
+local playerFrameBottomOffset = nil;
+
+-- Reserve the actual visible bottom HUD, including XP rails and the optional second row.
+-- A shared parent keeps the message history, scroll buttons and input aligned on resize.
+function ChatFrame_UpdateLayout()
+    local scale = GetUIScale();
+    local dock = ChatDock:GetRect();
+    local menu = GameMenuBar:GetRect();
+    local gap = 24 * scale.y;
+    local bottom = menu.top - gap;
+    for _, frame in ipairs({ActionBar, ActionBar2, ExperienceDock}) do
+        if frame:IsVisible() then
+            local rect = frame:GetRect();
+            if rect.left < dock.right and rect.right > dock.left then
+                bottom = math.min(bottom, rect.top - gap);
+            end
+        end
+    end
+
+    local offset = (bottom - menu.top) / scale.y;
+    if chatDockBottomOffset == nil or math.abs(offset - chatDockBottomOffset) > 0.001 then
+        ChatDock:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.TOP, GameMenuBar, offset);
+        chatDockBottomOffset = offset;
+    end
+
+    -- Keep the normal combat HUD position when there is room beside chat. Narrow windows
+    -- need the player frame above the messages so neither the portrait nor the bars cover text.
+    dock = ChatDock:GetRect();
+    local player = PlayerFrame:GetRect();
+    local screen = GameParent:GetRect();
+    local playerBottom = screen.bottom - 400 * scale.y;
+    if player.left < dock.right + gap and player.right > dock.left then
+        playerBottom = math.min(playerBottom, dock.top - gap);
+    end
+    offset = (playerBottom - screen.bottom) / scale.y;
+    if playerFrameBottomOffset == nil or math.abs(offset - playerFrameBottomOffset) > 0.001 then
+        PlayerFrame:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.BOTTOM, GameParent, offset);
+        playerFrameBottomOffset = offset;
+    end
+end
+
 function ChatFrame_OnUpdate(this, elapsed)
+    ChatFrame_UpdateLayout();
     -- The chat is fully visible while typing, while the mouse hovers it, or for a short
     -- "readable" window after the most recent activity (e.g. a new message arriving).
     -- Hovering fades it in; moving the mouse away lets it fade back out.
@@ -799,6 +842,7 @@ function ChatFrame_OnLoad(this)
 end
 
 function ChatFrame_OpenChat(input)
+    ChatFrame_UpdateLayout();
     ChatFrame_ResetActivity();
     if ( ChatFrame_ReplyTarget and not input ) then
         ChatType = "WHISPER";

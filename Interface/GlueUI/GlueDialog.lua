@@ -1,6 +1,9 @@
 
 GlueDialogs = {}
 
+-- Keep login focus across loading/error dialog replacements, then restore it on dismissal.
+local glueDialogLoginInput = nil;
+
 -- Vertical layout of GlueDialog, in UI units. The width stays as GlueDialog.xml sets it; the height
 -- follows the content each time a dialog is shown (GlueDialog_Layout).
 -- 72 above and below, like every glue panel: clear of the bronze edge and the corner ornaments.
@@ -236,6 +239,18 @@ REALM_AUTH_ERROR_STRING[5] = "REALM_STATUS_FAIL_NO_ACCESS"
 REALM_AUTH_ERROR_STRING[6] = "AUTH_STATUS_FAIL_INTERNAL_ERROR"
 
 function GlueDialog_Show(which, text, data)
+	if not GlueDialogBackground:IsVisible() then
+		if AccountPasswordField:HasInputCaptured() then
+			glueDialogLoginInput = AccountPasswordField;
+		elseif AccountNameField:HasInputCaptured() then
+			glueDialogLoginInput = AccountNameField;
+		elseif AccountLogin and AccountLogin:IsVisible() then
+			glueDialogLoginInput = AccountPasswordField;
+		else
+			glueDialogLoginInput = nil;
+		end
+	end
+
 	-- Dismiss any currently-visible dialog (without firing its callbacks).
 	if GlueDialogBackground:IsVisible() then
 		GlueDialogBackground:Hide()
@@ -297,6 +312,7 @@ function GlueDialog_Show(which, text, data)
 
 	-- Show the glue dialog
 	GlueDialogBackground:Show()
+	GlueDialog:CaptureInput()
 end
 
 -- Sizes GlueDialog's height to its content: top padding, the message word-wrapped at the label's
@@ -324,12 +340,16 @@ function GlueDialog_Hide()
 	end
 	GlueDialogBackground:Hide()
 	GlueDialog.which = nil
+	local loginInput = glueDialogLoginInput;
+	glueDialogLoginInput = nil;
+	if loginInput then
+		loginInput:CaptureInput();
+	end
 end
 
 function GlueDialog_Button1Clicked()
 	local which = GlueDialog.which
-	GlueDialog.which = nil
-	GlueDialogBackground:Hide()
+	GlueDialog_Hide()
 
 	if which ~= nil and GlueDialogs[which] ~= nil and GlueDialogs[which].OnAccept then
 		GlueDialogs[which].OnAccept()
@@ -338,8 +358,7 @@ end
 
 function GlueDialog_Button2Clicked()
 	local which = GlueDialog.which
-	GlueDialog.which = nil
-	GlueDialogBackground:Hide()
+	GlueDialog_Hide()
 
 	if which ~= nil and GlueDialogs[which] ~= nil and GlueDialogs[which].OnCancel then
 		GlueDialogs[which].OnCancel()

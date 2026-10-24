@@ -61,7 +61,16 @@
 		</Area>
 	</Frame>
 
-	<Frame name="ChatInputFrame" parent="GameParent" renderer="DefaultRenderer">
+	<!-- Move the entire chat cluster together when the bottom HUD needs more room. -->
+	<Frame name="ChatDock" parent="GameParent">
+		<Area>
+			<Anchor point="BOTTOM" relativePoint="TOP" offset="-24" relativeTo="GameMenuBar" />
+			<Anchor point="LEFT" />
+			<Size><AbsDimension x="894" y="360" /></Size>
+		</Area>
+	</Frame>
+
+	<Frame name="ChatInputFrame" parent="ChatDock" renderer="DefaultRenderer">
 		<Property name="Font" value="ChatFont" />
 		<Property name="Visible" value="False" />
 	
@@ -85,7 +94,7 @@
 		</Visual>
 
 		<Area>
-			<Anchor point="BOTTOM" relativePoint="TOP" offset="-24" relativeTo="GameMenuBar" />
+			<Anchor point="BOTTOM" />
 			<Anchor point="LEFT" offset="64" />
 			<Size><AbsDimension x="830" y="72" /></Size>
 		</Area>
@@ -156,7 +165,7 @@
 		</Frame>
 	</Frame>
 
-	<Frame name="ChatScrollEndButton" parent="GameParent" inherits="ChatButton">
+	<Frame name="ChatScrollEndButton" parent="ChatDock" inherits="ChatButton">
 		<Property name="Icon" value="Interface/GameUI/ChatIcon_DownArrow.htex" />
 			
 		<Area>
@@ -173,7 +182,7 @@
 		</Scripts>
 	</Frame>
 	
-	<Frame name="ChatScrollDownButton" parent="GameParent" inherits="ChatButton">
+	<Frame name="ChatScrollDownButton" parent="ChatDock" inherits="ChatButton">
 		<Property name="Icon" value="Interface/GameUI/ChatIcon_DownArrow.htex" />
 
 		<Area>
@@ -190,7 +199,7 @@
 		</Scripts>
 	</Frame>
 	
-	<Frame name="ChatScrollUpButton" parent="GameParent" inherits="ChatButton">
+	<Frame name="ChatScrollUpButton" parent="ChatDock" inherits="ChatButton">
 		<Property name="Icon" value="Interface/GameUI/ChatIcon_UpArrow.htex" />
 
 		<Area>
@@ -207,7 +216,7 @@
 		</Scripts>
 	</Frame>
 	
-	<Frame name="ChatBubbleButton" parent="GameParent" inherits="ChatButton">
+	<Frame name="ChatBubbleButton" parent="ChatDock" inherits="ChatButton">
 		<Property name="Icon" value="Interface/GameUI/ChatIcon_Dialogue.htex" />
 
 		<Area>
@@ -216,7 +225,7 @@
 		</Area>
 	</Frame>
 	
-	<Frame name="ChatFrame" parent="GameParent" type="ScrollingMessageFrame">
+	<Frame name="ChatFrame" parent="ChatDock" type="ScrollingMessageFrame">
 		<Property name="Font" value="ChatFont" />
 
 		<Area>

@@ -6,6 +6,19 @@ INVENTORY_SLOTS_PER_ROW = 8
 local inventoryDragOffset = nil;
 local INVENTORY_SCALE = 0.8;
 
+function InventoryCloseButton_Update(this)
+    local scale = GetUIScale();
+    if this.closeScaleX == scale.x and this.closeScaleY == scale.y then
+        return;
+    end
+
+    -- Use one screen-space size so non-widescreen windows cannot stretch the X.
+    local size = 64 * INVENTORY_SCALE * math.min(scale.x, scale.y);
+    this:SetSize(size / scale.x, size / scale.y);
+    this.closeScaleX = scale.x;
+    this.closeScaleY = scale.y;
+end
+
 function InventoryFrame_OnTitleMouseDown(self, button)
     if CursorHasPayload() then
         HandleInvalidItemDrop();
@@ -109,10 +122,9 @@ function InventoryFrame_Load(this)
     InventoryTitleBar:SetOnMouseMoveHandler(InventoryFrame_OnTitleMouseMove);
     InventoryTitleBar:SetOnMouseUpHandler(InventoryFrame_StopMoving);
 
-    local closeButton = InventoryTitleBar:GetChild(0);
-    closeButton:SetWidth(64 * INVENTORY_SCALE);
-    closeButton:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, InventoryTitleBar, 8 * INVENTORY_SCALE);
-    closeButton:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.BOTTOM, InventoryTitleBar, -18 * INVENTORY_SCALE);
+    -- Replace the inherited, vertically stretched control with the scaled square button.
+    InventoryTitleBar:GetChild(0):Hide();
+    InventoryCloseButton_Update(InventoryCloseButton);
 
     for _, denomination in ipairs({"Gold", "Silver", "Copper"}) do
         _G["PlayerMoneyFrame_" .. denomination .. "Button"]:SetProperty("Font", "InventoryCountFont");
@@ -124,6 +136,7 @@ function InventoryFrame_Load(this)
         slot:SetProperty("Font", "InventoryCountFont");
         InventoryItemButton_EnableQualityBorder(slot);
         slot.id = 65299 + i - 1;
+		slot:SetProperty("BagSlot", "true");
 
         BagContainer:AddChild(slot);
         slot:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, this, 24 * INVENTORY_SCALE);
@@ -135,7 +148,7 @@ function InventoryFrame_Load(this)
 
     this:RegisterEvent("EQUIPMENT_CHANGED", InventoryFrame_UpdateSlots);
 
-	InventoryFrame:GetChild(0):GetChild(0):SetClickedHandler(ToggleInventory);
+	InventoryCloseButton:SetClickedHandler(ToggleInventory);
 	AddMenuBarButton("Interface/GameUI/Alestia/MenuIcons/Inventory.htex", ToggleInventory, "MENUBAR_TOOLTIP_INVENTORY", "TOGGLEINVENTORY");
 
     this:RegisterEvent("MONEY_CHANGED", InventoryFrame_UpdateMoney);

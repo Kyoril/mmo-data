@@ -155,18 +155,54 @@ end
 -- in CharacterWindow.xml so one wheel notch scrolls by exactly one row.
 CHARACTER_STAT_ROW_STEP = 56;
 
--- Matches the content frame height declared in CharacterWindow.xml. The scroll range is the
--- part of it that does not fit into the clipping frame.
-CHARACTER_STAT_CONTENT_HEIGHT = 996;
+-- Keep full-size text readable when the surrounding sheet is compact. Wrapped labels get
+-- taller rows, and the scroll range follows the resulting content instead of clipping them.
+local function CharacterWindow_LayoutStatRows()
+    local groups = {
+        { frame = CharacterWindowPrimaryStatsFrame, header = CharacterWindowPrimaryStatsHeader, rows = {} },
+        { frame = CharacterWindowSecondaryStatsFrame, header = CharacterWindowSecondaryStatsHeader, rows = {} },
+        { frame = CharacterWindowCasterStatsFrame, header = CharacterWindowCasterStatsHeader, rows = {} }
+    };
+    for i = 0, 4 do
+        table.insert(groups[1].rows, { _G["CharacterStatLabel" .. i], _G["CharacterStat" .. i], _G["CharacterStatAdd" .. i] });
+    end
+    for _, name in ipairs({"Armor", "Damage", "AttackPower", "AttackTime", "MeleeCrit"}) do
+        table.insert(groups[2].rows, { _G["Character" .. name .. "Label"], _G["Character" .. name .. "Stat"] });
+    end
+    for _, name in ipairs({"SpellDamage", "SpellHealing", "SpellCrit", "ManaRegen"}) do
+        table.insert(groups[3].rows, { _G["Character" .. name .. "Label"], _G["Character" .. name .. "Stat"] });
+    end
+    local ratio = GetUIScale().y / CharacterAttributesContent:GetLayoutUIScale().y;
+    local contentHeight = 52;
+    for index, group in ipairs(groups) do
+        group.header:SetHeight(math.max(32, group.header:GetTextHeight() * ratio + 2));
+        local top = 16 + group.header:GetHeight();
+        for _, row in ipairs(group.rows) do
+            local height = math.max(44, row[1]:GetTextHeight() * ratio + 2, row[2]:GetTextHeight() * ratio + 2);
+            for column = 1, 2 do
+                row[column]:SetHeight(height);
+                row[column]:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, group.frame, top);
+            end
+            if row[3] then row[3]:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, group.frame, top + (height - 44) / 2); end
+            top = top + height + 12;
+        end
+        group.frame:SetHeight(top);
+        group.frame:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, CharacterAttributesContent, contentHeight);
+        contentHeight = contentHeight + top + (index < #groups and 8 or 0);
+    end
+    CharacterAttributesContent:SetHeight(contentHeight);
+end
 
 function CharacterWindow_UpdateScrollRange()
+    CharacterWindow_LayoutStatRows();
     CharacterAttributesScrollBar:SetValue(0);
     CharacterAttributesContent:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, 0);
 
     -- GetHeight reports screen pixels for an anchored frame, the content height is in UI units.
-    local clipHeight = CharacterAttributesClip:GetHeight() / GetUIScale().y;
-    if CHARACTER_STAT_CONTENT_HEIGHT > clipHeight then
-        CharacterAttributesScrollBar:SetMaximum(CHARACTER_STAT_CONTENT_HEIGHT - clipHeight);
+	local clipHeight = CharacterAttributesClip:GetHeight() / CharacterAttributesClip:GetLayoutUIScale().y;
+    local contentHeight = CharacterAttributesContent:GetHeight();
+    if contentHeight > clipHeight then
+        CharacterAttributesScrollBar:SetMaximum(contentHeight - clipHeight);
         CharacterAttributesScrollBar:Enable();
     else
         CharacterAttributesScrollBar:SetMaximum(0);

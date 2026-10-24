@@ -181,6 +181,24 @@ function SpellButton_OnDrag(self)
     PickupSpell(spell.id);
 end
 
+local function SpellButton_FitLabels(button)
+    local name, rank = button:GetChild(0), button:GetChild(1);
+    local ratio = GetUIScale().y / name:GetLayoutUIScale().y;
+    local nameHeight = math.max(32, name:GetTextHeight() * ratio + 2);
+    if math.abs(name:GetHeight() - nameHeight) > 0.1 then
+        name:SetHeight(nameHeight);
+        rank:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, name, 0);
+    end
+    rank:SetHeight(math.max(32, rank:GetTextHeight() * ratio + 2));
+end
+
+function SpellBook_UpdateLabelLayout()
+    for i = 1, SPELLS_PER_PAGE do
+        local button = _G["SpellBookButton" .. string.format("%02d", i)];
+        if button:IsVisible() then SpellButton_FitLabels(button); end
+    end
+end
+
 function SpellButton_Update(button)
     
     local id = tonumber(button.userData);
@@ -211,6 +229,7 @@ function SpellButton_Update(button)
     button:SetProperty("icon", spell.icon);
     button:SetProperty("DragEnabled", IsPassiveSpell(spell) and "false" or "true");
     button:Enable();
+    SpellButton_FitLabels(button);
 
 end
 
@@ -252,6 +271,7 @@ function SpellBookTab_OnClick(self)
 end
 
 function SpellBook_OnShow(self)
+    SpellBook_UpdateLabelLayout();
     PlaySound("Sound/Interface/Papers_01.wav");
 end
 

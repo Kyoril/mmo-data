@@ -786,8 +786,9 @@
 	<!-- ══════════════════════════════════════════════════════════
 	     Main Options Frame — same border style as TalentFrame / LootMethodFrame
 	     ══════════════════════════════════════════════════════════ -->
-	<Frame name="OptionsFrame" parent="GameParent" renderer="DefaultRenderer">
+	<Frame name="OptionsFrame" parent="TopFrame" renderer="DefaultRenderer" frameLevel="50">
 		<Property name="Visible" value="false" />
+		<Property name="Focusable" value="true" />
 
 		<Visual>
 			<ImagerySection name="Background">
@@ -1017,6 +1018,11 @@
 					OptionsFrame_OnShow(self);
 				end
 			</OnShow>
+			<OnEscapePressed>
+				return function(self)
+					OptionsFrame_Cancel();
+				end
+			</OnEscapePressed>
 		</Scripts>
 	</Frame>
 

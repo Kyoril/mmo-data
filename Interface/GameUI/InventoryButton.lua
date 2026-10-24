@@ -18,6 +18,9 @@ function InventoryItemButton_UpdateQualityBorder(this, item)
     local color = INVENTORY_QUALITY_COLOR_EMPTY;
     if item then
         color = ItemQualityColors[item:GetQuality()] or INVENTORY_QUALITY_COLOR_NONE;
+    elseif this:GetProperty("BagSlot") == "true" then
+        -- Preserve the authored bronze rim around the empty bag's red inset.
+        color = INVENTORY_QUALITY_COLOR_NONE;
     end
 
     this:SetProperty("QualityColor", color);
@@ -54,15 +57,19 @@ end
 function InventoryItemButton_OnEnter(this)
     local item = GetInventorySlotItem("player", this.id);
     if not item then
-        return;
-    end
+		if this:GetProperty("BagSlot") ~= "true" then
+			return;
+		end
+		GameTooltip_Clear();
+		GameTooltip_AddLine(Localize("BAG_SLOT"), TOOLTIP_LINE_LEFT, "FFFFD100");
+	else
+		-- Fill the tooltip first so its final height is known for anchoring below.
+		GameTooltip_SetItem(item);
 
-    -- Fill the tooltip first so its final height is known for anchoring below
-    GameTooltip_SetItem(item);
-
-    -- Warn when the active class can't use this equipped item (revoked proficiency / dual-wield).
-    if not item:IsUsable() then
-        GameTooltip_AddLine(Localize("ITEM_DISABLED_WRONG_CLASS"), TOOLTIP_LINE_LEFT, "FFFF2020");
+		-- Warn when the active class can't use this equipped item.
+		if not item:IsUsable() then
+			GameTooltip_AddLine(Localize("ITEM_DISABLED_WRONG_CLASS"), TOOLTIP_LINE_LEFT, "FFFF2020");
+		end
     end
 
     GameTooltip:ClearAnchors();
@@ -141,6 +148,16 @@ end
 
 function InventoryItemButton_OnUpdate(this, elapsed)
     local item = GetInventorySlotItem("player", this.id);
+	if this:GetProperty("BagSlot") == "true" then
+		local color = item and "00FFFFFF" or "FF801818";
+		if this:GetProperty("EmptyBagColor") ~= color then
+			this:SetProperty("EmptyBagColor", color);
+			if this:IsHovered() then
+				InventoryItemButton_OnEnter(this);
+			end
+		end
+	end
+
     if not item then
         this:SetText("");
         this:SetProperty("Icon", "");

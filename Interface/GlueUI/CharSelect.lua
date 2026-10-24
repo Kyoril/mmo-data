@@ -216,10 +216,46 @@ local function UpdateHover()
 	SetHoveredCharacter(overPlaza and GetPlazaCharacterAtCursor() or -1, force)
 end
 
+local enterButtonBottomOffset = nil
+local compactButtonLayout = nil
+
+-- Keep the prominent Enter button centered. When the side groups need its space,
+-- give it a separate row instead of shrinking labels or overlapping click targets.
+function CharSelect_UpdateButtonLayout()
+	local scale = GetUIScale()
+	local screen = CharSelect:GetRect()
+	local enter = CharSelectEnterButton:GetRect()
+	local gap = 24 * scale.x
+	local left = ChangeRealmButton:GetRect()
+	local compact = enter.left < left.right + gap
+	local rowTop = left.top
+	for _, button in ipairs({CharCreateButton, CharDeleteButton, CharRosterButton}) do
+		if button:IsVisible() then
+			local rect = button:GetRect()
+			compact = compact or enter.right > rect.left - gap
+			rowTop = math.min(rowTop, rect.top)
+		end
+	end
+
+	local offset = compact and (rowTop - 24 * scale.y - screen.bottom) / scale.y or -48
+	if enterButtonBottomOffset == nil or math.abs(offset - enterButtonBottomOffset) > 0.001 then
+		CharSelectEnterButton:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.BOTTOM, nil, offset)
+		enterButtonBottomOffset = offset
+	end
+	if compactButtonLayout ~= compact then
+		CharRosterPanel:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.TOP,
+			compact and CharSelectEnterButton or CharRosterButton, -32)
+		compactButtonLayout = compact
+	end
+end
+
 local function SetChromeVisible(visible)
 	chromeVisible = visible
 	CharSelectChrome:SetProperty("Visible", visible and "true" or "false")
 	CharSelectNameplates:SetProperty("Visible", visible and "true" or "false")
+	if visible then
+		CharSelect_UpdateButtonLayout()
+	end
 	if not visible then
 		plazaPress = nil
 		SetHoveredCharacter(-1)
@@ -658,6 +694,7 @@ function CharSelect_OnUpdate(self, elapsed)
 		return
 	end
 
+	CharSelect_UpdateButtonLayout()
 	RosterAutoScroll(elapsed)
 	UpdateHover()
 

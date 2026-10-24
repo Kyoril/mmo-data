@@ -93,6 +93,8 @@ function RefreshMoneyFrame(frameName, money, small, collapse, showSmallerCoins, 
 	local copperIcon = _G[frameName.."_CopperCoin"];
 	local silverIcon = _G[frameName.."_SilverCoin"];
 	local goldIcon = _G[frameName.."_GoldCoin"];
+	-- Compacted windows retain the normal font size, including coin amounts.
+	local textScale = GetUIScale().x / copperButton:GetLayoutUIScale().x;
 
 	local iconWidth = MONEY_ICON_WIDTH;
 	local spacing = MONEY_BUTTON_SPACING;
@@ -109,15 +111,15 @@ function RefreshMoneyFrame(frameName, money, small, collapse, showSmallerCoins, 
 	copperIcon:SetSize(iconWidth, iconWidth);
 
 	goldButton:SetText(tostring(gold));
-	goldButton:SetWidth(goldButton:GetTextWidth() + iconWidth);
+	goldButton:SetWidth(goldButton:GetTextWidth() * textScale + iconWidth);
 	goldButton:Show();
 	goldIcon:Show();
 	silverButton:SetText(tostring(silver));
-	silverButton:SetWidth(silverButton:GetTextWidth() + iconWidth);
+	silverButton:SetWidth(silverButton:GetTextWidth() * textScale + iconWidth);
 	silverButton:Show();
 	silverIcon:Show();
 	copperButton:SetText(tostring(copper));
-	copperButton:SetWidth(copperButton:GetTextWidth() + iconWidth);
+	copperButton:SetWidth(copperButton:GetTextWidth() * textScale + iconWidth);
 	copperButton:Show();
 	copperIcon:Show();
 
@@ -135,6 +137,8 @@ function RefreshMoneyFrame(frameName, money, small, collapse, showSmallerCoins, 
 	copperIcon:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.BOTTOM, copperButton, 0);
 
 	local frame = _G[frameName];
+	frame:SetHeight(math.max(iconWidth, goldButton:GetTextHeight() * textScale,
+		silverButton:GetTextHeight() * textScale, copperButton:GetTextHeight() * textScale));
 	frame.staticMoney = money;
 
 	if ( collapse ) then

@@ -163,6 +163,7 @@ strings =
 	(key = "KEYBINDING_CAT_MOVEMENT", string = "Движение")
 	(key = "KEYBINDING_CAT_CHAT", string = "Чат")
 	(key = "KEYBINDING_CAT_INTERFACE", string = "Интерфейс")
+	(key = "BINDING_MOVEACTIONBAR", string = "Перемещение ячеек панели (удерживать)")
 	(key = "KEYBINDING_CAT_ACTIONBAR", string = "Панель действий")
 	(key = "KEYBINDING_CAT_TARGET", string = "Цель")
 	(key = "KEYBINDING_CAT_OTHER", string = "Прочее")
@@ -1181,4 +1182,5 @@ strings =
 	(key = "DUEL_UNAVAILABLE", string = "Невозможно начать дуэль. Оба игрока должны быть рядом, живы, вне боя и доступны.")
 	(key = "CHAT_FORMAT_DUEL", string = "[Дуэль] %s")
 	(key = "INSPECT", string = "Inspect")
+	(key = "BAG_SLOT", string = "Ячейка для сумки")
 }

@@ -136,7 +136,7 @@
 			</StateImagery>
 		</Visual>
 	</Frame>
-	<!-- Second action bar (slots 13-24). It floats above the main bar instead of extending the
+	<!-- Second action bar (slots 13-24). It floats above the experience bars instead of extending the
 	     oak-bronze plate, and stays hidden until the player enables it in the interface options. -->
 	<Frame name="ActionBar2" parent="GameMenuBar" renderer="DefaultRenderer">
 		<Property name="Visible" value="false" />
@@ -145,7 +145,7 @@
 				<AbsDimension x="1432" y="112" />
 			</Size>
 			<Anchor point="LEFT" relativeTo="ActionBar" relativePoint="LEFT" offset="0" />
-			<Anchor point="BOTTOM" relativeTo="ActionBar" relativePoint="TOP" offset="-8" />
+			<Anchor point="BOTTOM" relativeTo="ExperienceDock" relativePoint="TOP" offset="-8" />
 		</Area>
 		<Frame name="ActionButton13" inherits="ActionBarButtonTemplate" id="13">
 			<Area>
