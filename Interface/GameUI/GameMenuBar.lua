@@ -31,6 +31,12 @@ function GameMenuBar_UpdateExperienceBarLayout()
 	else
 		PlayerClassExperienceBar:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.BOTTOM, ExperienceDock, 0);
 	end
+
+	-- The second action bar stacks on top of the experience bars. ActionBar.lua loads after this
+	-- file, so the function may not exist yet during the menu bar's own OnLoad.
+	if ActionBar_UpdateSecondBarLayout ~= nil then
+		ActionBar_UpdateSecondBarLayout();
+	end
 end
 
 function GameMenuBar_OnPlayerXpChanged(self)

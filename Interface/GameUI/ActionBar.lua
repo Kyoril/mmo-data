@@ -6,9 +6,27 @@ MAX_ACTION_BUTTONS = 24;
 -- Console variable deciding whether the second action bar is shown.
 ACTION_BAR_2_CVAR = "ShowActionBar2";
 
+-- Gap (UI units) between the second bar and the experience bars below it, and between the second
+-- bar and the player frame / cast bar it pushes up.
+ACTION_BAR_2_GAP = 24;
+
+-- Bottom offset of the player frame and cast bar while the second bar is hidden (matches the XML).
+ACTION_BAR_2_HUD_DEFAULT_BOTTOM = -400;
+
+-- Offset of the chat input above the menu bar while the second bar is hidden (matches the XML).
+ACTION_BAR_2_CHAT_DEFAULT_BOTTOM = -24;
+
 -- Tint used for the "active" glow shown on toggled ("Disabled While Active") spells such as Stealth.
 ACTION_BUTTON_ACTIVE_GLOW = "FFFFD100";
 ACTION_BUTTON_INACTIVE_GLOW = "00000000";
+
+-- Socket tints of a bound slot, and of the translucent socket shown instead on empty second-bar slots.
+ACTION_SOCKET_NORMAL_TINT = "FF998D7C";
+ACTION_SOCKET_HOVERED_TINT = "FFFFFFFF";
+ACTION_SOCKET_PUSHED_TINT = "FF91806A";
+ACTION_EMPTY_SOCKET_TINT = "4D998D7C";
+ACTION_EMPTY_SOCKET_HOVER_TINT = "A6FFFFFF";
+ACTION_HIDDEN_TINT = "00000000";
 
 -- Fallback icon for emotes without an authored icon.
 EMOTE_FALLBACK_ICON = "Interface/Icons/fg4_iconsFlat_dialogue.htex";
@@ -27,6 +45,47 @@ function ActionBar_UpdateSecondBarVisibility(bar)
         bar:Show();
     else
         bar:Hide();
+    end
+
+    ActionBar_UpdateSecondBarLayout(bar);
+end
+
+-- Stacks the second bar above the experience bars (or the menu bar plate when no experience bar
+-- is shown) and, while it is visible, lifts the player frame, cast bar and chat above it. The chat
+-- cluster reaches past the bar's left edge, and its frame would swallow the mouse over the first
+-- slots. Called whenever the experience bar layout or the bar's visibility changes.
+function ActionBar_UpdateSecondBarLayout(bar)
+    bar = bar or ActionBar2;
+    if bar == nil then
+        return;
+    end
+
+    if ExperienceDock ~= nil and ExperienceDock:IsVisible() then
+        bar:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.TOP, ExperienceDock, -ACTION_BAR_2_GAP);
+    else
+        bar:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.TOP, GameMenuBar, -ACTION_BAR_2_GAP);
+    end
+
+    -- The chat, player frame and cast bar load after the action bar, so they may not exist yet here.
+    -- The chat cluster (log, scroll buttons) is anchored to the chat input and follows it.
+    if ChatInputFrame ~= nil then
+        if bar:IsVisible() then
+            ChatInputFrame:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.TOP, bar, -ACTION_BAR_2_GAP);
+        else
+            ChatInputFrame:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.TOP, GameMenuBar, ACTION_BAR_2_CHAT_DEFAULT_BOTTOM);
+        end
+    end
+
+    -- The target frame is anchored to the player frame and follows it.
+    local hudFrames = { PlayerFrame, PlayerCastBar };
+    for _, frame in ipairs(hudFrames) do
+        if frame ~= nil then
+            if bar:IsVisible() then
+                frame:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.TOP, bar, -ACTION_BAR_2_GAP);
+            else
+                frame:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.BOTTOM, nil, ACTION_BAR_2_HUD_DEFAULT_BOTTOM);
+            end
+        end
     end
 end
 
@@ -162,7 +221,8 @@ function ActionBar_UpdateButtons(self)
                 -- Clear icon!
                 button:SetProperty("Icon", "");
                 button:SetText("");
-                -- Empty slots keep an opaque interior so terrain does not muddy the bar.
+                -- Main bar slots keep an opaque interior so terrain does not muddy the bar; empty
+                -- second-bar slots switch to a translucent socket in ActionButton_UpdateSocketStyle.
             end
 
             -- Recompute the usable tint as well, so that changes which only affect usability
@@ -181,6 +241,8 @@ function ActionButton_OnUpdate(self)
         self:SetProperty("Color", "FF888888");
     end
 
+    ActionButton_UpdateSocketStyle(self, occupied);
+
     -- Toggle the "active" glow for spells that stay active while their aura persists (e.g. Stealth).
     if IsActionButtonActive(self.id - 1) then
         self:SetProperty("ActiveGlowTint", ACTION_BUTTON_ACTIVE_GLOW);
@@ -190,6 +252,24 @@ function ActionButton_OnUpdate(self)
 
     -- Update cooldown display
     ActionButton_UpdateCooldown(self);
+end
+
+-- The second bar floats over the world without a backing plate, so its empty slots draw a faint
+-- translucent socket instead of the solid one. Main bar slots always keep the opaque socket.
+function ActionButton_UpdateSocketStyle(self, occupied)
+    if occupied or self.id <= ACTION_BUTTONS_PER_BAR then
+        self:SetProperty("NormalFrameTint", ACTION_SOCKET_NORMAL_TINT);
+        self:SetProperty("HoveredFrameTint", ACTION_SOCKET_HOVERED_TINT);
+        self:SetProperty("PushedFrameTint", ACTION_SOCKET_PUSHED_TINT);
+        self:SetProperty("EmptySocketTint", ACTION_HIDDEN_TINT);
+        self:SetProperty("EmptySocketHoverTint", ACTION_HIDDEN_TINT);
+    else
+        self:SetProperty("NormalFrameTint", ACTION_HIDDEN_TINT);
+        self:SetProperty("HoveredFrameTint", ACTION_HIDDEN_TINT);
+        self:SetProperty("PushedFrameTint", ACTION_HIDDEN_TINT);
+        self:SetProperty("EmptySocketTint", ACTION_EMPTY_SOCKET_TINT);
+        self:SetProperty("EmptySocketHoverTint", ACTION_EMPTY_SOCKET_HOVER_TINT);
+    end
 end
 
 -- Returns the spell that drives an item-type action button's cooldown, i.e. the item's

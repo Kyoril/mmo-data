@@ -8,6 +8,13 @@
 		<!-- Tint of the "active" glow overlay. Transparent (00000000) hides it; the action bar sets
              it to an opaque colour while a "Disabled While Active" spell (e.g. Stealth) is active. -->
 		<Property name="ActiveGlowTint" value="00000000" />
+		<!-- Socket tints per state. The second action bar clears them on empty slots and shows the
+             translucent EmptySocket instead, so unbound slots floating over the world stay light. -->
+		<Property name="NormalFrameTint" value="FF998D7C" />
+		<Property name="HoveredFrameTint" value="FFFFFFFF" />
+		<Property name="PushedFrameTint" value="FF91806A" />
+		<Property name="EmptySocketTint" value="00000000" />
+		<Property name="EmptySocketHoverTint" value="00000000" />
 		<Visual>
 			<ImagerySection name="ActiveGlow">
 				<ImageComponent texture="Interface/GlueUI/GlowYellow.htex" tint="$ActiveGlowTint">
@@ -32,13 +39,13 @@
 				</TextComponent>
 			</ImagerySection>
 			<ImagerySection name="NormalFrame">
-				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="FF998D7C" />
+				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="$NormalFrameTint" />
 			</ImagerySection>
 			<ImagerySection name="HoveredFrame">
-				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="FFFFFFFF" />
+				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="$HoveredFrameTint" />
 			</ImagerySection>
 			<ImagerySection name="PushedFrame">
-				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="FF91806A" />
+				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="$PushedFrameTint" />
 			</ImagerySection>
 			<!-- Darkens the icon while the button is held (mouse or key binding), so the pushed state
                  reads clearly against both the normal and the hovered state. -->
@@ -49,6 +56,13 @@
 					</Area>
 				</ImageComponent>
 			</ImagerySection>
+			<!-- Translucent "ghost" socket drawn instead of the solid one on empty second-bar slots. -->
+			<ImagerySection name="EmptySocket">
+				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="$EmptySocketTint" />
+			</ImagerySection>
+			<ImagerySection name="EmptySocketHovered">
+				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="$EmptySocketHoverTint" />
+			</ImagerySection>
 			<ImagerySection name="DisabledFrame">
 				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="FF998D7C" />
 			</ImagerySection>
@@ -56,6 +70,7 @@
 				<Layer>
 					<Section section="ActiveGlow" />
 					<Section section="NormalFrame" />
+					<Section section="EmptySocket" />
 					<Section section="Image" />
 					<Section section="Counter" />
 				</Layer>
@@ -64,6 +79,7 @@
 				<Layer>
 					<Section section="ActiveGlow" />
 					<Section section="HoveredFrame" />
+					<Section section="EmptySocketHovered" />
 					<Section section="Image" />
 					<Section section="Counter" />
 				</Layer>
@@ -72,6 +88,7 @@
 				<Layer>
 					<Section section="ActiveGlow" />
 					<Section section="PushedFrame" />
+					<Section section="EmptySocketHovered" />
 					<Section section="Image" />
 					<Section section="PushedOverlay" />
 					<Section section="Counter" />
