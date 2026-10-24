@@ -1,0 +1,93 @@
+{
+	"params": {
+		"basinDepth": 12.0,
+		"rimWidth": 14.0,
+		"outerFalloff": 12.0,
+		"terraceSteps": 3,
+		"terraceSharpness": 0.7,
+		"floorNoiseAmplitude": 0.4,
+		"rimPercentile": 0.2,
+		"waterInset": 28.0,
+		"waterDepth": 1.2,
+		"grassBand": 5.0,
+		"dirtBand": 4.0,
+		"bandNoiseAmplitude": 2.0,
+		"rockSpacing": 11.0,
+		"rockOffset": 4.0,
+		"rockOffsetJitter": 2.5,
+		"rockYawJitterDeg": 40.0,
+		"rockScaleMin": 0.9,
+		"rockScaleMax": 1.4,
+		"rockSink": 8.0,
+		"cliffWeight": 0.45,
+		"shelfWeight": 0.25,
+		"clumpWeight": 0.35,
+		"palmCell": 6.0,
+		"palmDensity": 0.55,
+		"palmNearWaterBoost": 1.5,
+		"palmScaleMin": 0.8,
+		"palmScaleMax": 1.2,
+		"bushCell": 3.0,
+		"bushDensity": 0.5,
+		"waterPlantBand": 3.0,
+		"waterPlantDensity": 0.7,
+		"maxSlopeDeg": 30.0,
+		"shelfSink": 3.0,
+		"clumpSink": 0.8
+	},
+	"assets": {
+		"cliffs": [
+			"Models/Desert/Rocks/SM_RockDesert_Layered01.hmsh",
+			"Models/Desert/Rocks/SM_RockDesert_Layered02.hmsh",
+			"Models/Desert/Rocks/SM_RockDesert_Layered03.hmsh",
+			"Models/Desert/Rocks/SM_RockDesert_Layered04.hmsh"
+		],
+		"shelves": [
+			"Models/Desert/Rocks/SM_RockDesert_Shelf01.hmsh",
+			"Models/Desert/Rocks/SM_RockDesert_Shelf02.hmsh",
+			"Models/Desert/Rocks/SM_RockDesert_Shelf03.hmsh",
+			"Models/Desert/Rocks/SM_RockDesert_Shelf04.hmsh",
+			"Models/Desert/Rocks/SM_RockDesert_Shelf05.hmsh"
+		],
+		"clumps": [
+			"Models/Desert/Rocks/SM_RockDesert_Clump05.hmsh",
+			"Models/Desert/Rocks/SM_RockDesert_Clump06.hmsh",
+			"Models/Desert/Rocks/SM_RockDesert_Clump07.hmsh",
+			"Models/Desert/Rocks/SM_RockDesert_Clump08.hmsh",
+			"Models/Desert/Rocks/SM_RockDesert_Clump09.hmsh",
+			"Models/Desert/Rocks/SM_RockDesert_Clump10.hmsh"
+		],
+		"palms": [
+			"Models/Desert/Trees/SM_DesertCoconutPalm01.hmsh",
+			"Models/Desert/Trees/SM_DesertCoconutPalm02.hmsh",
+			"Models/Desert/Trees/SM_DesertCoconutPalm03.hmsh",
+			"Models/Desert/Trees/SM_DesertCoconutPalm04.hmsh",
+			"Models/Desert/Trees/SM_DesertCoconutPalm05.hmsh",
+			"Models/Desert/Trees/SM_DesertCoconutPalm06.hmsh",
+			"Models/Desert/Trees/SM_DesertPalmTree01.hmsh",
+			"Models/Desert/Trees/SM_DesertPalmTree02.hmsh",
+			"Models/Desert/Trees/SM_DesertPalmTree03.hmsh",
+			"Models/Desert/Trees/SM_DesertPalmTree04.hmsh",
+			"Models/Desert/Trees/SM_DesertPalmTree05.hmsh"
+		],
+		"bushes": [
+			"Models/Desert/Foliage/SM_DesertBush01.hmsh",
+			"Models/Desert/Foliage/SM_DesertBush02.hmsh",
+			"Models/Desert/Foliage/SM_DesertBush03.hmsh",
+			"Models/Desert/Foliage/SM_DesertBush04.hmsh",
+			"Models/Desert/Foliage/SM_DesertBushB01.hmsh",
+			"Models/Desert/Foliage/SM_DesertBushB02.hmsh",
+			"Models/Desert/Foliage/SM_Bush1.hmsh",
+			"Models/Desert/Foliage/SM_Bush2.hmsh",
+			"Models/Desert/Foliage/SM_Bush3.hmsh"
+		],
+		"waterPlants": [
+			"Models/Desert/Foliage/SM_Marshtail01.hmsh",
+			"Models/Desert/Foliage/SM_Marshtail02.hmsh",
+			"Models/Desert/Foliage/SM_Marshtail03.hmsh",
+			"Models/Desert/Foliage/SM_Marshtail04.hmsh"
+		],
+		"terrainMaterial": "Models/Desert/Materials/Desert_Terrain.hmat",
+		"waterMaterial": "Worlds/Water_Ocean.hmat"
+	}
+}
