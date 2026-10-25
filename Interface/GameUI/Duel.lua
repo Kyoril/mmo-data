@@ -12,24 +12,24 @@ StaticDialogs["DUEL_REQUEST"] = {
 
 function DuelFrame_OnLoad(self)
     self:RegisterEvent("DUEL_UPDATE", function(_, state, detail, opponent)
-        if state == 1 then
+        if state == DuelEvent.Invited then
             StaticDialog_Show("DUEL_REQUEST", opponent);
             StaticDialog:BringToFront();
-        elseif state ~= 0 and state ~= 5 then
+        elseif state ~= DuelEvent.Pending and state ~= DuelEvent.Error then
             if StaticDialog.which == "DUEL_REQUEST" then StaticDialog:Hide(); end
         end
 
         local message = nil;
-        if state == 0 then
+        if state == DuelEvent.Pending then
             message = string.format(Localize("DUEL_REQUEST_SENT"), opponent);
-        elseif state == 2 then
+        elseif state == DuelEvent.Countdown then
             message = string.format(Localize("DUEL_COUNTDOWN"), detail);
-        elseif state == 3 then
+        elseif state == DuelEvent.Active then
             message = Localize("DUEL_START");
-        elseif state == 4 then
-            local resultKeys = { [0] = "DUEL_CANCELLED", [1] = "DUEL_WON", [2] = "DUEL_LOST", [3] = "DUEL_DECLINED", [4] = "DUEL_EXPIRED" };
+        elseif state == DuelEvent.Finished then
+            local resultKeys = { [DuelResult.Cancelled] = "DUEL_CANCELLED", [DuelResult.Won] = "DUEL_WON", [DuelResult.Lost] = "DUEL_LOST", [DuelResult.Declined] = "DUEL_DECLINED", [DuelResult.Expired] = "DUEL_EXPIRED" };
             message = string.format(Localize(resultKeys[detail] or "DUEL_CANCELLED"), opponent);
-        elseif state == 5 then
+        elseif state == DuelEvent.Error then
             message = Localize("DUEL_UNAVAILABLE");
         end
         if message then

@@ -5,6 +5,7 @@ MAX_ACTION_BUTTONS = 24;
 
 -- Console variable deciding whether the second action bar is shown.
 ACTION_BAR_2_CVAR = "ShowActionBar2";
+ACTION_BAR_LOCK_CVAR = "LockActionBars";
 
 ACTION_BAR_MOVE_BINDING = "MOVEACTIONBAR";
 local actionBarMoveKeys = {};
@@ -89,7 +90,8 @@ function ActionButton_OnEnter(self)
 end
 
 function ActionBarButton_OnDrag(this, button, position)
-    if button == "LEFT" and ActionBar_IsMoveKeyDown() then
+    local locked = GetCVar(ACTION_BAR_LOCK_CVAR) or "1";
+    if button == "LEFT" and (locked == "0" or locked == "false" or ActionBar_IsMoveKeyDown()) then
         PickupActionButton(this.id - 1);
     end
 end

@@ -1170,6 +1170,8 @@ strings =
 	(key = "OPTIONS_HEADER_CAMERA", string = "Camera & Mouse")
 	(key = "OPTIONS_SOUND_IN_BACKGROUND", string = "Sound in Background")
 	(key = "OPTIONS_SHOW_ACTION_BAR_2", string = "Show Second Action Bar")
+	(key = "OPTIONS_LOCK_ACTION_BARS", string = "Lock Action Bars")
+	(key = "OPTIONS_TT_LOCK_ACTION_BARS", string = "Requires holding the Move Action Bar key (Shift by default) to drag skills and items off either action bar. Turn this off to drag freely.")
 	(key = "OPTIONS_NP_ENEMY_NPCS", string = "Enemy NPCs")
 	(key = "OPTIONS_NP_ENEMY_PLAYERS", string = "Enemy Players")
 	(key = "OPTIONS_NP_ENEMY_PETS", string = "Enemy Pets")
@@ -1297,4 +1299,7 @@ strings =
 	(key = "CHAT_FORMAT_DUEL", string = "[Duel] %s")
 	(key = "INSPECT", string = "Inspect")
 	(key = "BAG_SLOT", string = "Bag Slot")
+	(key = "CHAT_ERROR_SELF_WHISPER", string = "You cannot whisper yourself.")
+	(key = "CHAT_ERROR_PLAYER_NOT_FOUND", string = "No player named '%s' is currently online.")
+	(key = "CHAT_ERROR_WRONG_FACTION", string = "You cannot whisper players of another faction.")
 }

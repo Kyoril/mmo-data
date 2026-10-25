@@ -620,6 +620,13 @@ OPTIONS_CATEGORIES = {
 			{ type = "header", labelKey = "OPTIONS_HEADER_ACTION_BARS" },
 			{
 				type = "toggle",
+				labelKey = "OPTIONS_LOCK_ACTION_BARS",
+				tooltipKey = "OPTIONS_TT_LOCK_ACTION_BARS",
+				cvar = "LockActionBars",
+				defaultValue = "1",
+			},
+			{
+				type = "toggle",
 				labelKey = "OPTIONS_SHOW_ACTION_BAR_2",
 				tooltipKey = "OPTIONS_TT_SHOW_ACTION_BAR_2",
 				cvar = "ShowActionBar2",

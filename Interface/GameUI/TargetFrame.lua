@@ -8,6 +8,7 @@ function TargetFrame_OnLoad()
     TargetFrame_Update();
 
     TargetFrame:RegisterEvent("PLAYER_TARGET_CHANGED", TargetFrame_Update);
+    TargetFrame:RegisterEvent("FACTION_CHANGED", TargetFrame_Update);
     TargetFrame:RegisterEvent("UNIT_HEALTH_UPDATED", TargetFrame_OnUnitUpdate);
     TargetFrame:RegisterEvent("UNIT_POWER_UPDATED", TargetFrame_OnUnitUpdate);
     TargetFrame:RegisterEvent("UNIT_LEVEL_UPDATED", TargetFrame_OnUnitUpdate);
