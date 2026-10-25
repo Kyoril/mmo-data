@@ -31,11 +31,11 @@ function GameMenuBar_UpdateExperienceBarLayout()
 	else
 		PlayerClassExperienceBar:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.BOTTOM, ExperienceDock, 0);
 	end
-	-- Keep the extra action slots clear of both experience bars, including when
-	-- either bar disappears at its maximum level.
-	if (ActionBar2 ~= nil) then
-		local anchor = visibleBars > 0 and ExperienceDock or ActionBar;
-		ActionBar2:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.TOP, anchor, -8);
+
+	-- The second action bar stacks on top of the experience bars. ActionBar.lua loads after this
+	-- file, so the function may not exist yet during the menu bar's own OnLoad.
+	if ActionBar_UpdateSecondBarLayout ~= nil then
+		ActionBar_UpdateSecondBarLayout();
 	end
 end
 

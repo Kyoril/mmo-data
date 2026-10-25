@@ -136,16 +136,19 @@
 			</StateImagery>
 		</Visual>
 	</Frame>
-	<!-- Second action bar (slots 13-24). It floats above the experience bars instead of extending the
-	     oak-bronze plate, and stays hidden until the player enables it in the interface options. -->
-	<Frame name="ActionBar2" parent="GameMenuBar" renderer="DefaultRenderer">
+	<!-- Second action bar (slots 13-24). It floats above the main bar instead of extending the
+	     oak-bronze plate, and stays hidden until the player enables it in the interface options.
+	     It is parented to GameParent, not GameMenuBar: hit testing only descends into children
+	     whose rect contains the cursor, so buttons outside the menu bar would not be clickable. -->
+	<Frame name="ActionBar2" parent="GameParent" renderer="DefaultRenderer">
 		<Property name="Visible" value="false" />
 		<Area>
 			<Size>
 				<AbsDimension x="1432" y="112" />
 			</Size>
 			<Anchor point="LEFT" relativeTo="ActionBar" relativePoint="LEFT" offset="0" />
-			<Anchor point="BOTTOM" relativeTo="ExperienceDock" relativePoint="TOP" offset="-8" />
+			<!-- Re-anchored above the experience bars by ActionBar_UpdateSecondBarLayout. -->
+			<Anchor point="BOTTOM" relativeTo="GameMenuBar" relativePoint="TOP" offset="-24" />
 		</Area>
 		<Frame name="ActionButton13" inherits="ActionBarButtonTemplate" id="13">
 			<Area>
