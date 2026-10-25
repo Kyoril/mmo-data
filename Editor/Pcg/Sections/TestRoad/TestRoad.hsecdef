@@ -1,0 +1,32 @@
+{
+  "halfWidth": 3.0,
+  "length": 20.0,
+  "name": "TestRoad",
+  "rules": [
+    {
+      "asset": "Models/FalwynPlains/Props/WoodProps/SM_Fence_01.hmsh",
+      "keepChance": 0.6,
+      "positionJitter": 0.0,
+      "scaleJitter": 0.0,
+      "swapGroup": [],
+      "yawJitterDeg": 3.0
+    },
+    {
+      "asset": "Models/FalwynPlains/Props/WoodProps/WoodLantern_A.hwmo",
+      "keepChance": 0.8,
+      "positionJitter": 0.0,
+      "scaleJitter": 0.0,
+      "swapGroup": [],
+      "yawJitterDeg": 0.0
+    }
+  ],
+  "sideFalloff": 4.0,
+  "variants": [
+    {
+      "originX": 0.0
+    },
+    {
+      "originX": 62.5
+    }
+  ]
+}
