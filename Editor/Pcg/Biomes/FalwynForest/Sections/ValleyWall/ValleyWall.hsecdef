@@ -1,0 +1,76 @@
+{
+  "cornerAngleDeg": 30.0,
+  "halfWidth": 25.0,
+  "length": 40.0,
+  "name": "ValleyWall",
+  "rules": [
+    {
+      "asset": "Models/FalwynPlains/Plants/Bush_01.hmsh",
+      "keepChance": 0.7,
+      "positionJitter": 1.0,
+      "scaleJitter": 0.2,
+      "swapGroup": [],
+      "yawJitterDeg": 180.0
+    },
+    {
+      "asset": "Models/Trees/SM_Tree_05.hmsh",
+      "keepChance": 0.8,
+      "positionJitter": 2.5,
+      "scaleJitter": 0.2,
+      "swapGroup": [],
+      "yawJitterDeg": 180.0
+    },
+    {
+      "asset": "Models/Trees/Tree_01.hmsh",
+      "keepChance": 0.75,
+      "positionJitter": 2.5,
+      "scaleJitter": 0.2,
+      "swapGroup": [],
+      "yawJitterDeg": 180.0
+    },
+    {
+      "asset": "Models/FalwynPlains/Trees/Tree_03.hmsh",
+      "keepChance": 0.8,
+      "positionJitter": 2.5,
+      "scaleJitter": 0.2,
+      "swapGroup": [],
+      "yawJitterDeg": 180.0
+    },
+    {
+      "asset": "Models/FalwynPlains/Plants/Shrub_02.hmsh",
+      "keepChance": 0.7,
+      "positionJitter": 1.0,
+      "scaleJitter": 0.2,
+      "swapGroup": [],
+      "yawJitterDeg": 180.0
+    },
+    {
+      "asset": "Models/Stones/SM_stone_06.hmsh",
+      "keepChance": 0.95,
+      "positionJitter": 0.5,
+      "scaleJitter": 0.15,
+      "swapGroup": [],
+      "yawJitterDeg": 180.0
+    }
+  ],
+  "sideFalloff": 15.0,
+  "variants": [
+    {
+      "originX": -300.0
+    },
+    {
+      "originX": -200.0
+    },
+    {
+      "originX": -100.0
+    },
+    {
+      "originX": 100.0,
+      "role": "innerCorner"
+    },
+    {
+      "originX": 200.0,
+      "role": "outerCorner"
+    }
+  ]
+}
