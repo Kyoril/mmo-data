@@ -56,20 +56,29 @@
   "sideFalloff": 15.0,
   "variants": [
     {
-      "originX": -300.0
+      "originX": -450.0
     },
     {
-      "originX": -200.0
+      "originX": -350.0
     },
     {
-      "originX": -100.0
+      "originX": -250.0
     },
     {
-      "originX": 100.0,
+      "originX": -150.0
+    },
+    {
+      "originX": -50.0
+    },
+    {
+      "originX": 50.0
+    },
+    {
+      "originX": 150.0,
       "role": "innerCorner"
     },
     {
-      "originX": 200.0,
+      "originX": 250.0,
       "role": "outerCorner"
     }
   ]
