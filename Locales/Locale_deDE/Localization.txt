@@ -224,6 +224,7 @@ strings =
 	(key = "CLASS_MAGE", string = "Magier")
 	(key = "CLASS_CLERIC", string = "Kleriker")
 	(key = "CLASS_SHADOWMANCER", string = "Schattenweber")
+	(key = "CLASS_ACOLYTE", string = "Akolyth")
 	(key = "CLASS_SCOUT", string = "Späher")
 
 	(key = "RACE", string = "Volk")
