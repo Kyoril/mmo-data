@@ -4,20 +4,26 @@
   "name": "TestRoad",
   "rules": [
     {
-      "asset": "Models/FalwynPlains/Props/WoodProps/SM_Fence_01.hmsh",
-      "keepChance": 0.6,
-      "positionJitter": 0.0,
-      "scaleJitter": 0.0,
-      "swapGroup": [],
-      "yawJitterDeg": 3.0
-    },
-    {
       "asset": "Models/FalwynPlains/Props/WoodProps/WoodLantern_A.hwmo",
       "keepChance": 0.8,
       "positionJitter": 0.0,
       "scaleJitter": 0.0,
       "swapGroup": [],
       "yawJitterDeg": 0.0
+    }
+  ],
+  "runs": [
+    {
+      "keepChance": 1.0,
+      "members": [
+        6829427359930646530,
+        6829427359930646531,
+        6829427359930646532,
+        6829427359930646534,
+        6829427359930646535,
+        6829427359930646536
+      ],
+      "name": "Fence"
     }
   ],
   "sideFalloff": 4.0,
