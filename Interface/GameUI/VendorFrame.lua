@@ -1,5 +1,26 @@
 VENDOR_ITEMS_PER_PAGE = 14;
 
+VENDOR_MODE_STOCK = 1;
+VENDOR_MODE_BUYBACK = 2;
+
+-- The vendor frame shows either the merchant's own stock or the items the player sold during
+-- this session. Both lists use the same cards, so every lookup goes through these two helpers.
+local function VendorFrame_GetNumItems()
+    if (VendorFrame.mode == VENDOR_MODE_BUYBACK) then
+        return GetVendorNumBuybackItems();
+    end
+
+    return GetVendorNumItems();
+end
+
+local function VendorFrame_GetItemInfo(index)
+    if (VendorFrame.mode == VENDOR_MODE_BUYBACK) then
+        return GetVendorBuybackItemInfo(index);
+    end
+
+    return GetVendorItemInfo(index);
+end
+
 local function VendorTextHeight(frame)
 	return frame:GetTextHeight() * GetUIScale().y / frame:GetLayoutUIScale().y;
 end
@@ -18,7 +39,7 @@ local function VendorFrame_LayoutItems(numItems)
 	-- its name and price, then paginate the rows that fit inside the stock surface.
 	local nameHeight = 58;
 	for i = 0, numItems - 1 do
-		local item = GetVendorItemInfo(i);
+		local item = VendorFrame_GetItemInfo(i);
 		if item then
 			VendorText1:SetText(item.name);
 			nameHeight = math.max(nameHeight, VendorTextHeight(VendorText1));
@@ -56,10 +77,18 @@ function VendorFrame_UpdateLayout()
 end
 
 function VendorFrame_UpdateVendorItems()
-    local numItems = GetVendorNumItems();
-    VendorStockLabel:SetText(string.format(Localize("VENDOR_STOCK_COUNT"), numItems));
-    VendorFrame_LayoutItems(numItems);
+    local buyback = (VendorFrame.mode == VENDOR_MODE_BUYBACK);
+    local numItems = VendorFrame_GetNumItems();
 
+    if (buyback) then
+        VendorStockLabel:SetText(string.format(Localize("VENDOR_BUYBACK_COUNT"), numItems));
+        VendorPurchaseHint:SetText(Localize("VENDOR_BUYBACK_HINT"));
+    else
+        VendorStockLabel:SetText(string.format(Localize("VENDOR_STOCK_COUNT"), numItems));
+        VendorPurchaseHint:SetText(Localize("VENDOR_PURCHASE_HINT"));
+    end
+
+    VendorFrame_LayoutItems(numItems);
     local pageCount = math.max(1, math.ceil(numItems / VENDOR_ITEMS_PER_PAGE));
     VendorFrame.page = math.max(1, math.min(VendorFrame.page, pageCount));
 
@@ -85,9 +114,14 @@ function VendorFrame_UpdateVendorItems()
 
         local money = _G["VendorMoney" .. i];
 
+        local item, texture, price, quantity = nil, nil, 0, 0;
         if (i <= VENDOR_ITEMS_PER_PAGE and index <= numItems) then
-            local item, texture, price, quantity, numAvailable, isUsable = GetVendorItemInfo(index - 1);
-    
+            item, texture, price, quantity = VendorFrame_GetItemInfo(index - 1);
+        end
+
+        -- A buyback entry whose item data has not arrived yet renders as an empty card and fills
+        -- in once the item query comes back.
+        if (item) then
             itemText:SetText(item.name);
             button:SetProperty("Icon", texture);
             button.id = index - 1;
@@ -115,8 +149,24 @@ function VendorFrame_UpdateVendorItems()
     end
 end
 
+function VendorFrame_SetMode(mode)
+    VendorFrame.mode = mode;
+    VendorFrame.page = 1;
+
+    VendorBuybackTabButton:SetChecked(mode == VENDOR_MODE_BUYBACK);
+    VendorFrame_UpdateVendorItems();
+end
+
+function VendorFrame_ToggleBuyback()
+    if (VendorFrame.mode == VENDOR_MODE_BUYBACK) then
+        VendorFrame_SetMode(VENDOR_MODE_STOCK);
+    else
+        VendorFrame_SetMode(VENDOR_MODE_BUYBACK);
+    end
+end
+
 function VendorFrame_NextPage()
-    local numItems = GetVendorNumItems();
+    local numItems = VendorFrame_GetNumItems();
 
     if (VendorFrame.page * VENDOR_ITEMS_PER_PAGE >= numItems) then
         return;
@@ -141,12 +191,18 @@ function VendorFrame_Show(self)
         SidePanel_SetUnitTitle(self, target);
     end
 
-    VendorFrame.page = 1;
-
     ShowUIPanel(self);
     OpenInventory();
 
-    VendorFrame_UpdateVendorItems();
+    VendorFrame_SetMode(VENDOR_MODE_STOCK);
+end
+
+function VendorFrame_BuybackUpdate(self)
+    -- The buyback list also changes while the stock tab is up (every sale adds to it), so the
+    -- frame only needs a refresh when it is actually on screen.
+    if (self:IsVisible()) then
+        VendorFrame_UpdateVendorItems();
+    end
 end
 
 function VendorFrame_Close(self)
@@ -155,18 +211,22 @@ end
 
 function VendorButton_OnClick(self, button)
     if (button == "RIGHT") then
-        BuyVendorItem(self.id);
+        if (VendorFrame.mode == VENDOR_MODE_BUYBACK) then
+            BuybackVendorItem(self.id);
+        else
+            BuyVendorItem(self.id);
+        end
     elseif(button == "LEFT") then
         print("TODO: Grab item from vendor");
     end
 end
 
 function VendorButton_OnEnter(this)
-    local numItems = GetVendorNumItems();
+    local numItems = VendorFrame_GetNumItems();
 
     local index = this.id + 1;
     if (index <= numItems) then
-        local item = GetVendorItemInfo(index - 1);
+        local item = VendorFrame_GetItemInfo(index - 1);
         if item then
             GameTooltip:ClearAnchors();
             GameTooltip:SetAnchor(AnchorPoint.LEFT, AnchorPoint.RIGHT, this, 16);
@@ -189,8 +249,12 @@ function VendorFrame_OnLoad(self)
     -- Initialize side panel functionality first, like the close button
     SidePanel_OnLoad(self);
 
+    self.mode = VENDOR_MODE_STOCK;
+    self.page = 1;
+
     self:RegisterEvent("VENDOR_SHOW", VendorFrame_Show);
     self:RegisterEvent("VENDOR_CLOSED", VendorFrame_Close);
+    self:RegisterEvent("VENDOR_BUYBACK_UPDATE", VendorFrame_BuybackUpdate);
 
     for i = 1, 14, 1 do
         local button = _G["VendorButton" .. i];
