@@ -7,6 +7,7 @@ strings =
 	
 	(key = "ACCOUNT_PASSWORD", string = "Account Password")
 	(key = "ACCOUNT_NAME", string = "Account Name")
+	(key = "REMEMBER_ACCOUNT_NAME", string = "Remember Account Name")
 	(key = "LOGIN", string = "Login")
 	(key = "QUIT", string = "Quit")
 	(key = "SETTINGS", string = "Settings")
