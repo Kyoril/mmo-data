@@ -2,6 +2,19 @@
 -- AccountLogin.xml file.
 
 
+-- Reads a boolean console variable, which is missing entirely until it is first set.
+local function IsCvarOn(val)
+	return val == "1" or val == "true";
+end
+
+-- Called when the "remember account name" checkbox was clicked. The client clears the stored
+-- account name by itself whenever the option is switched off, so only the option is written
+-- here. The password is never stored.
+function AccountLogin_OnRememberAccountNameToggled()
+	SetCVar("rememberAccountName", RememberAccountNameCheck:IsChecked() and "1" or "0");
+	RunConsoleCommand("saveconfig");
+end
+
 -- Initiates a login attempt using the values from the name and password fields.
 function AccountLogin_Login()
 	local username = AccountNameField:GetText();
@@ -138,8 +151,23 @@ function AccountLogin_OnLoad()
 	end);
 	AccountLogin:RegisterEvent("LOGIN_CONNECT", AccountLogin_OnConnect);
 
+	-- The account name of the last login is only kept while the option is enabled, so an empty
+	-- value means there is nothing to restore.
+	RememberAccountNameCheck:SetChecked(IsCvarOn(GetCVar("rememberAccountName")));
+
+	local rememberedAccountName = GetCVar("accountName") or "";
+	if rememberedAccountName ~= "" then
+		AccountNameField:SetText(rememberedAccountName);
+	end
+
 	if not realmConnector:IsConnected() then
-		AccountNameField:CaptureInput();
+		-- With the account name already filled in, the password is what the player still has to
+		-- type, so start there instead.
+		if rememberedAccountName ~= "" then
+			AccountPasswordField:CaptureInput();
+		else
+			AccountNameField:CaptureInput();
+		end
 	end
 
 	AccountLogin:PlayAnimation("FadeIn");
