@@ -6,6 +6,7 @@
 		<Property name="Visible" value="false" />
 	
 		<Frame name="GlueDialog" inherits="GlueBorderFrame">
+			<Property name="Focusable" value="true" />
 			<Area>
 				<!-- The height is a placeholder: GlueDialog_Layout sizes it to the content on every show. -->
 				<Size><AbsDimension x="1600" y="360" /></Size>
@@ -56,6 +57,15 @@
 					</OnClick>
 				</Scripts>
 			</Frame>
+			<Scripts>
+				<OnEnterPressed>
+					return function(this)
+						if GlueButton01:IsVisible() then
+							GlueDialog_Button1Clicked();
+						end
+					end
+				</OnEnterPressed>
+			</Scripts>
 		</Frame>
 	</Frame>
 </UiLayout>

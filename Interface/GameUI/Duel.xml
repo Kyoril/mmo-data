@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<UiLayout>
+    <Script file="Duel.lua" />
+    <Frame name="DuelFrame" parent="GameParent">
+        <Property name="Visible" value="false" />
+        <Scripts>
+            <OnLoad>
+                return function(self) DuelFrame_OnLoad(self); end
+            </OnLoad>
+        </Scripts>
+    </Frame>
+</UiLayout>

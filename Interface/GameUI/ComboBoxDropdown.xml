@@ -54,10 +54,10 @@
 
 	<!--
 		Global dropdown popup frame.
-		parent="GameParent" ensures it renders above all other game UI frames.
+		The shared options layer is available both before login and in the world.
 		Positioned and sized in Lua (ComboBox_Open) based on the clicked ComboBox.
 	-->
-	<Frame name="ComboBoxDropdownFrame" parent="GameParent" renderer="DefaultRenderer">
+	<Frame name="ComboBoxDropdownFrame" parent="TopFrame" renderer="DefaultRenderer" frameLevel="60">
 		<Property name="Visible" value="false" />
 
 		<Visual>

@@ -25,6 +25,9 @@ end
 -- Initialize the context menu frame
 function ContextMenu_OnLoad(self)
     self.buttonContainer = ContextMenuButtonContainer
+    self:RegisterEvent("PLAYER_TARGET_CHANGED", function()
+        if currentMenuType == "TARGET" or currentMenuType == "PARTY_MEMBER" then ContextMenu_Hide(); end
+    end)
 end
 
 -- Clear all existing menu buttons
@@ -335,7 +338,16 @@ RegisterContextMenu("TARGET", {
         local isPlayer = targetUnit and (targetUnit:GetType() == "PLAYER")
         local isSelf = isPlayer and (targetUnit == GetUnit("player"))
         
-        if isPlayer and not isSelf then
+        if isPlayer and not isSelf and CanInteractWithPlayer("target") then
+            local duelTargetGuid = targetUnit:GetGuid()
+            local inspectUnit = "guid:" .. targetUnit:GetGuidString()
+            table.insert(items, {
+                text = Localize("INVITE_TO_PARTY"),
+                callback = function()
+                    InviteByName(targetUnit:GetName());
+                end,
+                enabled = true
+            })
             -- Whisper option
             table.insert(items, {
                 text = Localize("WHISPER"),
@@ -351,11 +363,15 @@ RegisterContextMenu("TARGET", {
             })
 
             table.insert(items, {
-                text = Localize("INVITE_TO_PARTY"),
-                callback = function()
-                    InviteByName(targetUnit:GetName());
-                end,
+                text = Localize("INSPECT"),
+                callback = function() InspectWindow_Open(inspectUnit) end,
                 enabled = true
+            })
+
+            table.insert(items, {
+                text = Localize("DUEL"),
+                callback = function() RequestDuel(duelTargetGuid) end,
+                enabled = targetUnit:IsAlive() and GetUnit("player"):IsAlive()
             })
             
             -- Trade option

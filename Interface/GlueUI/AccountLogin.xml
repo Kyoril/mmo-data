@@ -221,11 +221,17 @@
 
 			<Frame name="LoginSettingsButton" inherits="GlueButton">
 				<Property name="Text" value="SETTINGS" />
-				<Property name="Enabled" value="False" />
 				<Area>
 					<Anchor point="LEFT" offset="24" />
 					<Anchor point="BOTTOM" offset="-24"/>
 				</Area>
+				<Scripts>
+					<OnClick>
+						return function(this)
+							OptionsFrame_Toggle();
+						end
+					</OnClick>
+				</Scripts>
 			</Frame>
 		</Frame>
 

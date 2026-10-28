@@ -35,6 +35,50 @@
 				<Anchor point="LEFT" offset="19.2" />
 				<Anchor point="RIGHT" offset="-19.2" />
 			</Area>
+
+			<Frame name="InventoryCloseButton" type="Button" renderer="ButtonRenderer">
+				<Visual>
+					<ImagerySection name="NormalFrame">
+						<ImageComponent texture="Interface/GameUI/fg4_buttonSmall1_Up_result.htex" />
+					</ImagerySection>
+					<ImagerySection name="HoveredFrame">
+						<ImageComponent texture="Interface/GameUI/fg4_buttonSmall1_Over_result.htex" />
+					</ImagerySection>
+					<ImagerySection name="PushedFrame">
+						<ImageComponent texture="Interface/GameUI/fg4_buttonSmall1_Down_result.htex" />
+					</ImagerySection>
+					<ImagerySection name="DisabledFrame">
+						<ImageComponent texture="Interface/GameUI/fg4_buttonSmall2_Disabled_result.htex" />
+					</ImagerySection>
+					<ImagerySection name="Caption">
+						<ImageComponent texture="Interface/Icons/fg4_iconsGold_close_result.htex" relativeInset="0.25" />
+					</ImagerySection>
+					<StateImagery name="Normal">
+						<Layer><Section section="NormalFrame" /><Section section="Caption" /></Layer>
+					</StateImagery>
+					<StateImagery name="Hovered">
+						<Layer><Section section="HoveredFrame" /><Section section="Caption" /></Layer>
+					</StateImagery>
+					<StateImagery name="Pushed">
+						<Layer><Section section="PushedFrame" /><Section section="Caption" color="FFAAAAAA" /></Layer>
+					</StateImagery>
+					<StateImagery name="Disabled">
+						<Layer><Section section="DisabledFrame" /><Section section="Caption" color="AE888888" /></Layer>
+					</StateImagery>
+				</Visual>
+				<Area>
+					<Size><AbsDimension x="51.2" y="51.2" /></Size>
+					<Anchor point="RIGHT" offset="-8" />
+					<Anchor point="V_CENTER" offset="-3.2" />
+				</Area>
+				<Scripts>
+					<OnUpdate>
+						return function(this, elapsed)
+							InventoryCloseButton_Update(this);
+						end
+					</OnUpdate>
+				</Scripts>
+			</Frame>
 		</Frame>
 
 		<Frame name="PlayerMoney" renderer="DefaultRenderer">
@@ -116,7 +160,7 @@
 			<OnMouseDown>
 				return function(this, button)
 					-- If clicking on inventory frame background (not a button), handle as invalid drop
-					if CursorHasItem() then
+					if CursorHasPayload() then
 						HandleInvalidItemDrop();
 						return true;  -- Event consumed
 					end

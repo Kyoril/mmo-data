@@ -11,6 +11,28 @@ QUEST_REWARD_COLUMN_GAP = 8;
 QUEST_REWARD_LABEL_SPACING = 8;
 QUEST_REWARD_SECTION_SPACING = 8;
 
+-- Fonts keep the normal UI scale when a window's artwork is compacted.
+local function QuestTextHeight(frame)
+    return frame:GetTextHeight() * GetUIScale().y / frame:GetLayoutUIScale().y;
+end
+
+local function QuestTextWidth(frame)
+    return frame:GetTextWidth() * GetUIScale().x / frame:GetLayoutUIScale().x;
+end
+
+local function QuestScroll_UpdateRange(content, clip, scrollBar)
+    local maximum = math.max(0, content:GetHeight() - clip:GetHeight() / clip:GetLayoutUIScale().y);
+    scrollBar:SetMaximum(maximum);
+    scrollBar:SetValue(math.min(scrollBar:GetValue(), maximum));
+    if maximum > 0 then
+        scrollBar:Enable();
+    else
+        scrollBar:Disable();
+    end
+end
+
+local refreshingQuestLayout = false;
+
 -- Registers a mouse wheel handler on a scroll area that moves the given scroll
 -- bar by stepsPerNotch steps per wheel notch. Registering a handler makes the
 -- frame consume wheel input over the area (and everything anchored inside it),
@@ -41,14 +63,15 @@ end
 -- Returns the row height contribution (0 when the row is hidden).
 function QuestRewards_SetXpRow(label, valueFrame, amount)
     if amount and amount > 0 then
-        label:SetWidth(label:GetTextWidth());
-        label:SetHeight(label:GetTextHeight());
+        label:SetWidth(QuestTextWidth(label));
+        label:SetHeight(QuestTextHeight(label));
         label:Show();
 
         valueFrame:SetText(QuestRewards_FormatNumber(amount));
-        valueFrame:SetWidth(valueFrame:GetTextWidth());
-        valueFrame:SetHeight(valueFrame:GetTextHeight());
+        valueFrame:SetWidth(QuestTextWidth(valueFrame));
+        valueFrame:SetHeight(QuestTextHeight(valueFrame));
         valueFrame:Show();
+		label:SetHeight(math.max(label:GetHeight(), valueFrame:GetHeight()));
 
         return label:GetHeight();
     end
@@ -140,7 +163,7 @@ local function QuestRewards_AddLabel(container, y, text)
     label:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, 0);
     container:AddChild(label);
     label:SetText(text);
-    label:SetHeight(label:GetTextHeight());
+    label:SetHeight(QuestTextHeight(label));
     return label:GetHeight();
 end
 
@@ -192,7 +215,8 @@ local function QuestRewards_AddRow(container, y, column, entry, clickedHandler)
     label:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, -(QUEST_REWARD_SLOT_PADDING + 16));
     row:AddChild(label);
     label:SetText(entry.name or "");
-    label:SetHeight(QUEST_REWARD_SLOT_SIZE);
+    label:SetHeight(math.max(QUEST_REWARD_SLOT_SIZE, QuestTextHeight(label)));
+    row:SetHeight(label:GetHeight() + 2 * QUEST_REWARD_SLOT_PADDING);
 
     return button;
 end
@@ -201,14 +225,21 @@ end
 -- Returns the new y offset after the grid and the created slot buttons.
 local function QuestRewards_AddGrid(container, y, entries, clickedHandler)
     local buttons = {};
-    for i, entry in ipairs(entries) do
-        local column = (i - 1) % 2;
-        local rowY = y + math.floor((i - 1) / 2) * (QUEST_REWARD_ROW_HEIGHT + QUEST_REWARD_ROW_SPACING);
-        buttons[#buttons + 1] = QuestRewards_AddRow(container, rowY, column, entry, clickedHandler);
+    for i = 1, #entries, 2 do
+        local left = QuestRewards_AddRow(container, y, 0, entries[i], clickedHandler);
+        buttons[#buttons + 1] = left;
+        local height = left:GetParent():GetHeight();
+        if entries[i + 1] then
+            local right = QuestRewards_AddRow(container, y, 1, entries[i + 1], clickedHandler);
+            buttons[#buttons + 1] = right;
+            height = math.max(height, right:GetParent():GetHeight());
+            right:GetParent():SetHeight(height);
+        end
+        left:GetParent():SetHeight(height);
+        y = y + height + QUEST_REWARD_ROW_SPACING;
     end
 
-    local rowCount = math.ceil(#entries / 2);
-    return y + rowCount * (QUEST_REWARD_ROW_HEIGHT + QUEST_REWARD_ROW_SPACING), buttons;
+    return y, buttons;
 end
 
 -- Populates a container frame with quest reward rows: an optional choice
@@ -332,16 +363,17 @@ function QuestFrame_OnQuestGreeting(self)
 	end
 
 	-- Ensure the quest frame is visible as in every event
-	ShowUIPanel(QuestFrame);
+	if not refreshingQuestLayout then ShowUIPanel(QuestFrame); end
 
     -- Set up the greeting text
     GreetingText:SetText(GetGreetingText());
-    GreetingText:SetHeight(GreetingText:GetTextHeight());
+    GreetingText:SetHeight(QuestTextHeight(GreetingText));
 
     -- Setup quest buttons
     AvailableQuestList:RemoveAllChildren();
 
     local prevButton = nil;
+    local questListHeight = 0;
     for i = 1, GetNumAvailableQuests() do
         local quest = GetAvailableQuest(i - 1);
         if quest then
@@ -361,13 +393,14 @@ function QuestFrame_OnQuestGreeting(self)
             button:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, 0);
             AvailableQuestList:AddChild(button);
             
-            button:SetHeight(button:GetTextHeight() + 16);
+            button:SetHeight(QuestTextHeight(button) + 16);
 
+            questListHeight = questListHeight + button:GetHeight();
             prevButton = button;
         end
     end
 
-    AvailableQuestList:SetHeight(GetNumAvailableQuests() * 60);
+    AvailableQuestList:SetHeight(questListHeight);
 
     if AvailableQuestList:GetChildCount() == 0 then
         AvailableQuestList:Hide();
@@ -379,6 +412,7 @@ function QuestFrame_OnQuestGreeting(self)
     GossipActionList:RemoveAllChildren();
 
     prevButton = nil;
+    local gossipListHeight = 0;
     for i = 1, GetNumGossipActions() do
         local action = GetGossipAction(i - 1);
         if action then
@@ -397,13 +431,14 @@ function QuestFrame_OnQuestGreeting(self)
             button:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, 0);
             GossipActionList:AddChild(button);
 
-            button:SetHeight(button:GetTextHeight() + 16);
+            button:SetHeight(QuestTextHeight(button) + 16);
 
+            gossipListHeight = gossipListHeight + button:GetHeight();
             prevButton = button;
         end
     end
 
-    GossipActionList:SetHeight(GetNumGossipActions() * 60);
+    GossipActionList:SetHeight(gossipListHeight);
 
     if GossipActionList:GetChildCount() == 0 then
         GossipActionList:Hide();
@@ -426,18 +461,19 @@ function QuestFrame_OnQuestDetail(self)
     end
 
     -- Ensure the quest frame is visible as in every event
-	ShowUIPanel(QuestFrame);
+	if not refreshingQuestLayout then ShowUIPanel(QuestFrame); end
 
     -- Reset scroll to top
     QuestDetailPanelScrollBar:SetValue(0);
+    QuestDetailAcceptButton:SetWidth(QuestTextWidth(QuestDetailAcceptButton) + 64);
 
     QuestDetailTitle:SetText(questDetails.title);
-    QuestDetailTitle:SetHeight(QuestDetailTitle:GetTextHeight());
+    QuestDetailTitle:SetHeight(QuestTextHeight(QuestDetailTitle));
     QuestDetailDetails:SetText(questDetails.details);
-    QuestDetailDetails:SetHeight(QuestDetailDetails:GetTextHeight());
-    QuestDetailObjectivesHeader:SetHeight(QuestDetailObjectivesHeader:GetTextHeight());
+    QuestDetailDetails:SetHeight(QuestTextHeight(QuestDetailDetails));
+    QuestDetailObjectivesHeader:SetHeight(QuestTextHeight(QuestDetailObjectivesHeader));
     QuestDetailObjectives:SetText(questDetails.objectives);
-    QuestDetailObjectives:SetHeight(QuestDetailObjectives:GetTextHeight());
+    QuestDetailObjectives:SetHeight(QuestTextHeight(QuestDetailObjectives));
 
     -- Compute content height as an explicit sum of element heights and fixed gaps.
     -- Avoid GetY() which is unreliable before layout evaluation.
@@ -467,7 +503,7 @@ function QuestFrame_OnQuestDetail(self)
     if questDetails.rewardedMoney > 0 or questDetails.rewardedXp > 0 or questDetails.rewardedClassXp > 0 or hasItemRewards then
 
         QuestDetailRewards:Show();
-        QuestDetailRewards:SetHeight(QuestDetailRewards:GetTextHeight());
+        QuestDetailRewards:SetHeight(QuestTextHeight(QuestDetailRewards));
 
         -- The money label always participates in layout (the XP rows are anchored
         -- below it), so its height must be measured even when no money is rewarded.
@@ -478,12 +514,13 @@ function QuestFrame_OnQuestDetail(self)
         else
             QuestDetailRewardMoneyLabel:SetText(Localize("QUEST_REWARD_YOU_WILL_RECEIVE"));
         end
-        QuestDetailRewardMoneyLabel:SetWidth(QuestDetailRewardMoneyLabel:GetTextWidth());
-        QuestDetailRewardMoneyLabel:SetHeight(QuestDetailRewardMoneyLabel:GetTextHeight());
+        QuestDetailRewardMoneyLabel:SetWidth(QuestTextWidth(QuestDetailRewardMoneyLabel));
+        QuestDetailRewardMoneyLabel:SetHeight(QuestTextHeight(QuestDetailRewardMoneyLabel));
 
         if questDetails.rewardedMoney > 0 then
             QuestDetailRewardMoneyLabel:Show();
             RefreshMoneyFrame("QuestDetailRewardMoney", questDetails.rewardedMoney, false, false, true);
+            QuestDetailRewardMoneyLabel:SetHeight(math.max(QuestDetailRewardMoneyLabel:GetHeight(), QuestDetailRewardMoney:GetHeight()));
             QuestDetailRewardMoney:Show();
         else
             QuestDetailRewardMoneyLabel:Hide();
@@ -526,13 +563,7 @@ function QuestFrame_OnQuestDetail(self)
 
     QuestDetailScrollContent:SetHeight(contentHeight);
 
-    if QuestDetailScrollContent:GetHeight() > QuestDetailScrollClip:GetHeight() then
-        QuestDetailPanelScrollBar:SetMaximum(QuestDetailScrollContent:GetHeight() - QuestDetailScrollClip:GetHeight());
-        QuestDetailPanelScrollBar:Enable();
-    else
-        QuestDetailPanelScrollBar:SetMaximum(0);
-        QuestDetailPanelScrollBar:Disable();
-    end
+    QuestScroll_UpdateRange(QuestDetailScrollContent, QuestDetailScrollClip, QuestDetailPanelScrollBar);
 
     -- Ensure the detail panel is visible
     QuestFrame_ShowPanel(QuestFrameDetailPanel);
@@ -546,11 +577,12 @@ function QuestFrame_OnQuestRequestItems(self)
     end
 
     -- Ensure the quest frame is visible as in every event
-	ShowUIPanel(QuestFrame);
+	if not refreshingQuestLayout then ShowUIPanel(QuestFrame); end
 
     QuestRequestItemsTitle:SetText(questDetails.title);
+    QuestRequestItemsTitle:SetHeight(QuestTextHeight(QuestRequestItemsTitle));
     QuestRequestItemsText:SetText(questDetails.requestItems);
-    QuestRequestItemsText:SetHeight(QuestRequestItemsText:GetTextHeight());
+    QuestRequestItemsText:SetHeight(QuestTextHeight(QuestRequestItemsText));
     
     -- Ensure the panel is visible
     QuestFrame_ShowPanel(QuestFrameRequestItemsPanel);
@@ -591,17 +623,17 @@ function QuestFrame_OnQuestOfferRewards(self)
     end
 
     -- Ensure the quest frame is visible as in every event
-	ShowUIPanel(QuestFrame);
+	if not refreshingQuestLayout then ShowUIPanel(QuestFrame); end
 
     -- Reset scroll to top
     QuestRewardsPanelScrollBar:SetValue(0);
 
-    QuestRewardCompleteButton:SetWidth(QuestRewardCompleteButton:GetTextWidth() + 64);
+    QuestRewardCompleteButton:SetWidth(QuestTextWidth(QuestRewardCompleteButton) + 64);
 
     QuestRewardsTitle:SetText(questDetails.title);
-    QuestRewardsTitle:SetHeight(QuestRewardsTitle:GetTextHeight());
+    QuestRewardsTitle:SetHeight(QuestTextHeight(QuestRewardsTitle));
     QuestRewardsText:SetText(questDetails.offerReward);
-    QuestRewardsText:SetHeight(QuestRewardsText:GetTextHeight());
+    QuestRewardsText:SetHeight(QuestTextHeight(QuestRewardsText));
 
     local contentHeight = 32  -- title top offset
         + QuestRewardsTitle:GetHeight()
@@ -641,7 +673,7 @@ function QuestFrame_OnQuestOfferRewards(self)
     if questDetails.rewardedMoney > 0 or questDetails.rewardedXp > 0 or questDetails.rewardedClassXp > 0 or hasItemRewards then
 
         QuestOfferRewardsHeader:Show();
-        QuestOfferRewardsHeader:SetHeight(QuestOfferRewardsHeader:GetTextHeight());
+        QuestOfferRewardsHeader:SetHeight(QuestTextHeight(QuestOfferRewardsHeader));
 
         -- When the item list already printed its "You will receive:" heading, the
         -- money row uses "You will also receive:" instead of repeating it.
@@ -650,12 +682,13 @@ function QuestFrame_OnQuestOfferRewards(self)
         else
             QuestOfferRewardMoneyLabel:SetText(Localize("QUEST_REWARD_YOU_WILL_RECEIVE"));
         end
-        QuestOfferRewardMoneyLabel:SetWidth(QuestOfferRewardMoneyLabel:GetTextWidth());
-        QuestOfferRewardMoneyLabel:SetHeight(QuestOfferRewardMoneyLabel:GetTextHeight());
+        QuestOfferRewardMoneyLabel:SetWidth(QuestTextWidth(QuestOfferRewardMoneyLabel));
+        QuestOfferRewardMoneyLabel:SetHeight(QuestTextHeight(QuestOfferRewardMoneyLabel));
 
         if questDetails.rewardedMoney > 0 then
             QuestOfferRewardMoneyLabel:Show();
             RefreshMoneyFrame("QuestOfferRewardMoney", questDetails.rewardedMoney, false, false, true);
+            QuestOfferRewardMoneyLabel:SetHeight(math.max(QuestOfferRewardMoneyLabel:GetHeight(), QuestOfferRewardMoney:GetHeight()));
             QuestOfferRewardMoney:Show();
         else
             QuestOfferRewardMoneyLabel:Hide();
@@ -696,13 +729,7 @@ function QuestFrame_OnQuestOfferRewards(self)
 
     QuestRewardsScrollContent:SetHeight(contentHeight);
 
-    if QuestRewardsScrollContent:GetHeight() > QuestRewardsScrollClip:GetHeight() then
-        QuestRewardsPanelScrollBar:SetMaximum(QuestRewardsScrollContent:GetHeight() - QuestRewardsScrollClip:GetHeight());
-        QuestRewardsPanelScrollBar:Enable();
-    else
-        QuestRewardsPanelScrollBar:SetMaximum(0);
-        QuestRewardsPanelScrollBar:Disable();
-    end
+    QuestScroll_UpdateRange(QuestRewardsScrollContent, QuestRewardsScrollClip, QuestRewardsPanelScrollBar);
 
     -- Ensure the panel is visible
     QuestFrame_ShowPanel(QuestFrameRewardsPanel);
@@ -726,7 +753,7 @@ function QuestFrame_OnLoad(self)
     self:RegisterEvent("QUEST_OFFER_REWARDS", QuestFrame_OnQuestOfferRewards);
     self:RegisterEvent("QUEST_FINISHED", QuestFrame_OnQuestFinished);
 
-    QuestDetailAcceptButton:SetWidth(QuestDetailAcceptButton:GetTextWidth() + 64);
+    QuestDetailAcceptButton:SetWidth(QuestTextWidth(QuestDetailAcceptButton) + 64);
 
     -- Setup quest detail scroll bar
     QuestDetailPanelScrollBar:SetMinimum(0);
@@ -754,4 +781,38 @@ end
 
 function QuestFrame_OnShow(self)
     PlaySound("Sound/Interface/Papers_02.wav");
+end
+
+-- Reflow a dialog already on screen after changing resolution. Rebuilding the
+-- visible panel keeps wrapping, rewards and scroll bounds in the same units.
+-- Preserve the player's reward selection and scroll position during the reflow.
+local questLayoutKey = nil;
+function QuestFrame_UpdateLayout()
+    if not QuestFrame:IsVisible() then return; end
+    local scale = GetUIScale();
+    local rect = QuestFrame:GetRect();
+    local key = table.concat({scale.x, scale.y, QuestFrame:GetLayoutScale(),
+        rect.right - rect.left, rect.bottom - rect.top}, ":");
+    if key == questLayoutKey then return; end
+    questLayoutKey = key;
+
+    local choice = selectedRewardChoice;
+    local detailScroll = QuestDetailPanelScrollBar:GetValue();
+    local rewardScroll = QuestRewardsPanelScrollBar:GetValue();
+    refreshingQuestLayout = true;
+    if QuestFrameDetailPanel:IsVisible() then
+        QuestFrame_OnQuestDetail(QuestFrame);
+        QuestDetailPanelScrollBar:SetValue(math.min(detailScroll, QuestDetailPanelScrollBar:GetMaximum()));
+    elseif QuestFrameRewardsPanel:IsVisible() then
+        QuestFrame_OnQuestOfferRewards(QuestFrame);
+        if choice ~= nil and offerChoiceButtons[choice + 1] then
+            QuestOfferRewardChoice_OnClick(offerChoiceButtons[choice + 1]);
+        end
+        QuestRewardsPanelScrollBar:SetValue(math.min(rewardScroll, QuestRewardsPanelScrollBar:GetMaximum()));
+    elseif QuestFrameRequestItemsPanel:IsVisible() then
+        QuestFrame_OnQuestRequestItems(QuestFrame);
+    elseif QuestFrameGreetingPanel:IsVisible() then
+        QuestFrame_OnQuestGreeting(QuestFrame);
+    end
+    refreshingQuestLayout = false;
 end

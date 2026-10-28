@@ -410,6 +410,8 @@
 			</OnHide>
 		</Scripts>
 		<Frame name="CharacterWindowTitle" renderer="DefaultRenderer">
+			<Property name="Clickable" value="true" />
+			<Property name="Focusable" value="true" />
 			<Property name="Font" value="CharacterTitleFont" />
 			<Property name="Text" value="CHARACTER" />
 			<Visual>

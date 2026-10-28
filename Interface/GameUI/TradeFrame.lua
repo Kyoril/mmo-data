@@ -391,6 +391,10 @@ end
 
 function TradeMySlot_OnClick(button)
 	local slotIndex = button.id - 1;
+	if CursorHasPayload() and not CursorHasItem() then
+		ClearCursorItem();
+		return;
+	end
 
 	if CursorHasItem() then
 		local inventorySlot = GetCursorItemSlot();

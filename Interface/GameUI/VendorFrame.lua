@@ -21,12 +21,64 @@ local function VendorFrame_GetItemInfo(index)
     return GetVendorItemInfo(index);
 end
 
+local function VendorTextHeight(frame)
+	return frame:GetTextHeight() * GetUIScale().y / frame:GetLayoutUIScale().y;
+end
+
+local function VendorFrame_LayoutItems(numItems)
+	VendorStockLabel:SetHeight(math.max(32, VendorTextHeight(VendorStockLabel)));
+	VendorPurchaseHint:SetHeight(math.max(28, VendorTextHeight(VendorPurchaseHint)));
+	VendorPageLabel:SetHeight(math.max(39, VendorTextHeight(VendorPageLabel)));
+	VendorPageLabel:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.TOP, VendorPurchaseHint, -8);
+	local footerHeight = math.max(112, 32 + VendorPurchaseHint:GetHeight() + 8 + VendorPageLabel:GetHeight());
+	VendorFooter:SetHeight(footerHeight);
+	VendorStockSurface:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, VendorStockLabel, 12);
+	VendorStockSurface:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.BOTTOM, nil, -footerHeight - 32);
+
+	-- Measure names at the actual column width. Keep every row large enough for
+	-- its name and price, then paginate the rows that fit inside the stock surface.
+	local nameHeight = 58;
+	for i = 0, numItems - 1 do
+		local item = VendorFrame_GetItemInfo(i);
+		if item then
+			VendorText1:SetText(item.name);
+			nameHeight = math.max(nameHeight, VendorTextHeight(VendorText1));
+		end
+	end
+	local priceHeight = math.max(44, VendorTextHeight(VendorMoney1_CopperButton));
+	local rowHeight = math.max(128, 12 + nameHeight + 4 + priceHeight + 8);
+	local availableHeight = VendorStockSurface:GetHeight() / VendorStockSurface:GetLayoutUIScale().y - 24;
+	local rows = math.max(1, math.min(7, math.floor((availableHeight + 8) / (rowHeight + 8))));
+	local perPage = rows * 2;
+	if perPage ~= VENDOR_ITEMS_PER_PAGE then
+		local firstItem = ((VendorFrame.page or 1) - 1) * VENDOR_ITEMS_PER_PAGE;
+		VendorFrame.page = math.floor(firstItem / perPage) + 1;
+		VENDOR_ITEMS_PER_PAGE = perPage;
+	end
+	for i = 1, 14 do
+		local border = _G["VendorButton" .. i .. "Border"];
+		border:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, VendorStockSurface,
+			12 + math.floor((i - 1) / 2) * (rowHeight + 8));
+		border:SetHeight(rowHeight);
+		_G["VendorText" .. i]:SetHeight(nameHeight);
+	end
+end
+
+local vendorLayoutKey = nil;
+function VendorFrame_UpdateLayout()
+	if not VendorFrame:IsVisible() then return; end
+	local scale, rect = GetUIScale(), VendorFrame:GetRect();
+	local key = table.concat({scale.x, scale.y, VendorFrame:GetLayoutScale(),
+		rect.right - rect.left, rect.bottom - rect.top}, ":");
+	if key ~= vendorLayoutKey then
+		vendorLayoutKey = key;
+		VendorFrame_UpdateVendorItems();
+	end
+end
+
 function VendorFrame_UpdateVendorItems()
     local buyback = (VendorFrame.mode == VENDOR_MODE_BUYBACK);
     local numItems = VendorFrame_GetNumItems();
-
-    local pageCount = math.max(1, math.ceil(numItems / VENDOR_ITEMS_PER_PAGE));
-    VendorFrame.page = math.max(1, math.min(VendorFrame.page, pageCount));
 
     if (buyback) then
         VendorStockLabel:SetText(string.format(Localize("VENDOR_BUYBACK_COUNT"), numItems));
@@ -35,6 +87,10 @@ function VendorFrame_UpdateVendorItems()
         VendorStockLabel:SetText(string.format(Localize("VENDOR_STOCK_COUNT"), numItems));
         VendorPurchaseHint:SetText(Localize("VENDOR_PURCHASE_HINT"));
     end
+
+    VendorFrame_LayoutItems(numItems);
+    local pageCount = math.max(1, math.ceil(numItems / VENDOR_ITEMS_PER_PAGE));
+    VendorFrame.page = math.max(1, math.min(VendorFrame.page, pageCount));
 
     if VendorFrame.page * VENDOR_ITEMS_PER_PAGE < numItems then
         VendorNextPageButton:Enable();
@@ -50,7 +106,7 @@ function VendorFrame_UpdateVendorItems()
 
     VendorPageLabel:SetText(string.format(Localize("VENDOR_PAGE_FORMAT"), VendorFrame.page, pageCount));
 
-    for i = 1, VENDOR_ITEMS_PER_PAGE, 1 do
+    for i = 1, 14, 1 do
         local index = (((VendorFrame.page - 1) * VENDOR_ITEMS_PER_PAGE) + i);
         local border = _G["VendorButton" .. i .. "Border"];
         local itemText = _G["VendorText" .. i];
@@ -59,7 +115,7 @@ function VendorFrame_UpdateVendorItems()
         local money = _G["VendorMoney" .. i];
 
         local item, texture, price, quantity = nil, nil, 0, 0;
-        if (index <= numItems) then
+        if (i <= VENDOR_ITEMS_PER_PAGE and index <= numItems) then
             item, texture, price, quantity = VendorFrame_GetItemInfo(index - 1);
         end
 
@@ -200,7 +256,7 @@ function VendorFrame_OnLoad(self)
     self:RegisterEvent("VENDOR_CLOSED", VendorFrame_Close);
     self:RegisterEvent("VENDOR_BUYBACK_UPDATE", VendorFrame_BuybackUpdate);
 
-    for i = 1, VENDOR_ITEMS_PER_PAGE, 1 do
+    for i = 1, 14, 1 do
         local button = _G["VendorButton" .. i];
         button:SetClickedHandler(VendorButton_OnClick);
         button:SetOnEnterHandler(VendorButton_OnEnter);

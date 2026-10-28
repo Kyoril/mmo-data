@@ -3,14 +3,20 @@
 	<Script file="FadingFrame.lua" />
 	<Script file="GameParent.lua" />
 	
-	<Frame name="GameParent" parent="TopGameFrame" setAllPoints="true">
+	<Frame name="GameParent" parent="TopFrame" setAllPoints="true">
 		<Property name="Font" value="DefaultSmall" />
 
 		<!-- The world viewport is always the backdrop of the game UI. The explicit frame level
 		     keeps it below every sibling, including HUD overlays that use a negative level to
 		     stay underneath the game windows. -->
 		<Frame name="WorldFrame" type="World" renderer="WorldRenderer" setAllPoints="true" frameLevel="-1000">
+			<Property name="DropEnabled" value="true" />
 			<Scripts>
+				<OnDrop>
+					return function(this, button, position)
+						HandleInvalidItemDrop();
+					end
+				</OnDrop>
 				<OnMouseDown>
 					return function(this, button)
 						return WorldFrame_OnMouseDown(this, button);
@@ -107,6 +113,11 @@
 					GameParent_OnLoad(this);
 				end
 			</OnLoad>
+			<OnUpdate>
+				return function(this, elapsed)
+					GameParent_UpdateWindowLayout();
+				end
+			</OnUpdate>
 		</Scripts>
 	</Frame>
 </UiLayout>
