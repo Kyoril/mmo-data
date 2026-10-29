@@ -423,7 +423,7 @@ function ChatFrame_OnInstanceResetResult(self, result, mapName)
     end
 end
 
-function ChatFrame_OnPlayerLevelUp(self, newLevel, health, mana, stamina, strength, agility, intellect, spirit, tp, ap)
+function ChatFrame_OnPlayerLevelUp(self, newLevel, health, mana, tp, ap)
     PlaySoundEntry(SOUND_UI_LEVEL_UP);
 
     -- Add level up notification
@@ -437,20 +437,14 @@ function ChatFrame_OnPlayerLevelUp(self, newLevel, health, mana, stamina, streng
         ChatFrame:AddMessage(string.format(Localize("LEVEL_UP_MANA"), mana), 1.0, 1.0, 0.0);
     end
 
-    if strength ~= 0 then
-        ChatFrame:AddMessage(string.format(Localize("LEVEL_UP_STRENGTH"), strength), 1.0, 1.0, 0.0);
-    end
-    if stamina ~= 0 then
-        ChatFrame:AddMessage(string.format(Localize("LEVEL_UP_STAMINA"), stamina), 1.0, 1.0, 0.0);
-    end
-    if intellect ~= 0 then
-        ChatFrame:AddMessage(string.format(Localize("LEVEL_UP_INTELLECT"), intellect), 1.0, 1.0, 0.0);
-    end
-    if agility ~= 0 then
-        ChatFrame:AddMessage(string.format(Localize("LEVEL_UP_AGILITY"), agility), 1.0, 1.0, 0.0);
-    end
-    if spirit ~= 0 then
-        ChatFrame:AddMessage(string.format(Localize("LEVEL_UP_SPIRIT"), spirit), 1.0, 1.0, 0.0);
+    -- Attributes come from the game data, each with its own level up line
+    for index = 0, GetNumAttributes() - 1 do
+        local attributeId = GetAttributeInfo(index);
+        local gain = GetLevelUpAttributeGain(attributeId);
+        local text = GetAttributeLevelUpText(attributeId);
+        if gain ~= 0 and text ~= "" then
+            ChatFrame:AddMessage(string.format(text, gain), 1.0, 1.0, 0.0);
+        end
     end
 
     if tp ~= 0 then

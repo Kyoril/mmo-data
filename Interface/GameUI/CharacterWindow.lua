@@ -107,13 +107,14 @@ function CharacterWindow_OnLoad(self)
         table.insert(self.statTooltips, { frame = frame, onEnter = onEnter });
     end
 
-    for i = 0, 4 do
-        local function onEnter(frame)
-            CharacterWindow_StatLabel_OnEnter(frame, frame.id);
-        end
-        bindTooltip(_G["CharacterStatLabel" .. i], onEnter);
-        bindTooltip(_G["CharacterStat" .. i], onEnter);
-        bindTooltip(_G["CharacterStatAdd" .. i], CharacterWindow_AddAttributeButton_OnEnter);
+    CharacterWindow_CreateAttributeRows();
+    local function onAttributeEnter(frame)
+        CharacterWindow_StatLabel_OnEnter(frame, frame.id);
+    end
+    for _, row in ipairs(attributeRows) do
+        bindTooltip(row.label, onAttributeEnter);
+        bindTooltip(row.value, onAttributeEnter);
+        bindTooltip(row.add, CharacterWindow_AddAttributeButton_OnEnter);
     end
 
     local secondaryStats = {
@@ -154,9 +155,77 @@ end
 -- in CharacterWindow.xml so one wheel notch scrolls by exactly one row.
 CHARACTER_STAT_ROW_STEP = 56;
 
--- Matches the content frame height declared in CharacterWindow.xml. The scroll range is the
--- part of it that does not fit into the clipping frame.
-CHARACTER_STAT_CONTENT_HEIGHT = 996;
+-- Offset of the first attribute row inside CharacterWindowPrimaryStatsFrame (below its header).
+local CHARACTER_ATTRIBUTE_ROWS_TOP = 48;
+
+-- Layout of CharacterWindow.xml, which is authored for five attribute rows: the primary stats
+-- frame height and the top offsets of the sections below it. CharacterWindow_CreateAttributeRows
+-- moves those sections by however much taller or shorter the attribute list really is.
+local CHARACTER_XML_ATTRIBUTE_COUNT = 5;
+local CHARACTER_XML_PRIMARY_HEIGHT = 328;
+local CHARACTER_XML_SECONDARY_TOP = 388;
+local CHARACTER_XML_CASTER_TOP = 724;
+local CHARACTER_XML_CONTENT_HEIGHT = 996;
+
+-- Height of the content frame. The scroll range is the part of it that does not fit into the
+-- clipping frame. Updated by CharacterWindow_CreateAttributeRows.
+CHARACTER_STAT_CONTENT_HEIGHT = CHARACTER_XML_CONTENT_HEIGHT;
+
+-- One entry per attribute row: { id = attribute id, label = frame, value = frame, add = button },
+-- in display order. Kept file-local, frames do not keep custom Lua fields between handler calls.
+attributeRows = {};
+
+-- Creates a label, value and "+" button row for every attribute defined by the game data and
+-- makes room for them by moving the sections below the attribute list.
+function CharacterWindow_CreateAttributeRows()
+    local count = GetNumAttributes();
+    for index = 0, count - 1 do
+        local id = GetAttributeInfo(index);
+        local top = CHARACTER_ATTRIBUTE_ROWS_TOP + index * CHARACTER_STAT_ROW_STEP;
+
+        local label = CharacterStatLabelTemplate:Clone();
+        CharacterWindowPrimaryStatsFrame:AddChild(label);
+        label.id = id;
+        label:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, top);
+        label:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, 16);
+        label:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, -160);
+
+        local value = CharacterStatValueTemplate:Clone();
+        CharacterWindowPrimaryStatsFrame:AddChild(value);
+        value.id = id;
+        value:SetText("0");
+        value:SetWidth(76);
+        value:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, top);
+        value:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, -72);
+
+        local add = CharacterAttributeButtonTemplate:Clone();
+        CharacterWindowPrimaryStatsFrame:AddChild(add);
+        add.id = id;
+        add:SetText("+");
+        add:SetSize(44, 44);
+        add:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, top);
+        add:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, -16);
+        add:SetClickedHandler(CharacterWindow_AddAttributeClicked);
+
+        table.insert(attributeRows, { id = id, label = label, value = value, add = add });
+    end
+
+    CharacterWindow_RefreshAttributeNames();
+
+    local delta = (count - CHARACTER_XML_ATTRIBUTE_COUNT) * CHARACTER_STAT_ROW_STEP;
+    CharacterWindowPrimaryStatsFrame:SetHeight(CHARACTER_XML_PRIMARY_HEIGHT + delta);
+    CharacterWindowSecondaryStatsFrame:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, CHARACTER_XML_SECONDARY_TOP + delta);
+    CharacterWindowCasterStatsFrame:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, CHARACTER_XML_CASTER_TOP + delta);
+    CHARACTER_STAT_CONTENT_HEIGHT = CHARACTER_XML_CONTENT_HEIGHT + delta;
+    CharacterAttributesContent:SetHeight(CHARACTER_STAT_CONTENT_HEIGHT);
+end
+
+-- Writes the (localized) attribute names into the attribute rows.
+function CharacterWindow_RefreshAttributeNames()
+    for _, row in ipairs(attributeRows) do
+        row.label:SetText(GetAttributeName(row.id));
+    end
+end
 
 function CharacterWindow_UpdateScrollRange()
     CharacterAttributesScrollBar:SetValue(0);
@@ -236,9 +305,6 @@ function CharacterWindow_DamageLabel_OnEnter(self)
     GameTooltip:Show();
 end
 
--- Localization keys of the five primary attributes, indexed by stat id + 1.
-local CHARACTER_ATTRIBUTE_KEYS = { "STAMINA", "STRENGTH", "AGILITY", "INTELLECT", "SPIRIT" };
-
 -- Opens the shared game tooltip below a combat stat row.
 -- @param self The hovered stat label or value frame the tooltip is anchored to.
 -- @param titleKey Localization key of the stat name shown as the tooltip header.
@@ -260,10 +326,11 @@ end
 -- Builds one "<amount> from <attribute>" line per attribute that contributes to a stat, so the
 -- tooltip names where the value actually comes from.
 local function CharacterWindow_AttributeSourceLines(lines, unit, getAmount)
-    for statId = 0, 4 do
+    for index = 0, GetNumAttributes() - 1 do
+        local statId, name = GetAttributeInfo(index);
         local amount = getAmount(unit, statId);
         if amount and amount > 0 then
-            table.insert(lines, string.format(Localize("CHARACTER_STAT_FROM_ATTRIBUTE"), amount, Localize(CHARACTER_ATTRIBUTE_KEYS[statId + 1])));
+            table.insert(lines, string.format(Localize("CHARACTER_STAT_FROM_ATTRIBUTE"), amount, name));
         end
     end
 end
@@ -361,28 +428,34 @@ function CharacterWindow_StatLabel_OnEnter(self, statId)
     GameTooltip:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, self, 0);
     GameTooltip:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, self, 0);
 
-    local statNames = {"STAMINA", "STRENGTH", "AGILITY", "INTELLECT", "SPIRIT"};
-    local statName = statNames[statId + 1];
-    
+    local statName, description;
+    for index = 0, GetNumAttributes() - 1 do
+        local id, name, desc = GetAttributeInfo(index);
+        if id == statId then
+            statName, description = name, desc;
+        end
+    end
+
     if not statName then
         return;
     end
 
     -- Add stat name as header
-    GameTooltip_AddLine(Localize(statName), TOOLTIP_LINE_LEFT, "FFFFD100");
+    GameTooltip_AddLine(statName, TOOLTIP_LINE_LEFT, "FFFFD100");
 
     -- Gather increments from stats
     local healthIncrease = unit:GetHealthFromStat(statId);
     local manaIncrease = unit:GetManaFromStat(statId);
     local attackPowerIncrease = unit:GetAttackPowerFromStat(statId);
 
-    -- Class-specific descriptions based on stat type
-    if statId == 4 then -- Spirit
-        GameTooltip_AddLine(Localize("SPIRIT_DESCRIPTION"), TOOLTIP_LINE_LEFT, "FFFFD100");
+    -- Attributes whose effect is not one of the bonuses below explain themselves in the game data
+    local hasDescription = description ~= nil and description ~= "";
+    if hasDescription then
+        GameTooltip_AddLine(description, TOOLTIP_LINE_LEFT, "FFFFD100");
     end
 
     -- Some class/stat combinations have no derived bonus. Still explain the stat.
-    if statId ~= 4 and healthIncrease <= 0 and manaIncrease <= 0 and attackPowerIncrease <= 0 then
+    if not hasDescription and healthIncrease <= 0 and manaIncrease <= 0 and attackPowerIncrease <= 0 then
         GameTooltip_AddLine(Localize("CHARACTER_STAT_NO_BONUS"), TOOLTIP_LINE_LEFT, "FFFFFFFF");
     end
 
@@ -651,12 +724,12 @@ function CharacterWindow_RefreshStats()
     local player = GetUnit("player");
     local attributePointsAvailable = player:GetAvailableAttributePoints();
 
-    for attribute = 0, 4 do
-        local attributeCost = UnitAttributeCost("player", attribute);
+    for _, row in ipairs(attributeRows) do
+        local attributeCost = UnitAttributeCost("player", row.id);
         if (attributeCost > attributePointsAvailable) then
-            _G["CharacterStatAdd" .. attribute]:Disable();
+            row.add:Disable();
         else
-            _G["CharacterStatAdd" .. attribute]:Enable();
+            row.add:Enable();
         end
     end
 
@@ -668,11 +741,10 @@ function CharacterWindow_RefreshStats()
     CharacterWindowAttributePointsLabel:SetProperty("TextColor", hasUnspentPoints and "FFF3CF50" or "FF99958C");
     CharacterWindowAttributePointsLabel:SetProperty("GlowTint", hasUnspentPoints and "FFFFD100" or "00000000");
 
-    for i = 0, 4 do
-        local base, modifier = UnitStat("player", i);
+    for _, row in ipairs(attributeRows) do
+        local base, modifier = UnitStat("player", row.id);
 
-        local statName = "CharacterStat" .. i;
-        local statValue = _G[statName];
+        local statValue = row.value;
         if (statValue ~= nil) then
             statValue:SetText(tostring(base + modifier));
 

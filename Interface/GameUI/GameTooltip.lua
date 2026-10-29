@@ -55,6 +55,29 @@ local function ClearTooltip()
     end
 end
 
+-- Adds one "+<value> <stat>" line per stat of an item (an ItemInfo or an ItemHandle). Attribute
+-- stats are named by the game data's attributes, all other stats by their localization key.
+function GameTooltip_AddItemStatLines(item)
+    for i = 0, 9 do
+        local statName = nil;
+        local attribute = item:GetStatAttribute(i);
+        if attribute >= 0 then
+            statName = GetAttributeName(attribute);
+        else
+            local statType = item:GetStatType(i);
+            if not statType then
+                break;
+            end
+            statName = Localize(statType);
+        end
+
+        -- An attribute that no longer exists has no name and is skipped
+        if statName ~= "" then
+            GameTooltip_AddLine(string.format("+%d %s", item:GetStatValue(i), statName), TOOLTIP_LINE_LEFT, "FF00FF00");
+        end
+    end
+end
+
 function GameTooltip_Clear()
     ClearTooltip();
 end
@@ -358,15 +381,7 @@ local function AppendItemTemplateLines(item, embedded)
         GameTooltip_AddLine(string.format(Localize("DURABILITY_VALUE"), durability, maxDurability) , TOOLTIP_LINE_LEFT);
     end
 
-    for i = 0, 9 do
-        local statType = item:GetStatType(i);
-        if statType then
-            local statValue = item:GetStatValue(i);
-            GameTooltip_AddLine(string.format("+%d %s", statValue, Localize(statType)), TOOLTIP_LINE_LEFT, "FF00FF00");
-        else
-            break;
-        end
-    end
+    GameTooltip_AddItemStatLines(item);
     
     for i = 0, 4 do
         local itemSpellId = item:GetSpellId(i);
@@ -503,15 +518,7 @@ local function FillItemTooltip(item, header)
         GameTooltip_AddLine(string.format(Localize("DURABILITY_VALUE"), durability, maxDurability) , TOOLTIP_LINE_LEFT);
     end
 
-    for i = 0, 9 do
-        local statType = item:GetStatType(i);
-        if statType then
-            local statValue = item:GetStatValue(i);
-            GameTooltip_AddLine(string.format("+%d %s", statValue, Localize(statType)), TOOLTIP_LINE_LEFT, "FF00FF00");
-        else
-            break;
-        end
-    end
+    GameTooltip_AddItemStatLines(item);
 
     for i = 0, 4 do
         local itemSpell = item:GetSpell(i);
