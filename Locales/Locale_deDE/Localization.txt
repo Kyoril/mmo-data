@@ -653,6 +653,7 @@ strings =
 	(key = "FRIEND_CANNOT_ADD_SELF", string = "Ihr könnt Euch nicht selbst als Freund hinzufügen.")
 	(key = "FRIEND_INVITE_PENDING", string = "%s hat bereits eine ausstehende Freundschaftseinladung.")
 	(key = "FRIEND_NOT_FRIENDS", string = "Ihr seid nicht mit %s befreundet.")
+	(key = "FRIEND_DISABLED", string = "Die Freundesliste ist derzeit nicht verfügbar.")
 	(key = "FRIEND_ONLINE", string = "Online")
 	(key = "FRIEND_OFFLINE", string = "Offline")
 	(key = "FRIEND_LIST_EMPTY", string = "Ihr habt noch keine Freunde hinzugefügt.")

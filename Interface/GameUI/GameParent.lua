@@ -111,6 +111,9 @@ function GameParent_OnFriendCommandResult(gameParent, result, playerName)
 	elseif result == 7 then
 		-- Not friends
 		ChatFrame:AddMessage(string.format(Localize("FRIEND_NOT_FRIENDS"), playerName), info.r, info.g, info.b);
+	elseif result == 8 then
+		-- The friend list is switched off on the server
+		ChatFrame:AddMessage(Localize("FRIEND_DISABLED"), info.r, info.g, info.b);
 	end
 end
 

@@ -7,6 +7,10 @@ FRIEND_COMMAND_RESULTS[4] = "FRIEND_NOT_FOUND"
 FRIEND_COMMAND_RESULTS[5] = "FRIEND_SELF"
 FRIEND_COMMAND_RESULTS[6] = "FRIEND_INVITE_PENDING"
 FRIEND_COMMAND_RESULTS[7] = "FRIEND_NOT_FRIENDS"
+FRIEND_COMMAND_RESULTS[8] = "FRIEND_DISABLED"
+
+-- Server subsystem that switches the friend list on and off.
+local FRIENDS_SUBSYSTEM = "FRIENDS";
 
 local FRIEND_LIST_MAX_DISPLAY = 12
 local FRIEND_LIST_OFFSET = 0
@@ -45,6 +49,13 @@ function FriendsList_OnStatusChange(self, friendName, online)
     FriendsList_Update();
 end
 
+-- The server switched the friend list off: close the panel, its contents can no longer change.
+local function FriendsFrame_OnSubsystemStatusChanged(self, name, available)
+    if name == FRIENDS_SUBSYSTEM and not available and FriendsFrame:IsVisible() then
+        HideUIPanel(FriendsFrame);
+    end
+end
+
 function FriendsFrame_OnLoad(self)
     SidePanel_OnLoad(self);
 
@@ -53,6 +64,7 @@ function FriendsFrame_OnLoad(self)
     self:RegisterEvent("FRIEND_INVITE", FriendsFrame_OnInvite);
     self:RegisterEvent("FRIEND_LIST_UPDATE", FriendsList_Update);
     self:RegisterEvent("FRIEND_STATUS_CHANGE", FriendsList_OnStatusChange);
+    self:RegisterEvent("SUBSYSTEM_STATUS_CHANGED", FriendsFrame_OnSubsystemStatusChanged);
 
     local scrollBar = FriendListScrollBar;
     scrollBar:SetMinimum(0);
@@ -271,6 +283,9 @@ end
 function FriendsFrame_Toggle()
     if FriendsFrame:IsVisible() then
         HideUIPanel(FriendsFrame);
+    elseif not IsSubsystemAvailable(FRIENDS_SUBSYSTEM) then
+        local info = ChatTypeInfo["SYSTEM"];
+        ChatFrame:AddMessage(Localize("FRIEND_DISABLED"), info.r, info.g, info.b);
     else
         ShowUIPanel(FriendsFrame);
     end
