@@ -810,6 +810,7 @@ strings =
 	(key = "SPELL_CAST_FAILED_LEVEL_REQUIREMENT", string = "Your level is too low.")
 	(key = "SPELL_CAST_FAILED_MOVING", string = "You are moving.")
 	(key = "SPELL_CAST_FAILED_NOT_KNOWN", string = "You don't know that spell.")
+	(key = "SPELL_CAST_FAILED_PASSIVE", string = "That ability is passive.")
 	(key = "SPELL_CAST_FAILED_NOT_READY", string = "Spell is not ready yet.")
 	(key = "SPELL_CAST_FAILED_NO_POWER", string = "Not enough mana.")
 	(key = "SPELL_CAST_FAILED_NO_POWER_MANA", string = "Not enough mana.")
@@ -1268,6 +1269,11 @@ strings =
 	(key = "BINDING_TARGETSELF", string = "Target Self")
 	(key = "BINDING_TARGETNEARESTENEMY", string = "Target Nearest Enemy")
 
+	(key = "BOT_STARTED", string = "Bot started.")
+	(key = "BOT_STOPPED", string = "Bot stopped.")
+	(key = "BOT_API_DISABLED", string = "Bot API is disabled. Enter 'set botApiEnabled 1' in the console.")
+	(key = "BOT_NO_NAVMESH", string = "Bot: no navmesh for this map.")
+	(key = "BOT_STATUS", string = "Bot state: %s, movement: %s")
 	// Minimap compass directions
 	(key = "MINIMAP_COMPASS_NORTH", string = "N")
 	(key = "MINIMAP_COMPASS_EAST", string = "E")

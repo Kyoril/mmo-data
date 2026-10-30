@@ -846,6 +846,7 @@ strings =
 	(key = "ATTACK_SWING_NOT_STANDING", string = "Ihr müsst stehen, um angreifen zu können.")
 	(key = "ATTACK_SWING_OUT_OF_RANGE", string = "Euer Ziel ist außer Reichweite.")
 
+	(key = "SPELL_CAST_FAILED_PASSIVE", string = "Diese Fähigkeit ist passiv.")
 	(key = "SPELL_CAST_FAILED_NO_POWER", string = "Nicht genug Mana.")
 	(key = "SPELL_CAST_FAILED_NO_POWER_MANA", string = "Nicht genug Mana.")
 	(key = "SPELL_CAST_FAILED_NO_POWER_RAGE", string = "Nicht genug Wut.")
@@ -1241,6 +1242,11 @@ strings =
 	(key = "BINDING_TARGETSELF", string = "Sich selbst anvisieren")
 	(key = "BINDING_TARGETNEARESTENEMY", string = "Nächsten Feind anvisieren")
 
+	(key = "BOT_STARTED", string = "Bot started.")
+	(key = "BOT_STOPPED", string = "Bot stopped.")
+	(key = "BOT_API_DISABLED", string = "Bot API is disabled. Enter 'set botApiEnabled 1' in the console.")
+	(key = "BOT_NO_NAVMESH", string = "Bot: no navmesh for this map.")
+	(key = "BOT_STATUS", string = "Bot state: %s, movement: %s")
 	// Minimap compass directions
 	(key = "MINIMAP_COMPASS_NORTH", string = "N")
 	(key = "MINIMAP_COMPASS_EAST", string = "O")
