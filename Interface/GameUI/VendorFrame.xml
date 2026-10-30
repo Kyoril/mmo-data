@@ -2,7 +2,6 @@
 <UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
 	<Script file="VendorFrame.lua" />
 	<Font name="VendorItemFont" file="Fonts/FRIZQT__.TTF" size="24" outline="1" />
-	<Font name="VendorItemNameFont" file="Fonts/FRIZQT__.TTF" size="20" outline="1" />
 	<Frame name="VendorItemIconTemplate" type="Button" renderer="ButtonRenderer">
 		<Property name="Icon" />
 		<Property name="QualityColor" value="FFFFFFFF" />
@@ -214,19 +213,24 @@
 					<Anchor point="TOP" offset="8" />
 				</Area>
 			</Frame>
+			<!--
+				The item name of a card must never word-wrap: a second line would be drawn over
+				the price row below it, because a text component does not clip to its frame. The
+				name is shortened with a trailing ellipsis instead (see VendorFrame.lua).
+			-->
 			<Frame name="VendorText1" renderer="DefaultRenderer" id="1">
-				<Property name="Font" value="VendorItemNameFont" />
+				<Property name="Font" value="VendorItemFont" />
 				<Area>
-					<Anchor point="TOP" relativeTo="VendorButton1" offset="0" />
+					<Anchor point="TOP" relativeTo="VendorButton1" offset="4" />
 					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="VendorButton1" offset="8" />
 					<Anchor point="RIGHT" offset="-12" />
 					<Size>
-						<AbsDimension x="0" y="68" />
+						<AbsDimension x="0" y="58" />
 					</Size>
 				</Area>
 				<Visual>
 					<ImagerySection name="Text">
-						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
+						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" wrap="false" />
 					</ImagerySection>
 					<StateImagery name="Enabled">
 						<Layer>
@@ -260,18 +264,18 @@
 				</Area>
 			</Frame>
 			<Frame name="VendorText2" renderer="DefaultRenderer" id="2">
-				<Property name="Font" value="VendorItemNameFont" />
+				<Property name="Font" value="VendorItemFont" />
 				<Area>
-					<Anchor point="TOP" relativeTo="VendorButton2" offset="0" />
+					<Anchor point="TOP" relativeTo="VendorButton2" offset="4" />
 					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="VendorButton2" offset="8" />
 					<Anchor point="RIGHT" offset="-12" />
 					<Size>
-						<AbsDimension x="0" y="68" />
+						<AbsDimension x="0" y="58" />
 					</Size>
 				</Area>
 				<Visual>
 					<ImagerySection name="Text">
-						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
+						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" wrap="false" />
 					</ImagerySection>
 					<StateImagery name="Enabled">
 						<Layer>
@@ -305,18 +309,18 @@
 				</Area>
 			</Frame>
 			<Frame name="VendorText3" renderer="DefaultRenderer" id="3">
-				<Property name="Font" value="VendorItemNameFont" />
+				<Property name="Font" value="VendorItemFont" />
 				<Area>
-					<Anchor point="TOP" relativeTo="VendorButton3" offset="0" />
+					<Anchor point="TOP" relativeTo="VendorButton3" offset="4" />
 					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="VendorButton3" offset="8" />
 					<Anchor point="RIGHT" offset="-12" />
 					<Size>
-						<AbsDimension x="0" y="68" />
+						<AbsDimension x="0" y="58" />
 					</Size>
 				</Area>
 				<Visual>
 					<ImagerySection name="Text">
-						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
+						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" wrap="false" />
 					</ImagerySection>
 					<StateImagery name="Enabled">
 						<Layer>
@@ -350,18 +354,18 @@
 				</Area>
 			</Frame>
 			<Frame name="VendorText4" renderer="DefaultRenderer" id="4">
-				<Property name="Font" value="VendorItemNameFont" />
+				<Property name="Font" value="VendorItemFont" />
 				<Area>
-					<Anchor point="TOP" relativeTo="VendorButton4" offset="0" />
+					<Anchor point="TOP" relativeTo="VendorButton4" offset="4" />
 					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="VendorButton4" offset="8" />
 					<Anchor point="RIGHT" offset="-12" />
 					<Size>
-						<AbsDimension x="0" y="68" />
+						<AbsDimension x="0" y="58" />
 					</Size>
 				</Area>
 				<Visual>
 					<ImagerySection name="Text">
-						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
+						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" wrap="false" />
 					</ImagerySection>
 					<StateImagery name="Enabled">
 						<Layer>
@@ -395,18 +399,18 @@
 				</Area>
 			</Frame>
 			<Frame name="VendorText5" renderer="DefaultRenderer" id="5">
-				<Property name="Font" value="VendorItemNameFont" />
+				<Property name="Font" value="VendorItemFont" />
 				<Area>
-					<Anchor point="TOP" relativeTo="VendorButton5" offset="0" />
+					<Anchor point="TOP" relativeTo="VendorButton5" offset="4" />
 					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="VendorButton5" offset="8" />
 					<Anchor point="RIGHT" offset="-12" />
 					<Size>
-						<AbsDimension x="0" y="68" />
+						<AbsDimension x="0" y="58" />
 					</Size>
 				</Area>
 				<Visual>
 					<ImagerySection name="Text">
-						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
+						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" wrap="false" />
 					</ImagerySection>
 					<StateImagery name="Enabled">
 						<Layer>
@@ -440,18 +444,18 @@
 				</Area>
 			</Frame>
 			<Frame name="VendorText6" renderer="DefaultRenderer" id="6">
-				<Property name="Font" value="VendorItemNameFont" />
+				<Property name="Font" value="VendorItemFont" />
 				<Area>
-					<Anchor point="TOP" relativeTo="VendorButton6" offset="0" />
+					<Anchor point="TOP" relativeTo="VendorButton6" offset="4" />
 					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="VendorButton6" offset="8" />
 					<Anchor point="RIGHT" offset="-12" />
 					<Size>
-						<AbsDimension x="0" y="68" />
+						<AbsDimension x="0" y="58" />
 					</Size>
 				</Area>
 				<Visual>
 					<ImagerySection name="Text">
-						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
+						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" wrap="false" />
 					</ImagerySection>
 					<StateImagery name="Enabled">
 						<Layer>
@@ -485,18 +489,18 @@
 				</Area>
 			</Frame>
 			<Frame name="VendorText7" renderer="DefaultRenderer" id="7">
-				<Property name="Font" value="VendorItemNameFont" />
+				<Property name="Font" value="VendorItemFont" />
 				<Area>
-					<Anchor point="TOP" relativeTo="VendorButton7" offset="0" />
+					<Anchor point="TOP" relativeTo="VendorButton7" offset="4" />
 					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="VendorButton7" offset="8" />
 					<Anchor point="RIGHT" offset="-12" />
 					<Size>
-						<AbsDimension x="0" y="68" />
+						<AbsDimension x="0" y="58" />
 					</Size>
 				</Area>
 				<Visual>
 					<ImagerySection name="Text">
-						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
+						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" wrap="false" />
 					</ImagerySection>
 					<StateImagery name="Enabled">
 						<Layer>
@@ -530,18 +534,18 @@
 				</Area>
 			</Frame>
 			<Frame name="VendorText8" renderer="DefaultRenderer" id="8">
-				<Property name="Font" value="VendorItemNameFont" />
+				<Property name="Font" value="VendorItemFont" />
 				<Area>
-					<Anchor point="TOP" relativeTo="VendorButton8" offset="0" />
+					<Anchor point="TOP" relativeTo="VendorButton8" offset="4" />
 					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="VendorButton8" offset="8" />
 					<Anchor point="RIGHT" offset="-12" />
 					<Size>
-						<AbsDimension x="0" y="68" />
+						<AbsDimension x="0" y="58" />
 					</Size>
 				</Area>
 				<Visual>
 					<ImagerySection name="Text">
-						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
+						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" wrap="false" />
 					</ImagerySection>
 					<StateImagery name="Enabled">
 						<Layer>
@@ -575,18 +579,18 @@
 				</Area>
 			</Frame>
 			<Frame name="VendorText9" renderer="DefaultRenderer" id="9">
-				<Property name="Font" value="VendorItemNameFont" />
+				<Property name="Font" value="VendorItemFont" />
 				<Area>
-					<Anchor point="TOP" relativeTo="VendorButton9" offset="0" />
+					<Anchor point="TOP" relativeTo="VendorButton9" offset="4" />
 					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="VendorButton9" offset="8" />
 					<Anchor point="RIGHT" offset="-12" />
 					<Size>
-						<AbsDimension x="0" y="68" />
+						<AbsDimension x="0" y="58" />
 					</Size>
 				</Area>
 				<Visual>
 					<ImagerySection name="Text">
-						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
+						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" wrap="false" />
 					</ImagerySection>
 					<StateImagery name="Enabled">
 						<Layer>
@@ -620,18 +624,18 @@
 				</Area>
 			</Frame>
 			<Frame name="VendorText10" renderer="DefaultRenderer" id="10">
-				<Property name="Font" value="VendorItemNameFont" />
+				<Property name="Font" value="VendorItemFont" />
 				<Area>
-					<Anchor point="TOP" relativeTo="VendorButton10" offset="0" />
+					<Anchor point="TOP" relativeTo="VendorButton10" offset="4" />
 					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="VendorButton10" offset="8" />
 					<Anchor point="RIGHT" offset="-12" />
 					<Size>
-						<AbsDimension x="0" y="68" />
+						<AbsDimension x="0" y="58" />
 					</Size>
 				</Area>
 				<Visual>
 					<ImagerySection name="Text">
-						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
+						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" wrap="false" />
 					</ImagerySection>
 					<StateImagery name="Enabled">
 						<Layer>
@@ -665,18 +669,18 @@
 				</Area>
 			</Frame>
 			<Frame name="VendorText11" renderer="DefaultRenderer" id="11">
-				<Property name="Font" value="VendorItemNameFont" />
+				<Property name="Font" value="VendorItemFont" />
 				<Area>
-					<Anchor point="TOP" relativeTo="VendorButton11" offset="0" />
+					<Anchor point="TOP" relativeTo="VendorButton11" offset="4" />
 					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="VendorButton11" offset="8" />
 					<Anchor point="RIGHT" offset="-12" />
 					<Size>
-						<AbsDimension x="0" y="68" />
+						<AbsDimension x="0" y="58" />
 					</Size>
 				</Area>
 				<Visual>
 					<ImagerySection name="Text">
-						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
+						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" wrap="false" />
 					</ImagerySection>
 					<StateImagery name="Enabled">
 						<Layer>
@@ -710,18 +714,18 @@
 				</Area>
 			</Frame>
 			<Frame name="VendorText12" renderer="DefaultRenderer" id="12">
-				<Property name="Font" value="VendorItemNameFont" />
+				<Property name="Font" value="VendorItemFont" />
 				<Area>
-					<Anchor point="TOP" relativeTo="VendorButton12" offset="0" />
+					<Anchor point="TOP" relativeTo="VendorButton12" offset="4" />
 					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="VendorButton12" offset="8" />
 					<Anchor point="RIGHT" offset="-12" />
 					<Size>
-						<AbsDimension x="0" y="68" />
+						<AbsDimension x="0" y="58" />
 					</Size>
 				</Area>
 				<Visual>
 					<ImagerySection name="Text">
-						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
+						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" wrap="false" />
 					</ImagerySection>
 					<StateImagery name="Enabled">
 						<Layer>
@@ -755,18 +759,18 @@
 				</Area>
 			</Frame>
 			<Frame name="VendorText13" renderer="DefaultRenderer" id="13">
-				<Property name="Font" value="VendorItemNameFont" />
+				<Property name="Font" value="VendorItemFont" />
 				<Area>
-					<Anchor point="TOP" relativeTo="VendorButton13" offset="0" />
+					<Anchor point="TOP" relativeTo="VendorButton13" offset="4" />
 					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="VendorButton13" offset="8" />
 					<Anchor point="RIGHT" offset="-12" />
 					<Size>
-						<AbsDimension x="0" y="68" />
+						<AbsDimension x="0" y="58" />
 					</Size>
 				</Area>
 				<Visual>
 					<ImagerySection name="Text">
-						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
+						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" wrap="false" />
 					</ImagerySection>
 					<StateImagery name="Enabled">
 						<Layer>
@@ -800,18 +804,18 @@
 				</Area>
 			</Frame>
 			<Frame name="VendorText14" renderer="DefaultRenderer" id="14">
-				<Property name="Font" value="VendorItemNameFont" />
+				<Property name="Font" value="VendorItemFont" />
 				<Area>
-					<Anchor point="TOP" relativeTo="VendorButton14" offset="0" />
+					<Anchor point="TOP" relativeTo="VendorButton14" offset="4" />
 					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="VendorButton14" offset="8" />
 					<Anchor point="RIGHT" offset="-12" />
 					<Size>
-						<AbsDimension x="0" y="68" />
+						<AbsDimension x="0" y="58" />
 					</Size>
 				</Area>
 				<Visual>
 					<ImagerySection name="Text">
-						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
+						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" wrap="false" />
 					</ImagerySection>
 					<StateImagery name="Enabled">
 						<Layer>

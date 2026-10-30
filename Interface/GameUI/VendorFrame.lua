@@ -66,7 +66,9 @@ function VendorFrame_UpdateVendorItems()
         -- A buyback entry whose item data has not arrived yet renders as an empty card and fills
         -- in once the item query comes back.
         if (item) then
-            itemText:SetText(item.name);
+            -- Shortened with an ellipsis when it does not fit: the card has room for a
+            -- single line of name above its price row (see VendorFrame.xml).
+            itemText:SetTruncatedText(item.name);
             button:SetProperty("Icon", texture);
             button.id = index - 1;
             if (quantity > 1) then
