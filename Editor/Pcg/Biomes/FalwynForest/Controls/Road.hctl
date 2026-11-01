@@ -1,0 +1,28 @@
+{
+  "defaultTags": [
+    "exclusion",
+    "road"
+  ],
+  "groups": [
+    {
+      "name": "Road",
+      "properties": [
+        {
+          "default": {
+            "type": "float",
+            "value": 6.0
+          },
+          "description": "Distance from the road centre line kept free of generated content",
+          "enumValues": [],
+          "max": 100.0,
+          "min": 0.0,
+          "name": "clearance",
+          "type": "float"
+        }
+      ]
+    }
+  ],
+  "name": "Road",
+  "shape": "openSpline",
+  "version": 1
+}

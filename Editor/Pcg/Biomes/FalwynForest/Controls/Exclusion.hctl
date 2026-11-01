@@ -1,0 +1,9 @@
+{
+  "defaultTags": [
+    "exclusion"
+  ],
+  "groups": [],
+  "name": "Exclusion",
+  "shape": "closedLoop",
+  "version": 1
+}

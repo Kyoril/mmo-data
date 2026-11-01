@@ -1,0 +1,237 @@
+{
+  "links": [
+    {
+      "fromNode": 1,
+      "fromPin": "Out",
+      "toNode": 2,
+      "toPin": "In"
+    },
+    {
+      "fromNode": 2,
+      "fromPin": "Out",
+      "toNode": 4,
+      "toPin": "In"
+    },
+    {
+      "fromNode": 3,
+      "fromPin": "Out",
+      "toNode": 4,
+      "toPin": "Subtract"
+    },
+    {
+      "fromNode": 4,
+      "fromPin": "Out",
+      "toNode": 5,
+      "toPin": "In"
+    },
+    {
+      "fromNode": 5,
+      "fromPin": "Out",
+      "toNode": 6,
+      "toPin": "In"
+    },
+    {
+      "fromNode": 6,
+      "fromPin": "Out",
+      "toNode": 7,
+      "toPin": "In"
+    },
+    {
+      "fromNode": 7,
+      "fromPin": "Out",
+      "toNode": 8,
+      "toPin": "In"
+    }
+  ],
+  "name": "ForestTest",
+  "nextNodeId": 9,
+  "nodes": [
+    {
+      "comment": "",
+      "debug": false,
+      "editorX": 0.0,
+      "editorY": 0.0,
+      "id": 1,
+      "settings": {
+        "tags": {
+          "type": "string",
+          "value": "forest"
+        }
+      },
+      "type": "GetControls"
+    },
+    {
+      "comment": "",
+      "debug": false,
+      "editorX": 260.0,
+      "editorY": 0.0,
+      "id": 2,
+      "settings": {
+        "cellSize": {
+          "type": "float",
+          "value": 2.0
+        },
+        "densityAttribute": {
+          "type": "string",
+          "value": "density"
+        },
+        "jitter": {
+          "type": "float",
+          "value": 1.0
+        },
+        "minSpacing": {
+          "type": "string",
+          "value": "$minSpacing"
+        }
+      },
+      "type": "SampleArea"
+    },
+    {
+      "comment": "",
+      "debug": false,
+      "editorX": 260.0,
+      "editorY": 200.0,
+      "id": 3,
+      "settings": {
+        "tags": {
+          "type": "string",
+          "value": "exclusion"
+        }
+      },
+      "type": "GetControls"
+    },
+    {
+      "comment": "",
+      "debug": false,
+      "editorX": 520.0,
+      "editorY": 0.0,
+      "id": 4,
+      "settings": {
+        "clearanceAttribute": {
+          "type": "string",
+          "value": "clearance"
+        },
+        "distance": {
+          "type": "float",
+          "value": 0.0
+        }
+      },
+      "type": "Difference"
+    },
+    {
+      "comment": "",
+      "debug": false,
+      "editorX": 780.0,
+      "editorY": 0.0,
+      "id": 5,
+      "settings": {
+        "minSpacing": {
+          "type": "string",
+          "value": "$minSpacing"
+        },
+        "planar": {
+          "type": "bool",
+          "value": true
+        },
+        "priority": {
+          "type": "string",
+          "value": "density"
+        }
+      },
+      "type": "SelfPrune"
+    },
+    {
+      "comment": "",
+      "debug": false,
+      "editorX": 1040.0,
+      "editorY": 0.0,
+      "id": 6,
+      "settings": {
+        "maxSlope": {
+          "type": "float",
+          "value": 30.0
+        },
+        "minSlope": {
+          "type": "float",
+          "value": 0.0
+        }
+      },
+      "type": "FilterByTerrain"
+    },
+    {
+      "comment": "",
+      "debug": false,
+      "editorX": 1300.0,
+      "editorY": 0.0,
+      "id": 7,
+      "settings": {
+        "orientation": {
+          "type": "string",
+          "value": "upright"
+        },
+        "scaleMax": {
+          "type": "vector3",
+          "value": [
+            1.2000000476837158,
+            1.2000000476837158,
+            1.2000000476837158
+          ]
+        },
+        "scaleMin": {
+          "type": "vector3",
+          "value": [
+            0.800000011920929,
+            0.800000011920929,
+            0.800000011920929
+          ]
+        },
+        "uniformScale": {
+          "type": "bool",
+          "value": true
+        },
+        "yawMax": {
+          "type": "float",
+          "value": 360.0
+        },
+        "yawMin": {
+          "type": "float",
+          "value": 0.0
+        }
+      },
+      "type": "TransformPoints"
+    },
+    {
+      "comment": "",
+      "debug": false,
+      "editorX": 1560.0,
+      "editorY": 0.0,
+      "id": 8,
+      "settings": {
+        "collides": {
+          "type": "bool",
+          "value": true
+        },
+        "kind": {
+          "type": "string",
+          "value": "Foliage"
+        },
+        "meshes": {
+          "type": "string",
+          "value": "Models/Trees/Tree_02.hmsh|3;Models/Trees/SM_Tree_05.hmsh|2;Models/FalwynPlains/Trees/Tree_03.hmsh|1"
+        }
+      },
+      "type": "SpawnMeshes"
+    }
+  ],
+  "parameters": [
+    {
+      "default": {
+        "type": "float",
+        "value": 6.0
+      },
+      "description": "Minimum distance between trees in metres",
+      "name": "minSpacing"
+    }
+  ],
+  "version": 1
+}

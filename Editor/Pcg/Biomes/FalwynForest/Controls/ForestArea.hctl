@@ -1,0 +1,39 @@
+{
+  "defaultTags": [
+    "forest"
+  ],
+  "groups": [
+    {
+      "name": "Forest",
+      "properties": [
+        {
+          "default": {
+            "type": "float",
+            "value": 0.5
+          },
+          "description": "Share of candidate points kept before spacing (0-1)",
+          "enumValues": [],
+          "max": 1.0,
+          "min": 0.0,
+          "name": "density",
+          "type": "float"
+        },
+        {
+          "default": {
+            "type": "float",
+            "value": 6.0
+          },
+          "description": "Minimum distance between trees in metres",
+          "enumValues": [],
+          "max": 100.0,
+          "min": 0.0,
+          "name": "minSpacing",
+          "type": "float"
+        }
+      ]
+    }
+  ],
+  "name": "Forest Area",
+  "shape": "closedLoop",
+  "version": 1
+}
