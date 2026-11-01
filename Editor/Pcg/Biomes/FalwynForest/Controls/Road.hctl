@@ -18,6 +18,18 @@
           "min": 0.0,
           "name": "clearance",
           "type": "float"
+        },
+        {
+          "default": {
+            "type": "string",
+            "value": "Editor/Pcg/Sections/TestRoad.hsec"
+          },
+          "description": "Section asset (.hsec) laid along the road",
+          "enumValues": [],
+          "max": 0.0,
+          "min": 0.0,
+          "name": "section",
+          "type": "asset"
         }
       ]
     }

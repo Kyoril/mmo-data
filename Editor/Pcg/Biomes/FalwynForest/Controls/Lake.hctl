@@ -1,0 +1,28 @@
+{
+  "defaultTags": [
+    "exclusion",
+    "water"
+  ],
+  "groups": [
+    {
+      "name": "Water",
+      "properties": [
+        {
+          "default": {
+            "type": "float",
+            "value": 20.0
+          },
+          "description": "Water surface height (m)",
+          "enumValues": [],
+          "max": 1000.0,
+          "min": -1000.0,
+          "name": "level",
+          "type": "float"
+        }
+      ]
+    }
+  ],
+  "name": "Lake",
+  "shape": "closedLoop",
+  "version": 1
+}

@@ -1,0 +1,221 @@
+{
+  "defaultTags": [
+    "valley"
+  ],
+  "groups": [
+    {
+      "name": "Wall",
+      "properties": [
+        {
+          "default": {
+            "type": "string",
+            "value": "Editor/Pcg/Biomes/FalwynForest/Sections/ValleyWall.hsec"
+          },
+          "description": "Section asset (.hsec) laid along the wall",
+          "enumValues": [],
+          "max": 0.0,
+          "min": 0.0,
+          "name": "section",
+          "type": "asset"
+        },
+        {
+          "default": {
+            "type": "string",
+            "value": "smoothedGround"
+          },
+          "description": "Where the centre line height comes from",
+          "enumValues": [
+            "followSpline",
+            "followGround",
+            "smoothedGround"
+          ],
+          "max": 0.0,
+          "min": 0.0,
+          "name": "heightMode",
+          "type": "enum"
+        },
+        {
+          "default": {
+            "type": "float",
+            "value": 60.0
+          },
+          "description": "smoothedGround: length (m) the base ground is averaged over",
+          "enumValues": [],
+          "max": 500.0,
+          "min": 0.0,
+          "name": "groundSmoothing",
+          "type": "float"
+        },
+        {
+          "default": {
+            "type": "float",
+            "value": 4.0
+          },
+          "description": "Distance (m) over which the terrain targets of two copies cross-fade",
+          "enumValues": [],
+          "max": 50.0,
+          "min": 0.0,
+          "name": "joinBlend",
+          "type": "float"
+        },
+        {
+          "default": {
+            "type": "bool",
+            "value": true
+          },
+          "description": "Lay every copy mirrored along its length or not, by hash",
+          "enumValues": [],
+          "max": 0.0,
+          "min": 0.0,
+          "name": "mirrorCopies",
+          "type": "bool"
+        },
+        {
+          "default": {
+            "type": "float",
+            "value": 0.20000000298023224
+          },
+          "description": "Scales every copy's section heights by a hashed factor in 1 +- jitter",
+          "enumValues": [],
+          "max": 1.0,
+          "min": 0.0,
+          "name": "facadeHeightJitter",
+          "type": "float"
+        }
+      ]
+    },
+    {
+      "name": "Mass",
+      "properties": [
+        {
+          "default": {
+            "type": "bool",
+            "value": true
+          },
+          "description": "Adds a broad terrain mass behind the wall",
+          "enumValues": [],
+          "max": 0.0,
+          "min": 0.0,
+          "name": "massEnabled",
+          "type": "bool"
+        },
+        {
+          "default": {
+            "type": "float",
+            "value": 95.0
+          },
+          "description": "Mass height (m) above the centre line",
+          "enumValues": [],
+          "max": 500.0,
+          "min": 0.0,
+          "name": "massHeight",
+          "type": "float"
+        },
+        {
+          "default": {
+            "type": "float",
+            "value": 220.0
+          },
+          "description": "How far (m) the mass reaches across",
+          "enumValues": [],
+          "max": 1000.0,
+          "min": 0.0,
+          "name": "massDepth",
+          "type": "float"
+        },
+        {
+          "default": {
+            "type": "float",
+            "value": 0.6000000238418579
+          },
+          "description": "Fraction of the depth over which the mass rises",
+          "enumValues": [],
+          "max": 1.0,
+          "min": 0.0,
+          "name": "massRise",
+          "type": "float"
+        },
+        {
+          "default": {
+            "type": "float",
+            "value": 35.0
+          },
+          "description": "Low-frequency variation (m) of the mass height",
+          "enumValues": [],
+          "max": 200.0,
+          "min": 0.0,
+          "name": "massNoiseAmplitude",
+          "type": "float"
+        },
+        {
+          "default": {
+            "type": "float",
+            "value": 180.0
+          },
+          "description": "Wavelength (m) of that variation",
+          "enumValues": [],
+          "max": 2000.0,
+          "min": 1.0,
+          "name": "massNoiseWavelength",
+          "type": "float"
+        },
+        {
+          "default": {
+            "type": "float",
+            "value": 8.0
+          },
+          "description": "Breakup (m) on top of it",
+          "enumValues": [],
+          "max": 100.0,
+          "min": 0.0,
+          "name": "massDetailAmplitude",
+          "type": "float"
+        },
+        {
+          "default": {
+            "type": "float",
+            "value": 35.0
+          },
+          "description": "Wavelength (m) of the breakup",
+          "enumValues": [],
+          "max": 1000.0,
+          "min": 1.0,
+          "name": "massDetailWavelength",
+          "type": "float"
+        },
+        {
+          "default": {
+            "type": "int",
+            "value": 0
+          },
+          "description": "Section paint layer (0..3) of the mass slopes, -1 = automatic",
+          "enumValues": [],
+          "max": 3.0,
+          "min": -1.0,
+          "name": "massPaintLayer",
+          "type": "int"
+        }
+      ]
+    },
+    {
+      "name": "Forest",
+      "properties": [
+        {
+          "default": {
+            "type": "float",
+            "value": 45.0
+          },
+          "description": "Distance from the wall centre line kept free of generated forest",
+          "enumValues": [],
+          "max": 200.0,
+          "min": 0.0,
+          "name": "clearance",
+          "type": "float"
+        }
+      ]
+    }
+  ],
+  "name": "Valley Wall",
+  "shape": "openSpline",
+  "version": 1
+}
