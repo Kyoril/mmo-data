@@ -507,7 +507,7 @@
 	<Frame name="ThemeGlueCharNameplateSelectedMarkVisual">
 		<Visual>
 			<ImagerySection name="Line">
-				<BorderComponent texture="Interface/GameUI/Themes/BlueGold/Textures/SelectedTabV5.htex" borderSize="18" leftSize="176" rightSize="176" topSize="176" bottomSize="176" tint="FFEEE0BD" />
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FFE5BE70"><Area><Inset top="2" bottom="2" /></Area></ImageComponent>
 			</ImagerySection>
 			<StateImagery name="Enabled">
 				<Layer>
@@ -618,22 +618,22 @@
 	<Frame name="ThemeGlueGlueButtonPrimaryVisual">
 		<Visual>
 			<ImagerySection name="NormalFrame">
-				<BorderComponent texture="Interface/GameUI/Themes/BlueGold/Textures/ButtonV2.htex" borderSize="14" leftSize="120" rightSize="120" topSize="120" bottomSize="120" tint="FFBEB19A" />
+				<BorderComponent texture="Interface/GameUI/Themes/BlueGold/Textures/SelectedTabV5.htex" borderSize="18" leftSize="176" rightSize="176" topSize="176" bottomSize="176" tint="FFEEE0BD" />
 			</ImagerySection>
 			<ImagerySection name="HoveredFrame">
-				<BorderComponent texture="Interface/GameUI/Themes/BlueGold/Textures/ButtonV2.htex" borderSize="14" leftSize="120" rightSize="120" topSize="120" bottomSize="120" tint="FFF3DFBA" />
+				<BorderComponent texture="Interface/GameUI/Themes/BlueGold/Textures/SelectedTabV5.htex" borderSize="18" leftSize="176" rightSize="176" topSize="176" bottomSize="176" tint="FFFFEBC8" />
 			</ImagerySection>
 			<ImagerySection name="PushedFrame">
-				<BorderComponent texture="Interface/GameUI/Themes/BlueGold/Textures/ButtonV2.htex" borderSize="14" leftSize="120" rightSize="120" topSize="120" bottomSize="120" tint="FF837D70" />
+				<BorderComponent texture="Interface/GameUI/Themes/BlueGold/Textures/SelectedTabV5.htex" borderSize="18" leftSize="176" rightSize="176" topSize="176" bottomSize="176" tint="FFB6A17B" />
 			</ImagerySection>
 			<ImagerySection name="DisabledFrame">
 				<BorderComponent texture="Interface/GameUI/Themes/BlueGold/Textures/ButtonV2.htex" borderSize="14" leftSize="120" rightSize="120" topSize="120" bottomSize="120" tint="FF625F59" />
 			</ImagerySection>
 			<ImagerySection name="Caption">
-				<TextComponent color="FFF0E6D2" horzAlign="CENTER" vertAlign="CENTER" />
+				<TextComponent color="FFF6D992" horzAlign="CENTER" vertAlign="CENTER" />
 			</ImagerySection>
 			<ImagerySection name="HoveredCaption">
-				<TextComponent color="FFFFFFFF" horzAlign="CENTER" vertAlign="CENTER" />
+				<TextComponent color="FFFFF2D6" horzAlign="CENTER" vertAlign="CENTER" />
 			</ImagerySection>
 			<ImagerySection name="DisabledCaption">
 				<TextComponent color="FF8A867E" horzAlign="CENTER" vertAlign="CENTER" />

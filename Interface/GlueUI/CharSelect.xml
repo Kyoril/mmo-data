@@ -181,7 +181,7 @@
 				<Area>
 					<Anchor point="BOTTOM" offset="-48" />
 					<Anchor point="H_CENTER" />
-					<Size><AbsDimension x="560" y="166" /></Size>
+					<Size><AbsDimension x="560" y="128" /></Size>
 				</Area>
 				<Scripts>
 					<OnClick>
