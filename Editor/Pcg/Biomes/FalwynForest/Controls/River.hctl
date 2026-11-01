@@ -1,0 +1,53 @@
+{
+  "defaultTags": [
+    "exclusion",
+    "river",
+    "water"
+  ],
+  "groups": [
+    {
+      "name": "River",
+      "properties": [
+        {
+          "default": {
+            "type": "float",
+            "value": 4.0
+          },
+          "description": "Half width (m) of the river bed floor, per side",
+          "enumValues": [],
+          "max": 50.0,
+          "min": 0.5,
+          "name": "width",
+          "type": "float"
+        },
+        {
+          "default": {
+            "type": "float",
+            "value": 1.5
+          },
+          "description": "Depth (m) of the bed below the water surface",
+          "enumValues": [],
+          "max": 20.0,
+          "min": 0.0,
+          "name": "depth",
+          "type": "float"
+        },
+        {
+          "default": {
+            "type": "float",
+            "value": 10.0
+          },
+          "description": "Distance from the river centre line kept free of generated forest (bed + bank + 2 m)",
+          "enumValues": [],
+          "max": 100.0,
+          "min": 0.0,
+          "name": "clearance",
+          "type": "float"
+        }
+      ]
+    }
+  ],
+  "name": "River",
+  "shape": "openSpline",
+  "version": 1
+}

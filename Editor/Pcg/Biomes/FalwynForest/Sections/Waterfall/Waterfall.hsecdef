@@ -1,0 +1,12 @@
+{
+  "halfWidth": 6.0,
+  "length": 12.0,
+  "name": "Waterfall",
+  "rules": [],
+  "sideFalloff": 4.0,
+  "variants": [
+    {
+      "originX": 0.0
+    }
+  ]
+}
