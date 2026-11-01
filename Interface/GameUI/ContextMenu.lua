@@ -275,7 +275,12 @@ RegisterContextMenu("PET_FRAME", {
             table.insert(items, {
                 text = Localize("PET_RENAME"),
                 callback = function()
-                    StaticDialog_Show("RENAME_PET")
+                    -- Starts from the current name, so a small change is a small edit.
+                    local dialog = StaticDialog_Show("RENAME_PET")
+                    local pet = GetUnit("pet")
+                    if dialog and dialog.editBox and pet then
+                        dialog.editBox:SetText(pet:GetName())
+                    end
                 end,
                 enabled = true
             })
