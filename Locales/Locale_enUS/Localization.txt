@@ -1014,6 +1014,7 @@ strings =
 	(key = "BINDING_TOGGLEPROFESSIONS", string = "Professions")
 	(key = "SPELL_CAST_FAILED_SKILL_TOO_LOW", string = "Your skill is too low.")
 	(key = "SPELL_CAST_FAILED_INVENTORY_FULL", string = "Your inventory is full.")
+	(key = "SPELL_CAST_FAILED_TOO_MANY_PETS", string = "You already have too many pets.")
 	(key = "TRAINER_ERROR_SKILL_TOO_LOW", string = "Your skill is too low to learn this.")
 	(key = "BUGREPORT_TITLE", string = "Bug Report")
 	(key = "BUGREPORT_TITLE_SUBJECT", string = "Issue Report: %s")

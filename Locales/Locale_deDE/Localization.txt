@@ -987,6 +987,7 @@ strings =
 	(key = "BINDING_TOGGLEPROFESSIONS", string = "Berufe")
 	(key = "SPELL_CAST_FAILED_SKILL_TOO_LOW", string = "Eure Fertigkeit ist zu niedrig.")
 	(key = "SPELL_CAST_FAILED_INVENTORY_FULL", string = "Euer Inventar ist voll.")
+	(key = "SPELL_CAST_FAILED_TOO_MANY_PETS", string = "Ihr habt bereits zu viele Begleiter.")
 	(key = "TRAINER_ERROR_SKILL_TOO_LOW", string = "Eure Fertigkeit ist zu niedrig, um dies zu erlernen.")
 	(key = "BUGREPORT_TITLE", string = "Fehlerbericht")
 	(key = "BUGREPORT_TITLE_SUBJECT", string = "Problem melden: %s")

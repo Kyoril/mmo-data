@@ -900,6 +900,7 @@ strings =
 	(key = "BINDING_TOGGLEPROFESSIONS", string = "Профессии")
 	(key = "SPELL_CAST_FAILED_SKILL_TOO_LOW", string = "Ваш навык слишком низок.")
 	(key = "SPELL_CAST_FAILED_INVENTORY_FULL", string = "Ваш инвентарь полон.")
+	(key = "SPELL_CAST_FAILED_TOO_MANY_PETS", string = "У вас уже слишком много питомцев.")
 	(key = "TRAINER_ERROR_SKILL_TOO_LOW", string = "Ваш навык слишком низок, чтобы изучить это.")
 	(key = "BUGREPORT_TITLE", string = "Отчёт об ошибке")
 	(key = "BUGREPORT_TITLE_SUBJECT", string = "Сообщить о проблеме: %s")
