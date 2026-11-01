@@ -15,92 +15,7 @@
 		<Property name="PushedFrameTint" value="FF91806A" />
 		<Property name="EmptySocketTint" value="00000000" />
 		<Property name="EmptySocketHoverTint" value="00000000" />
-		<Visual>
-			<ImagerySection name="ActiveGlow">
-				<ImageComponent texture="Interface/GlueUI/GlowYellow.htex" tint="$ActiveGlowTint">
-					<Area>
-						<Inset all="-4" />
-					</Area>
-				</ImageComponent>
-			</ImagerySection>
-			<ImagerySection name="Image">
-				<ImageComponent>
-					<Area>
-						<Inset all="10" />
-					</Area>
-					<PropertyValue property="Icon" />
-				</ImageComponent>
-			</ImagerySection>
-			<ImagerySection name="Counter">
-				<TextComponent color="FFFFFFFF" horzAlign="RIGHT" vertAlign="BOTTOM">
-					<Area>
-						<Inset all="16" />
-					</Area>
-				</TextComponent>
-			</ImagerySection>
-			<ImagerySection name="NormalFrame">
-				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="$NormalFrameTint" />
-			</ImagerySection>
-			<ImagerySection name="HoveredFrame">
-				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="$HoveredFrameTint" />
-			</ImagerySection>
-			<ImagerySection name="PushedFrame">
-				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="$PushedFrameTint" />
-			</ImagerySection>
-			<!-- Darkens the icon while the button is held (mouse or key binding), so the pushed state
-                 reads clearly against both the normal and the hovered state. -->
-			<ImagerySection name="PushedOverlay">
-				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="60000000">
-					<Area>
-						<Inset all="10" />
-					</Area>
-				</ImageComponent>
-			</ImagerySection>
-			<!-- Translucent "ghost" socket drawn instead of the solid one on empty second-bar slots. -->
-			<ImagerySection name="EmptySocket">
-				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="$EmptySocketTint" />
-			</ImagerySection>
-			<ImagerySection name="EmptySocketHovered">
-				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="$EmptySocketHoverTint" />
-			</ImagerySection>
-			<ImagerySection name="DisabledFrame">
-				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="FF998D7C" />
-			</ImagerySection>
-			<StateImagery name="Normal">
-				<Layer>
-					<Section section="ActiveGlow" />
-					<Section section="NormalFrame" />
-					<Section section="EmptySocket" />
-					<Section section="Image" />
-					<Section section="Counter" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Hovered">
-				<Layer>
-					<Section section="ActiveGlow" />
-					<Section section="HoveredFrame" />
-					<Section section="EmptySocketHovered" />
-					<Section section="Image" />
-					<Section section="Counter" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Pushed">
-				<Layer>
-					<Section section="ActiveGlow" />
-					<Section section="PushedFrame" />
-					<Section section="EmptySocketHovered" />
-					<Section section="Image" />
-					<Section section="PushedOverlay" />
-					<Section section="Counter" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer>
-					<Section section="DisabledFrame" />
-					<Section section="Image" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeActionBarButtonTemplateVisual" />
 		<Area>
 			<Size>
 				<AbsDimension x="112" y="112" />
@@ -150,16 +65,7 @@
 				<Anchor point="RIGHT" offset="-8" />
 				<Anchor point="TOP" offset="2" />
 			</Area>
-			<Visual>
-				<ImagerySection name="Text">
-					<TextComponent color="FFF0E7D6" horzAlign="RIGHT" vertAlign="TOP" />
-				</ImagerySection>
-				<StateImagery name="Enabled">
-					<Layer>
-						<Section section="Text" />
-					</Layer>
-				</StateImagery>
-			</Visual>
+			<Visual inherits="ThemeActionShortcutVisual" />
 		</Frame>
 	</Frame>
 </UiLayout>

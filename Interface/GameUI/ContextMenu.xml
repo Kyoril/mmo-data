@@ -6,59 +6,7 @@
 	<Frame name="ContextMenuButtonTemplate" type="Button" renderer="ButtonRenderer">
 		<Property name="Font" value="DefaultSmall" />
 
-		<Visual>
-			<ImagerySection name="NormalFrame">
-				<ImageComponent texture="Interface/GlueUI/CharSelectButtonBackground.htex" tiling="VERT" />
-			</ImagerySection>
-			<ImagerySection name="HoveredFrame">
-				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tiling="VERT" tint="FFFFD100" />
-			</ImagerySection>
-			<ImagerySection name="PushedFrame">
-				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tiling="VERT" />
-			</ImagerySection>
-			<ImagerySection name="DisabledFrame">
-				<ImageComponent texture="Interface/GlueUI/CharSelectButtonBackground.htex" tiling="VERT" />
-			</ImagerySection>
-			<ImagerySection name="Caption">
-				<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="CENTER">
-					<Area><Inset left="16" right="16" /></Area>
-				</TextComponent>
-			</ImagerySection>
-			<ImagerySection name="HoveredCaption">
-				<TextComponent color="FFFFFFFF" horzAlign="LEFT" vertAlign="CENTER">
-					<Area><Inset left="16" right="16" /></Area>
-				</TextComponent>
-			</ImagerySection>
-			<ImagerySection name="DisabledCaption">
-				<TextComponent color="AE888888" horzAlign="LEFT" vertAlign="CENTER">
-					<Area><Inset left="16" right="16" /></Area>
-				</TextComponent>
-			</ImagerySection>
-			<StateImagery name="Normal">
-				<Layer>
-					<Section section="NormalFrame" />
-					<Section section="Caption" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Hovered">
-				<Layer>
-					<Section section="HoveredFrame" color="FFA0D700" />
-					<Section section="HoveredCaption" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Pushed">
-				<Layer>
-					<Section section="PushedFrame" />
-					<Section section="Caption" color="FFAAAAAA" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer>
-					<Section section="DisabledFrame" />
-					<Section section="DisabledCaption" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeContextMenuButtonTemplateVisual" />
 		<Area>
 			<Size>
 				<AbsDimension x="200" y="48" />
@@ -91,16 +39,7 @@
 	<Frame name="ContextMenu" renderer="DefaultRenderer" parent="GameParent">
 		<Property name="Visible" value="false" />
 
-		<Visual>
-			<ImagerySection name="Background">
-				<BorderComponent texture="Interface/GameUI/fg4_borders_tooltip.htex" borderSize="64" />
-			</ImagerySection>
-			<StateImagery name="Enabled">
-				<Layer>
-					<Section section="Background" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeComboBoxDropdownFrameVisual" />
 
 		<Area>
 			<Size><AbsDimension x="480" y="100" /></Size>

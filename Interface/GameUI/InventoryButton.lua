@@ -6,7 +6,7 @@ INVENTORY_ICON_COLOR_DISABLED = "FFFF4040";
 
 -- White preserves the authored frame for ordinary inventory buttons.
 INVENTORY_QUALITY_COLOR_NONE = "FFFFFFFF";
-INVENTORY_QUALITY_COLOR_EMPTY = "FF505050";
+INVENTORY_QUALITY_COLOR_EMPTY = (GameUITheme and GameUITheme.EmptySlotQualityColor) or "FF505050";
 
 -- Recolors the button frame to the item's quality color. Only slots whose "QualityBorder"
 -- property is enabled participate; every other inventory button keeps its plain frame.

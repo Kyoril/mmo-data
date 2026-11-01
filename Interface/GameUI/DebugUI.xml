@@ -12,16 +12,7 @@
 			<Size><AbsDimension x="540" y="128" /></Size>
 		</Area>
 
-		<Visual>
-			<ImagerySection name="Text">
-				<TextComponent font="Interface/Fonts/DefaultFont.xml" text="Profiling" />
-			</ImagerySection>
-			<StateImagery name="Enabled">
-				<Layer>
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeProfilingLabelVisual" />
 
 		<Scripts>
 			<OnLoad>
@@ -35,16 +26,7 @@
 	<Frame name="DebugPanel" renderer="DefaultRenderer" parent="GameParent">
 		<Property name="Visible" value="False" />
 
-		<Visual>
-			<ImagerySection name="Background">
-				<BorderComponent texture="Interface/GameUI/fg4_borders_01_03.htex" borderSize="250" />
-			</ImagerySection>
-			<StateImagery name="Enabled">
-				<Layer>
-					<Section section="Background" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeDebugPanelVisual" />
 
 		<Area>
 			<Size><AbsDimension x="540" y="128" /></Size>
@@ -63,16 +45,7 @@
 		</Frame>
 
 		<Frame name="DebugMenuButtons" renderer="DefaultRenderer">
-			<Visual>
-				<ImagerySection name="Border">
-					<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" />
-				</ImagerySection>
-				<StateImagery name="Enabled">
-					<Layer>
-						<Section section="Border" />
-					</Layer>
-				</StateImagery>
-			</Visual>
+			<Visual inherits="ThemeBankBuySlotPanelVisual" />
 
 			<Area>
 				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="DebugTitleBar" offset="5" />

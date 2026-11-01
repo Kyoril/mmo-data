@@ -2,28 +2,11 @@
 <UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
 	<Script file="EmoteList.lua" />
 
-	<Font name="EmoteNameLabelFont" file="Fonts/FRIZQT__.TTF" size="22" outline="0" shadowX="1.0" shadowY="1.0" />
-	<Font name="EmoteSubLabelFont" file="Fonts/FRIZQT__.TTF" size="18" outline="0" shadowX="1.0" shadowY="1.0" />
-
 	<!-- Small label -->
 	<Frame name="EmoteNameLabel" renderer="DefaultRenderer">
 		<Property name="Font" value="EmoteNameLabelFont" />
 
-		<Visual>
-			<ImagerySection name="Text">
-				<TextComponent color="FFFFFFFF" horzAlign="LEFT" vertAlign="TOP" />
-			</ImagerySection>
-			<StateImagery name="Enabled">
-				<Layer>
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer>
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeEmoteNameLabelVisual" />
 		<Area>
 			<Size><AbsDimension x="0" y="40" /></Size>
 		</Area>
@@ -33,52 +16,7 @@
 		<Property name="Icon" />
 		<Property name="DragEnabled" value="true" />
 
-		<Visual>
-			<ImagerySection name="Image">
-				<ImageComponent>
-					<Area>
-						<Inset all="16" />
-					</Area>
-					<PropertyValue property="Icon" />
-				</ImageComponent>
-			</ImagerySection>
-			<ImagerySection name="NormalFrame">
-				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="FFB8A887" />
-			</ImagerySection>
-			<ImagerySection name="HoveredFrame">
-				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="FFFFDDA0" />
-			</ImagerySection>
-			<ImagerySection name="PushedFrame">
-				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="FF7F6E53" />
-			</ImagerySection>
-			<ImagerySection name="DisabledFrame">
-				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="FFB8A887" />
-			</ImagerySection>
-			<StateImagery name="Normal">
-				<Layer>
-					<Section section="NormalFrame" />
-					<Section section="Image" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Hovered">
-				<Layer>
-					<Section section="HoveredFrame" />
-					<Section section="Image" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Pushed">
-				<Layer>
-					<Section section="PushedFrame" />
-					<Section section="Image" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer>
-					<Section section="DisabledFrame" />
-					<Section section="Image" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeEmoteListButtonTemplateVisual" />
 
 		<Frame name="EmoteButtonNameLabel" inherits="EmoteNameLabel">
 			<Property name="Color" value="FF4A3620" />
@@ -122,16 +60,7 @@
 	<Frame name="EmoteList" renderer="DefaultRenderer" parent="GameParent">
 		<Property name="Visible" value="False" />
 
-		<Visual>
-			<ImagerySection name="Background">
-				<BorderComponent texture="Interface/GameUI/Alestia/WindowPanel.htex" borderSize="32" />
-			</ImagerySection>
-			<StateImagery name="Enabled">
-				<Layer>
-					<Section section="Background" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeBugReportFrameVisual" />
 
 		<Area>
 			<Size><AbsDimension x="960" y="1280" /></Size>
@@ -160,14 +89,7 @@
 			<Frame name="EmoteListPaper" renderer="DefaultRenderer">
 				<Property name="Clickable" value="false" />
 
-				<Visual>
-					<ImagerySection name="Frame">
-						<BorderComponent texture="Interface/GameUI/QuestFrame_Background.htex" borderSize="96" tint="FFFFFFFF" />
-					</ImagerySection>
-					<StateImagery name="Enabled">
-						<Layer><Section section="Frame" /></Layer>
-					</StateImagery>
-				</Visual>
+				<Visual inherits="ThemeEmoteListPaperVisual" />
 
 				<Area>
 					<Anchor point="TOP" offset="20" />
@@ -180,14 +102,7 @@
 			<Frame name="EmoteListPaperBorder" renderer="DefaultRenderer">
 				<Property name="Clickable" value="false" />
 
-				<Visual>
-					<ImagerySection name="Frame">
-						<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" />
-					</ImagerySection>
-					<StateImagery name="Enabled">
-						<Layer><Section section="Frame" /></Layer>
-					</StateImagery>
-				</Visual>
+				<Visual inherits="ThemeEmoteListPaperBorderVisual" />
 
 				<Area>
 					<Anchor point="TOP" offset="12" />

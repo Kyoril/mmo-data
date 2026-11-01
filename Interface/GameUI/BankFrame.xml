@@ -33,16 +33,7 @@
 		</Scripts>
 
 		<Frame name="BankBuySlotPanel" renderer="DefaultRenderer">
-			<Visual>
-				<ImagerySection name="Border">
-					<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" />
-				</ImagerySection>
-				<StateImagery name="Enabled">
-					<Layer>
-						<Section section="Border" />
-					</Layer>
-				</StateImagery>
-			</Visual>
+			<Visual inherits="ThemeBankBuySlotPanelVisual" />
 
 			<Area>
 				<Anchor point="BOTTOM" offset="-24" />

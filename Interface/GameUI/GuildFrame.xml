@@ -1,8 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <UiLayout xmlns="http://www.w3schools.com/Ui">
 	<Script file="GuildFrame.lua" />
-	<Font name="GuildTextFont" file="Fonts/FRIZQT__.TTF" size="24" outline="1" />
-	<Font name="GuildHeadingFont" file="Fonts/FRIZQT__.TTF" size="30" outline="1" />
+
 	<Frame name="GuildMemberButtonTemplate" type="Button" renderer="CheckboxRenderer">
 		<Property name="Checkable" value="true" />
 		<Area>
@@ -10,47 +9,7 @@
 				<AbsDimension y="60" />
 			</Size>
 		</Area>
-		<Visual>
-			<ImagerySection name="Normal">
-				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF191A17" />
-			</ImagerySection>
-			<ImagerySection name="Hover">
-				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF453820" />
-			</ImagerySection>
-			<ImagerySection name="Selected">
-				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF66502A" />
-			</ImagerySection>
-			<StateImagery name="Normal">
-				<Layer>
-					<Section section="Normal" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Hovered">
-				<Layer>
-					<Section section="Hover" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Pushed">
-				<Layer>
-					<Section section="Hover" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="NormalChecked">
-				<Layer>
-					<Section section="Selected" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="HoveredChecked">
-				<Layer>
-					<Section section="Selected" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="PushedChecked">
-				<Layer>
-					<Section section="Selected" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeGuildMemberButtonTemplateVisual" />
 		<Frame name="GuildMemberName" inherits="TextSmall">
 			<Property name="Font" value="GuildTextFont" />
 			<Property name="TextColor" value="FFD6CDBA" />
@@ -116,17 +75,7 @@
 				<Anchor point="RIGHT" offset="-24" />
 				<Anchor point="TOP" offset="16" relativeTo="GuildFrame_SidePanelTitleBar" relativePoint="BOTTOM" />
 			</Area>
-			<Visual>
-				<ImagerySection name="Surface">
-					<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF10110F" />
-					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFAC946B" />
-				</ImagerySection>
-				<StateImagery name="Enabled">
-					<Layer>
-						<Section section="Surface" />
-					</Layer>
-				</StateImagery>
-			</Visual>
+			<Visual inherits="ThemeGuildInfoFrameVisual" />
 			<Frame name="GuildMOTDHeader" inherits="TextSmall">
 				<Property name="Font" value="GuildTextFont" />
 				<Property name="TextColor" value="FFF3CF50" />
@@ -176,17 +125,7 @@
 				<Anchor point="TOP" offset="12" relativeTo="GuildRosterSummary" relativePoint="BOTTOM" />
 				<Anchor point="BOTTOM" offset="-128" />
 			</Area>
-			<Visual>
-				<ImagerySection name="Surface">
-					<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF10110F" />
-					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFAC946B" />
-				</ImagerySection>
-				<StateImagery name="Enabled">
-					<Layer>
-						<Section section="Surface" />
-					</Layer>
-				</StateImagery>
-			</Visual>
+			<Visual inherits="ThemeGuildInfoFrameVisual" />
 			<Frame name="GuildHeaderName" type="Button" renderer="ButtonRenderer">
 				<Property name="Text" value="GUILD_COLUMN_NAME" />
 				<Property name="Font" value="GuildTextFont" />
@@ -197,26 +136,7 @@
 					<Anchor point="LEFT" offset="28" />
 					<Anchor point="TOP" offset="12" />
 				</Area>
-				<Visual>
-					<ImagerySection name="Text">
-						<TextComponent color="FFF3CF50" vertAlign="CENTER" />
-					</ImagerySection>
-					<StateImagery name="Normal">
-						<Layer>
-							<Section section="Text" />
-						</Layer>
-					</StateImagery>
-					<StateImagery name="Hovered">
-						<Layer>
-							<Section section="Text" />
-						</Layer>
-					</StateImagery>
-					<StateImagery name="Pushed">
-						<Layer>
-							<Section section="Text" />
-						</Layer>
-					</StateImagery>
-				</Visual>
+				<Visual inherits="ThemeGuildHeaderNameVisual" />
 				<Scripts>
 					<OnClick>return function(self) GuildRoster_SortByColumn(self, "name"); end</OnClick>
 				</Scripts>
@@ -231,26 +151,7 @@
 					<Anchor point="LEFT" offset="268" />
 					<Anchor point="TOP" offset="12" />
 				</Area>
-				<Visual>
-					<ImagerySection name="Text">
-						<TextComponent color="FFF3CF50" vertAlign="CENTER" />
-					</ImagerySection>
-					<StateImagery name="Normal">
-						<Layer>
-							<Section section="Text" />
-						</Layer>
-					</StateImagery>
-					<StateImagery name="Hovered">
-						<Layer>
-							<Section section="Text" />
-						</Layer>
-					</StateImagery>
-					<StateImagery name="Pushed">
-						<Layer>
-							<Section section="Text" />
-						</Layer>
-					</StateImagery>
-				</Visual>
+				<Visual inherits="ThemeGuildHeaderNameVisual" />
 				<Scripts>
 					<OnClick>return function(self) GuildRoster_SortByColumn(self, "level"); end</OnClick>
 				</Scripts>
@@ -265,26 +166,7 @@
 					<Anchor point="LEFT" offset="362" />
 					<Anchor point="TOP" offset="12" />
 				</Area>
-				<Visual>
-					<ImagerySection name="Text">
-						<TextComponent color="FFF3CF50" vertAlign="CENTER" />
-					</ImagerySection>
-					<StateImagery name="Normal">
-						<Layer>
-							<Section section="Text" />
-						</Layer>
-					</StateImagery>
-					<StateImagery name="Hovered">
-						<Layer>
-							<Section section="Text" />
-						</Layer>
-					</StateImagery>
-					<StateImagery name="Pushed">
-						<Layer>
-							<Section section="Text" />
-						</Layer>
-					</StateImagery>
-				</Visual>
+				<Visual inherits="ThemeGuildHeaderNameVisual" />
 				<Scripts>
 					<OnClick>return function(self) GuildRoster_SortByColumn(self, "rankIndex"); end</OnClick>
 				</Scripts>
@@ -299,26 +181,7 @@
 					<Anchor point="LEFT" offset="632" />
 					<Anchor point="TOP" offset="12" />
 				</Area>
-				<Visual>
-					<ImagerySection name="Text">
-						<TextComponent color="FFF3CF50" vertAlign="CENTER" />
-					</ImagerySection>
-					<StateImagery name="Normal">
-						<Layer>
-							<Section section="Text" />
-						</Layer>
-					</StateImagery>
-					<StateImagery name="Hovered">
-						<Layer>
-							<Section section="Text" />
-						</Layer>
-					</StateImagery>
-					<StateImagery name="Pushed">
-						<Layer>
-							<Section section="Text" />
-						</Layer>
-					</StateImagery>
-				</Visual>
+				<Visual inherits="ThemeGuildHeaderNameVisual" />
 				<Scripts>
 					<OnClick>return function(self) GuildRoster_SortByColumn(self, "status"); end</OnClick>
 				</Scripts>
@@ -430,17 +293,7 @@
 				<Anchor point="TOP" offset="0" relativeTo="GuildRosterFrame" />
 				<Anchor point="BOTTOM" offset="-128" />
 			</Area>
-			<Visual>
-				<ImagerySection name="Surface">
-					<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF10110F" />
-					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFAC946B" />
-				</ImagerySection>
-				<StateImagery name="Enabled">
-					<Layer>
-						<Section section="Surface" />
-					</Layer>
-				</StateImagery>
-			</Visual>
+			<Visual inherits="ThemeGuildInfoFrameVisual" />
 			<Frame name="GuildSelectionHint" inherits="TextSmall">
 				<Property name="Font" value="GuildTextFont" />
 				<Property name="TextColor" value="FFD6CDBA" />
@@ -585,17 +438,7 @@
 				<Anchor point="RIGHT" offset="-16" />
 				<Anchor point="BOTTOM" offset="-16" />
 			</Area>
-			<Visual>
-				<ImagerySection name="Surface">
-					<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF10110F" />
-					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFAC946B" />
-				</ImagerySection>
-				<StateImagery name="Enabled">
-					<Layer>
-						<Section section="Surface" />
-					</Layer>
-				</StateImagery>
-			</Visual>
+			<Visual inherits="ThemeGuildInfoFrameVisual" />
 			<Frame name="GuildFooterHint" inherits="TextSmall">
 				<Property name="Font" value="GuildTextFont" />
 				<Property name="TextColor" value="FFD6CDBA" />

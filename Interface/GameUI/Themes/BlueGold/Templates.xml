@@ -1,0 +1,478 @@
+<?xml version='1.0' encoding='utf-8'?>
+<UiLayout xmlns="http://www.w3schools.com/Ui">
+	<Frame name="ThemeGlueButtonVisual">
+		<Property name="Icon" value="" />
+		<Visual>
+			<ImagerySection name="NormalFrame">
+				<BorderComponent texture="Interface/GameUI/Themes/BlueGold/Textures/ButtonV2.htex" borderSize="14" leftSize="120" rightSize="120" topSize="120" bottomSize="120" tint="FFB5AD9A" />
+			</ImagerySection>
+			<ImagerySection name="HoveredFrame">
+				<BorderComponent texture="Interface/GameUI/Themes/BlueGold/Textures/ButtonV2.htex" borderSize="14" leftSize="120" rightSize="120" topSize="120" bottomSize="120" tint="FFF3DFBA" />
+			</ImagerySection>
+			<ImagerySection name="PushedFrame">
+				<BorderComponent texture="Interface/GameUI/Themes/BlueGold/Textures/ButtonV2.htex" borderSize="14" leftSize="120" rightSize="120" topSize="120" bottomSize="120" tint="FF8B929C" />
+			</ImagerySection>
+			<ImagerySection name="DisabledFrame">
+				<BorderComponent texture="Interface/GameUI/Themes/BlueGold/Textures/ButtonV2.htex" borderSize="14" leftSize="120" rightSize="120" topSize="120" bottomSize="120" tint="FF626A77" />
+			</ImagerySection>
+			<ImagerySection name="Caption">
+				<TextComponent color="FFE2B04A" horzAlign="CENTER" vertAlign="CENTER" />
+			</ImagerySection>
+			<ImagerySection name="Image">
+				<ImageComponent>
+					<Area>
+						<Inset all="16" />
+					</Area>
+					<PropertyValue property="Icon" />
+				</ImageComponent>
+			</ImagerySection>
+			<ImagerySection name="ImageDisabled">
+				<ImageComponent tint="80888888">
+					<Area>
+						<Inset all="16" />
+					</Area>
+					<PropertyValue property="Icon" />
+				</ImageComponent>
+			</ImagerySection>
+			<ImagerySection name="HoveredCaption">
+				<TextComponent color="FFFFFFFF" horzAlign="CENTER" vertAlign="CENTER" />
+			</ImagerySection>
+			<ImagerySection name="DisabledCaption">
+				<TextComponent color="AE888888" horzAlign="CENTER" vertAlign="CENTER" />
+			</ImagerySection>
+			<StateImagery name="Normal">
+				<Layer>
+					<Section section="NormalFrame" />
+					<Section section="Image" />
+					<Section section="Caption" color="FFE2B04A" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Hovered">
+				<Layer>
+					<Section section="HoveredFrame" />
+					<Section section="Image" />
+					<Section section="HoveredCaption" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Pushed">
+				<Layer>
+					<Section section="PushedFrame" />
+					<Section section="Image" />
+					<Section section="Caption" color="FFAAAAAA" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="DisabledFrame" />
+					<Section section="ImageDisabled" />
+					<Section section="DisabledCaption" color="AE888888" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+	</Frame>
+	<Frame name="ThemeRoundIconButtonVisual">
+		<Property name="Icon" value="" />
+		<Visual>
+			<ImagerySection name="NormalFrame">
+				<ImageComponent texture="Interface/GameUI/Themes/BlueGold/Textures/RoundButtonV3.htex" tint="FFCABB9D" />
+			</ImagerySection>
+			<ImagerySection name="HoveredFrame">
+				<ImageComponent texture="Interface/GameUI/Themes/BlueGold/Textures/RoundButtonV3.htex" tint="FFF5E6C6" />
+			</ImagerySection>
+			<ImagerySection name="PushedFrame">
+				<ImageComponent texture="Interface/GameUI/Themes/BlueGold/Textures/RoundButtonV3.htex" tint="FF918E87" />
+			</ImagerySection>
+			<ImagerySection name="DisabledFrame">
+				<ImageComponent texture="Interface/GameUI/Themes/BlueGold/Textures/RoundButtonV3.htex" tint="FF74777D" />
+			</ImagerySection>
+			<ImagerySection name="Caption">
+				<ImageComponent>
+					<Area>
+						<Inset all="16" />
+					</Area>
+					<PropertyValue property="Icon" />
+				</ImageComponent>
+				<TextComponent color="FFF3D79B" horzAlign="CENTER" vertAlign="CENTER" />
+			</ImagerySection>
+			<ImagerySection name="CaptionDisabled">
+				<ImageComponent tint="AE888888">
+					<Area>
+						<Inset all="16" />
+					</Area>
+					<PropertyValue property="Icon" />
+				</ImageComponent>
+				<TextComponent color="FF807B6D" horzAlign="CENTER" vertAlign="CENTER" />
+			</ImagerySection>
+			<StateImagery name="Normal">
+				<Layer>
+					<Section section="NormalFrame" />
+					<Section section="Caption" color="FFFFFFFF" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Hovered">
+				<Layer>
+					<Section section="HoveredFrame" />
+					<Section section="Caption" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Pushed">
+				<Layer>
+					<Section section="PushedFrame" />
+					<Section section="Caption" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="DisabledFrame" />
+					<Section section="CaptionDisabled" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+	</Frame>
+	<Frame name="ThemeIconButtonVisual">
+		<Property name="Icon" value="" />
+		<Visual>
+			<ImagerySection name="NormalFrame">
+				<BorderComponent texture="Interface/GameUI/Themes/BlueGold/Textures/ButtonV2.htex" borderSize="14" leftSize="120" rightSize="120" topSize="120" bottomSize="120" tint="FFB5AD9A" />
+			</ImagerySection>
+			<ImagerySection name="HoveredFrame">
+				<BorderComponent texture="Interface/GameUI/Themes/BlueGold/Textures/ButtonV2.htex" borderSize="14" leftSize="120" rightSize="120" topSize="120" bottomSize="120" tint="FFF3DFBA" />
+			</ImagerySection>
+			<ImagerySection name="PushedFrame">
+				<BorderComponent texture="Interface/GameUI/Themes/BlueGold/Textures/ButtonV2.htex" borderSize="14" leftSize="120" rightSize="120" topSize="120" bottomSize="120" tint="FF8B929C" />
+			</ImagerySection>
+			<ImagerySection name="DisabledFrame">
+				<BorderComponent texture="Interface/GameUI/Themes/BlueGold/Textures/ButtonV2.htex" borderSize="14" leftSize="120" rightSize="120" topSize="120" bottomSize="120" tint="FF626A77" />
+			</ImagerySection>
+			<ImagerySection name="Caption">
+				<ImageComponent>
+					<Area>
+						<Inset all="16" />
+					</Area>
+					<PropertyValue property="Icon" />
+				</ImageComponent>
+			</ImagerySection>
+			<StateImagery name="Normal">
+				<Layer>
+					<Section section="NormalFrame" />
+					<Section section="Caption" color="FFFFFFFF" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Hovered">
+				<Layer>
+					<Section section="HoveredFrame" />
+					<Section section="Caption" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Pushed">
+				<Layer>
+					<Section section="PushedFrame" />
+					<Section section="Caption" color="FFAAAAAA" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="DisabledFrame" />
+					<Section section="Caption" color="AE888888" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+	</Frame>
+	<Frame name="ThemeTextSmallVisual">
+		<Property name="HorzAlign" value="LEFT" />
+		<Property name="TextColor" value="FFFFFFFF" />
+		<Property name="VertAlign" value="TOP" />
+		<Visual>
+			<ImagerySection name="Text">
+				<TextComponent color="$TextColor" horzAlign="$HorzAlign" vertAlign="$VertAlign" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+	</Frame>
+	<Frame name="ThemeTextSmallRightVisual">
+		<Visual>
+			<ImagerySection name="Text">
+				<TextComponent color="FFE2B04A" horzAlign="RIGHT" vertAlign="TOP" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+	</Frame>
+	<Frame name="ThemeTextCenterVisual">
+		<Visual>
+			<ImagerySection name="Text">
+				<TextComponent color="FFE2B04A" horzAlign="CENTER" vertAlign="TOP" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+	</Frame>
+	<Frame name="ThemeTitleBarVisual">
+		<Visual>
+			<ImagerySection name="Background">
+				<BorderComponent texture="Interface/GameUI/fg4_gradientBlackCircle2.htex" borderSize="20" tint="90FFFFFF">
+					<Area>
+						<Inset left="0" right="0" top="0" bottom="-14" />
+					</Area>
+				</BorderComponent>
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF0C182A" />
+				<ImageComponent texture="Interface/GameUI/Themes/BlueGold/Textures/NavySurfaceV2.htex" tiling="BOTH" tint="55FFFFFF" />
+				<TextComponent color="FFF3EAD2" horzAlign="LEFT">
+					<Area>
+						<Inset left="16" right="96" top="8" bottom="8" />
+					</Area>
+				</TextComponent>
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Background" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+	</Frame>
+	<Frame name="ThemeTextLargeVisual">
+		<Visual>
+			<ImagerySection name="Text">
+				<TextComponent color="FFE2B04A" horzAlign="CENTER" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+	</Frame>
+	<Frame name="ThemeIconTemplateVisual">
+		<Property name="Icon" value="" />
+		<Visual>
+			<ImagerySection name="Image">
+				<ImageComponent tiling="NONE">
+					<PropertyValue property="Icon" />
+				</ImageComponent>
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Image" color="FFFFFFFF" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="Image" color="AE888888" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+	</Frame>
+	<Frame name="ThemeGameTextFieldVisual">
+		<Visual>
+			<ImagerySection name="Frame">
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF050B14">
+					<Area />
+				</ImageComponent>
+				<ImageComponent texture="Interface/GameUI/Themes/BlueGold/Textures/NavySurfaceV2.htex" tiling="BOTH" tint="38FFFFFF">
+					<Area />
+				</ImageComponent>
+				<BorderComponent texture="Interface/GameUI/Themes/BlueGold/Textures/QuietSlotV2.htex" borderSize="10" leftSize="100" rightSize="100" topSize="100" bottomSize="100" tint="FF758091">
+					<Area />
+				</BorderComponent>
+			</ImagerySection>
+			<ImagerySection name="Caret">
+				<ImageComponent texture="Interface/GlueUI/Caret.htex" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Frame" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="Frame" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Caret">
+				<Layer>
+					<Section section="Caret" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+	</Frame>
+	<Frame name="ThemeDialogBorderFrameVisual">
+		<Visual>
+			<ImagerySection name="Background">
+				<BorderComponent texture="Interface/GameUI/fg4_gradientBlackCircle2.htex" borderSize="31" tint="B0FFFFFF">
+					<Area>
+						<Inset left="-20" right="-24" top="-10" bottom="-28" />
+					</Area>
+				</BorderComponent>
+				<ImageComponent texture="Interface/GameUI/Themes/BlueGold/Textures/NavyWellV4.htex" tint="FFB4BBC9" />
+				<BorderComponent texture="Interface/GameUI/Themes/BlueGold/Textures/WindowFrameV2.htex" borderSize="40" leftSize="168" rightSize="168" topSize="168" bottomSize="168" tint="FFC1B9A8">
+					<Area />
+				</BorderComponent>
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Background" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+	</Frame>
+	<Frame name="ThemeThumbButtonTemplateVisual">
+		<Visual>
+			<ImagerySection name="NormalFrame">
+				<BorderComponent texture="Interface/GameUI/Themes/BlueGold/Textures/ButtonV2.htex" borderSize="7" leftSize="120" rightSize="120" topSize="120" bottomSize="120" tint="FFB5AD9A">
+					<Area>
+						<Inset left="22" right="22" top="4" bottom="4" />
+					</Area>
+				</BorderComponent>
+			</ImagerySection>
+			<ImagerySection name="HoveredFrame">
+				<BorderComponent texture="Interface/GameUI/Themes/BlueGold/Textures/ButtonV2.htex" borderSize="7" leftSize="120" rightSize="120" topSize="120" bottomSize="120" tint="FFF3DFBA">
+					<Area>
+						<Inset left="22" right="22" top="4" bottom="4" />
+					</Area>
+				</BorderComponent>
+			</ImagerySection>
+			<ImagerySection name="PushedFrame">
+				<BorderComponent texture="Interface/GameUI/Themes/BlueGold/Textures/ButtonV2.htex" borderSize="7" leftSize="120" rightSize="120" topSize="120" bottomSize="120" tint="FF8B929C">
+					<Area>
+						<Inset left="22" right="22" top="4" bottom="4" />
+					</Area>
+				</BorderComponent>
+			</ImagerySection>
+			<ImagerySection name="DisabledFrame">
+				<BorderComponent texture="Interface/GameUI/Themes/BlueGold/Textures/ButtonV2.htex" borderSize="7" leftSize="120" rightSize="120" topSize="120" bottomSize="120" tint="FF626A77">
+					<Area>
+						<Inset left="22" right="22" top="4" bottom="4" />
+					</Area>
+				</BorderComponent>
+			</ImagerySection>
+			<StateImagery name="Normal">
+				<Layer>
+					<Section section="NormalFrame" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Hovered">
+				<Layer>
+					<Section section="HoveredFrame" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Pushed">
+				<Layer>
+					<Section section="PushedFrame" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="DisabledFrame" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+	</Frame>
+	<Frame name="ThemeVerticalScrollBarVisual">
+		<Visual>
+			<ImagerySection name="Border">
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="80000000">
+					<Area>
+						<Inset left="40" right="40" top="80" bottom="80" />
+					</Area>
+				</ImageComponent>
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Border" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="Border" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+	</Frame>
+	<Frame name="ThemeScrollUpButtonVisual">
+		<Property name="Icon" value="" />
+		<Visual>
+			<ImagerySection name="ArrowNormal">
+				<ImageComponent tint="FFB3A184">
+					<Area>
+						<Inset all="24" />
+					</Area>
+					<PropertyValue property="Icon" />
+				</ImageComponent>
+			</ImagerySection>
+			<StateImagery name="Normal">
+				<Layer>
+					<Section section="ArrowNormal" />
+				</Layer>
+			</StateImagery>
+			<ImagerySection name="ArrowHovered">
+				<ImageComponent tint="FFFFDA91">
+					<Area>
+						<Inset all="24" />
+					</Area>
+					<PropertyValue property="Icon" />
+				</ImageComponent>
+			</ImagerySection>
+			<StateImagery name="Hovered">
+				<Layer>
+					<Section section="ArrowHovered" />
+				</Layer>
+			</StateImagery>
+			<ImagerySection name="ArrowPushed">
+				<ImageComponent tint="FF8A724F">
+					<Area>
+						<Inset all="24" />
+					</Area>
+					<PropertyValue property="Icon" />
+				</ImageComponent>
+			</ImagerySection>
+			<StateImagery name="Pushed">
+				<Layer>
+					<Section section="ArrowPushed" />
+				</Layer>
+			</StateImagery>
+			<ImagerySection name="ArrowDisabled">
+				<ImageComponent tint="FF393939">
+					<Area>
+						<Inset all="24" />
+					</Area>
+					<PropertyValue property="Icon" />
+				</ImageComponent>
+			</ImagerySection>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="ArrowDisabled" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+	</Frame>
+</UiLayout>

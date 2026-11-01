@@ -125,16 +125,7 @@
             </OnLoad>
 			<OnUpdate>return function(self, elapsed) ActionBar_UpdateShortcutLabels(elapsed); end</OnUpdate>
 		</Scripts>
-		<Visual>
-			<ImagerySection name="Surface">
-				<!-- The continuous oak-bronze plate is drawn by GameMenuBar. -->
-			</ImagerySection>
-			<StateImagery name="Enabled">
-				<Layer>
-					<Section section="Surface" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeActionBarVisual" />
 	</Frame>
 	<!-- Second action bar (slots 13-24). It floats above the main bar instead of extending the
 	     oak-bronze plate, and stays hidden until the player enables it in the interface options.
@@ -265,15 +256,6 @@
                 end
             </OnLoad>
 		</Scripts>
-		<Visual>
-			<ImagerySection name="Surface">
-				<!-- Deliberately empty: the second bar has no backing plate of its own. -->
-			</ImagerySection>
-			<StateImagery name="Enabled">
-				<Layer>
-					<Section section="Surface" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeActionBarVisual" />
 	</Frame>
 </UiLayout>

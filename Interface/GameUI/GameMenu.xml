@@ -13,16 +13,7 @@
 	<Frame name="GameMenu" renderer="DefaultRenderer" parent="GameParent">
 		<Property name="Visible" value="False" />
 
-		<Visual>
-			<ImagerySection name="Background">
-				<BorderComponent texture="Interface/GameUI/Alestia/WindowPanel.htex" borderSize="32" />
-			</ImagerySection>
-			<StateImagery name="Enabled">
-				<Layer>
-					<Section section="Background" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeBugReportFrameVisual" />
 
 
 		<Area>
@@ -42,16 +33,7 @@
 		</Frame>
 
 		<Frame name="GameMenuButtons" renderer="DefaultRenderer">
-			<Visual>
-				<ImagerySection name="Border">
-					<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" />
-				</ImagerySection>
-				<StateImagery name="Enabled">
-					<Layer>
-						<!-- Buttons sit directly on the window surface. -->
-					</Layer>
-				</StateImagery>
-			</Visual>
+			<Visual inherits="ThemeGameMenuButtonsVisual" />
 
 			<Area>
 				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="MenuTitleBar" offset="20" />

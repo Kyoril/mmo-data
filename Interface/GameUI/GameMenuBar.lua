@@ -7,6 +7,18 @@ local menuBarOffset = MENUBAR_H_PADDING + 0.0
 -- Labeled experience bars sit above the action slots. At max character level,
 -- the class bar occupies the lower position. Tooltips provide further details.
 function GameMenuBar_UpdateExperienceBarLayout()
+	local barHeight = (GameUITheme and GameUITheme.ExperienceBarHeight) or 44;
+	local barSpacing = (GameUITheme and GameUITheme.ExperienceBarSpacing) or 4;
+	local barStep = barHeight + barSpacing;
+	local dockBottom = (GameUITheme and GameUITheme.ExperienceDockBottomOffset) or 8;
+	local dockSide = (GameUITheme and GameUITheme.ExperienceDockSideOffset) or 56;
+	local enclosed = GameUITheme and GameUITheme.EncloseExperienceBars;
+	local baseHeight = (GameUITheme and GameUITheme.MenuBarBaseHeight) or 156;
+	ExperienceDock:SetAnchor(AnchorPoint.BOTTOM, enclosed and AnchorPoint.BOTTOM or AnchorPoint.TOP, GameMenuBar, dockBottom);
+	ExperienceDock:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, GameMenuBar, -dockSide);
+	ExperienceDock:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, GameMenuBar, dockSide);
+	PlayerExperienceBar:SetHeight(barHeight);
+	PlayerClassExperienceBar:SetHeight(barHeight);
 	local visibleBars = 0;
 	if (PlayerExperienceBar:IsVisible()) then
 		visibleBars = visibleBars + 1;
@@ -14,8 +26,8 @@ function GameMenuBar_UpdateExperienceBarLayout()
 	if (PlayerClassExperienceBar:IsVisible()) then
 		visibleBars = visibleBars + 1;
 	end
-	GameMenuBar:SetHeight(156);
-	ExperienceDock:SetHeight(visibleBars * 48);
+	GameMenuBar:SetHeight(baseHeight + (enclosed and visibleBars * barStep or 0));
+	ExperienceDock:SetHeight(visibleBars * barStep);
 	if (visibleBars > 0) then
 		ExperienceDock:Show();
 	else
@@ -27,7 +39,7 @@ function GameMenuBar_UpdateExperienceBarLayout()
 	AlestiaOakLeft:SetWidth(ornamentHeight / 2);
 	AlestiaOakRight:SetWidth(ornamentHeight / 2);
 	if (PlayerExperienceBar:IsVisible()) then
-		PlayerClassExperienceBar:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.BOTTOM, ExperienceDock, -48);
+		PlayerClassExperienceBar:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.BOTTOM, ExperienceDock, -barStep);
 	else
 		PlayerClassExperienceBar:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.BOTTOM, ExperienceDock, 0);
 	end

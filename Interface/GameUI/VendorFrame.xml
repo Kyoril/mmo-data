@@ -1,67 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
 <UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
 	<Script file="VendorFrame.lua" />
-	<Font name="VendorItemFont" file="Fonts/FRIZQT__.TTF" size="24" outline="1" />
+
 	<Frame name="VendorItemIconTemplate" type="Button" renderer="ButtonRenderer">
 		<Property name="Icon" />
 		<Property name="QualityColor" value="FFFFFFFF" />
-		<Visual>
-			<ImagerySection name="Image">
-				<ImageComponent>
-					<Area>
-						<Inset all="10" />
-					</Area>
-					<PropertyValue property="Icon" />
-				</ImageComponent>
-			</ImagerySection>
-			<ImagerySection name="Text">
-				<TextComponent horzAlign="RIGHT" vertAlign="BOTTOM">
-					<Area>
-						<Inset all="8" />
-					</Area>
-				</TextComponent>
-			</ImagerySection>
-			<ImagerySection name="NormalFrame">
-				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="$QualityColor" />
-			</ImagerySection>
-			<ImagerySection name="HoveredFrame">
-				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="$QualityColor" />
-			</ImagerySection>
-			<ImagerySection name="PushedFrame">
-				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="$QualityColor" />
-			</ImagerySection>
-			<ImagerySection name="DisabledFrame">
-				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="$QualityColor" />
-			</ImagerySection>
-			<StateImagery name="Normal">
-				<Layer>
-					<Section section="NormalFrame" />
-					<Section section="Image" />
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Hovered">
-				<Layer>
-					<Section section="HoveredFrame" />
-					<Section section="Image" />
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Pushed">
-				<Layer>
-					<Section section="PushedFrame" />
-					<Section section="Image" />
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer>
-					<Section section="DisabledFrame" />
-					<Section section="Image" />
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeVendorItemIconTemplateVisual" />
 		<Area>
 			<Size>
 				<AbsDimension x="112" y="112" />
@@ -71,47 +15,7 @@
 	<Frame name="VendorTabButtonTemplate" type="Button" renderer="CheckboxRenderer">
 		<Property name="Font" value="DefaultSmall" />
 		<Property name="Checkable" value="true" />
-		<Visual>
-			<ImagerySection name="NormalFrame">
-				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Down_result.htex" borderSize="25" />
-			</ImagerySection>
-			<ImagerySection name="HoveredFrame">
-				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Up_result.htex" borderSize="25" />
-			</ImagerySection>
-			<ImagerySection name="PushedFrame">
-				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Over_result.htex" borderSize="25" />
-			</ImagerySection>
-			<ImagerySection name="SelectedFrame">
-				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Over_result.htex" borderSize="25" />
-				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="8">
-					<Area><Inset all="5" /></Area>
-				</BorderComponent>
-			</ImagerySection>
-			<ImagerySection name="Caption">
-				<TextComponent color="FFB9A26A" horzAlign="CENTER" vertAlign="CENTER" />
-			</ImagerySection>
-			<ImagerySection name="CaptionActive">
-				<TextComponent color="FFFFFFFF" horzAlign="CENTER" vertAlign="CENTER" />
-			</ImagerySection>
-			<StateImagery name="Normal">
-				<Layer><Section section="NormalFrame" /><Section section="Caption" /></Layer>
-			</StateImagery>
-			<StateImagery name="Hovered">
-				<Layer><Section section="HoveredFrame" /><Section section="CaptionActive" /></Layer>
-			</StateImagery>
-			<StateImagery name="Pushed">
-				<Layer><Section section="PushedFrame" /><Section section="CaptionActive" color="FFAAAAAA" /></Layer>
-			</StateImagery>
-			<StateImagery name="NormalChecked">
-				<Layer><Section section="SelectedFrame" /><Section section="CaptionActive" /></Layer>
-			</StateImagery>
-			<StateImagery name="HoveredChecked">
-				<Layer><Section section="SelectedFrame" /><Section section="CaptionActive" /></Layer>
-			</StateImagery>
-			<StateImagery name="PushedChecked">
-				<Layer><Section section="SelectedFrame" /><Section section="CaptionActive" color="FFAAAAAA" /></Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeMailFrameTabButtonTemplateVisual" />
 		<Area>
 			<Size><AbsDimension x="224" y="48" /></Size>
 		</Area>
@@ -122,17 +26,7 @@
 				<AbsDimension y="128" />
 			</Size>
 		</Area>
-		<Visual>
-			<ImagerySection name="Surface">
-				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF211E17" />
-				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="8" tint="FF9B8052" />
-			</ImagerySection>
-			<StateImagery name="Enabled">
-				<Layer>
-					<Section section="Surface" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeVendorCardTemplateVisual" />
 	</Frame>
 	<Frame name="VendorFrame" inherits="SidePanelTemplate" parent="GameParent">
 		<Property name="Visible" value="False" />
@@ -189,17 +83,7 @@
 				<Anchor point="RIGHT" offset="-24" />
 				<Anchor point="BOTTOM" offset="-144" />
 			</Area>
-			<Visual>
-				<ImagerySection name="Surface">
-					<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF11110F" />
-					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFAC946B" />
-				</ImagerySection>
-				<StateImagery name="Enabled">
-					<Layer>
-						<Section section="Surface" />
-					</Layer>
-				</StateImagery>
-			</Visual>
+			<Visual inherits="ThemeVendorStockSurfaceVisual" />
 		</Frame>
 		<Frame name="VendorButton1Border" inherits="VendorCardTemplate">
 			<Area>
@@ -223,21 +107,7 @@
 						<AbsDimension x="0" y="58" />
 					</Size>
 				</Area>
-				<Visual>
-					<ImagerySection name="Text">
-						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
-					</ImagerySection>
-					<StateImagery name="Enabled">
-						<Layer>
-							<Section section="Text" />
-						</Layer>
-					</StateImagery>
-					<StateImagery name="Disabled">
-						<Layer>
-							<Section section="Text" />
-						</Layer>
-					</StateImagery>
-				</Visual>
+				<Visual inherits="ThemeVendorText1Visual" />
 			</Frame>
 			<Frame name="VendorMoney1" inherits="MoneyFrameTemplate">
 				<Area>
@@ -268,21 +138,7 @@
 						<AbsDimension x="0" y="58" />
 					</Size>
 				</Area>
-				<Visual>
-					<ImagerySection name="Text">
-						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
-					</ImagerySection>
-					<StateImagery name="Enabled">
-						<Layer>
-							<Section section="Text" />
-						</Layer>
-					</StateImagery>
-					<StateImagery name="Disabled">
-						<Layer>
-							<Section section="Text" />
-						</Layer>
-					</StateImagery>
-				</Visual>
+				<Visual inherits="ThemeVendorText1Visual" />
 			</Frame>
 			<Frame name="VendorMoney2" inherits="MoneyFrameTemplate">
 				<Area>
@@ -313,21 +169,7 @@
 						<AbsDimension x="0" y="58" />
 					</Size>
 				</Area>
-				<Visual>
-					<ImagerySection name="Text">
-						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
-					</ImagerySection>
-					<StateImagery name="Enabled">
-						<Layer>
-							<Section section="Text" />
-						</Layer>
-					</StateImagery>
-					<StateImagery name="Disabled">
-						<Layer>
-							<Section section="Text" />
-						</Layer>
-					</StateImagery>
-				</Visual>
+				<Visual inherits="ThemeVendorText1Visual" />
 			</Frame>
 			<Frame name="VendorMoney3" inherits="MoneyFrameTemplate">
 				<Area>
@@ -358,21 +200,7 @@
 						<AbsDimension x="0" y="58" />
 					</Size>
 				</Area>
-				<Visual>
-					<ImagerySection name="Text">
-						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
-					</ImagerySection>
-					<StateImagery name="Enabled">
-						<Layer>
-							<Section section="Text" />
-						</Layer>
-					</StateImagery>
-					<StateImagery name="Disabled">
-						<Layer>
-							<Section section="Text" />
-						</Layer>
-					</StateImagery>
-				</Visual>
+				<Visual inherits="ThemeVendorText1Visual" />
 			</Frame>
 			<Frame name="VendorMoney4" inherits="MoneyFrameTemplate">
 				<Area>
@@ -403,21 +231,7 @@
 						<AbsDimension x="0" y="58" />
 					</Size>
 				</Area>
-				<Visual>
-					<ImagerySection name="Text">
-						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
-					</ImagerySection>
-					<StateImagery name="Enabled">
-						<Layer>
-							<Section section="Text" />
-						</Layer>
-					</StateImagery>
-					<StateImagery name="Disabled">
-						<Layer>
-							<Section section="Text" />
-						</Layer>
-					</StateImagery>
-				</Visual>
+				<Visual inherits="ThemeVendorText1Visual" />
 			</Frame>
 			<Frame name="VendorMoney5" inherits="MoneyFrameTemplate">
 				<Area>
@@ -448,21 +262,7 @@
 						<AbsDimension x="0" y="58" />
 					</Size>
 				</Area>
-				<Visual>
-					<ImagerySection name="Text">
-						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
-					</ImagerySection>
-					<StateImagery name="Enabled">
-						<Layer>
-							<Section section="Text" />
-						</Layer>
-					</StateImagery>
-					<StateImagery name="Disabled">
-						<Layer>
-							<Section section="Text" />
-						</Layer>
-					</StateImagery>
-				</Visual>
+				<Visual inherits="ThemeVendorText1Visual" />
 			</Frame>
 			<Frame name="VendorMoney6" inherits="MoneyFrameTemplate">
 				<Area>
@@ -493,21 +293,7 @@
 						<AbsDimension x="0" y="58" />
 					</Size>
 				</Area>
-				<Visual>
-					<ImagerySection name="Text">
-						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
-					</ImagerySection>
-					<StateImagery name="Enabled">
-						<Layer>
-							<Section section="Text" />
-						</Layer>
-					</StateImagery>
-					<StateImagery name="Disabled">
-						<Layer>
-							<Section section="Text" />
-						</Layer>
-					</StateImagery>
-				</Visual>
+				<Visual inherits="ThemeVendorText1Visual" />
 			</Frame>
 			<Frame name="VendorMoney7" inherits="MoneyFrameTemplate">
 				<Area>
@@ -538,21 +324,7 @@
 						<AbsDimension x="0" y="58" />
 					</Size>
 				</Area>
-				<Visual>
-					<ImagerySection name="Text">
-						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
-					</ImagerySection>
-					<StateImagery name="Enabled">
-						<Layer>
-							<Section section="Text" />
-						</Layer>
-					</StateImagery>
-					<StateImagery name="Disabled">
-						<Layer>
-							<Section section="Text" />
-						</Layer>
-					</StateImagery>
-				</Visual>
+				<Visual inherits="ThemeVendorText1Visual" />
 			</Frame>
 			<Frame name="VendorMoney8" inherits="MoneyFrameTemplate">
 				<Area>
@@ -583,21 +355,7 @@
 						<AbsDimension x="0" y="58" />
 					</Size>
 				</Area>
-				<Visual>
-					<ImagerySection name="Text">
-						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
-					</ImagerySection>
-					<StateImagery name="Enabled">
-						<Layer>
-							<Section section="Text" />
-						</Layer>
-					</StateImagery>
-					<StateImagery name="Disabled">
-						<Layer>
-							<Section section="Text" />
-						</Layer>
-					</StateImagery>
-				</Visual>
+				<Visual inherits="ThemeVendorText1Visual" />
 			</Frame>
 			<Frame name="VendorMoney9" inherits="MoneyFrameTemplate">
 				<Area>
@@ -628,21 +386,7 @@
 						<AbsDimension x="0" y="58" />
 					</Size>
 				</Area>
-				<Visual>
-					<ImagerySection name="Text">
-						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
-					</ImagerySection>
-					<StateImagery name="Enabled">
-						<Layer>
-							<Section section="Text" />
-						</Layer>
-					</StateImagery>
-					<StateImagery name="Disabled">
-						<Layer>
-							<Section section="Text" />
-						</Layer>
-					</StateImagery>
-				</Visual>
+				<Visual inherits="ThemeVendorText1Visual" />
 			</Frame>
 			<Frame name="VendorMoney10" inherits="MoneyFrameTemplate">
 				<Area>
@@ -673,21 +417,7 @@
 						<AbsDimension x="0" y="58" />
 					</Size>
 				</Area>
-				<Visual>
-					<ImagerySection name="Text">
-						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
-					</ImagerySection>
-					<StateImagery name="Enabled">
-						<Layer>
-							<Section section="Text" />
-						</Layer>
-					</StateImagery>
-					<StateImagery name="Disabled">
-						<Layer>
-							<Section section="Text" />
-						</Layer>
-					</StateImagery>
-				</Visual>
+				<Visual inherits="ThemeVendorText1Visual" />
 			</Frame>
 			<Frame name="VendorMoney11" inherits="MoneyFrameTemplate">
 				<Area>
@@ -718,21 +448,7 @@
 						<AbsDimension x="0" y="58" />
 					</Size>
 				</Area>
-				<Visual>
-					<ImagerySection name="Text">
-						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
-					</ImagerySection>
-					<StateImagery name="Enabled">
-						<Layer>
-							<Section section="Text" />
-						</Layer>
-					</StateImagery>
-					<StateImagery name="Disabled">
-						<Layer>
-							<Section section="Text" />
-						</Layer>
-					</StateImagery>
-				</Visual>
+				<Visual inherits="ThemeVendorText1Visual" />
 			</Frame>
 			<Frame name="VendorMoney12" inherits="MoneyFrameTemplate">
 				<Area>
@@ -763,21 +479,7 @@
 						<AbsDimension x="0" y="58" />
 					</Size>
 				</Area>
-				<Visual>
-					<ImagerySection name="Text">
-						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
-					</ImagerySection>
-					<StateImagery name="Enabled">
-						<Layer>
-							<Section section="Text" />
-						</Layer>
-					</StateImagery>
-					<StateImagery name="Disabled">
-						<Layer>
-							<Section section="Text" />
-						</Layer>
-					</StateImagery>
-				</Visual>
+				<Visual inherits="ThemeVendorText1Visual" />
 			</Frame>
 			<Frame name="VendorMoney13" inherits="MoneyFrameTemplate">
 				<Area>
@@ -808,21 +510,7 @@
 						<AbsDimension x="0" y="58" />
 					</Size>
 				</Area>
-				<Visual>
-					<ImagerySection name="Text">
-						<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
-					</ImagerySection>
-					<StateImagery name="Enabled">
-						<Layer>
-							<Section section="Text" />
-						</Layer>
-					</StateImagery>
-					<StateImagery name="Disabled">
-						<Layer>
-							<Section section="Text" />
-						</Layer>
-					</StateImagery>
-				</Visual>
+				<Visual inherits="ThemeVendorText1Visual" />
 			</Frame>
 			<Frame name="VendorMoney14" inherits="MoneyFrameTemplate">
 				<Area>
@@ -842,16 +530,7 @@
 					<AbsDimension y="112" />
 				</Size>
 			</Area>
-			<Visual>
-				<ImagerySection name="Surface">
-					<BorderComponent texture="Interface/GameUI/Alestia/WindowPanel.htex" borderSize="32" />
-				</ImagerySection>
-				<StateImagery name="Enabled">
-					<Layer>
-						<Section section="Surface" />
-					</Layer>
-				</StateImagery>
-			</Visual>
+			<Visual inherits="ThemeCraftingFrameVisual" />
 		</Frame>
 		<Frame inherits="TextCenter" name="VendorPageLabel">
 			<Property name="Text" value="" />

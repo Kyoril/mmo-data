@@ -1,29 +1,11 @@
 <?xml version="1.0" ?>
 <UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
 	<Script file="GameTooltip.lua" />
-	
-	<Font name="TooltipTitleFont" file="Fonts/FRIZQT__.TTF" size="28" outline="0" shadowX="1.0" shadowY="1.0" />
-	<Font name="TooltipFont" file="Fonts/FRIZQT__.TTF" size="24" outline="0" shadowX="1.0" shadowY="1.0" />
 
     <Frame name="GameTooltipLineTemplate" renderer="DefaultRenderer">
 		<Property name="Font" value="TooltipFont" />
 
-        <Visual>
-			<ImagerySection name="Text">
-				<TextComponent color="FFFFFFFF" horzAlign="LEFT" vertAlign="TOP" />
-            </ImagerySection>
-
-			<StateImagery name="Enabled">
-				<Layer>
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer>
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-        </Visual>
+        <Visual inherits="ThemeEmoteNameLabelVisual" />
         <Area>
             <Size><AbsDimension x="512" y="32" /></Size>
         </Area>
@@ -55,22 +37,7 @@
     <Frame name="GameTooltipLineRightTemplate" renderer="DefaultRenderer">
 		<Property name="Font" value="TooltipFont" />
 
-        <Visual>
-			<ImagerySection name="Text">
-				<TextComponent color="FFFFFFFF" horzAlign="RIGHT" vertAlign="TOP" />
-            </ImagerySection>
-
-			<StateImagery name="Enabled">
-				<Layer>
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer>
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-        </Visual>
+        <Visual inherits="ThemeGameTooltipLineRightTemplateVisual" />
         <Area>
             <Size><AbsDimension x="512" y="32" /></Size>
         </Area>
@@ -80,19 +47,7 @@
 		<Property name="Visible" value="False" />
 		<Property name="MousePassThrough" value="true" />
 		
-		<Visual>
-			<ImagerySection name="Background">
-				<ImageComponent texture="Interface/GlueUI/TransparentBorder.htex" tiling="NONE">
-					<Area><Inset all="8" /></Area>
-                </ImageComponent>
-				<BorderComponent texture="Interface/GameUI/fg4_borders_stone_edges_result.htex" borderSize="32" />
-			</ImagerySection>
-			<StateImagery name="Enabled">
-				<Layer>
-					<Section section="Background" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeGameTooltipVisual" />
 
         <Frame name="GameTooltipLines">
             <Area>
@@ -149,19 +104,7 @@
 		<Property name="Visible" value="False" />
 		<Property name="MousePassThrough" value="true" />
 
-		<Visual>
-			<ImagerySection name="Background">
-				<ImageComponent texture="Interface/GlueUI/TransparentBorder.htex" tiling="NONE">
-					<Area><Inset all="8" /></Area>
-				</ImageComponent>
-				<BorderComponent texture="Interface/GameUI/fg4_borders_stone_edges_result.htex" borderSize="32" />
-			</ImagerySection>
-			<StateImagery name="Enabled">
-				<Layer>
-					<Section section="Background" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeGameTooltipVisual" />
 
 		<Frame name="ItemCompareTooltipLines">
 			<Area>

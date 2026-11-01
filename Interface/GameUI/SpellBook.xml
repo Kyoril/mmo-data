@@ -2,29 +2,11 @@
 <UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
 	<Script file="SpellBook.lua" />
 
-	<Font name="SpellNameLabelFont" file="Fonts/FRIZQT__.TTF" size="22" outline="0" shadowX="1.0" shadowY="1.0" />
-	<Font name="SpellSubLabelFont" file="Fonts/FRIZQT__.TTF" size="18" outline="0" shadowX="1.0" shadowY="1.0" />
-	<Font name="SpellBookTabFont" file="Fonts/FRIZQT__.TTF" size="20" outline="0" shadowX="1.0" shadowY="1.0" />
-
 	<!-- Small label -->
 	<Frame name="SpellNameLabel" renderer="DefaultRenderer">
 		<Property name="Font" value="SpellNameLabelFont" />
 
-		<Visual>
-			<ImagerySection name="Text">
-				<TextComponent color="FFFFFFFF" horzAlign="LEFT" vertAlign="TOP" />
-			</ImagerySection>
-			<StateImagery name="Enabled">
-				<Layer>
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer>
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeEmoteNameLabelVisual" />
 		<Area>
 			<Size><AbsDimension x="0" y="40" /></Size>
 		</Area>
@@ -34,52 +16,7 @@
 		<Property name="Icon" />
 		<Property name="DragEnabled" value="true" />
 
-		<Visual>
-			<ImagerySection name="Image">
-				<ImageComponent>
-					<Area>
-						<Inset all="16" />
-					</Area>
-					<PropertyValue property="Icon" />
-				</ImageComponent>
-			</ImagerySection>
-			<ImagerySection name="NormalFrame">
-				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="FFB8A887" />
-			</ImagerySection>
-			<ImagerySection name="HoveredFrame">
-				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="FFFFDDA0" />
-			</ImagerySection>
-			<ImagerySection name="PushedFrame">
-				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="FF7F6E53" />
-			</ImagerySection>
-			<ImagerySection name="DisabledFrame">
-				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="FFB8A887" />
-			</ImagerySection>
-			<StateImagery name="Normal">
-				<Layer>
-					<Section section="NormalFrame" />
-					<Section section="Image" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Hovered">
-				<Layer>
-					<Section section="HoveredFrame" />
-					<Section section="Image" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Pushed">
-				<Layer>
-					<Section section="PushedFrame" />
-					<Section section="Image" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer>
-					<Section section="DisabledFrame" />
-					<Section section="Image" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeEmoteListButtonTemplateVisual" />
 
         <Frame name="NameLabel" inherits="SpellNameLabel">
             <Property name="Color" value="FF4A3620" />
@@ -124,68 +61,7 @@
 		<Property name="Font" value="SpellBookTabFont" />
 		<Property name="Checkable" value="true" />
 
-		<Visual>
-			<ImagerySection name="NormalFrame">
-				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Down_result.htex" borderSize="25" />
-			</ImagerySection>
-			<ImagerySection name="HoveredFrame">
-				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Up_result.htex" borderSize="25" />
-			</ImagerySection>
-			<ImagerySection name="PushedFrame">
-				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Over_result.htex" borderSize="25" />
-			</ImagerySection>
-			<ImagerySection name="SelectedFrame">
-				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Over_result.htex" borderSize="25" />
-				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="8">
-					<Area><Inset all="5" /></Area>
-				</BorderComponent>
-			</ImagerySection>
-			<ImagerySection name="CaptionNormal">
-				<TextComponent color="FFB9A26A" horzAlign="CENTER" vertAlign="CENTER" />
-			</ImagerySection>
-			<ImagerySection name="CaptionActive">
-				<TextComponent color="FFFFD100" horzAlign="CENTER" vertAlign="CENTER" />
-			</ImagerySection>
-			<ImagerySection name="CaptionSelected">
-				<TextComponent color="FFFFFFFF" horzAlign="CENTER" vertAlign="CENTER" />
-			</ImagerySection>
-			<StateImagery name="Normal">
-				<Layer>
-					<Section section="NormalFrame" />
-					<Section section="CaptionNormal" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Hovered">
-				<Layer>
-					<Section section="HoveredFrame" />
-					<Section section="CaptionActive" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Pushed">
-				<Layer>
-					<Section section="PushedFrame" />
-					<Section section="CaptionSelected" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="NormalChecked">
-				<Layer>
-					<Section section="SelectedFrame" />
-					<Section section="CaptionSelected" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="HoveredChecked">
-				<Layer>
-					<Section section="SelectedFrame" />
-					<Section section="CaptionSelected" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="PushedChecked">
-				<Layer>
-					<Section section="SelectedFrame" />
-					<Section section="CaptionSelected" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeSpellBookTabButtonTemplateVisual" />
 
 		<Area>
 			<Size><AbsDimension x="256" y="76" /></Size>
@@ -195,16 +71,7 @@
     <Frame name="SpellBook" renderer="DefaultRenderer" parent="GameParent">
 		<Property name="Visible" value="False" />
 
-		<Visual>
-			<ImagerySection name="Background">
-				<BorderComponent texture="Interface/GameUI/Alestia/WindowPanel.htex" borderSize="32" />
-			</ImagerySection>
-			<StateImagery name="Enabled">
-				<Layer>
-					<Section section="Background" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeBugReportFrameVisual" />
 
         <Area>
 			<Size><AbsDimension x="960" y="1280" /></Size>
@@ -233,14 +100,7 @@
 			<Frame name="SpellBookPaper" renderer="DefaultRenderer">
 				<Property name="Clickable" value="false" />
 
-				<Visual>
-					<ImagerySection name="Frame">
-						<BorderComponent texture="Interface/GameUI/QuestFrame_Background.htex" borderSize="96" tint="FFFFFFFF" />
-					</ImagerySection>
-					<StateImagery name="Enabled">
-						<Layer><Section section="Frame" /></Layer>
-					</StateImagery>
-				</Visual>
+				<Visual inherits="ThemeEmoteListPaperVisual" />
 
 				<Area>
 					<Anchor point="TOP" offset="112" />
@@ -253,14 +113,7 @@
 			<Frame name="SpellBookPaperBorder" renderer="DefaultRenderer">
 				<Property name="Clickable" value="false" />
 
-				<Visual>
-					<ImagerySection name="Frame">
-						<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" />
-					</ImagerySection>
-					<StateImagery name="Enabled">
-						<Layer><Section section="Frame" /></Layer>
-					</StateImagery>
-				</Visual>
+				<Visual inherits="ThemeEmoteListPaperBorderVisual" />
 
 				<Area>
 					<Anchor point="TOP" offset="104" />
