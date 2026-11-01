@@ -4,9 +4,6 @@
 
 	<!-- Nameplate names: hovered (deeper shadow) and selected (larger, deeper shadow). The resting
 	     name uses DefaultHeader, the resting level line DefaultSmall. -->
-	<Font name="CharNameplateNameHovered" file="Fonts/EBGaramond-Regular.ttf" size="41" outline="0" shadowX="2.0" shadowY="2.0" />
-	<Font name="CharNameplateNameSelected" file="Fonts/EBGaramond-Regular.ttf" size="47" outline="0" shadowX="2.0" shadowY="2.0" />
-	<Font name="CharNameplateSmallHovered" file="Fonts/EBGaramond-Regular.ttf" size="32" outline="0" shadowX="2.0" shadowY="2.0" />
 
 	<!-- Roster row: CharRosterRow1..N are a fixed pool showing a window of the character order
 	     (CharSelect.lua). List style B, like the realm rows (RealmList.xml): no box at rest, a thin
@@ -22,86 +19,7 @@
 		<Property name="Checkable" value="true" />
 		<Property name="SeparatorColor" value="598C6234" />
 
-		<Visual>
-			<ImagerySection name="Separator">
-				<BorderComponent texture="Interface/GlueUI/GlueListAccent.htex" leftSize="2" topSize="14" rightSize="22" bottomSize="14" tint="$SeparatorColor">
-					<Area><Inset left="32" top="140" right="32" bottom="0" /></Area>
-				</BorderComponent>
-			</ImagerySection>
-			<ImagerySection name="HoverFade">
-				<ImageComponent texture="Interface/GlueUI/GlueListFade.htex" tint="5AC8642E" />
-			</ImagerySection>
-			<ImagerySection name="PushedFade">
-				<ImageComponent texture="Interface/GlueUI/GlueListFade.htex" tint="80B4502A" />
-			</ImagerySection>
-			<ImagerySection name="SelectedFade">
-				<ImageComponent texture="Interface/GlueUI/GlueListFade.htex" tint="CC96241A" />
-				<BorderComponent texture="Interface/GlueUI/GlueListAccent.htex" borderSize="12" tint="FFDEA660" />
-			</ImagerySection>
-			<!-- The right inset leaves room for the "on the plaza" marker. -->
-			<ImagerySection name="Name">
-				<TextComponent color="FFF3EEE2" horzAlign="LEFT" vertAlign="TOP">
-					<Area><Inset left="40" top="18" right="320" /></Area>
-				</TextComponent>
-			</ImagerySection>
-
-			<StateImagery name="Normal">
-				<Layer>
-					<Section section="Separator" />
-					<Section section="Name" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Hovered">
-				<Layer>
-					<Section section="HoverFade" />
-					<Section section="Separator" />
-					<Section section="Name" color="FFFFFFFF" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Pushed">
-				<Layer>
-					<Section section="PushedFade" />
-					<Section section="Separator" />
-					<Section section="Name" color="FFDDDDDD" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer>
-					<Section section="Separator" />
-					<Section section="Name" color="FF8A867E" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="NormalChecked">
-				<Layer>
-					<Section section="SelectedFade" />
-					<Section section="Separator" />
-					<Section section="Name" color="FFFFFFFF" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="HoveredChecked">
-				<Layer>
-					<Section section="SelectedFade" />
-					<Section section="HoverFade" />
-					<Section section="Separator" />
-					<Section section="Name" color="FFFFFFFF" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="PushedChecked">
-				<Layer>
-					<Section section="SelectedFade" />
-					<Section section="PushedFade" />
-					<Section section="Separator" />
-					<Section section="Name" color="FFDDDDDD" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="DisabledChecked">
-				<Layer>
-					<Section section="SelectedFade" />
-					<Section section="Separator" />
-					<Section section="Name" color="FF8A867E" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeGlueCharRosterRowTemplateVisual" />
 		<Area>
 			<Size><AbsDimension y="144" /></Size>
 		</Area>
@@ -112,22 +30,7 @@
 			<Property name="Enabled" value="false" />
 			<Property name="Clickable" value="false" />
 
-			<Visual>
-				<ImagerySection name="Text">
-					<TextComponent color="FFB5A892" horzAlign="LEFT" vertAlign="CENTER" />
-				</ImagerySection>
-
-				<StateImagery name="Enabled">
-					<Layer>
-						<Section section="Text" />
-					</Layer>
-				</StateImagery>
-				<StateImagery name="Disabled">
-					<Layer>
-						<Section section="Text" />
-					</Layer>
-				</StateImagery>
-			</Visual>
+			<Visual inherits="ThemeGlueCharSubtextVisual" />
 
 			<Area>
 				<Anchor point="LEFT" offset="40" />
@@ -233,21 +136,7 @@
 				<Anchor point="BOTTOM" offset="-97" />
 				<Size><AbsDimension x="220" y="6" /></Size>
 			</Area>
-			<Visual>
-				<ImagerySection name="Line">
-					<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrameSelected.htex" leftSize="36" topSize="6" rightSize="36" bottomSize="494" tint="FFFFB84D" />
-				</ImagerySection>
-				<StateImagery name="Enabled">
-					<Layer>
-						<Section section="Line" />
-					</Layer>
-				</StateImagery>
-				<StateImagery name="Disabled">
-					<Layer>
-						<Section section="Line" />
-					</Layer>
-				</StateImagery>
-			</Visual>
+			<Visual inherits="ThemeGlueCharNameplateSelectedMarkVisual" />
 		</Frame>
 	</Frame>
 
@@ -283,16 +172,7 @@
 					<Anchor point="BOTTOM"/>
 					<Size><AbsDimension y="400" /></Size>
 				</Area>
-				<Visual>
-					<ImagerySection name="Background">
-						<ImageComponent texture="Interface/GlueUI/GradientBlack.htex" tiling="HORZ" />
-					</ImagerySection>
-					<StateImagery name="Enabled">
-						<Layer>
-							<Section section="Background" />
-						</Layer>
-					</StateImagery>
-				</Visual>
+				<Visual inherits="ThemeGlueCharSelectBottomBarVisual" />
 			</Frame>
 
 			<Frame name="CharSelectEnterButton" inherits="GlueButtonPrimary">

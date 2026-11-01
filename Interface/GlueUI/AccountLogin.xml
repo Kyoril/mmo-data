@@ -12,21 +12,7 @@
 		<Area>
 			<Size><AbsDimension x="44" y="44" /></Size>
 		</Area>
-		<Visual>
-			<ImagerySection name="FrameNormal"><BorderComponent texture="Interface/GlueUI/CharButtonUp.htex" borderSize="22" /></ImagerySection>
-			<ImagerySection name="FrameHovered"><BorderComponent texture="Interface/GlueUI/CharButtonHovered.htex" borderSize="22" /></ImagerySection>
-			<ImagerySection name="FramePushed"><BorderComponent texture="Interface/GlueUI/CharButtonPushed.htex" borderSize="22" /></ImagerySection>
-			<ImagerySection name="FrameDisabled"><BorderComponent texture="Interface/GlueUI/CharButtonUp.htex" borderSize="22" tint="80606060" /></ImagerySection>
-			<ImagerySection name="CheckIcon"><ImageComponent texture="Interface/Icons/fg4_iconsGold_checkMark_result.htex" tiling="NONE"><Area><Inset all="10" /></Area></ImageComponent></ImagerySection>
-			<StateImagery name="Normal"><Layer><Section section="FrameNormal" /></Layer></StateImagery>
-			<StateImagery name="Hovered"><Layer><Section section="FrameHovered" /></Layer></StateImagery>
-			<StateImagery name="Pushed"><Layer><Section section="FramePushed" /></Layer></StateImagery>
-			<StateImagery name="Disabled"><Layer><Section section="FrameDisabled" /></Layer></StateImagery>
-			<StateImagery name="NormalChecked"><Layer><Section section="FramePushed" /><Section section="CheckIcon" /></Layer></StateImagery>
-			<StateImagery name="HoveredChecked"><Layer><Section section="FrameHovered" /><Section section="CheckIcon" /></Layer></StateImagery>
-			<StateImagery name="PushedChecked"><Layer><Section section="FramePushed" /><Section section="CheckIcon" color="FFAAAAAA" /></Layer></StateImagery>
-			<StateImagery name="DisabledChecked"><Layer><Section section="FrameDisabled" /><Section section="CheckIcon" color="80808080" /></Layer></StateImagery>
-		</Visual>
+		<Visual inherits="ThemeGlueGlueCheckboxVisual" />
 	</Frame>
 
 	<!-- Account login frame -->
@@ -56,17 +42,7 @@
 					<Anchor point="BOTTOM"/>
 					<Size><AbsDimension y="500" /></Size>
 				</Area>
-				<Visual>
-					<ImagerySection name="Background">
-						<ImageComponent texture="Interface/GlueUI/GradientBlack.htex" tiling="HORZ" />
-					</ImagerySection>
-
-					<StateImagery name="Enabled">
-						<Layer>
-							<Section section="Background" />
-						</Layer>
-					</StateImagery>
-				</Visual>
+				<Visual inherits="ThemeGlueLoginBackgroundFrameBottomVisual" />
 			</Frame>
 
 			<!-- Dark backdrop centered on logo + form area -->
@@ -85,16 +61,7 @@
 					<Anchor point="H_CENTER" />
 					<Size><AbsDimension x="971" y="512" /></Size>
 				</Area>
-				<Visual>
-					<ImagerySection name="Background">
-						<ImageComponent texture="Interface/Logo.htex" tiling="NONE" />
-					</ImagerySection>
-					<StateImagery name="Enabled">
-						<Layer>
-							<Section section="Background" />
-						</Layer>
-					</StateImagery>
-				</Visual>
+				<Visual inherits="ThemeGlueLoginLogoFrameVisual" />
 			</Frame>
 
 			<Frame name="AccountPasswordField" inherits="GlueTextField">

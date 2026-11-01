@@ -1,3 +1,6 @@
+# Load exactly one appearance before the shared layouts.
+Themes/BlueGold/Theme.toc
+#Themes/Legacy/Theme.toc
 # Include control templates first so that they are known when the layout files that
 # reference them by name are able to find them
 GlueTemplates.xml
