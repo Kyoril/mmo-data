@@ -1,0 +1,281 @@
+<?xml version="1.0" ?>
+<UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="file:\\F:\mmo\data\client\Interface\Ui.xsd">
+	<Script file="PetFrame.lua" />
+	<!-- Sits above the pet bar, which sits above the player frame: both follow the player frame
+	     when the second action bar lifts it (ActionBar_UpdateSecondBarLayout). -->
+	<Frame name="PetFrame" parent="GameParent" renderer="DefaultRenderer">
+		<Property name="Visible" value="false" />
+		<Area>
+			<Size>
+				<AbsDimension x="440" y="152" />
+			</Size>
+			<Anchor point="LEFT" relativeTo="PlayerFrame" offset="0" />
+			<Anchor point="BOTTOM" relativeTo="PetActionBar" relativePoint="TOP" offset="-12" />
+		</Area>
+		<Visual>
+			<ImagerySection name="Background">
+				<BorderComponent texture="Interface/GameUI/fg4_gradientBlackCircle2.htex" borderSize="31" tint="81FFFFFF" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Background" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="Background" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+		<Frame name="PetPortrait" renderer="DefaultRenderer">
+			<Area>
+				<Size>
+					<AbsDimension x="112" y="112" />
+				</Size>
+				<Anchor point="TOP" offset="8" />
+				<Anchor point="LEFT" offset="8" />
+			</Area>
+			<Visual>
+				<ImagerySection name="Background">
+					<BorderComponent texture="Interface/GameUI/fg4_slotBrownRound1_result.htex" borderSize="30" tint="FFFFFFFF" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Background" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="Disabled">
+					<Layer>
+						<Section section="Background" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+			<Frame name="PetPortraitModel" type="UnitModel" renderer="ModelRenderer">
+				<Property name="Animation" value="Idle" />
+				<Property name="Yaw" value="-90" />
+				<Property name="Zoom" value="0.55" />
+				<Property name="OffsetY" value="1.7" />
+				<Area>
+					<Anchor point="TOP" offset="14" />
+					<Anchor point="LEFT" offset="14" />
+					<Anchor point="RIGHT" offset="-14" />
+					<Anchor point="BOTTOM" offset="-14" />
+				</Area>
+			</Frame>
+			<Frame name="PetPortraitLevel" renderer="DefaultRenderer">
+				<Property name="Font" value="CombatHudTextFont" />
+				<Property name="TextColor" value="FFFFFFFF" />
+				<Visual>
+					<ImagerySection name="Background">
+						<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFB6A890" />
+						<TextComponent color="$TextColor" horzAlign="CENTER" vertAlign="CENTER" />
+					</ImagerySection>
+					<StateImagery name="Enabled">
+						<Layer>
+							<Section section="Background" />
+						</Layer>
+					</StateImagery>
+					<StateImagery name="Disabled">
+						<Layer>
+							<Section section="Background" />
+						</Layer>
+					</StateImagery>
+				</Visual>
+				<Area>
+					<Size>
+						<AbsDimension x="56" y="36" />
+					</Size>
+					<Anchor point="H_CENTER" offset="0" />
+					<Anchor point="BOTTOM" offset="16" />
+				</Area>
+			</Frame>
+		</Frame>
+		<Frame name="PetName" inherits="TextSmall">
+			<Property name="TextColor" value="FFF0E7D6" />
+			<Property name="Font" value="CombatHudNameFont" />
+			<Property name="HorzAlign" value="LEFT" />
+			<Area>
+				<Size>
+					<AbsDimension y="34" />
+				</Size>
+				<Anchor point="LEFT" offset="12" relativeTo="PetPortrait" relativePoint="RIGHT" />
+				<Anchor point="RIGHT" offset="-8" />
+				<Anchor point="TOP" offset="6" />
+			</Area>
+		</Frame>
+		<Frame name="PetHealthBar" type="ProgressBar">
+			<Property name="Progress" value="1" />
+			<Property name="Font" value="CombatHudTextFont" />
+			<Area>
+				<Size>
+					<AbsDimension y="38" />
+				</Size>
+				<Anchor point="LEFT" offset="12" relativeTo="PetPortrait" relativePoint="RIGHT" />
+				<Anchor point="RIGHT" offset="-8" />
+				<Anchor point="TOP" offset="0" relativeTo="PetName" relativePoint="BOTTOM" />
+			</Area>
+			<Visual>
+				<ImagerySection name="Caption">
+					<TextComponent color="FFFFFFFF" horzAlign="CENTER" vertAlign="CENTER" />
+				</ImagerySection>
+				<ImagerySection name="Background">
+					<BorderComponent texture="Interface/fg4_borders_01_33.htex" borderSize="5" />
+				</ImagerySection>
+				<ImagerySection name="Border">
+					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFB6A890" />
+				</ImagerySection>
+				<ImagerySection name="Progress">
+					<ImageComponent texture="Interface/fg4_gradientWhiteV1_result.htex" tiling="HORZ" tint="FF43C653">
+						<Area>
+							<Inset all="7" />
+						</Area>
+					</ImageComponent>
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Background" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="Disabled">
+					<Layer>
+						<Section section="Background" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="Progress">
+					<Layer>
+						<Section section="Progress" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="Overlay">
+					<Layer>
+						<Section section="Border" />
+						<Section section="Caption" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+		</Frame>
+		<Frame name="PetManaBar" type="ProgressBar">
+			<Property name="Progress" value="1" />
+			<Property name="Font" value="CombatHudTextFont" />
+			<Area>
+				<Size>
+					<AbsDimension y="30" />
+				</Size>
+				<Anchor point="LEFT" offset="12" relativeTo="PetPortrait" relativePoint="RIGHT" />
+				<Anchor point="RIGHT" offset="-8" />
+				<Anchor point="TOP" offset="4" relativeTo="PetHealthBar" relativePoint="BOTTOM" />
+			</Area>
+			<Visual>
+				<ImagerySection name="Caption">
+					<TextComponent color="FFFFFFFF" horzAlign="CENTER" vertAlign="CENTER" />
+				</ImagerySection>
+				<ImagerySection name="Background">
+					<BorderComponent texture="Interface/fg4_borders_01_33.htex" borderSize="5" />
+				</ImagerySection>
+				<ImagerySection name="Border">
+					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFB6A890" />
+				</ImagerySection>
+				<ImagerySection name="Progress">
+					<ImageComponent texture="Interface/fg4_gradientWhiteV1_result.htex" tiling="HORZ" tint="FFFFFFFF">
+						<Area>
+							<Inset all="7" />
+						</Area>
+					</ImageComponent>
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Background" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="Disabled">
+					<Layer>
+						<Section section="Background" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="Progress">
+					<Layer>
+						<Section section="Progress" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="Overlay">
+					<Layer>
+						<Section section="Border" />
+						<Section section="Caption" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+		</Frame>
+		<!-- Only shown for pets that level on their own (PetFrame_UpdateExperience). -->
+		<Frame name="PetExperienceBar" type="ProgressBar">
+			<Property name="Visible" value="false" />
+			<Property name="Progress" value="0" />
+			<Property name="Font" value="ExperienceHudFont" />
+			<Area>
+				<Size>
+					<AbsDimension y="28" />
+				</Size>
+				<Anchor point="LEFT" offset="12" relativeTo="PetPortrait" relativePoint="RIGHT" />
+				<Anchor point="RIGHT" offset="-8" />
+				<Anchor point="TOP" offset="4" relativeTo="PetManaBar" relativePoint="BOTTOM" />
+			</Area>
+			<Visual>
+				<ImagerySection name="RailRim">
+					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="6" tint="FFB38C49" />
+				</ImagerySection>
+				<ImagerySection name="Caption">
+					<TextComponent color="FFFFFFFF" horzAlign="CENTER" vertAlign="CENTER" />
+				</ImagerySection>
+				<ImagerySection name="Background">
+					<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF17130E" />
+				</ImagerySection>
+				<ImagerySection name="Progress">
+					<ImageComponent texture="Interface/fg4_gradientWhiteV1_result.htex" tiling="HORZ" tint="FFAD58E8">
+						<Area>
+							<Inset all="6" />
+						</Area>
+					</ImageComponent>
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Background" />
+						<Section section="RailRim" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="Disabled">
+					<Layer>
+						<Section section="Background" />
+						<Section section="RailRim" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="Progress">
+					<Layer>
+						<Section section="Progress" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="Overlay">
+					<Layer>
+						<Section section="Caption" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+		</Frame>
+		<Frame name="PetFrameClick" setAllPoints="true">
+			<Property name="HoverUnit" value="pet" />
+			<Scripts>
+				<OnClick>
+					return function(self, button)
+						local pos = GetCursorPosition()
+						PetFrame_OnClick(PetFrame, button, pos.x, pos.y)
+					end
+				</OnClick>
+			</Scripts>
+		</Frame>
+		<Scripts>
+			<OnLoad>
+				return function(self)
+					PetFrame_OnLoad(self);
+				end
+			</OnLoad>
+		</Scripts>
+	</Frame>
+</UiLayout>

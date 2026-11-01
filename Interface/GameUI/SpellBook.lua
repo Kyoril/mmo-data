@@ -6,9 +6,22 @@ SPELLS_PER_PAGE = 12
 SPELLBOOK_TAB_GENERAL = 1
 SPELLBOOK_TAB_ABILITIES = 2
 SPELLBOOK_TAB_SKILLS = 3
-SPELLBOOK_MAX_TABS = 3
+SPELLBOOK_TAB_PET = 4
+SPELLBOOK_MAX_TABS = 4
 
 local SpellBookVisibleSpells = {}
+
+-- On the pet tab: the GetPetSpell index of each visible spell, parallel to SpellBookVisibleSpells.
+local SpellBookVisiblePetSpellIndex = {}
+
+-- The pet tab is offered while a persistent pet is summoned; temporary pets have no spells.
+local function SpellBook_IsTabAvailable(tabId)
+    if (tabId == SPELLBOOK_TAB_PET) then
+        return HasPersistentPet();
+    end
+
+    return true;
+end
 
 local function SpellBook_GetCategory(spell)
     if (spell == nil) then
@@ -35,11 +48,28 @@ local function SpellBook_GetTabText(tabId)
         return Localize("SPELLBOOK_TAB_SKILLS");
     end
 
+    if (tabId == SPELLBOOK_TAB_PET) then
+        return Localize("PET_TAB");
+    end
+
     return Localize("SPELLBOOK_TAB_GENERAL");
 end
 
 local function SpellBook_RebuildVisibleSpells()
     SpellBookVisibleSpells = {};
+    SpellBookVisiblePetSpellIndex = {};
+
+    -- The pet tab lists every spell of the persistent pet, passive ones included.
+    if (SpellBookTab == SPELLBOOK_TAB_PET) then
+        for petIndex = 0, GetNumPetSpells() - 1 do
+            local spell = GetPetSpell(petIndex);
+            if (spell ~= nil) then
+                table.insert(SpellBookVisibleSpells, spell);
+                table.insert(SpellBookVisiblePetSpellIndex, petIndex);
+            end
+        end
+        return;
+    end
 
     local spellIndex = 0;
     while true do
@@ -60,10 +90,25 @@ local function SpellBook_GetSpellAtPageIndex(index)
     return SpellBookVisibleSpells[index + 1];
 end
 
+-- The GetPetSpell index of a spell on the pet tab, or nil on the other tabs.
+local function SpellBook_GetPetSpellIndexAtPageIndex(index)
+    if (SpellBookTab ~= SPELLBOOK_TAB_PET) then
+        return nil;
+    end
+
+    return SpellBookVisiblePetSpellIndex[index + 1];
+end
+
 function SpellBook_UpdateTabs()
     for i = 1, SPELLBOOK_MAX_TABS do
         local tabButton = _G["SpellBookTab" .. i];
         tabButton:SetText(SpellBook_GetTabText(i));
+
+        if (SpellBook_IsTabAvailable(i)) then
+            tabButton:Show();
+        else
+            tabButton:Hide();
+        end
 
         if (i == SpellBookTab) then
             tabButton:SetChecked(true);
@@ -74,6 +119,12 @@ function SpellBook_UpdateTabs()
 end
 
 function SpellBook_UpdatePage()
+    -- A tab that went away (the pet was dismissed) falls back to the general tab.
+    if (not SpellBook_IsTabAvailable(SpellBookTab)) then
+        SpellBookTab = SPELLBOOK_TAB_GENERAL;
+        SpellBookPage = 1;
+    end
+
     SpellBook_RebuildVisibleSpells();
 
     local maxPage = math.max(1, math.ceil(#SpellBookVisibleSpells / SPELLS_PER_PAGE));
@@ -130,6 +181,13 @@ function SpellButton_OnClick(self, button)
         return;
     end
 
+    -- Pet spells are cast by the pet; they cannot be put on the player's action bar.
+    local petSpellIndex = SpellBook_GetPetSpellIndexAtPageIndex(spellIndex);
+    if (petSpellIndex ~= nil) then
+        PetCastSpell(petSpellIndex);
+        return;
+    end
+
     if button == "LEFT" then
         PickupSpell(spell.id);
     else
@@ -172,7 +230,7 @@ function SpellButton_OnDrag(self)
 
     local spellIndex = id + (SpellBookPage - 1) * SPELLS_PER_PAGE;
     local spell = SpellBook_GetSpellAtPageIndex(spellIndex);
-    if (spell == nil or IsPassiveSpell(spell)) then
+    if (spell == nil or IsPassiveSpell(spell) or SpellBookTab == SPELLBOOK_TAB_PET) then
         return;
     end
 
@@ -209,7 +267,7 @@ function SpellButton_Update(button)
         button:GetChild(1):SetText("");
     end
     button:SetProperty("icon", spell.icon);
-    button:SetProperty("DragEnabled", IsPassiveSpell(spell) and "false" or "true");
+    button:SetProperty("DragEnabled", (IsPassiveSpell(spell) or SpellBookTab == SPELLBOOK_TAB_PET) and "false" or "true");
     button:Enable();
 
 end
@@ -264,6 +322,10 @@ function SpellBook_OnLoad(self)
     -- Rebuild the spellbook whenever the active spellbook is replaced (spawn, class switch, etc.),
     -- so switching class updates the visible spells immediately instead of on the next open.
     self:RegisterEvent("PLAYER_SPELLS_CHANGED", SpellBook_SpellsChanged);
+
+    -- The pet tab comes and goes with the persistent pet and lists its spells.
+    self:RegisterEvent("PET_CHANGED", SpellBook_SpellsChanged);
+    self:RegisterEvent("PET_SPELLS_CHANGED", SpellBook_SpellsChanged);
 
     for i = 1, SPELLS_PER_PAGE do
         local button = _G["SpellBookButton" .. string.format("%02d", i)];

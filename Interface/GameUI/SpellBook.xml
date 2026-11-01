@@ -188,7 +188,8 @@
 		</Visual>
 
 		<Area>
-			<Size><AbsDimension x="256" y="76" /></Size>
+			<!-- Four tabs fit the tab bar side by side. -->
+			<Size><AbsDimension x="208" y="76" /></Size>
 		</Area>
 	</Frame>
 
@@ -282,7 +283,7 @@
 					<Property name="Text" value="SPELLBOOK_TAB_GENERAL" />
 					<Area>
 						<Anchor point="TOP" offset="6" />
-						<Anchor point="LEFT" offset="36" />
+						<Anchor point="LEFT" offset="4" />
 					</Area>
 				</Frame>
 
@@ -299,6 +300,16 @@
 					<Area>
 						<Anchor point="TOP" relativeTo="SpellBookTab1" />
 						<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="SpellBookTab2" offset="0" />
+					</Area>
+				</Frame>
+
+				<!-- Only shown while a persistent pet is summoned (SpellBook_UpdateTabs). -->
+				<Frame name="SpellBookTab4" inherits="SpellBookTabButtonTemplate" type="Button" id="4">
+					<Property name="Text" value="PET_TAB" />
+					<Property name="Visible" value="false" />
+					<Area>
+						<Anchor point="TOP" relativeTo="SpellBookTab1" />
+						<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="SpellBookTab3" offset="0" />
 					</Area>
 				</Frame>
 			</Frame>

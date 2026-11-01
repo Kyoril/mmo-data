@@ -9,6 +9,8 @@ ChatFrame.xml
 ChatBubble.xml
 Nameplate.xml
 PlayerFrame.xml
+PetActionBar.xml
+PetFrame.xml
 PartyFrame.xml
 InventoryButton.xml
 CharacterWindow.xml

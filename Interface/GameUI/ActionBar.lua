@@ -76,7 +76,8 @@ function ActionBar_UpdateSecondBarLayout(bar)
         end
     end
 
-    -- The target frame is anchored to the player frame and follows it.
+    -- The target frame, the pet bar and the pet frame above it are anchored to the player frame and
+    -- follow it, so the pet bar never collides with this bar.
     local hudFrames = { PlayerFrame, PlayerCastBar };
     for _, frame in ipairs(hudFrames) do
         if frame ~= nil then
