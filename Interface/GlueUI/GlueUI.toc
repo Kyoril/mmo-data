@@ -13,3 +13,4 @@ CharSelect.xml
 CharCreate.xml
 
 GlueDialog.xml
+GlueLayout.lua

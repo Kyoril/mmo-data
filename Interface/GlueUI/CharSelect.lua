@@ -18,7 +18,7 @@ local NAMEPLATE_ZONE_LINE = 48		-- Height of the zone line at the bottom, empty 
 
 -- Roster list (CharSelect.xml): a fixed pool of rows (CharRosterRow1..N) showing a window of the
 -- character order, like the realm list (RealmList.lua).
-local VISIBLE_ROWS = 10
+local VISIBLE_ROWS = (GlueUITheme and GlueUITheme.RosterVisibleRows) or 10
 local ROSTER_DIVIDER_GAP = 80		-- UI units above the first character not on the plaza (divider and label)
 local ROSTER_AUTOSCROLL_SECONDS = 0.18	-- One row per step while a drag is held past the top or bottom row
 local SEPARATOR_COLOR = "598C6234"
@@ -506,6 +506,7 @@ function CharSelect_ToggleRoster()
 	end
 	CharRoster_Refresh()
 	CharRosterPanel:Show()
+	CharSelect_UpdateActionLayout()
 end
 
 -- Closes the roster panel and sends the order if it changed (once, not per drop).
@@ -515,6 +516,7 @@ function CharSelect_CloseRoster()
 		CharRosterPanel:Hide()
 		SaveCharacterOrder()
 	end
+	CharSelect_UpdateActionLayout()
 end
 
 -- Only clicks no frame took reach CharSelect (it covers the screen behind the chrome), so a press
@@ -697,6 +699,7 @@ function CharList_Show()
 	plazaPress = nil
 	hoverDirty = true
 	CharRosterPanel:Hide()
+	CharSelect_UpdateActionLayout()
 
 	RealmNameLabel:SetText(realmConnector:GetRealmName())
 

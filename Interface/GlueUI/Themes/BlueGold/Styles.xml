@@ -507,7 +507,11 @@
 	<Frame name="ThemeGlueCharNameplateSelectedMarkVisual">
 		<Visual>
 			<ImagerySection name="Line">
-				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FFE5BE70"><Area><Inset top="2" bottom="2" /></Area></ImageComponent>
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FFE5BE70">
+					<Area>
+						<Inset top="2" bottom="2" />
+					</Area>
+				</ImageComponent>
 			</ImagerySection>
 			<StateImagery name="Enabled">
 				<Layer>
@@ -856,16 +860,32 @@
 	<Frame name="ThemeGlueThumbButtonTemplateVisual">
 		<Visual>
 			<ImagerySection name="NormalFrame">
-				<BorderComponent texture="Interface/GameUI/Themes/BlueGold/Textures/ButtonV2.htex" borderSize="14" leftSize="120" rightSize="120" topSize="120" bottomSize="120" tint="FFBEB19A" />
+				<BorderComponent texture="Interface/GameUI/Themes/BlueGold/Textures/ButtonV2.htex" borderSize="7" leftSize="120" rightSize="120" topSize="120" bottomSize="120" tint="FFB5AD9A">
+					<Area>
+						<Inset left="22" right="22" top="4" bottom="4" />
+					</Area>
+				</BorderComponent>
 			</ImagerySection>
 			<ImagerySection name="HoveredFrame">
-				<BorderComponent texture="Interface/GameUI/Themes/BlueGold/Textures/ButtonV2.htex" borderSize="14" leftSize="120" rightSize="120" topSize="120" bottomSize="120" tint="FFF3DFBA" />
+				<BorderComponent texture="Interface/GameUI/Themes/BlueGold/Textures/ButtonV2.htex" borderSize="7" leftSize="120" rightSize="120" topSize="120" bottomSize="120" tint="FFF3DFBA">
+					<Area>
+						<Inset left="22" right="22" top="4" bottom="4" />
+					</Area>
+				</BorderComponent>
 			</ImagerySection>
 			<ImagerySection name="PushedFrame">
-				<BorderComponent texture="Interface/GameUI/Themes/BlueGold/Textures/ButtonV2.htex" borderSize="14" leftSize="120" rightSize="120" topSize="120" bottomSize="120" tint="FF837D70" />
+				<BorderComponent texture="Interface/GameUI/Themes/BlueGold/Textures/ButtonV2.htex" borderSize="7" leftSize="120" rightSize="120" topSize="120" bottomSize="120" tint="FF8B929C">
+					<Area>
+						<Inset left="22" right="22" top="4" bottom="4" />
+					</Area>
+				</BorderComponent>
 			</ImagerySection>
 			<ImagerySection name="DisabledFrame">
-				<BorderComponent texture="Interface/GameUI/Themes/BlueGold/Textures/ButtonV2.htex" borderSize="14" leftSize="120" rightSize="120" topSize="120" bottomSize="120" tint="FF625F59" />
+				<BorderComponent texture="Interface/GameUI/Themes/BlueGold/Textures/ButtonV2.htex" borderSize="7" leftSize="120" rightSize="120" topSize="120" bottomSize="120" tint="FF626A77">
+					<Area>
+						<Inset left="22" right="22" top="4" bottom="4" />
+					</Area>
+				</BorderComponent>
 			</ImagerySection>
 			<StateImagery name="Normal">
 				<Layer>
@@ -892,71 +912,59 @@
 	<Frame name="ThemeGlueGlueScrollArrowButtonVisual">
 		<Property name="Icon" value="" />
 		<Visual>
-			<ImagerySection name="NormalFrame">
-				<BorderComponent texture="Interface/GameUI/Themes/BlueGold/Textures/ButtonV2.htex" borderSize="14" leftSize="120" rightSize="120" topSize="120" bottomSize="120" tint="FFBEB19A" />
-			</ImagerySection>
-			<ImagerySection name="HoveredFrame">
-				<BorderComponent texture="Interface/GameUI/Themes/BlueGold/Textures/ButtonV2.htex" borderSize="14" leftSize="120" rightSize="120" topSize="120" bottomSize="120" tint="FFF3DFBA" />
-			</ImagerySection>
-			<ImagerySection name="PushedFrame">
-				<BorderComponent texture="Interface/GameUI/Themes/BlueGold/Textures/ButtonV2.htex" borderSize="14" leftSize="120" rightSize="120" topSize="120" bottomSize="120" tint="FF837D70" />
-			</ImagerySection>
-			<ImagerySection name="DisabledFrame">
-				<BorderComponent texture="Interface/GameUI/Themes/BlueGold/Textures/ButtonV2.htex" borderSize="14" leftSize="120" rightSize="120" topSize="120" bottomSize="120" tint="FF625F59" />
-			</ImagerySection>
+			<ImagerySection name="DisabledFrame" />
+			<ImagerySection name="PushedFrame" />
+			<ImagerySection name="HoveredFrame" />
+			<ImagerySection name="NormalFrame" />
 			<ImagerySection name="Arrow">
-				<ImageComponent tint="FFF3EEE2">
+				<ImageComponent tint="FFB3A184">
 					<Area>
-						<Inset all="20" />
-					</Area>
-					<PropertyValue property="Icon" />
-				</ImageComponent>
-			</ImagerySection>
-			<ImagerySection name="ArrowHovered">
-				<ImageComponent tint="FFFFFFFF">
-					<Area>
-						<Inset all="20" />
-					</Area>
-					<PropertyValue property="Icon" />
-				</ImageComponent>
-			</ImagerySection>
-			<ImagerySection name="ArrowPushed">
-				<ImageComponent tint="FFD2CEC4">
-					<Area>
-						<Inset all="22" />
-					</Area>
-					<PropertyValue property="Icon" />
-				</ImageComponent>
-			</ImagerySection>
-			<ImagerySection name="ArrowDisabled">
-				<ImageComponent tint="A08A867E">
-					<Area>
-						<Inset all="20" />
+						<Inset all="24" />
 					</Area>
 					<PropertyValue property="Icon" />
 				</ImageComponent>
 			</ImagerySection>
 			<StateImagery name="Normal">
 				<Layer>
-					<Section section="NormalFrame" />
 					<Section section="Arrow" />
 				</Layer>
 			</StateImagery>
+			<ImagerySection name="ArrowHovered">
+				<ImageComponent tint="FFFFDA91">
+					<Area>
+						<Inset all="24" />
+					</Area>
+					<PropertyValue property="Icon" />
+				</ImageComponent>
+			</ImagerySection>
 			<StateImagery name="Hovered">
 				<Layer>
-					<Section section="HoveredFrame" />
 					<Section section="ArrowHovered" />
 				</Layer>
 			</StateImagery>
+			<ImagerySection name="ArrowPushed">
+				<ImageComponent tint="FF8A724F">
+					<Area>
+						<Inset all="24" />
+					</Area>
+					<PropertyValue property="Icon" />
+				</ImageComponent>
+			</ImagerySection>
 			<StateImagery name="Pushed">
 				<Layer>
-					<Section section="PushedFrame" />
 					<Section section="ArrowPushed" />
 				</Layer>
 			</StateImagery>
+			<ImagerySection name="ArrowDisabled">
+				<ImageComponent tint="FF393939">
+					<Area>
+						<Inset all="24" />
+					</Area>
+					<PropertyValue property="Icon" />
+				</ImageComponent>
+			</ImagerySection>
 			<StateImagery name="Disabled">
 				<Layer>
-					<Section section="DisabledFrame" />
 					<Section section="ArrowDisabled" />
 				</Layer>
 			</StateImagery>
@@ -965,11 +973,11 @@
 	<Frame name="ThemeGlueVerticalScrollBarVisual">
 		<Visual>
 			<ImagerySection name="Border">
-				<BorderComponent texture="Interface/GlueUI/GlueListAccent.htex" leftSize="2" topSize="14" rightSize="22" bottomSize="14" tint="B4050302">
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="80000000">
 					<Area>
-						<Inset left="12" top="40" right="12" bottom="40" />
+						<Inset left="40" right="40" top="80" bottom="80" />
 					</Area>
-				</BorderComponent>
+				</ImageComponent>
 			</ImagerySection>
 			<StateImagery name="Enabled">
 				<Layer>
