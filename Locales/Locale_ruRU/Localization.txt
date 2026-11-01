@@ -1209,4 +1209,5 @@ strings =
 	(key = "MINIMAP_COMPASS_EAST", string = "В")
 	(key = "MINIMAP_COMPASS_SOUTH", string = "Ю")
 	(key = "MINIMAP_COMPASS_WEST", string = "З")
+	(key = "NPC_DIALOG_SERVICES", string = "Разговор и услуги")
 }

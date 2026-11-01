@@ -1,8 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <UiLayout xmlns="http://www.w3schools.com/Ui">
 	<Script file="TrainerFrame.lua" />
-	<Font name="TrainerNameFont" file="Fonts/FRIZQT__.TTF" size="26" outline="1" />
-	<Font name="TrainerDetailFont" file="Fonts/FRIZQT__.TTF" size="22" outline="1" />
+
 	<Frame name="TrainerFilterTemplate" type="Button" renderer="CheckboxRenderer">
 		<Property name="Font" value="TrainerDetailFont" />
 		<Property name="Checkable" value="true" />
@@ -11,62 +10,7 @@
 				<AbsDimension y="48" x="432" />
 			</Size>
 		</Area>
-		<Visual>
-			<ImagerySection name="Normal">
-				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="8" tint="FF786B55" />
-			</ImagerySection>
-			<ImagerySection name="Selected">
-				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="8" tint="FFE0B55B" />
-				<ImageComponent texture="Interface/Icons/fg4_iconsGold_checkMark_result.htex">
-					<Area>
-						<Inset left="10" right="390" top="8" bottom="8" />
-					</Area>
-				</ImageComponent>
-			</ImagerySection>
-			<ImagerySection name="Label">
-				<TextComponent color="FFE8D8B7" vertAlign="CENTER">
-					<Area>
-						<Inset left="52" right="8" />
-					</Area>
-				</TextComponent>
-			</ImagerySection>
-			<StateImagery name="Normal">
-				<Layer>
-					<Section section="Normal" />
-					<Section section="Label" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Hovered">
-				<Layer>
-					<Section section="Normal" />
-					<Section section="Label" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Pushed">
-				<Layer>
-					<Section section="Normal" />
-					<Section section="Label" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="NormalChecked">
-				<Layer>
-					<Section section="Selected" />
-					<Section section="Label" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="HoveredChecked">
-				<Layer>
-					<Section section="Selected" />
-					<Section section="Label" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="PushedChecked">
-				<Layer>
-					<Section section="Selected" />
-					<Section section="Label" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeTrainerFilterTemplateVisual" />
 	</Frame>
 	<Frame name="TrainerRowTemplate" type="Button" renderer="CheckboxRenderer">
 		<Property name="Checkable" value="true" />
@@ -77,47 +21,7 @@
 				<AbsDimension y="112" />
 			</Size>
 		</Area>
-		<Visual>
-			<ImagerySection name="Normal">
-				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF1B1B17" />
-			</ImagerySection>
-			<ImagerySection name="Hover">
-				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF453820" />
-			</ImagerySection>
-			<ImagerySection name="Selected">
-				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF66502A" />
-			</ImagerySection>
-			<StateImagery name="Normal">
-				<Layer>
-					<Section section="Normal" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Hovered">
-				<Layer>
-					<Section section="Hover" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Pushed">
-				<Layer>
-					<Section section="Hover" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="NormalChecked">
-				<Layer>
-					<Section section="Selected" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="HoveredChecked">
-				<Layer>
-					<Section section="Selected" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="PushedChecked">
-				<Layer>
-					<Section section="Selected" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeTrainerRowTemplateVisual" />
 	</Frame>
 	<Frame name="TrainerIconTemplate" renderer="DefaultRenderer">
 		<Property name="Icon" />
@@ -127,22 +31,7 @@
 				<AbsDimension y="80" x="80" />
 			</Size>
 		</Area>
-		<Visual>
-			<ImagerySection name="Icon">
-				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" />
-				<ImageComponent tint="$IconTint">
-					<Area>
-						<Inset all="8" />
-					</Area>
-					<PropertyValue property="Icon" />
-				</ImageComponent>
-			</ImagerySection>
-			<StateImagery name="Enabled">
-				<Layer>
-					<Section section="Icon" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeTrainerIconTemplateVisual" />
 	</Frame>
 	<Frame name="TrainerFrame" inherits="SidePanelTemplate" parent="GameParent">
 		<Property name="Visible" value="false" />
@@ -182,17 +71,7 @@
 				<Anchor point="RIGHT" offset="-24" />
 				<Anchor point="TOP" offset="8" relativeTo="TrainerListSummary" relativePoint="BOTTOM" />
 			</Area>
-			<Visual>
-				<ImagerySection name="Surface">
-					<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF10110F" />
-					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFA88A59" />
-				</ImagerySection>
-				<StateImagery name="Enabled">
-					<Layer>
-						<Section section="Surface" />
-					</Layer>
-				</StateImagery>
-			</Visual>
+			<Visual inherits="ThemeTrainerSpellListVisual" />
 			<Frame name="TrainerEmptyLabel" inherits="TextSmall">
 				<Property name="Font" value="TrainerDetailFont" />
 				<Property name="TextColor" value="FFD2C9B8" />
@@ -526,17 +405,7 @@
 				<Anchor point="TOP" offset="12" relativeTo="TrainerSpellList" relativePoint="BOTTOM" />
 				<Anchor point="BOTTOM" offset="-128" />
 			</Area>
-			<Visual>
-				<ImagerySection name="Surface">
-					<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF10110F" />
-					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFA88A59" />
-				</ImagerySection>
-				<StateImagery name="Enabled">
-					<Layer>
-						<Section section="Surface" />
-					</Layer>
-				</StateImagery>
-			</Visual>
+			<Visual inherits="ThemeTrainerSpellListVisual" />
 			<Frame name="TrainerSelectionHint" inherits="TextSmall">
 				<Property name="Font" value="TrainerDetailFont" />
 				<Property name="TextColor" value="FFD2C9B8" />
@@ -631,17 +500,7 @@
 				<Anchor point="RIGHT" offset="-16" />
 				<Anchor point="BOTTOM" offset="-16" />
 			</Area>
-			<Visual>
-				<ImagerySection name="Surface">
-					<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF10110F" />
-					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFA88A59" />
-				</ImagerySection>
-				<StateImagery name="Enabled">
-					<Layer>
-						<Section section="Surface" />
-					</Layer>
-				</StateImagery>
-			</Visual>
+			<Visual inherits="ThemeTrainerSpellListVisual" />
 		</Frame>
 		<Frame name="TrainerPlayerMoneyFrame" inherits="MoneyFrameTemplate">
 			<Area>

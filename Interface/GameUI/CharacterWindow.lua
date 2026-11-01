@@ -279,7 +279,7 @@ function CharacterWindow_ArmorLabel_OnEnter(self)
     GameTooltip:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, self, 0);
 
     GameTooltip_AddLine(Localize("ARMOR"), TOOLTIP_LINE_LEFT, "FFFFD100");
-    GameTooltip_AddLine(string.format(Localize("ARMOR_DESCRIPTION"), unit:GetArmorReductionFactor() * 100.0), TOOLTIP_LINE_LEFT, "FFFFD100");
+    GameTooltip_AddLine(string.format(Localize("ARMOR_DESCRIPTION"), unit:GetArmorReductionFactor() * 100.0), TOOLTIP_LINE_LEFT, "FFFFFFFF");
 
     GameTooltip:Show();
 end
@@ -451,7 +451,7 @@ function CharacterWindow_StatLabel_OnEnter(self, statId)
     -- Attributes whose effect is not one of the bonuses below explain themselves in the game data
     local hasDescription = description ~= nil and description ~= "";
     if hasDescription then
-        GameTooltip_AddLine(description, TOOLTIP_LINE_LEFT, "FFFFD100");
+        GameTooltip_AddLine(description, TOOLTIP_LINE_LEFT, "FFFFFFFF");
     end
 
     -- Some class/stat combinations have no derived bonus. Still explain the stat.
@@ -460,13 +460,13 @@ function CharacterWindow_StatLabel_OnEnter(self, statId)
     end
 
     if healthIncrease > 0 then
-        GameTooltip_AddLine(string.format(Localize("STAT_HEALTH_INCREASE"), healthIncrease), TOOLTIP_LINE_LEFT, "FFFFD100");
+        GameTooltip_AddLine(string.format(Localize("STAT_HEALTH_INCREASE"), healthIncrease), TOOLTIP_LINE_LEFT, "FFFFFFFF");
     end
     if manaIncrease > 0 then
-        GameTooltip_AddLine(string.format(Localize("STAT_MANA_INCREASE"), manaIncrease), TOOLTIP_LINE_LEFT, "FFFFD100");
+        GameTooltip_AddLine(string.format(Localize("STAT_MANA_INCREASE"), manaIncrease), TOOLTIP_LINE_LEFT, "FFFFFFFF");
     end
     if attackPowerIncrease > 0 then
-        GameTooltip_AddLine(string.format(Localize("STAT_ATTACKPOWER_INCREASE"), attackPowerIncrease), TOOLTIP_LINE_LEFT, "FFFFD100");
+        GameTooltip_AddLine(string.format(Localize("STAT_ATTACKPOWER_INCREASE"), attackPowerIncrease), TOOLTIP_LINE_LEFT, "FFFFFFFF");
     end
 
     GameTooltip:Show();

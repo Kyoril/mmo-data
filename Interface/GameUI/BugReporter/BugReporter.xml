@@ -7,41 +7,7 @@
 	<Frame name="BugReportIconTemplate" type="Button" renderer="ButtonRenderer">
 		<Property name="Icon" />
 		<Property name="Clickable" value="false" />
-		<Visual>
-			<ImagerySection name="Well">
-				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" />
-			</ImagerySection>
-			<ImagerySection name="Image">
-				<ImageComponent>
-					<Area><Inset all="12" /></Area>
-					<PropertyValue property="Icon" />
-				</ImageComponent>
-			</ImagerySection>
-			<StateImagery name="Normal">
-				<Layer>
-					<Section section="Well" />
-					<Section section="Image" color="FFFFFFFF" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Hovered">
-				<Layer>
-					<Section section="Well" />
-					<Section section="Image" color="FFFFFFFF" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Pushed">
-				<Layer>
-					<Section section="Well" />
-					<Section section="Image" color="FFFFFFFF" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer>
-					<Section section="Well" />
-					<Section section="Image" color="FFFFFFFF" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeBugReportIconTemplateVisual" />
 		<Area>
 			<Size><AbsDimension x="128" y="128" /></Size>
 		</Area>
@@ -51,16 +17,7 @@
 	<Frame name="BugReportFrame" parent="GameParent" renderer="DefaultRenderer">
 		<Property name="Visible" value="False" />
 
-		<Visual>
-			<ImagerySection name="Background">
-				<BorderComponent texture="Interface/GameUI/Alestia/WindowPanel.htex" borderSize="32" />
-			</ImagerySection>
-			<StateImagery name="Enabled">
-				<Layer>
-					<Section section="Background" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeBugReportFrameVisual" />
 
 		<Area>
 			<Size><AbsDimension x="1200" y="1000" /></Size>

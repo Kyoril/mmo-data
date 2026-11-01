@@ -56,21 +56,7 @@
 	<Frame name="CombatLog" parent="GameParent" type="ScrollingMessageFrame">
 		<Property name="Font" value="ChatFont" />
 
-		<Visual>
-			<ImagerySection name="Text">
-				<TextComponent color="ffffd200" horzAlign="LEFT" />
-			</ImagerySection>
-			<StateImagery name="Enabled">
-				<Layer>
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer>
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeCombatLogVisual" />
 		
 		<Area>
 			<Anchor point="RIGHT" relativeTo="CombatLogScrollEndButton" relativePoint="LEFT" offset="-8" />

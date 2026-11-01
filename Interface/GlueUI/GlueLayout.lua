@@ -1,0 +1,41 @@
+-- Copyright (C) 2019 - 2025, Kyoril. All rights reserved.
+-- Theme layout runs after all shared Glue frames have been loaded.
+function CharSelect_UpdateActionLayout()
+	if not GlueUITheme or not GlueUITheme.CompactCharacterActions then
+		return;
+	end
+	for _, button in ipairs({ CharSelectQuitButton, ChangeRealmButton }) do
+		button:ClearAnchors();
+		button:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, CharSelectChrome, 48);
+		button:SetSize(300, 88);
+		button:SetWidth(math.max(300, button:GetTextWidth() + 48));
+	end
+	CharSelectQuitButton:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, CharSelectChrome, 48);
+	ChangeRealmButton:SetAnchor(AnchorPoint.LEFT, AnchorPoint.RIGHT, CharSelectQuitButton, 16);
+	for _, button in ipairs({ CharCreateButton, CharDeleteButton }) do
+		button:ClearAnchors();
+		button:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.BOTTOM, CharRosterPanel, -40);
+		button:SetHeight(96);
+		if CharRosterPanel:IsVisible() then
+			button:Show();
+		else
+			button:Hide();
+		end
+		-- These remain siblings of the panel, rendered above its surface.
+		button:SetFrameLevel(1);
+	end
+	CharCreateButton:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, CharRosterPanel, 72);
+	CharCreateButton:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.H_CENTER, CharRosterPanel, -8);
+	CharDeleteButton:SetAnchor(AnchorPoint.LEFT, AnchorPoint.H_CENTER, CharRosterPanel, 8);
+	CharDeleteButton:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, CharRosterPanel, -72);
+	CharRosterHint:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.BOTTOM, CharRosterPanel, -156);
+	CharRosterList:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.BOTTOM, CharRosterPanel, -224);
+	CharRosterRow10:Hide();
+	CharSelectBottomBar:SetHeight(260);
+	for _, bar in ipairs({ VerticalScrollBar, CharRosterScrollBar, RealmListScrollBar }) do
+		bar:GetChild(0):SetProperty("Icon", "Interface/Icons/IconGold_ArrowUp.htex");
+		bar:GetChild(1):SetProperty("Icon", "Interface/Icons/IconGold_ArrowDown.htex");
+	end
+end
+
+CharSelect_UpdateActionLayout();

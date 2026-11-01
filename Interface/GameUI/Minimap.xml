@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
 	<Script file="Minimap.lua" />
-	<Font name="MinimapCompassFont" file="Fonts/FRIZQT__.TTF" size="26" outline="2" shadowX="1.0" shadowY="1.0" />
+
 	<Frame name="Minimap" parent="GameParent">
 		<Scripts>
 			<OnLoad>
@@ -37,23 +37,10 @@
 				<Anchor point="RIGHT" offset="0" />
 				<Anchor point="TOP" offset="0" />
 			</Area>
-			<Visual>
-				<ImagerySection name="Background">
-					<BorderComponent texture="Interface/GameUI/Alestia/WindowPanel.htex" borderSize="24" />
-					<TextComponent color="FFF0E7D6" horzAlign="CENTER" vertAlign="CENTER">
-						<Area>
-							<Inset all="0" left="16" right="60" />
-						</Area>
-					</TextComponent>
-				</ImagerySection>
-				<StateImagery name="Enabled">
-					<Layer>
-						<Section section="Background" />
-					</Layer>
-				</StateImagery>
-			</Visual>
+			<Visual inherits="ThemeMinimapTitleBarVisual" />
 			<Frame name="MinimapCloseButton" inherits="IconButton">
 				<Property name="Icon" value="Interface/Icons/fg4_iconsGold_close_result.htex" />
+				<Visual inherits="ThemeMinimapCloseButtonVisual" />
 				<Area>
 					<Size>
 						<AbsDimension x="56" y="56" />
@@ -79,16 +66,7 @@
 				<Anchor point="TOP" offset="8" relativeTo="MinimapTitleBar" relativePoint="BOTTOM" />
 			</Area>
 			<Frame name="MinimapBorder" renderer="DefaultRenderer">
-				<Visual>
-					<ImagerySection name="Background">
-						<ImageComponent texture="Interface/GameUI/fg4_glass_border_result.htex" tiling="NONE" />
-					</ImagerySection>
-					<StateImagery name="Enabled">
-						<Layer>
-							<Section section="Background" />
-						</Layer>
-					</StateImagery>
-				</Visual>
+				<Visual inherits="ThemeMinimapBorderVisual" />
 				<Area>
 					<Anchor point="LEFT" offset="0" />
 					<Anchor point="RIGHT" offset="0" />
@@ -218,6 +196,7 @@
 			<Property name="TextColor" value="FFE2DCCD" />
 			<Property name="Font" value="SmallLabelFont" />
 			<Property name="HorzAlign" value="CENTER" />
+			<Visual inherits="ThemeMinimapTimeVisual" />
 			<Area>
 				<Size>
 					<AbsDimension x="160" y="40" />

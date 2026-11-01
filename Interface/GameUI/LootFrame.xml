@@ -5,63 +5,7 @@
     <Frame name="LootButtonTemplate" type="Button" renderer="ButtonRenderer">
         <Property name="Icon" />
 
-        <Visual>
-			<ImagerySection name="Image">
-				<ImageComponent>
-					<Area>
-						<Inset all="16" />
-					</Area>
-					<PropertyValue property="Icon" />
-				</ImageComponent>
-			</ImagerySection>
-			<ImagerySection name="Text">
-				<TextComponent horzAlign="RIGHT" vertAlign="BOTTOM">
-					<Area>
-						<Inset all="8" />
-					</Area>
-				</TextComponent>
-			</ImagerySection>
-			<ImagerySection name="NormalFrame">
-				<BorderComponent texture="Interface/BW_ButtonSmall_Up.htex" borderSize="30" />
-			</ImagerySection>
-			<ImagerySection name="HoveredFrame">
-				<BorderComponent texture="Interface/BW_ButtonSmall_Over.htex" borderSize="30" />
-			</ImagerySection>
-			<ImagerySection name="PushedFrame">
-				<BorderComponent texture="Interface/BW_ButtonSmall_Down.htex" borderSize="30" />
-			</ImagerySection>
-			<ImagerySection name="DisabledFrame">
-				<BorderComponent texture="Interface/BW_ButtonSmall_Up.htex" borderSize="30" tint="80808080" />
-			</ImagerySection>
-			<StateImagery name="Normal">
-				<Layer>
-					<Section section="NormalFrame" />
-					<Section section="Image" />
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Hovered">
-				<Layer>
-					<Section section="HoveredFrame" />
-					<Section section="Image" />
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Pushed">
-				<Layer>
-					<Section section="PushedFrame" />
-					<Section section="Image" />
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer>
-					<Section section="DisabledFrame" />
-					<Section section="Image" />
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+        <Visual inherits="ThemeLootButtonTemplateVisual" />
 
 		<Area>
 			<Size>
@@ -75,39 +19,13 @@
 			<Size><AbsDimension y="144" /></Size>
 		</Area>
 		
-		<Visual>
-			<ImagerySection name="Background">
-				<BorderComponent texture="Interface/GameUI/fg4_iconsSlot.htex" borderSize="64" />
-			</ImagerySection>
-			<ImagerySection name="DisabledBackground">
-				<BorderComponent texture="Interface/GameUI/fg4_iconsSlot.htex" borderSize="64" tint="80303030" />
-			</ImagerySection>
-			<StateImagery name="Enabled">
-				<Layer>
-					<Section section="Background" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer>
-					<Section section="DisabledBackground" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeLootButtonBorderTemplateVisual" />
 	</Frame>
 	
     <Frame name="LootFrame" parent="GameParent" renderer="DefaultRenderer">
         <Property name="Visible" value="false" />
 
-		<Visual>
-			<ImagerySection name="Background">
-				<BorderComponent texture="Interface/GameUI/fg4_borders_simple.htex" borderSize="250" />
-			</ImagerySection>
-			<StateImagery name="Enabled">
-				<Layer>
-					<Section section="Background" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeLootFrameVisual" />
 
 		<Scripts>
 			<OnLoad>
@@ -160,21 +78,7 @@
 				<Size><AbsDimension y="48" /></Size>
 			</Area>
 
-			<Visual>
-				<ImagerySection name="Text">
-					<TextComponent color="FFB0B0B0" horzAlign="CENTER" vertAlign="CENTER" />
-				</ImagerySection>
-				<StateImagery name="Enabled">
-					<Layer>
-						<Section section="Text" />
-					</Layer>
-				</StateImagery>
-				<StateImagery name="Disabled">
-					<Layer>
-						<Section section="Text" />
-					</Layer>
-				</StateImagery>
-			</Visual>
+			<Visual inherits="ThemeLootEmptyLabelVisual" />
 		</Frame>
 
 		<Frame name="LootButton1Border" inherits="LootButtonBorderTemplate">
@@ -202,21 +106,7 @@
 					<Size><AbsDimension x="0" y="44" /></Size>
 				</Area>
 						
-				<Visual>
-					<ImagerySection name="Text">
-						<TextComponent color="FFFFFFFF" horzAlign="LEFT" vertAlign="CENTER" />
-					</ImagerySection>
-					<StateImagery name="Enabled">
-						<Layer>
-							<Section section="Text" />
-						</Layer>
-					</StateImagery>
-					<StateImagery name="Disabled">
-						<Layer>
-							<Section section="Text" />
-						</Layer>
-					</StateImagery>
-				</Visual>
+				<Visual inherits="ThemeLootText1Visual" />
 			</Frame>
 		</Frame>
 		
@@ -243,21 +133,7 @@
 					<Anchor point="BOTTOM" offset="-8" />
 					<Size><AbsDimension x="0" y="44" /></Size>
 				</Area>
-				<Visual>
-					<ImagerySection name="Text">
-						<TextComponent color="FFFFFFFF" horzAlign="LEFT" vertAlign="CENTER" />
-					</ImagerySection>
-					<StateImagery name="Enabled">
-						<Layer>
-							<Section section="Text" />
-						</Layer>
-					</StateImagery>
-					<StateImagery name="Disabled">
-						<Layer>
-							<Section section="Text" />
-						</Layer>
-					</StateImagery>
-				</Visual>
+				<Visual inherits="ThemeLootText1Visual" />
 			</Frame>
 		</Frame>
 		
@@ -284,21 +160,7 @@
 					<Anchor point="BOTTOM" offset="-8" />
 					<Size><AbsDimension x="0" y="44" /></Size>
 				</Area>
-				<Visual>
-					<ImagerySection name="Text">
-						<TextComponent color="FFFFFFFF" horzAlign="LEFT" vertAlign="CENTER" />
-					</ImagerySection>
-					<StateImagery name="Enabled">
-						<Layer>
-							<Section section="Text" />
-						</Layer>
-					</StateImagery>
-					<StateImagery name="Disabled">
-						<Layer>
-							<Section section="Text" />
-						</Layer>
-					</StateImagery>
-				</Visual>
+				<Visual inherits="ThemeLootText1Visual" />
 			</Frame>
 		</Frame>
 		
@@ -327,21 +189,7 @@
 					<Size><AbsDimension x="0" y="44" /></Size>
 				</Area>
 		
-				<Visual>
-					<ImagerySection name="Text">
-						<TextComponent color="FFFFFFFF" horzAlign="LEFT" vertAlign="CENTER" />
-					</ImagerySection>
-					<StateImagery name="Enabled">
-						<Layer>
-							<Section section="Text" />
-						</Layer>
-					</StateImagery>
-					<StateImagery name="Disabled">
-						<Layer>
-							<Section section="Text" />
-						</Layer>
-					</StateImagery>
-				</Visual>
+				<Visual inherits="ThemeLootText1Visual" />
 			</Frame>
 		</Frame>
 	</Frame>

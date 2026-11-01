@@ -5,21 +5,7 @@
 	<Frame name="MoneyText" renderer="DefaultRenderer">
 		<Property name="Font" value="DefaultSmallBorder" />
 
-		<Visual>
-			<ImagerySection name="Text">
-				<TextComponent color="FFFFFFFF" horzAlign="LEFT" vertAlign="TOP" />
-			</ImagerySection>
-			<StateImagery name="Enabled">
-				<Layer>
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer>
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeEmoteNameLabelVisual" />
 		<Area>
 			<Size><AbsDimension x="100" y="44" /></Size>
 		</Area>
@@ -28,23 +14,7 @@
 	<Frame name="MoneyCoinFrame" renderer="DefaultRenderer">
 		<Property name="Icon" />
 
-		<Visual>
-			<ImagerySection name="Image">
-				<ImageComponent>
-					<PropertyValue property="Icon" />
-				</ImageComponent>
-			</ImagerySection>
-			<StateImagery name="Enabled">
-				<Layer>
-					<Section section="Image" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer>
-					<Section section="Image" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeMoneyCoinFrameVisual" />
 
 		<Area>
 			<Size><AbsDimension x="44" y="44" /></Size>

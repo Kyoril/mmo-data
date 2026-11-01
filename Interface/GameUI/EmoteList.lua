@@ -6,8 +6,8 @@ EMOTES_PER_PAGE = 12;
 -- Emote id to visually highlight in the list (set when following an emote chat link).
 EmoteList_HighlightEmoteId = nil;
 
--- Name label colors (dark ink default, gold for the highlighted entry).
-EMOTELIST_NAME_COLOR = "FF4A3620";
+-- Theme label color, with the original parchment ink as the Legacy fallback.
+EMOTELIST_NAME_COLOR = (GameUITheme and GameUITheme.IconListNameColor) or "FF4A3620";
 EMOTELIST_NAME_COLOR_HIGHLIGHT = "FFFFD100";
 
 -- Fallback icon for emotes without an authored icon (shared with ActionBar.lua).
@@ -39,6 +39,7 @@ function EmoteList_UpdatePage()
     end
 
     EmoteListPageLabel:SetText(string.format(Localize("SPELL_BOOK_PAGE_FORMAT"), EmoteListPage));
+	EmoteListEmptyLabel:SetProperty("TextColor", (GameUITheme and GameUITheme.IconListEmptyColor) or "FF776A58");
 
     if (numEmotes == 0) then
         EmoteListEmptyLabel:Show();
@@ -72,6 +73,13 @@ function EmoteButton_Update(button)
 
     button:Show();
     button:GetChild(0):SetText(emote.name);
+	button:GetChild(1):SetProperty("Color", (GameUITheme and GameUITheme.IconListDetailColor) or "FF656565");
+	if GameUITheme and GameUITheme.IconListLabelWidth then
+		button:GetChild(0):SetWidth(GameUITheme.IconListLabelWidth);
+		button:GetChild(1):SetWidth(GameUITheme.IconListLabelWidth);
+		local top = (emote.command ~= nil and emote.command ~= "" and GameUITheme.IconListLabelWithDetailTop or GameUITheme.IconListLabelTop) or 0;
+		button:GetChild(0):SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, top);
+	end
 
     -- Highlight the entry the player jumped to via an emote chat link.
     if (EmoteList_HighlightEmoteId ~= nil and emote.id == EmoteList_HighlightEmoteId) then

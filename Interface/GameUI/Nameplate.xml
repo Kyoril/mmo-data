@@ -16,9 +16,6 @@
 		the frame sets based on the unit's reaction (hostile / neutral / friendly / player).
 	-->
 
-	<Font name="NameplateFont" file="Fonts/FRIZQT__.TTF" size="24" outline="0" shadowX="1.0" shadowY="1.0" />
-	<Font name="NameplateCastFont" file="Fonts/FRIZQT__.TTF" size="18" outline="0" shadowX="1.0" shadowY="1.0" />
-
 	<Frame name="NameplateTemplate" renderer="DefaultRenderer">
 		<Area>
 			<Size><AbsDimension x="240" y="58" /></Size>
@@ -34,22 +31,7 @@
 		<Property name="Font" value="NameplateFont" />
 		<Property name="TextColor" value="FFFFFFFF" />
 
-		<Visual>
-			<ImagerySection name="Text">
-				<TextComponent color="$TextColor" horzAlign="CENTER" vertAlign="CENTER" wrap="false" />
-			</ImagerySection>
-
-			<StateImagery name="Enabled">
-				<Layer>
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer>
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeNameplateNameTemplateVisual" />
 
 		<Area>
 			<Size><AbsDimension x="240" y="24" /></Size>
@@ -60,47 +42,7 @@
 		<Property name="Progress" value="1.0" />
 		<Property name="ProgressColor" value="FFD23A3A" />
 
-		<Visual>
-			<!-- Near-black translucent backing so missing health reads as a dark gap. -->
-			<ImagerySection name="Background">
-				<ImageComponent texture="Interface/fg4_gradientWhiteV1_result.htex" tiling="HORZ" tint="D8101010" />
-			</ImagerySection>
-			<!-- White gradient fill, tinted at runtime via the ProgressColor property. -->
-			<ImagerySection name="Progress">
-				<ImageComponent texture="Interface/fg4_gradientWhiteV1_result.htex" tiling="HORZ" tint="FFFFFFFF">
-					<Area><Inset all="4" /></Area>
-				</ImageComponent>
-			</ImagerySection>
-			<ImagerySection name="Border">
-				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" />
-			</ImagerySection>
-
-			<StateImagery name="Enabled">
-				<Layer>
-					<Section section="Background" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer>
-					<Section section="Background" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Progress">
-				<Layer>
-					<Section section="Progress" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Overlay">
-				<Layer>
-					<Section section="Border" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="OverlayDisabled">
-				<Layer>
-					<Section section="Border" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeNameplateHealthBarTemplateVisual" />
 
 		<Area>
 			<Size><AbsDimension x="240" y="30" /></Size>
@@ -108,22 +50,7 @@
 	</Frame>
 
 	<Frame name="NameplateHighlightTemplate" renderer="DefaultRenderer">
-		<Visual>
-			<ImagerySection name="Fill">
-				<ImageComponent texture="Interface/fg4_gradientWhiteV1_result.htex" tiling="HORZ" tint="FFFFFFFF" />
-			</ImagerySection>
-
-			<StateImagery name="Enabled">
-				<Layer>
-					<Section section="Fill" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer>
-					<Section section="Fill" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeNameplateHighlightTemplateVisual" />
 
 		<Area>
 			<Size><AbsDimension x="248" y="38" /></Size>
@@ -142,50 +69,7 @@
 		<Property name="ProgressColor" value="FFE8B923" />
 		<Property name="Font" value="NameplateCastFont" />
 
-		<Visual>
-			<ImagerySection name="Background">
-				<ImageComponent texture="Interface/fg4_gradientWhiteV1_result.htex" tiling="HORZ" tint="D8101010" />
-			</ImagerySection>
-			<ImagerySection name="Progress">
-				<ImageComponent texture="Interface/fg4_gradientWhiteV1_result.htex" tiling="HORZ" tint="FFFFFFFF">
-					<Area><Inset all="3" /></Area>
-				</ImageComponent>
-			</ImagerySection>
-			<ImagerySection name="Border">
-				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" />
-			</ImagerySection>
-			<ImagerySection name="Caption">
-				<TextComponent color="FFFFFFFF" horzAlign="CENTER" vertAlign="CENTER" wrap="false" />
-			</ImagerySection>
-
-			<StateImagery name="Enabled">
-				<Layer>
-					<Section section="Background" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer>
-					<Section section="Background" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Progress">
-				<Layer>
-					<Section section="Progress" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Overlay">
-				<Layer>
-					<Section section="Border" />
-					<Section section="Caption" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="OverlayDisabled">
-				<Layer>
-					<Section section="Border" />
-					<Section section="Caption" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeNameplateCastBarTemplateVisual" />
 
 		<Area>
 			<Size><AbsDimension x="240" y="20" /></Size>

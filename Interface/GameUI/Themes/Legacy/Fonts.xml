@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UiLayout xmlns="http://www.w3schools.com/Ui">
+	<Font name="CharacterTitleFont" file="Fonts/FRIZQT__.TTF" size="32" outline="0" shadowX="1.0" shadowY="1.0" />
+	<Font name="CharacterBodyFont" file="Fonts/FRIZQT__.TTF" size="24" outline="0" shadowX="1.0" shadowY="1.0" />
+	<Font name="CharacterAttributeButtonFont" file="Fonts/FRIZQT__.TTF" size="30" outline="0" />
+	<Font name="ChatBubbleFont" file="Fonts/FRIZQT__.TTF" size="24" outline="0" shadowX="0.0" shadowY="0.0" />
+	<Font name="ChatFont" file="Fonts/ARIALN.TTF" size="30" outline="0" shadowX="1.0" shadowY="1.0" />
+	<Font name="CraftingFont" file="Fonts/FRIZQT__.TTF" size="24" outline="0" shadowX="1" shadowY="1" />
+	<Font name="EmoteNameLabelFont" file="Fonts/FRIZQT__.TTF" size="22" outline="0" shadowX="1.0" shadowY="1.0" />
+	<Font name="EmoteSubLabelFont" file="Fonts/FRIZQT__.TTF" size="18" outline="0" shadowX="1.0" shadowY="1.0" />
+	<Font name="FriendNameFont" file="Fonts/FRIZQT__.TTF" size="26" outline="1" />
+	<Font name="FriendDetailFont" file="Fonts/FRIZQT__.TTF" size="22" outline="1" />
+	<Font name="ExperienceHudFont" file="Fonts/FRIZQT__.TTF" size="22" outline="1" shadowX="1.0" shadowY="1.0" />
+	<Font name="ActionShortcutFont" file="Fonts/FRIZQT__.TTF" size="16" outline="1" shadowX="1.0" shadowY="1.0" />
+	<Font name="MenuBarBadgeFont" file="Fonts/FRIZQT__.TTF" size="22" outline="1" />
+	<Font name="CombatHudNameFont" file="Fonts/FRIZQT__.TTF" size="24" outline="1" shadowX="1.0" shadowY="1.0" />
+	<Font name="CombatHudTextFont" file="Fonts/FRIZQT__.TTF" size="22" outline="1" shadowX="1.0" shadowY="1.0" />
+	<Font name="DefaultSmall" file="Fonts/FRIZQT__.TTF" size="26" outline="0" shadowX="1.0" shadowY="1.0" />
+	<Font name="DefaultSmallBorder" file="Fonts/FRIZQT__.TTF" size="26" outline="0" shadowX="1.0" shadowY="1.0" />
+	<Font name="DefaultHeader" file="Fonts/FRIZQT__.TTF" size="42" outline="0" />
+	<Font name="DefaultSmallOutline" file="Fonts/FRIZQT__.TTF" size="26" outline="0" shadowX="1.0" shadowY="1.0" />
+	<Font name="SmallLabelFont" file="Fonts/FRIZQT__.TTF" size="20" outline="0" shadowX="1.0" shadowY="1.0" />
+	<Font name="AuraTimeFont" file="Fonts/FRIZQT__.TTF" size="18" outline="0" shadowX="1.0" shadowY="1.0" />
+	<Font name="AlestiaWindowTitleFont" file="Fonts/FRIZQT__.TTF" size="32" outline="0" shadowX="1.0" shadowY="1.0" />
+	<Font name="TooltipTitleFont" file="Fonts/FRIZQT__.TTF" size="28" outline="0" shadowX="1.0" shadowY="1.0" />
+	<Font name="TooltipFont" file="Fonts/FRIZQT__.TTF" size="24" outline="0" shadowX="1.0" shadowY="1.0" />
+	<Font name="GuildTextFont" file="Fonts/FRIZQT__.TTF" size="24" outline="1" />
+	<Font name="GuildHeadingFont" file="Fonts/FRIZQT__.TTF" size="30" outline="1" />
+	<Font name="InventoryTitleFont" file="Fonts/FRIZQT__.TTF" size="25.6" outline="0" shadowX="0.8" shadowY="0.8" />
+	<Font name="InventoryCountFont" file="Fonts/FRIZQT__.TTF" size="20.8" outline="0" shadowX="0.8" shadowY="0.8" />
+	<Font name="MinimapCompassFont" file="Fonts/FRIZQT__.TTF" size="26" outline="2" shadowX="1.0" shadowY="1.0" />
+	<Font name="NameplateFont" file="Fonts/FRIZQT__.TTF" size="24" outline="0" shadowX="1.0" shadowY="1.0" />
+	<Font name="NameplateCastFont" file="Fonts/FRIZQT__.TTF" size="18" outline="0" shadowX="1.0" shadowY="1.0" />
+	<Font name="QuestTitleFont" file="Fonts/FRIZQT__.TTF" size="30" outline="0" />
+	<Font name="QuestFont" file="Fonts/FRIZQT__.TTF" size="24" outline="0" />
+	<Font name="QuestTrackerHeadingFont" file="Fonts/FRIZQT__.TTF" size="26" outline="1" shadowX="1.0" shadowY="1.0" />
+	<Font name="QuestTrackerObjectiveFont" file="Fonts/FRIZQT__.TTF" size="20" outline="1" shadowX="1.0" shadowY="1.0" />
+	<Font name="QuestTrackerTitleFont" file="Fonts/FRIZQT__.TTF" size="22" outline="1" shadowX="1.0" shadowY="1.0" />
+	<Font name="SpellNameLabelFont" file="Fonts/FRIZQT__.TTF" size="22" outline="0" shadowX="1.0" shadowY="1.0" />
+	<Font name="SpellSubLabelFont" file="Fonts/FRIZQT__.TTF" size="18" outline="0" shadowX="1.0" shadowY="1.0" />
+	<Font name="SpellBookTabFont" file="Fonts/FRIZQT__.TTF" size="20" outline="0" shadowX="1.0" shadowY="1.0" />
+	<Font name="TalentPointsCounterFont" file="Fonts/FRIZQT__.TTF" size="40" outline="1" />
+	<Font name="TalentTabFont" file="Fonts/FRIZQT__.TTF" size="20" outline="0" shadowX="1.0" shadowY="1.0" />
+	<Font name="TalentRankFont" file="Fonts/FRIZQT__.TTF" size="22" outline="1" shadowX="0.5" shadowY="0.5" />
+	<Font name="TalentPathFont" file="Fonts/FRIZQT__.TTF" size="34" outline="1" shadowX="1.5" shadowY="1.5" />
+	<Font name="TrainerNameFont" file="Fonts/FRIZQT__.TTF" size="26" outline="1" />
+	<Font name="TrainerDetailFont" file="Fonts/FRIZQT__.TTF" size="22" outline="1" />
+	<Font name="VendorItemFont" file="Fonts/FRIZQT__.TTF" size="24" outline="1" />
+	<Font name="ZoneTextFont" file="Fonts/FRIZQT__.TTF" size="64" outline="3" />
+	<Font name="ZoneTextFontSmall" file="Fonts/FRIZQT__.TTF" size="48" outline="3" />
+</UiLayout>

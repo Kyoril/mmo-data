@@ -1,0 +1,14 @@
+Alestia Online loading screen
+
+Generated with the built-in image generation tool.
+Source: Loading.png. Runtime asset: ../Loading.htex.
+Import from bin/Debug:
+  mmo_edit --import-texture Interface H:/mmo/data/client/Interface/Source/Loading.png
+Import as Color without compression to preserve the logo and gold ornament detail.
+
+Generation prompt:
+Use case: stylized-concept. Asset type: finished full-screen fantasy MMORPG loading-screen illustration, landscape 16:9, ideally 1920x1080.
+Create a new Alestia Online loading screen that fits the attached UI mock: midnight navy embossed leather/stone, sculpted antique gold edging, luminous blue accents, rich painterly fantasy.
+References: the UI screenshot is ONLY a visual vocabulary reference (navy panels and gold trim); the logo PNG is the current actual game logo to reproduce faithfully; the launcher splash is a reference for the game's painterly world quality.
+Scene: an inviting forest road leading into Oakenshire, a small medieval timber-and-stone village nestled among tall old oaks and conifers, distant blue mountains, warm lanterns and late afternoon sunlight, grassy verge and wildflowers. Hand-painted high quality fantasy game key art with strong readable shapes, architectural detail and atmospheric depth, neither photorealistic nor flat storybook drawing.
+Composition: panoramic landscape with village and winding road as focal point at center-right; balanced foreground trees frame edges; tasteful soft dark navy vignette. Place the faithful current blue/gold Alestia Online logo at top center at moderate size, crisp and readable, using the exact supplied logo design, not the old sword-through-logo design. At the extreme outer edge a very slim navy frame with restrained sculpted gold corner ornaments matching UI mock. Bottom edge transitions naturally to a quiet dark navy band with a small symmetrical gold diamond ornament at bottom center. No progress bar, no fake progress indicator, no loading text or tips, no location sign, no extra words, no characters, no watermark. This is final shippable loading artwork, not a screenshot mockup.

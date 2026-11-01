@@ -164,6 +164,7 @@
         <xs:element name="StateImagery" type="StateImageryType" />
       </xs:choice>
     </xs:sequence>
+    <xs:attribute name="inherits" use="optional" type="xs:string" />
   </xs:complexType>
 
   <xs:complexType name="AbsDimensionType">
