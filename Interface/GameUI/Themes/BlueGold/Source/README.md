@@ -5,14 +5,21 @@ Generated using the built-in ImageGen tool, then imported with the editor's `--i
 The current theme uses:
 
 - **NavySurfaceV2.png**: fine seamless midnight navy grain, composited over solid navy at reduced alpha.
-- **WindowFrameV2.png**: transparent center with dimensional brass molding and compact engraved scroll corners; main windows, character well and progress rails use different destination sizes.
-- **ButtonV2.png**: opaque raised navy enamel face and brass chamfered bevel, shared by action sockets, selected tabs, buttons and unit-frame backing.
+- **WindowFrameV2.png**: transparent center with dimensional brass molding and compact engraved scroll corners for main windows and the character well.
+- **ButtonV2.png**: raised navy enamel face and brass chamfered bevel for action sockets and buttons. The menu hover material is preserved; idle menu buttons use a dimmer tint.
+- **SelectedTabV5.png**: active tab with a deep navy enamel face, sculpted brass edge and luminous gold inner lip; keeps ivory captions clear without a broad gold fill.
 - **QuietSlotV2.png**: desaturated slate bevel with transparent center and shadowed inner edge; derived by editing `SlotV2.png` to reduce the original bright steel highlights.
-- **ActionFrameV3.png**: broad sculpted gold surround, navy inner shoulder and compact carved corners; a dedicated nine-slice for the main action bar.
-- **MinimapRingV4.png**: smooth continuous circular navy/brass molding with a transparent center; replaces the thin V2 rim.
+- **ActionFrameV4.png**: sculpted gold end fittings, slimmer rails and a recessed navy shoulder, enclosing both action icons and XP rails.
+- **MinimapRingV5.png**: smooth bronze/navy circular molding with transparent center and filtered mip levels, replacing the noisy yellow V4 rim.
 - **RoundButtonV3.png**: matching opaque navy enamel button face with circular gold molding and transparent outside.
+- **HeaderPlateV4.png**: raised navy/gold plaque with transparent outside-corner cutouts, used by the minimap header and close control.
+- **NavyWellV4.png**: recessed navy material with soft ambient occlusion at its edges for window interiors and tooltips.
+- **SoftShadowV4.png**: diffuse black alpha shadow around a transparent center, replacing the hard old circular backing.
+- **BarFillV4.png**: smooth neutral grayscale curved highlight, tinted by the existing progress colors.
+- **BarRimV4.png**: rounded transparent brass housing and inset shadow for progress bars, unit cards and tooltips.
+- **SlotNeutralV4.png**: neutral silver/graphite rim whose tint cleanly identifies rarity without a blue base material.
 
-Full generation prompts are retained in `prompts-v2.json` and `prompts-v3.json`. `SlotV2.png`, `MinimapRingV2.png` and the earlier source set below are retained as art history; the active XML references the materials above.
+Full built-in ImageGen prompts are retained in `prompts-v2.json`, `prompts-v3.json`, `prompts-v4.json` and `prompts-v5.json`. Older source variants remain as art history. Import current UI rims, fills, wells and shadows as uncompressed Color/UI with `--mipmaps`; this enables filtered non-power-of-two mip chains instead of sampling the full 1254px source at tiny screen sizes. See the parent theme README for import commands and sampling corner sizes.
 
 Generation prompt briefs:
 

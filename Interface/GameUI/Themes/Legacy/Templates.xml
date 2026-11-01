@@ -480,4 +480,65 @@
 			</StateImagery>
 		</Visual>
 	</Frame>
+	<Frame name="ThemeWindowHeaderChromeTemplate" renderer="DefaultRenderer">
+		<Property name="Clickable" value="false" />
+		<Property name="MousePassThrough" value="true" />
+		<Visual>
+			<ImagerySection name="Background" />
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Background" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+		<Frame name="ThemeWindowHeaderChromeTop" renderer="DefaultRenderer">
+			<Property name="Clickable" value="false" />
+			<Property name="MousePassThrough" value="true" />
+			<Visual>
+				<ImagerySection name="Background" />
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Background" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+		</Frame>
+		<Frame name="ThemeWindowHeaderChromeLeft" renderer="DefaultRenderer">
+			<Property name="Clickable" value="false" />
+			<Property name="MousePassThrough" value="true" />
+			<Visual>
+				<ImagerySection name="Background" />
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Background" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+		</Frame>
+		<Frame name="ThemeWindowHeaderChromeRight" renderer="DefaultRenderer">
+			<Property name="Clickable" value="false" />
+			<Property name="MousePassThrough" value="true" />
+			<Visual>
+				<ImagerySection name="Background" />
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Background" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+		</Frame>
+		<Frame name="ThemeWindowHeaderChromeRim" renderer="DefaultRenderer">
+			<Property name="MousePassThrough" value="true" />
+			<Property name="ClippedByParent" value="true" />
+			<Property name="Clickable" value="false" />
+			<Visual>
+				<ImagerySection name="Rim" />
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Rim" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+		</Frame>
+	</Frame>
 </UiLayout>

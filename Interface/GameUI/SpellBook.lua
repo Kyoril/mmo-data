@@ -98,6 +98,7 @@ function SpellBook_UpdatePage()
     end
 
     SpellBookPageLabel:SetText(string.format(Localize("SPELL_BOOK_PAGE_FORMAT"), SpellBookPage));
+	SpellBookEmptyLabel:SetProperty("TextColor", (GameUITheme and GameUITheme.IconListEmptyColor) or "FF776A58");
 
     if (#SpellBookVisibleSpells == 0) then
         SpellBookEmptyLabel:Show();
@@ -202,6 +203,14 @@ function SpellButton_Update(button)
 
     button:Show();
     button:GetChild(0):SetText(spell.name);
+	button:GetChild(0):SetProperty("Color", (GameUITheme and GameUITheme.IconListNameColor) or "FF4A3620");
+	button:GetChild(1):SetProperty("Color", (GameUITheme and GameUITheme.IconListDetailColor) or "FF656565");
+	if GameUITheme and GameUITheme.IconListLabelWidth then
+		button:GetChild(0):SetWidth(GameUITheme.IconListLabelWidth);
+		button:GetChild(1):SetWidth(GameUITheme.IconListLabelWidth);
+		local top = (spell.rank > 0 and GameUITheme.IconListLabelWithDetailTop or GameUITheme.IconListLabelTop) or 0;
+		button:GetChild(0):SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, top);
+	end
 
     if spell.rank > 0 then
         button:GetChild(1):SetText(string.format(Localize("SPELL_RANK_FORMAT"), spell.rank));

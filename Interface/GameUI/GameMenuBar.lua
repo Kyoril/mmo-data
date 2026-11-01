@@ -27,6 +27,16 @@ function GameMenuBar_UpdateExperienceBarLayout()
 		visibleBars = visibleBars + 1;
 	end
 	GameMenuBar:SetHeight(baseHeight + (enclosed and visibleBars * barStep or 0));
+	if GameUITheme then
+		if ActionBar and GameUITheme.ActionBarBottomOffset then
+			ActionBar:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.BOTTOM, GameMenuBar, GameUITheme.ActionBarBottomOffset);
+			ActionBar:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, GameMenuBar, GameUITheme.ActionBarLeftOffset or 16);
+		end
+		if MenuBarButtons and GameUITheme.MenuButtonsBottomOffset then
+			MenuBarButtons:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.BOTTOM, GameMenuBar, GameUITheme.MenuButtonsBottomOffset);
+			MenuBarButtons:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, GameMenuBar, GameUITheme.MenuButtonsRightOffset or -16);
+		end
+	end
 	ExperienceDock:SetHeight(visibleBars * barStep);
 	if (visibleBars > 0) then
 		ExperienceDock:Show();
@@ -288,7 +298,8 @@ function AddMenuBarButton(icon, callback, tooltipKey, bindingName, badgeTooltipK
 		local child = MenuBarButtons:GetChild(i);
 		child:ClearAnchors();
 		child:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.BOTTOM, nil, -8);
-		child:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, -16 - (childCount - i - 1) * (child:GetWidth() + MENUBAR_H_PADDING));
+		local rightInset = (GameUITheme and GameUITheme.MenuButtonRightInset) or 16;
+		child:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, -rightInset - (childCount - i - 1) * (child:GetWidth() + MENUBAR_H_PADDING));
 	end
 
 	return button;

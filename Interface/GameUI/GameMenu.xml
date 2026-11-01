@@ -13,7 +13,7 @@
 	<Frame name="GameMenu" renderer="DefaultRenderer" parent="GameParent">
 		<Property name="Visible" value="False" />
 
-		<Visual inherits="ThemeBugReportFrameVisual" />
+		<Visual inherits="ThemeGameMenuVisual" />
 
 
 		<Area>
@@ -24,6 +24,7 @@
 
 		<Frame name="MenuTitleBar" inherits="TitleBar">
 			<Property name="Text" value="MENU" />
+			<Visual inherits="ThemeGameMenuTitleBarVisual" />
 
 			<Area>
 				<Anchor point="TOP" offset="24" />
@@ -42,7 +43,14 @@
 				<Anchor point="BOTTOM" offset="-48" />
 			</Area>
 		</Frame>
-		
+
+		<!-- The rim is drawn after the connected header, without intercepting input. -->
+		<Frame name="GameMenuBorder" renderer="DefaultRenderer" setAllPoints="true" frameLevel="1">
+			<Property name="Clickable" value="false" />
+			<Property name="MousePassThrough" value="true" />
+			<Visual inherits="ThemeGameMenuBorderVisual" />
+		</Frame>
+
 		<Scripts>
 			<OnLoad>
 				return function(self)

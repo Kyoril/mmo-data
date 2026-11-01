@@ -3770,4 +3770,81 @@
 			</StateImagery>
 		</Visual>
 	</Frame>
+
+	<Frame name="ThemeGameMenuVisual">
+		<Visual>
+			<ImagerySection name="Background">
+				<BorderComponent texture="Interface/GameUI/Alestia/WindowPanel.htex" borderSize="32" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Background" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+	</Frame>
+	<Frame name="ThemeGameMenuTitleBarVisual">
+		<Visual>
+			<ImagerySection name="Background">
+				<TextComponent color="FFF0E7D6" horzAlign="LEFT">
+					<Area>
+						<Inset left="16" right="96" top="8" bottom="8" />
+					</Area>
+				</TextComponent>
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Background" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+	</Frame>
+	<Frame name="ThemeGameMenuBorderVisual">
+		<Visual>
+			<ImagerySection name="Border" />
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Border" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+	</Frame>
+
+	<Frame name="ThemeNpcGreetingPanelTemplate" renderer="DefaultRenderer">
+		<Property name="Clickable" value="false" />
+		<Property name="MousePassThrough" value="true" />
+		<Visual>
+			<ImagerySection name="Background">
+				<BorderComponent texture="Interface/GameUI/QuestFrame_Background.htex" borderSize="96" />
+			</ImagerySection>
+			<StateImagery name="Enabled"><Layer><Section section="Background" /></Layer></StateImagery>
+		</Visual>
+	</Frame>
+	<Frame name="ThemeNpcGreetingCardTemplate" renderer="DefaultRenderer">
+		<Property name="Clickable" value="false" />
+		<Property name="MousePassThrough" value="true" />
+		<Visual>
+			<ImagerySection name="Background">
+				<BorderComponent texture="Interface/GameUI/QuestFrame_Background.htex" borderSize="48" leftSize="96" rightSize="96" topSize="96" bottomSize="96" tint="FFF2F4F6" />
+			</ImagerySection>
+			<StateImagery name="Enabled"><Layer><Section section="Background" /></Layer></StateImagery>
+		</Visual>
+	</Frame>
+	<Frame name="ThemeNpcGreetingChoiceTemplate" type="Button" renderer="ButtonRenderer">
+		<Property name="Font" value="QuestFont" />
+		<Property name="Icon" />
+		<Visual>
+			<ImagerySection name="Normal"><BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="FFAA9D85" /></ImagerySection>
+			<ImagerySection name="Hovered"><BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="FFF3DFBA" /></ImagerySection>
+			<ImagerySection name="Pushed"><BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="FF807B70" /></ImagerySection>
+			<ImagerySection name="Disabled"><BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="FF615E58" /></ImagerySection>
+			<ImagerySection name="Icon">
+				<ImageComponent><Area><Inset left="18" top="16" /><Size><AbsDimension x="44" y="44" /></Size></Area><PropertyValue property="Icon" /></ImageComponent>
+			</ImagerySection>
+			<StateImagery name="Normal"><Layer><Section section="Normal" /><Section section="Icon" /></Layer></StateImagery>
+			<StateImagery name="Hovered"><Layer><Section section="Hovered" /><Section section="Icon" /></Layer></StateImagery>
+			<StateImagery name="Pushed"><Layer><Section section="Pushed" /><Section section="Icon" /></Layer></StateImagery>
+			<StateImagery name="Disabled"><Layer><Section section="Disabled" /><Section section="Icon" /></Layer></StateImagery>
+		</Visual>
+	</Frame>
 </UiLayout>

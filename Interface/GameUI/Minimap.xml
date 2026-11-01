@@ -40,6 +40,7 @@
 			<Visual inherits="ThemeMinimapTitleBarVisual" />
 			<Frame name="MinimapCloseButton" inherits="IconButton">
 				<Property name="Icon" value="Interface/Icons/fg4_iconsGold_close_result.htex" />
+				<Visual inherits="ThemeMinimapCloseButtonVisual" />
 				<Area>
 					<Size>
 						<AbsDimension x="56" y="56" />

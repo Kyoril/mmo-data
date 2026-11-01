@@ -6,8 +6,8 @@
 	<Font name="ChatBubbleFont" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="24" outline="0" shadowX="0.0" shadowY="0.0" />
 	<Font name="ChatFont" file="Fonts/ARIALN.TTF" size="30" outline="0" shadowX="1.0" shadowY="1.0" />
 	<Font name="CraftingFont" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="24" outline="0" shadowX="1" shadowY="1" />
-	<Font name="EmoteNameLabelFont" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="22" outline="0" shadowX="1.0" shadowY="1.0" />
-	<Font name="EmoteSubLabelFont" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="18" outline="0" shadowX="1.0" shadowY="1.0" />
+	<Font name="EmoteNameLabelFont" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="24" outline="0" shadowX="1.0" shadowY="1.0" />
+	<Font name="EmoteSubLabelFont" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="20" outline="0" shadowX="1.0" shadowY="1.0" />
 	<Font name="FriendNameFont" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="26" outline="1" />
 	<Font name="FriendDetailFont" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="22" outline="1" />
 	<Font name="ExperienceHudFont" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="20" outline="1" shadowX="1.0" shadowY="1.0" />
@@ -36,8 +36,8 @@
 	<Font name="QuestTrackerHeadingFont" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="26" outline="1" shadowX="1.0" shadowY="1.0" />
 	<Font name="QuestTrackerObjectiveFont" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="20" outline="1" shadowX="1.0" shadowY="1.0" />
 	<Font name="QuestTrackerTitleFont" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="22" outline="1" shadowX="1.0" shadowY="1.0" />
-	<Font name="SpellNameLabelFont" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="22" outline="0" shadowX="1.0" shadowY="1.0" />
-	<Font name="SpellSubLabelFont" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="18" outline="0" shadowX="1.0" shadowY="1.0" />
+	<Font name="SpellNameLabelFont" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="24" outline="0" shadowX="1.0" shadowY="1.0" />
+	<Font name="SpellSubLabelFont" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="20" outline="0" shadowX="1.0" shadowY="1.0" />
 	<Font name="SpellBookTabFont" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="20" outline="0" shadowX="1.0" shadowY="1.0" />
 	<Font name="TalentPointsCounterFont" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="40" outline="1" />
 	<Font name="TalentTabFont" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="20" outline="0" shadowX="1.0" shadowY="1.0" />

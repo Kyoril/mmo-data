@@ -23,6 +23,7 @@ end
 function QuestLogFrame_OnLoad(self)
     -- Initialize side panel functionality first, like the close button
     SidePanel_OnLoad(self);
+	QuestText_ApplyPalette(self);
     
     -- Localize quest log text
     self:GetChild(0):SetText(Localize("QUESTS"));
@@ -142,7 +143,7 @@ function QuestLogFrame_UpdateQuestDetails()
         local objective = GetQuestObjectiveText(i - 1);
         
         local label = TextSmall:Clone();
-        label:SetProperty("TextColor", "FF100500");
+        label:SetProperty("TextColor", QuestText_GetBodyColor());
         label:SetProperty("Font", "QuestFont");
         label:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, 0);
         label:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, 0);
@@ -356,7 +357,7 @@ function QuestLog_Update()
                     button:SetProperty("TextColor", "FFD28B7F");
                     button:SetText(string.format(Localize("QUEST_FAILED_FORMAT"), title));
                 else
-                    button:SetProperty("TextColor", "FFF3CF50");
+                    button:SetProperty("TextColor", (GameUITheme and GameUITheme.QuestListTextColor) or "FFF3CF50");
                     button:SetText(title);
                 end
                 button:SetChecked(questLogEntry.quest.id == GetQuestLogSelection());

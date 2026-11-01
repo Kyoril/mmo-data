@@ -18,6 +18,9 @@ function InventoryItemButton_UpdateQualityBorder(this, item)
     local color = INVENTORY_QUALITY_COLOR_EMPTY;
     if item then
         color = ItemQualityColors[item:GetQuality()] or INVENTORY_QUALITY_COLOR_NONE;
+        if GameUITheme and GameUITheme.ItemQualityBorderColors then
+            color = GameUITheme.ItemQualityBorderColors[item:GetQuality()] or color;
+        end
     end
 
     this:SetProperty("QualityColor", color);

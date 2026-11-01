@@ -1,4 +1,3 @@
-<?xml version='1.0' encoding='utf-8'?>
 <UiLayout xmlns="http://www.w3schools.com/Ui">
 	<Frame name="ThemeGlueButtonVisual">
 		<Property name="Icon" value="" />
@@ -235,13 +234,8 @@
 	<Frame name="ThemeTitleBarVisual">
 		<Visual>
 			<ImagerySection name="Background">
-				<BorderComponent texture="Interface/GameUI/fg4_gradientBlackCircle2.htex" borderSize="20" tint="90FFFFFF">
-					<Area>
-						<Inset left="0" right="0" top="0" bottom="-14" />
-					</Area>
-				</BorderComponent>
 				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF0C182A" />
-				<ImageComponent texture="Interface/GameUI/Themes/BlueGold/Textures/NavySurfaceV2.htex" tiling="BOTH" tint="55FFFFFF" />
+				<ImageComponent texture="Interface/GameUI/Themes/BlueGold/Textures/NavySurfaceV2.htex" tint="55FFFFFF" tiling="BOTH" />
 				<TextComponent color="FFF3EAD2" horzAlign="LEFT">
 					<Area>
 						<Inset left="16" right="96" top="8" bottom="8" />
@@ -328,9 +322,9 @@
 	<Frame name="ThemeDialogBorderFrameVisual">
 		<Visual>
 			<ImagerySection name="Background">
-				<BorderComponent texture="Interface/GameUI/fg4_gradientBlackCircle2.htex" borderSize="31" tint="B0FFFFFF">
+				<BorderComponent texture="Interface/GameUI/Themes/BlueGold/Textures/SoftShadowV4.htex" borderSize="28" leftSize="224" rightSize="224" topSize="224" bottomSize="224" tint="50FFFFFF">
 					<Area>
-						<Inset left="-20" right="-24" top="-10" bottom="-28" />
+						<Inset left="-10" right="-14" top="-8" bottom="-16" />
 					</Area>
 				</BorderComponent>
 				<ImageComponent texture="Interface/GameUI/Themes/BlueGold/Textures/NavyWellV4.htex" tint="FFB4BBC9" />
@@ -474,5 +468,78 @@
 				</Layer>
 			</StateImagery>
 		</Visual>
+	</Frame>
+	<Frame name="ThemeWindowHeaderChromeTemplate" renderer="DefaultRenderer">
+		<Property name="Clickable" value="false" />
+		<Property name="MousePassThrough" value="true" />
+		<Visual>
+			<ImagerySection name="Background">
+				</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Background" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+		<Frame name="ThemeWindowHeaderChromeTop" renderer="DefaultRenderer">
+			<Property name="Clickable" value="false" />
+			<Property name="MousePassThrough" value="true" />
+			<Visual>
+				<ImagerySection name="Background">
+					<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF0C182A" />
+					<ImageComponent texture="Interface/GameUI/Themes/BlueGold/Textures/NavySurfaceV2.htex" tint="55FFFFFF" tiling="BOTH" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Background" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+		</Frame>
+		<Frame name="ThemeWindowHeaderChromeLeft" renderer="DefaultRenderer">
+			<Property name="Clickable" value="false" />
+			<Property name="MousePassThrough" value="true" />
+			<Visual>
+				<ImagerySection name="Background">
+					<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF0C182A" />
+					<ImageComponent texture="Interface/GameUI/Themes/BlueGold/Textures/NavySurfaceV2.htex" tint="55FFFFFF" tiling="BOTH" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Background" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+		</Frame>
+		<Frame name="ThemeWindowHeaderChromeRight" renderer="DefaultRenderer">
+			<Property name="Clickable" value="false" />
+			<Property name="MousePassThrough" value="true" />
+			<Visual>
+				<ImagerySection name="Background">
+					<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF0C182A" />
+					<ImageComponent texture="Interface/GameUI/Themes/BlueGold/Textures/NavySurfaceV2.htex" tint="55FFFFFF" tiling="BOTH" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Background" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+		</Frame>
+		<Frame name="ThemeWindowHeaderChromeRim" renderer="DefaultRenderer">
+			<Property name="MousePassThrough" value="true" />
+			<Property name="ClippedByParent" value="true" />
+			<Property name="Clickable" value="false" />
+			<Visual>
+				<ImagerySection name="Rim">
+					<BorderComponent texture="Interface/GameUI/Themes/BlueGold/Textures/WindowFrameV2.htex" borderSize="40" leftSize="168" rightSize="168" topSize="168" bottomSize="168" tint="FFC1B9A8" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Rim" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+		</Frame>
 	</Frame>
 </UiLayout>

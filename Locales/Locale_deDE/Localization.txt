@@ -1248,4 +1248,5 @@ strings =
 	(key = "MINIMAP_COMPASS_EAST", string = "O")
 	(key = "MINIMAP_COMPASS_SOUTH", string = "S")
 	(key = "MINIMAP_COMPASS_WEST", string = "W")
+	(key = "NPC_DIALOG_SERVICES", string = "Gespräche und Dienste")
 }

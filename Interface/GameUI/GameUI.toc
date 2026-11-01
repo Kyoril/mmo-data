@@ -53,3 +53,4 @@ GameTooltip.xml
 BugReporter/BugReporter.toc
 
 #DebugUI.xml
+ThemeLayout.lua
