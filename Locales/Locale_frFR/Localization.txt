@@ -620,6 +620,7 @@ strings =
 	(key = "GUILD_PLAYER_NOT_FOUND", string = "Joueur '%s' introuvable.")
 	(key = "GUILD_ALREADY_IN_OTHER_GUILD", string = "%s est déjà dans une guilde.")
 	(key = "GUILD_INVITE_PENDING", string = "%s a une invitation de guilde en attente.")
+	(key = "GUILD_DISABLED", string = "Les guildes sont actuellement indisponibles.")
 	(key = "GUILD_INVITE_DECLINED", string = "%s a refusé votre invitation de guilde.")
 
 	(key = "GUILD_EVENT_PROMOTION", string = "%s a promu %s au rang %s.")

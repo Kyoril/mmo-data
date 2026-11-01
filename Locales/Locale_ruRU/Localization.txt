@@ -623,6 +623,7 @@ strings =
 	(key = "GUILD_PLAYER_NOT_FOUND", string = "Player '%s' not found.")
 	(key = "GUILD_ALREADY_IN_OTHER_GUILD", string = "%s is already in a guild.")
 	(key = "GUILD_INVITE_PENDING", string = "%s has a pending guild invite.")
+	(key = "GUILD_DISABLED", string = "Гильдии сейчас недоступны.")
 	(key = "GUILD_INVITE_DECLINED", string = "%s has declined your guild invitation.")
 
 	(key = "GUILD_EVENT_PROMOTION", string = "%s promoted %s to rank %s.")
