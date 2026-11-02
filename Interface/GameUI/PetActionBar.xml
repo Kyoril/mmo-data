@@ -77,8 +77,9 @@
 				<AbsDimension x="80" y="80" />
 			</Size>
 		</Area>
-		<!-- Cooldown overlay of an ability button. -->
-		<Frame name="Cooldown" type="Cooldown">
+		<!-- Cooldown overlay of an ability button. Frame names are global, so it must not be called
+		     "Cooldown" like the one in ActionBarButtonTemplate. -->
+		<Frame name="PetActionButtonTemplateCooldown" type="Cooldown">
 			<Property name="Clickable" value="false" />
 			<Property name="Enabled" value="false" />
 			<Property name="Visible" value="false" />

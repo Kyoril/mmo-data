@@ -68,7 +68,8 @@ end
 
 function PetActionButton_UpdateCooldown(self)
     local cooldownFrame = self:GetChild(0);
-    if cooldownFrame == nil then
+    -- Only a Cooldown frame has SetProgress; bail out if the overlay failed to load.
+    if cooldownFrame == nil or cooldownFrame.SetProgress == nil then
         return;
     end
 
