@@ -1,0 +1,154 @@
+{
+  "extraTags": [],
+  "halfExtents": [
+    5.0,
+    5.0,
+    5.0
+  ],
+  "id": 9926440849303915649,
+  "name": "Valley Wall 2",
+  "nextPointId": 7,
+  "overrides": {
+    "facadeHeightJitter": {
+      "type": "float",
+      "value": 0.25
+    },
+    "groundSmoothing": {
+      "type": "float",
+      "value": 22.5
+    },
+    "heightMode": {
+      "type": "string",
+      "value": "followGround"
+    },
+    "massDepth": {
+      "type": "float",
+      "value": 135.0
+    },
+    "massHeight": {
+      "type": "float",
+      "value": 70.0
+    },
+    "massNoiseAmplitude": {
+      "type": "float",
+      "value": 57.0
+    },
+    "massNoiseWavelength": {
+      "type": "float",
+      "value": 180.0
+    },
+    "massPaintLayer": {
+      "type": "int",
+      "value": 0
+    },
+    "massRise": {
+      "type": "float",
+      "value": 0.49000000953674316
+    }
+  },
+  "pointIds": [
+    1,
+    3,
+    4,
+    5,
+    6,
+    2
+  ],
+  "position": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "rotation": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "spline": {
+    "closed": false,
+    "interpolation": "catmullRom",
+    "points": [
+      {
+        "autoTangents": false,
+        "inX": 8.818821907043457,
+        "inY": 0.06816291809082031,
+        "inZ": -21.756444931030273,
+        "outX": -8.818821907043457,
+        "outY": -0.06816291809082031,
+        "outZ": 21.756444931030273,
+        "width": 0.0,
+        "x": -215.00218200683594,
+        "y": 0.33447265625,
+        "z": 1144.0360107421875
+      },
+      {
+        "autoTangents": true,
+        "inX": 0.0,
+        "inY": 0.0,
+        "inZ": 0.0,
+        "outX": 0.0,
+        "outY": 0.0,
+        "outZ": 0.0,
+        "width": 0.0,
+        "x": -361.1897888183594,
+        "y": -0.2517189383506775,
+        "z": 1247.6461181640625
+      },
+      {
+        "autoTangents": true,
+        "inX": 0.0,
+        "inY": 0.0,
+        "inZ": 0.0,
+        "outX": 0.0,
+        "outY": 0.0,
+        "outZ": 0.0,
+        "width": 0.0,
+        "x": -444.0086364746094,
+        "y": -0.4738507866859436,
+        "z": 1218.59765625
+      },
+      {
+        "autoTangents": true,
+        "inX": 0.0,
+        "inY": 0.0,
+        "inZ": 0.0,
+        "outX": 0.0,
+        "outY": 0.0,
+        "outZ": 0.0,
+        "width": 0.0,
+        "x": -576.625244140625,
+        "y": 12.071178436279297,
+        "z": 1314.494140625
+      },
+      {
+        "autoTangents": true,
+        "inX": 0.0,
+        "inY": 0.0,
+        "inZ": 0.0,
+        "outX": 0.0,
+        "outY": 0.0,
+        "outZ": 0.0,
+        "width": 0.0,
+        "x": -716.0784301757813,
+        "y": -0.8108396530151367,
+        "z": 1082.34423828125
+      },
+      {
+        "autoTangents": false,
+        "inX": -29.596338272094727,
+        "inY": 1.6661942936480045e-09,
+        "inZ": 6.643052577972412,
+        "outX": 29.596338272094727,
+        "outY": -1.6661942936480045e-09,
+        "outZ": -6.643052577972412,
+        "width": 0.0,
+        "x": -602.0457153320313,
+        "y": -0.8077070116996765,
+        "z": 847.9057006835938
+      }
+    ]
+  },
+  "typePath": "Editor/Pcg/Biomes/FalwynForest/Controls/ValleyWall.hctl",
+  "version": 1
+}

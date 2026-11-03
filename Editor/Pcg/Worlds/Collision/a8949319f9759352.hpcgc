@@ -1,0 +1,98 @@
+{
+  "extraTags": [],
+  "halfExtents": [
+    5.0,
+    5.0,
+    5.0
+  ],
+  "id": 12147495834693768018,
+  "name": "Forest Area 3",
+  "nextPointId": 5,
+  "overrides": {
+    "density": {
+      "type": "float",
+      "value": 0.05000000074505806
+    },
+    "minSpacing": {
+      "type": "float",
+      "value": 15.0
+    }
+  },
+  "pointIds": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "position": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "rotation": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "spline": {
+    "closed": true,
+    "interpolation": "catmullRom",
+    "points": [
+      {
+        "autoTangents": true,
+        "inX": 0.0,
+        "inY": 0.0,
+        "inZ": 0.0,
+        "outX": 0.0,
+        "outY": 0.0,
+        "outZ": 0.0,
+        "width": 0.0,
+        "x": -188.94126892089844,
+        "y": -0.12929858267307281,
+        "z": 772.6735229492188
+      },
+      {
+        "autoTangents": true,
+        "inX": 0.0,
+        "inY": 0.0,
+        "inZ": 0.0,
+        "outX": 0.0,
+        "outY": 0.0,
+        "outZ": 0.0,
+        "width": 0.0,
+        "x": -213.0654754638672,
+        "y": 1.1099085807800293,
+        "z": 1088.424072265625
+      },
+      {
+        "autoTangents": true,
+        "inX": 0.0,
+        "inY": 0.0,
+        "inZ": 0.0,
+        "outX": 0.0,
+        "outY": 0.0,
+        "outZ": 0.0,
+        "width": 0.0,
+        "x": -658.9122314453125,
+        "y": 0.1559154987335205,
+        "z": 1303.1304931640625
+      },
+      {
+        "autoTangents": true,
+        "inX": 0.0,
+        "inY": 0.0,
+        "inZ": 0.0,
+        "outX": 0.0,
+        "outY": 0.0,
+        "outZ": 0.0,
+        "width": 0.0,
+        "x": -638.651611328125,
+        "y": -0.5614564418792725,
+        "z": 788.4976196289063
+      }
+    ]
+  },
+  "typePath": "Editor/Pcg/Biomes/FalwynForest/Controls/ForestArea.hctl",
+  "version": 1
+}
