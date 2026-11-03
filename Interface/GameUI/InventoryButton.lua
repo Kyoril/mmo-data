@@ -6,7 +6,7 @@ INVENTORY_ICON_COLOR_DISABLED = "FFFF4040";
 
 -- White preserves the authored frame for ordinary inventory buttons.
 INVENTORY_QUALITY_COLOR_NONE = "FFFFFFFF";
-INVENTORY_QUALITY_COLOR_EMPTY = "FF505050";
+INVENTORY_QUALITY_COLOR_EMPTY = (GameUITheme and GameUITheme.EmptySlotQualityColor) or "FF505050";
 
 -- Recolors the button frame to the item's quality color. Only slots whose "QualityBorder"
 -- property is enabled participate; every other inventory button keeps its plain frame.
@@ -18,6 +18,9 @@ function InventoryItemButton_UpdateQualityBorder(this, item)
     local color = INVENTORY_QUALITY_COLOR_EMPTY;
     if item then
         color = ItemQualityColors[item:GetQuality()] or INVENTORY_QUALITY_COLOR_NONE;
+        if GameUITheme and GameUITheme.ItemQualityBorderColors then
+            color = GameUITheme.ItemQualityBorderColors[item:GetQuality()] or color;
+        end
     end
 
     this:SetProperty("QualityColor", color);

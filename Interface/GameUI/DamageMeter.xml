@@ -8,34 +8,7 @@
 		<Property name="Font" value="SmallLabelFont" />
 		<Property name="Visible" value="False" />
 
-		<Visual>
-			<ImagerySection name="Caption">
-				<TextComponent color="FFFFFFFF" horzAlign="LEFT" vertAlign="CENTER">
-					<Area><Inset left="12" right="12" /></Area>
-				</TextComponent>
-			</ImagerySection>
-			<ImagerySection name="Background">
-				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="B0000000" />
-			</ImagerySection>
-			<ImagerySection name="Progress">
-				<ImageComponent texture="Interface/fg4_gradientWhiteV1_result.htex" tiling="HORZ" tint="FF8C2F12">
-					<Area><Inset all="5" /></Area>
-				</ImageComponent>
-			</ImagerySection>
-
-			<StateImagery name="Enabled">
-				<Layer><Section section="Background" /></Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer><Section section="Background" /></Layer>
-			</StateImagery>
-			<StateImagery name="Progress">
-				<Layer><Section section="Progress" /></Layer>
-			</StateImagery>
-			<StateImagery name="Overlay">
-				<Layer><Section section="Caption" /></Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeDamageMeterRowTemplateVisual" />
 
 		<Area>
 			<Size><AbsDimension x="0" y="44" /></Size>
@@ -45,52 +18,7 @@
 	<Frame name="DamageMeterSmallButtonTemplate" type="Button" renderer="ButtonRenderer">
 		<Property name="Font" value="SmallLabelFont" />
 
-		<Visual>
-			<ImagerySection name="NormalFrame">
-				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Up_result.htex" borderSize="22" />
-			</ImagerySection>
-			<ImagerySection name="HoveredFrame">
-				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Over_result.htex" borderSize="22" />
-			</ImagerySection>
-			<ImagerySection name="PushedFrame">
-				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Down_result.htex" borderSize="22" />
-			</ImagerySection>
-			<ImagerySection name="Caption">
-				<TextComponent color="FFFFD100" horzAlign="CENTER" vertAlign="CENTER">
-					<Area><Inset left="12" right="12" /></Area>
-				</TextComponent>
-			</ImagerySection>
-			<ImagerySection name="HoveredCaption">
-				<TextComponent color="FFFFFFFF" horzAlign="CENTER" vertAlign="CENTER">
-					<Area><Inset left="12" right="12" /></Area>
-				</TextComponent>
-			</ImagerySection>
-
-			<StateImagery name="Normal">
-				<Layer>
-					<Section section="NormalFrame" />
-					<Section section="Caption" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Hovered">
-				<Layer>
-					<Section section="HoveredFrame" />
-					<Section section="HoveredCaption" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Pushed">
-				<Layer>
-					<Section section="PushedFrame" />
-					<Section section="Caption" color="FFAAAAAA" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer>
-					<Section section="NormalFrame" color="80808080" />
-					<Section section="Caption" color="AE888888" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeDamageMeterSmallButtonTemplateVisual" />
 
 		<Area>
 			<Size><AbsDimension x="300" y="56" /></Size>
@@ -100,14 +28,7 @@
 	<Frame name="DamageMeterFrame" parent="GameParent" renderer="DefaultRenderer">
 		<Property name="Visible" value="False" />
 
-		<Visual>
-			<ImagerySection name="Background">
-				<BorderComponent texture="Interface/GameUI/fg4_borders_simple.htex" borderSize="250" tint="F0FFFFFF" />
-			</ImagerySection>
-			<StateImagery name="Enabled">
-				<Layer><Section section="Background" /></Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeDamageMeterFrameVisual" />
 
 		<Area>
 			<Size><AbsDimension x="620" y="420" /></Size>

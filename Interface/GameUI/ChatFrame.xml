@@ -3,57 +3,10 @@
 	<Script file="SlashCommandStrings.lua" />
 	<Script file="ChatFrame.lua" />
 
-	<Font name="ChatFont" file="Fonts/ARIALN.TTF" size="30" outline="0" shadowX="1.0" shadowY="1.0" />
-
 	<Frame name="ChatButton" type="Button" renderer="ButtonRenderer">
 		<Property name="Icon" />
 
-		<Visual>
-			<ImagerySection name="Image">
-				<ImageComponent>
-					<Area>
-						<Inset all="8" />
-					</Area>
-					<PropertyValue property="Icon" />
-				</ImageComponent>
-			</ImagerySection>
-			<ImagerySection name="NormalFrame">
-				<BorderComponent texture="Interface/GameUI/ChatButton_Up.htex" borderSize="16" />
-			</ImagerySection>
-			<ImagerySection name="HoveredFrame">
-				<BorderComponent texture="Interface/GameUI/ChatButton_Hovered.htex" borderSize="16" />
-			</ImagerySection>
-			<ImagerySection name="PushedFrame">
-				<BorderComponent texture="Interface/GameUI/ChatButton_Down.htex" borderSize="16" />
-			</ImagerySection>
-			<ImagerySection name="DisabledFrame">
-				<BorderComponent texture="Interface/GameUI/ChatButton_Disabled.htex" borderSize="16" />
-			</ImagerySection>
-			<StateImagery name="Normal">
-				<Layer>
-					<Section section="NormalFrame" />
-					<Section section="Image" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Hovered">
-				<Layer>
-					<Section section="HoveredFrame" />
-					<Section section="Image" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Pushed">
-				<Layer>
-					<Section section="PushedFrame" />
-					<Section section="Image" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer>
-					<Section section="DisabledFrame" />
-					<Section section="Image" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeChatButtonVisual" />
 		<Area>
 			<Size>
 				<AbsDimension x="64" y="64" />
@@ -65,24 +18,7 @@
 		<Property name="Font" value="ChatFont" />
 		<Property name="Visible" value="False" />
 	
-		<Visual>
-			<ImagerySection name="Frame">
-				<BorderComponent texture="Interface/GlueUI/TextFieldBorder.htex" borderSize="40">
-					<Area></Area>
-				</BorderComponent>
-			</ImagerySection>
-			
-			<StateImagery name="Enabled">
-				<Layer>
-					<Section section="Frame" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer>
-					<Section section="Frame" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeChatInputFrameVisual" />
 
 		<Area>
 			<Anchor point="BOTTOM" relativePoint="TOP" offset="-24" relativeTo="GameMenuBar" />
@@ -115,19 +51,7 @@
 				<Property name="VertAlign" value="CENTER" />
 				<Property name="ClippedByParent" value="true" />
 			
-				<Visual>
-					<ImagerySection name="Caret">
-						<ImageComponent texture="Interface/GlueUI/Caret.htex" />
-					</ImagerySection>
-					
-					<StateImagery name="Enabled" />
-					<StateImagery name="Disabled" />
-					<StateImagery name="Caret">
-						<Layer>
-							<Section section="Caret" />
-						</Layer>
-					</StateImagery>
-				</Visual>
+				<Visual inherits="ThemeChatInputVisual" />
 				
 
 				<Scripts>

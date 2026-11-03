@@ -1,0 +1,22 @@
+{
+  "ActionFrameV3": {
+    "source": "ActionFrameV3.png",
+    "prompt": "Production fantasy MMO UI scalable nine-slice texture, isolated game asset, NOT a UI mockup. Square frame edge-to-edge, truly transparent open center, antique gold/brass sculpted frame with midnight navy enamel inner shoulder. A substantial broad raised multilevel gold molding band along each of the four straight edges, approximately 65 pixels thick on a 1024x1024 canvas. Thick shadowed brass outer lip, warm pale gold highlight on upper-left planes, deep brown-gold lower-right bevels, narrow engraved darker groove, inner navy shoulder and thin gold inner lip. Compact tasteful carved gold scroll corner fittings occupying only the outermost 145px corner squares. All straight edge bands completely undecorated and uniform so a nine-slice can stretch the frame into a very wide short action-bar surround. All artwork flush to all four image edges, no outer padding, no solid black or navy center, no background, no contents/text/icons/gems or animals. Substantial richly crafted frame like the wide golden action bar of the attached approved navy and gold MMORPG UI mock. It must have actual wide physical gold bevel surfaces, not a thin outline. The attached approved mock is STYLE REFERENCE ONLY; output only a square transparent-center nine-slice frame.",
+    "active": true
+  },
+  "MinimapRingV3": {
+    "source": "MinimapRingV3.png",
+    "prompt": "Production fantasy MMO UI texture, isolated game asset, NOT a mockup. Create one perfect circular minimap frame viewed exactly orthographically straight on. Entire canvas square, outer diameter fills 98% of canvas, centered precisely. Circular annular band is SUBSTANTIAL: total radial thickness 6% of the FULL image width (about 60px on 1024 canvas). Outer continuous thick sculpted antique champagne gold brass bevel, dark lower-right shading and pale warm top-left highlight; broad solid midnight navy enameled inner shoulder; inner continuous rounded brass lip. Physical weight like the gold-rimmed minimap of a premium classic fantasy MMORPG. Uniform unbroken concentric circles, perfectly smooth crisp antialiased edges, no dotted or fragmented outlines, no thin floating concentric wires. No ornament, no text, no compass letters, no icons, no attached buttons, no map. Entire circular central hole and outside circle truly transparent alpha. No black painted center, no cast shadow outside, no bloom. Rich dimensional molded metal with muted warm gold, navy inlay, high craft quality. Keep trim evenly thick around all 360 degrees. The attached approved mock is STYLE REFERENCE ONLY; output only this circular rim.",
+    "active": false
+  },
+  "MinimapRingV4": {
+    "source": "MinimapRingV4.png",
+    "prompt": "Edit ONLY this circular minimap frame texture. Keep the exact same circular silhouette, antique gold metal shading and midnight navy enamel materials, with the outside diameter staying 98% of canvas width. The ring is much too thick. Reduce its radial band thickness by HALF by enlarging the transparent central hole. Transparent central hole must now occupy 88% of the full canvas width, outer diameter 98%; total radial band thickness only 5% of canvas width. Scale down the outer gold bevel, navy shoulder and inner gold lip proportionally into that narrower band, keep all three visibly physical. Fully transparent outside and central hole. Smooth unbroken clean anti-aliased circles with no dotted edge. No contents, letters or buttons. Output the same single isolated square transparent texture.",
+    "active": true
+  },
+  "RoundButtonV3": {
+    "source": "RoundButtonV3.png",
+    "prompt": "Edit this circular fantasy UI frame into a ROUND BUTTON texture. Preserve its circular silhouette, physical antique champagne gold rim and midnight navy shoulder. Keep outside circle fully transparent alpha. Fill ONLY the central hole with an opaque solid deep midnight navy #081525 enameled button face, subtle fine grain, slight inset shadow at the inside rim, no lighting hotspot. This face is opaque, not black, and contains absolutely no icon, text or symbols. Substantial smooth dimensional gold circular rim, continuous and crisp, no dots, no fragments. The finished image is a single centered round navy-and-gold button at 98% canvas width, with fully transparent outside.",
+    "active": true
+  }
+}

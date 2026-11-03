@@ -1,0 +1,19 @@
+{
+  "generator": "Built-in ImageGen",
+  "assets": [
+    {
+      "source": "SelectedTabV5.png",
+      "reference": "ButtonV2.png",
+      "output": "../Textures/SelectedTabV5.htex",
+      "prompt": "Edit target: the supplied square blue leather/enamel and brass UI button texture. Produce a premium ACTIVE SELECTED TAB variation for the same navy-and-gold fantasy MMO UI, designed for nine-slice scaling down to small horizontal tabs. Preserve exactly the square silhouette, the source corner extents (roughly 120 pixels of 1254 pixels), restrained chamfered corners and dimensional handcrafted gold/brass rim. Preserve a fully opaque very dark midnight navy fine-grain face. The selected state should be obvious through a softly luminous warm gold INNER perimeter, a slim bright gold inner lip and delicate reflected amber light spilling just a short distance onto the navy face. The center must remain deep navy, a calm high-contrast place for ivory text. Add beautiful bevel lighting and subtle engraved metal variation; refined antique gold, never yellow plastic. A very soft compact transparent golden halo can surround the outside. DO NOT fill the face with gold. DO NOT add a broad shiny horizontal gradient band. DO NOT make it flat. No text, symbols or icons. No blue-white glowing edges. Truly transparent outside the button silhouette and halo. Orthographic production UI material, sharp clean edges, no perspective.",
+      "import": {
+        "type": "Color/UI",
+        "compression": "none",
+        "mipmaps": true,
+        "width": 1254,
+        "height": 1254,
+        "levels": 7
+      }
+    }
+  ]
+}

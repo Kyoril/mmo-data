@@ -11,6 +11,29 @@ QUEST_REWARD_COLUMN_GAP = 8;
 QUEST_REWARD_LABEL_SPACING = 8;
 QUEST_REWARD_SECTION_SPACING = 8;
 
+-- Quest dialogs and the quest log share one palette. Legacy retains its ink
+-- defaults; apply the active theme to static text before it is measured.
+function QuestText_GetBodyColor()
+	return (GameUITheme and GameUITheme.QuestBodyTextColor) or "FF100500";
+end
+
+function QuestText_ApplyPalette(frame)
+	if not GameUITheme or not GameUITheme.QuestBodyTextColor then
+		return;
+	end
+	if frame:GetProperty("TextColor") == "FF100500" then
+		local color = frame:GetProperty("Font") == "QuestTitleFont"
+			and GameUITheme.QuestHeadingTextColor or GameUITheme.QuestBodyTextColor;
+		frame:SetProperty("TextColor", color or GameUITheme.QuestBodyTextColor);
+	elseif frame:GetProperty("Font") == "DefaultSmallBorder" and frame:GetName():match("Reward.*XpValue$") then
+		frame:SetProperty("TextColor", GameUITheme.QuestBodyTextColor);
+		frame:SetProperty("Font", "QuestFont");
+	end
+	for index = 0, frame:GetChildCount() - 1 do
+		QuestText_ApplyPalette(frame:GetChild(index));
+	end
+end
+
 -- Registers a mouse wheel handler on a scroll area that moves the given scroll
 -- bar by stepsPerNotch steps per wheel notch. Registering a handler makes the
 -- frame consume wheel input over the area (and everything anchored inside it),
@@ -60,14 +83,13 @@ function QuestRewards_SetXpRow(label, valueFrame, amount)
     return 0;
 end
 
--- Reward item names render on the parchment background where the white/grey
--- low-quality colors are unreadable. Use dark ink for those and the quality
--- color for uncommon and better.
+-- Use the theme's body color for common rewards and preserve rarity colors.
 function QuestRewards_ItemNameColor(quality)
     if quality and quality >= 2 then
-        return ItemQualityColors[quality];
+		local colors = GameUITheme and GameUITheme.QuestRewardQualityColors;
+        return (colors and colors[quality]) or ItemQualityColors[quality];
     end
-    return "FF100500";
+    return QuestText_GetBodyColor();
 end
 
 -- Builds a display entry from a QuestRewardItemDisplay (quest giver dialogs,
@@ -134,7 +156,7 @@ end
 local function QuestRewards_AddLabel(container, y, text)
     local label = TextSmall:Clone();
     label:SetProperty("Font", "QuestFont");
-    label:SetProperty("TextColor", "FF100500");
+    label:SetProperty("TextColor", QuestText_GetBodyColor());
     label:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, y);
     label:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, 0);
     label:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, 0);
@@ -185,7 +207,7 @@ local function QuestRewards_AddRow(container, y, column, entry, clickedHandler)
     local label = TextSmall:Clone();
     label:SetProperty("Font", "QuestFont");
     label:SetProperty("VertAlign", "CENTER");
-    label:SetProperty("TextColor", entry.color or "FF100500");
+    label:SetProperty("TextColor", entry.color or QuestText_GetBodyColor());
     label:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, QUEST_REWARD_SLOT_PADDING);
     label:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, QUEST_REWARD_SLOT_PADDING + QUEST_REWARD_SLOT_SIZE + 16);
     -- Keep the name clear of the border art (25px ring) on the right side.
@@ -240,7 +262,7 @@ function QuestRewards_Populate(container, rewards)
 
     if rewards.spell then
         y = y + QuestRewards_AddLabel(container, y, Localize("QUEST_REWARD_LEARN_SPELL")) + QUEST_REWARD_LABEL_SPACING;
-        y = QuestRewards_AddGrid(container, y, { { icon = rewards.spell.icon, name = rewards.spell.name, color = "FF100500", spell = rewards.spell } });
+        y = QuestRewards_AddGrid(container, y, { { icon = rewards.spell.icon, name = rewards.spell.name, color = QuestText_GetBodyColor(), spell = rewards.spell } });
         y = y + QUEST_REWARD_SECTION_SPACING;
     end
 
@@ -251,7 +273,7 @@ function QuestRewards_Populate(container, rewards)
         end
 
         y = y + QuestRewards_AddLabel(container, y, Localize("QUEST_REWARD_UNLOCK_EMOTE")) + QUEST_REWARD_LABEL_SPACING;
-        y = QuestRewards_AddGrid(container, y, { { icon = emoteIcon, name = rewards.emote.name, color = "FF100500", emote = rewards.emote } });
+        y = QuestRewards_AddGrid(container, y, { { icon = emoteIcon, name = rewards.emote.name, color = QuestText_GetBodyColor(), emote = rewards.emote } });
     end
 
     container:SetHeight(y);
@@ -281,6 +303,10 @@ function QuestRewards_CollectDialogEntries()
 end
 
 function QuestFrame_ShowPanel(panel)
+    local target = GetUnit("target");
+    if target then
+        SidePanel_SetUnitTitle(QuestFrame, target);
+    end
     -- Hide all child panels
     for i = 1, QuestFramePanels:GetChildCount() do
         local child = QuestFramePanels:GetChild(i-1);
@@ -324,6 +350,160 @@ function GossipActionButton_OnClick(self, mouseButton)
     GossipAction(self.id);
 end
 
+-- Theme-only greeting layout. The original parchment/list layout remains the
+-- fallback for Legacy; quest details and reward panels keep their own surfaces.
+local function NpcDialog_Container(parent)
+	local frame = TextSmall:Clone();
+	frame:SetText("");
+	frame:SetProperty("Clickable", "false");
+	frame:SetProperty("MousePassThrough", "false");
+	frame:SetProperty("ClippedByParent", "true");
+	parent:AddChild(frame);
+	frame:ClearAnchors();
+	frame:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, parent, 0);
+	frame:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, parent, 0);
+	frame:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, parent, 0);
+	return frame;
+end
+
+local function NpcDialog_CreateGreeting(self)
+	local root = ThemeNpcGreetingPanelTemplate:Clone();
+	QuestFrameGreetingPanel:AddChild(root);
+	for _, point in ipairs({ AnchorPoint.LEFT, AnchorPoint.RIGHT, AnchorPoint.TOP, AnchorPoint.BOTTOM }) do
+		root:SetAnchor(point, point, QuestFrameGreetingPanel, 0);
+	end
+	local clip = NpcDialog_Container(root);
+	clip:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, root, 20);
+	clip:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, root, -100);
+	clip:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, root, 20);
+	clip:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.BOTTOM, root, -20);
+	local content = NpcDialog_Container(clip);
+	local scroll = VerticalScrollBar:Clone();
+	root:AddChild(scroll);
+	scroll:ClearAnchors();
+	scroll:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, root, 0);
+	scroll:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, root, 0);
+	scroll:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.BOTTOM, root, 0);
+	scroll:SetMinimum(0);
+	scroll:SetMaximum(0);
+	scroll:SetStep(32);
+	scroll:SetOnValueChangedHandler(function(_, value)
+		content:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, clip, -value);
+	end);
+	QuestScroll_AttachMouseWheel(root, scroll, 3);
+	local card = ThemeNpcGreetingCardTemplate:Clone();
+	content:AddChild(card);
+	card:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, content, 0);
+	card:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, content, 0);
+	card:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, content, 0);
+	local greeting = NpcDialog_Container(card);
+	greeting:SetProperty("Font", "QuestFont");
+	greeting:SetProperty("TextColor", GameUITheme.NpcGreetingTextColor or "FFF0E6D2");
+	greeting:SetProperty("MousePassThrough", "true");
+	greeting:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, card, 24);
+	greeting:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, card, 24);
+	greeting:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, card, -24);
+	local quests = NpcDialog_Container(content);
+	local services = NpcDialog_Container(content);
+	self.npcGreetingLayout = { root = root, clip = clip, content = content, scroll = scroll,
+		card = card, greeting = greeting, quests = quests, services = services };
+	GreetingText:Hide();
+	AvailableQuestList:Hide();
+	GossipActionList:Hide();
+	GreetingPanelScrollBar:Hide();
+	return self.npcGreetingLayout;
+end
+
+local function NpcDialog_AddChoices(container, titleKey, count, getEntry, clicked)
+	container:RemoveAllChildren();
+	local y = 0;
+	local rows = {};
+	for index = 0, count - 1 do
+		local entry = getEntry(index);
+		if entry then
+			if #rows == 0 then
+				local heading = NpcDialog_Container(container);
+				heading:SetProperty("Font", "SmallLabelFont");
+				heading:SetProperty("TextColor", "FFE5C37E");
+				heading:SetText(Localize(titleKey));
+				heading:SetHeight(heading:GetTextHeight());
+				y = heading:GetTextHeight() + 12;
+			end
+			local button = ThemeNpcGreetingChoiceTemplate:Clone();
+			container:AddChild(button);
+			button.id = entry.id;
+			button:SetProperty("Icon", entry.icon);
+			button:SetClickedHandler(clicked);
+			button:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, container, 0);
+			button:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, container, 0);
+			button:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, container, y);
+			local label = NpcDialog_Container(button);
+			label:SetProperty("MousePassThrough", "true");
+			label:SetProperty("Font", "QuestFont");
+			label:SetProperty("TextColor", "FFF0E6D2");
+			label:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, button, 80);
+			label:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, button, -24);
+			label:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, button, 16);
+			label:SetText(entry.text);
+			local textHeight = label:GetTextHeight();
+			label:SetHeight(textHeight);
+			local height = math.max(76, textHeight + 32);
+			button:SetHeight(height);
+			y = y + height + 12;
+			table.insert(rows, button);
+		end
+	end
+	local height = #rows > 0 and y - 12 or 0;
+	container:SetHeight(height);
+	return height, rows;
+end
+
+local function NpcDialog_UpdateGreeting(self, reserveScrollBar)
+	local layout = self.npcGreetingLayout or NpcDialog_CreateGreeting(self);
+	layout.clip:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, layout.root, reserveScrollBar and -100 or -20);
+	-- Resolve the visible panel before measuring wrapped text and the scroll viewport.
+	QuestFrame_ShowPanel(QuestFrameGreetingPanel);
+	layout.greeting:SetText(GetGreetingText() or "");
+	local textHeight = layout.greeting:GetTextHeight();
+	layout.greeting:SetHeight(textHeight);
+	local cardHeight = textHeight > 0 and math.max(96, textHeight + 48) or 0;
+	layout.card:SetHeight(cardHeight);
+	if cardHeight > 0 then
+		layout.card:Show();
+	else
+		layout.card:Hide();
+	end
+	local y = cardHeight > 0 and cardHeight + 28 or 0;
+	layout.quests:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, layout.content, y);
+	local questsHeight;
+	questsHeight, layout.questRows = NpcDialog_AddChoices(layout.quests, "QUESTS", GetNumAvailableQuests(), function(index)
+		local quest = GetAvailableQuest(index);
+		return quest and { id = quest.id, text = quest.title, icon = QuestListIcons[quest.icon] or QuestListIcons[6] };
+	end, QuestListButton_OnClick);
+	y = y + questsHeight + (questsHeight > 0 and 28 or 0);
+	layout.services:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, layout.content, y);
+	local servicesHeight;
+	servicesHeight, layout.serviceRows = NpcDialog_AddChoices(layout.services, "NPC_DIALOG_SERVICES", GetNumGossipActions(), function(index)
+		local action = GetGossipAction(index);
+		return action and { id = index, text = action.text, icon = "Interface/Icons/fg4_iconsFlat_dialogue.htex" };
+	end, GossipActionButton_OnClick);
+	layout.content:SetHeight(y + servicesHeight + 8);
+	local viewport = layout.clip:GetRect();
+	local maximum = math.max(0, y + servicesHeight + 8 - (viewport.bottom - viewport.top) / GetUIScale().y);
+	if maximum > 0 and not reserveScrollBar then
+		-- Reserve a gutter only when needed, then remeasure the narrower wrapped rows.
+		return NpcDialog_UpdateGreeting(self, true);
+	end
+	layout.scroll:SetMaximum(maximum);
+	layout.scroll:SetValue(0);
+	layout.scroll:SetEnabled(maximum > 0);
+	if maximum > 0 then
+		layout.scroll:Show();
+	else
+		layout.scroll:Hide();
+	end
+end
+
 function QuestFrame_OnQuestGreeting(self)
 	-- Show NPC name in title bar (per CONTEXT.md locked decision: NPC name/portrait header)
 	local target = GetUnit("target");
@@ -333,6 +513,10 @@ function QuestFrame_OnQuestGreeting(self)
 
 	-- Ensure the quest frame is visible as in every event
 	ShowUIPanel(QuestFrame);
+	if GameUITheme and GameUITheme.RefinedNpcGreeting then
+		NpcDialog_UpdateGreeting(self);
+		return;
+	end
 
     -- Set up the greeting text
     GreetingText:SetText(GetGreetingText());
@@ -715,6 +899,7 @@ end
 function QuestFrame_OnLoad(self)
     -- Initialize side panel functionality first, like the close button
     SidePanel_OnLoad(self);
+	QuestText_ApplyPalette(self);
 
     -- Localize quest log text
     SidePanel_SetTitle(self, Localize("QUESTS"));

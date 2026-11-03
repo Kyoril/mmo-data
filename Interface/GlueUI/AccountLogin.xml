@@ -3,6 +3,18 @@
 	<!-- Reference lua script file here -->
 	<Script file="AccountLogin.lua" />
 
+	<!--
+		Checkbox used by the login form: a frame border when unchecked, plus a checkmark icon when
+		checked. Mirrors GameUI's OptionsCheckboxTemplate, which the glue UI does not load.
+	-->
+	<Frame name="GlueCheckbox" type="Button" renderer="CheckboxRenderer">
+		<Property name="Checkable" value="true" />
+		<Area>
+			<Size><AbsDimension x="44" y="44" /></Size>
+		</Area>
+		<Visual inherits="ThemeGlueGlueCheckboxVisual" />
+	</Frame>
+
 	<!-- Account login frame -->
 	<Frame name="AccountLogin" parent="GlueParent" setAllPoints="true" renderer="DefaultRenderer">
 		<Property name="Focusable" value="true" />
@@ -30,17 +42,7 @@
 					<Anchor point="BOTTOM"/>
 					<Size><AbsDimension y="500" /></Size>
 				</Area>
-				<Visual>
-					<ImagerySection name="Background">
-						<ImageComponent texture="Interface/GlueUI/GradientBlack.htex" tiling="HORZ" />
-					</ImagerySection>
-
-					<StateImagery name="Enabled">
-						<Layer>
-							<Section section="Background" />
-						</Layer>
-					</StateImagery>
-				</Visual>
+				<Visual inherits="ThemeGlueLoginBackgroundFrameBottomVisual" />
 			</Frame>
 
 			<!-- Dark backdrop centered on logo + form area -->
@@ -59,16 +61,7 @@
 					<Anchor point="H_CENTER" />
 					<Size><AbsDimension x="971" y="512" /></Size>
 				</Area>
-				<Visual>
-					<ImagerySection name="Background">
-						<ImageComponent texture="Interface/Logo.htex" tiling="NONE" />
-					</ImagerySection>
-					<StateImagery name="Enabled">
-						<Layer>
-							<Section section="Background" />
-						</Layer>
-					</StateImagery>
-				</Visual>
+				<Visual inherits="ThemeGlueLoginLogoFrameVisual" />
 			</Frame>
 
 			<Frame name="AccountPasswordField" inherits="GlueTextField">
@@ -125,10 +118,35 @@
 				</Area>
 			</Frame>
 
+			<!-- Remembers the account name (never the password) between sessions. -->
+			<Frame name="RememberAccountNameCheck" inherits="GlueCheckbox">
+				<Area>
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="AccountPasswordField" offset="16" />
+					<Anchor point="LEFT" relativePoint="LEFT" relativeTo="AccountPasswordField" />
+					<Size><AbsDimension x="44" y="44" /></Size>
+				</Area>
+				<Scripts>
+					<OnClick>
+						return function(this)
+							AccountLogin_OnRememberAccountNameToggled();
+						end
+					</OnClick>
+				</Scripts>
+			</Frame>
+			<Frame name="RememberAccountNameLabel" inherits="GlueTextSmall">
+				<Property name="Text" value="REMEMBER_ACCOUNT_NAME" />
+				<Property name="VertAlign" value="CENTER" />
+				<Area>
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="RememberAccountNameCheck" offset="12" />
+					<Anchor point="V_CENTER" relativePoint="V_CENTER" relativeTo="RememberAccountNameCheck" />
+					<Size><AbsDimension x="520" y="44" /></Size>
+				</Area>
+			</Frame>
+
 			<Frame name="LoginButton" inherits="GlueButtonPrimary">
 				<Property name="Text" value="LOGIN" />
 				<Area>
-					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="AccountPasswordField" offset="56" />
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RememberAccountNameCheck" offset="24" />
 					<Anchor point="H_CENTER" />
 					<Size><AbsDimension x="600" y="128"/></Size>
 				</Area>

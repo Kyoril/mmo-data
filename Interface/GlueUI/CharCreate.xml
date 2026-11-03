@@ -9,24 +9,7 @@
 		<Area>
 			<Size><AbsDimension x="396" y="104" /></Size>
 		</Area>
-		<Visual>
-			<ImagerySection name="NormalFrame"><ImageComponent texture="Interface/GlueUI/GlueSkinButtonNormal.htex"><Area><Inset all="14" /></Area></ImageComponent><BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" /></ImagerySection>
-			<ImagerySection name="HoveredFrame"><ImageComponent texture="Interface/GlueUI/GlueSkinButtonHovered.htex"><Area><Inset all="14" /></Area></ImageComponent><BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" /></ImagerySection>
-			<ImagerySection name="PushedFrame"><ImageComponent texture="Interface/GlueUI/GlueSkinButtonPushed.htex"><Area><Inset all="14" /></Area></ImageComponent><BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" /></ImagerySection>
-			<ImagerySection name="DisabledFrame"><ImageComponent texture="Interface/GlueUI/GlueSkinButtonDisabled.htex"><Area><Inset all="14" /></Area></ImageComponent><BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" tint="FF8C8C8C" /></ImagerySection>
-			<ImagerySection name="SelectedFrame"><ImageComponent texture="Interface/GlueUI/GlueSkinButtonChecked.htex"><Area><Inset all="14" /></Area></ImageComponent><BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrameSelected.htex" borderSize="36" /></ImagerySection>
-			<ImagerySection name="Caption"><TextComponent color="FFF3EEE2" horzAlign="CENTER" vertAlign="CENTER"><Area><Inset left="36" top="8" right="36" bottom="8" /></Area></TextComponent></ImagerySection>
-			<ImagerySection name="HoveredCaption"><TextComponent color="FFFFFFFF" horzAlign="CENTER" vertAlign="CENTER"><Area><Inset left="36" top="8" right="36" bottom="8" /></Area></TextComponent></ImagerySection>
-			<ImagerySection name="DisabledCaption"><TextComponent color="FF8A867E" horzAlign="CENTER" vertAlign="CENTER"><Area><Inset left="36" top="8" right="36" bottom="8" /></Area></TextComponent></ImagerySection>
-			<StateImagery name="Normal"><Layer><Section section="NormalFrame" /><Section section="Caption" /></Layer></StateImagery>
-			<StateImagery name="Hovered"><Layer><Section section="HoveredFrame" /><Section section="HoveredCaption" /></Layer></StateImagery>
-			<StateImagery name="Pushed"><Layer><Section section="PushedFrame" /><Section section="Caption" color="FFAAAAAA" /></Layer></StateImagery>
-			<StateImagery name="Disabled"><Layer><Section section="DisabledFrame" /><Section section="DisabledCaption" /></Layer></StateImagery>
-			<StateImagery name="NormalChecked"><Layer><Section section="SelectedFrame" /><Section section="HoveredCaption" /></Layer></StateImagery>
-			<StateImagery name="HoveredChecked"><Layer><Section section="SelectedFrame" /><Section section="HoveredCaption" /></Layer></StateImagery>
-			<StateImagery name="PushedChecked"><Layer><Section section="PushedFrame" /><Section section="HoveredCaption" /></Layer></StateImagery>
-			<StateImagery name="DisabledChecked"><Layer><Section section="DisabledFrame" /><Section section="DisabledCaption" /></Layer></StateImagery>
-		</Visual>
+		<Visual inherits="ThemeGlueListCheckButtonBaseVisual" />
 	</Frame>
 
 	<!-- Larger class card with the canonical class icon. -->
@@ -36,24 +19,7 @@
 		<Area>
 			<Size><AbsDimension x="396" y="144" /></Size>
 		</Area>
-		<Visual>
-			<ImagerySection name="NormalFrame"><ImageComponent texture="Interface/GlueUI/GlueSkinButtonNormal.htex"><Area><Inset all="14" /></Area></ImageComponent><BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" /></ImagerySection>
-			<ImagerySection name="HoveredFrame"><ImageComponent texture="Interface/GlueUI/GlueSkinButtonHovered.htex"><Area><Inset all="14" /></Area></ImageComponent><BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" /></ImagerySection>
-			<ImagerySection name="PushedFrame"><ImageComponent texture="Interface/GlueUI/GlueSkinButtonPushed.htex"><Area><Inset all="14" /></Area></ImageComponent><BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" /></ImagerySection>
-			<ImagerySection name="DisabledFrame"><ImageComponent texture="Interface/GlueUI/GlueSkinButtonDisabled.htex"><Area><Inset all="14" /></Area></ImageComponent><BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" tint="FF8C8C8C" /></ImagerySection>
-			<ImagerySection name="SelectedFrame"><ImageComponent texture="Interface/GlueUI/GlueSkinButtonChecked.htex"><Area><Inset all="14" /></Area></ImageComponent><BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrameSelected.htex" borderSize="36" /></ImagerySection>
-			<ImagerySection name="Caption"><TextComponent color="FFF3EEE2" horzAlign="LEFT" vertAlign="CENTER"><Area><Inset left="152" top="8" right="36" bottom="8" /></Area></TextComponent></ImagerySection>
-			<ImagerySection name="HoveredCaption"><TextComponent color="FFFFFFFF" horzAlign="LEFT" vertAlign="CENTER"><Area><Inset left="152" top="8" right="36" bottom="8" /></Area></TextComponent></ImagerySection>
-			<ImagerySection name="DisabledCaption"><TextComponent color="FF8A867E" horzAlign="LEFT" vertAlign="CENTER"><Area><Inset left="152" top="8" right="36" bottom="8" /></Area></TextComponent></ImagerySection>
-			<StateImagery name="Normal"><Layer><Section section="NormalFrame" /><Section section="Caption" /></Layer></StateImagery>
-			<StateImagery name="Hovered"><Layer><Section section="HoveredFrame" /><Section section="HoveredCaption" /></Layer></StateImagery>
-			<StateImagery name="Pushed"><Layer><Section section="PushedFrame" /><Section section="Caption" color="FFAAAAAA" /></Layer></StateImagery>
-			<StateImagery name="Disabled"><Layer><Section section="DisabledFrame" /><Section section="DisabledCaption" /></Layer></StateImagery>
-			<StateImagery name="NormalChecked"><Layer><Section section="SelectedFrame" /><Section section="HoveredCaption" /></Layer></StateImagery>
-			<StateImagery name="HoveredChecked"><Layer><Section section="SelectedFrame" /><Section section="HoveredCaption" /></Layer></StateImagery>
-			<StateImagery name="PushedChecked"><Layer><Section section="PushedFrame" /><Section section="HoveredCaption" /></Layer></StateImagery>
-			<StateImagery name="DisabledChecked"><Layer><Section section="DisabledFrame" /><Section section="DisabledCaption" /></Layer></StateImagery>
-		</Visual>
+		<Visual inherits="ThemeGlueClassCheckButtonBaseVisual" />
 		<Frame name="ClassChoiceIcon" renderer="DefaultRenderer">
 			<Property name="Icon" />
 			<Area>
@@ -61,12 +27,7 @@
 				<Anchor point="V_CENTER" />
 				<Size><AbsDimension x="108" y="108" /></Size>
 			</Area>
-			<Visual>
-				<ImagerySection name="Icon"><ImageComponent><Area><Inset all="6" /></Area><PropertyValue property="Icon" /></ImageComponent></ImagerySection>
-				<ImagerySection name="Slot"><BorderComponent texture="Interface/GlueUI/fg4_slotBrown_result.htex" borderSize="28" /></ImagerySection>
-				<StateImagery name="Enabled"><Layer><Section section="Slot" /><Section section="Icon" /></Layer></StateImagery>
-				<StateImagery name="Disabled"><Layer><Section section="Slot" /><Section section="Icon" color="88777777" /></Layer></StateImagery>
-			</Visual>
+			<Visual inherits="ThemeGlueClassChoiceIconVisual" />
 		</Frame>
 	</Frame>
 
@@ -75,13 +36,7 @@
 		<Area>
 			<Size><AbsDimension x="824" y="128" /></Size>
 		</Area>
-		<Visual>
-			<ImagerySection name="Background">
-				<ImageComponent texture="Interface/GlueUI/GlueSkinWellFill.htex" tiling="BOTH"><Area><Inset all="6" /></Area></ImageComponent>
-				<BorderComponent texture="Interface/GlueUI/GlueSkinWellFrame.htex" borderSize="18" />
-			</ImagerySection>
-			<StateImagery name="Enabled"><Layer><Section section="Background" /></Layer></StateImagery>
-		</Visual>
+		<Visual inherits="ThemeGlueCustomizationPropertyButtonVisual" />
 		<Frame inherits="GlueTextSmall" name="PropertyName">
 			<Property name="HorzAlign" value="LEFT" />
 			<Property name="VertAlign" value="CENTER" />
@@ -144,10 +99,7 @@
 
 		<Frame name="CharCreateBackdrop" renderer="DefaultRenderer">
 			<Area><Position><AbsDimension x="0" y="0" /></Position><Size><AbsDimension x="3840" y="2160" /></Size></Area>
-			<Visual>
-				<ImagerySection name="Background"><ImageComponent texture="Interface/GlueUI/BackgroundPH.htex" tiling="NONE" /></ImagerySection>
-				<StateImagery name="Enabled"><Layer><Section section="Background" /></Layer></StateImagery>
-			</Visual>
+			<Visual inherits="ThemeGlueCharCreateBackdropVisual" />
 		</Frame>
 
 		<Frame name="CharCreateModel" type="Model" setAllPoints="true" renderer="ModelRenderer">
@@ -179,7 +131,7 @@
 					</Frame>
 					<Frame name="CharRaceList" renderer="DefaultRenderer">
 						<Area><Anchor point="LEFT" /><Anchor point="RIGHT" /><Anchor point="TOP" offset="52" /><Anchor point="BOTTOM" /></Area>
-						<Visual><ImagerySection name="Frame"><ImageComponent texture="Interface/GlueUI/GlueSkinWellFill.htex" tiling="BOTH"><Area><Inset all="6" /></Area></ImageComponent><BorderComponent texture="Interface/GlueUI/GlueSkinWellFrame.htex" borderSize="18" /></ImagerySection><StateImagery name="Enabled"><Layer><Section section="Frame" /></Layer></StateImagery></Visual>
+						<Visual inherits="ThemeGlueCharRaceListVisual" />
 					</Frame>
 				</Frame>
 
@@ -191,7 +143,7 @@
 					</Frame>
 					<Frame name="CharClassList" renderer="DefaultRenderer">
 						<Area><Anchor point="LEFT" /><Anchor point="RIGHT" /><Anchor point="TOP" offset="52" /><Anchor point="BOTTOM" /></Area>
-						<Visual><ImagerySection name="Frame"><ImageComponent texture="Interface/GlueUI/GlueSkinWellFill.htex" tiling="BOTH"><Area><Inset all="6" /></Area></ImageComponent><BorderComponent texture="Interface/GlueUI/GlueSkinWellFrame.htex" borderSize="18" /></ImagerySection><StateImagery name="Enabled"><Layer><Section section="Frame" /></Layer></StateImagery></Visual>
+						<Visual inherits="ThemeGlueCharClassListVisual" />
 					</Frame>
 				</Frame>
 
@@ -203,7 +155,7 @@
 					</Frame>
 					<Frame name="CharGenderList" renderer="DefaultRenderer">
 						<Area><Anchor point="LEFT" /><Anchor point="RIGHT" /><Anchor point="TOP" offset="52" /><Anchor point="BOTTOM" /></Area>
-						<Visual><ImagerySection name="Frame"><ImageComponent texture="Interface/GlueUI/GlueSkinWellFill.htex" tiling="BOTH"><Area><Inset all="6" /></Area></ImageComponent><BorderComponent texture="Interface/GlueUI/GlueSkinWellFrame.htex" borderSize="18" /></ImagerySection><StateImagery name="Enabled"><Layer><Section section="Frame" /></Layer></StateImagery></Visual>
+						<Visual inherits="ThemeGlueCharGenderListVisual" />
 						<Frame name="GenderMaleButton" inherits="ListCheckButtonBase" id="0">
 							<Property name="Text" value="MALE" /><Property name="Checked" value="true" />
 							<Area><Anchor point="LEFT" offset="12" /><Anchor point="TOP" offset="12" /></Area>
@@ -220,7 +172,7 @@
 
 			<Frame name="CharCreatePage1Footer" renderer="DefaultRenderer">
 				<Area><Anchor point="LEFT" /><Anchor point="RIGHT" /><Anchor point="BOTTOM" /><Size><AbsDimension y="280" /></Size></Area>
-				<Visual><ImagerySection name="Background"><ImageComponent texture="Interface/GlueUI/GradientBlack.htex" tiling="HORZ" /></ImagerySection><StateImagery name="Enabled"><Layer><Section section="Background" /></Layer></StateImagery></Visual>
+				<Visual inherits="ThemeGlueCharCreatePage1FooterVisual" />
 				<Frame name="CancelCharCreationButton" inherits="GlueButton">
 					<Property name="Text" value="CANCEL" />
 					<Area><Anchor point="LEFT" offset="32" /><Anchor point="BOTTOM" offset="-32" /></Area>
@@ -259,7 +211,7 @@
 
 			<Frame name="CharCreatePage2Footer" renderer="DefaultRenderer">
 				<Area><Anchor point="LEFT" /><Anchor point="RIGHT" /><Anchor point="BOTTOM" /><Size><AbsDimension y="280" /></Size></Area>
-				<Visual><ImagerySection name="Background"><ImageComponent texture="Interface/GlueUI/GradientBlack.htex" tiling="HORZ" /></ImagerySection><StateImagery name="Enabled"><Layer><Section section="Background" /></Layer></StateImagery></Visual>
+				<Visual inherits="ThemeGlueCharCreatePage2FooterVisual" />
 				<Frame name="NewCharacterNameBox" inherits="GlueTextField">
 					<Area><Anchor point="H_CENTER" /><Anchor point="BOTTOM" offset="-48" /><Size><AbsDimension x="600" y="128" /></Size></Area>
 				</Frame>

@@ -15,77 +15,7 @@
         <Property name="DragEnabled" value="true" />
         <Property name="DropEnabled" value="true" />
 
-		<Visual>
-			<ImagerySection name="Background">
-				<ImageComponent tint="$BackgroundColor">
-					<Area>
-						<Inset all="16" />
-					</Area>
-					<PropertyValue property="Background" />
-				</ImageComponent>
-			</ImagerySection>
-			<ImagerySection name="Image">
-				<ImageComponent tint="$IconColor">
-					<Area>
-						<Inset all="16" />
-					</Area>
-					<PropertyValue property="Icon" />
-				</ImageComponent>
-			</ImagerySection>
-			<ImagerySection name="Text">
-				<TextComponent horzAlign="RIGHT" vertAlign="BOTTOM">
-					<Area>
-						<Inset all="16" />
-					</Area>
-				</TextComponent>
-			</ImagerySection>
-			<ImagerySection name="NormalFrame">
-				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="$QualityColor" />
-			</ImagerySection>
-			<ImagerySection name="HoveredFrame">
-				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="$QualityColor" />
-			<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="30FFFFFF" />
-			</ImagerySection>
-			<ImagerySection name="PushedFrame">
-				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="$QualityColor" />
-			<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="50000000" />
-			</ImagerySection>
-			<ImagerySection name="DisabledFrame">
-				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="$QualityColor" />
-			</ImagerySection>
-			<StateImagery name="Normal">
-				<Layer>
-					<Section section="NormalFrame" />
-					<Section section="Background" />
-					<Section section="Image" />
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Hovered">
-				<Layer>
-					<Section section="HoveredFrame" />
-					<Section section="Background" />
-					<Section section="Image" />
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Pushed">
-				<Layer>
-					<Section section="PushedFrame" />
-					<Section section="Background" />
-					<Section section="Image" />
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer>
-					<Section section="DisabledFrame" />
-					<Section section="Background" />
-					<Section section="Image" />
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeCraftingReagentIconTemplateVisual" />
 
 		<Area>
 			<Size>

@@ -111,6 +111,9 @@ function GameParent_OnFriendCommandResult(gameParent, result, playerName)
 	elseif result == 7 then
 		-- Not friends
 		ChatFrame:AddMessage(string.format(Localize("FRIEND_NOT_FRIENDS"), playerName), info.r, info.g, info.b);
+	elseif result == 8 then
+		-- The friend list is switched off on the server
+		ChatFrame:AddMessage(Localize("FRIEND_DISABLED"), info.r, info.g, info.b);
 	end
 end
 
@@ -247,6 +250,13 @@ local SIDE_PANEL_TITLE_SUBTEXT_CHILD = 2;
 -- Sets a side panel's title bar text and clears the second header line below it.
 function SidePanel_SetTitle(self, text)
 	local titleBar = self:GetChild(0);
+	if self.npcNameLabel then
+		self.npcNameLabel:Hide();
+		titleBar:SetHeight(self.defaultTitleHeight);
+		local close = titleBar:GetChild(0);
+		close:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, titleBar, 8);
+		close:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.BOTTOM, titleBar, -18);
+	end
 	titleBar:SetText(text);
 
 	local subtext = titleBar:GetChild(SIDE_PANEL_TITLE_SUBTEXT_CHILD);
@@ -259,9 +269,45 @@ end
 -- subtitle ("<General Goods>") on the line below it, when the creature defines a subname.
 function SidePanel_SetUnitTitle(self, unit)
 	local titleBar = self:GetChild(0);
-	titleBar:SetText(unit:GetName());
-
 	local subtext = titleBar:GetChild(SIDE_PANEL_TITLE_SUBTEXT_CHILD);
+	if GameUITheme and GameUITheme.NpcDialogNameFont and subtext then
+		if not self.npcNameLabel then
+			local rect = titleBar:GetRect();
+			self.defaultTitleHeight = (rect.bottom - rect.top) / GetUIScale().y;
+			self.npcNameLabel = TextSmall:Clone();
+			self.npcNameLabel:SetProperty("Clickable", "false");
+			self.npcNameLabel:SetProperty("MousePassThrough", "true");
+			titleBar:AddChild(self.npcNameLabel);
+		end
+		local name = self.npcNameLabel;
+		name:SetProperty("Font", GameUITheme.NpcDialogNameFont);
+		name:SetProperty("TextColor", "FFF3EAD2");
+		name:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, titleBar, 16);
+		name:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, titleBar, -96);
+		name:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, titleBar, 12);
+		name:SetText(unit:GetName());
+		local nameHeight = name:GetTextHeight();
+		name:SetHeight(nameHeight);
+		name:Show();
+		titleBar:SetText("");
+
+		local subtitle = unit:GetSubtitle() or "";
+		subtext:SetProperty("Font", GameUITheme.NpcDialogSubtitleFont or "SmallLabelFont");
+		subtext:SetProperty("VertAlign", "TOP");
+		subtext:ClearAnchor(AnchorPoint.BOTTOM);
+		subtext:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, name, 6);
+		subtext:SetText(subtitle);
+		local subtitleHeight = subtitle ~= "" and subtext:GetTextHeight() or 0;
+		subtext:SetHeight(subtitleHeight);
+		titleBar:SetHeight(math.max(self.defaultTitleHeight, 12 + nameHeight + (subtitleHeight > 0 and 6 + subtitleHeight or 0) + 18));
+		-- The close control stays square when a long name expands the header.
+		local close = titleBar:GetChild(0);
+		close:ClearAnchor(AnchorPoint.BOTTOM);
+		close:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, titleBar, 12);
+		close:SetHeight(64);
+		return;
+	end
+	titleBar:SetText(unit:GetName());
 	if subtext then
 		subtext:SetText(unit:GetSubtitle());
 	end

@@ -263,6 +263,44 @@ RegisterContextMenu("PARTY_MEMBER", {
 })
 
 
+--------------------------------------------------------------------------------
+-- Pet Frame Context Menu: rename (when the pet may be renamed) and dismiss.
+--------------------------------------------------------------------------------
+
+RegisterContextMenu("PET_FRAME", {
+    items = function(data)
+        local items = {}
+
+        if CanRenamePet() then
+            table.insert(items, {
+                text = Localize("PET_RENAME"),
+                callback = function()
+                    -- Starts from the current name, so a small change is a small edit.
+                    local dialog = StaticDialog_Show("RENAME_PET")
+                    local pet = GetUnit("pet")
+                    if dialog and dialog.editBox and pet then
+                        dialog.editBox:SetText(pet:GetName())
+                    end
+                end,
+                enabled = true
+            })
+        end
+
+        if HasPersistentPet() then
+            table.insert(items, {
+                text = Localize("PET_DISMISS"),
+                callback = function()
+                    PetDismiss()
+                end,
+                enabled = true
+            })
+        end
+
+        return items
+    end
+})
+
+
 RegisterContextMenu("LOOT_METHOD", {
     items = function(data)
         return {

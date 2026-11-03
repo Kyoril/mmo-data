@@ -6,47 +6,7 @@
 		<Property name="Font" value="DefaultSmall" />
 		<Property name="Checkable" value="true" />
 
-		<Visual>
-			<ImagerySection name="NormalFrame">
-				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Down_result.htex" borderSize="25" />
-			</ImagerySection>
-			<ImagerySection name="HoveredFrame">
-				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Up_result.htex" borderSize="25" />
-			</ImagerySection>
-			<ImagerySection name="PushedFrame">
-				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Over_result.htex" borderSize="25" />
-			</ImagerySection>
-			<ImagerySection name="SelectedFrame">
-				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Over_result.htex" borderSize="25" />
-				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="8">
-					<Area><Inset all="5" /></Area>
-				</BorderComponent>
-			</ImagerySection>
-			<ImagerySection name="Caption">
-				<TextComponent color="FFB9A26A" horzAlign="CENTER" vertAlign="CENTER" />
-			</ImagerySection>
-			<ImagerySection name="CaptionActive">
-				<TextComponent color="FFFFFFFF" horzAlign="CENTER" vertAlign="CENTER" />
-			</ImagerySection>
-			<StateImagery name="Normal">
-				<Layer><Section section="NormalFrame" /><Section section="Caption" /></Layer>
-			</StateImagery>
-			<StateImagery name="Hovered">
-				<Layer><Section section="HoveredFrame" /><Section section="CaptionActive" /></Layer>
-			</StateImagery>
-			<StateImagery name="Pushed">
-				<Layer><Section section="PushedFrame" /><Section section="CaptionActive" color="FFAAAAAA" /></Layer>
-			</StateImagery>
-			<StateImagery name="NormalChecked">
-				<Layer><Section section="SelectedFrame" /><Section section="CaptionActive" /></Layer>
-			</StateImagery>
-			<StateImagery name="HoveredChecked">
-				<Layer><Section section="SelectedFrame" /><Section section="CaptionActive" /></Layer>
-			</StateImagery>
-			<StateImagery name="PushedChecked">
-				<Layer><Section section="SelectedFrame" /><Section section="CaptionActive" color="FFAAAAAA" /></Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeMailFrameTabButtonTemplateVisual" />
 
 		<Area>
 			<Size><AbsDimension x="452" y="76" /></Size>
@@ -57,38 +17,7 @@
 		<Property name="Font" value="DefaultSmall" />
 		<Property name="Checkable" value="true" />
 
-		<Visual>
-			<ImagerySection name="NormalBg">
-				<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="50000000" />
-			</ImagerySection>
-			<ImagerySection name="HoveredBg">
-				<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="A0553300" />
-			</ImagerySection>
-			<ImagerySection name="PushedBg">
-				<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="A0221100" />
-			</ImagerySection>
-			<ImagerySection name="SelectedBg">
-				<BorderComponent texture="Interface/GameUI/fg4_borders_01_28_2_result.htex" borderSize="24" />
-			</ImagerySection>
-			<StateImagery name="Normal">
-				<Layer><Section section="NormalBg" /></Layer>
-			</StateImagery>
-			<StateImagery name="Hovered">
-				<Layer><Section section="HoveredBg" /></Layer>
-			</StateImagery>
-			<StateImagery name="Pushed">
-				<Layer><Section section="PushedBg" /></Layer>
-			</StateImagery>
-			<StateImagery name="NormalChecked">
-				<Layer><Section section="SelectedBg" /></Layer>
-			</StateImagery>
-			<StateImagery name="HoveredChecked">
-				<Layer><Section section="SelectedBg" /></Layer>
-			</StateImagery>
-			<StateImagery name="PushedChecked">
-				<Layer><Section section="SelectedBg" /></Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeMailListRowTemplateVisual" />
 
 		<Area>
 			<Size><AbsDimension x="0" y="68" /></Size>
@@ -143,47 +72,7 @@
 	<Frame name="MailActionButtonTemplate" type="Button" renderer="ButtonRenderer">
 		<Property name="Font" value="DefaultSmall" />
 
-		<Visual>
-			<ImagerySection name="NormalFrame">
-				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Up_result.htex" borderSize="22" />
-			</ImagerySection>
-			<ImagerySection name="HoveredFrame">
-				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Over_result.htex" borderSize="22" />
-			</ImagerySection>
-			<ImagerySection name="PushedFrame">
-				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Down_result.htex" borderSize="22" />
-			</ImagerySection>
-			<ImagerySection name="DisabledFrame">
-				<BorderComponent texture="Interface/GameUI/fg4_buttonSmall1_Down_result.htex" borderSize="22" tint="80404040" />
-			</ImagerySection>
-			<ImagerySection name="Caption">
-				<TextComponent color="FFFFD100" horzAlign="CENTER" vertAlign="CENTER">
-					<Area><Inset left="12" right="12" /></Area>
-				</TextComponent>
-			</ImagerySection>
-			<ImagerySection name="CaptionHovered">
-				<TextComponent color="FFFFFFFF" horzAlign="CENTER" vertAlign="CENTER">
-					<Area><Inset left="12" right="12" /></Area>
-				</TextComponent>
-			</ImagerySection>
-			<ImagerySection name="CaptionDisabled">
-				<TextComponent color="AE888888" horzAlign="CENTER" vertAlign="CENTER">
-					<Area><Inset left="12" right="12" /></Area>
-				</TextComponent>
-			</ImagerySection>
-			<StateImagery name="Normal">
-				<Layer><Section section="NormalFrame" /><Section section="Caption" /></Layer>
-			</StateImagery>
-			<StateImagery name="Hovered">
-				<Layer><Section section="HoveredFrame" /><Section section="CaptionHovered" /></Layer>
-			</StateImagery>
-			<StateImagery name="Pushed">
-				<Layer><Section section="PushedFrame" /><Section section="Caption" color="FFAAAAAA" /></Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer><Section section="DisabledFrame" /><Section section="CaptionDisabled" /></Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeMailActionButtonTemplateVisual" />
 
 		<Area>
 			<Size><AbsDimension x="280" y="80" /></Size>
@@ -246,14 +135,7 @@
 
 			<Frame name="MailListFrame" renderer="DefaultRenderer">
 				<Property name="Visible" value="true" />
-				<Visual>
-					<ImagerySection name="Border">
-						<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="50000000" />
-					</ImagerySection>
-					<StateImagery name="Enabled">
-						<Layer><Section section="Border" /></Layer>
-					</StateImagery>
-				</Visual>
+				<Visual inherits="ThemeMailListFrameVisual" />
 				<Area>
 					<Anchor point="TOP" offset="0" />
 					<Anchor point="LEFT" offset="0" />
@@ -360,14 +242,7 @@
 
 			<Frame name="MailDetailFrame" renderer="DefaultRenderer">
 				<Property name="Visible" value="false" />
-				<Visual>
-					<ImagerySection name="Well">
-						<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="B0000000" />
-					</ImagerySection>
-					<StateImagery name="Enabled">
-						<Layer><Section section="Well" /></Layer>
-					</StateImagery>
-				</Visual>
+				<Visual inherits="ThemeMailDetailFrameVisual" />
 				<Area>
 					<Anchor point="TOP" offset="0" />
 					<Anchor point="LEFT" offset="0" />
@@ -484,14 +359,7 @@
 			</Frame>
 
 			<Frame name="MailSendFormFrame" renderer="DefaultRenderer">
-				<Visual>
-					<ImagerySection name="Well">
-						<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="B0000000" />
-					</ImagerySection>
-					<StateImagery name="Enabled">
-						<Layer><Section section="Well" /></Layer>
-					</StateImagery>
-				</Visual>
+				<Visual inherits="ThemeMailDetailFrameVisual" />
 				<Area>
 					<Anchor point="TOP" offset="0" />
 					<Anchor point="LEFT" offset="0" />

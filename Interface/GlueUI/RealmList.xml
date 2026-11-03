@@ -10,21 +10,7 @@
 		<Property name="TextColor" value="FFB5A892" />
 		<Property name="HorzAlign" value="LEFT" />
 
-		<Visual>
-			<ImagerySection name="Text">
-				<TextComponent color="$TextColor" horzAlign="$HorzAlign" vertAlign="CENTER" />
-			</ImagerySection>
-			<StateImagery name="Enabled">
-				<Layer>
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer>
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeGlueRealmRowLabelTemplateVisual" />
 		<Area>
 			<Size><AbsDimension y="44" /></Size>
 		</Area>
@@ -45,85 +31,7 @@
 		<Property name="NameVertAlign" value="CENTER" />
 		<Property name="SeparatorColor" value="598C6234" />
 
-		<Visual>
-			<ImagerySection name="Separator">
-				<BorderComponent texture="Interface/GlueUI/GlueListAccent.htex" leftSize="2" topSize="14" rightSize="22" bottomSize="14" tint="$SeparatorColor">
-					<Area><Inset left="40" top="164" right="40" bottom="0" /></Area>
-				</BorderComponent>
-			</ImagerySection>
-			<ImagerySection name="HoverFade">
-				<ImageComponent texture="Interface/GlueUI/GlueListFade.htex" tint="5AC8642E" />
-			</ImagerySection>
-			<ImagerySection name="PushedFade">
-				<ImageComponent texture="Interface/GlueUI/GlueListFade.htex" tint="80B4502A" />
-			</ImagerySection>
-			<ImagerySection name="SelectedFade">
-				<ImageComponent texture="Interface/GlueUI/GlueListFade.htex" tint="CC96241A" />
-				<BorderComponent texture="Interface/GlueUI/GlueListAccent.htex" borderSize="12" tint="FFDEA660" />
-			</ImagerySection>
-			<ImagerySection name="Name">
-				<TextComponent color="FFF3EEE2" horzAlign="LEFT" vertAlign="$NameVertAlign">
-					<Area><Inset left="150" top="34" right="560" bottom="34" /></Area>
-				</TextComponent>
-			</ImagerySection>
-
-			<StateImagery name="Normal">
-				<Layer>
-					<Section section="Separator" />
-					<Section section="Name" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Hovered">
-				<Layer>
-					<Section section="HoverFade" />
-					<Section section="Separator" />
-					<Section section="Name" color="FFFFFFFF" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Pushed">
-				<Layer>
-					<Section section="PushedFade" />
-					<Section section="Separator" />
-					<Section section="Name" color="FFDDDDDD" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer>
-					<Section section="Separator" />
-					<Section section="Name" color="FF8A867E" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="NormalChecked">
-				<Layer>
-					<Section section="SelectedFade" />
-					<Section section="Separator" />
-					<Section section="Name" color="FFFFFFFF" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="HoveredChecked">
-				<Layer>
-					<Section section="SelectedFade" />
-					<Section section="HoverFade" />
-					<Section section="Separator" />
-					<Section section="Name" color="FFFFFFFF" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="PushedChecked">
-				<Layer>
-					<Section section="SelectedFade" />
-					<Section section="PushedFade" />
-					<Section section="Separator" />
-					<Section section="Name" color="FFDDDDDD" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="DisabledChecked">
-				<Layer>
-					<Section section="SelectedFade" />
-					<Section section="Separator" />
-					<Section section="Name" color="FF8A867E" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeGlueRealmListRowTemplateVisual" />
 		<Area>
 			<Size><AbsDimension y="168" /></Size>
 		</Area>
@@ -133,24 +41,7 @@
 			<Property name="Enabled" value="false" />
 			<Property name="Clickable" value="false" />
 			<Property name="GemColor" value="FF40D040" />
-			<Visual>
-				<ImagerySection name="Gem">
-					<ImageComponent texture="Interface/GlueUI/GlowYellow.htex" tint="$GemColor" />
-					<ImageComponent texture="Interface/GlueUI/GlowYellow.htex" tint="$GemColor">
-						<Area><Inset all="16" /></Area>
-					</ImageComponent>
-				</ImagerySection>
-				<StateImagery name="Enabled">
-					<Layer>
-						<Section section="Gem" />
-					</Layer>
-				</StateImagery>
-				<StateImagery name="Disabled">
-					<Layer>
-						<Section section="Gem" />
-					</Layer>
-				</StateImagery>
-			</Visual>
+			<Visual inherits="ThemeGlueRealmRowGemVisual" />
 			<Area>
 				<Size><AbsDimension x="80" y="80" /></Size>
 				<Anchor point="LEFT" offset="48" />
@@ -200,16 +91,7 @@
 		<!-- Darkens the lower part of the backdrop so the panel reads as the focus. -->
 		<Frame name="RealmListShade" renderer="DefaultRenderer">
 			<Property name="Clickable" value="false" />
-			<Visual>
-				<ImagerySection name="Shade">
-					<ImageComponent texture="Interface/GlueUI/GradientBlack.htex" tiling="HORZ" />
-				</ImagerySection>
-				<StateImagery name="Enabled">
-					<Layer>
-						<Section section="Shade" />
-					</Layer>
-				</StateImagery>
-			</Visual>
+			<Visual inherits="ThemeGlueRealmListShadeVisual" />
 			<Area>
 				<Anchor point="LEFT" />
 				<Anchor point="RIGHT" />

@@ -17,94 +17,7 @@
 		<Property name="Icon" />
 		<Property name="CaptionColor" value="FFEED37C" />
 
-		<Visual>
-			<ImagerySection name="NormalSurface">
-				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF29231B" />
-				<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="FFAD9470" />
-			</ImagerySection>
-			<ImagerySection name="HoveredSurface">
-				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF493621" />
-				<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="FFB09A73" />
-			</ImagerySection>
-			<ImagerySection name="PushedSurface">
-				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF211A14" />
-				<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="FFAD9470" />
-			</ImagerySection>
-			<ImagerySection name="CheckedSurface">
-				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF513A20" />
-				<BorderComponent texture="Interface/GameUI/fg4_borders_01_28_2_result.htex" borderSize="24" tint="FFE0BB78" />
-			</ImagerySection>
-			<ImagerySection name="IconSlot">
-				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFD0B68B">
-					<Area><Inset left="16" top="14" /><Size><AbsDimension x="104" y="104" /></Size></Area>
-				</BorderComponent>
-			</ImagerySection>
-			<ImagerySection name="IconImage">
-				<ImageComponent tiling="NONE">
-					<Area><Inset left="26" top="24" /><Size><AbsDimension x="84" y="84" /></Size></Area>
-					<PropertyValue property="Icon" />
-				</ImageComponent>
-			</ImagerySection>
-			<ImagerySection name="Caption">
-				<TextComponent color="$CaptionColor" horzAlign="LEFT" vertAlign="CENTER" wrap="false">
-					<Area><Inset left="140" top="8" right="16" bottom="8" /></Area>
-				</TextComponent>
-			</ImagerySection>
-			<ImagerySection name="CaptionHovered">
-				<TextComponent color="FFFFFFFF" horzAlign="LEFT" vertAlign="CENTER" wrap="false">
-					<Area><Inset left="140" top="8" right="16" bottom="8" /></Area>
-				</TextComponent>
-			</ImagerySection>
-
-			<StateImagery name="Normal">
-				<Layer>
-					<Section section="NormalSurface" />
-					<Section section="IconSlot" />
-					<Section section="IconImage" />
-					<Section section="Caption" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Hovered">
-				<Layer>
-					<Section section="HoveredSurface" />
-					<Section section="IconSlot" />
-					<Section section="IconImage" />
-					<Section section="CaptionHovered" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Pushed">
-				<Layer>
-					<Section section="PushedSurface" />
-					<Section section="IconSlot" />
-					<Section section="IconImage" />
-					<Section section="Caption" color="FFAAAAAA" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="NormalChecked">
-				<Layer>
-					<Section section="CheckedSurface" />
-					<Section section="IconSlot" />
-					<Section section="IconImage" />
-					<Section section="CaptionHovered" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="HoveredChecked">
-				<Layer>
-					<Section section="CheckedSurface" />
-					<Section section="IconSlot" />
-					<Section section="IconImage" />
-					<Section section="CaptionHovered" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="PushedChecked">
-				<Layer>
-					<Section section="CheckedSurface" />
-					<Section section="IconSlot" />
-					<Section section="IconImage" />
-					<Section section="Caption" color="FFAAAAAA" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeLootMethodRowTemplateVisual" />
 
 		<Area>
 			<Size><AbsDimension x="536" y="132" /></Size>
@@ -115,65 +28,7 @@
 	<Frame name="LootComboBoxTemplate" type="ComboBox" renderer="ComboBoxRenderer">
 		<Property name="Font" value="DefaultSmall" />
 
-		<Visual>
-			<ImagerySection name="NormalBg">
-				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF29231B" />
-				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFD0B68B" />
-			</ImagerySection>
-			<ImagerySection name="HoveredBg">
-				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF493621" />
-				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFE0BB78" />
-			</ImagerySection>
-			<ImagerySection name="OpenBg">
-				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF513A20" />
-				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFFFD100" />
-			</ImagerySection>
-			<ImagerySection name="DisabledBg">
-				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF211A14" />
-				<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FF77654E" />
-			</ImagerySection>
-			<!-- Text leaves room on the right for the arrow child frame -->
-			<ImagerySection name="CaptionNormal">
-				<TextComponent color="FFEED37C" horzAlign="LEFT" vertAlign="CENTER" wrap="false">
-					<Area><Inset left="20" right="80" /></Area>
-				</TextComponent>
-			</ImagerySection>
-			<ImagerySection name="CaptionHovered">
-				<TextComponent color="FFFFFFFF" horzAlign="LEFT" vertAlign="CENTER" wrap="false">
-					<Area><Inset left="20" right="80" /></Area>
-				</TextComponent>
-			</ImagerySection>
-			<ImagerySection name="CaptionDisabled">
-				<TextComponent color="FFAA9B80" horzAlign="LEFT" vertAlign="CENTER" wrap="false">
-					<Area><Inset left="20" right="80" /></Area>
-				</TextComponent>
-			</ImagerySection>
-
-			<StateImagery name="Normal">
-				<Layer>
-					<Section section="NormalBg" />
-					<Section section="CaptionNormal" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Hovered">
-				<Layer>
-					<Section section="HoveredBg" />
-					<Section section="CaptionHovered" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Open">
-				<Layer>
-					<Section section="OpenBg" />
-					<Section section="CaptionHovered" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer>
-					<Section section="DisabledBg" />
-					<Section section="CaptionDisabled" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeLootComboBoxTemplateVisual" />
 
 		<Area>
 			<Size><AbsDimension x="600" y="72" /></Size>
@@ -183,14 +38,7 @@
 	<!-- Thin gold rule separating sections inside a well. -->
 	<Frame name="LootMethodDividerTemplate" renderer="DefaultRenderer">
 		<Property name="Clickable" value="false" />
-		<Visual>
-			<ImagerySection name="Line">
-				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="60D0B68B" />
-			</ImagerySection>
-			<StateImagery name="Enabled">
-				<Layer><Section section="Line" /></Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeLootMethodDividerTemplateVisual" />
 		<Area>
 			<Size><AbsDimension y="2" /></Size>
 		</Area>
@@ -202,14 +50,7 @@
 	<Frame name="LootMethodFrame" parent="GameParent" renderer="DefaultRenderer">
 		<Property name="Visible" value="false" />
 
-		<Visual>
-			<ImagerySection name="Surface">
-				<BorderComponent texture="Interface/GameUI/Alestia/WindowPanel.htex" borderSize="32" />
-			</ImagerySection>
-			<StateImagery name="Enabled">
-				<Layer><Section section="Surface" /></Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeCraftingFrameVisual" />
 
 		<Scripts>
 			<OnLoad>
@@ -247,15 +88,7 @@
 				<Anchor point="LEFT" offset="32" />
 				<Size><AbsDimension x="576" y="616" /></Size>
 			</Area>
-			<Visual>
-				<ImagerySection name="Surface">
-					<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF181611" />
-					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFD0B68B" />
-				</ImagerySection>
-				<StateImagery name="Enabled">
-					<Layer><Section section="Surface" /></Layer>
-				</StateImagery>
-			</Visual>
+			<Visual inherits="ThemeCraftingOverviewVisual" />
 
 			<Frame name="LootMethodRow1" inherits="LootMethodRowTemplate" id="1">
 				<Area>
@@ -317,15 +150,7 @@
 				<Anchor point="RIGHT" offset="-32" />
 				<Anchor point="BOTTOM" offset="-136" />
 			</Area>
-			<Visual>
-				<ImagerySection name="Surface">
-					<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF181611" />
-					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFD0B68B" />
-				</ImagerySection>
-				<StateImagery name="Enabled">
-					<Layer><Section section="Surface" /></Layer>
-				</StateImagery>
-			</Visual>
+			<Visual inherits="ThemeCraftingOverviewVisual" />
 
 			<!-- Large icon for the shown method -->
 			<Frame name="LootMethodDetailIcon" renderer="DefaultRenderer">
@@ -336,23 +161,7 @@
 					<Anchor point="LEFT" offset="28" />
 					<Size><AbsDimension x="128" y="128" /></Size>
 				</Area>
-				<Visual>
-					<ImagerySection name="SlotBg">
-						<BorderComponent texture="Interface/GameUI/fg4_iconsSlot.htex" borderSize="64" />
-					</ImagerySection>
-					<ImagerySection name="Image">
-						<ImageComponent tiling="NONE">
-							<Area><Inset all="22" /></Area>
-							<PropertyValue property="Icon" />
-						</ImageComponent>
-					</ImagerySection>
-					<StateImagery name="Enabled">
-						<Layer>
-							<Section section="SlotBg" />
-							<Section section="Image" />
-						</Layer>
-					</StateImagery>
-				</Visual>
+				<Visual inherits="ThemeLootMethodDetailIconVisual" />
 			</Frame>
 
 			<!-- Shown method name -->
@@ -435,14 +244,7 @@
 						<Anchor point="RIGHT" offset="-16" />
 						<Size><AbsDimension x="44" /></Size>
 					</Area>
-					<Visual>
-						<ImagerySection name="Image">
-							<ImageComponent texture="Interface/Icons/IconGold_ArrowDown.htex" tiling="NONE" />
-						</ImagerySection>
-						<StateImagery name="Enabled">
-							<Layer><Section section="Image" /></Layer>
-						</StateImagery>
-					</Visual>
+					<Visual inherits="ThemeLootThresholdArrowVisual" />
 				</Frame>
 			</Frame>
 
@@ -478,14 +280,7 @@
 						<Anchor point="RIGHT" offset="-16" />
 						<Size><AbsDimension x="44" /></Size>
 					</Area>
-					<Visual>
-						<ImagerySection name="Image">
-							<ImageComponent texture="Interface/Icons/IconGold_ArrowDown.htex" tiling="NONE" />
-						</ImagerySection>
-						<StateImagery name="Enabled">
-							<Layer><Section section="Image" /></Layer>
-						</StateImagery>
-					</Visual>
+					<Visual inherits="ThemeLootThresholdArrowVisual" />
 				</Frame>
 			</Frame>
 		</Frame>

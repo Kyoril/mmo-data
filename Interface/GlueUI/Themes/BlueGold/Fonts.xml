@@ -1,0 +1,7 @@
+<UiLayout>
+	<Font name="CharNameplateNameHovered" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="41" outline="0" shadowX="2.0" shadowY="2.0" />
+	<Font name="CharNameplateNameSelected" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="47" outline="0" shadowX="2.0" shadowY="2.0" />
+	<Font name="CharNameplateSmallHovered" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="32" outline="0" shadowX="2.0" shadowY="2.0" />
+	<Font name="DefaultSmall" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="32" outline="0" shadowX="1.0" shadowY="1.0" />
+	<Font name="DefaultHeader" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="41" outline="0" shadowX="1.0" shadowY="1.0" />
+</UiLayout>

@@ -3,6 +3,15 @@ lastMinimapTimeHour = -1;
 lastMinimapTimeMinute = -1;
 
 function Minimap_OnLoad(self)
+    if GameUITheme and GameUITheme.MinimapUseTextZoomIcons then
+        MinimapZoomIn:SetProperty("Icon", "");
+        MinimapZoomOut:SetProperty("Icon", "");
+        MinimapZoomIn:SetProperty("Font", "CharacterAttributeButtonFont");
+        MinimapZoomOut:SetProperty("Font", "CharacterAttributeButtonFont");
+        MinimapZoomIn:SetText("+");
+        MinimapZoomOut:SetText("-");
+    end
+
     self:RegisterEvent("ZONE_CHANGED", Minimap_OnZoneChanged);
     self:RegisterEvent("PARTY_PING", Minimap_OnPartyPing);
     self:RegisterEvent("PARTY_PING_UNIT", Minimap_OnPartyPing);

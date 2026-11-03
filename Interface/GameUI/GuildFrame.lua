@@ -5,6 +5,10 @@ GUILD_COMMAND_RESULTS[3] = "GUILD_NOT_ALLOWED";
 GUILD_COMMAND_RESULTS[4] = "GUILD_PLAYER_NOT_FOUND";
 GUILD_COMMAND_RESULTS[5] = "GUILD_ALREADY_IN_OTHER_GUILD";
 GUILD_COMMAND_RESULTS[6] = "GUILD_INVITE_PENDING";
+GUILD_COMMAND_RESULTS[7] = "GUILD_DISABLED";
+
+-- Server subsystem that switches guilds on and off.
+local GUILD_SUBSYSTEM = "GUILD";
 
 local GUILD_ROSTER_MAX_DISPLAY = 12;
 local guildOffset = 0;
@@ -245,8 +249,15 @@ function GuildFrame_OnShow(self)
 	GuildRoster_Update();
 	GuildRoster();
 end
+-- The server switched guilds off: close the panel, its contents can no longer change.
+local function GuildFrame_OnSubsystemStatusChanged(self, name, available)
+	if name == GUILD_SUBSYSTEM and not available and GuildFrame:IsVisible() then
+		HideUIPanel(GuildFrame);
+	end
+end
 function GuildFrame_Toggle()
 	if GuildFrame:IsVisible() then HideUIPanel(GuildFrame);
+	elseif not IsSubsystemAvailable(GUILD_SUBSYSTEM) then ChatFrame:AddMessage(Localize("GUILD_DISABLED"), 1, 1, 0);
 	elseif IsInGuild() then ShowUIPanel(GuildFrame);
 	else ChatFrame:AddMessage(Localize("GUILD_NOT_IN_GUILD"), 1, 1, 0); end
 end
@@ -259,6 +270,7 @@ function GuildFrame_OnLoad(self)
 	self:RegisterEvent("GUILD_EVENT", GuildFrame_OnEvent);
 	self:RegisterEvent("GUILD_REMOVED", GuildFrame_OnRemoved);
 	self:RegisterEvent("GUILD_ROSTER_UPDATE", GuildRoster_Update);
+	self:RegisterEvent("SUBSYSTEM_STATUS_CHANGED", GuildFrame_OnSubsystemStatusChanged);
 	GuildRosterScrollBar:SetMinimum(0);
 	GuildRosterScrollBar:SetMaximum(0);
 	GuildRosterScrollBar:SetStep(1);

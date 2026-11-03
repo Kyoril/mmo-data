@@ -13,16 +13,7 @@
 	<Frame name="GameMenu" renderer="DefaultRenderer" parent="GameParent">
 		<Property name="Visible" value="False" />
 
-		<Visual>
-			<ImagerySection name="Background">
-				<BorderComponent texture="Interface/GameUI/Alestia/WindowPanel.htex" borderSize="32" />
-			</ImagerySection>
-			<StateImagery name="Enabled">
-				<Layer>
-					<Section section="Background" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeGameMenuVisual" />
 
 
 		<Area>
@@ -33,6 +24,7 @@
 
 		<Frame name="MenuTitleBar" inherits="TitleBar">
 			<Property name="Text" value="MENU" />
+			<Visual inherits="ThemeGameMenuTitleBarVisual" />
 
 			<Area>
 				<Anchor point="TOP" offset="24" />
@@ -42,16 +34,7 @@
 		</Frame>
 
 		<Frame name="GameMenuButtons" renderer="DefaultRenderer">
-			<Visual>
-				<ImagerySection name="Border">
-					<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" />
-				</ImagerySection>
-				<StateImagery name="Enabled">
-					<Layer>
-						<!-- Buttons sit directly on the window surface. -->
-					</Layer>
-				</StateImagery>
-			</Visual>
+			<Visual inherits="ThemeGameMenuButtonsVisual" />
 
 			<Area>
 				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="MenuTitleBar" offset="20" />
@@ -60,7 +43,14 @@
 				<Anchor point="BOTTOM" offset="-48" />
 			</Area>
 		</Frame>
-		
+
+		<!-- The rim is drawn after the connected header, without intercepting input. -->
+		<Frame name="GameMenuBorder" renderer="DefaultRenderer" setAllPoints="true" frameLevel="1">
+			<Property name="Clickable" value="false" />
+			<Property name="MousePassThrough" value="true" />
+			<Visual inherits="ThemeGameMenuBorderVisual" />
+		</Frame>
+
 		<Scripts>
 			<OnLoad>
 				return function(self)

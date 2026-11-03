@@ -1,22 +1,11 @@
 <?xml version="1.0" ?>
 <UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
 	<Script file="InventoryFrame.lua" />
-	<Font name="InventoryTitleFont" file="Fonts/FRIZQT__.TTF" size="25.6" outline="0" shadowX="0.8" shadowY="0.8" />
-	<Font name="InventoryCountFont" file="Fonts/FRIZQT__.TTF" size="20.8" outline="0" shadowX="0.8" shadowY="0.8" />
 
     <Frame name="InventoryFrame" renderer="DefaultRenderer" parent="GameParent">
 		<Property name="Visible" value="False" />
 		
-		<Visual>
-			<ImagerySection name="Background">
-				<BorderComponent texture="Interface/GameUI/Alestia/WindowPanel.htex" borderSize="25.6" />
-			</ImagerySection>
-			<StateImagery name="Enabled">
-				<Layer>
-					<Section section="Background" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeInventoryFrameVisual" />
 
 		<Area>
 			<Size><AbsDimension x="768" y="1024" /></Size>
@@ -40,20 +29,7 @@
 		<Frame name="PlayerMoney" renderer="DefaultRenderer">
 			<Property name="Font" value="InventoryCountFont" />
 
-			<Visual>
-				<ImagerySection name="Border">
-					<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="20" />
-				</ImagerySection>
-				<ImagerySection name="Text">
-					<TextComponent />
-				</ImagerySection>
-				<StateImagery name="Enabled">
-					<Layer>
-						<Section section="Border" />
-						<Section section="Text" />
-					</Layer>
-				</StateImagery>
-			</Visual>
+			<Visual inherits="ThemePlayerMoneyVisual" />
 
 			<Area>
 				<Anchor point="BOTTOM" offset="-19.2" />

@@ -8,7 +8,7 @@ ACTION_BAR_2_CVAR = "ShowActionBar2";
 
 -- Gap (UI units) between the second bar and the experience bars below it, and between the second
 -- bar and the player frame / cast bar it pushes up.
-ACTION_BAR_2_GAP = 24;
+ACTION_BAR_2_GAP = (GameUITheme and GameUITheme.ActionBar2Gap) or 24;
 
 -- Bottom offset of the player frame and cast bar while the second bar is hidden (matches the XML).
 ACTION_BAR_2_HUD_DEFAULT_BOTTOM = -400;
@@ -21,11 +21,11 @@ ACTION_BUTTON_ACTIVE_GLOW = "FFFFD100";
 ACTION_BUTTON_INACTIVE_GLOW = "00000000";
 
 -- Socket tints of a bound slot, and of the translucent socket shown instead on empty second-bar slots.
-ACTION_SOCKET_NORMAL_TINT = "FF998D7C";
-ACTION_SOCKET_HOVERED_TINT = "FFFFFFFF";
-ACTION_SOCKET_PUSHED_TINT = "FF91806A";
-ACTION_EMPTY_SOCKET_TINT = "4D998D7C";
-ACTION_EMPTY_SOCKET_HOVER_TINT = "A6FFFFFF";
+ACTION_SOCKET_NORMAL_TINT = (GameUITheme and GameUITheme.ActionSocketNormalTint) or "FF998D7C";
+ACTION_SOCKET_HOVERED_TINT = (GameUITheme and GameUITheme.ActionSocketHoveredTint) or "FFFFFFFF";
+ACTION_SOCKET_PUSHED_TINT = (GameUITheme and GameUITheme.ActionSocketPushedTint) or "FF91806A";
+ACTION_EMPTY_SOCKET_TINT = (GameUITheme and GameUITheme.ActionEmptySocketTint) or "4D998D7C";
+ACTION_EMPTY_SOCKET_HOVER_TINT = (GameUITheme and GameUITheme.ActionEmptySocketHoverTint) or "A6FFFFFF";
 ACTION_HIDDEN_TINT = "00000000";
 
 -- Fallback icon for emotes without an authored icon.
@@ -76,7 +76,8 @@ function ActionBar_UpdateSecondBarLayout(bar)
         end
     end
 
-    -- The target frame is anchored to the player frame and follows it.
+    -- The target frame, the pet bar and the pet frame above it are anchored to the player frame and
+    -- follow it, so the pet bar never collides with this bar.
     local hudFrames = { PlayerFrame, PlayerCastBar };
     for _, frame in ipairs(hudFrames) do
         if frame ~= nil then

@@ -164,6 +164,23 @@ StaticDialogs["GUILD_EDIT_MOTD"] = {
 	OnAccept = function() GuildFrame_SaveMOTD(); end
 };
 
+-- Renames the persistent pet. The client and the server both validate the name and report a
+-- refused one through PET_RESULT.
+StaticDialogs["RENAME_PET"] = {
+	text = Localize("PET_RENAME_PROMPT"),
+	button1 = Localize("ACCEPT"),
+	button2 = Localize("CANCEL"),
+	hasEditBox = true,
+	OnAccept = function()
+		local name = StaticDialog.editBox:GetText();
+		if (name and name ~= "") then
+			PetRename(name);
+		end
+	end,
+	timeout = 0,
+	exclusive = false
+};
+
 function StaticDialog_OnLoad(self)
 
 end

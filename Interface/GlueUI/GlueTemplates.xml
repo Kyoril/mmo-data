@@ -2,10 +2,9 @@
 
 <!-- This file contains frame templates that are often used by the GlueUI part. -->
 <UiLayout xmlns="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://mmo-dev.net/ Ui.xsd">
-	<Font name="DefaultSmall" file="Fonts/EBGaramond-Regular.ttf" size="32" outline="0" shadowX="1.0" shadowY="1.0" />
-	<Font name="DefaultHeader" file="Fonts/EBGaramond-Regular.ttf" size="41" outline="0" shadowX="1.0" shadowY="1.0" />
 	
-	<!-- GlueSkin textures (Interface/GlueUI/GlueSkin*.htex): how they were made. They were baked once
+	<!-- Historical Legacy artwork notes. BlueGold uses the shared GameUI theme materials.
+	     GlueSkin textures (Interface/GlueUI/GlueSkin*.htex): how they were made. They were baked once
 	     with a throwaway Pillow script and imported with .agents/skills/mmo-item-designer/scripts/
 	     import_item_icon.py (texconv, full mips); there is no generator in the repo. To change one,
 	     decode its source with htex_tool.py preview, apply the recipe and import it again.
@@ -49,74 +48,7 @@
 		<Property name="Font" value="DefaultSmall" />
 		<Property name="Icon" />
 
-		<Visual>
-			<ImagerySection name="NormalFrame">
-				<BorderComponent texture="Interface/GlueUI/ButtonNormal.htex" borderSize="30" />
-			</ImagerySection>
-			<ImagerySection name="HoveredFrame">
-				<BorderComponent texture="Interface/GlueUI/ButtonHovered.htex" borderSize="30" />
-			</ImagerySection>
-			<ImagerySection name="PushedFrame">
-				<BorderComponent texture="Interface/GlueUI/ButtonPushed.htex" borderSize="30" />
-			</ImagerySection>
-			<ImagerySection name="DisabledFrame">
-				<BorderComponent texture="Interface/GlueUI/ButtonDisabled.htex" borderSize="30" />
-			</ImagerySection>
-			<ImagerySection name="Caption">
-				<TextComponent color="FFF3EEE2" horzAlign="CENTER" vertAlign="CENTER" />
-			</ImagerySection>
-			<!-- TODO: Remove these sections and only use the Caption section with overridden color values -->
-			<ImagerySection name="HoveredCaption">
-				<TextComponent color="FFFFFFFF" horzAlign="CENTER" vertAlign="CENTER" />
-			</ImagerySection>
-			<ImagerySection name="DisabledCaption">
-				<TextComponent color="FF8A867E" horzAlign="CENTER" vertAlign="CENTER" />
-			</ImagerySection>
-			<ImagerySection name="Image">
-				<ImageComponent>
-					<Area>
-						<Inset all="16" />
-					</Area>
-					<PropertyValue property="Icon" />
-				</ImageComponent>
-			</ImagerySection>
-			<ImagerySection name="ImageDisabled">
-				<ImageComponent tint="80888888">
-					<Area>
-						<Inset all="16" />
-					</Area>
-					<PropertyValue property="Icon" />
-				</ImageComponent>
-			</ImagerySection>
-			<StateImagery name="Normal">
-				<Layer>
-					<Section section="NormalFrame" />
-					<Section section="Image" />
-					<Section section="Caption" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Hovered">
-				<Layer>
-					<Section section="HoveredFrame" />
-					<Section section="Image" />
-					<Section section="HoveredCaption" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Pushed">
-				<Layer>
-					<Section section="PushedFrame" />
-					<Section section="Image" />
-					<Section section="Caption" color="FFDDDDDD" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer>
-					<Section section="DisabledFrame" />
-					<Section section="ImageDisabled" />
-					<Section section="DisabledCaption" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeGlueGlueButtonVisual" />
 		<Area>
 			<Size>
 				<AbsDimension x="440" y="128" />
@@ -126,54 +58,7 @@
 	
 	<!-- Primary glue button -->
 	<Frame name="GlueButtonPrimary" type="Button" renderer="ButtonRenderer">
-		<Visual>
-			<ImagerySection name="NormalFrame">
-				<BorderComponent texture="Interface/GlueUI/PrimaryButtonNormal.htex" borderSize="64" />
-			</ImagerySection>
-			<ImagerySection name="HoveredFrame">
-				<BorderComponent texture="Interface/GlueUI/PrimaryButtonHovered.htex" borderSize="64" />
-			</ImagerySection>
-			<ImagerySection name="PushedFrame">
-				<BorderComponent texture="Interface/GlueUI/PrimaryButtonPushed.htex" borderSize="64" />
-			</ImagerySection>
-			<ImagerySection name="DisabledFrame">
-				<BorderComponent texture="Interface/GlueUI/PrimaryButtonDisabled.htex" borderSize="64" />
-			</ImagerySection>
-			<ImagerySection name="Caption">
-				<TextComponent color="FFF3EEE2" horzAlign="CENTER" vertAlign="CENTER" />
-			</ImagerySection>
-			<!-- TODO: Remove these sections and only use the Caption section with overridden color values -->
-			<ImagerySection name="HoveredCaption">
-				<TextComponent color="FFFFFFFF" horzAlign="CENTER" vertAlign="CENTER" />
-			</ImagerySection>
-			<ImagerySection name="DisabledCaption">
-				<TextComponent color="FF8A867E" horzAlign="CENTER" vertAlign="CENTER" />
-			</ImagerySection>
-			<StateImagery name="Normal">
-				<Layer>
-					<Section section="NormalFrame" />
-					<Section section="Caption" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Hovered">
-				<Layer>
-					<Section section="HoveredFrame" />
-					<Section section="HoveredCaption" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Pushed">
-				<Layer>
-					<Section section="PushedFrame" />
-					<Section section="Caption" color="FFDDDDDD" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer>
-					<Section section="DisabledFrame" />
-					<Section section="DisabledCaption" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeGlueGlueButtonPrimaryVisual" />
 		<Area>
 			<Size>
 				<AbsDimension x="440" y="128" />
@@ -187,61 +72,7 @@
 	<Frame name="GlueArrowButton" type="Button" renderer="ButtonRenderer">
 		<Property name="Icon" />
 
-		<Visual>
-			<ImagerySection name="NormalFrame">
-				<ImageComponent texture="Interface/GlueUI/GlueSkinButtonNormal.htex"><Area><Inset all="14" /></Area></ImageComponent>
-				<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" />
-			</ImagerySection>
-			<ImagerySection name="HoveredFrame">
-				<ImageComponent texture="Interface/GlueUI/GlueSkinButtonHovered.htex"><Area><Inset all="14" /></Area></ImageComponent>
-				<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" />
-			</ImagerySection>
-			<ImagerySection name="PushedFrame">
-				<ImageComponent texture="Interface/GlueUI/GlueSkinButtonPushed.htex"><Area><Inset all="14" /></Area></ImageComponent>
-				<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" />
-			</ImagerySection>
-			<ImagerySection name="DisabledFrame">
-				<ImageComponent texture="Interface/GlueUI/GlueSkinButtonDisabled.htex"><Area><Inset all="14" /></Area></ImageComponent>
-				<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" tint="FF8C8C8C" />
-			</ImagerySection>
-			<!-- Arrow tints: ivory, white on hover, ivory x DDDDDD pushed, the disabled caption colour faded. -->
-			<ImagerySection name="Arrow">
-				<ImageComponent tint="FFF3EEE2"><Area><Inset all="20" /></Area><PropertyValue property="Icon" /></ImageComponent>
-			</ImagerySection>
-			<ImagerySection name="ArrowHovered">
-				<ImageComponent tint="FFFFFFFF"><Area><Inset all="20" /></Area><PropertyValue property="Icon" /></ImageComponent>
-			</ImagerySection>
-			<ImagerySection name="ArrowPushed">
-				<ImageComponent tint="FFD2CEC4"><Area><Inset all="20" /></Area><PropertyValue property="Icon" /></ImageComponent>
-			</ImagerySection>
-			<ImagerySection name="ArrowDisabled">
-				<ImageComponent tint="A08A867E"><Area><Inset all="20" /></Area><PropertyValue property="Icon" /></ImageComponent>
-			</ImagerySection>
-			<StateImagery name="Normal">
-				<Layer>
-					<Section section="NormalFrame" />
-					<Section section="Arrow" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Hovered">
-				<Layer>
-					<Section section="HoveredFrame" />
-					<Section section="ArrowHovered" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Pushed">
-				<Layer>
-					<Section section="PushedFrame" />
-					<Section section="ArrowPushed" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer>
-					<Section section="DisabledFrame" />
-					<Section section="ArrowDisabled" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeGlueGlueArrowButtonVisual" />
 		<Area>
 			<Size>
 				<AbsDimension x="80" y="80" />
@@ -256,21 +87,7 @@
 		<Property name="VertAlign" value="TOP" />
 		<Property name="TextColor" value="FFCFE0D4" />
 
-		<Visual>
-			<ImagerySection name="Text">
-				<TextComponent color="$TextColor" horzAlign="$HorzAlign" vertAlign="$VertAlign" />
-			</ImagerySection>
-			<StateImagery name="Enabled">
-				<Layer>
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer>
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeGlueGlueTextSmallVisual" />
 		<Area>
 			<Size><AbsDimension x="0" y="44" /></Size>
 		</Area>
@@ -281,21 +98,7 @@
 		<Property name="Font" value="DefaultHeader" />
 		<Property name="HorzAlign" value="CENTER" />
 		
-		<Visual>
-			<ImagerySection name="Text">
-				<TextComponent color="FFF3EEE2" horzAlign="CENTER" />
-			</ImagerySection>
-			<StateImagery name="Enabled">
-				<Layer>
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer>
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeGlueGlueTextLargeVisual" />
 		<Area>
 			<Size><AbsDimension x="0" y="60" /></Size>
 		</Area>
@@ -307,32 +110,7 @@
 		<Property name="HorzAlign" value="LEFT" />
 		<Property name="VertAlign" value="CENTER" />
 	
-		<Visual>
-			<!-- Same steel frame as the buttons around dark stone; text padding is set by the OnLoad below. -->
-			<ImagerySection name="Frame">
-				<ImageComponent texture="Interface/GlueUI/GlueSkinFieldFill.htex"><Area><Inset all="14" /></Area></ImageComponent>
-				<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" borderSize="36" />
-			</ImagerySection>
-			<ImagerySection name="Caret">
-				<ImageComponent texture="Interface/GlueUI/Caret.htex" />
-			</ImagerySection>
-			
-			<StateImagery name="Enabled">
-				<Layer>
-					<Section section="Frame" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer>
-					<Section section="Frame" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Caret">
-				<Layer>
-					<Section section="Caret" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeGlueGlueTextFieldVisual" />
 		<Area>
 			<Size><AbsDimension x="440" y="128" /></Size>
 		</Area>
@@ -360,22 +138,7 @@
 	<Frame name="GlueDivider" renderer="DefaultRenderer">
 		<Property name="Clickable" value="false" />
 		<Property name="LineColor" value="FFDEA660" />
-		<Visual>
-			<!-- Tinted bronze, to sit with the wood panels and the red buttons. -->
-			<ImagerySection name="Line">
-				<BorderComponent texture="Interface/GlueUI/GlueSkinSteelFrame.htex" leftSize="36" topSize="6" rightSize="36" bottomSize="494" tint="$LineColor" />
-			</ImagerySection>
-			<StateImagery name="Enabled">
-				<Layer>
-					<Section section="Line" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer>
-					<Section section="Line" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeGlueGlueDividerVisual" />
 		<Area>
 			<Size><AbsDimension y="12" /></Size>
 		</Area>
@@ -385,73 +148,16 @@
 	     an inner shadow under the top edge (GlueListWell, see the note above). Content belongs 8 UI
 	     inside it. -->
 	<Frame name="GlueListWell" renderer="DefaultRenderer">
-		<Visual>
-			<ImagerySection name="Well">
-				<BorderComponent texture="Interface/GlueUI/GlueListWell.htex" borderSize="32" />
-			</ImagerySection>
-			<StateImagery name="Enabled">
-				<Layer>
-					<Section section="Well" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer>
-					<Section section="Well" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeGlueGlueListWellVisual" />
 	</Frame>
 
 	<Frame name="GlueBorderFrame" renderer="DefaultRenderer">
-		<Visual>
-			<!-- Dark wood with a bronze edge and corner ornaments: WindowPanel baked at 2x (GlueSkin note above). -->
-			<ImagerySection name="Background">
-				<BorderComponent texture="Interface/GlueUI/GlueSkinPanel.htex" borderSize="64" />
-			</ImagerySection>
-			<StateImagery name="Enabled">
-				<Layer>
-					<Section section="Background" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeGlueGlueBorderFrameVisual" />
 	</Frame>
 
 	<!-- Scroll thumb: the red glue button art, 9-sliced (30) like GlueButton. -->
 	<Frame name="ThumbButtonTemplate" type="Thumb" renderer="ButtonRenderer">
-		<Visual>
-			<ImagerySection name="NormalFrame">
-				<BorderComponent texture="Interface/GlueUI/ButtonNormal.htex" borderSize="30" />
-			</ImagerySection>
-			<ImagerySection name="HoveredFrame">
-				<BorderComponent texture="Interface/GlueUI/ButtonHovered.htex" borderSize="30" />
-			</ImagerySection>
-			<ImagerySection name="PushedFrame">
-				<BorderComponent texture="Interface/GlueUI/ButtonPushed.htex" borderSize="30" />
-			</ImagerySection>
-			<ImagerySection name="DisabledFrame">
-				<BorderComponent texture="Interface/GlueUI/ButtonDisabled.htex" borderSize="30" />
-			</ImagerySection>
-			<StateImagery name="Normal">
-				<Layer>
-					<Section section="NormalFrame" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Hovered">
-				<Layer>
-					<Section section="HoveredFrame" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Pushed">
-				<Layer>
-					<Section section="PushedFrame" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer>
-					<Section section="DisabledFrame" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeGlueThumbButtonTemplateVisual" />
 		<Area>
 			<Anchor point="TOP" offset="80" />
 			<Anchor point="LEFT" offset="8" />
@@ -466,56 +172,7 @@
 	<Frame name="GlueScrollArrowButton" type="Button" renderer="ButtonRenderer">
 		<Property name="Icon" />
 
-		<Visual>
-			<ImagerySection name="NormalFrame">
-				<BorderComponent texture="Interface/GlueUI/ButtonNormal.htex" borderSize="30" />
-			</ImagerySection>
-			<ImagerySection name="HoveredFrame">
-				<BorderComponent texture="Interface/GlueUI/ButtonHovered.htex" borderSize="30" />
-			</ImagerySection>
-			<ImagerySection name="PushedFrame">
-				<BorderComponent texture="Interface/GlueUI/ButtonPushed.htex" borderSize="30" />
-			</ImagerySection>
-			<ImagerySection name="DisabledFrame">
-				<BorderComponent texture="Interface/GlueUI/ButtonDisabled.htex" borderSize="30" />
-			</ImagerySection>
-			<ImagerySection name="Arrow">
-				<ImageComponent tint="FFF3EEE2"><Area><Inset all="20" /></Area><PropertyValue property="Icon" /></ImageComponent>
-			</ImagerySection>
-			<ImagerySection name="ArrowHovered">
-				<ImageComponent tint="FFFFFFFF"><Area><Inset all="20" /></Area><PropertyValue property="Icon" /></ImageComponent>
-			</ImagerySection>
-			<ImagerySection name="ArrowPushed">
-				<ImageComponent tint="FFD2CEC4"><Area><Inset all="22" /></Area><PropertyValue property="Icon" /></ImageComponent>
-			</ImagerySection>
-			<ImagerySection name="ArrowDisabled">
-				<ImageComponent tint="A08A867E"><Area><Inset all="20" /></Area><PropertyValue property="Icon" /></ImageComponent>
-			</ImagerySection>
-			<StateImagery name="Normal">
-				<Layer>
-					<Section section="NormalFrame" />
-					<Section section="Arrow" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Hovered">
-				<Layer>
-					<Section section="HoveredFrame" />
-					<Section section="ArrowHovered" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Pushed">
-				<Layer>
-					<Section section="PushedFrame" />
-					<Section section="ArrowPushed" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer>
-					<Section section="DisabledFrame" />
-					<Section section="ArrowDisabled" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeGlueGlueScrollArrowButtonVisual" />
 		<Area>
 			<Size>
 				<AbsDimension x="80" y="80" />
@@ -526,25 +183,7 @@
 	<Frame name="VerticalScrollBar" type="ScrollBar" renderer="DefaultRenderer">
 		<Property name="Orientation" value="VERTICAL" />
 
-		<Visual>
-			<!-- Track: a dark slot inside the list well between the arrow buttons (a solid crop of
-			     GlueListAccent, tinted near-black). -->
-			<ImagerySection name="Border">
-				<BorderComponent texture="Interface/GlueUI/GlueListAccent.htex" leftSize="2" topSize="14" rightSize="22" bottomSize="14" tint="B4050302">
-					<Area><Inset left="12" top="40" right="12" bottom="40" /></Area>
-				</BorderComponent>
-			</ImagerySection>
-			<StateImagery name="Enabled">
-				<Layer>
-					<Section section="Border" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer>
-					<Section section="Border" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeGlueVerticalScrollBarVisual" />
 
 		<Area>
 			<Anchor point="RIGHT" offset="-16" />

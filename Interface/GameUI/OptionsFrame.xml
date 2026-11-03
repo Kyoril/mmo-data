@@ -7,64 +7,7 @@
 		<Property name="Font" value="DefaultSmall" />
 		<Property name="Checkable" value="true" />
 
-		<Visual>
-			<ImagerySection name="NormalBg">
-				<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="30000000" />
-			</ImagerySection>
-			<ImagerySection name="HoveredBg">
-				<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="60332200" />
-			</ImagerySection>
-			<ImagerySection name="SelectedBg">
-				<BorderComponent texture="Interface/GameUI/fg4_borders_01_28_2_result.htex" borderSize="24" />
-			</ImagerySection>
-			<ImagerySection name="CaptionNormal">
-				<TextComponent color="FFD0D0D0" horzAlign="LEFT" vertAlign="CENTER">
-					<Area><Inset left="20" /></Area>
-				</TextComponent>
-			</ImagerySection>
-			<ImagerySection name="CaptionSelected">
-				<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="CENTER">
-					<Area><Inset left="20" /></Area>
-				</TextComponent>
-			</ImagerySection>
-
-			<StateImagery name="Normal">
-				<Layer>
-					<Section section="NormalBg" />
-					<Section section="CaptionNormal" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Hovered">
-				<Layer>
-					<Section section="HoveredBg" />
-					<Section section="CaptionNormal" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Pushed">
-				<Layer>
-					<Section section="HoveredBg" />
-					<Section section="CaptionNormal" color="FFAAAAAA" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="NormalChecked">
-				<Layer>
-					<Section section="SelectedBg" />
-					<Section section="CaptionSelected" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="HoveredChecked">
-				<Layer>
-					<Section section="SelectedBg" />
-					<Section section="CaptionSelected" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="PushedChecked">
-				<Layer>
-					<Section section="SelectedBg" />
-					<Section section="CaptionSelected" color="FFAAAAAA" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeOptionsCatButtonTemplateVisual" />
 
 		<Area>
 			<Size><AbsDimension x="0" y="90" /></Size>
@@ -83,19 +26,7 @@
 		<Frame name="OptionsHeaderRowLabel" renderer="DefaultRenderer">
 			<Property name="Font" value="AlestiaWindowTitleFont" />
 
-			<Visual>
-				<ImagerySection name="Text">
-					<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="BOTTOM">
-						<Area><Inset bottom="14" /></Area>
-					</TextComponent>
-				</ImagerySection>
-				<StateImagery name="Enabled">
-					<Layer><Section section="Text" /></Layer>
-				</StateImagery>
-				<StateImagery name="Disabled">
-					<Layer><Section section="Text" /></Layer>
-				</StateImagery>
-			</Visual>
+			<Visual inherits="ThemeOptionsHeaderRowLabelVisual" />
 
 			<Area>
 				<Anchor point="LEFT" offset="8" />
@@ -107,14 +38,7 @@
 
 		<!-- Child 1: gold rule under the title -->
 		<Frame name="OptionsHeaderRowRule" renderer="DefaultRenderer">
-			<Visual>
-				<ImagerySection name="Rule">
-					<ImageComponent texture="Interface/fg4_gradientWhiteV1_result.htex" tint="90FFD100" />
-				</ImagerySection>
-				<StateImagery name="Enabled">
-					<Layer><Section section="Rule" /></Layer>
-				</StateImagery>
-			</Visual>
+			<Visual inherits="ThemeOptionsHeaderRowRuleVisual" />
 
 			<Area>
 				<Anchor point="LEFT" offset="8" />
@@ -134,17 +58,7 @@
 		<Property name="Font" value="DefaultSmall" />
 		<Property name="LabelColor" value="FFD0D0D0" />
 
-		<Visual>
-			<ImagerySection name="Text">
-				<TextComponent color="$LabelColor" horzAlign="LEFT" vertAlign="CENTER" />
-			</ImagerySection>
-			<StateImagery name="Enabled">
-				<Layer><Section section="Text" /></Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer><Section section="Text" /></Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeOptionsRowLabelTemplateVisual" />
 	</Frame>
 
 	<!--
@@ -155,76 +69,7 @@
 	<Frame name="OptionsCheckboxTemplate" type="Button" renderer="CheckboxRenderer">
 		<Property name="Checkable" value="true" />
 
-		<Visual>
-			<!-- Button frame borders (same texture set as IconButton) -->
-			<ImagerySection name="FrameNormal">
-				<BorderComponent texture="Interface/GlueUI/CharButtonUp.htex" borderSize="22" />
-			</ImagerySection>
-			<ImagerySection name="FrameHovered">
-				<BorderComponent texture="Interface/GlueUI/CharButtonHovered.htex" borderSize="22" />
-			</ImagerySection>
-			<ImagerySection name="FramePushed">
-				<BorderComponent texture="Interface/GlueUI/CharButtonPushed.htex" borderSize="22" />
-			</ImagerySection>
-			<ImagerySection name="FrameDisabled">
-				<BorderComponent texture="Interface/GlueUI/CharButtonUp.htex" borderSize="22" tint="80606060" />
-			</ImagerySection>
-
-			<!-- Checkmark icon shown only in checked states -->
-			<ImagerySection name="CheckIcon">
-				<ImageComponent texture="Interface/Icons/fg4_iconsGold_checkMark_result.htex" tiling="NONE">
-					<Area><Inset all="10" /></Area>
-				</ImageComponent>
-			</ImagerySection>
-
-			<!-- Unchecked: frame only, no icon -->
-			<StateImagery name="Normal">
-				<Layer>
-					<Section section="FrameNormal" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Hovered">
-				<Layer>
-					<Section section="FrameHovered" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Pushed">
-				<Layer>
-					<Section section="FramePushed" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer>
-					<Section section="FrameDisabled" />
-				</Layer>
-			</StateImagery>
-
-			<!-- Checked: frame + checkmark icon -->
-			<StateImagery name="NormalChecked">
-				<Layer>
-					<Section section="FramePushed" />
-					<Section section="CheckIcon" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="HoveredChecked">
-				<Layer>
-					<Section section="FrameHovered" />
-					<Section section="CheckIcon" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="PushedChecked">
-				<Layer>
-					<Section section="FramePushed" />
-					<Section section="CheckIcon" color="FFAAAAAA" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="DisabledChecked">
-				<Layer>
-					<Section section="FrameDisabled" />
-					<Section section="CheckIcon" color="80808080" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeOptionsCheckboxTemplateVisual" />
 	</Frame>
 
 	<!--
@@ -234,17 +79,7 @@
 	<Frame name="OptionsSliderTemplate" type="ScrollBar" renderer="DefaultRenderer">
 		<Property name="Orientation" value="HORIZONTAL" />
 
-		<Visual>
-			<ImagerySection name="Border">
-				<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" />
-			</ImagerySection>
-			<StateImagery name="Enabled">
-				<Layer><Section section="Border" /></Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer><Section section="Border" color="80808080" /></Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeOptionsSliderTemplateVisual" />
 
 		<Frame name="OptionsSliderLeftButton" inherits="GlueButton">
 			<Property name="Icon" value="Interface/Icons/fg4_iconsGold_leftArrow.htex" />
@@ -277,17 +112,7 @@
 	<Frame name="OptionsValueLabelTemplate" renderer="DefaultRenderer">
 		<Property name="Font" value="DefaultSmall" />
 
-		<Visual>
-			<ImagerySection name="Text">
-				<TextComponent color="FFFFD100" horzAlign="RIGHT" vertAlign="CENTER" />
-			</ImagerySection>
-			<StateImagery name="Enabled">
-				<Layer><Section section="Text" /></Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer><Section section="Text" color="FF808080" /></Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeOptionsValueLabelTemplateVisual" />
 	</Frame>
 
 	<!--
@@ -298,17 +123,7 @@
 	<Frame name="OptionsToggleRowTemplate" renderer="DefaultRenderer">
 		<Property name="HighlightTint" value="00000000" />
 
-		<Visual>
-			<ImagerySection name="Highlight">
-				<ImageComponent texture="Interface/fg4_gradientWhiteV1_result.htex" tint="$HighlightTint" />
-			</ImagerySection>
-			<StateImagery name="Enabled">
-				<Layer><Section section="Highlight" /></Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer><Section section="Highlight" /></Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeOptionsToggleRowTemplateVisual" />
 
 		<Area>
 			<Size><AbsDimension x="0" y="80" /></Size>
@@ -339,17 +154,7 @@
 	<Frame name="OptionsComboRowTemplate" renderer="DefaultRenderer">
 		<Property name="HighlightTint" value="00000000" />
 
-		<Visual>
-			<ImagerySection name="Highlight">
-				<ImageComponent texture="Interface/fg4_gradientWhiteV1_result.htex" tint="$HighlightTint" />
-			</ImagerySection>
-			<StateImagery name="Enabled">
-				<Layer><Section section="Highlight" /></Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer><Section section="Highlight" /></Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeOptionsToggleRowTemplateVisual" />
 
 		<Area>
 			<Size><AbsDimension x="0" y="80" /></Size>
@@ -369,60 +174,7 @@
 		<Frame name="OptionsComboBoxWidget" type="ComboBox" renderer="ComboBoxRenderer">
 			<Property name="Font" value="DefaultSmall" />
 
-			<Visual>
-				<ImagerySection name="NormalBg">
-					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" />
-				</ImagerySection>
-				<ImagerySection name="HoveredBg">
-					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFB07030" />
-				</ImagerySection>
-				<ImagerySection name="OpenBg">
-					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFFFD100" />
-				</ImagerySection>
-				<ImagerySection name="DisabledBg">
-					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="80404040" />
-				</ImagerySection>
-				<ImagerySection name="CaptionNormal">
-					<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="CENTER">
-						<Area><Inset left="16" right="56" /></Area>
-					</TextComponent>
-				</ImagerySection>
-				<ImagerySection name="CaptionHovered">
-					<TextComponent color="FFFFFFFF" horzAlign="LEFT" vertAlign="CENTER">
-						<Area><Inset left="16" right="56" /></Area>
-					</TextComponent>
-				</ImagerySection>
-				<ImagerySection name="CaptionDisabled">
-					<TextComponent color="AE888888" horzAlign="LEFT" vertAlign="CENTER">
-						<Area><Inset left="16" right="56" /></Area>
-					</TextComponent>
-				</ImagerySection>
-
-				<StateImagery name="Normal">
-					<Layer>
-						<Section section="NormalBg" />
-						<Section section="CaptionNormal" />
-					</Layer>
-				</StateImagery>
-				<StateImagery name="Hovered">
-					<Layer>
-						<Section section="HoveredBg" />
-						<Section section="CaptionHovered" />
-					</Layer>
-				</StateImagery>
-				<StateImagery name="Open">
-					<Layer>
-						<Section section="OpenBg" />
-						<Section section="CaptionHovered" />
-					</Layer>
-				</StateImagery>
-				<StateImagery name="Disabled">
-					<Layer>
-						<Section section="DisabledBg" />
-						<Section section="CaptionDisabled" />
-					</Layer>
-				</StateImagery>
-			</Visual>
+			<Visual inherits="ThemeOptionsComboBoxWidgetVisual" />
 
 			<Scripts>
 				<OnClick>
@@ -447,17 +199,7 @@
 					<Anchor point="RIGHT" offset="-12" />
 					<Size><AbsDimension x="36" /></Size>
 				</Area>
-				<Visual>
-					<ImagerySection name="Image">
-						<ImageComponent texture="Interface/Icons/IconGold_ArrowDown.htex" tiling="NONE" />
-					</ImagerySection>
-					<StateImagery name="Enabled">
-						<Layer><Section section="Image" /></Layer>
-					</StateImagery>
-					<StateImagery name="Disabled">
-						<Layer><Section section="Image" color="80808080" /></Layer>
-					</StateImagery>
-				</Visual>
+				<Visual inherits="ThemeOptionsComboArrowIconVisual" />
 			</Frame>
 		</Frame>
 	</Frame>
@@ -471,17 +213,7 @@
 	<Frame name="OptionsSliderRowTemplate" renderer="DefaultRenderer">
 		<Property name="HighlightTint" value="00000000" />
 
-		<Visual>
-			<ImagerySection name="Highlight">
-				<ImageComponent texture="Interface/fg4_gradientWhiteV1_result.htex" tint="$HighlightTint" />
-			</ImagerySection>
-			<StateImagery name="Enabled">
-				<Layer><Section section="Highlight" /></Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer><Section section="Highlight" /></Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeOptionsToggleRowTemplateVisual" />
 
 		<Area>
 			<Size><AbsDimension x="0" y="80" /></Size>
@@ -526,17 +258,7 @@
 	<Frame name="OptionsToggleSliderRowTemplate" renderer="DefaultRenderer">
 		<Property name="HighlightTint" value="00000000" />
 
-		<Visual>
-			<ImagerySection name="Highlight">
-				<ImageComponent texture="Interface/fg4_gradientWhiteV1_result.htex" tint="$HighlightTint" />
-			</ImagerySection>
-			<StateImagery name="Enabled">
-				<Layer><Section section="Highlight" /></Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer><Section section="Highlight" /></Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeOptionsToggleRowTemplateVisual" />
 
 		<Area>
 			<Size><AbsDimension x="0" y="80" /></Size>
@@ -591,17 +313,7 @@
 	<Frame name="OptionsHardwareRowTemplate" renderer="DefaultRenderer">
 		<Property name="HighlightTint" value="00000000" />
 
-		<Visual>
-			<ImagerySection name="Highlight">
-				<ImageComponent texture="Interface/fg4_gradientWhiteV1_result.htex" tint="$HighlightTint" />
-			</ImagerySection>
-			<StateImagery name="Enabled">
-				<Layer><Section section="Highlight" /></Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer><Section section="Highlight" /></Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeOptionsToggleRowTemplateVisual" />
 
 		<Area>
 			<Size><AbsDimension x="0" y="80" /></Size>
@@ -639,17 +351,7 @@
 	<Frame name="KeyBindRowTemplate" renderer="DefaultRenderer">
 		<Property name="HighlightTint" value="00000000" />
 
-		<Visual>
-			<ImagerySection name="Highlight">
-				<ImageComponent texture="Interface/fg4_gradientWhiteV1_result.htex" tint="$HighlightTint" />
-			</ImagerySection>
-			<StateImagery name="Enabled">
-				<Layer><Section section="Highlight" /></Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer><Section section="Highlight" /></Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeOptionsToggleRowTemplateVisual" />
 
 		<Area>
 			<Size><AbsDimension x="0" y="72" /></Size>
@@ -670,51 +372,7 @@
 		<Frame name="KeyBindSlot1Button" type="Button" renderer="ButtonRenderer">
 			<Property name="Font" value="DefaultSmall" />
 
-			<Visual>
-				<ImagerySection name="NormalBg">
-					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" />
-				</ImagerySection>
-				<ImagerySection name="HoveredBg">
-					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFB07030" />
-				</ImagerySection>
-				<ImagerySection name="PushedBg">
-					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFFFD100" />
-				</ImagerySection>
-				<ImagerySection name="Caption">
-					<TextComponent color="FFFFD100" horzAlign="CENTER" vertAlign="CENTER" />
-				</ImagerySection>
-				<ImagerySection name="CaptionHovered">
-					<TextComponent color="FFFFFFFF" horzAlign="CENTER" vertAlign="CENTER" />
-				</ImagerySection>
-				<ImagerySection name="CaptionPushed">
-					<TextComponent color="FFAAAAAA" horzAlign="CENTER" vertAlign="CENTER" />
-				</ImagerySection>
-
-				<StateImagery name="Normal">
-					<Layer>
-						<Section section="NormalBg" />
-						<Section section="Caption" />
-					</Layer>
-				</StateImagery>
-				<StateImagery name="Hovered">
-					<Layer>
-						<Section section="HoveredBg" />
-						<Section section="CaptionHovered" />
-					</Layer>
-				</StateImagery>
-				<StateImagery name="Pushed">
-					<Layer>
-						<Section section="PushedBg" />
-						<Section section="CaptionPushed" />
-					</Layer>
-				</StateImagery>
-				<StateImagery name="Disabled">
-					<Layer>
-						<Section section="NormalBg" />
-						<Section section="Caption" />
-					</Layer>
-				</StateImagery>
-			</Visual>
+			<Visual inherits="ThemeKeyBindSlot1ButtonVisual" />
 
 			<Area>
 				<Anchor point="RIGHT" relativePoint="RIGHT" offset="-232" />
@@ -728,51 +386,7 @@
 		<Frame name="KeyBindSlot2Button" type="Button" renderer="ButtonRenderer">
 			<Property name="Font" value="DefaultSmall" />
 
-			<Visual>
-				<ImagerySection name="NormalBg">
-					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" />
-				</ImagerySection>
-				<ImagerySection name="HoveredBg">
-					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFB07030" />
-				</ImagerySection>
-				<ImagerySection name="PushedBg">
-					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFFFD100" />
-				</ImagerySection>
-				<ImagerySection name="Caption">
-					<TextComponent color="FFFFD100" horzAlign="CENTER" vertAlign="CENTER" />
-				</ImagerySection>
-				<ImagerySection name="CaptionHovered">
-					<TextComponent color="FFFFFFFF" horzAlign="CENTER" vertAlign="CENTER" />
-				</ImagerySection>
-				<ImagerySection name="CaptionPushed">
-					<TextComponent color="FFAAAAAA" horzAlign="CENTER" vertAlign="CENTER" />
-				</ImagerySection>
-
-				<StateImagery name="Normal">
-					<Layer>
-						<Section section="NormalBg" />
-						<Section section="Caption" />
-					</Layer>
-				</StateImagery>
-				<StateImagery name="Hovered">
-					<Layer>
-						<Section section="HoveredBg" />
-						<Section section="CaptionHovered" />
-					</Layer>
-				</StateImagery>
-				<StateImagery name="Pushed">
-					<Layer>
-						<Section section="PushedBg" />
-						<Section section="CaptionPushed" />
-					</Layer>
-				</StateImagery>
-				<StateImagery name="Disabled">
-					<Layer>
-						<Section section="NormalBg" />
-						<Section section="Caption" />
-					</Layer>
-				</StateImagery>
-			</Visual>
+			<Visual inherits="ThemeKeyBindSlot1ButtonVisual" />
 
 			<Area>
 				<Anchor point="RIGHT" offset="-8" />
@@ -789,14 +403,7 @@
 	<Frame name="OptionsFrame" parent="GameParent" renderer="DefaultRenderer">
 		<Property name="Visible" value="false" />
 
-		<Visual>
-			<ImagerySection name="Background">
-				<BorderComponent texture="Interface/GameUI/fg4_borders_simple.htex" borderSize="250" />
-			</ImagerySection>
-			<StateImagery name="Enabled">
-				<Layer><Section section="Background" /></Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeLootFrameVisual" />
 
 		<Area>
 			<Size><AbsDimension x="2200" y="1400" /></Size>
@@ -816,14 +423,7 @@
 
 		<!-- ── Left panel: category list ── -->
 		<Frame name="OptionsCategoryPanel" renderer="DefaultRenderer">
-			<Visual>
-				<ImagerySection name="Background">
-					<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="50000000" />
-				</ImagerySection>
-				<StateImagery name="Enabled">
-					<Layer><Section section="Background" /></Layer>
-				</StateImagery>
-			</Visual>
+			<Visual inherits="ThemeOptionsCategoryPanelVisual" />
 
 			<!--
 				Bottom offset accounts for: 48px bottom padding + 96px button height + 16px gap = 160px.
@@ -839,14 +439,7 @@
 
 		<!-- Vertical separator -->
 		<Frame name="OptionsSeparator" renderer="DefaultRenderer">
-			<Visual>
-				<ImagerySection name="Line">
-					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" />
-				</ImagerySection>
-				<StateImagery name="Enabled">
-					<Layer><Section section="Line" /></Layer>
-				</StateImagery>
-			</Visual>
+			<Visual inherits="ThemeOptionsSeparatorVisual" />
 
 			<Area>
 				<Anchor point="TOP" relativePoint="TOP" relativeTo="OptionsCategoryPanel" />
@@ -858,14 +451,7 @@
 
 		<!-- ── Right panel: scrollable settings content ── -->
 		<Frame name="OptionsContentPanel" renderer="DefaultRenderer">
-			<Visual>
-				<ImagerySection name="Background">
-					<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="30000000" />
-				</ImagerySection>
-				<StateImagery name="Enabled">
-					<Layer><Section section="Background" /></Layer>
-				</StateImagery>
-			</Visual>
+			<Visual inherits="ThemeOptionsContentPanelVisual" />
 
 			<Area>
 				<Anchor point="TOP" relativePoint="TOP" relativeTo="OptionsCategoryPanel" />
@@ -878,14 +464,7 @@
 			<Frame name="OptionsKeyWarningFrame" renderer="DefaultRenderer">
 				<Property name="Visible" value="false" />
 
-				<Visual>
-					<ImagerySection name="Bg">
-						<BorderComponent texture="Interface/GameUI/fg4_borders_01_19.htex" borderSize="25" tint="CC550000" />
-					</ImagerySection>
-					<StateImagery name="Enabled">
-						<Layer><Section section="Bg" /></Layer>
-					</StateImagery>
-				</Visual>
+				<Visual inherits="ThemeOptionsKeyWarningFrameVisual" />
 
 				<Area>
 					<Anchor point="TOP" offset="8" />
@@ -897,17 +476,7 @@
 				<Frame name="OptionsKeyWarningText" renderer="DefaultRenderer">
 					<Property name="Font" value="DefaultSmall" />
 
-					<Visual>
-						<ImagerySection name="Text">
-							<TextComponent color="FFFF4444" horzAlign="CENTER" vertAlign="CENTER" />
-						</ImagerySection>
-						<StateImagery name="Enabled">
-							<Layer><Section section="Text" /></Layer>
-						</StateImagery>
-						<StateImagery name="Disabled">
-							<Layer><Section section="Text" /></Layer>
-						</StateImagery>
-					</Visual>
+					<Visual inherits="ThemeOptionsKeyWarningTextVisual" />
 
 					<Area>
 						<Anchor point="TOP" />

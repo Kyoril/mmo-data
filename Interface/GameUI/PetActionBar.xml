@@ -1,0 +1,188 @@
+<?xml version="1.0" ?>
+<UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
+	<Script file="PetActionBar.lua" />
+	<!-- A pet bar button. Unlike ActionBarButtonTemplate it is not bound to a character action
+	     slot: no drag and drop, and the cooldown comes from the pet's spells. -->
+	<Frame name="PetActionButtonTemplate" type="Button" renderer="ButtonRenderer">
+		<Property name="Icon" />
+		<Property name="Font" value="CombatHudTextFont" />
+		<!-- Glow marking the strategy toggle while the pet assists (PetActionBar_UpdateStrategy). -->
+		<Property name="ActiveGlowTint" value="00000000" />
+		<Visual>
+			<ImagerySection name="ActiveGlow">
+				<ImageComponent texture="Interface/GlueUI/GlowYellow.htex" tint="$ActiveGlowTint">
+					<Area>
+						<Inset all="-4" />
+					</Area>
+				</ImageComponent>
+			</ImagerySection>
+			<ImagerySection name="Image">
+				<ImageComponent>
+					<Area>
+						<Inset all="8" />
+					</Area>
+					<PropertyValue property="Icon" />
+				</ImageComponent>
+			</ImagerySection>
+			<ImagerySection name="NormalFrame">
+				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="FF998D7C" />
+			</ImagerySection>
+			<ImagerySection name="HoveredFrame">
+				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="FFFFFFFF" />
+			</ImagerySection>
+			<ImagerySection name="PushedFrame">
+				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="FF91806A" />
+			</ImagerySection>
+			<ImagerySection name="PushedOverlay">
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="60000000">
+					<Area>
+						<Inset all="8" />
+					</Area>
+				</ImageComponent>
+			</ImagerySection>
+			<ImagerySection name="DisabledFrame">
+				<ImageComponent texture="Interface/GameUI/Alestia/ActionSocket.htex" tint="FF998D7C" />
+			</ImagerySection>
+			<StateImagery name="Normal">
+				<Layer>
+					<Section section="ActiveGlow" />
+					<Section section="NormalFrame" />
+					<Section section="Image" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Hovered">
+				<Layer>
+					<Section section="ActiveGlow" />
+					<Section section="HoveredFrame" />
+					<Section section="Image" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Pushed">
+				<Layer>
+					<Section section="ActiveGlow" />
+					<Section section="PushedFrame" />
+					<Section section="Image" />
+					<Section section="PushedOverlay" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="DisabledFrame" />
+					<Section section="Image" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+		<Area>
+			<Size>
+				<AbsDimension x="80" y="80" />
+			</Size>
+		</Area>
+		<!-- Cooldown overlay of an ability button. -->
+		<Frame name="Cooldown" type="Cooldown">
+			<Property name="Clickable" value="false" />
+			<Property name="Enabled" value="false" />
+			<Property name="Visible" value="false" />
+			<Property name="Material" value="Interface/Cooldown_Instance.hmi" />
+			<Area>
+				<Anchor point="TOP" offset="8" />
+				<Anchor point="LEFT" offset="8" />
+				<Anchor point="BOTTOM" offset="-8" />
+				<Anchor point="RIGHT" offset="-8" />
+			</Area>
+			<Scripts>
+				<OnUpdate>
+					return function(self, elapsed)
+						PetActionButton_UpdateCooldown(self:GetParent());
+					end
+				</OnUpdate>
+			</Scripts>
+		</Frame>
+	</Frame>
+
+	<!-- Five commands (attack, follow, stay, assist/passive, dismiss), then six abilities. It sits
+	     on top of the player frame and follows it when the second action bar lifts it, so it never
+	     collides with ActionBar2 (see ActionBar_UpdateSecondBarLayout). -->
+	<Frame name="PetActionBar" parent="GameParent" renderer="DefaultRenderer">
+		<Property name="Visible" value="false" />
+		<Area>
+			<Size>
+				<AbsDimension x="976" y="80" />
+			</Size>
+			<Anchor point="LEFT" relativeTo="PlayerFrame" offset="0" />
+			<Anchor point="BOTTOM" relativeTo="PlayerFrame" relativePoint="TOP" offset="-12" />
+		</Area>
+		<Frame name="PetActionButton1" inherits="PetActionButtonTemplate" id="1">
+			<Area>
+				<Anchor point="LEFT" offset="0" />
+				<Anchor point="TOP" offset="0" />
+			</Area>
+		</Frame>
+		<Frame name="PetActionButton2" inherits="PetActionButtonTemplate" id="2">
+			<Area>
+				<Anchor point="LEFT" offset="8" relativeTo="PetActionButton1" relativePoint="RIGHT" />
+				<Anchor point="TOP" offset="0" />
+			</Area>
+		</Frame>
+		<Frame name="PetActionButton3" inherits="PetActionButtonTemplate" id="3">
+			<Area>
+				<Anchor point="LEFT" offset="8" relativeTo="PetActionButton2" relativePoint="RIGHT" />
+				<Anchor point="TOP" offset="0" />
+			</Area>
+		</Frame>
+		<Frame name="PetActionButton4" inherits="PetActionButtonTemplate" id="4">
+			<Area>
+				<Anchor point="LEFT" offset="8" relativeTo="PetActionButton3" relativePoint="RIGHT" />
+				<Anchor point="TOP" offset="0" />
+			</Area>
+		</Frame>
+		<Frame name="PetActionButton5" inherits="PetActionButtonTemplate" id="5">
+			<Area>
+				<Anchor point="LEFT" offset="8" relativeTo="PetActionButton4" relativePoint="RIGHT" />
+				<Anchor point="TOP" offset="0" />
+			</Area>
+		</Frame>
+		<Frame name="PetActionButton6" inherits="PetActionButtonTemplate" id="6">
+			<Area>
+				<Anchor point="LEFT" offset="24" relativeTo="PetActionButton5" relativePoint="RIGHT" />
+				<Anchor point="TOP" offset="0" />
+			</Area>
+		</Frame>
+		<Frame name="PetActionButton7" inherits="PetActionButtonTemplate" id="7">
+			<Area>
+				<Anchor point="LEFT" offset="8" relativeTo="PetActionButton6" relativePoint="RIGHT" />
+				<Anchor point="TOP" offset="0" />
+			</Area>
+		</Frame>
+		<Frame name="PetActionButton8" inherits="PetActionButtonTemplate" id="8">
+			<Area>
+				<Anchor point="LEFT" offset="8" relativeTo="PetActionButton7" relativePoint="RIGHT" />
+				<Anchor point="TOP" offset="0" />
+			</Area>
+		</Frame>
+		<Frame name="PetActionButton9" inherits="PetActionButtonTemplate" id="9">
+			<Area>
+				<Anchor point="LEFT" offset="8" relativeTo="PetActionButton8" relativePoint="RIGHT" />
+				<Anchor point="TOP" offset="0" />
+			</Area>
+		</Frame>
+		<Frame name="PetActionButton10" inherits="PetActionButtonTemplate" id="10">
+			<Area>
+				<Anchor point="LEFT" offset="8" relativeTo="PetActionButton9" relativePoint="RIGHT" />
+				<Anchor point="TOP" offset="0" />
+			</Area>
+		</Frame>
+		<Frame name="PetActionButton11" inherits="PetActionButtonTemplate" id="11">
+			<Area>
+				<Anchor point="LEFT" offset="8" relativeTo="PetActionButton10" relativePoint="RIGHT" />
+				<Anchor point="TOP" offset="0" />
+			</Area>
+		</Frame>
+		<Scripts>
+			<OnLoad>
+				return function(self)
+					PetActionBar_OnLoad(self);
+				end
+			</OnLoad>
+		</Scripts>
+	</Frame>
+</UiLayout>

@@ -7,99 +7,7 @@
 		<Property name="Checkable" value="true" />
 		<Property name="TextColor" value="FFF3CF50" />
 
-		<Visual>
-			<ImagerySection name="FrameNormal">
-				<ImageComponent texture="Interface/GlueUI/CharSelectButtonBackground.htex" />
-			</ImagerySection>
-			<ImagerySection name="FrameHovered">
-				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="FF9A8055" />
-			</ImagerySection>
-			<ImagerySection name="FramePushed">
-				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="FF705632">
-					<Area>
-						<Inset left="8" top="8" />
-					</Area>
-				</ImageComponent>
-			</ImagerySection>
-			<ImagerySection name="FrameDisabled">
-				<ImageComponent texture="Interface/GlueUI/CharSelectButtonBackground.htex" tint="88404040" />
-			</ImagerySection>
-
-			<ImagerySection name="FrameNormalChecked">
-				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="FF806537" />
-			</ImagerySection>
-			<ImagerySection name="FramePushedChecked">
-				<ImageComponent texture="Interface/GlueUI/CharSelectButtonHighlight.htex" tint="FF806537">
-					<Area>
-						<Inset left="8" top="8" />
-					</Area>
-				</ImageComponent>
-			</ImagerySection>
-			<ImagerySection name="Text">
-				<TextComponent color="$TextColor" horzAlign="LEFT" vertAlign="TOP">
-					<Area>
-						<Inset left="8" top="8" />
-					</Area>
-				</TextComponent>
-			</ImagerySection>
-			<ImagerySection name="TextDisabled">
-				<TextComponent color="88404040" horzAlign="LEFT" vertAlign="TOP">
-					<Area>
-						<Inset left="8" top="8" />
-					</Area>
-				</TextComponent>
-			</ImagerySection>
-
-			<StateImagery name="Normal">
-				<Layer>
-					<Section section="FrameNormal" />
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Hovered">
-				<Layer>
-					<Section section="FrameHovered" />
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Pushed">
-				<Layer>
-					<Section section="FramePushed" />
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer>
-					<Section section="FrameDisabled" />
-					<Section section="TextDisabled" />
-				</Layer>
-			</StateImagery>
-			
-			<StateImagery name="NormalChecked">
-				<Layer>
-					<Section section="FrameNormalChecked" />
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="HoveredChecked">
-				<Layer>
-					<Section section="FrameNormalChecked" />
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="PushedChecked">
-				<Layer>
-					<Section section="FramePushedChecked" />
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="DisabledChecked">
-				<Layer>
-					<Section section="FrameDisabled" />
-					<Section section="TextDisabled" />
-				</Layer>
-			</StateImagery>
-		</Visual>
+		<Visual inherits="ThemeQuestListQuestButtonVisual" />
 		<Area>
 			<Size><AbsDimension x="128" y="64" /></Size>
 		</Area>
@@ -109,19 +17,7 @@
 		<Property name="Visible" value="False" />
 
         <Frame name="QuestLogQuestList" renderer="DefaultRenderer">
-			<Visual>
-				<ImagerySection name="Frame">
-					<ImageComponent texture="Interface/GlueUI/RealmListBackground.htex" tiling="BOTH">
-						<Area><Inset all="8" /></Area>
-					</ImageComponent>
-					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" />
-				</ImagerySection>
-				<StateImagery name="Enabled">
-					<Layer>
-						<Section section="Frame" />
-					</Layer>
-				</StateImagery>
-			</Visual>
+			<Visual inherits="ThemeQuestLogQuestListVisual" />
 
 			<Area>
 				<Anchor point="LEFT" offset="16" />
@@ -387,7 +283,7 @@
 
 		<Frame name="QuestLogFooter" renderer="DefaultRenderer">
 			<Area><Anchor point="LEFT" offset="16" /><Anchor point="RIGHT" offset="-16" /><Anchor point="BOTTOM" offset="-16" /><Size><AbsDimension y="96" /></Size></Area>
-			<Visual><ImagerySection name="Surface"><BorderComponent texture="Interface/GameUI/Alestia/WindowPanel.htex" borderSize="32" /></ImagerySection><StateImagery name="Enabled"><Layer><Section section="Surface" /></Layer></StateImagery></Visual>
+			<Visual inherits="ThemeCraftingFrameVisual" />
 			<Frame name="QuestLogAbandonButton" inherits="GlueButton">
 				<Property name="Text" value="ABANDON_QUEST" />
 
