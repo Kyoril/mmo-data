@@ -6,19 +6,21 @@ local QS_COMPLETE   = 1
 local QS_FAILED     = 5
 local QS_INCOMPLETE = 3  -- and anything else
 
+local style = GameUITheme and GameUITheme.QuestTracker
+
 -- Colors
-local COLOR_TITLE_NORMAL   = "FFF3CF50"   -- warm gold
+local COLOR_TITLE_NORMAL   = style and style.titleColor or "FFF3CF50"   -- warm gold
 local COLOR_STATUS_FAILED  = "FFFF8070"   -- failure detail
 local COLOR_TITLE_DISABLED = "FFB8B1A4"   -- muted, but readable over the world
-local COLOR_OBJ_INCOMPLETE = "FFCEC8BC"   -- warm ivory
-local COLOR_OBJ_COMPLETE   = "FF86DE56"   -- completed objective
+local COLOR_OBJ_INCOMPLETE = style and style.objectiveColor or "FFCEC8BC"   -- warm ivory
+local COLOR_OBJ_COMPLETE   = style and style.completedColor or "FF86DE56"   -- completed objective
 
 -- Layout constants (logical 4K units)
 local PAD          = 24    -- outer padding
-local TITLE_H      = 36   -- minimum title row height (collapse button + text)
-local OBJ_H        = 28   -- minimum objective row height
+local TITLE_H      = style and style.titleHeight or 36   -- minimum title row height (collapse button + text)
+local OBJ_H        = style and style.objectiveHeight or 28   -- minimum objective row height
 local QUEST_GAP    = 16    -- gap between quests
-local OBJ_INDENT   = 36   -- indent for objective text
+local OBJ_INDENT   = style and style.objectiveIndent or 36   -- indent for objective text
 
 -- Max slots in the pool
 local MAX_QUESTS   = 5
@@ -77,6 +79,21 @@ function QuestTracker_OnLoad(self)
         for oi = 1, MAX_OBJS do
             s.objs[oi] = _G["QuestTrackerObj" .. qi .. "_" .. oi]
         end
+        if style then
+            s.trail = WayfinderTrackerTrail:Clone()
+            self:AddChild(s.trail)
+            s.trail:SetWidth(3)
+            s.trail:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, self, PAD + 15)
+            WayfinderTrackerGlyph:CopyVisuals(s.toggle)
+            WayfinderTrackerGlyph:CopyVisuals(s.collapse)
+            WayfinderTrackerTitle:CopyVisuals(s.title)
+            s.title:SetProperty("Font", "WayfinderTrackerTitleFont")
+            s.title:SetProperty("TextColorHover", "FFFFEAC1")
+            s.title:SetProperty("TextColorPush", "FFCBB483")
+            for _, objective in ipairs(s.objs) do
+                objective:SetProperty("Font", "WayfinderTrackerDetailFont")
+            end
+        end
         slots[qi] = s
     end
 
@@ -116,7 +133,8 @@ end
 
 function QuestTracker_Refresh()
     local numQuests = GetNumQuestLogEntries()
-    local shown     = 0
+    local selectedQuest = QuestLogFrame:IsVisible() and GetQuestLogSelection() or 0
+    local restoreSelection = false
 
     -- Hide all slots first
     for qi = 1, MAX_QUESTS do
@@ -125,6 +143,7 @@ function QuestTracker_Refresh()
         s.toggle:Hide()
         s.collapse:Hide()
         s.title:Hide()
+        if s.trail then s.trail:Hide() end
         for oi = 1, MAX_OBJS do s.objs[oi]:Hide() end
     end
 
@@ -134,6 +153,7 @@ function QuestTracker_Refresh()
         local entry = GetQuestLogEntry(qi - 1)
         if entry and entry.quest and entry.id ~= 0 then
             questList[#questList + 1] = entry
+            restoreSelection = restoreSelection or entry.id == selectedQuest
         end
     end
 
@@ -157,6 +177,7 @@ function QuestTracker_Refresh()
         if slotIdx >= MAX_QUESTS then break end
         slotIdx = slotIdx + 1
 
+        local rowTop = offsetY
         local s      = slots[slotIdx]
         s.questId = entry.id
         local status = entry.status
@@ -171,22 +192,28 @@ function QuestTracker_Refresh()
 
         -- Collapse toggle button: show only when there are objectives and not complete/failed/disabled
         s.statusOnly = isComplete or isFailed or isDisabled
-        local showToggle = true
-        if showToggle then
-            s.toggle:ClearAnchors()
-            s.toggle:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, QuestTrackerFrame, PAD)
-            s.toggle:SetAnchor(AnchorPoint.TOP,  AnchorPoint.TOP,  QuestTrackerFrame, offsetY)
-            s.toggle:SetText(isCollapsed and "+" or "-")
-            s.toggle:SetProperty("StatusIcon", isComplete and "Interface/Icons/Icon_QuestCompleted.htex" or "Interface/Icons/Icon_QuestInProgress.htex")
-            s.toggle:SetProperty("StatusTint", isDisabled and "FF777777" or (isFailed and "FFFF6655" or "FFFFFFFF"))
-            s.toggle:Show()
-            if not s.statusOnly then
-                s.collapse:ClearAnchors()
-                s.collapse:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, QuestTrackerFrame, -PAD)
-                s.collapse:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, QuestTrackerFrame, offsetY)
+        s.toggle:ClearAnchors()
+        s.toggle:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, QuestTrackerFrame, PAD)
+        s.toggle:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, QuestTrackerFrame, offsetY)
+        local statusIcon = isComplete and "Interface/Icons/Icon_QuestCompleted.htex" or "Interface/Icons/Icon_QuestInProgress.htex"
+        local statusTint = isDisabled and "FF777777" or (isFailed and "FFFF6655" or "FFFFFFFF")
+        if style then
+            statusIcon = isComplete and style.icons.completed or (isFailed and style.icons.failed or style.icons.active)
+            statusTint = isDisabled and "FF8D8C85" or (isFailed and COLOR_STATUS_FAILED or (isComplete and COLOR_OBJ_COMPLETE or "FFFFFFFF"))
+        end
+        s.toggle:SetProperty("StatusIcon", statusIcon)
+        s.toggle:SetProperty("StatusTint", statusTint)
+        s.toggle:Show()
+        if not s.statusOnly then
+            s.collapse:ClearAnchors()
+            s.collapse:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, QuestTrackerFrame, -PAD)
+            s.collapse:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, QuestTrackerFrame, offsetY)
+            if style then
+                s.collapse:SetProperty("StatusIcon", isCollapsed and style.icons.expand or style.icons.collapse)
+            else
                 s.collapse:SetText(isCollapsed and "+" or "-")
-                s.collapse:Show()
             end
+            s.collapse:Show()
         end
 
         -- Title frame
@@ -266,10 +293,21 @@ function QuestTracker_Refresh()
             end
         end
 
-        shown = shown + 1
+        if s.trail and offsetY > rowTop + titleH then
+            local trailTop = rowTop + 30
+            s.trail:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, QuestTrackerFrame, trailTop)
+            s.trail:SetHeight(offsetY - trailTop - 4)
+            s.trail:Show()
+        end
+
         if slotIdx < #questList and slotIdx < MAX_QUESTS then
             offsetY = offsetY + QUEST_GAP
         end
+    end
+
+    -- Objective queries change the shared selection. Keep the open log on the user's quest.
+    if restoreSelection and GetQuestLogSelection() ~= selectedQuest then
+        QuestLogSelectQuest(selectedQuest)
     end
 
     -- Resize panel and show

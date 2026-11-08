@@ -109,6 +109,22 @@ local function SetupMinimap()
 	Wayfinder_UpdateMinimapLayout();
 end
 
+local function SetupQuestTracker()
+	WayfinderTrackerInk:CopyVisuals(QuestTrackerFrame);
+	QuestTrackerFrame:SetWidth(624);
+	QuestTrackerHeading:SetProperty("TextColor", "FFE4C38A");
+	QuestTrackerHeading:SetProperty("Font", "WayfinderTrackerHeadingFont");
+	QuestTrackerHeadingRule:SetHeight(3);
+	WayfinderTrackerRule:CopyVisuals(QuestTrackerHeadingRule);
+	GameUITheme.QuestTracker.icons = {
+		active = Wayfinder_Art("GlyphQuest"),
+		completed = Wayfinder_Art("GlyphQuestDone"),
+		failed = Wayfinder_Art("GlyphQuestFailed"),
+		expand = Wayfinder_Art("GlyphPlus"),
+		collapse = Wayfinder_Art("GlyphMinus"),
+	};
+end
+
 function Wayfinder_ApplyLayout()
 	local titleFonts = { AlestiaWindowTitleFont = true, CharacterTitleFont = true, InventoryTitleFont = true };
 	for index = 0, GameParent:GetChildCount() - 1 do
@@ -127,6 +143,7 @@ function Wayfinder_ApplyLayout()
 	WayfinderPanel:CopyVisuals(QuestLogFrame);
 	WayfinderPanel:CopyVisuals(SpellBook);
 	SetupMinimap();
+	SetupQuestTracker();
 
 	WayfinderEmpty:CopyVisuals(GameMenuBar);
 	WayfinderEmpty:CopyVisuals(MenuBarButtons);
@@ -157,19 +174,19 @@ function Wayfinder_ApplyLayout()
 	clasp:SetAnchor(A.TOP, A.TOP, ActionBar, -8);
 
 	WayfinderEmpty:CopyVisuals(PlayerFrame);
-	Center(PlayerFrame, GameParent, barWidth, 32);
+	Center(PlayerFrame, GameParent, barWidth, 36);
 	PlayerFrame:SetAnchor(A.BOTTOM, A.BOTTOM, GameMenuBar, -57);
 	PlayerPortrait:Hide();
 	PlayerName:Hide();
 
 	for i, rail in ipairs({ PlayerHealthBar, PlayerManaBar }) do
 		rail:ClearAnchors();
-		rail:SetSize(bankWidth, 32);
+		rail:SetSize(bankWidth, 36);
 		local edge = i == 1 and A.LEFT or A.RIGHT;
 		rail:SetAnchor(edge, edge, PlayerFrame, 0);
 		rail:SetAnchor(A.TOP, A.TOP, PlayerFrame, 0);
 		WayfinderMeter:CopyVisuals(rail);
-		rail:SetProperty("ProgressInset", "5");
+		rail:SetProperty("ProgressInset", "4");
 	end
 	PlayerHealthBar:SetProperty("ProgressColor", "FF76BC93");
 
@@ -186,8 +203,8 @@ function Wayfinder_ApplyLayout()
 		rail:ClearAnchors();
 		Span(rail, TargetFrame, 0);
 		rail:SetAnchor(A.TOP, A.TOP, TargetFrame, i == 1 and 48 or 83);
-		rail:SetHeight(i == 1 and 28 or 12);
-		rail:SetProperty("ProgressInset", i == 1 and "5" or "2");
+		rail:SetHeight(i == 1 and 31 or 12);
+		rail:SetProperty("ProgressInset", i == 1 and "4" or "2");
 	end
 	WayfinderMeter:CopyVisuals(TargetHealthBar);
 	WayfinderThinMeter:CopyVisuals(TargetManaBar);
@@ -200,7 +217,7 @@ function Wayfinder_ApplyLayout()
 	PlayerCastBar:SetAnchor(A.RIGHT, A.RIGHT, ActionBar, 0);
 	PlayerCastBar:SetWidth(540);
 	PlayerCastBar:SetHeight(40);
-	PlayerCastBar:SetProperty("ProgressInset", "3");
+	PlayerCastBar:SetProperty("ProgressInset", "4");
 	PlayerCastBar:SetProperty("ProgressColor", "FFD8B677");
 
 	WayfinderChat_Setup();

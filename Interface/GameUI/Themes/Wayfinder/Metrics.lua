@@ -20,3 +20,13 @@ GameUITheme.ActionEmptySocketTint = "603B4C59";
 GameUITheme.SocialLeftOffset = 40;
 GameUITheme.SocialTopOffset = 256;
 GameUITheme.MenuButtonRightInset = 0;
+
+GameUITheme.QuestTracker = {
+	titleColor = "FFF1DFBE",
+	objectiveColor = "FFE4DECF",
+	completedColor = "FF9AD2A3",
+	titleHeight = 40,
+	objectiveHeight = 32,
+	objectiveIndent = 40,
+	questGap = 18,
+};

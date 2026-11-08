@@ -1,5 +1,8 @@
 <?xml version="1.0" ?>
 <UiLayout xmlns="http://www.w3schools.com/Ui">
+	<Font name="WayfinderTrackerHeadingFont" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="29" outline="0" shadowX="1" shadowY="1" />
+	<Font name="WayfinderTrackerDetailFont" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="23" outline="0" shadowX="1" shadowY="1" />
+	<Font name="WayfinderTrackerTitleFont" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="26" outline="0" shadowX="1" shadowY="1" />
 	<Font name="WayfinderChatFont" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="26" outline="1" shadowX="1" shadowY="1" />
 	<Font name="WayfinderXPFont" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="20" outline="0" shadowX="1" shadowY="1" />
 
@@ -245,13 +248,13 @@
 	<Frame name="WayfinderMeter">
 		<Visual>
 			<ImagerySection name="Background">
-				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/MeterWell.htex" borderSize="14" leftSize="36" rightSize="36" topSize="36" bottomSize="36" />
+				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/MeterWell.htex" borderSize="18" leftSize="56" rightSize="56" topSize="60" bottomSize="60" />
 			</ImagerySection>
 			<ImagerySection name="Progress">
-				<ImageComponent texture="Interface/GameUI/Themes/BlueGold/Textures/BarFillV4.htex" tint="FFFFFFFF" />
+				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/MeterFill.htex" borderSize="11" leftSize="56" rightSize="56" topSize="60" bottomSize="60" tint="FFFFFFFF" />
 			</ImagerySection>
 			<ImagerySection name="Frame">
-				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/MeterRim.htex" borderSize="14" leftSize="36" rightSize="36" topSize="36" bottomSize="36" />
+				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/MeterRim.htex" borderSize="18" leftSize="56" rightSize="56" topSize="60" bottomSize="60" />
 			</ImagerySection>
 			<ImagerySection name="TickMarks">
 				<ImageComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/MeterTicks.htex">
@@ -259,7 +262,7 @@
 				</ImageComponent>
 			</ImagerySection>
 			<ImagerySection name="Text">
-				<ImageComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/MeterLabelShade.htex" />
+				<ImageComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/MeterLabelShade.htex" tint="3AFFFFFF" />
 				<TextComponent color="FFF3EEE0" horzAlign="CENTER" vertAlign="CENTER" />
 			</ImagerySection>
 			<StateImagery name="Enabled">
@@ -285,13 +288,13 @@
 	<Frame name="WayfinderThinMeter">
 		<Visual>
 			<ImagerySection name="Background">
-				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/MeterWell.htex" borderSize="5" leftSize="36" rightSize="36" topSize="36" bottomSize="36" />
+				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/MeterWell.htex" borderSize="5" leftSize="56" rightSize="56" topSize="60" bottomSize="60" />
 			</ImagerySection>
 			<ImagerySection name="Progress">
-				<ImageComponent texture="Interface/GameUI/Themes/BlueGold/Textures/BarFillV4.htex" tint="FFFFFFFF" />
+				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/MeterFill.htex" borderSize="3" leftSize="56" rightSize="56" topSize="60" bottomSize="60" tint="FFFFFFFF" />
 			</ImagerySection>
 			<ImagerySection name="Frame">
-				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/MeterRim.htex" borderSize="5" leftSize="36" rightSize="36" topSize="36" bottomSize="36" />
+				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/MeterRim.htex" borderSize="5" leftSize="56" rightSize="56" topSize="60" bottomSize="60" />
 			</ImagerySection>
 			<StateImagery name="Enabled">
 				<Layer>
@@ -314,13 +317,13 @@
 	<Frame name="WayfinderLevelXP">
 		<Visual>
 			<ImagerySection name="Background">
-				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/MeterWell.htex" borderSize="10" leftSize="36" rightSize="36" topSize="36" bottomSize="36" />
+				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/MeterWell.htex" borderSize="10" leftSize="56" rightSize="56" topSize="60" bottomSize="60" />
 			</ImagerySection>
 			<ImagerySection name="Progress">
-				<ImageComponent texture="Interface/GameUI/Themes/BlueGold/Textures/BarFillV4.htex" tint="FF9BB8CF" />
+				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/MeterFill.htex" borderSize="7" leftSize="56" rightSize="56" topSize="60" bottomSize="60" tint="FF9BB8CF" />
 			</ImagerySection>
 			<ImagerySection name="Frame">
-				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/MeterRim.htex" borderSize="10" leftSize="36" rightSize="36" topSize="36" bottomSize="36" />
+				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/MeterRim.htex" borderSize="10" leftSize="56" rightSize="56" topSize="60" bottomSize="60" />
 			</ImagerySection>
 			<ImagerySection name="Text">
 				<ImageComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/MeterLabelShade.htex" />
@@ -348,13 +351,13 @@
 	<Frame name="WayfinderClassXP">
 		<Visual>
 			<ImagerySection name="Background">
-				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/MeterWell.htex" borderSize="10" leftSize="36" rightSize="36" topSize="36" bottomSize="36" />
+				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/MeterWell.htex" borderSize="10" leftSize="56" rightSize="56" topSize="60" bottomSize="60" />
 			</ImagerySection>
 			<ImagerySection name="Progress">
-				<ImageComponent texture="Interface/GameUI/Themes/BlueGold/Textures/BarFillV4.htex" tint="FFC7A467" />
+				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/MeterFill.htex" borderSize="7" leftSize="56" rightSize="56" topSize="60" bottomSize="60" tint="FFC7A467" />
 			</ImagerySection>
 			<ImagerySection name="Frame">
-				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/MeterRim.htex" borderSize="10" leftSize="36" rightSize="36" topSize="36" bottomSize="36" />
+				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/MeterRim.htex" borderSize="10" leftSize="56" rightSize="56" topSize="60" bottomSize="60" />
 			</ImagerySection>
 			<ImagerySection name="Text">
 				<ImageComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/MeterLabelShade.htex" />
@@ -378,6 +381,69 @@
 			</StateImagery>
 		</Visual>
 	</Frame>
+	<Frame name="WayfinderTrackerInk">
+		<Visual>
+			<ImagerySection name="Ink">
+				<ImageComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/TrackerInk.htex" />
+			</ImagerySection>
+			<StateImagery name="Enabled"><Layer><Section section="Ink" /></Layer></StateImagery>
+		</Visual>
+	</Frame>
+
+	<Frame name="WayfinderTrackerTrail" renderer="DefaultRenderer" frameLevel="-1">
+		<Property name="Clickable" value="false" />
+		<Property name="MousePassThrough" value="true" />
+		<Property name="Visible" value="false" />
+		<Visual>
+			<ImagerySection name="Trail">
+				<ImageComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/TrackerTrail.htex" />
+			</ImagerySection>
+			<StateImagery name="Enabled"><Layer><Section section="Trail" /></Layer></StateImagery>
+		</Visual>
+	</Frame>
+
+	<Frame name="WayfinderTrackerGlyph">
+		<Property name="StatusIcon" />
+		<Property name="StatusTint" value="FFFFFFFF" />
+		<Visual>
+			<ImagerySection name="Glyph">
+				<ImageComponent tint="$StatusTint"><PropertyValue property="StatusIcon" /></ImageComponent>
+			</ImagerySection>
+			<StateImagery name="Normal"><Layer><Section section="Glyph" /></Layer></StateImagery>
+			<StateImagery name="Hovered"><Layer><Section section="Glyph" color="FFFFDB91" /></Layer></StateImagery>
+			<StateImagery name="Pushed"><Layer><Section section="Glyph" color="FFB8A079" /></Layer></StateImagery>
+		</Visual>
+	</Frame>
+
+	<Frame name="WayfinderTrackerTitle">
+		<Property name="TextColor" />
+		<Property name="TextColorHover" />
+		<Property name="TextColorPush" />
+		<Visual>
+			<ImagerySection name="Text">
+				<TextComponent color="$TextColor" horzAlign="LEFT" vertAlign="TOP" />
+			</ImagerySection>
+			<ImagerySection name="Hover">
+				<TextComponent color="$TextColorHover" horzAlign="LEFT" vertAlign="TOP" />
+			</ImagerySection>
+			<ImagerySection name="Pushed">
+				<TextComponent color="$TextColorPush" horzAlign="LEFT" vertAlign="TOP" />
+			</ImagerySection>
+			<StateImagery name="Normal"><Layer><Section section="Text" /></Layer></StateImagery>
+			<StateImagery name="Hovered"><Layer><Section section="Hover" /></Layer></StateImagery>
+			<StateImagery name="Pushed"><Layer><Section section="Pushed" /></Layer></StateImagery>
+		</Visual>
+	</Frame>
+
+	<Frame name="WayfinderTrackerRule">
+		<Visual>
+			<ImagerySection name="Rule">
+				<ImageComponent texture="Interface/GlueUI/GlueListFade.htex" tint="E4CCAA73" />
+			</ImagerySection>
+			<StateImagery name="Enabled"><Layer><Section section="Rule" /></Layer></StateImagery>
+		</Visual>
+	</Frame>
+
 	<Frame name="WayfinderMinimapRing">
 		<Visual>
 			<ImagerySection name="Ring">
