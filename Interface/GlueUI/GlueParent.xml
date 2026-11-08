@@ -19,13 +19,6 @@
 	<Frame name="GlueParent" parent="TopFrame" setAllPoints="true">
 		<Property name="Font" value="DefaultSmall" />
 
-		<!-- The client looks this frame up: Cinematic=false keeps the 3D plaza scene unloaded, the screens
-		     use painted artwork instead. -->
-		<Frame name="GlueSceneFrame" renderer="DefaultRenderer" setAllPoints="true">
-			<Property name="MousePassThrough" value="true" />
-			<Property name="Cinematic" value="false" />
-		</Frame>
-
 		<Frame name="GlueBackdropGate" inherits="GlueBackdropTemplate">
 			<Visual>
 				<ImagerySection name="Art"><ImageComponent texture="Interface/GlueUI/LoginBackgroundPH.htex" tint="FFD2D8DE" /></ImagerySection>

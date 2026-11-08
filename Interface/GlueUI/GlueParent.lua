@@ -3,26 +3,8 @@
 -- front-door chrome, the fade from black and the focus rim of text fields. Also routes the events
 -- that move between screens from anywhere (returning from the world, dropped connections).
 
-GlueScreenInfo = { };
-GlueScreenInfo["login"] = "AccountLogin";
-
 -- Set to an error code string when an error should show once the character list has loaded.
 pendingCharListError = nil;
-
--- The screens always use painted artwork (GlueSceneFrame's Cinematic property is false).
-function GlueUsesStaticFrontEnd()
-	return true;
-end
-
--- Kept for callers from the cinematic front end; the painted stage has nothing to hold.
-function GlueSceneFade_Hold()
-end
-function GlueSceneFade_Release()
-end
-function GlueScene_UpdateVisibility()
-end
-function SetGlueScreen(name)
-end
 
 local STAGE_FADE_SECONDS = 0.7;
 local INTRO_FADE_SECONDS = 1.2;
