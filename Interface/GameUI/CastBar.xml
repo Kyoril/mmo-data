@@ -3,6 +3,8 @@
 	<Script file="CastBar.lua" />
 
     <Frame name="PlayerCastBar" type="ProgressBar" parent="GameParent">
+    	<Property name="FillMaterial" value="Interface/ProgressFill.hmat" />
+    	<Property name="FillMaterialTint" value="FFE2B53C" />
         <Property name="Progress" value="0.12783" />
         <Property name="Text" value="SPELL_NAME" />
         <Property name="Font" value="DefaultSmall" />

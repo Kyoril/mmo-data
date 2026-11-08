@@ -67,5 +67,102 @@
 			</Area>
 			<Visual inherits="ThemeActionShortcutVisual" />
 		</Frame>
+		<!-- Child 2: remaining cooldown in seconds, shown for cooldowns longer than the global one. -->
+		<Frame name="CooldownText" renderer="DefaultRenderer">
+			<Property name="Enabled" value="false" />
+			<Property name="Clickable" value="false" />
+			<Property name="Visible" value="false" />
+			<Property name="Font" value="ActionCooldownFont" />
+			<Property name="TextColor" value="FFFFF6E0" />
+			<Area>
+				<Anchor point="TOP" offset="10" />
+				<Anchor point="LEFT" offset="4" />
+				<Anchor point="BOTTOM" offset="-10" />
+				<Anchor point="RIGHT" offset="-4" />
+			</Area>
+			<Visual>
+				<ImagerySection name="Text">
+					<TextComponent color="$TextColor" horzAlign="CENTER" vertAlign="CENTER" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Text" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="Disabled">
+					<Layer>
+						<Section section="Text" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+		</Frame>
+		<!-- Child 3: resource cost of the spell, top left (interface option "Show Ability Costs"). The
+		     shortcut label sits top right (BlueGold) or bottom centre (Wayfinder), the item count bottom right. -->
+		<Frame name="ActionCost" renderer="DefaultRenderer">
+			<Property name="Enabled" value="false" />
+			<Property name="Clickable" value="false" />
+			<Property name="Visible" value="false" />
+			<Property name="Font" value="ActionCostFont" />
+			<Property name="CostColor" value="FFFFFFFF" />
+			<Area>
+				<Size>
+					<AbsDimension y="28" />
+				</Size>
+				<Anchor point="LEFT" offset="10" />
+				<Anchor point="RIGHT" offset="-10" />
+				<Anchor point="TOP" offset="6" />
+			</Area>
+			<Visual>
+				<ImagerySection name="Text">
+					<TextComponent color="$CostColor" horzAlign="LEFT" vertAlign="TOP" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Text" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="Disabled">
+					<Layer>
+						<Section section="Text" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+		</Frame>
+		<!-- Child 4: short glow when a longer cooldown finishes. -->
+		<Frame name="ReadyFlash" renderer="DefaultRenderer">
+			<Property name="Enabled" value="false" />
+			<Property name="Clickable" value="false" />
+			<Property name="Visible" value="false" />
+			<Area>
+				<Anchor point="TOP" offset="-6" />
+				<Anchor point="LEFT" offset="-6" />
+				<Anchor point="BOTTOM" offset="6" />
+				<Anchor point="RIGHT" offset="6" />
+			</Area>
+			<Visual>
+				<ImagerySection name="Glow">
+					<ImageComponent texture="Interface/GlueUI/GlowYellow.htex" tint="FFFFF2C8" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Glow" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="Disabled">
+					<Layer>
+						<Section section="Glow" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+			<Animations>
+				<Animation name="Flash" duration="0.5" loop="false">
+					<Track property="Opacity">
+						<Keyframe time="0" value="0"/>
+						<Keyframe time="0.07" value="1"/>
+						<Keyframe time="0.5" value="0"/>
+					</Track>
+				</Animation>
+			</Animations>
+		</Frame>
 	</Frame>
 </UiLayout>

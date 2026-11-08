@@ -70,6 +70,12 @@
 			</Area>
 		</Frame>
 		<Frame name="PlayerHealthBar" type="ProgressBar">
+			<Property name="FillMaterial" value="Interface/ProgressFill.hmat" />
+			<Property name="SmoothSpeed" value="12" />
+			<Property name="TrailDelay" value="0.35" />
+			<Property name="TrailSpeed" value="0.7" />
+			<Property name="TrailColor" value="B3FFE9B8" />
+			<Property name="FillMaterialTint" value="FF43C653" />
 			<Property name="Progress" value="0.12783" />
 			<Property name="Font" value="CombatHudTextFont" />
 			<Area>
@@ -83,6 +89,8 @@
 			<Visual inherits="ThemePlayerHealthBarVisual" />
 		</Frame>
 		<Frame name="PlayerManaBar" type="ProgressBar">
+			<Property name="FillMaterial" value="Interface/ProgressFill.hmat" />
+			<Property name="SmoothSpeed" value="12" />
 			<Property name="Progress" value="0.12783" />
 			<Property name="Font" value="CombatHudTextFont" />
 			<Area>

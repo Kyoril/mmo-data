@@ -49,6 +49,9 @@
 		</Frame>
 
 		<Frame name="PlayerExperienceBar" type="ProgressBar">
+			<Property name="FillMaterial" value="Interface/ProgressFill.hmat" />
+			<Property name="SmoothSpeed" value="4" />
+			<Property name="FillMaterialTint" value="FF6285B6" />
 			<Property name="Progress" value="0.12783" />
 			<Property name="Text" value="200 / 400" />
 			<Property name="Font" value="ExperienceHudFont" />
@@ -63,6 +66,9 @@
 			<Visual inherits="ThemePlayerExperienceBarVisual" />
 		</Frame>
 		<Frame name="PlayerClassExperienceBar" type="ProgressBar">
+			<Property name="FillMaterial" value="Interface/ProgressFill.hmat" />
+			<Property name="SmoothSpeed" value="4" />
+			<Property name="FillMaterialTint" value="FFDEA83E" />
 			<Property name="Progress" value="0" />
 			<Property name="Font" value="ExperienceHudFont" />
 			<Property name="Visible" value="False" />

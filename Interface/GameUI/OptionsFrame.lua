@@ -626,6 +626,14 @@ OPTIONS_CATEGORIES = {
 				defaultValue = "0",
 				onChange = function() ActionBar_UpdateSecondBarVisibility(); end,
 			},
+			{
+				type = "toggle",
+				labelKey = "OPTIONS_SHOW_ACTION_COST",
+				tooltipKey = "OPTIONS_TT_SHOW_ACTION_COST",
+				cvar = "ActionBarShowCost",
+				defaultValue = "0",
+				onChange = function() ActionBar_UpdateButtons(); end,
+			},
 
 			{ type = "header", labelKey = "OPTIONS_HEADER_NAMEPLATES" },
 			{

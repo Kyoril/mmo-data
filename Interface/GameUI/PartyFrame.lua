@@ -86,6 +86,9 @@ end
 
 function PartyMemberFrame_OnMembersChanged(self)
     PartyMemberFrame_UpdateMember(self);
+    -- Slots can now show a different member, whose bars must not animate from the old values.
+    self:GetChild(1):SetProgressInstant(self:GetChild(1):GetProgress());
+    self:GetChild(2):SetProgressInstant(self:GetChild(2):GetProgress());
     PartyMemberFrame_UpdateLeader(self);
 end
 

@@ -28,6 +28,39 @@ ACTION_EMPTY_SOCKET_TINT = (GameUITheme and GameUITheme.ActionEmptySocketTint) o
 ACTION_EMPTY_SOCKET_HOVER_TINT = (GameUITheme and GameUITheme.ActionEmptySocketHoverTint) or "A6FFFFFF";
 ACTION_HIDDEN_TINT = "00000000";
 
+-- Console variable deciding whether spell costs are printed on the action buttons.
+ACTION_BAR_SHOW_COST_CVAR = "ActionBarShowCost";
+
+-- Child indices of ActionBarButtonTemplate (see ActionBarButton.xml).
+ACTION_BUTTON_CHILD_COOLDOWN = 0;
+ACTION_BUTTON_CHILD_SHORTCUT = 1;
+ACTION_BUTTON_CHILD_COOLDOWN_TEXT = 2;
+ACTION_BUTTON_CHILD_COST = 3;
+ACTION_BUTTON_CHILD_READY_FLASH = 4;
+
+-- Cost text colours per power type (0 = mana, 1 = rage, 2 = energy). Slightly lighter than the
+-- resource bars so the small digits stay readable on dark icons.
+ACTION_COST_COLORS = {
+    [0] = "FF5CAEFF",
+    [1] = "FFFF5A46",
+    [2] = "FFFFDC3C",
+};
+-- Cost colour while the player lacks the resource for the spell.
+ACTION_COST_INSUFFICIENT_COLOR = "FF8C8C8C";
+
+-- Cooldowns up to this long (seconds) count as the global cooldown: no countdown, no ready flash.
+ACTION_COOLDOWN_GLOBAL_MAX = 2.0;
+-- Below this many seconds the countdown turns warm and shows a tenth of a second.
+ACTION_COOLDOWN_SOON = 3.0;
+ACTION_COOLDOWN_TEXT_COLOR = "FFFFF6E0";
+ACTION_COOLDOWN_SOON_COLOR = "FFFFC34D";
+
+-- Spell id of the longer cooldown running on each slot, keyed by button id. Kept here and not on
+-- the frames: Lua fields set on frame userdata do not survive between handler calls.
+local actionCooldownLong = {};
+-- Ready flashes currently playing, keyed by button id.
+local actionReadyFlashes = {};
+
 -- Fallback icon for emotes without an authored icon.
 EMOTE_FALLBACK_ICON = "Interface/Icons/fg4_iconsFlat_dialogue.htex";
 
@@ -258,6 +291,82 @@ function ActionButton_OnUpdate(self)
 
     -- Update cooldown display
     ActionButton_UpdateCooldown(self);
+
+    ActionButton_UpdateCost(self);
+end
+
+-- Whether the interface option to print spell costs on the action buttons is enabled.
+function ActionBar_IsCostShown()
+    local value = GetCVar(ACTION_BAR_SHOW_COST_CVAR);
+    return value ~= nil and value ~= "" and value ~= "0";
+end
+
+-- Prints the spell's (mod-adjusted) cost in its resource colour at the top left of the button.
+function ActionButton_UpdateCost(self)
+    local costFrame = self:GetChild(ACTION_BUTTON_CHILD_COST);
+    if costFrame == nil then
+        return;
+    end
+
+    local spell = nil;
+    if ActionBar_IsCostShown() and IsActionButtonSpell(self.id - 1) then
+        spell = GetActionButtonSpell(self.id - 1);
+    end
+
+    local color = spell ~= nil and ACTION_COST_COLORS[spell.powertype] or nil;
+    if spell == nil or spell.cost == 0 or color == nil then
+        costFrame:Hide();
+        return;
+    end
+
+    local cost = GetSpellEffectiveCost(spell.id);
+    if cost == nil or cost <= 0 then
+        costFrame:Hide();
+        return;
+    end
+
+    local player = GetUnit("player");
+    if player ~= nil and player:GetPower(spell.powertype) < cost then
+        color = ACTION_COST_INSUFFICIENT_COLOR;
+    end
+
+    costFrame:SetText(string.format("%d", cost));
+    costFrame:SetProperty("CostColor", color);
+    costFrame:Show();
+end
+
+-- Plays the short glow shown when a longer cooldown finishes.
+function ActionButton_PlayReadyFlash(self)
+    local flash = self:GetChild(ACTION_BUTTON_CHILD_READY_FLASH);
+    if flash == nil then
+        return;
+    end
+
+    flash:SetOpacity(0.0);
+    flash:Show();
+    flash:PlayAnimation("Flash");
+    actionReadyFlashes[self.id] = flash;
+end
+
+-- Hides ready flashes whose animation finished. Runs every frame, but only loops active flashes.
+function ActionBar_UpdateReadyFlashes()
+    for id, flash in pairs(actionReadyFlashes) do
+        if not flash:IsAnimationPlaying("Flash") then
+            flash:Hide();
+            actionReadyFlashes[id] = nil;
+        end
+    end
+end
+
+-- Formats a remaining cooldown: minutes above a minute, tenths in the last seconds.
+function ActionButton_FormatCooldown(remaining)
+    if remaining >= 60 then
+        return string.format("%dm", math.ceil(remaining / 60));
+    end
+    if remaining < ACTION_COOLDOWN_SOON then
+        return string.format("%.1f", remaining);
+    end
+    return string.format("%d", math.ceil(remaining));
 end
 
 -- The second bar floats over the world without a backing plate, so its empty slots draw a faint
@@ -308,10 +417,11 @@ function ActionButton_GetItemUseSpell(slot)
 end
 
 function ActionButton_UpdateCooldown(self)
-    local cooldownFrame = self:GetChild(0);
+    local cooldownFrame = self:GetChild(ACTION_BUTTON_CHILD_COOLDOWN);
     if cooldownFrame == nil then
         return;
     end
+    local cooldownText = self:GetChild(ACTION_BUTTON_CHILD_COOLDOWN_TEXT);
 
     -- Resolve the spell driving this button's cooldown. For spell buttons this is the spell
     -- itself; for item buttons it is the item's "On Use" spell (e.g. a potion's heal effect).
@@ -326,9 +436,46 @@ function ActionButton_UpdateCooldown(self)
         local progress = GetSpellCooldownProgress(spell.id);
         cooldownFrame:SetProgress(progress);
         cooldownFrame:Show();
+
+        -- Total duration from remaining time and progress; the global cooldown stays quiet.
+        local remaining = GetSpellCooldownRemaining(spell.id);
+        local total = 0;
+        if progress < 1.0 then
+            total = remaining / (1.0 - progress);
+        end
+
+        if total > ACTION_COOLDOWN_GLOBAL_MAX then
+            actionCooldownLong[self.id] = spell.id;
+        end
+
+        if cooldownText ~= nil then
+            if actionCooldownLong[self.id] and remaining > 0 then
+                cooldownText:SetText(ActionButton_FormatCooldown(remaining));
+                if remaining < ACTION_COOLDOWN_SOON then
+                    cooldownText:SetProperty("TextColor", ACTION_COOLDOWN_SOON_COLOR);
+                else
+                    cooldownText:SetProperty("TextColor", ACTION_COOLDOWN_TEXT_COLOR);
+                end
+                cooldownText:Show();
+            else
+                cooldownText:Hide();
+            end
+        end
     else
         cooldownFrame:SetProgress(1.0);
         cooldownFrame:Hide();
+        if cooldownText ~= nil then
+            cooldownText:Hide();
+        end
+
+        -- A longer cooldown just finished (not one that was cleared by swapping the slot's spell).
+        local finishedSpellId = actionCooldownLong[self.id];
+        if finishedSpellId ~= nil then
+            actionCooldownLong[self.id] = nil;
+            if spell ~= nil and spell.id == finishedSpellId then
+                ActionButton_PlayReadyFlash(self);
+            end
+        end
     end
 end
 
@@ -397,6 +544,8 @@ end
 -- Binding changes have no UI event; refresh these small captions once per second.
 local shortcutRefreshElapsed = 1.0;
 function ActionBar_UpdateShortcutLabels(elapsed)
+    ActionBar_UpdateReadyFlashes();
+
     shortcutRefreshElapsed = shortcutRefreshElapsed + elapsed;
     if shortcutRefreshElapsed < 1.0 then
         return;
@@ -409,7 +558,7 @@ function ActionBar_UpdateShortcutLabels(elapsed)
         text = text:gsub("MINUS$", "-"):gsub("PLUS$", "+");
         local button = _G["ActionButton" .. i];
         if button ~= nil then
-            button:GetChild(1):SetText(text);
+            button:GetChild(ACTION_BUTTON_CHILD_SHORTCUT):SetText(text);
         end
     end
 end

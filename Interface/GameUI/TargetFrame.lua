@@ -4,10 +4,17 @@ ResourceBarColors[0] = "FF328FEA"; -- Mana
 ResourceBarColors[1] = "FFE94B38"; -- Rage
 ResourceBarColors[2] = "FFF0C632"; -- Energy
 
+-- A new target must not inherit the previous target's bar animation, so its bars snap.
+function TargetFrame_OnTargetChanged()
+    TargetFrame_Update();
+    TargetHealthBar:SetProgressInstant(TargetHealthBar:GetProgress());
+    TargetManaBar:SetProgressInstant(TargetManaBar:GetProgress());
+end
+
 function TargetFrame_OnLoad()
     TargetFrame_Update();
 
-    TargetFrame:RegisterEvent("PLAYER_TARGET_CHANGED", TargetFrame_Update);
+    TargetFrame:RegisterEvent("PLAYER_TARGET_CHANGED", TargetFrame_OnTargetChanged);
     TargetFrame:RegisterEvent("UNIT_HEALTH_UPDATED", TargetFrame_OnUnitUpdate);
     TargetFrame:RegisterEvent("UNIT_POWER_UPDATED", TargetFrame_OnUnitUpdate);
     TargetFrame:RegisterEvent("UNIT_LEVEL_UPDATED", TargetFrame_OnUnitUpdate);
@@ -125,6 +132,8 @@ function TargetFrame_Update()
         if GameUITheme and GameUITheme.Wayfinder then
             local healthColor = target:IsHostile() and "FFE17C6D" or (target:IsFriendly() and "FF76BC93" or "FFD6B677");
             TargetHealthBar:SetProperty("ProgressColor", healthColor);
+            -- The reaction colour is the whole fill colour here, not a tint over the green fill.
+            TargetHealthBar:SetProperty("FillMaterialTint", "FFFFFFFF");
         end
 
         -- Update progress bars

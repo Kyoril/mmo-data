@@ -62,6 +62,8 @@ end
 function PetFrame_OnPetChanged(self)
     PetPortraitModel:SetUnit("pet");
     PetFrame_Update(self);
+    PetHealthBar:SetProgressInstant(PetHealthBar:GetProgress());
+    PetManaBar:SetProgressInstant(PetManaBar:GetProgress());
 end
 
 function PetFrame_OnUnitUpdate(self, unit)
