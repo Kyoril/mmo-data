@@ -3,22 +3,49 @@
 	<Frame name="WayfinderGluePrimary">
 		<Visual>
 			<ImagerySection name="Base">
-				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/PanelRim.htex" borderSize="18" leftSize="44" rightSize="44" topSize="44" bottomSize="44" tint="FFFFE2A8" />
-				<ImageComponent texture="Interface/GlueUI/GlueListFade.htex" tint="786C5131"><Area><Inset all="7" /></Area></ImageComponent>
+				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/PrimaryButton.htex" borderSize="22" leftSize="36" rightSize="36" topSize="36" bottomSize="36" tint="FFDFD6C4" />
 			</ImagerySection>
-			<ImagerySection name="Highlight">
-				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/Selection.htex" borderSize="18" leftSize="32" rightSize="32" topSize="32" bottomSize="32" tint="E8FFE1AA" />
+			<ImagerySection name="Hover">
+				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/PrimaryButton.htex" borderSize="22" leftSize="36" rightSize="36" topSize="36" bottomSize="36" />
 			</ImagerySection>
-			<ImagerySection name="Caption"><TextComponent color="FFFFDCA0" horzAlign="CENTER" vertAlign="CENTER" /></ImagerySection>
+			<ImagerySection name="Pressed">
+				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/PrimaryButton.htex" borderSize="22" leftSize="36" rightSize="36" topSize="36" bottomSize="36" tint="FFC1B6A3" />
+			</ImagerySection>
+			<ImagerySection name="Caption"><TextComponent color="FF28180D" horzAlign="CENTER" vertAlign="CENTER" /></ImagerySection>
 			<ImagerySection name="Unavailable">
 				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/SocketRim.htex" borderSize="18" leftSize="32" rightSize="32" topSize="32" bottomSize="32" tint="B0A39F96" />
 				<TextComponent color="FF899096" horzAlign="CENTER" vertAlign="CENTER" />
 			</ImagerySection>
 			<StateImagery name="Normal"><Layer><Section section="Base" /><Section section="Caption" /></Layer></StateImagery>
-			<StateImagery name="Hovered"><Layer><Section section="Base" /><Section section="Highlight" /><Section section="Caption" /></Layer></StateImagery>
-			<StateImagery name="Pushed"><Layer><Section section="Base" color="FFB1A18A" /><Section section="Caption" /></Layer></StateImagery>
+			<StateImagery name="Hovered"><Layer><Section section="Hover" /><Section section="Caption" /></Layer></StateImagery>
+			<StateImagery name="Pushed"><Layer><Section section="Pressed" /><Section section="Caption" /></Layer></StateImagery>
 			<StateImagery name="Disabled"><Layer><Section section="Unavailable" /></Layer></StateImagery>
 		</Visual>
+	</Frame>
+
+	<Frame name="WayfinderGluePrimarySheen" renderer="DefaultRenderer">
+		<Property name="Clickable" value="false" />
+		<Property name="MousePassThrough" value="true" />
+		<Visual>
+			<ImagerySection name="Glint">
+				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/PrimaryButtonSheen.htex" borderSize="22" leftSize="36" rightSize="36" topSize="36" bottomSize="36" />
+			</ImagerySection>
+			<StateImagery name="Enabled"><Layer><Section section="Glint" /></Layer></StateImagery>
+			<StateImagery name="Disabled" />
+		</Visual>
+		<Animations>
+			<Animation name="HoverGlint" duration="0.48" loop="false">
+				<Track property="Opacity">
+					<Keyframe time="0" value="0" />
+					<Keyframe time="0.08" value="0.9" />
+					<Keyframe time="0.22" value="0.28" />
+					<Keyframe time="0.48" value="0" />
+				</Track>
+			</Animation>
+		</Animations>
+		<Scripts>
+			<OnHide>return function(self) self:StopAnimation("HoverGlint"); self:SetOpacity(0); end</OnHide>
+		</Scripts>
 	</Frame>
 
 	<Frame name="WayfinderGlueChoice">

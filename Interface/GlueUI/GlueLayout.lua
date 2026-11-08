@@ -44,6 +44,24 @@ CharSelect_UpdateActionLayout();
 
 if GlueUITheme and GlueUITheme.Wayfinder then
 	local A = AnchorPoint;
+	for _, button in ipairs({ LoginButton, RealmListButton01, CharSelectEnterButton, CharCreatePage1NextButton, CharCreateSubmitButton }) do
+		local sheen = WayfinderGluePrimarySheen:Clone();
+		button:AddChild(sheen);
+		sheen:SetOpacity(0);
+		for _, edge in ipairs({ A.LEFT, A.RIGHT, A.TOP, A.BOTTOM }) do
+			sheen:SetAnchor(edge, edge, button, 0);
+		end
+		button:SetOnEnterHandler(function(self)
+			if self:IsEnabled(false) then
+				sheen:PlayAnimation("HoverGlint");
+			end
+		end);
+		button:SetOnLeaveHandler(function()
+			sheen:StopAnimation("HoverGlint");
+			sheen:SetOpacity(0);
+		end);
+	end
+
 	LoginFormBackdrop:SetHeight(840);
 	LoginFormBackdrop:SetAnchor(A.V_CENTER, A.V_CENTER, nil, -8);
 	local loginTitle = GlueTextLarge:Clone();
