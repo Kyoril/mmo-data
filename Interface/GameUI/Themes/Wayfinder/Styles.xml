@@ -482,42 +482,25 @@
 	<Frame name="WayfinderMinimapControl">
 		<Property name="Icon" />
 		<Visual>
-			<ImagerySection name="Housing">
-				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/PanelRim.htex" borderSize="14" leftSize="44" rightSize="44" topSize="44" bottomSize="44" />
-			</ImagerySection>
-			<ImagerySection name="Hover">
-				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/Selection.htex" borderSize="14" leftSize="44" rightSize="44" topSize="44" bottomSize="44" />
-			</ImagerySection>
 			<ImagerySection name="Icon">
-				<ImageComponent><Area><Inset all="6" /></Area><PropertyValue property="Icon" /></ImageComponent>
+				<ImageComponent>
+					<Area><Inset all="3" /></Area>
+					<PropertyValue property="Icon" />
+				</ImageComponent>
 			</ImagerySection>
 			<ImagerySection name="Dim">
-				<ImageComponent tint="7088857E"><Area><Inset all="6" /></Area><PropertyValue property="Icon" /></ImageComponent>
+				<ImageComponent tint="808E969E">
+					<Area><Inset all="3" /></Area>
+					<PropertyValue property="Icon" />
+				</ImageComponent>
 			</ImagerySection>
-			<StateImagery name="Normal">
-				<Layer>
-					<Section section="Housing" />
-					<Section section="Icon" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Hovered">
-				<Layer>
-					<Section section="Hover" />
-					<Section section="Icon" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Pushed">
-				<Layer>
-					<Section section="Hover" />
-					<Section section="Icon" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer>
-					<Section section="Housing" />
-					<Section section="Dim" />
-				</Layer>
-			</StateImagery>
+			<ImagerySection name="Halo">
+				<ImageComponent texture="Interface/GlueUI/GlowYellow.htex" tint="6ED9AC67" />
+			</ImagerySection>
+			<StateImagery name="Normal"><Layer><Section section="Icon" /></Layer></StateImagery>
+			<StateImagery name="Hovered"><Layer><Section section="Halo" /><Section section="Icon" /></Layer></StateImagery>
+			<StateImagery name="Pushed"><Layer><Section section="Icon" color="FFD4B184" /></Layer></StateImagery>
+			<StateImagery name="Disabled"><Layer><Section section="Dim" /></Layer></StateImagery>
 		</Visual>
 	</Frame>
 

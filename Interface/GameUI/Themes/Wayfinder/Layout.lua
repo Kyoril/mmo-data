@@ -93,19 +93,20 @@ local function SetupMinimap()
 	MinimapTime:SetAnchor(A.TOP, A.BOTTOM, MinimapContent, 2);
 	MinimapTime:SetHeight(42);
 
-	WayfinderMinimapControl:CopyVisuals(MinimapDayNight);
-	MinimapDayNight:SetSize(54, 54);
-	MinimapDayNight:SetAnchor(A.TOP, A.TOP, MinimapContent, 2);
-	MinimapDayNight:SetAnchor(A.RIGHT, A.RIGHT, MinimapContent, -2);
+	-- Match the centers of the sockets painted into MapRing.htex.
+	local function MountControl(frame, x, y, size)
+		WayfinderMinimapControl:CopyVisuals(frame);
+		frame:ClearAnchors();
+		frame:SetSize(size, size);
+		frame:SetAnchor(A.LEFT, A.LEFT, MinimapContent, x - size / 2);
+		frame:SetAnchor(A.TOP, A.TOP, MinimapContent, y - size / 2);
+	end
+
+	MountControl(MinimapDayNight, 324, 61, 58);
 	MinimapDayNight:SetProperty("Clickable", "false");
 	MinimapDayNight:SetProperty("MousePassThrough", "true");
-
-	for i, button in ipairs({ MinimapZoomIn, MinimapZoomOut }) do
-		WayfinderMinimapControl:CopyVisuals(button);
-		button:SetSize(46, 46);
-		button:SetAnchor(A.BOTTOM, A.BOTTOM, MinimapContent, -2);
-		button:SetAnchor(A.RIGHT, A.RIGHT, MinimapContent, -2 - (i - 1) * 54);
-	end
+	MountControl(MinimapZoomIn, 334, 304, 48);
+	MountControl(MinimapZoomOut, 278, 351, 48);
 	Wayfinder_UpdateMinimapLayout();
 end
 
