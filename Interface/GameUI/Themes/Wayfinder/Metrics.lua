@@ -44,4 +44,5 @@ GameUITheme.TooltipQualityColors = {
 GameUITheme.QuestBodyTextColor = "FFE8E0D0";
 GameUITheme.QuestHeadingTextColor = "FFE3BF82";
 GameUITheme.QuestListTextColor = "FFF0E3C8";
+GameUITheme.QuestLogVisibleRows = 14;
 GameUITheme.QuestRewardQualityColors = { [2] = "FF98D1A8", [3] = "FF79B8FA", [4] = "FFC99BFA", [5] = "FFFFB76F" };

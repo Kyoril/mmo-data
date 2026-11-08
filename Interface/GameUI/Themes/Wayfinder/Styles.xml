@@ -122,6 +122,15 @@
 		</Visual>
 	</Frame>
 
+	<Frame name="WayfinderQuestLogReading">
+		<Visual>
+			<ImagerySection name="ReadingSurface">
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="38070503" />
+			</ImagerySection>
+			<StateImagery name="Enabled"><Layer><Section section="ReadingSurface" /></Layer></StateImagery>
+		</Visual>
+	</Frame>
+
 	<Frame name="WayfinderEmpty">
 		<Visual>
 			<StateImagery name="Enabled" />

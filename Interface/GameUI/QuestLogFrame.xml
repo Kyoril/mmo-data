@@ -34,61 +34,8 @@
 					<Anchor point="BOTTOM" />
 				</Area>
 
-                <Frame name="QuestListButton1" inherits="QuestListQuestButton" id="1">
-                    <Area>
-                        <Anchor point="LEFT" offset="8" />
-                        <Anchor point="RIGHT" offset="-8" />
-                        <Anchor point="TOP" offset="16" />
-                    </Area>
-                    <Scripts><OnClick>return function(this) QuestListQuestButton_OnClick(this); end</OnClick></Scripts>
-                </Frame>
-                
-                <Frame name="QuestListButton2" inherits="QuestListQuestButton" id="2">
-                    <Area>
-                        <Anchor point="LEFT" relativeTo="QuestListButton1" />
-                        <Anchor point="RIGHT" relativeTo="QuestListButton1" />
-                        <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestListButton1" />
-                    </Area>
-                    <Scripts><OnClick>return function(this) QuestListQuestButton_OnClick(this); end</OnClick></Scripts>
-                </Frame>
-                
-                <Frame name="QuestListButton3" inherits="QuestListQuestButton" id="3">
-                    <Area>
-                        <Anchor point="LEFT" relativeTo="QuestListButton1" />
-                        <Anchor point="RIGHT" relativeTo="QuestListButton1" />
-                        <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestListButton2" />
-                    </Area>
-                    <Scripts><OnClick>return function(this) QuestListQuestButton_OnClick(this); end</OnClick></Scripts>
-                </Frame>
-                
-                <Frame name="QuestListButton4" inherits="QuestListQuestButton" id="4">
-                    <Area>
-                        <Anchor point="LEFT" relativeTo="QuestListButton1" />
-                        <Anchor point="RIGHT" relativeTo="QuestListButton1" />
-                        <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestListButton3" />
-                    </Area>
-                    <Scripts><OnClick>return function(this) QuestListQuestButton_OnClick(this); end</OnClick></Scripts>
-                </Frame>
-                
-                <Frame name="QuestListButton5" inherits="QuestListQuestButton" id="5">
-                    <Area>
-                        <Anchor point="LEFT" relativeTo="QuestListButton1" />
-                        <Anchor point="RIGHT" relativeTo="QuestListButton1" />
-                        <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestListButton4" />
-                    </Area>
-                    <Scripts><OnClick>return function(this) QuestListQuestButton_OnClick(this); end</OnClick></Scripts>
-                </Frame>
-                
-                <Frame name="QuestListButton6" inherits="QuestListQuestButton" id="6">
-                    <Area>
-                        <Anchor point="LEFT" relativeTo="QuestListButton1" />
-                        <Anchor point="RIGHT" relativeTo="QuestListButton1" />
-                        <Anchor point="TOP" relativePoint="BOTTOM" relativeTo="QuestListButton5" />
-                    </Area>
-                    <Scripts><OnClick>return function(this) QuestListQuestButton_OnClick(this); end</OnClick></Scripts>
-                </Frame>
 			</Frame>
-            
+
 			<Frame name="QuestLogQuestListScrollBar" inherits="VerticalScrollBar">
 				<Property name="Enabled" value="false" />
 				<Area>

@@ -165,10 +165,30 @@ local function SetupGuild()
 end
 
 local function SetupQuestWindows()
+	QuestLogFrame:SetWidth(1584);
 	WayfinderEmpty:CopyVisuals(QuestLogFooter);
-	WayfinderInsetWell:CopyVisuals(QuestLogQuestList);
-	WayfinderQuestReading:CopyVisuals(QuestLogQuestDetailsFrame);
-	QuestLogQuestDetailsFrame:SetAnchor(A.TOP, A.BOTTOM, QuestLogQuestList, 8);
+	WayfinderEmpty:CopyVisuals(QuestLogQuestList);
+	WayfinderQuestLogReading:CopyVisuals(QuestLogQuestDetailsFrame);
+
+	QuestLogQuestList:ClearAnchor(A.RIGHT);
+	QuestLogQuestList:SetWidth(620);
+	QuestLogQuestList:SetAnchor(A.TOP, A.BOTTOM, QuestLogFrame_SidePanelTitleBar, 12);
+	QuestLogQuestList:SetAnchor(A.BOTTOM, A.TOP, QuestLogFooter, -8);
+	QuestLogQuestDetailsFrame:SetAnchor(A.LEFT, A.RIGHT, QuestLogQuestList, 12);
+	QuestLogQuestDetailsFrame:SetAnchor(A.TOP, A.TOP, QuestLogQuestList, 0);
+	QuestLogQuestDetailsFrame:SetAnchor(A.BOTTOM, A.BOTTOM, QuestLogQuestList, 0);
+	QuestLogQuestDetailObjectivesHeader:SetAnchor(A.TOP, A.BOTTOM, QuestLogQuestDetailDetails, 32);
+	QuestLogObjectiveList:SetAnchor(A.TOP, A.BOTTOM, QuestLogQuestDetailObjectives, 16);
+	QuestLogQuestDetailRewards:SetAnchor(A.TOP, A.BOTTOM, QuestLogObjectiveList, 32);
+
+	local divider = WayfinderTrackerSpine:Clone();
+	QuestLogFrame:AddChild(divider);
+	divider:SetAnchor(A.LEFT, A.RIGHT, QuestLogQuestList, 4);
+	divider:SetAnchor(A.TOP, A.TOP, QuestLogQuestList, 0);
+	divider:SetAnchor(A.BOTTOM, A.BOTTOM, QuestLogQuestList, 0);
+	divider:SetWidth(2);
+	divider:Show();
+
 	for _, page in ipairs({ QuestFrameDetailPanel, QuestFrameRequestItemsPanel, QuestFrameRewardsPanel }) do
 		WayfinderQuestReading:CopyVisuals(page);
 	end

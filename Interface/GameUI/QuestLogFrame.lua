@@ -1,5 +1,4 @@
 
-MAX_DISPLAY_QUESTS = 6;
 MAX_QUESTLOG_SIZE = 20;
 
 -- Quest status values (from shared/game/quest.h)
@@ -7,6 +6,7 @@ local QS_COMPLETE = 1;
 local QS_FAILED   = 5;
 
 local selectedQuestId = nil;
+local questRows = {};
 
 -- Formats a remaining-seconds value as "M:SS" (or "H:MM:SS" for long timers).
 local function FormatQuestTime(seconds)
@@ -26,7 +26,22 @@ function QuestLogFrame_OnLoad(self)
 	QuestText_ApplyPalette(self);
     
     -- Localize quest log text
-    self:GetChild(0):SetText(Localize("QUESTS"));
+    local wayfinder = GameUITheme and GameUITheme.Wayfinder;
+    self:GetChild(0):SetText(Localize(wayfinder and "MENUBAR_TOOLTIP_QUESTLOG" or "QUESTS"));
+    if wayfinder then
+        QuestLogQuestDetailTitle:SetProperty("TextColor", QuestText_GetBodyColor());
+    end
+
+    local visibleRows = (GameUITheme and GameUITheme.QuestLogVisibleRows) or 6;
+    for i = 1, visibleRows do
+        local row = QuestListQuestButton:Clone();
+        row:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, 8);
+        row:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, -8);
+        row:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, 16 + (i - 1) * row:GetHeight());
+        row:SetClickedHandler(QuestListQuestButton_OnClick);
+        QuestLogFrameQuestListContent:AddChild(row);
+        questRows[i] = row;
+    end
 
     QuestLogAbandonButton:SetWidth(QuestLogAbandonButton:GetTextWidth() + 64);
     QuestLogAbandonButton:Disable();
@@ -42,7 +57,7 @@ function QuestLogFrame_OnLoad(self)
     -- Setup quest list scroll bar
     QuestLogQuestListScrollBar:SetMinimum(0);
     QuestLogQuestListScrollBar:SetValue(0);
-    QuestLogQuestListScrollBar:SetMaximum(5);
+    QuestLogQuestListScrollBar:SetMaximum(0);
     QuestLogQuestListScrollBar:SetOnValueChangedHandler(QuestLogQuestListScrollBar_OnValueChanged);
     QuestLogQuestListScrollBar:Disable();
 
@@ -157,7 +172,6 @@ function QuestLogFrame_UpdateQuestDetails()
     end
     QuestLogObjectiveList:SetHeight(count * 32);
     
-    QuestLogQuestDetailObjectivesHeader:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, QuestLogObjectiveList, 32);
     QuestLogQuestDetailObjectivesHeader:SetHeight(QuestLogQuestDetailObjectivesHeader:GetTextHeight());
     QuestLogQuestDetailObjectives:SetText(GetQuestObjectivesText(questLogEntry.quest));
     QuestLogQuestDetailObjectives:SetHeight(QuestLogQuestDetailObjectives:GetTextHeight());
@@ -168,9 +182,9 @@ function QuestLogFrame_UpdateQuestDetails()
         + QuestLogQuestDetailTitle:GetHeight()
         + 8   -- details top offset from title bottom (Anchor offset="8")
         + QuestLogQuestDetailDetails:GetHeight()
-        + 16  -- objective list top offset from details bottom (Anchor offset="16")
+        + 16  -- objective list top padding
         + QuestLogObjectiveList:GetHeight()
-        + 32  -- objectives header top offset from objective list bottom
+        + 32  -- objectives header top padding
         + QuestLogQuestDetailObjectivesHeader:GetHeight()
         + 8   -- objectives text top offset from header bottom (Anchor offset="8")
         + QuestLogQuestDetailObjectives:GetHeight()
@@ -211,7 +225,6 @@ function QuestLogFrame_UpdateQuestDetails()
     });
 
     if rewardMoney > 0 or rewardXp > 0 or quest.rewardClassXp > 0 or hasItemRewards then
-        QuestLogQuestDetailRewards:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, QuestLogQuestDetailObjectives, 32);
         QuestLogQuestDetailRewards:Show();
         QuestLogQuestDetailRewards:SetHeight(QuestLogQuestDetailRewards:GetTextHeight());
 
@@ -234,7 +247,7 @@ function QuestLogFrame_UpdateQuestDetails()
             QuestLogDetailRewardMoney:Hide();
         end
 
-        -- Rewards header 32 below the objectives, item list 8 below the header,
+        -- Rewards header 32 below the objective section, item list 8 below the header,
         -- money label 8 below the item list.
         contentHeight = contentHeight
             + 32
@@ -280,8 +293,7 @@ function QuestListQuestButton_OnClick(self)
     QuestLogQuestDetailScrollContent:Hide();
 
     -- Uncheck all buttons
-    for i = 1, MAX_DISPLAY_QUESTS do
-        local button = _G["QuestListButton" .. i];
+    for _, button in ipairs(questRows) do
         button:SetChecked(false);
     end
 
@@ -305,8 +317,6 @@ function QuestLogFrame_OnUpdateQuestLog(self)
 end
 
 function QuestLog_Update()
-    local numEntries = GetNumQuestLogEntries();
-
     -- Determine number of quests
     local questCount = 0;
     for i = 1, MAX_QUESTLOG_SIZE do
@@ -316,18 +326,22 @@ function QuestLog_Update()
         end
     end
 
-    if questCount > MAX_DISPLAY_QUESTS then
-        QuestLogQuestListScrollBar:SetMaximum(questCount - MAX_DISPLAY_QUESTS);
+    local maxOffset = math.max(0, questCount - #questRows);
+    QuestLogQuestListScrollBar:SetMaximum(maxOffset);
+    if maxOffset > 0 then
         QuestLogQuestListScrollBar:Enable();
     else
-        QuestLogQuestListScrollBar:SetMaximum(5);
         QuestLogQuestListScrollBar:Disable();
     end
 
-    for i = 1, MAX_DISPLAY_QUESTS do
-        local button = _G["QuestListButton" .. i];
+    if GameUITheme and GameUITheme.Wayfinder then
+        QuestLogQuestListScrollBar:SetProperty("Visible", maxOffset > 0 and "true" or "false");
+        QuestLogFrameQuestListContent:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, maxOffset > 0 and -96 or 0);
+    end
 
-        local questLogEntry = GetQuestLogEntry(i + QuestLogQuestListScrollBar:GetValue() - 1);
+    local offset = math.floor(QuestLogQuestListScrollBar:GetValue());
+    for i, button in ipairs(questRows) do
+        local questLogEntry = GetQuestLogEntry(i + offset - 1);
         if questLogEntry then
             if GetQuestLogSelection() == 0 then
                 QuestLogSelectQuest(questLogEntry.id);
