@@ -32,10 +32,32 @@ function CharSelect_UpdateActionLayout()
 	CharRosterList:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.BOTTOM, CharRosterPanel, -224);
 	CharRosterRow10:Hide();
 	CharSelectBottomBar:SetHeight(260);
-	for _, bar in ipairs({ VerticalScrollBar, CharRosterScrollBar, RealmListScrollBar }) do
-		bar:GetChild(0):SetProperty("Icon", "Interface/Icons/IconGold_ArrowUp.htex");
-		bar:GetChild(1):SetProperty("Icon", "Interface/Icons/IconGold_ArrowDown.htex");
+	if not GlueUITheme.Wayfinder then
+		for _, bar in ipairs({ VerticalScrollBar, CharRosterScrollBar, RealmListScrollBar }) do
+			bar:GetChild(0):SetProperty("Icon", "Interface/Icons/IconGold_ArrowUp.htex");
+			bar:GetChild(1):SetProperty("Icon", "Interface/Icons/IconGold_ArrowDown.htex");
+		end
 	end
 end
 
 CharSelect_UpdateActionLayout();
+
+if GlueUITheme and GlueUITheme.Wayfinder then
+	local A = AnchorPoint;
+	LoginFormBackdrop:SetHeight(840);
+	LoginFormBackdrop:SetAnchor(A.V_CENTER, A.V_CENTER, nil, -8);
+	local loginTitle = GlueTextLarge:Clone();
+	LoginFormBackdrop:AddChild(loginTitle);
+	loginTitle:SetText(Localize("LOGIN"));
+	loginTitle:SetAnchor(A.LEFT, A.LEFT, LoginFormBackdrop, 48);
+	loginTitle:SetAnchor(A.RIGHT, A.RIGHT, LoginFormBackdrop, -48);
+	loginTitle:SetAnchor(A.TOP, A.TOP, LoginFormBackdrop, 32);
+
+	RealmListHeaderDivider:Hide();
+	Wayfinder_AddTitleRule(LoginFormBackdrop, loginTitle, 48, 16);
+	Wayfinder_AddTitleRule(RealmListBorder, RealmListHeaderDivider, 72, -6);
+	Wayfinder_AddTitleRule(CharRosterPanel, CharCountLabel, 72, 16);
+	Wayfinder_AddTitleRule(CharCreateSelectionPanel, CharCreateSelectionTitle, 72, 3);
+	Wayfinder_AddTitleRule(CharCreatePropertiesFrame, CharCreatePropertiesLabel, 72, 5);
+	Wayfinder_AddTitleRule(DeleteConfirmationFrame, DeleteConfirmationHeader, 72, 8);
+end

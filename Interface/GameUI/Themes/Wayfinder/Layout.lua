@@ -65,6 +65,7 @@ local function ApplyTitle(title)
 		WayfinderUtility:CopyVisuals(close);
 		close:SetProperty("Icon", Wayfinder_Art("GlyphClose"));
 	end
+	Wayfinder_AddTitleRule(title, title, 0, -2);
 end
 
 function Wayfinder_UpdateActionBarLayout(bar)

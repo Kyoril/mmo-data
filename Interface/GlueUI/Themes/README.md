@@ -3,13 +3,16 @@
 Load exactly one theme at the top of `GlueUI.toc`, before `GlueTemplates.xml`:
 
 ```
-Themes/BlueGold/Theme.toc
+Themes/Wayfinder/Theme.toc
+#Themes/BlueGold/Theme.toc
 #Themes/Legacy/Theme.toc
 ```
 
-Reverse those comments to restore the original Glue appearance. Reload the complete UI or restart the client after switching. GameUI has its own independent selection.
+Comment out Wayfinder and uncomment BlueGold or Legacy to switch. Reload the complete UI or restart the client after switching. GameUI has its own independent selection.
 
-Each theme exposes the same 34 appearance prototypes in `Styles.xml` and five font roles in `Fonts.xml`. Shared layouts keep geometry, input properties, animations, localized text and scripts. `Visual inherits` copies only imagery and rebinds properties to the actual control. Declare bound properties on both prototype and consumer.
+The themes expose the same 34 appearance prototypes and five font roles. Shared layouts keep geometry, input properties, animations, localized text and scripts. `Visual inherits` copies only imagery and rebinds properties to the actual control. Declare bound properties on both prototype and consumer.
+
+Wayfinder loads the BlueGold base first, then replaces its control visuals before the shared layouts are loaded. It shares panel, button, and diamond divider chrome with the in-game Wayfinder theme. Glue-specific control states are in `Wayfinder/Styles.xml`, and the placement of the title dividers is in `GlueLayout.lua`.
 
 BlueGold reuses the GameUI theme's imported, mipmapped artwork: `WindowFrameV2`, `NavyWellV4`, `QuietSlotV2`, `ButtonV2` and `SelectedTabV5`. Brass molding, navy enamel and illuminated gold selections match the in-game windows. The realm and roster lists retain their gradient fades with bronze/gold selection and blue hover; population/status colors remain semantic. Background scenes and logos retain their existing art. Fonts use the same PT Serif family as GameUI, at the original Glue sizes.
 

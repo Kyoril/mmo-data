@@ -1,4 +1,6 @@
 Metrics.lua
+Chrome.xml
+Chrome.lua
 Styles.xml
 Social.lua
 Chat.lua

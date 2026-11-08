@@ -157,29 +157,9 @@
 		</Visual>
 	</Frame>
 
-	<Frame name="WayfinderEmpty">
-		<Visual>
-			<StateImagery name="Enabled" />
-		</Visual>
-	</Frame>
-
-	<Frame name="WayfinderPanel">
-		<Visual>
-			<ImagerySection name="Surface">
-				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/PanelRim.htex" borderSize="40" leftSize="44" rightSize="44" topSize="44" bottomSize="44" tint="FFFFFFFF" />
-			</ImagerySection>
-			<StateImagery name="Enabled">
-				<Layer>
-					<Section section="Surface" />
-				</Layer>
-			</StateImagery>
-		</Visual>
-	</Frame>
-
 	<Frame name="WayfinderTitle">
 		<Visual>
 			<ImagerySection name="Title">
-				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/Underline.htex" borderSize="12" leftSize="12" rightSize="12" topSize="12" bottomSize="12" tint="FFFFFFFF" />
 				<TextComponent color="FFF1E5CC" horzAlign="LEFT" vertAlign="CENTER"><Area><Inset left="4" right="76" /></Area></TextComponent>
 			</ImagerySection>
 			<StateImagery name="Enabled">
@@ -251,52 +231,6 @@
 				<Layer>
 					<Section section="Selected" />
 					<Section section="Line" />
-				</Layer>
-			</StateImagery>
-		</Visual>
-	</Frame>
-
-	<Frame name="WayfinderButton">
-		<Visual>
-			<ImagerySection name="Base">
-				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/SocketRim.htex" borderSize="12" leftSize="32" rightSize="32" topSize="32" bottomSize="32" tint="F6C6BBA6" />
-			</ImagerySection>
-			<ImagerySection name="Hover">
-				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/Selection.htex" borderSize="12" leftSize="32" rightSize="32" topSize="32" bottomSize="32" tint="F0FFE0AA" />
-			</ImagerySection>
-			<ImagerySection name="Pushed">
-				<ImageComponent texture="Interface/GlueUI/GlueListFade.htex" tint="826A5B47" />
-			</ImagerySection>
-			<ImagerySection name="Text">
-				<TextComponent color="FFE5D3AD" horzAlign="CENTER" vertAlign="CENTER" />
-			</ImagerySection>
-			<ImagerySection name="Disabled">
-				<TextComponent color="FF78818A" horzAlign="CENTER" vertAlign="CENTER" />
-			</ImagerySection>
-			<StateImagery name="Normal">
-				<Layer>
-					<Section section="Base" />
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Hovered">
-				<Layer>
-					<Section section="Base" />
-					<Section section="Hover" />
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Pushed">
-				<Layer>
-					<Section section="Base" />
-					<Section section="Pushed" />
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer>
-					<Section section="Base" />
-					<Section section="Disabled" />
 				</Layer>
 			</StateImagery>
 		</Visual>
@@ -475,15 +409,6 @@
 			</StateImagery>
 		</Visual>
 	</Frame>
-	<Frame name="WayfinderInsetWell">
-		<Visual>
-			<ImagerySection name="Well">
-				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/SocketRim.htex" borderSize="14" leftSize="40" rightSize="40" topSize="40" bottomSize="40" tint="88B4A993" />
-			</ImagerySection>
-			<StateImagery name="Enabled"><Layer><Section section="Well" /></Layer></StateImagery>
-		</Visual>
-	</Frame>
-
 	<Frame name="WayfinderTrackerInk" renderer="DefaultRenderer">
 		<Property name="Clickable" value="false" />
 		<Property name="MousePassThrough" value="true" />

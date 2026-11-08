@@ -1,0 +1,110 @@
+<?xml version="1.0" ?>
+<UiLayout>
+	<Frame name="WayfinderPanel">
+		<Visual>
+			<ImagerySection name="Surface">
+				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/PanelRim.htex" borderSize="40" leftSize="44" rightSize="44" topSize="44" bottomSize="44" tint="FFFFFFFF" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Surface" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+	</Frame>
+
+	<Frame name="WayfinderButton">
+		<Visual>
+			<ImagerySection name="Base">
+				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/SocketRim.htex" borderSize="12" leftSize="32" rightSize="32" topSize="32" bottomSize="32" tint="F6C6BBA6" />
+			</ImagerySection>
+			<ImagerySection name="Hover">
+				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/Selection.htex" borderSize="12" leftSize="32" rightSize="32" topSize="32" bottomSize="32" tint="F0FFE0AA" />
+			</ImagerySection>
+			<ImagerySection name="Pushed">
+				<ImageComponent texture="Interface/GlueUI/GlueListFade.htex" tint="826A5B47" />
+			</ImagerySection>
+			<ImagerySection name="Text">
+				<TextComponent color="FFE5D3AD" horzAlign="CENTER" vertAlign="CENTER" />
+			</ImagerySection>
+			<ImagerySection name="Disabled">
+				<TextComponent color="FF78818A" horzAlign="CENTER" vertAlign="CENTER" />
+			</ImagerySection>
+			<StateImagery name="Normal">
+				<Layer>
+					<Section section="Base" />
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Hovered">
+				<Layer>
+					<Section section="Base" />
+					<Section section="Hover" />
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Pushed">
+				<Layer>
+					<Section section="Base" />
+					<Section section="Pushed" />
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="Base" />
+					<Section section="Disabled" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+	</Frame>
+
+	<Frame name="WayfinderInsetWell">
+		<Visual>
+			<ImagerySection name="Well">
+				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/SocketRim.htex" borderSize="14" leftSize="40" rightSize="40" topSize="40" bottomSize="40" tint="88B4A993" />
+			</ImagerySection>
+			<StateImagery name="Enabled"><Layer><Section section="Well" /></Layer></StateImagery>
+		</Visual>
+	</Frame>
+
+	<Frame name="WayfinderEmpty">
+		<Visual>
+			<StateImagery name="Enabled" />
+		</Visual>
+	</Frame>
+	<Frame name="WayfinderTitleRuleLine" renderer="DefaultRenderer">
+		<Property name="Clickable" value="false" />
+		<Property name="MousePassThrough" value="true" />
+		<Area><Size><AbsDimension y="2" /></Size></Area>
+		<Visual>
+			<ImagerySection name="Line">
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="D7CCAF7F" />
+			</ImagerySection>
+			<StateImagery name="Enabled"><Layer><Section section="Line" /></Layer></StateImagery>
+		</Visual>
+	</Frame>
+
+	<Frame name="WayfinderTitleRule">
+		<Property name="Clickable" value="false" />
+		<Property name="MousePassThrough" value="true" />
+		<Area><Size><AbsDimension y="30" /></Size></Area>
+		<Frame name="WayfinderTitleRuleLeft" inherits="WayfinderTitleRuleLine">
+			<Area><Anchor point="LEFT" /><Anchor point="RIGHT" relativePoint="H_CENTER" offset="-11" /><Anchor point="V_CENTER" /></Area>
+		</Frame>
+		<Frame name="WayfinderTitleRuleRight" inherits="WayfinderTitleRuleLine">
+			<Area><Anchor point="LEFT" relativePoint="H_CENTER" offset="11" /><Anchor point="RIGHT" /><Anchor point="V_CENTER" /></Area>
+		</Frame>
+		<Frame name="WayfinderTitleRuleDiamond" renderer="DefaultRenderer">
+			<Property name="Clickable" value="false" />
+			<Property name="MousePassThrough" value="true" />
+			<Area><Size><AbsDimension x="30" y="30" /></Size><Anchor point="H_CENTER" /><Anchor point="V_CENTER" /></Area>
+			<Visual>
+				<ImagerySection name="Diamond">
+					<ImageComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/GlyphQuest.htex" />
+				</ImagerySection>
+				<StateImagery name="Enabled"><Layer><Section section="Diamond" /></Layer></StateImagery>
+			</Visual>
+		</Frame>
+	</Frame>
+</UiLayout>
