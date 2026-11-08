@@ -33,3 +33,10 @@ GameUITheme.QuestTracker = {
 	bottomPadding = 16,
 	hoverBackdropOpacity = 0.58,
 };
+
+GameUITheme.TooltipQualityColors = {
+	[2] = "FF98D1A8",
+	[3] = "FF79B8FA",
+	[4] = "FFC99BFA",
+	[5] = "FFFFB76F",
+};

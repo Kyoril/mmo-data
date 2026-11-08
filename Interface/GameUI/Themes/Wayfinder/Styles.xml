@@ -6,6 +6,29 @@
 	<Font name="WayfinderChatFont" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="23" outline="1" shadowX="1" shadowY="1" />
 	<Font name="WayfinderXPFont" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="20" outline="0" shadowX="1" shadowY="1" />
 
+	<Font name="WayfinderTooltipTitleFont" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="29" outline="0" shadowX="1" shadowY="1" />
+	<Font name="WayfinderTooltipNoteFont" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="20" outline="0" shadowX="1" shadowY="1" />
+
+	<Frame name="WayfinderTooltip">
+		<Visual>
+			<ImagerySection name="Panel">
+				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/PanelRim.htex" borderSize="24" leftSize="44" rightSize="44" topSize="44" bottomSize="44" />
+			</ImagerySection>
+			<StateImagery name="Enabled"><Layer><Section section="Panel" /></Layer></StateImagery>
+		</Visual>
+	</Frame>
+
+	<Frame name="WayfinderTooltipDivider" renderer="DefaultRenderer">
+		<Property name="Clickable" value="false" />
+		<Property name="MousePassThrough" value="true" />
+		<Visual>
+			<ImagerySection name="Rule">
+				<ImageComponent texture="Interface/GlueUI/GlueListFade.htex" tint="C5D5AD73" />
+			</ImagerySection>
+			<StateImagery name="Enabled"><Layer><Section section="Rule" /></Layer></StateImagery>
+		</Visual>
+	</Frame>
+
 	<Frame name="WayfinderEmpty">
 		<Visual>
 			<StateImagery name="Enabled" />

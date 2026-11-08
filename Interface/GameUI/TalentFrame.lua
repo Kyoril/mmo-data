@@ -417,7 +417,7 @@ function TalentFrameTalent_OnEnter(self)
     GameTooltip:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, self, 12)
     GameTooltip:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, self, 0)
     GameTooltip_Clear()
-    GameTooltip_AddLine(talent.spell.name, TOOLTIP_LINE_LEFT, "FFFFFFFF")
+    GameTooltip_AddLine(talent.spell.name, TOOLTIP_LINE_LEFT, "FFFFFFFF", "title")
     if talent.placeholder then
         GameTooltip_AddLine(Localize("TALENT_COMING_SOON"), TOOLTIP_LINE_LEFT, TALENT_COMING_SOON_COLOR)
         GameTooltip_AddLine(GetSpellDescription(talent.spell), TOOLTIP_LINE_LEFT, "FFB8BEC8")
@@ -432,7 +432,7 @@ function TalentFrameTalent_OnEnter(self)
     if talent.rank < talent.maxRank and talent.rank > 0 and talent.nextRankSpell ~= nil then
         GameTooltip_AddLine("", TOOLTIP_LINE_LEFT, "FFFFFFFF")
         GameTooltip_AddLine(Localize("TALENT_NEXT_RANK"), TOOLTIP_LINE_LEFT, "FFFFFFFF")
-        GameTooltip_AddLine(GetSpellDescription(talent.nextRankSpell), TOOLTIP_LINE_LEFT, "FFFFD100")
+        GameTooltip_AddLine(GetSpellDescription(talent.nextRankSpell), TOOLTIP_LINE_LEFT, "FFFFD100", "description")
     end
 
     local spent = GetTalentPointsSpentInTab(selectedTab - 1)

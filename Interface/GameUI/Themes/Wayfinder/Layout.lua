@@ -176,6 +176,12 @@ function Wayfinder_ApplyLayout()
 	WayfinderPanel:CopyVisuals(SpellBook);
 	SetupMinimap();
 	SetupQuestTracker();
+	for _, tooltip in ipairs({ GameTooltip, ItemCompareTooltip }) do
+		WayfinderTooltip:CopyVisuals(tooltip);
+		tooltip:SetWidth(580);
+	end
+	TooltipMoneyText:SetProperty("TextColor", "FFB5A78B");
+	ItemCompareTooltipMoneyText:SetProperty("TextColor", "FFB5A78B");
 
 	WayfinderEmpty:CopyVisuals(GameMenuBar);
 	WayfinderEmpty:CopyVisuals(MenuBarButtons);

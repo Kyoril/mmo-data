@@ -278,7 +278,7 @@ function CharacterWindow_ArmorLabel_OnEnter(self)
     GameTooltip:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, self, 0);
     GameTooltip:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, self, 0);
 
-    GameTooltip_AddLine(Localize("ARMOR"), TOOLTIP_LINE_LEFT, "FFFFD100");
+    GameTooltip_AddLine(Localize("ARMOR"), TOOLTIP_LINE_LEFT, "FFFFD100", "title");
     GameTooltip_AddLine(string.format(Localize("ARMOR_DESCRIPTION"), unit:GetArmorReductionFactor() * 100.0), TOOLTIP_LINE_LEFT, "FFFFFFFF");
 
     GameTooltip:Show();
@@ -299,7 +299,7 @@ function CharacterWindow_DamageLabel_OnEnter(self)
     GameTooltip:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, self, 0);
     GameTooltip:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, self, 0);
 
-    GameTooltip_AddLine(Localize("DAMAGE"), TOOLTIP_LINE_LEFT, "FFFFD100");
+    GameTooltip_AddLine(Localize("DAMAGE"), TOOLTIP_LINE_LEFT, "FFFFD100", "title");
     GameTooltip_AddLine(Localize("CHARACTER_DAMAGE_DESCRIPTION"), TOOLTIP_LINE_LEFT, "FFFFFFFF");
 
     GameTooltip:Show();
@@ -315,7 +315,7 @@ function CharacterWindow_ShowStatTooltip(self, titleKey, lines)
     GameTooltip:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, self, 0);
     GameTooltip:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, self, 0);
 
-    GameTooltip_AddLine(Localize(titleKey), TOOLTIP_LINE_LEFT, "FFFFD100");
+    GameTooltip_AddLine(Localize(titleKey), TOOLTIP_LINE_LEFT, "FFFFD100", "title");
     for _, line in ipairs(lines) do
         GameTooltip_AddLine(line, TOOLTIP_LINE_LEFT, "FFFFFFFF");
     end
@@ -411,7 +411,7 @@ function CharacterWindow_AttackSpeedLabel_OnEnter(self)
     GameTooltip:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, self, 0);
     GameTooltip:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, self, 0);
 
-    GameTooltip_AddLine(Localize("ATTACK_SPEED"), TOOLTIP_LINE_LEFT, "FFFFD100");
+    GameTooltip_AddLine(Localize("ATTACK_SPEED"), TOOLTIP_LINE_LEFT, "FFFFD100", "title");
     GameTooltip_AddLine(Localize("CHARACTER_ATTACK_SPEED_DESCRIPTION"), TOOLTIP_LINE_LEFT, "FFFFFFFF");
 
     GameTooltip:Show();
@@ -441,7 +441,7 @@ function CharacterWindow_StatLabel_OnEnter(self, statId)
     end
 
     -- Add stat name as header
-    GameTooltip_AddLine(statName, TOOLTIP_LINE_LEFT, "FFFFD100");
+    GameTooltip_AddLine(statName, TOOLTIP_LINE_LEFT, "FFFFD100", "title");
 
     -- Gather increments from stats
     local healthIncrease = unit:GetHealthFromStat(statId);

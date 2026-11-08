@@ -5,9 +5,13 @@ TOOLTIP_LINE_RIGHT = 2
 
 TooltipHeight = 40
 
+local wayfinder = GameUITheme and GameUITheme.Wayfinder
+local lineInset = wayfinder and 12 or 8
+local lineGap = wayfinder and 6 or 8
+
 -- Horizontal space (in pixels) between the tooltip edge and the line text on each side.
--- Mirrors the LEFT/RIGHT anchor offsets of the lines container (8) plus the line frame (8).
-TOOLTIP_TEXT_PADDING = 16
+-- Mirrors the LEFT/RIGHT anchor offsets of the lines container plus the line frame inset.
+TOOLTIP_TEXT_PADDING = 8 + lineInset
 
 PowerTypeNames = {};
 PowerTypeNames[0] = "MANA";
@@ -55,6 +59,48 @@ local function ClearTooltip()
     end
 end
 
+local function ItemTitleColor(quality)
+    if wayfinder then
+        local colors = GameUITheme.TooltipQualityColors;
+        return colors[quality] or ItemQualityColors[quality];
+    end
+    return ItemQualityColors[quality];
+end
+
+local function StyleLine(frame, color, role)
+    if wayfinder then
+        if role == "title" then
+            frame:SetProperty("Font", "WayfinderTooltipTitleFont");
+            if color == "FFFFD100" then
+                color = "FFEBD1A0";
+            end
+        elseif role == "note" then
+            frame:SetProperty("Font", "WayfinderTooltipNoteFont");
+        end
+        if role == "description" then
+            color = "FFF0E6D3";
+        elseif role == "note" then
+            color = "FFA9B8C5";
+        else
+            color = color or "FFDBD9D2";
+        end
+    end
+    if color then
+        frame:SetProperty("Color", color);
+    end
+end
+
+local function AddTitleRule(tooltip, lines, title)
+    local rule = WayfinderTooltipDivider:Clone();
+    lines:AddChild(rule);
+    rule:SetHeight(2);
+    rule:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, title, 5);
+    rule:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, lineInset);
+    rule:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, -lineInset);
+    TooltipHeight = TooltipHeight + 7;
+    tooltip:SetHeight(TooltipHeight);
+end
+
 -- Adds one "+<value> <stat>" line per stat of an item (an ItemInfo or an ItemHandle). Attribute
 -- stats are named by the game data's attributes, all other stats by their localization key.
 function GameTooltip_AddItemStatLines(item)
@@ -73,7 +119,7 @@ function GameTooltip_AddItemStatLines(item)
 
         -- An attribute that no longer exists has no name and is skipped
         if statName ~= "" then
-            GameTooltip_AddLine(string.format("+%d %s", item:GetStatValue(i), statName), TOOLTIP_LINE_LEFT, "FF00FF00");
+            GameTooltip_AddLine(string.format("+%d %s", item:GetStatValue(i), statName), TOOLTIP_LINE_LEFT, wayfinder and "FF98D1A8" or "FF00FF00");
         end
     end
 end
@@ -82,9 +128,10 @@ function GameTooltip_Clear()
     ClearTooltip();
 end
 
-function GameTooltip_AddLine(line, alignment, color)
+function GameTooltip_AddLine(line, alignment, color, role)
     local tooltip = _G[tooltipTarget.frame];
     local GameTooltipLines = _G[tooltipTarget.lines];
+    local spacing = wayfinder and role == "description" and lineGap + 5 or lineGap;
 
 	-- Create a new button from the template and add it to the window
 	local lineFrame = GameTooltipLineTemplate:Clone();
@@ -92,23 +139,24 @@ function GameTooltip_AddLine(line, alignment, color)
 	GameTooltipLines:AddChild(lineFrame);
 
     if (GameTooltipLines:GetChildCount() > 1) then
-        lineFrame:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, GameTooltipLines:GetChild(GameTooltipLines:GetChildCount() - 2), 8);
+        lineFrame:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, GameTooltipLines:GetChild(GameTooltipLines:GetChildCount() - 2), spacing);
     else
         lineFrame:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, 8);
     end
     
-    lineFrame:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, 8);
-    lineFrame:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, -8);
+    lineFrame:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, lineInset);
+    lineFrame:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, -lineInset);
 
-    if ( color ~= nil ) then
-        lineFrame:SetProperty("Color", color);
-    end
+    StyleLine(lineFrame, color, role);
 
     local textHeight = lineFrame:GetTextHeight();
-    TooltipHeight = TooltipHeight + textHeight + 8;
+    TooltipHeight = TooltipHeight + textHeight + spacing;
     lineFrame:SetHeight(textHeight);
 
     tooltip:SetHeight(TooltipHeight);
+    if wayfinder and role == "title" then
+        AddTitleRule(tooltip, GameTooltipLines, lineFrame);
+    end
 end
 
 function GameTooltip_AddIconLine(line, icon, color)
@@ -124,26 +172,24 @@ function GameTooltip_AddIconLine(line, icon, color)
 	GameTooltipLines:AddChild(lineFrame);
 
 	if (GameTooltipLines:GetChildCount() > 1) then
-		lineFrame:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, GameTooltipLines:GetChild(GameTooltipLines:GetChildCount() - 2), 8);
+		lineFrame:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, GameTooltipLines:GetChild(GameTooltipLines:GetChildCount() - 2), lineGap);
 	else
 		lineFrame:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, 8);
 	end
 
-	lineFrame:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, 8);
-	lineFrame:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, -8);
+	lineFrame:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, lineInset);
+	lineFrame:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, -lineInset);
 
-	if (color ~= nil) then
-		textFrame:SetProperty("Color", color);
-	end
+	StyleLine(textFrame, color);
 
 	local lineHeight = math.max(iconFrame:GetHeight(), textFrame:GetTextHeight());
 	lineFrame:SetHeight(lineHeight);
 	textFrame:SetHeight(lineHeight);
-	TooltipHeight = TooltipHeight + lineHeight + 8;
+	TooltipHeight = TooltipHeight + lineHeight + lineGap;
 	tooltip:SetHeight(TooltipHeight);
 end
 
-function GameTooltip_AddDualLine(leftText, rightText, leftColor, rightColor)
+function GameTooltip_AddDualLine(leftText, rightText, leftColor, rightColor, role)
 	local tooltip = _G[tooltipTarget.frame];
 	local GameTooltipLines = _G[tooltipTarget.lines];
 
@@ -153,21 +199,16 @@ function GameTooltip_AddDualLine(leftText, rightText, leftColor, rightColor)
 	GameTooltipLines:AddChild(leftFrame);
 
     if (GameTooltipLines:GetChildCount() > 1) then
-        leftFrame:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, GameTooltipLines:GetChild(GameTooltipLines:GetChildCount() - 2), 8);
+        leftFrame:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, GameTooltipLines:GetChild(GameTooltipLines:GetChildCount() - 2), lineGap);
     else
         leftFrame:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, 8);
     end
     
-    -- Left frame spans full width, text is left-aligned
-    leftFrame:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, 8);
-    leftFrame:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, -8);
+    -- Begin with both captions spanning the row. Wayfinder reserves room for the right caption below.
+    leftFrame:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, lineInset);
+    leftFrame:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, -lineInset);
 
-    if ( leftColor ~= nil ) then
-        leftFrame:SetProperty("Color", leftColor);
-    end
-
-    local leftHeight = leftFrame:GetTextHeight();
-    leftFrame:SetHeight(leftHeight);
+    StyleLine(leftFrame, leftColor, role);
 
     -- Create right-aligned text frame on the same row
     local rightFrame = GameTooltipLineRightTemplate:Clone();
@@ -175,23 +216,32 @@ function GameTooltip_AddDualLine(leftText, rightText, leftColor, rightColor)
     GameTooltipLines:AddChild(rightFrame);
 
     -- Anchor to the same position as the left frame (same row)
-    -- Right frame also spans full width, but text is right-aligned
     rightFrame:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, leftFrame, 0);
-    rightFrame:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, 8);
-    rightFrame:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, -8);
+    rightFrame:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, lineInset);
+    rightFrame:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, -lineInset);
 
-    if ( rightColor ~= nil ) then
-        rightFrame:SetProperty("Color", rightColor);
+    StyleLine(rightFrame, rightColor, wayfinder and role == "title" and "note" or nil);
+    if wayfinder then
+        local rightWidth = math.min(rightFrame:GetTextWidth() + 12, tooltip:GetWidth() * 0.45);
+        rightFrame:ClearAnchor(AnchorPoint.LEFT);
+        rightFrame:SetWidth(rightWidth);
+        leftFrame:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, -lineInset - rightWidth);
     end
 
+    local leftHeight = leftFrame:GetTextHeight();
+    leftFrame:SetHeight(leftHeight);
     local rightHeight = rightFrame:GetTextHeight();
     rightFrame:SetHeight(rightHeight);
 
     -- Use the taller of the two text heights for the row
     local textHeight = math.max(leftHeight, rightHeight);
-    TooltipHeight = TooltipHeight + textHeight + 8;
-
+    TooltipHeight = TooltipHeight + textHeight + lineGap;
+    -- The next line anchors below the right-hand frame, even when the left text wrapped.
+    rightFrame:SetHeight(textHeight);
     tooltip:SetHeight(TooltipHeight);
+    if wayfinder and role == "title" then
+        AddTitleRule(tooltip, GameTooltipLines, rightFrame);
+    end
 end
 
 function GameTooltip_SetMoney(money)
@@ -239,7 +289,7 @@ local function SetupItemComparison(inventoryType, sourceItem)
 
     GameTooltip.compareInventoryType = inventoryType;
     GameTooltip.compareSourceItem = sourceItem;
-    GameTooltip_AddLine(Localize("ITEM_COMPARE_HINT"), TOOLTIP_LINE_LEFT, "FF808080");
+    GameTooltip_AddLine(Localize("ITEM_COMPARE_HINT"), TOOLTIP_LINE_LEFT, "FF808080", "note");
 end
 
 -- Formats a duration amount with one decimal, but drops a trailing ".0": 2 -> "2", 2.5 -> "2.5".
@@ -289,7 +339,7 @@ end
 -- tooltip without clearing it. When embedded is true the item is only a part of a bigger
 -- tooltip (e.g. the item a recipe creates), so the equipment comparison hint is left out.
 local function AppendItemTemplateLines(item, embedded)
-    GameTooltip_AddLine(item.name, TOOLTIP_LINE_LEFT, ItemQualityColors[item.quality]);
+    GameTooltip_AddLine(item.name, TOOLTIP_LINE_LEFT, ItemTitleColor(item.quality), "title");
 
     -- Binding line from static entry data
     local bonding = item.bonding;
@@ -372,7 +422,7 @@ local function AppendItemTemplateLines(item, embedded)
     -- Line 3: Description
     local description = item.description;
     if (description and description:len() > 0) then
-        GameTooltip_AddLine(description, TOOLTIP_LINE_LEFT, "FFFFD100");
+        GameTooltip_AddLine(description, TOOLTIP_LINE_LEFT, "FFFFD100", "description");
     end
 
     local maxDurability = item.maxDurability;
@@ -420,9 +470,9 @@ local function FillItemTooltip(item, header)
 
     ClearTooltip();
     if (header ~= nil) then
-        GameTooltip_AddLine(header, TOOLTIP_LINE_LEFT, "FF808080");
+        GameTooltip_AddLine(header, TOOLTIP_LINE_LEFT, "FF808080", "note");
     end
-    GameTooltip_AddLine(item:GetName(), TOOLTIP_LINE_LEFT, ItemQualityColors[item:GetQuality()]);
+    GameTooltip_AddLine(item:GetName(), TOOLTIP_LINE_LEFT, ItemTitleColor(item:GetQuality()), "title");
 
     -- Binding line: bound instance takes priority, otherwise fall back to entry hint
     if (item:IsBound()) then
@@ -509,7 +559,7 @@ local function FillItemTooltip(item, header)
     -- Line 3: Description
     local description = item:GetDescription();
     if (description and description:len() > 0) then
-        GameTooltip_AddLine(description, TOOLTIP_LINE_LEFT, "FFFFD100");
+        GameTooltip_AddLine(description, TOOLTIP_LINE_LEFT, "FFFFD100", "description");
     end
 
     local maxDurability = item:GetMaxDurability();
@@ -569,10 +619,10 @@ function GameTooltip_SetAura(spell)
         return
     end
     
-    GameTooltip_AddLine(spell.name, TOOLTIP_LINE_LEFT, "FFFFFFFF");
+    GameTooltip_AddLine(spell.name, TOOLTIP_LINE_LEFT, "FFFFFFFF", "title");
 
     -- Line 3: Description
-    GameTooltip_AddLine(GetSpellAuraText(spell), TOOLTIP_LINE_LEFT, "FFFFD100");
+    GameTooltip_AddLine(GetSpellAuraText(spell), TOOLTIP_LINE_LEFT, "FFFFD100", "description");
 end
 
 -- Shows a tooltip for an emote table ({ id, name, command, icon }) as returned by
@@ -584,7 +634,7 @@ function GameTooltip_SetEmote(emote)
         return
     end
 
-    GameTooltip_AddLine(emote.name, TOOLTIP_LINE_LEFT, "FFFFD100");
+    GameTooltip_AddLine(emote.name, TOOLTIP_LINE_LEFT, "FFFFD100", "title");
 
     if (emote.command ~= nil and emote.command ~= "") then
         GameTooltip_AddLine("/" .. emote.command, TOOLTIP_LINE_LEFT, "FF808080");
@@ -666,13 +716,14 @@ function GameTooltip_SetSpell(spell)
             spell.name,
             string.format(Localize("SPELL_RANK_FORMAT"), spell.rank),
             "FFFFD100",
-            "FF808080"
+            "FF808080",
+            "title"
         );
     elseif (IsRacialSpell(spell)) then
         -- Racial abilities have no ranks; label them in the rank's place instead
-        GameTooltip_AddDualLine(spell.name, Localize("RACIAL"), "FFFFD100", "FF808080");
+        GameTooltip_AddDualLine(spell.name, Localize("RACIAL"), "FFFFD100", "FF808080", "title");
     else
-        GameTooltip_AddLine(spell.name, TOOLTIP_LINE_LEFT, "FFFFD100");
+        GameTooltip_AddLine(spell.name, TOOLTIP_LINE_LEFT, "FFFFD100", "title");
     end
 
     GameTooltip_AddSpellDetails(spell);
@@ -726,7 +777,7 @@ function GameTooltip_AddSpellDetails(spell)
     end
 
     -- Line 3: Description
-    GameTooltip_AddLine(GetSpellDescription(spell), TOOLTIP_LINE_LEFT, "FFFFD100");
+    GameTooltip_AddLine(GetSpellDescription(spell), TOOLTIP_LINE_LEFT, "FFFFD100", "description");
 
     AppendRecipeLines(spell);
 end

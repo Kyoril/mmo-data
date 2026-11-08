@@ -137,10 +137,10 @@ function PlayerExperienceBar_OnEnter(self)
 	GameTooltip:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.TOP, self, -16);
 	GameTooltip:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, self, 0);
 
-	GameTooltip_AddLine(Localize("XPBAR_TOOLTIP_TITLE"), TOOLTIP_LINE_LEFT, "FFFFD100");
+	GameTooltip_AddLine(Localize("XPBAR_TOOLTIP_TITLE"), TOOLTIP_LINE_LEFT, "FFFFD100", "title");
 	GameTooltip_AddLine(string.format(Localize("XPBAR_TOOLTIP_LEVEL"), player:GetLevel()), TOOLTIP_LINE_LEFT);
 	GameTooltip_AddLine(string.format(Localize("XPBAR_TOOLTIP_XP"), xp, nextLevelXp, xp / nextLevelXp * 100.0), TOOLTIP_LINE_LEFT);
-	GameTooltip_AddLine(Localize("XPBAR_TOOLTIP_DESC"), TOOLTIP_LINE_LEFT, "FFFFD100");
+	GameTooltip_AddLine(Localize("XPBAR_TOOLTIP_DESC"), TOOLTIP_LINE_LEFT, "FFFFD100", "description");
 
 	GameTooltip:Show();
 end
@@ -165,14 +165,14 @@ function PlayerClassExperienceBar_OnEnter(self)
 			GameTooltip:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.TOP, self, -16);
 			GameTooltip:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, self, 0);
 
-			GameTooltip_AddLine(Localize("CLASSXPBAR_TOOLTIP_TITLE"), TOOLTIP_LINE_LEFT, "FFFFD100");
+			GameTooltip_AddLine(Localize("CLASSXPBAR_TOOLTIP_TITLE"), TOOLTIP_LINE_LEFT, "FFFFD100", "title");
 			GameTooltip_AddDualLine(className, string.format(Localize("CLASS_RANK_FORMAT"), classLevel, maxClassLevel), "FFFFFFFF", "FF808080");
 			if (xpToNextLevel > 0) then
 				GameTooltip_AddLine(string.format(Localize("XPBAR_TOOLTIP_XP"), classXp, xpToNextLevel, classXp / xpToNextLevel * 100.0), TOOLTIP_LINE_LEFT);
 			else
 				GameTooltip_AddLine(Localize("CLASS_RANK_MAX"), TOOLTIP_LINE_LEFT);
 			end
-			GameTooltip_AddLine(Localize("CLASSXPBAR_TOOLTIP_DESC"), TOOLTIP_LINE_LEFT, "FFFFD100");
+			GameTooltip_AddLine(Localize("CLASSXPBAR_TOOLTIP_DESC"), TOOLTIP_LINE_LEFT, "FFFFD100", "description");
 
 			GameTooltip:Show();
 			return;

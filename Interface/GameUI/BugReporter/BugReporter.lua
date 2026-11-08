@@ -77,7 +77,7 @@ local function BugReporter_SetTooltipSubject(subject)
 		return;
 	end
 
-	GameTooltip_AddLine(string.format(Localize("BUGREPORT_TOOLTIP_HINT"), key), TOOLTIP_LINE_LEFT, BUGREPORT_HINT_COLOR);
+	GameTooltip_AddLine(string.format(Localize("BUGREPORT_TOOLTIP_HINT"), key), TOOLTIP_LINE_LEFT, BUGREPORT_HINT_COLOR, "note");
 end
 
 ------------------------------------------------------------------------------------------------
