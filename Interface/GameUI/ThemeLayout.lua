@@ -96,6 +96,9 @@ function GameUI_ApplyThemeLayout()
 		PlayerExperienceBar:SetProperty("ProgressInset", tostring(GameUITheme.ExperienceProgressInset));
 		PlayerClassExperienceBar:SetProperty("ProgressInset", tostring(GameUITheme.ExperienceProgressInset));
 	end
+	if GameUITheme.Wayfinder then
+		Wayfinder_ApplyLayout();
+	end
 	GameMenuBar_UpdateExperienceBarLayout();
 end
 

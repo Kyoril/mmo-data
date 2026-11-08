@@ -12,7 +12,8 @@ FRIEND_COMMAND_RESULTS[8] = "FRIEND_DISABLED"
 -- Server subsystem that switches the friend list on and off.
 local FRIENDS_SUBSYSTEM = "FRIENDS";
 
-local FRIEND_LIST_MAX_DISPLAY = 12
+local FRIEND_LIST_MAX_DISPLAY = (GameUITheme and GameUITheme.FriendsVisibleRows) or 12
+local groupInviteButton
 local FRIEND_LIST_OFFSET = 0
 
 -- Selection is tracked by friend name (not list index) so it survives the
@@ -115,6 +116,14 @@ function FriendsFrame_OnLoad(self)
         end);
     end
 
+    if GameUITheme and GameUITheme.Wayfinder then
+        groupInviteButton = WayfinderSocial_Setup(self, function()
+            local friend = FriendsList_FindFriendByName(FRIEND_SELECTED_NAME);
+            if friend and friend.online then
+                InviteByName(friend.name);
+            end
+        end);
+    end
     FriendsFrame_UpdateActionButtons();
 end
 
@@ -218,6 +227,9 @@ function FriendsList_Update()
         end
     end
 
+    if groupInviteButton then
+        WayfinderSocial_Update(FRIEND_DATA.friends, FRIEND_LIST_OFFSET);
+    end
     FriendsFrame_UpdateActionButtons();
 end
 
@@ -252,7 +264,11 @@ function FriendsFrame_UpdateActionButtons()
 
     FriendRemoveButton:SetEnabled(hasSelection);
     local selectedFriend = hasSelection and FriendsList_FindFriendByName(FRIEND_SELECTED_NAME);
-    FriendWhisperButton:SetEnabled(selectedFriend ~= nil and selectedFriend ~= false and selectedFriend.online);
+    local canContact = selectedFriend and selectedFriend.online or false;
+    FriendWhisperButton:SetEnabled(canContact);
+    if groupInviteButton then
+        groupInviteButton:SetEnabled(canContact);
+    end
     FriendInviteButton:SetEnabled(true);
 end
 
@@ -263,12 +279,10 @@ end
 function FriendsFrame_WhisperClicked(self)
     local friend = FriendsList_FindFriendByName(FRIEND_SELECTED_NAME);
     if friend and friend.online then
-        ChatFrame_WhisperTarget = FRIEND_SELECTED_NAME;
+        ChatFrame_OpenChat();
+        ChatFrame_WhisperTarget = friend.name;
         ChatType = "WHISPER";
         ChatEdit_UpdateHeader();
-        if not ChatInputFrame:IsVisible() then
-            ChatFrame_OpenChat();
-        end
     end
 end
 

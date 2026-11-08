@@ -3,11 +3,14 @@
 The active appearance is selected at the top of `GameUI.toc`. Load **exactly one** theme before `GameTemplates.xml`:
 
 ```text
-Themes/BlueGold/Theme.toc
+Wayfinder.toc
+#Themes/BlueGold/Theme.toc
 #Themes/Legacy/Theme.toc
 ```
 
-Reverse those comments to restore the old appearance, then restart the client or reload its complete UI. This is a load-time choice, not a live per-window toggle. GlueUI/login/character selection remain separate.
+Comment the active entry and uncomment another to switch, then restart the client or reload the full UI. GlueUI has its own theme selector.
+
+Wayfinder loads the BlueGold base and then the experimental Social, HUD and window styles. Its Lua layout uses the frame UI's `CopyVisuals` binding, so rebuild the client before selecting it for the first time. Recreate the geometric HTEX assets with `py -3 tools/ui_theme/wayfinder_art.py` from the main checkout. Preview the populated Social panel and two action bars with `tools/ui_test/ui_test.ps1 shot -Scenario wayfinder`.
 
 The first migration requires rebuilding the client executable in the configuration you launch (normally **Debug** in Visual Studio). Both themes use the new `Visual inherits` loader support; switching to Legacy does not make these refactored layouts compatible with an older executable. An old loader silently ignores that attribute, leaving icons/models/maps visible but most HUD chrome missing. After the initial rebuild, theme-only XML/art changes need only a UI reload or restart.
 

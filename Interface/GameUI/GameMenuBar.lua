@@ -293,7 +293,9 @@ function AddMenuBarButton(icon, callback, tooltipKey, bindingName, badgeTooltipK
 	local childCount = MenuBarButtons:GetChildCount();
 	local menuWidth = childCount * (button:GetWidth() + MENUBAR_H_PADDING) + 24;
 	MenuBarButtons:SetWidth(menuWidth);
-	GameMenuBar:SetWidth(1488 + menuWidth);
+	if not (GameUITheme and GameUITheme.Wayfinder) then
+		GameMenuBar:SetWidth(1488 + menuWidth);
+	end
 	for i = 0, childCount - 1 do
 		local child = MenuBarButtons:GetChild(i);
 		child:ClearAnchors();

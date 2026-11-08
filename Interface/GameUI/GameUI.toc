@@ -1,5 +1,6 @@
 # Load exactly one theme, before the shared templates and windows.
-Themes/BlueGold/Theme.toc
+Wayfinder.toc
+#Themes/BlueGold/Theme.toc
 #Themes/Legacy/Theme.toc
 GameTemplates.xml
 GameParent.xml

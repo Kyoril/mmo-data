@@ -596,8 +596,9 @@ function SetLeftFrame(frame)
 	end	
 
 	if ( frame ) then
-		frame:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, GameParent, 0.0);
-		frame:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, GameParent, 300.0);
+		local social = GameUITheme and GameUITheme.Wayfinder and frame == FriendsFrame;
+		frame:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, GameParent, social and GameUITheme.SocialLeftOffset or 0);
+		frame:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, GameParent, social and GameUITheme.SocialTopOffset or 300);
 		frame:Show();
 		if (GameParent.center) then
 			GameParent.center:SetAnchor(AnchorPoint.LEFT, AnchorPoint.RIGHT, frame, 32.0);

@@ -1292,4 +1292,8 @@ strings =
 	(key = "MINIMAP_COMPASS_SOUTH", string = "S")
 	(key = "MINIMAP_COMPASS_WEST", string = "W")
 	(key = "NPC_DIALOG_SERVICES", string = "Gespräche und Dienste")
+	(key = "WAYFINDER_SOCIAL", string = "Soziales")
+	(key = "WAYFINDER_WHISPER", string = "Flüstern")
+	(key = "WAYFINDER_INVITE", string = "Einladen")
+	(key = "WAYFINDER_REMOVE", string = "Entfernen")
 }

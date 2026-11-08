@@ -33,6 +33,7 @@
         <!-- Child 0: Status dot — large ● character colored by online state -->
         <Frame name="FriendStatusDot" renderer="DefaultRenderer">
             <Property name="Clickable" value="false" />
+            <Property name="Icon" />
             <Property name="StatusColor" value="FFAAA396" />
             <Area><Anchor point="LEFT" offset="12" /><Anchor point="V_CENTER" /><Size><AbsDimension x="28" y="28" /></Size></Area>
             <Visual inherits="ThemeFriendStatusDotVisual" />

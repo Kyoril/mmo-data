@@ -1,0 +1,2 @@
+Themes/BlueGold/Theme.toc
+Themes/Wayfinder/Theme.toc

@@ -1210,4 +1210,8 @@ strings =
 	(key = "MINIMAP_COMPASS_SOUTH", string = "Ю")
 	(key = "MINIMAP_COMPASS_WEST", string = "З")
 	(key = "NPC_DIALOG_SERVICES", string = "Разговор и услуги")
+	(key = "WAYFINDER_SOCIAL", string = "Общение")
+	(key = "WAYFINDER_WHISPER", string = "Шёпот")
+	(key = "WAYFINDER_INVITE", string = "Пригласить")
+	(key = "WAYFINDER_REMOVE", string = "Удалить")
 }

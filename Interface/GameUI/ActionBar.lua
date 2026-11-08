@@ -60,6 +60,11 @@ function ActionBar_UpdateSecondBarLayout(bar)
         return;
     end
 
+    if GameUITheme and GameUITheme.Wayfinder then
+        Wayfinder_UpdateActionBarLayout(bar);
+        return;
+    end
+
     if ExperienceDock ~= nil and ExperienceDock:IsVisible() then
         bar:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.TOP, ExperienceDock, -ACTION_BAR_2_GAP);
     else

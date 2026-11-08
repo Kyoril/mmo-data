@@ -112,12 +112,19 @@ function TargetFrame_Update()
         TargetPortraitLevel:SetText(tostring(target:GetLevel()));
         TargetPortraitModel:SetUnit("target");
 
-        if (target:IsFriendly()) then
+        if GameUITheme and GameUITheme.Wayfinder then
+            TargetName:SetProperty("TextColor", "FFF3EAD8");
+        elseif (target:IsFriendly()) then
             TargetName:SetProperty("TextColor", "FF90CF8A");
         elseif (target:IsHostile()) then
             TargetName:SetProperty("TextColor", "FFE94B38");
         else
             TargetName:SetProperty("TextColor", "FFF0C632");
+        end
+
+        if GameUITheme and GameUITheme.Wayfinder then
+            local healthColor = target:IsHostile() and "FFE17C6D" or (target:IsFriendly() and "FF76BC93" or "FFD6B677");
+            TargetHealthBar:SetProperty("ProgressColor", healthColor);
         end
 
         -- Update progress bars
