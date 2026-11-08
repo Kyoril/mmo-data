@@ -1,9 +1,9 @@
 <?xml version="1.0" ?>
 <UiLayout xmlns="http://www.w3schools.com/Ui">
 	<Font name="WayfinderTrackerHeadingFont" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="29" outline="0" shadowX="1" shadowY="1" />
-	<Font name="WayfinderTrackerDetailFont" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="23" outline="0" shadowX="1" shadowY="1" />
+	<Font name="WayfinderTrackerDetailFont" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="20" outline="0" shadowX="1" shadowY="1" />
 	<Font name="WayfinderTrackerTitleFont" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="26" outline="0" shadowX="1" shadowY="1" />
-	<Font name="WayfinderChatFont" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="26" outline="1" shadowX="1" shadowY="1" />
+	<Font name="WayfinderChatFont" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="23" outline="1" shadowX="1" shadowY="1" />
 	<Font name="WayfinderXPFont" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="20" outline="0" shadowX="1" shadowY="1" />
 
 	<Frame name="WayfinderEmpty">
@@ -146,63 +146,6 @@
 				<Layer>
 					<Section section="Base" />
 					<Section section="Disabled" />
-				</Layer>
-			</StateImagery>
-		</Visual>
-	</Frame>
-
-	<Frame name="WayfinderTab">
-		<Visual>
-			<ImagerySection name="Base" />
-			<ImagerySection name="Hover">
-				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/Underline.htex" borderSize="12" leftSize="12" rightSize="12" topSize="12" bottomSize="12" tint="FFFFFFFF" />
-			</ImagerySection>
-			<ImagerySection name="Pushed" />
-			<ImagerySection name="Text">
-				<TextComponent color="FFE5D3AD" horzAlign="CENTER" vertAlign="CENTER" />
-			</ImagerySection>
-			<ImagerySection name="Disabled">
-				<TextComponent color="FF78818A" horzAlign="CENTER" vertAlign="CENTER" />
-			</ImagerySection>
-			<StateImagery name="Normal">
-				<Layer>
-					<Section section="Base" />
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Hovered">
-				<Layer>
-					<Section section="Base" />
-					<Section section="Hover" />
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Pushed">
-				<Layer>
-					<Section section="Base" />
-					<Section section="Pushed" />
-					<Section section="Text" />
-				</Layer>
-			</StateImagery>
-			<StateImagery name="Disabled">
-				<Layer>
-					<Section section="Base" />
-					<Section section="Disabled" />
-				</Layer>
-			</StateImagery>
-		</Visual>
-	</Frame>
-
-	<Frame name="WayfinderActiveTab" renderer="DefaultRenderer">
-		<Property name="Clickable" value="false" />
-		<Visual>
-			<ImagerySection name="Tab">
-				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/Underline.htex" borderSize="12" leftSize="12" rightSize="12" topSize="12" bottomSize="12" tint="FFFFFFFF" />
-				<TextComponent color="FFF1DFB8" horzAlign="CENTER" vertAlign="CENTER" />
-			</ImagerySection>
-			<StateImagery name="Enabled">
-				<Layer>
-					<Section section="Tab" />
 				</Layer>
 			</StateImagery>
 		</Visual>
@@ -381,7 +324,18 @@
 			</StateImagery>
 		</Visual>
 	</Frame>
-	<Frame name="WayfinderTrackerInk">
+	<Frame name="WayfinderGuildWell">
+		<Visual>
+			<ImagerySection name="Well">
+				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/SocketRim.htex" borderSize="14" leftSize="40" rightSize="40" topSize="40" bottomSize="40" tint="88B4A993" />
+			</ImagerySection>
+			<StateImagery name="Enabled"><Layer><Section section="Well" /></Layer></StateImagery>
+		</Visual>
+	</Frame>
+
+	<Frame name="WayfinderTrackerInk" renderer="DefaultRenderer">
+		<Property name="Clickable" value="false" />
+		<Property name="MousePassThrough" value="true" />
 		<Visual>
 			<ImagerySection name="Ink">
 				<ImageComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/TrackerInk.htex" />
@@ -390,15 +344,15 @@
 		</Visual>
 	</Frame>
 
-	<Frame name="WayfinderTrackerTrail" renderer="DefaultRenderer" frameLevel="-1">
+	<Frame name="WayfinderTrackerSpine" renderer="DefaultRenderer">
 		<Property name="Clickable" value="false" />
 		<Property name="MousePassThrough" value="true" />
 		<Property name="Visible" value="false" />
 		<Visual>
-			<ImagerySection name="Trail">
-				<ImageComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/TrackerTrail.htex" />
+			<ImagerySection name="Spine">
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="A6A48250" />
 			</ImagerySection>
-			<StateImagery name="Enabled"><Layer><Section section="Trail" /></Layer></StateImagery>
+			<StateImagery name="Enabled"><Layer><Section section="Spine" /></Layer></StateImagery>
 		</Visual>
 	</Frame>
 

@@ -51,6 +51,28 @@ end
 
 -- Pool of pre-built slot data (filled in OnLoad)
 local slots = {}   -- slots[i] = { toggle, title, objs = {o1..o4} }
+local backdrop
+local spine
+
+local function UpdateBackdrop(frame, elapsed)
+    local hovered = frame:IsHovered()
+    if not hovered then
+        for i = 0, frame:GetChildCount() - 1 do
+            if frame:GetChild(i):IsHovered() then
+                hovered = true
+                break
+            end
+        end
+    end
+
+    local opacity = backdrop:GetOpacity(false)
+    local target = hovered and style.hoverBackdropOpacity or 0
+    if opacity < target then
+        backdrop:SetOpacity(math.min(target, opacity + elapsed * 4))
+    elseif opacity > target then
+        backdrop:SetOpacity(math.max(target, opacity - elapsed * 3))
+    end
+end
 
 -- Keeps the tracker below the minimap without ever letting it rise into the aura rows, which
 -- share this corner of the screen: the bar sits left of the minimap, but the tracker is wider
@@ -80,10 +102,6 @@ function QuestTracker_OnLoad(self)
             s.objs[oi] = _G["QuestTrackerObj" .. qi .. "_" .. oi]
         end
         if style then
-            s.trail = WayfinderTrackerTrail:Clone()
-            self:AddChild(s.trail)
-            s.trail:SetWidth(3)
-            s.trail:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, self, PAD + 15)
             WayfinderTrackerGlyph:CopyVisuals(s.toggle)
             WayfinderTrackerGlyph:CopyVisuals(s.collapse)
             WayfinderTrackerTitle:CopyVisuals(s.title)
@@ -95,6 +113,21 @@ function QuestTracker_OnLoad(self)
             end
         end
         slots[qi] = s
+    end
+
+    if style then
+        backdrop = WayfinderTrackerInk:Clone()
+        backdrop:SetFrameLevel(-2)
+        self:AddChild(backdrop)
+        backdrop:SetOpacity(0)
+        for _, point in ipairs({ AnchorPoint.TOP, AnchorPoint.LEFT, AnchorPoint.BOTTOM, AnchorPoint.RIGHT }) do
+            backdrop:SetAnchor(point, point, self, 0)
+        end
+        spine = WayfinderTrackerSpine:Clone()
+        spine:SetFrameLevel(-1)
+        self:AddChild(spine)
+        spine:SetWidth(2)
+        spine:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, self, PAD + 15)
     end
 
     self:RegisterEvent("QUEST_LOG_UPDATE", QuestTracker_Refresh)
@@ -143,7 +176,6 @@ function QuestTracker_Refresh()
         s.toggle:Hide()
         s.collapse:Hide()
         s.title:Hide()
-        if s.trail then s.trail:Hide() end
         for oi = 1, MAX_OBJS do s.objs[oi]:Hide() end
     end
 
@@ -158,6 +190,7 @@ function QuestTracker_Refresh()
     end
 
     if #questList == 0 then
+        if backdrop then backdrop:SetOpacity(0) end
         QuestTrackerFrame:Hide()
         return
     end
@@ -170,14 +203,13 @@ function QuestTracker_Refresh()
     local titleW = frameW - PAD * 2 - TITLE_H * 2   -- width left for title text (TITLE_H reserved for toggle btn)
     local objW   = frameW - PAD * 2 - OBJ_INDENT
 
-    local offsetY = 72
+    local offsetY = style and style.headingHeight or 72
     local slotIdx = 0
 
     for _, entry in ipairs(questList) do
         if slotIdx >= MAX_QUESTS then break end
         slotIdx = slotIdx + 1
 
-        local rowTop = offsetY
         local s      = slots[slotIdx]
         s.questId = entry.id
         local status = entry.status
@@ -293,13 +325,6 @@ function QuestTracker_Refresh()
             end
         end
 
-        if s.trail and offsetY > rowTop + titleH then
-            local trailTop = rowTop + 30
-            s.trail:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, QuestTrackerFrame, trailTop)
-            s.trail:SetHeight(offsetY - trailTop - 4)
-            s.trail:Show()
-        end
-
         if slotIdx < #questList and slotIdx < MAX_QUESTS then
             offsetY = offsetY + QUEST_GAP
         end
@@ -310,13 +335,23 @@ function QuestTracker_Refresh()
         QuestLogSelectQuest(selectedQuest)
     end
 
-    -- Resize panel and show
-    QuestTrackerFrame:SetHeight(offsetY + PAD)
+    if spine then
+        if slotIdx > 1 then
+            spine:SetAnchor(AnchorPoint.TOP, AnchorPoint.V_CENTER, slots[1].toggle, 0)
+            spine:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.V_CENTER, slots[slotIdx].toggle, 0)
+            spine:Show()
+        else
+            spine:Hide()
+        end
+    end
+
+    QuestTrackerFrame:SetHeight(offsetY + (style and style.bottomPadding or PAD))
     QuestTrackerFrame:Show()
 end
 
 -- Periodically refreshes the tracker so active quest timers count down live.
 function QuestTracker_OnUpdate(self, elapsed)
+    if backdrop then UpdateBackdrop(self, elapsed) end
     timerAccum = timerAccum + elapsed
     if timerAccum < 1.0 then
         return

@@ -11,6 +11,9 @@ GUILD_COMMAND_RESULTS[7] = "GUILD_DISABLED";
 local GUILD_SUBSYSTEM = "GUILD";
 
 local GUILD_ROSTER_MAX_DISPLAY = 12;
+local wayfinder = GameUITheme and GameUITheme.Wayfinder;
+local onlineNameColor = wayfinder and "FFF3EAD8" or "FFF3CF50";
+local onlineStatusColor = wayfinder and "FF9AD2A3" or "FF86DE56";
 local guildOffset = 0;
 local guildSelectedName;
 local guildPendingRemoval;
@@ -113,7 +116,7 @@ function GuildFrame_UpdateActionButtons()
 		UserDescription:SetText(string.format(Localize("GUILD_PLAYER_DESCRIPTION"), member.level, member.raceName, member.className));
 		UserRank:SetText(string.format(Localize("GUILD_PLAYER_RANK"), member.rank));
 		UserStatus:SetText(Localize(member.online and "FRIEND_ONLINE" or "FRIEND_OFFLINE"));
-		UserStatus:SetProperty("TextColor", member.online and "FF86DE56" or "FFAAA396");
+		UserStatus:SetProperty("TextColor", member.online and onlineStatusColor or "FFAAA396");
 	else
 		guildSelectedName = nil;
 		GuildMemberDetails:Hide();
@@ -156,11 +159,11 @@ function GuildRoster_Update()
 		row:SetChecked(member ~= nil and member.name == guildSelectedName);
 		if member then
 			row:GetChild(0):SetText(member.name);
-			row:GetChild(0):SetProperty("TextColor", member.status == 1 and "FFF3CF50" or "FFBDB6A8");
+			row:GetChild(0):SetProperty("TextColor", member.status == 1 and onlineNameColor or "FFBDB6A8");
 			row:GetChild(1):SetText(tostring(member.level));
 			row:GetChild(2):SetText(member.rank);
 			row:GetChild(3):SetText(Localize(member.status == 1 and "FRIEND_ONLINE" or "FRIEND_OFFLINE"));
-			row:GetChild(3):SetProperty("TextColor", member.status == 1 and "FF86DE56" or "FFAAA396");
+			row:GetChild(3):SetProperty("TextColor", member.status == 1 and onlineStatusColor or "FFAAA396");
 			row:Show();
 		else row:Hide(); end
 	end

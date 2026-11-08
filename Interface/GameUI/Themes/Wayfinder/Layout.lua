@@ -111,8 +111,7 @@ local function SetupMinimap()
 end
 
 local function SetupQuestTracker()
-	WayfinderTrackerInk:CopyVisuals(QuestTrackerFrame);
-	QuestTrackerFrame:SetWidth(624);
+	QuestTrackerFrame:SetWidth(600);
 	QuestTrackerHeading:SetProperty("TextColor", "FFE4C38A");
 	QuestTrackerHeading:SetProperty("Font", "WayfinderTrackerHeadingFont");
 	QuestTrackerHeadingRule:SetHeight(3);
@@ -124,6 +123,38 @@ local function SetupQuestTracker()
 		expand = Wayfinder_Art("GlyphPlus"),
 		collapse = Wayfinder_Art("GlyphMinus"),
 	};
+end
+
+local function SetupGuild()
+	WayfinderPanel:CopyVisuals(GuildFrame);
+	WayfinderEmpty:CopyVisuals(GuildActionButtonsFrame);
+	for _, well in ipairs({ GuildInfoFrame, GuildRosterFrame, GuildDetailsPanel }) do
+		WayfinderGuildWell:CopyVisuals(well);
+	end
+	for _, button in ipairs({
+		GuildEditMOTDButton, GuildInviteButton, GuildWhisperButton, GuildGroupButton,
+		UserPromoteButton, UserDemoteButton, UserKickButton,
+	}) do
+		WayfinderButton:CopyVisuals(button);
+	end
+	local columnLeft = { 28, 268, 362, 632 };
+	for i, heading in ipairs({ GuildHeaderName, GuildHeaderLevel, GuildHeaderRank, GuildHeaderStatus }) do
+		WayfinderMenuRow:CopyVisuals(heading);
+		heading:SetProperty("Font", "SmallLabelFont");
+		heading:SetWidth(heading:GetWidth() + 18);
+		-- The Wayfinder menu caption has a left inset. Match it to the roster columns.
+		heading:SetAnchor(A.LEFT, A.LEFT, GuildRosterFrame, columnLeft[i] - 18);
+	end
+	for i = 0, GuildRosterListContent:GetChildCount() - 1 do
+		WayfinderFriendRow:CopyVisuals(GuildRosterListContent:GetChild(i));
+	end
+	GuildMOTDHeader:SetProperty("TextColor", "FFDFBF85");
+	UserName:SetProperty("TextColor", "FFF1DFBE");
+	local divider = WayfinderRule:Clone();
+	GuildActionButtonsFrame:AddChild(divider);
+	Span(divider, GuildActionButtonsFrame, 20);
+	divider:SetAnchor(A.TOP, A.TOP, GuildActionButtonsFrame, 0);
+	divider:SetHeight(2);
 end
 
 function Wayfinder_ApplyLayout()
@@ -139,7 +170,7 @@ function Wayfinder_ApplyLayout()
 		end
 	end
 	WayfinderPanel:CopyVisuals(FriendsFrame);
-	WayfinderPanel:CopyVisuals(GuildFrame);
+	SetupGuild();
 	WayfinderPanel:CopyVisuals(CharacterWindow);
 	WayfinderPanel:CopyVisuals(QuestLogFrame);
 	WayfinderPanel:CopyVisuals(SpellBook);

@@ -26,23 +26,10 @@ local function AddLabel(parent, key)
 end
 
 function WayfinderSocial_Setup(window, inviteClicked)
-	window:SetHeight(1160);
+	window:SetHeight(1080);
 	local title = window:GetChild(0);
 	title:SetText(Localize("WAYFINDER_SOCIAL"));
-	local friendsTab = WayfinderActiveTab:Clone();
-	friendsTab:SetProperty("Font", "DefaultSmall");
-	friendsTab:SetText(Localize("FRIENDS"));
-	window:AddChild(friendsTab);
-	Place(friendsTab, window, 40, 130, 202, 58);
-
-	local guildTab = GlueButton:Clone();
-	window:AddChild(guildTab);
-	WayfinderTab:CopyVisuals(guildTab);
-	guildTab:SetText(Localize("BINDING_TOGGLEGUILD"));
-	guildTab:SetClickedHandler(GuildFrame_Toggle);
-	Place(guildTab, window, 252, 130, 202, 58);
-
-	FriendListSummary:SetAnchor(A.TOP, A.BOTTOM, friendsTab, 24);
+	FriendListSummary:SetAnchor(A.TOP, A.BOTTOM, title, 20);
 	FriendListSummary:SetProperty("TextColor", "FFADB7BD");
 	FriendListEmptyLabel:SetAnchor(A.RIGHT, A.RIGHT, FriendListFrame, -48);
 	WayfinderEmpty:CopyVisuals(FriendListFrame);
