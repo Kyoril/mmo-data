@@ -3,7 +3,10 @@ lastMinimapTimeHour = -1;
 lastMinimapTimeMinute = -1;
 
 function Minimap_OnLoad(self)
-    if GameUITheme and GameUITheme.MinimapUseTextZoomIcons then
+    if GameUITheme and GameUITheme.Wayfinder then
+        MinimapZoomIn:SetProperty("Icon", Wayfinder_Art("GlyphPlus"));
+        MinimapZoomOut:SetProperty("Icon", Wayfinder_Art("GlyphMinus"));
+    elseif GameUITheme and GameUITheme.MinimapUseTextZoomIcons then
         MinimapZoomIn:SetProperty("Icon", "");
         MinimapZoomOut:SetProperty("Icon", "");
         MinimapZoomIn:SetProperty("Font", "CharacterAttributeButtonFont");
@@ -44,10 +47,11 @@ function Minimap_OnPartyPing()
 end
 
 function Minimap_UpdateDayNightIcon(hour)
-    if hour >= 21 or hour < 5 then
-        MinimapDayNight:SetProperty("Icon", "Interface/Icons/MinimapNight.htex");
+    local night = hour >= 21 or hour < 5;
+    if GameUITheme and GameUITheme.Wayfinder then
+        MinimapDayNight:SetProperty("Icon", Wayfinder_Art(night and "GlyphMoon" or "GlyphSun"));
     else
-        MinimapDayNight:SetProperty("Icon", "Interface/Icons/MinimapDay.htex");
+        MinimapDayNight:SetProperty("Icon", night and "Interface/Icons/MinimapNight.htex" or "Interface/Icons/MinimapDay.htex");
     end
 end
 
@@ -57,13 +61,7 @@ function Minimap_UpdateTime()
 
     -- Only update text if time changed to not stress the UI
     if hour ~= lastMinimapTimeHour or minute ~= lastMinimapTimeMinute then
-        -- If hour just passed 5, it's sunrise
-        if hour >= 21 and lastMinimapTimeHour < 21 then
-            -- If hour just passed 21, it's sunset
-            -- TODO: Play night sound
-            Minimap_UpdateDayNightIcon(hour);
-        elseif hour >= 5 and lastMinimapTimeHour < 5 then
-            -- TODO: Play sunrise sound
+        if hour ~= lastMinimapTimeHour then
             Minimap_UpdateDayNightIcon(hour);
         end
 
@@ -99,11 +97,18 @@ function Minimap_Toggle(self)
     if MinimapContent:IsVisible() then
         MinimapContent:Hide();
         MinimapTime:Hide();
-        Minimap:SetHeight(56);
+        if not (GameUITheme and GameUITheme.Wayfinder) then
+            Minimap:SetHeight(56);
+        end
     else
         MinimapContent:Show();
         MinimapTime:Show();
-        Minimap:SetHeight(512);
+        if not (GameUITheme and GameUITheme.Wayfinder) then
+            Minimap:SetHeight(512);
+        end
+    end
+    if GameUITheme and GameUITheme.Wayfinder then
+        Wayfinder_UpdateMinimapLayout();
     end
 
     -- The quest tracker hangs below the minimap, so it has to re-anchor: collapsed, the

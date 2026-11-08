@@ -276,7 +276,7 @@ function AddMenuBarButton(icon, callback, tooltipKey, bindingName, badgeTooltipK
 	-- Create a new button from the template and add it to the window
 	local button = GameMenuBarImageButton:Clone();
 	button:SetText(Localize(icon));
-	button:SetProperty("Icon", icon);
+	button:SetProperty("Icon", GameUITheme and GameUITheme.Wayfinder and Wayfinder_MenuIcon(icon) or icon);
 	button:SetClickedHandler(callback);
 
 	-- Remember tooltip metadata for the shared hover handler. Uses userData (C++-backed) so

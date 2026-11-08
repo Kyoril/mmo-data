@@ -1297,4 +1297,6 @@ strings =
 	(key = "WAYFINDER_WHISPER", string = "Chuchoter")
 	(key = "WAYFINDER_INVITE", string = "Inviter")
 	(key = "WAYFINDER_REMOVE", string = "Retirer")
+	(key = "CHAT_WHISPER_TO_FORMAT", string = "À %s :")
+	(key = "WAYFINDER_WHISPER_WHO", string = "À qui souhaitez-vous chuchoter ?")
 }

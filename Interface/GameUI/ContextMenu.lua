@@ -37,19 +37,22 @@ local function ClearMenuButtons()
 end
 
 -- Create a menu button
-local function CreateMenuButton(index, text, callback, enabled)
+local function CreateMenuButton(index, item)
     local button = ContextMenuButtonTemplate:Clone()
-    button:SetText(text)
+    button:SetText(item.text)
+    if item.visual then
+        item.visual:CopyVisuals(button)
+    end
     
-    if enabled == false then
+    if item.enabled == false then
         button:Disable()
     else
         button:Enable()
     end
     
     button:SetClickedHandler(function()
-        if callback then
-            callback(currentMenuData)
+        if item.callback then
+            item.callback(currentMenuData)
         end
         ContextMenu_Hide()
     end)
@@ -97,7 +100,7 @@ function ContextMenu_Show(menuType, x, y, data)
     
     -- Create buttons for each menu item
     for i, item in ipairs(items) do
-        local button = CreateMenuButton(i, item.text, item.callback, item.enabled)
+        local button = CreateMenuButton(i, item)
         table.insert(menuButtons, button)
     end
     
@@ -109,11 +112,16 @@ function ContextMenu_Show(menuType, x, y, data)
     ContextMenu:SetWidth(menuWidth)
     ContextMenu:SetHeight(menuHeight)
     
-    -- Position the menu at the cursor
-    ContextMenu:ClearAnchor(AnchorPoint.LEFT)
+    -- An anchored menu opens above its trigger. World context menus follow the cursor.
     ContextMenu:ClearAnchor(AnchorPoint.TOP)
-    ContextMenu:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, x)
-    ContextMenu:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, y)
+    ContextMenu:ClearAnchor(AnchorPoint.BOTTOM)
+    if menuDef.above then
+        ContextMenu:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, menuDef.above, 0)
+        ContextMenu:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.TOP, menuDef.above, -8)
+    else
+        ContextMenu:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, x)
+        ContextMenu:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, y)
+    end
     
     -- Show the backdrop first (to capture clicks outside)
     ContextMenuBackdrop:Show()
@@ -124,16 +132,20 @@ end
 
 -- Hide the context menu
 function ContextMenu_Hide()
+    local definition = ContextMenus[currentMenuType]
     ContextMenuBackdrop:Hide()
     ContextMenu:Hide()
     currentMenuType = nil
     currentMenuData = nil
     ClearMenuButtons()
+    if definition and definition.onDismiss then
+        definition.onDismiss()
+    end
 end
 
 -- Check if context menu is currently visible
-function ContextMenu_IsShown()
-    return ContextMenu:IsVisible()
+function ContextMenu_IsShown(menuType)
+    return ContextMenu:IsVisible() and (not menuType or currentMenuType == menuType)
 end
 
 -- Toggle context menu

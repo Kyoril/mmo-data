@@ -1,6 +1,8 @@
 <?xml version="1.0" ?>
 <UiLayout xmlns="http://www.w3schools.com/Ui">
 	<Font name="WayfinderChatFont" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="26" outline="1" shadowX="1" shadowY="1" />
+	<Font name="WayfinderXPFont" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="20" outline="0" shadowX="1" shadowY="1" />
+
 	<Frame name="WayfinderEmpty">
 		<Visual>
 			<StateImagery name="Enabled" />
@@ -11,7 +13,6 @@
 		<Visual>
 			<ImagerySection name="Surface">
 				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/PanelRim.htex" borderSize="40" leftSize="44" rightSize="44" topSize="44" bottomSize="44" tint="FFFFFFFF" />
-				<ImageComponent texture="Interface/GameUI/Themes/BlueGold/Textures/NavyWellV4.htex" tint="4EABA9A3"><Area><Inset all="18" /></Area></ImageComponent>
 			</ImagerySection>
 			<StateImagery name="Enabled">
 				<Layer>
@@ -244,20 +245,21 @@
 	<Frame name="WayfinderMeter">
 		<Visual>
 			<ImagerySection name="Background">
-				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="EF131B20" />
+				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/MeterWell.htex" borderSize="14" leftSize="36" rightSize="36" topSize="36" bottomSize="36" />
 			</ImagerySection>
 			<ImagerySection name="Progress">
 				<ImageComponent texture="Interface/GameUI/Themes/BlueGold/Textures/BarFillV4.htex" tint="FFFFFFFF" />
 			</ImagerySection>
 			<ImagerySection name="Frame">
-				<BorderComponent texture="Interface/GameUI/Themes/BlueGold/Textures/BarRimV4.htex" borderSize="6" leftSize="208" rightSize="208" topSize="208" bottomSize="208" tint="FFD7C7A5" />
+				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/MeterRim.htex" borderSize="14" leftSize="36" rightSize="36" topSize="36" bottomSize="36" />
 			</ImagerySection>
 			<ImagerySection name="TickMarks">
 				<ImageComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/MeterTicks.htex">
-					<Area><Inset all="3" /></Area>
+					<Area><Inset all="5" /></Area>
 				</ImageComponent>
 			</ImagerySection>
 			<ImagerySection name="Text">
+				<ImageComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/MeterLabelShade.htex" />
 				<TextComponent color="FFF3EEE0" horzAlign="CENTER" vertAlign="CENTER" />
 			</ImagerySection>
 			<StateImagery name="Enabled">
@@ -283,13 +285,13 @@
 	<Frame name="WayfinderThinMeter">
 		<Visual>
 			<ImagerySection name="Background">
-				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="EF131B20" />
+				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/MeterWell.htex" borderSize="5" leftSize="36" rightSize="36" topSize="36" bottomSize="36" />
 			</ImagerySection>
 			<ImagerySection name="Progress">
 				<ImageComponent texture="Interface/GameUI/Themes/BlueGold/Textures/BarFillV4.htex" tint="FFFFFFFF" />
 			</ImagerySection>
 			<ImagerySection name="Frame">
-				<BorderComponent texture="Interface/GameUI/Themes/BlueGold/Textures/BarRimV4.htex" borderSize="6" leftSize="208" rightSize="208" topSize="208" bottomSize="208" tint="FFD7C7A5" />
+				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/MeterRim.htex" borderSize="5" leftSize="36" rightSize="36" topSize="36" bottomSize="36" />
 			</ImagerySection>
 			<StateImagery name="Enabled">
 				<Layer>
@@ -312,13 +314,17 @@
 	<Frame name="WayfinderLevelXP">
 		<Visual>
 			<ImagerySection name="Background">
-				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="EF131B20" />
+				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/MeterWell.htex" borderSize="10" leftSize="36" rightSize="36" topSize="36" bottomSize="36" />
 			</ImagerySection>
 			<ImagerySection name="Progress">
 				<ImageComponent texture="Interface/GameUI/Themes/BlueGold/Textures/BarFillV4.htex" tint="FF9BB8CF" />
 			</ImagerySection>
 			<ImagerySection name="Frame">
-				<BorderComponent texture="Interface/GameUI/Themes/BlueGold/Textures/BarRimV4.htex" borderSize="6" leftSize="208" rightSize="208" topSize="208" bottomSize="208" tint="FFD7C7A5" />
+				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/MeterRim.htex" borderSize="10" leftSize="36" rightSize="36" topSize="36" bottomSize="36" />
+			</ImagerySection>
+			<ImagerySection name="Text">
+				<ImageComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/MeterLabelShade.htex" />
+				<TextComponent color="FFF1E7CF" horzAlign="CENTER" vertAlign="CENTER" />
 			</ImagerySection>
 			<StateImagery name="Enabled">
 				<Layer>
@@ -333,6 +339,7 @@
 			<StateImagery name="Overlay">
 				<Layer>
 					<Section section="Frame" />
+					<Section section="Text" />
 				</Layer>
 			</StateImagery>
 		</Visual>
@@ -341,13 +348,17 @@
 	<Frame name="WayfinderClassXP">
 		<Visual>
 			<ImagerySection name="Background">
-				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="EF131B20" />
+				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/MeterWell.htex" borderSize="10" leftSize="36" rightSize="36" topSize="36" bottomSize="36" />
 			</ImagerySection>
 			<ImagerySection name="Progress">
 				<ImageComponent texture="Interface/GameUI/Themes/BlueGold/Textures/BarFillV4.htex" tint="FFC7A467" />
 			</ImagerySection>
 			<ImagerySection name="Frame">
-				<BorderComponent texture="Interface/GameUI/Themes/BlueGold/Textures/BarRimV4.htex" borderSize="6" leftSize="208" rightSize="208" topSize="208" bottomSize="208" tint="FFD7C7A5" />
+				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/MeterRim.htex" borderSize="10" leftSize="36" rightSize="36" topSize="36" bottomSize="36" />
+			</ImagerySection>
+			<ImagerySection name="Text">
+				<ImageComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/MeterLabelShade.htex" />
+				<TextComponent color="FFF1E7CF" horzAlign="CENTER" vertAlign="CENTER" />
 			</ImagerySection>
 			<StateImagery name="Enabled">
 				<Layer>
@@ -362,6 +373,7 @@
 			<StateImagery name="Overlay">
 				<Layer>
 					<Section section="Frame" />
+					<Section section="Text" />
 				</Layer>
 			</StateImagery>
 		</Visual>
@@ -380,13 +392,151 @@
 		<Visual>
 			<ImagerySection name="Caption">
 				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/PanelRim.htex" borderSize="22" leftSize="44" rightSize="44" topSize="44" bottomSize="44" />
-				<TextComponent color="FFF0E3C7" horzAlign="CENTER" vertAlign="CENTER"><Area><Inset right="52" /></Area></TextComponent>
+				<TextComponent color="FFF0E3C7" horzAlign="CENTER" vertAlign="CENTER"><Area><Inset right="52" left="16" /></Area></TextComponent>
 			</ImagerySection>
 			<StateImagery name="Enabled">
 				<Layer><Section section="Caption" /></Layer>
 			</StateImagery>
 		</Visual>
 	</Frame>
+	<Frame name="WayfinderMinimapClock">
+		<Visual>
+			<ImagerySection name="Caption">
+				<ImageComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/MeterLabelShade.htex" />
+				<TextComponent color="FFCFBC95" horzAlign="CENTER" vertAlign="CENTER" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Caption" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+	</Frame>
+
+	<Frame name="WayfinderMinimapControl">
+		<Property name="Icon" />
+		<Visual>
+			<ImagerySection name="Housing">
+				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/PanelRim.htex" borderSize="14" leftSize="44" rightSize="44" topSize="44" bottomSize="44" />
+			</ImagerySection>
+			<ImagerySection name="Hover">
+				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/Selection.htex" borderSize="14" leftSize="44" rightSize="44" topSize="44" bottomSize="44" />
+			</ImagerySection>
+			<ImagerySection name="Icon">
+				<ImageComponent><Area><Inset all="6" /></Area><PropertyValue property="Icon" /></ImageComponent>
+			</ImagerySection>
+			<ImagerySection name="Dim">
+				<ImageComponent tint="7088857E"><Area><Inset all="6" /></Area><PropertyValue property="Icon" /></ImageComponent>
+			</ImagerySection>
+			<StateImagery name="Normal">
+				<Layer>
+					<Section section="Housing" />
+					<Section section="Icon" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Hovered">
+				<Layer>
+					<Section section="Hover" />
+					<Section section="Icon" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Pushed">
+				<Layer>
+					<Section section="Hover" />
+					<Section section="Icon" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="Housing" />
+					<Section section="Dim" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+	</Frame>
+
+	<Frame name="WayfinderBadge">
+		<Visual>
+			<ImagerySection name="Badge">
+				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/Selection.htex" borderSize="8" leftSize="44" rightSize="44" topSize="44" bottomSize="44" />
+				<TextComponent color="FFFFE6B3" horzAlign="CENTER" vertAlign="CENTER" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Badge" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="Badge" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+	</Frame>
+
+	<Frame name="WayfinderChatMode">
+		<Visual>
+			<ImagerySection name="Base">
+				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/SocketRim.htex" borderSize="14" leftSize="44" rightSize="44" topSize="44" bottomSize="44" tint="E5B3B5B7" />
+			</ImagerySection>
+			<ImagerySection name="Hover">
+				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/Selection.htex" borderSize="14" leftSize="44" rightSize="44" topSize="44" bottomSize="44" tint="F7A2937D" />
+			</ImagerySection>
+			<StateImagery name="Normal">
+				<Layer>
+					<Section section="Base" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Hovered">
+				<Layer>
+					<Section section="Hover" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Pushed">
+				<Layer>
+					<Section section="Hover" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+	</Frame>
+
+	<Frame name="WayfinderMenuRow">
+		<Visual>
+			<ImagerySection name="Hover">
+				<ImageComponent texture="Interface/GlueUI/GlueListFade.htex" tint="A97A603F" />
+			</ImagerySection>
+			<ImagerySection name="Text">
+				<TextComponent color="FFF0E4CB" horzAlign="LEFT" vertAlign="CENTER"><Area><Inset left="18" /></Area></TextComponent>
+			</ImagerySection>
+			<ImagerySection name="Dim">
+				<TextComponent color="FF89919A" horzAlign="LEFT" vertAlign="CENTER"><Area><Inset left="18" /></Area></TextComponent>
+			</ImagerySection>
+			<StateImagery name="Normal"><Layer><Section section="Text" /></Layer></StateImagery>
+			<StateImagery name="Hovered"><Layer><Section section="Hover" /><Section section="Text" /></Layer></StateImagery>
+			<StateImagery name="Pushed"><Layer><Section section="Hover" /><Section section="Text" /></Layer></StateImagery>
+			<StateImagery name="Disabled"><Layer><Section section="Dim" /></Layer></StateImagery>
+		</Visual>
+	</Frame>
+
+	<Frame name="WayfinderMenuSelected">
+		<Visual>
+			<ImagerySection name="Hover">
+				<ImageComponent texture="Interface/GlueUI/GlueListFade.htex" tint="B9957042" />
+				<BorderComponent texture="Interface/GlueUI/GlueListAccent.htex" borderSize="7" tint="FFDFC18B" />
+			</ImagerySection>
+			<ImagerySection name="Text">
+				<TextComponent color="FFF0E4CB" horzAlign="LEFT" vertAlign="CENTER"><Area><Inset left="18" /></Area></TextComponent>
+			</ImagerySection>
+			<ImagerySection name="Dim">
+				<TextComponent color="FF89919A" horzAlign="LEFT" vertAlign="CENTER"><Area><Inset left="18" /></Area></TextComponent>
+			</ImagerySection>
+			<StateImagery name="Normal"><Layer><Section section="Hover" /><Section section="Text" /></Layer></StateImagery>
+			<StateImagery name="Hovered"><Layer><Section section="Hover" /><Section section="Text" /></Layer></StateImagery>
+			<StateImagery name="Pushed"><Layer><Section section="Hover" /><Section section="Text" /></Layer></StateImagery>
+			<StateImagery name="Disabled"><Layer><Section section="Dim" /></Layer></StateImagery>
+		</Visual>
+	</Frame>
+
 	<Frame name="WayfinderChatRail">
 		<Visual>
 			<ImagerySection name="Rail">

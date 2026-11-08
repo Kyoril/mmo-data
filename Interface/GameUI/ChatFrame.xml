@@ -57,12 +57,16 @@
 				<Scripts>
 					<OnEnterPressed>
 						return function(this)
-							ChatFrame_SendMessage(this);
+							if not (GameUITheme and GameUITheme.Wayfinder and WayfinderChat_CloseModeMenu()) then
+								ChatFrame_SendMessage(this);
+							end
 						end
 					</OnEnterPressed>
 					<OnEscapePressed>
 						return function(this)
-							ChatInput_OnEscapePressed();
+							if not (GameUITheme and GameUITheme.Wayfinder and WayfinderChat_CloseModeMenu()) then
+								ChatInput_OnEscapePressed();
+							end
 						end
 					</OnEscapePressed>
 					<OnSpacePressed>

@@ -5,6 +5,26 @@ local slotStride = 120;
 local claspWidth = 128;
 local bankWidth = 5 * slotStride + slotSize;
 local barWidth = 2 * bankWidth + claspWidth;
+local menuGlyphs = {
+	["Character.htex"] = "Character",
+	["Repertoire.htex"] = "Book",
+	["Professions.htex"] = "Craft",
+	["Emotes.htex"] = "Emotes",
+	["Inventory.htex"] = "Bag",
+	["Quests.htex"] = "Quests",
+	["Talents.htex"] = "Talents",
+	["Menu.htex"] = "Settings",
+	["BugReport.htex"] = "Report",
+};
+
+function Wayfinder_Art(name)
+	return "Interface/GameUI/Themes/Wayfinder/Textures/" .. name .. ".htex";
+end
+
+function Wayfinder_MenuIcon(icon)
+	local glyph = menuGlyphs[icon:match("[^/]+$")];
+	return glyph and Wayfinder_Art("Glyph" .. glyph) or icon;
+end
 
 local function Span(frame, parent, inset)
 	frame:SetAnchor(A.LEFT, A.LEFT, parent, inset);
@@ -36,6 +56,7 @@ local function ApplyTitle(title)
 	local close = title:GetChild(0);
 	if close and close:GetProperty("Icon") == "Interface/Icons/fg4_iconsGold_close_result.htex" then
 		WayfinderUtility:CopyVisuals(close);
+		close:SetProperty("Icon", Wayfinder_Art("GlyphClose"));
 	end
 end
 
@@ -48,6 +69,44 @@ function Wayfinder_UpdateActionBarLayout(bar)
 	if PlayerCastBar then
 		PlayerCastBar:SetAnchor(A.BOTTOM, A.TOP, topBar, -16);
 	end
+end
+
+function Wayfinder_UpdateMinimapLayout()
+	local expanded = MinimapContent:IsVisible();
+	MinimapTitleBar:SetAnchor(A.TOP, A.TOP, Minimap, expanded and 432 or 0);
+	Minimap:SetHeight(expanded and 490 or 50);
+	MinimapCloseButton:SetProperty("Icon", Wayfinder_Art(expanded and "GlyphMinus" or "GlyphPlus"));
+end
+
+local function SetupMinimap()
+	Minimap:SetAnchor(A.TOP, A.TOP, GameParent, 28);
+	Minimap:SetAnchor(A.RIGHT, A.RIGHT, GameParent, -20);
+	MinimapContent:SetAnchor(A.TOP, A.TOP, Minimap, 0);
+
+	WayfinderMinimapRing:CopyVisuals(MinimapBorder);
+	WayfinderMinimapCaption:CopyVisuals(MinimapTitleBar);
+	MinimapTitleBar:SetHeight(50);
+	WayfinderUtility:CopyVisuals(MinimapCloseButton);
+	MinimapCloseButton:SetSize(44, 50);
+
+	WayfinderMinimapClock:CopyVisuals(MinimapTime);
+	MinimapTime:SetAnchor(A.TOP, A.BOTTOM, MinimapContent, 2);
+	MinimapTime:SetHeight(42);
+
+	WayfinderMinimapControl:CopyVisuals(MinimapDayNight);
+	MinimapDayNight:SetSize(54, 54);
+	MinimapDayNight:SetAnchor(A.TOP, A.TOP, MinimapContent, 2);
+	MinimapDayNight:SetAnchor(A.RIGHT, A.RIGHT, MinimapContent, -2);
+	MinimapDayNight:SetProperty("Clickable", "false");
+	MinimapDayNight:SetProperty("MousePassThrough", "true");
+
+	for i, button in ipairs({ MinimapZoomIn, MinimapZoomOut }) do
+		WayfinderMinimapControl:CopyVisuals(button);
+		button:SetSize(46, 46);
+		button:SetAnchor(A.BOTTOM, A.BOTTOM, MinimapContent, -2);
+		button:SetAnchor(A.RIGHT, A.RIGHT, MinimapContent, -2 - (i - 1) * 54);
+	end
+	Wayfinder_UpdateMinimapLayout();
 end
 
 function Wayfinder_ApplyLayout()
@@ -67,9 +126,7 @@ function Wayfinder_ApplyLayout()
 	WayfinderPanel:CopyVisuals(CharacterWindow);
 	WayfinderPanel:CopyVisuals(QuestLogFrame);
 	WayfinderPanel:CopyVisuals(SpellBook);
-	WayfinderMinimapRing:CopyVisuals(MinimapBorder);
-	WayfinderMinimapCaption:CopyVisuals(MinimapTitleBar);
-	WayfinderUtility:CopyVisuals(MinimapCloseButton);
+	SetupMinimap();
 
 	WayfinderEmpty:CopyVisuals(GameMenuBar);
 	WayfinderEmpty:CopyVisuals(MenuBarButtons);
@@ -81,7 +138,12 @@ function Wayfinder_ApplyLayout()
 		ornament:Hide();
 	end
 	WayfinderUtility:CopyVisuals(GameMenuBarImageButton);
-	GameMenuBarImageButton:SetSize(62, 74);
+	GameMenuBarImageButton:SetSize(61, 65);
+	local badge = GameMenuBarImageButton:GetChild(0);
+	WayfinderBadge:CopyVisuals(badge);
+	badge:SetSize(25, 25);
+	badge:SetAnchor(A.TOP, A.TOP, nil, 0);
+	badge:SetAnchor(A.RIGHT, A.RIGHT, nil, -1);
 
 	LayoutSlots(ActionBar, 1);
 	LayoutSlots(ActionBar2, 13);
@@ -96,7 +158,7 @@ function Wayfinder_ApplyLayout()
 
 	WayfinderEmpty:CopyVisuals(PlayerFrame);
 	Center(PlayerFrame, GameParent, barWidth, 32);
-	PlayerFrame:SetAnchor(A.BOTTOM, A.BOTTOM, GameMenuBar, -41);
+	PlayerFrame:SetAnchor(A.BOTTOM, A.BOTTOM, GameMenuBar, -57);
 	PlayerPortrait:Hide();
 	PlayerName:Hide();
 
@@ -107,7 +169,7 @@ function Wayfinder_ApplyLayout()
 		rail:SetAnchor(edge, edge, PlayerFrame, 0);
 		rail:SetAnchor(A.TOP, A.TOP, PlayerFrame, 0);
 		WayfinderMeter:CopyVisuals(rail);
-		rail:SetProperty("ProgressInset", "3");
+		rail:SetProperty("ProgressInset", "5");
 	end
 	PlayerHealthBar:SetProperty("ProgressColor", "FF76BC93");
 
@@ -125,12 +187,14 @@ function Wayfinder_ApplyLayout()
 		Span(rail, TargetFrame, 0);
 		rail:SetAnchor(A.TOP, A.TOP, TargetFrame, i == 1 and 48 or 83);
 		rail:SetHeight(i == 1 and 28 or 12);
-		rail:SetProperty("ProgressInset", "2");
+		rail:SetProperty("ProgressInset", i == 1 and "5" or "2");
 	end
 	WayfinderMeter:CopyVisuals(TargetHealthBar);
 	WayfinderThinMeter:CopyVisuals(TargetManaBar);
 	WayfinderLevelXP:CopyVisuals(PlayerExperienceBar);
 	WayfinderClassXP:CopyVisuals(PlayerClassExperienceBar);
+	PlayerExperienceBar:SetProperty("Font", "WayfinderXPFont");
+	PlayerClassExperienceBar:SetProperty("Font", "WayfinderXPFont");
 	WayfinderMeter:CopyVisuals(PlayerCastBar);
 	PlayerCastBar:ClearAnchor(A.H_CENTER);
 	PlayerCastBar:SetAnchor(A.RIGHT, A.RIGHT, ActionBar, 0);
@@ -139,14 +203,6 @@ function Wayfinder_ApplyLayout()
 	PlayerCastBar:SetProperty("ProgressInset", "3");
 	PlayerCastBar:SetProperty("ProgressColor", "FFD8B677");
 
-	for _, button in ipairs({ ChatBubbleButton, ChatScrollUpButton, ChatScrollDownButton, ChatScrollEndButton }) do
-		WayfinderUtility:CopyVisuals(button);
-	end
-	WayfinderChatRail:CopyVisuals(ChatInputFrame);
-	ChatFrame:SetProperty("Font", "WayfinderChatFont");
-	ChatInput:SetProperty("Font", "WayfinderChatFont");
-	ChatInputHeader:SetProperty("Font", "WayfinderChatFont");
-	ChatInputFrame:SetAnchor(A.BOTTOM, A.BOTTOM, GameParent, -28);
-	ChatInputFrame:SetHeight(60);
+	WayfinderChat_Setup();
 	Wayfinder_UpdateActionBarLayout(ActionBar2);
 end

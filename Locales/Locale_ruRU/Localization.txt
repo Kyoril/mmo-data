@@ -1214,4 +1214,6 @@ strings =
 	(key = "WAYFINDER_WHISPER", string = "Шёпот")
 	(key = "WAYFINDER_INVITE", string = "Пригласить")
 	(key = "WAYFINDER_REMOVE", string = "Удалить")
+	(key = "CHAT_WHISPER_TO_FORMAT", string = "Для %s:")
+	(key = "WAYFINDER_WHISPER_WHO", string = "Кому вы хотите прошептать?")
 }

@@ -350,6 +350,9 @@ function ChatFrame_OnUpdate(this, elapsed)
     end
 
     ChatFrame_ApplyOpacity(ChatFrame_CurrentOpacity);
+    if GameUITheme and GameUITheme.Wayfinder then
+        WayfinderChat_Update();
+    end
 end
 
 function ChatInput_OnTabPressed()
@@ -819,7 +822,7 @@ function ChatEdit_UpdateHeader()
     local headerText;
     if type == "WHISPER" then
         local target = ChatFrame_WhisperTarget or ChatFrame_ReplyTarget or "?";
-        headerText = "To " .. target .. ":";
+        headerText = string.format(Localize("CHAT_WHISPER_TO_FORMAT"), target);
     elseif type == "CHANNEL" then
         local localId = ChatFrame_ChannelTarget;
         local channel = localId and GetChannelInfo(localId) or nil;
@@ -972,6 +975,9 @@ function ChatFrame_ParseText(send)
 end
 
 function ChatInput_OnEscapePressed()
+    if GameUITheme and GameUITheme.Wayfinder then
+        WayfinderChat_CloseModeMenu();
+    end
 	ChatInput:SetText("");
 	ChatInputFrame:Hide();
     ChatInput:ReleaseInput();
