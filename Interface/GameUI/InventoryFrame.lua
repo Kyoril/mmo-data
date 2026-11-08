@@ -5,6 +5,34 @@ INVENTORY_SLOTS_PER_ROW = 8
 
 local inventoryDragOffset = nil;
 local INVENTORY_SCALE = 0.8;
+local searchHeight = GameUITheme and GameUITheme.Wayfinder and 72 or 0;
+local searchQuery = "";
+local searchMatches = {};
+
+function InventoryFrame_SetSearch(query)
+    searchQuery = query;
+    searchMatches = {};
+    GameTooltip:Hide();
+end
+
+function InventoryFrame_ApplySearch(slot, item)
+    local parent = slot:GetParent();
+    if parent ~= ItemSlotContainer and parent ~= BagContainer then
+        return;
+    end
+
+    local opacity = 1;
+    if searchQuery ~= "" then
+        local name = item and item:GetName();
+        if name and searchMatches[name] == nil then
+            searchMatches[name] = Wayfinder_SearchText(name):find(searchQuery, 1, true) ~= nil;
+        end
+        opacity = name and searchMatches[name] and 1 or 0.24;
+    end
+    if math.abs(slot:GetOpacity(false) - opacity) > 0.001 then
+        slot:SetOpacity(opacity);
+    end
+end
 
 function InventoryFrame_OnTitleMouseDown(self, button)
     if CursorHasItem() then
@@ -73,7 +101,7 @@ function InventoryFrame_UpdateSlots(this)
         slot.id = GetBackpackSlot(i - 1);
         ItemSlotContainer:AddChild(slot);
         slot:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, this, 40 * INVENTORY_SCALE + buttonSize + math.fmod((i - 1), INVENTORY_SLOTS_PER_ROW) * buttonSize);
-        slot:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, InventoryTitleBar, math.floor((i - 1) / INVENTORY_SLOTS_PER_ROW) * buttonSize);
+        slot:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, InventoryTitleBar, searchHeight + math.floor((i - 1) / INVENTORY_SLOTS_PER_ROW) * buttonSize);
         slotsAdded = slotsAdded + 1;
     end
 
@@ -90,7 +118,7 @@ function InventoryFrame_UpdateSlots(this)
             ItemSlotContainer:AddChild(slot);
 
             slot:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, this, 40 * INVENTORY_SCALE + buttonSize + math.fmod(slotsAdded, INVENTORY_SLOTS_PER_ROW) * buttonSize);
-            slot:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, InventoryTitleBar, math.floor(slotsAdded / INVENTORY_SLOTS_PER_ROW) * buttonSize);
+            slot:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, InventoryTitleBar, searchHeight + math.floor(slotsAdded / INVENTORY_SLOTS_PER_ROW) * buttonSize);
 
             slotsAdded = slotsAdded + 1;
         end
@@ -99,7 +127,7 @@ function InventoryFrame_UpdateSlots(this)
     local minRowCount = math.max(math.ceil(numSlots / INVENTORY_SLOTS_PER_ROW), 4);
 
     this:SetWidth(64 * INVENTORY_SCALE + (INVENTORY_SLOTS_PER_ROW + 1) * buttonSize);
-    this:SetHeight(48 * INVENTORY_SCALE + minRowCount * buttonSize + PlayerMoney:GetHeight() + InventoryTitleBar:GetHeight());
+    this:SetHeight(48 * INVENTORY_SCALE + minRowCount * buttonSize + PlayerMoney:GetHeight() + InventoryTitleBar:GetHeight() + searchHeight);
 end
 
 function InventoryFrame_Load(this)
@@ -127,7 +155,7 @@ function InventoryFrame_Load(this)
 
         BagContainer:AddChild(slot);
         slot:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, this, 24 * INVENTORY_SCALE);
-        slot:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, InventoryTitleBar, (i - 1) * buttonSize);
+        slot:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, InventoryTitleBar, searchHeight + (i - 1) * buttonSize);
         slot:SetProperty("Background", "Interface/Icons/ItemSlots/icons_01_bag.htex");
     end
 

@@ -1305,4 +1305,9 @@ strings =
 	(key = "WAYFINDER_REMOVE", string = "Remove")
 	(key = "CHAT_WHISPER_TO_FORMAT", string = "To %s:")
 	(key = "WAYFINDER_WHISPER_WHO", string = "Whisper to whom?")
+	(key = "WAYFINDER_SPELL_SEARCH", string = "Search this tab…")
+	(key = "WAYFINDER_ITEM_SEARCH", string = "Search inventory…")
+	(key = "WAYFINDER_SEARCH_NO_RESULTS", string = "No spells match your search.")
+	(key = "WAYFINDER_SHORTCUTS_COLLAPSE", string = "Collapse shortcuts")
+	(key = "WAYFINDER_SHORTCUTS_EXPAND", string = "Expand shortcuts")
 }

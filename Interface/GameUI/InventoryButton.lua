@@ -143,6 +143,9 @@ end
 
 function InventoryItemButton_OnUpdate(this, elapsed)
     local item = GetInventorySlotItem("player", this.id);
+    if GameUITheme and GameUITheme.Wayfinder then
+        InventoryFrame_ApplySearch(this, item);
+    end
     if not item then
         this:SetText("");
         this:SetProperty("Icon", "");

@@ -10,6 +10,18 @@ SPELLBOOK_TAB_PET = 4
 SPELLBOOK_MAX_TABS = 4
 
 local SpellBookVisibleSpells = {}
+local searchQuery = "";
+
+local function SpellBook_MatchesSearch(spell)
+    return searchQuery == "" or Wayfinder_SearchText(spell.name):find(searchQuery, 1, true) ~= nil;
+end
+
+function SpellBook_SetSearch(query)
+    searchQuery = query;
+    SpellBookPage = 1;
+    GameTooltip:Hide();
+    SpellBook_UpdatePage();
+end
 
 -- On the pet tab: the GetPetSpell index of each visible spell, parallel to SpellBookVisibleSpells.
 local SpellBookVisiblePetSpellIndex = {}
@@ -63,7 +75,7 @@ local function SpellBook_RebuildVisibleSpells()
     if (SpellBookTab == SPELLBOOK_TAB_PET) then
         for petIndex = 0, GetNumPetSpells() - 1 do
             local spell = GetPetSpell(petIndex);
-            if (spell ~= nil) then
+            if (spell ~= nil and SpellBook_MatchesSearch(spell)) then
                 table.insert(SpellBookVisibleSpells, spell);
                 table.insert(SpellBookVisiblePetSpellIndex, petIndex);
             end
@@ -78,7 +90,7 @@ local function SpellBook_RebuildVisibleSpells()
             break;
         end
 
-        if (SpellBook_GetCategory(spell) == SpellBookTab) then
+        if (SpellBook_GetCategory(spell) == SpellBookTab and SpellBook_MatchesSearch(spell)) then
             table.insert(SpellBookVisibleSpells, spell);
         end
 
@@ -152,6 +164,7 @@ function SpellBook_UpdatePage()
 	SpellBookEmptyLabel:SetProperty("TextColor", (GameUITheme and GameUITheme.IconListEmptyColor) or "FF776A58");
 
     if (#SpellBookVisibleSpells == 0) then
+        SpellBookEmptyLabel:SetText(Localize(searchQuery == "" and "SPELLBOOK_EMPTY_CATEGORY" or "WAYFINDER_SEARCH_NO_RESULTS"));
         SpellBookEmptyLabel:Show();
     else
         SpellBookEmptyLabel:Hide();

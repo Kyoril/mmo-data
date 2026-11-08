@@ -29,6 +29,99 @@
 		</Visual>
 	</Frame>
 
+	<Frame name="WayfinderBookIcon">
+		<Property name="Icon" />
+		<Visual>
+			<ImagerySection name="Socket">
+				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/SocketRim.htex" borderSize="16" leftSize="32" rightSize="32" topSize="32" bottomSize="32" />
+			</ImagerySection>
+			<ImagerySection name="Hover">
+				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/Selection.htex" borderSize="16" leftSize="32" rightSize="32" topSize="32" bottomSize="32" />
+			</ImagerySection>
+			<ImagerySection name="Icon">
+				<ImageComponent>
+					<Area><Inset all="9" /></Area>
+					<PropertyValue property="Icon" />
+				</ImageComponent>
+			</ImagerySection>
+			<StateImagery name="Normal"><Layer><Section section="Socket" /><Section section="Icon" /></Layer></StateImagery>
+			<StateImagery name="Hovered"><Layer><Section section="Hover" /><Section section="Icon" /></Layer></StateImagery>
+			<StateImagery name="Pushed"><Layer><Section section="Hover" /><Section section="Icon" color="FFAD9B88" /></Layer></StateImagery>
+			<StateImagery name="Disabled"><Layer><Section section="Socket" /><Section section="Icon" color="FF6B7178" /></Layer></StateImagery>
+		</Visual>
+	</Frame>
+
+	<Frame name="WayfinderSearchField" type="TextField" renderer="TextFieldRenderer">
+		<Property name="Font" value="DefaultSmall" />
+		<Property name="EnabledTextColor" value="FFF0E5D1" />
+		<Property name="VertAlign" value="CENTER" />
+		<Visual>
+			<ImagerySection name="Field">
+				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/SocketRim.htex" borderSize="15" leftSize="44" rightSize="44" topSize="44" bottomSize="44" tint="FFD0C6B3" />
+			</ImagerySection>
+			<ImagerySection name="Caret">
+				<ImageComponent texture="Interface/GlueUI/Caret.htex" />
+			</ImagerySection>
+			<StateImagery name="Enabled"><Layer><Section section="Field" /></Layer></StateImagery>
+			<StateImagery name="Caret"><Layer><Section section="Caret" /></Layer></StateImagery>
+		</Visual>
+		<Scripts>
+			<OnEnterPressed>return function(self) self:ReleaseInput(); end</OnEnterPressed>
+			<OnEscapePressed>return function(self) self:SetText(""); self:ReleaseInput(); end</OnEscapePressed>
+		</Scripts>
+	</Frame>
+
+	<Frame name="WayfinderSelectedTab">
+		<Visual>
+			<ImagerySection name="Selected">
+				<ImageComponent texture="Interface/GlueUI/GlueListFade.htex" tint="765D472F" />
+				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/Underline.htex" borderSize="14" leftSize="12" rightSize="12" topSize="12" bottomSize="12" tint="FFFFE1A1" />
+			</ImagerySection>
+			<ImagerySection name="Hover">
+				<ImageComponent texture="Interface/GlueUI/GlueListFade.htex" tint="44546E77" />
+			</ImagerySection>
+			<ImagerySection name="Caption">
+				<TextComponent color="FFE3D2AF" horzAlign="CENTER" vertAlign="CENTER" />
+			</ImagerySection>
+			<StateImagery name="Normal"><Layer><Section section="Caption" /></Layer></StateImagery>
+			<StateImagery name="Hovered"><Layer><Section section="Hover" /><Section section="Caption" /></Layer></StateImagery>
+			<StateImagery name="Pushed"><Layer><Section section="Hover" /><Section section="Caption" /></Layer></StateImagery>
+			<StateImagery name="NormalChecked"><Layer><Section section="Selected" /><Section section="Caption" /></Layer></StateImagery>
+			<StateImagery name="HoveredChecked"><Layer><Section section="Selected" /><Section section="Caption" /></Layer></StateImagery>
+			<StateImagery name="PushedChecked"><Layer><Section section="Selected" /><Section section="Caption" /></Layer></StateImagery>
+		</Visual>
+	</Frame>
+
+	<Frame name="WayfinderNpcChoice">
+		<Property name="Icon" />
+		<Visual>
+			<ImagerySection name="Rest">
+				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/SocketRim.htex" borderSize="15" leftSize="44" rightSize="44" topSize="44" bottomSize="44" tint="A8BCB09B" />
+			</ImagerySection>
+			<ImagerySection name="Hover">
+				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/Selection.htex" borderSize="15" leftSize="44" rightSize="44" topSize="44" bottomSize="44" tint="D8E5D2AE" />
+			</ImagerySection>
+			<ImagerySection name="Icon">
+				<ImageComponent>
+					<Area><Inset left="18" top="16" /><Size><AbsDimension x="44" y="44" /></Size></Area>
+					<PropertyValue property="Icon" />
+				</ImageComponent>
+			</ImagerySection>
+			<StateImagery name="Normal"><Layer><Section section="Rest" /><Section section="Icon" /></Layer></StateImagery>
+			<StateImagery name="Hovered"><Layer><Section section="Hover" /><Section section="Icon" /></Layer></StateImagery>
+			<StateImagery name="Pushed"><Layer><Section section="Hover" /><Section section="Icon" color="FFB9A484" /></Layer></StateImagery>
+		</Visual>
+	</Frame>
+
+	<Frame name="WayfinderQuestReading">
+		<Visual>
+			<ImagerySection name="ReadingSurface">
+				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/PanelRim.htex" borderSize="22" leftSize="44" rightSize="44" topSize="44" bottomSize="44" tint="FFDDD0AF" />
+			</ImagerySection>
+			<StateImagery name="Enabled"><Layer><Section section="ReadingSurface" /></Layer></StateImagery>
+		</Visual>
+	</Frame>
+
 	<Frame name="WayfinderEmpty">
 		<Visual>
 			<StateImagery name="Enabled" />
@@ -347,7 +440,7 @@
 			</StateImagery>
 		</Visual>
 	</Frame>
-	<Frame name="WayfinderGuildWell">
+	<Frame name="WayfinderInsetWell">
 		<Visual>
 			<ImagerySection name="Well">
 				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/SocketRim.htex" borderSize="14" leftSize="40" rightSize="40" topSize="40" bottomSize="40" tint="88B4A993" />

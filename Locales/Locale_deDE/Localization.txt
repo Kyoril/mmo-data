@@ -1298,4 +1298,9 @@ strings =
 	(key = "WAYFINDER_REMOVE", string = "Entfernen")
 	(key = "CHAT_WHISPER_TO_FORMAT", string = "An %s:")
 	(key = "WAYFINDER_WHISPER_WHO", string = "Wem möchtet Ihr etwas zuflüstern?")
+	(key = "WAYFINDER_SPELL_SEARCH", string = "Diesen Reiter durchsuchen …")
+	(key = "WAYFINDER_ITEM_SEARCH", string = "Inventar durchsuchen …")
+	(key = "WAYFINDER_SEARCH_NO_RESULTS", string = "Keine passenden Zauber gefunden.")
+	(key = "WAYFINDER_SHORTCUTS_COLLAPSE", string = "Schnellzugriffe einklappen")
+	(key = "WAYFINDER_SHORTCUTS_EXPAND", string = "Schnellzugriffe ausklappen")
 }

@@ -1216,4 +1216,9 @@ strings =
 	(key = "WAYFINDER_REMOVE", string = "Удалить")
 	(key = "CHAT_WHISPER_TO_FORMAT", string = "Для %s:")
 	(key = "WAYFINDER_WHISPER_WHO", string = "Кому вы хотите прошептать?")
+	(key = "WAYFINDER_SPELL_SEARCH", string = "Поиск на вкладке…")
+	(key = "WAYFINDER_ITEM_SEARCH", string = "Поиск в сумках…")
+	(key = "WAYFINDER_SEARCH_NO_RESULTS", string = "Подходящих заклинаний нет.")
+	(key = "WAYFINDER_SHORTCUTS_COLLAPSE", string = "Свернуть панель ярлыков")
+	(key = "WAYFINDER_SHORTCUTS_EXPAND", string = "Развернуть панель ярлыков")
 }

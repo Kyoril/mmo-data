@@ -53,6 +53,13 @@ end
 
 local function ApplyTitle(title)
 	WayfinderTitle:CopyVisuals(title);
+	for i = 0, title:GetChildCount() - 1 do
+		local child = title:GetChild(i);
+		local name = child:GetName();
+		if name:match("TitleTrim$") or name:match("TitleDivider$") then
+			child:Hide();
+		end
+	end
 	local close = title:GetChild(0);
 	if close and close:GetProperty("Icon") == "Interface/Icons/fg4_iconsGold_close_result.htex" then
 		WayfinderUtility:CopyVisuals(close);
@@ -129,7 +136,7 @@ local function SetupGuild()
 	WayfinderPanel:CopyVisuals(GuildFrame);
 	WayfinderEmpty:CopyVisuals(GuildActionButtonsFrame);
 	for _, well in ipairs({ GuildInfoFrame, GuildRosterFrame, GuildDetailsPanel }) do
-		WayfinderGuildWell:CopyVisuals(well);
+		WayfinderInsetWell:CopyVisuals(well);
 	end
 	for _, button in ipairs({
 		GuildEditMOTDButton, GuildInviteButton, GuildWhisperButton, GuildGroupButton,
@@ -157,6 +164,103 @@ local function SetupGuild()
 	divider:SetHeight(2);
 end
 
+local function SetupQuestWindows()
+	WayfinderEmpty:CopyVisuals(QuestLogFooter);
+	WayfinderInsetWell:CopyVisuals(QuestLogQuestList);
+	WayfinderQuestReading:CopyVisuals(QuestLogQuestDetailsFrame);
+	QuestLogQuestDetailsFrame:SetAnchor(A.TOP, A.BOTTOM, QuestLogQuestList, 8);
+	for _, page in ipairs({ QuestFrameDetailPanel, QuestFrameRequestItemsPanel, QuestFrameRewardsPanel }) do
+		WayfinderQuestReading:CopyVisuals(page);
+	end
+	WayfinderEmpty:CopyVisuals(QuestFrameGreetingPanel);
+	WayfinderInsetWell:CopyVisuals(ThemeNpcGreetingPanelTemplate);
+	WayfinderInsetWell:CopyVisuals(ThemeNpcGreetingCardTemplate);
+	WayfinderNpcChoice:CopyVisuals(ThemeNpcGreetingChoiceTemplate);
+	for _, button in ipairs({ QuestLogAbandonButton, QuestDetailAcceptButton, QuestRewardCompleteButton }) do
+		WayfinderButton:CopyVisuals(button);
+	end
+	if QuestLogReportButton then
+		WayfinderButton:CopyVisuals(QuestLogReportButton);
+	end
+end
+
+local function SetupSearchWindows()
+	Wayfinder_CreateSearch(InventoryFrame, 104, 24, "WAYFINDER_ITEM_SEARCH", InventoryFrame_SetSearch);
+	for _, container in ipairs({ BagContainer, ItemSlotContainer }) do
+		container:SetAnchor(A.TOP, A.BOTTOM, InventoryTitleBar, 72);
+	end
+	WayfinderEmpty:CopyVisuals(PlayerMoney);
+
+	SpellBook:SetHeight(1344);
+	Wayfinder_CreateSearch(SpellBookBackground, 103, 40, "WAYFINDER_SPELL_SEARCH", SpellBook_SetSearch);
+	WayfinderInsetWell:CopyVisuals(SpellBookPaper);
+	WayfinderEmpty:CopyVisuals(SpellBookPaperBorder);
+	SpellBookPaper:SetAnchor(A.TOP, A.TOP, SpellBookBackground, 172);
+	SpellBookButton01:SetAnchor(A.TOP, A.TOP, SpellBookBackground, 208);
+	for i = 1, SPELLBOOK_MAX_TABS do
+		WayfinderSelectedTab:CopyVisuals(_G["SpellBookTab" .. i]);
+	end
+	for i = 1, SPELLS_PER_PAGE do
+		WayfinderBookIcon:CopyVisuals(_G[string.format("SpellBookButton%02d", i)]);
+	end
+	WayfinderInsetWell:CopyVisuals(EmoteListPaper);
+	WayfinderEmpty:CopyVisuals(EmoteListPaperBorder);
+	for i = 1, 12 do
+		WayfinderBookIcon:CopyVisuals(_G[string.format("EmoteListButton%02d", i)]);
+	end
+	WayfinderInsetWell:CopyVisuals(CharacterAttributesPage);
+	WayfinderInsetWell:CopyVisuals(CharacterClassesPage);
+	WayfinderInsetWell:CopyVisuals(CharacterModelFrameBorder);
+	for _, tab in ipairs({ CharacterWindowTab1, CharacterWindowTab2 }) do
+		WayfinderSelectedTab:CopyVisuals(tab);
+	end
+	for i, button in ipairs({ SpellBookPrevPageButton, SpellBookNextPageButton }) do
+		WayfinderUtility:CopyVisuals(button);
+		button:SetProperty("Icon", Wayfinder_Art(i == 1 and "GlyphChevronLeft" or "GlyphChevronRight"));
+		button:SetSize(56, 62);
+		button:SetAnchor(A.BOTTOM, A.BOTTOM, SpellBookBackground, -32);
+	end
+	SpellBookPageLabel:SetProperty("TextColor", "FFCCB58D");
+end
+
+local function SetupSystemWindows()
+	WayfinderPanel:CopyVisuals(GameMenu);
+	WayfinderEmpty:CopyVisuals(GameMenuButtons);
+	GameMenuBorder:Hide();
+	WayfinderButton:CopyVisuals(GameMenuButtonTemplate);
+	WayfinderInsetWell:CopyVisuals(OptionsCategoryPanel);
+	WayfinderInsetWell:CopyVisuals(OptionsContentPanel);
+	WayfinderSelectedTab:CopyVisuals(OptionsCatButtonTemplate);
+	for _, button in ipairs({
+		OptionsDefaultsButton, OptionsOkayButton, OptionsCancelButton,
+		OptionsHardwareRowTemplate:GetChild(1),
+	}) do
+		WayfinderButton:CopyVisuals(button);
+	end
+end
+
+local function SetupShortcutToggle()
+	local toggle = ChatButton:Clone();
+	WayfinderMinimapControl:CopyVisuals(toggle);
+	GameMenuBar:AddChild(toggle);
+	toggle:SetSize(54, 62);
+	toggle:SetAnchor(A.RIGHT, A.RIGHT, GameMenuBar, -18);
+	toggle:SetAnchor(A.BOTTOM, A.BOTTOM, GameMenuBar, -13);
+	local function UpdateToggle()
+		local expanded = MenuBarButtons:IsVisible();
+		toggle:SetProperty("Icon", Wayfinder_Art(expanded and "GlyphChevronRight" or "GlyphChevronLeft"));
+		toggle.userData = { tooltipKey = expanded and "WAYFINDER_SHORTCUTS_COLLAPSE" or "WAYFINDER_SHORTCUTS_EXPAND" };
+	end
+	toggle:SetClickedHandler(function()
+		if MenuBarButtons:IsVisible() then MenuBarButtons:Hide(); else MenuBarButtons:Show(); end
+		GameTooltip:Hide();
+		UpdateToggle();
+	end);
+	toggle:SetOnEnterHandler(MenuBarButton_OnEnter);
+	toggle:SetOnLeaveHandler(MenuBarButton_OnLeave);
+	UpdateToggle();
+end
+
 function Wayfinder_ApplyLayout()
 	local titleFonts = { AlestiaWindowTitleFont = true, CharacterTitleFont = true, InventoryTitleFont = true };
 	for index = 0, GameParent:GetChildCount() - 1 do
@@ -169,11 +273,19 @@ function Wayfinder_ApplyLayout()
 			end
 		end
 	end
-	WayfinderPanel:CopyVisuals(FriendsFrame);
+	for _, name in ipairs({
+		"FriendsFrame", "CharacterWindow", "QuestLogFrame", "QuestFrame", "SpellBook",
+		"InventoryFrame", "EmoteList", "CraftingFrame", "BankFrame", "MailFrame",
+		"VendorFrame", "TrainerFrame", "TradeFrame", "LootFrame", "LootMethodFrame",
+		"TalentFrame", "OptionsFrame", "BugReportFrame",
+	}) do
+		local panel = _G[name];
+		if panel then WayfinderPanel:CopyVisuals(panel); end
+	end
 	SetupGuild();
-	WayfinderPanel:CopyVisuals(CharacterWindow);
-	WayfinderPanel:CopyVisuals(QuestLogFrame);
-	WayfinderPanel:CopyVisuals(SpellBook);
+	SetupQuestWindows();
+	SetupSearchWindows();
+	SetupSystemWindows();
 	SetupMinimap();
 	SetupQuestTracker();
 	for _, tooltip in ipairs({ GameTooltip, ItemCompareTooltip }) do
@@ -199,6 +311,7 @@ function Wayfinder_ApplyLayout()
 	badge:SetSize(25, 25);
 	badge:SetAnchor(A.TOP, A.TOP, nil, 0);
 	badge:SetAnchor(A.RIGHT, A.RIGHT, nil, -1);
+	SetupShortcutToggle();
 
 	LayoutSlots(ActionBar, 1);
 	LayoutSlots(ActionBar2, 13);

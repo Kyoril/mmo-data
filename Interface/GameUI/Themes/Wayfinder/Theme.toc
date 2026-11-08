@@ -2,4 +2,5 @@ Metrics.lua
 Styles.xml
 Social.lua
 Chat.lua
+Search.lua
 Layout.lua

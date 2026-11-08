@@ -13,7 +13,7 @@ GameUITheme.MenuBarBaseHeight = 190;
 GameUITheme.ActionBarBottomOffset = -100;
 GameUITheme.ActionBarLeftOffset = 1144;
 GameUITheme.MenuButtonsBottomOffset = -4;
-GameUITheme.MenuButtonsRightOffset = -18;
+GameUITheme.MenuButtonsRightOffset = -84;
 GameUITheme.ActionSocketNormalTint = "FFB2B2AB";
 GameUITheme.ActionSocketHoveredTint = "FFFFDF9F";
 GameUITheme.ActionEmptySocketTint = "603B4C59";
@@ -40,3 +40,8 @@ GameUITheme.TooltipQualityColors = {
 	[4] = "FFC99BFA",
 	[5] = "FFFFB76F",
 };
+
+GameUITheme.QuestBodyTextColor = "FFE8E0D0";
+GameUITheme.QuestHeadingTextColor = "FFE3BF82";
+GameUITheme.QuestListTextColor = "FFF0E3C8";
+GameUITheme.QuestRewardQualityColors = { [2] = "FF98D1A8", [3] = "FF79B8FA", [4] = "FFC99BFA", [5] = "FFFFB76F" };
