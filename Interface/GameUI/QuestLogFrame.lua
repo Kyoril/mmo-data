@@ -7,6 +7,57 @@ local QS_FAILED   = 5;
 
 local selectedQuestId = nil;
 local questRows = {};
+local categories = {
+    { label = "QUEST_LOG_CATEGORY_ACTIVE" },
+    { label = "QUEST_LOG_CATEGORY_COMPLETED" },
+};
+
+local function QuestTitleLess(left, right)
+    local leftTitle = string.lower(left.quest.title);
+    local rightTitle = string.lower(right.quest.title);
+    if leftTitle == rightTitle then
+        return left.quest.id < right.quest.id;
+    end
+    return leftTitle < rightTitle;
+end
+
+local function BuildQuestRoster(grouped, revealQuestId)
+    local roster, active, completed = {}, {}, {};
+    for i = 0, MAX_QUESTLOG_SIZE - 1 do
+        local entry = GetQuestLogEntry(i);
+        if entry and entry.quest then
+            if grouped then
+                local group = entry.status == QS_COMPLETE and completed or active;
+                group[#group + 1] = entry;
+            else
+                roster[#roster + 1] = { entry = entry };
+            end
+        end
+    end
+
+    if grouped then
+        for i, entries in ipairs({ active, completed }) do
+            if #entries > 0 then
+                local category = categories[i];
+                table.sort(entries, QuestTitleLess);
+                roster[#roster + 1] = { category = category, count = #entries };
+
+                for _, entry in ipairs(entries) do
+                    if entry.quest.id == revealQuestId then
+                        category.collapsed = false;
+                        break;
+                    end
+                end
+                if not category.collapsed then
+                    for _, entry in ipairs(entries) do
+                        roster[#roster + 1] = { entry = entry };
+                    end
+                end
+            end
+        end
+    end
+    return roster;
+end
 
 -- Formats a remaining-seconds value as "M:SS" (or "H:MM:SS" for long timers).
 local function FormatQuestTime(seconds)
@@ -33,14 +84,31 @@ function QuestLogFrame_OnLoad(self)
     end
 
     local visibleRows = (GameUITheme and GameUITheme.QuestLogVisibleRows) or 6;
+    local rowInset = wayfinder and 48 or 8;
     for i = 1, visibleRows do
         local row = QuestListQuestButton:Clone();
-        row:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, 8);
+        row:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, rowInset);
         row:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, -8);
         row:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, 16 + (i - 1) * row:GetHeight());
         row:SetClickedHandler(QuestListQuestButton_OnClick);
         QuestLogFrameQuestListContent:AddChild(row);
         questRows[i] = row;
+    end
+
+    if wayfinder then
+        for _, category in ipairs(categories) do
+            local section = category;
+            local button = WayfinderQuestLogCategory:Clone();
+            button:SetHeight(questRows[1]:GetHeight());
+            button:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, 8);
+            button:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, -8);
+            button:SetClickedHandler(function()
+                section.collapsed = not section.collapsed;
+                QuestLog_Update();
+            end);
+            QuestLogFrameQuestListContent:AddChild(button);
+            section.button = button;
+        end
     end
 
     QuestLogAbandonButton:SetWidth(QuestLogAbandonButton:GetTextWidth() + 64);
@@ -56,6 +124,7 @@ function QuestLogFrame_OnLoad(self)
 
     -- Setup quest list scroll bar
     QuestLogQuestListScrollBar:SetMinimum(0);
+    QuestLogQuestListScrollBar:SetStep(1);
     QuestLogQuestListScrollBar:SetValue(0);
     QuestLogQuestListScrollBar:SetMaximum(0);
     QuestLogQuestListScrollBar:SetOnValueChangedHandler(QuestLogQuestListScrollBar_OnValueChanged);
@@ -101,9 +170,7 @@ function QuestLogFrame_OnShow(self)
 
     PlaySound("Sound/Interface/Papers_02.wav");
     
-    if GetQuestLogSelection() ~= 0 then
-        QuestLogFrame_UpdateQuestDetails();
-    end
+    QuestLogFrame_UpdateQuestDetails();
 end
 
 function QuestLogFrame_UpdateQuestDetails()
@@ -119,6 +186,8 @@ function QuestLogFrame_UpdateQuestDetails()
     end
 
     if not questLogEntry then
+        selectedQuestId = nil;
+        QuestLogAbandonButton:Disable();
         QuestLogQuestDetailScrollContent:Hide();
         QuestLogQuestDetailPanelScrollBar:Disable();
         return;
@@ -289,97 +358,105 @@ function QuestLogFrame_UpdateQuestDetails()
 end
 
 function QuestListQuestButton_OnClick(self)
-    -- Hide scroll content
-    QuestLogQuestDetailScrollContent:Hide();
-
-    -- Uncheck all buttons
-    for _, button in ipairs(questRows) do
-        button:SetChecked(false);
-    end
-
-    self:SetChecked(true);
-
-    -- If there is a quest selected...
     if self.userData then
-        selectedQuestId = self.userData.quest.id;
-        QuestLogSelectQuest(selectedQuestId);
-
+        QuestLogSelectQuest(self.userData.quest.id);
+        QuestLog_Update();
         QuestLogFrame_UpdateQuestDetails();
     end
 end
 
 function QuestLogFrame_OnUpdateQuestLog(self)
     QuestLog_Update();
-
-    if GetQuestLogSelection() ~= 0 then
-        QuestLogFrame_UpdateQuestDetails();
-    end
+    QuestLogFrame_UpdateQuestDetails();
 end
 
-function QuestLog_Update()
-    -- Determine number of quests
-    local questCount = 0;
-    for i = 1, MAX_QUESTLOG_SIZE do
-        local questLogEntry = GetQuestLogEntry(i - 1);
-        if questLogEntry then
-            questCount = questCount + 1;
+local function UpdateQuestRow(button, entry, selection, grouped)
+    local title = entry.quest.title;
+    if IsClassUnlockQuest(entry.quest) then
+        title = string.format(Localize("QUEST_CLASS_UNLOCK_FORMAT"), title);
+    end
+
+    if not IsQuestAllowedForClass(entry.quest) then
+        button:SetProperty("TextColor", "FF99958C");
+        title = string.format(Localize("QUEST_WRONG_CLASS_FORMAT"), title);
+    elseif entry.status == QS_COMPLETE then
+        button:SetProperty("TextColor", "FF89D95B");
+        if not grouped then
+            title = string.format(Localize("QUEST_COMPLETED_FORMAT"), title);
         end
-    end
-
-    local maxOffset = math.max(0, questCount - #questRows);
-    QuestLogQuestListScrollBar:SetMaximum(maxOffset);
-    if maxOffset > 0 then
-        QuestLogQuestListScrollBar:Enable();
+    elseif entry.status == QS_FAILED then
+        button:SetProperty("TextColor", "FFD28B7F");
+        title = string.format(Localize("QUEST_FAILED_FORMAT"), title);
     else
-        QuestLogQuestListScrollBar:Disable();
+        button:SetProperty("TextColor", (GameUITheme and GameUITheme.QuestListTextColor) or "FFF3CF50");
     end
 
-    if GameUITheme and GameUITheme.Wayfinder then
-        QuestLogQuestListScrollBar:SetProperty("Visible", maxOffset > 0 and "true" or "false");
+    button.userData = entry;
+    button:SetText(title);
+    button:SetChecked(entry.quest.id == selection);
+    button:Show();
+end
+
+function QuestLog_Update(revealQuestId)
+    local grouped = GameUITheme and GameUITheme.Wayfinder;
+    local roster = BuildQuestRoster(grouped, revealQuestId);
+    local scrollBar = QuestLogQuestListScrollBar;
+    local maxOffset = math.max(0, #roster - #questRows);
+    scrollBar:SetMaximum(maxOffset);
+    scrollBar:SetEnabled(maxOffset > 0);
+
+    if grouped then
+        scrollBar:SetProperty("Visible", maxOffset > 0 and "true" or "false");
         QuestLogFrameQuestListContent:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, maxOffset > 0 and -96 or 0);
     end
 
-    local offset = math.floor(QuestLogQuestListScrollBar:GetValue());
+    local offset = math.floor(scrollBar:GetValue());
+    if grouped and revealQuestId then
+        for i, item in ipairs(roster) do
+            if item.entry and item.entry.quest.id == revealQuestId then
+                if i <= offset then
+                    scrollBar:SetValue(i - 1);
+                elseif i > offset + #questRows then
+                    scrollBar:SetValue(i - #questRows);
+                end
+                offset = math.floor(scrollBar:GetValue());
+                break;
+            end
+        end
+    end
+
+    local selection = GetQuestLogSelection();
+    if selection == 0 then
+        for _, item in ipairs(roster) do
+            if item.entry then
+                QuestLogSelectQuest(item.entry.quest.id);
+                selection = GetQuestLogSelection();
+                break;
+            end
+        end
+    end
+
+    if grouped then
+        for _, category in ipairs(categories) do
+            category.button:Hide();
+        end
+    end
+
     for i, button in ipairs(questRows) do
-        local questLogEntry = GetQuestLogEntry(i + offset - 1);
-        if questLogEntry then
-            if GetQuestLogSelection() == 0 then
-                QuestLogSelectQuest(questLogEntry.id);
-            end
-
-            button.userData = questLogEntry;
-
-            if not questLogEntry.quest then
-                -- Quest data not yet loaded from server; skip rendering this slot.
-                button:Hide();
-            else
-                -- Feature-unlock chains (e.g. class unlock quests) are tagged so the player can
-                -- tell them apart from regular quests.
-                local title = questLogEntry.quest.title;
-                if IsClassUnlockQuest(questLogEntry.quest) then
-                    title = string.format(Localize("QUEST_CLASS_UNLOCK_FORMAT"), title);
-                end
-
-                if not IsQuestAllowedForClass(questLogEntry.quest) then
-                    -- Quest is frozen because the active class does not match its required class.
-                    button:SetProperty("TextColor", "FF99958C");
-                    button:SetText(string.format(Localize("QUEST_WRONG_CLASS_FORMAT"), title));
-                elseif questLogEntry.status == QS_COMPLETE then
-                    button:SetProperty("TextColor", "FF89D95B");
-                    button:SetText(string.format(Localize("QUEST_COMPLETED_FORMAT"), title));
-                elseif questLogEntry.status == QS_FAILED then
-                    button:SetProperty("TextColor", "FFD28B7F");
-                    button:SetText(string.format(Localize("QUEST_FAILED_FORMAT"), title));
-                else
-                    button:SetProperty("TextColor", (GameUITheme and GameUITheme.QuestListTextColor) or "FFF3CF50");
-                    button:SetText(title);
-                end
-                button:SetChecked(questLogEntry.quest.id == GetQuestLogSelection());
-                button:Show();
-            end
+        local item = roster[i + offset];
+        if item and item.entry then
+            UpdateQuestRow(button, item.entry, selection, grouped);
         else
             button.userData = nil;
             button:Hide();
+            if item then
+                local category = item.category;
+                local header = category.button;
+                header:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, 16 + (i - 1) * header:GetHeight());
+                header:SetText(string.format(Localize(category.label), item.count));
+                header:SetProperty("StatusIcon", Wayfinder_Art(category.collapsed and "GlyphPlus" or "GlyphMinus"));
+                header:Show();
+            end
         end
     end
 end

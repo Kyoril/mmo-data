@@ -437,6 +437,8 @@ strings =
 	(key = "QUEST_OBJECTIVES", string = "Quest Objectives")
 	(key = "ACCEPT_QUEST", string = "Accept")
 	(key = "ABANDON_QUEST", string = "Abandon")
+	(key = "QUEST_LOG_CATEGORY_ACTIVE", string = "Active Quests (%d)")
+	(key = "QUEST_LOG_CATEGORY_COMPLETED", string = "Completed (%d)")
 	(key = "QUEST_COMPLETED_FORMAT", string = "%s (Completed)")
 	(key = "QUEST_FAILED", string = "Failed")
 	(key = "QUEST_FAILED_FORMAT", string = "%s (Failed)")

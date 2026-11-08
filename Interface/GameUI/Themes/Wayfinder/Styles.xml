@@ -131,6 +131,32 @@
 		</Visual>
 	</Frame>
 
+	<Frame name="WayfinderQuestLogCategory" type="Button" renderer="ButtonRenderer">
+		<Property name="Visible" value="false" />
+		<Property name="Font" value="WayfinderTrackerHeadingFont" />
+		<Property name="StatusIcon" />
+		<Visual>
+			<ImagerySection name="Label">
+				<ImageComponent texture="Interface/GlueUI/GlueListFade.htex" tint="A6CCAA73">
+					<Area><Inset left="12" right="12" top="61" bottom="1" /></Area>
+				</ImageComponent>
+				<ImageComponent>
+					<Area><Inset left="20" top="19" /><Size><AbsDimension x="26" y="26" /></Size></Area>
+					<PropertyValue property="StatusIcon" />
+				</ImageComponent>
+				<TextComponent color="FFE4C38A" horzAlign="LEFT" vertAlign="CENTER">
+					<Area><Inset left="60" right="16" /></Area>
+				</TextComponent>
+			</ImagerySection>
+			<ImagerySection name="Highlight">
+				<ImageComponent texture="Interface/GlueUI/GlueListFade.htex" tint="416F593D" />
+			</ImagerySection>
+			<StateImagery name="Normal"><Layer><Section section="Label" /></Layer></StateImagery>
+			<StateImagery name="Hovered"><Layer><Section section="Highlight" /><Section section="Label" /></Layer></StateImagery>
+			<StateImagery name="Pushed"><Layer><Section section="Highlight" /><Section section="Label" color="FFC5AD85" /></Layer></StateImagery>
+		</Visual>
+	</Frame>
+
 	<Frame name="WayfinderEmpty">
 		<Visual>
 			<StateImagery name="Enabled" />
