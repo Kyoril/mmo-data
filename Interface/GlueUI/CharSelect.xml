@@ -146,6 +146,25 @@
 	<Frame name="CharSelect" parent="GlueParent" setAllPoints="true">
 		<Property name="Visible" value="false" />
 
+		<Frame name="CharSelectBackdrop" renderer="DefaultRenderer" setAllPoints="true">
+			<Property name="Visible" value="false" />
+			<Property name="MousePassThrough" value="true" />
+		</Frame>
+
+		<Frame name="CharSelectPreview" type="CharacterPreview">
+			<Property name="Visible" value="false" />
+			<Property name="MousePassThrough" value="true" />
+			<Property name="Animation" value="Idle" />
+			<Property name="Zoom" value="4.0" />
+			<Property name="OffsetY" value="1.0" />
+			<Area>
+				<Anchor point="LEFT" offset="48" />
+				<Anchor point="RIGHT" relativePoint="H_CENTER" offset="360" />
+				<Anchor point="TOP" offset="240" />
+				<Anchor point="BOTTOM" offset="-240" />
+			</Area>
+		</Frame>
+
 		<!-- Nameplates of the five plaza characters (1-5, by order index) and of a selected visitor (6). -->
 		<Frame name="CharSelectNameplates" setAllPoints="true">
 			<Property name="MousePassThrough" value="true" />
@@ -161,6 +180,18 @@
 		<!-- Everything clickable. Not clickable itself, so a click on empty space reaches CharSelect. -->
 		<Frame name="CharSelectChrome" setAllPoints="true">
 			<Property name="Clickable" value="false" />
+
+			<Frame name="CharSelectSpotlight" inherits="GlueTextLarge">
+				<Property name="Visible" value="false" />
+				<Property name="Font" value="CharNameplateNameSelected" />
+				<Property name="Clickable" value="false" />
+				<Property name="MousePassThrough" value="true" />
+				<Area>
+					<Anchor point="TOP" offset="152" />
+					<Anchor point="LEFT" relativeTo="CharSelectPreview" />
+					<Anchor point="RIGHT" relativeTo="CharSelectPreview" />
+				</Area>
+			</Frame>
 
 			<!-- Bottom bar: a soft gradient behind the buttons. Not clickable, so drags on it still turn
 			     the selected character. -->

@@ -23,6 +23,10 @@ local glueSceneReady = false;
 -- ready when coming back from the world.
 local glueSceneFadeHeld = false;
 
+function GlueUsesStaticFrontEnd()
+	return GlueUITheme and GlueUITheme.StaticFrontEnd;
+end
+
 local function GlueSceneFade_SetTarget(target)
 	glueSceneFadeTarget = target;
 	if target > 0 then
@@ -32,6 +36,7 @@ end
 
 -- Covers the scene (fading in) until GlueSceneFade_Release.
 function GlueSceneFade_Hold()
+	if GlueUsesStaticFrontEnd() then return; end
 	glueSceneFadeHeld = true;
 	GlueSceneFade_SetTarget(1.0);
 end
@@ -71,8 +76,14 @@ function GlueParent_OnLoad(this)
 	-- view has loaded.
 	glueSceneFadeOpacity = 1.0;
 	glueSceneFadeTarget = 1.0;
-	GlueSceneFade:SetOpacity(1.0);
-	GlueSceneFade:Show();
+	if GlueUsesStaticFrontEnd() then
+		glueSceneFadeOpacity = 0.0;
+		glueSceneFadeTarget = 0.0;
+		GlueSceneFade:Hide();
+	else
+		GlueSceneFade:SetOpacity(1.0);
+		GlueSceneFade:Show();
+	end
 	this:RegisterEvent("GLUE_SCENE_READY", function(frame)
 		glueSceneReady = true;
 		if not glueSceneFadeHeld then

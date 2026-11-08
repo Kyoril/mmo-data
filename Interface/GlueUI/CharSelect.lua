@@ -19,6 +19,8 @@ local NAMEPLATE_ZONE_LINE = 48		-- Height of the zone line at the bottom, empty 
 -- Roster list (CharSelect.xml): a fixed pool of rows (CharRosterRow1..N) showing a window of the
 -- character order, like the realm list (RealmList.lua).
 local VISIBLE_ROWS = (GlueUITheme and GlueUITheme.RosterVisibleRows) or 10
+local staticFrontEnd = GlueUsesStaticFrontEnd()
+local ROSTER_PANEL_CHROME_HEIGHT = 460
 local ROSTER_DIVIDER_GAP = 80		-- UI units above the first character not on the plaza (divider and label)
 local ROSTER_AUTOSCROLL_SECONDS = 0.18	-- One row per step while a drag is held past the top or bottom row
 local SEPARATOR_COLOR = "598C6234"
@@ -219,7 +221,7 @@ end
 local function SetChromeVisible(visible)
 	chromeVisible = visible
 	CharSelectChrome:SetProperty("Visible", visible and "true" or "false")
-	CharSelectNameplates:SetProperty("Visible", visible and "true" or "false")
+	CharSelectNameplates:SetProperty("Visible", visible and not staticFrontEnd and "true" or "false")
 	if not visible then
 		plazaPress = nil
 		SetHoveredCharacter(-1)
@@ -305,6 +307,10 @@ function CharRoster_Refresh()
 	local numCharacters = GetNumCharacters()
 
 	CharCountLabel:SetText(string.format(Localize("CHAR_COUNT_FORMAT"), numCharacters))
+	if staticFrontEnd then
+		local rows = math.max(4, math.min(VISIBLE_ROWS, numCharacters))
+		CharRosterPanel:SetHeight(ROSTER_PANEL_CHROME_HEIGHT + rows * CharRosterRow1:GetHeight())
+	end
 
 	local hasScroll = numCharacters > VISIBLE_ROWS
 	scrollOffset = math.max(0, math.min(scrollOffset, MaxScrollOffset()))
@@ -326,7 +332,7 @@ function CharRoster_Refresh()
 
 		-- The divider before the first character who is not on the plaza belongs to that character's
 		-- row: it sits in a gap opened above the row, wherever the row is in the window.
-		local dividerAbove = character ~= nil and index == PLAZA_SPOTS
+		local dividerAbove = not staticFrontEnd and character ~= nil and index == PLAZA_SPOTS
 		if rowIndex == 1 then
 			row:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, dividerAbove and ROSTER_DIVIDER_GAP or 0)
 		else
@@ -338,9 +344,10 @@ function CharRoster_Refresh()
 		if character then
 			row:SetText(character.name)
 			row:GetChild(ROW_SUBTEXT):SetText(LevelClassText(character, index))
-			row:GetChild(ROW_PLAZA_MARK):SetText(index < PLAZA_SPOTS and onThePlaza or "")
+			local location = staticFrontEnd and GetCharacterZoneName(index) or (index < PLAZA_SPOTS and onThePlaza or "")
+			row:GetChild(ROW_PLAZA_MARK):SetText(location or "")
 			-- No separator under the last character, nor above the plaza divider.
-			local lastOfGroup = index == numCharacters - 1 or index == PLAZA_SPOTS - 1
+			local lastOfGroup = index == numCharacters - 1 or (not staticFrontEnd and index == PLAZA_SPOTS - 1)
 			row:SetProperty("SeparatorColor", lastOfGroup and NO_SEPARATOR or SEPARATOR_COLOR)
 			row:SetChecked(index == selectedIndex)
 			row:Show()
@@ -358,7 +365,7 @@ local function RosterDragTo(target)
 		MoveCharacterInOrder(rosterDrag.index - 1, target - 1)
 		rosterDrag.index = target
 		selectedIndex = GetSelectedCharacterIndex()
-		RefreshNameplates()
+		if not staticFrontEnd then RefreshNameplates() end
 	end
 	CharRoster_Refresh()
 end
@@ -467,6 +474,9 @@ local function SetupRosterRow(rowIndex)
 
 	row:SetOnMouseUpHandler(function(frame, button)
 		if button == LEFT_MOUSE_BUTTON then
+			if staticFrontEnd and rosterDrag and rosterDrag.moved then
+				SaveCharacterOrder()
+			end
 			rosterDrag = nil
 			-- A checkable button toggles itself on release: put the selection marks back.
 			CharRoster_Refresh()
@@ -492,7 +502,13 @@ function CharSelect_SelectIndex(index)
 		EnsureVisible(index + 1)
 	end
 	CharRoster_Refresh()
-	RefreshNameplates()
+	if staticFrontEnd then
+		CharSelectSpotlight:SetText(character and character.name or Localize("CREATE_CHARACTER"))
+		CharSelectSpotlight:Show()
+		SetCharacterPreview(CharSelectPreview, index)
+	else
+		RefreshNameplates()
+	end
 end
 
 function CharSelect_ToggleRoster()
@@ -513,7 +529,7 @@ end
 function CharSelect_CloseRoster()
 	rosterDrag = nil
 	if CharRosterPanel:IsVisible() then
-		CharRosterPanel:Hide()
+		if not staticFrontEnd then CharRosterPanel:Hide() end
 		SaveCharacterOrder()
 	end
 	CharSelect_UpdateActionLayout()
@@ -543,7 +559,7 @@ local function CharSelect_OnMouseUp(self, button)
 
 	-- A drag that turned the character is not a click, and neither is a release over the chrome
 	-- or a frame that opened in the meantime.
-	if press.rotating or not PlazaInputAllowed() or not CharSelect:IsMouseClickTarget() then
+	if staticFrontEnd or press.rotating or not PlazaInputAllowed() or not CharSelect:IsMouseClickTarget() then
 		return
 	end
 
@@ -599,6 +615,9 @@ end
 -- Leaving the character screen (or its parent hiding) drops the hover and any plaza press, so the
 -- character does not keep reacting and a later release does not pick or turn anyone.
 function CharSelect_OnHide(self)
+	if staticFrontEnd then
+		SetCharacterPreview(CharSelectPreview, -1)
+	end
 	plazaPress = nil
 	SetHoveredCharacter(-1)
 	hoverDirty = true
@@ -661,6 +680,7 @@ function CharSelect_OnUpdate(self, elapsed)
 	end
 
 	RosterAutoScroll(elapsed)
+	if staticFrontEnd then return end
 	UpdateHover()
 
 	-- Nameplates follow the characters, including while they run. Plates that would overlap make
@@ -708,6 +728,10 @@ function CharList_Show()
 	local index = FindCharacterIndex(selectedGuid) or GetInitialCharacterIndex()
 
 	CharSelect:Show()
+	if staticFrontEnd then
+		CharRosterPanel:Show()
+		CharSelect_UpdateActionLayout()
+	end
 	CharSelect_SelectIndex(index)
 
 	-- While the camera flies in, the chrome waits for GLUE_FLIGHT_FINISHED.
@@ -728,7 +752,7 @@ function CharSelect_EnterWorld()
 	RunConsoleCommand("saveconfig")
 
 	SetChromeVisible(false)
-	if not GluePushIn() then
+	if staticFrontEnd or not GluePushIn() then
 		EnterWorld()
 	end
 end
@@ -777,7 +801,7 @@ function CharSelect_ChangeRealm()
 	selectedGuid = nil
 
 	-- Fly back out through the gate; the realm list appears there.
-	if GlueFlyToGate() then
+	if not staticFrontEnd and GlueFlyToGate() then
 		afterFlight = "realmlist"
 	else
 		RealmList_Show(true)
@@ -796,6 +820,13 @@ function CharSelect_ConfirmDelete()
 		return
 	end
 	local guid = character.guid
+	if staticFrontEnd then
+		SetChromeVisible(false)
+		selectedGuid = nil
+		realmConnector:DeleteCharacter(character)
+		GlueDialog_Show("DELETING_CHARACTER")
+		return
+	end
 	character = nil
 
 	-- The character runs out first; the delete is sent once it is on its way (CharSelect_OnUpdate).

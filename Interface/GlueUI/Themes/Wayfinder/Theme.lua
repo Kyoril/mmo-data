@@ -1,6 +1,7 @@
 -- Copyright (C) 2019 - 2025, Kyoril. All rights reserved.
 -- Replace the visual prototypes before GlueTemplates.xml and the screens inherit them.
 GlueUITheme.Wayfinder = true;
+GlueUITheme.StaticFrontEnd = true;
 
 local function Apply(visual, ...)
 	for _, target in ipairs({ ... }) do

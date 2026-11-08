@@ -1,5 +1,23 @@
 <?xml version="1.0" ?>
 <UiLayout>
+	<Frame name="WayfinderGateBackdrop">
+		<Visual>
+			<ImagerySection name="Art">
+				<ImageComponent texture="Interface/GlueUI/LoginBackgroundPH.htex" tint="FFC0C9D4" />
+			</ImagerySection>
+			<StateImagery name="Enabled"><Layer><Section section="Art" /></Layer></StateImagery>
+		</Visual>
+	</Frame>
+
+	<Frame name="WayfinderRosterBackdrop">
+		<Visual>
+			<ImagerySection name="Art">
+				<ImageComponent texture="Interface/GlueUI/BackgroundPH.htex" tint="FF8C939D" />
+			</ImagerySection>
+			<StateImagery name="Enabled"><Layer><Section section="Art" /></Layer></StateImagery>
+		</Visual>
+	</Frame>
+
 	<Frame name="WayfinderGluePrimary">
 		<Visual>
 			<ImagerySection name="Base">

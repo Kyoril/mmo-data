@@ -78,4 +78,29 @@ if GlueUITheme and GlueUITheme.Wayfinder then
 	Wayfinder_AddTitleRule(CharCreateSelectionPanel, CharCreateSelectionTitle, 72, 3);
 	Wayfinder_AddTitleRule(CharCreatePropertiesFrame, CharCreatePropertiesLabel, 72, 5);
 	Wayfinder_AddTitleRule(DeleteConfirmationFrame, DeleteConfirmationHeader, 72, 8);
+
+	if GlueUsesStaticFrontEnd() then
+		GlueSceneFrame:SetProperty("Cinematic", "false");
+		WayfinderGateBackdrop:CopyVisuals(GlueSceneFrame);
+		WayfinderRosterBackdrop:CopyVisuals(CharSelectBackdrop);
+		CharSelectBackdrop:Show();
+
+		LoginFormBackdrop:ClearAnchor(A.H_CENTER);
+		LoginFormBackdrop:SetAnchor(A.LEFT, A.LEFT, AccountLoginContent, 128);
+		for _, frame in ipairs({ LoginLogoFrame, AccountNameLabel, AccountNameField, AccountPasswordLabel, AccountPasswordField, LoginButton }) do
+			frame:SetAnchor(A.H_CENTER, A.H_CENTER, LoginFormBackdrop, 0);
+		end
+		LoginLogoFrame:SetSize(800, 422);
+		LoginLogoFrame:SetAnchor(A.TOP, A.TOP, AccountLoginContent, 128);
+		AccountNameLabel:SetProperty("Font", "DefaultSmall");
+		AccountPasswordLabel:SetProperty("Font", "DefaultSmall");
+
+		CharRosterButton:Hide();
+		CharRosterPanel:ClearAnchor(A.TOP);
+		CharRosterPanel:ClearAnchor(A.BOTTOM);
+		CharRosterPanel:SetAnchor(A.V_CENTER, A.V_CENTER, CharSelectChrome, 0);
+		CharSelectPreview:SetAnchor(A.LEFT, A.H_CENTER, CharSelect, -880);
+		CharSelectPreview:SetAnchor(A.RIGHT, A.LEFT, CharRosterPanel, -48);
+		CharSelectEnterButton:SetAnchor(A.H_CENTER, A.H_CENTER, CharSelectPreview, 0);
+	end
 end

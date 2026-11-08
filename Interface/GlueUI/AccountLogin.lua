@@ -42,6 +42,10 @@ function AccountLogin_OnRealmList()
 	end
 
 	GlueDialog_Hide();
+	if GlueUsesStaticFrontEnd() then
+		RealmList_Show();
+		return;
+	end
 	local anim = AccountLogin:GetAnimation("FadeOut")
 	if anim and not anim:IsPlaying() then
 		anim:SetOnFinish(function(a)
@@ -122,7 +126,7 @@ function AccountLogin_OnLoad()
 			GlueDialog_Show("REALM_DISCONNECTED_ERROR");
 		end
 
-		AccountLogin:PlayAnimation("FadeIn");
+		if not GlueUsesStaticFrontEnd() then AccountLogin:PlayAnimation("FadeIn"); end
 	end);
 
 	-- The login server terminated this session, most commonly because the account was signed in
@@ -141,7 +145,7 @@ function AccountLogin_OnLoad()
 		AccountNameField:CaptureInput();
 		GlueDialog_Show("SESSION_KICKED_ERROR", reasonText);
 
-		AccountLogin:PlayAnimation("FadeIn");
+		if not GlueUsesStaticFrontEnd() then AccountLogin:PlayAnimation("FadeIn"); end
 	end);
 
 	AccountLogin:RegisterEvent("REALM_LIST", AccountLogin_OnRealmList);
@@ -170,5 +174,5 @@ function AccountLogin_OnLoad()
 		end
 	end
 
-	AccountLogin:PlayAnimation("FadeIn");
+	if not GlueUsesStaticFrontEnd() then AccountLogin:PlayAnimation("FadeIn"); end
 end

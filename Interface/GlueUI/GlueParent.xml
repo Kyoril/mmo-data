@@ -5,9 +5,10 @@
 	<Frame name="GlueParent" parent="TopFrame" setAllPoints="true">
 		<Property name="Font" value="DefaultSmall" />
 
-		<!-- The live 3D scene behind every glue screen. First child, so it is drawn below them. -->
-		<Frame name="GlueSceneFrame" renderer="GlueSceneRenderer" setAllPoints="true">
+		<!-- A theme can supply artwork here, or let the client attach the cinematic renderer. -->
+		<Frame name="GlueSceneFrame" renderer="DefaultRenderer" setAllPoints="true">
 			<Property name="MousePassThrough" value="true" />
+			<Property name="Cinematic" value="true" />
 		</Frame>
 
 		<!-- Dark fill over the scene until its gate view is ready; GlueParent.lua fades it out. -->

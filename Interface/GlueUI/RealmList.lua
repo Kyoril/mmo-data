@@ -253,7 +253,9 @@ function RealmList_Show(fromCharSelect)
 
 	RealmListFrame:Show()
 	RealmList_Update()
-	RealmListFrame:PlayAnimation("FadeIn")
+	if not GlueUsesStaticFrontEnd() then
+		RealmListFrame:PlayAnimation("FadeIn")
+	end
 end
 
 function RealmList_Hide()
@@ -284,8 +286,16 @@ function RealmList_Cancel()
 		RealmList_Hide()
 		-- Back to the plaza of the realm that is still connected: fly in again. The character
 		-- screen keeps its chrome hidden until the flight has finished.
-		GlueFlyToPlaza()
+		if not GlueUsesStaticFrontEnd() then GlueFlyToPlaza() end
 		CharList_Show()
+		return
+	end
+
+	if GlueUsesStaticFrontEnd() then
+		RealmList_Hide()
+		AccountLogin:Show()
+		LoginButton:Enable()
+		AccountNameField:CaptureInput()
 		return
 	end
 
