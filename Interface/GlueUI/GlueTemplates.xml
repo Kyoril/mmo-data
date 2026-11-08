@@ -1,227 +1,465 @@
 <?xml version="1.0"?>
+<!-- Copyright (C) 2019 - 2025, Kyoril. All rights reserved. -->
 
-<!-- This file contains frame templates that are often used by the GlueUI part. -->
+<!-- The Glue UI's design system: fonts, colours and the control templates every screen is built from.
+
+     Style: light, flat and quiet, in the in-game Wayfinder language. Dark translucent ink instead of
+     framed boxes, hairline brass rims with chamfered corners, Cinzel capitals for titles, captions and
+     buttons, PT Serif for running text. The brass primary button is the only heavy element on a
+     screen, so the next step is always obvious.
+
+     Art: Interface/GlueUI/Art/*.htex are white alpha shapes drawn by tools/ui_theme/glue_art.py; the
+     XML tints them, so one file serves every state colour. Sizes are UI units (4K reference: halve
+     them for pixels at 1080p).
+
+     Palette (ARGB)
+       ink        E6101419  panel fill          line       4DD7C29A  hairline rim
+       ivory      FFEDE3CF  primary text        muted      FF9AA1A6  secondary text
+       gold       FFE3C78F  accent, selection   dim        FF666D73  disabled text
+       danger     FFE58B78  destructive hover -->
 <UiLayout xmlns="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://mmo-dev.net/ Ui.xsd">
-	
-	<!-- Historical Legacy artwork notes. BlueGold uses the shared GameUI theme materials.
-	     GlueSkin textures (Interface/GlueUI/GlueSkin*.htex): how they were made. They were baked once
-	     with a throwaway Pillow script and imported with .agents/skills/mmo-item-designer/scripts/
-	     import_item_icon.py (texconv, full mips); there is no generator in the repo. To change one,
-	     decode its source with htex_tool.py preview, apply the recipe and import it again.
-	     - Why 2x: a BorderComponent draws its corners as many UI units wide as it cuts source px, and
-	       the UI is authored at 4K, so the panel and the steel frame are their sources doubled (LANCZOS)
-	       to keep the approved size at 1080p (1 original px = 1 screen px).
-	     - GlueSkinPanel (1024, DXT1, borderSize 64): GameUI/Alestia/WindowPanel.htex at 2x, opaque.
-	     - GlueSkinSteelFrame (512, DXT5, borderSize 36): GameUI/fg4_borders_stone_edges_result.htex at
-	       2x. Drawn over a fill inset 14, so the fill never leaks past the frame.
-	     - GlueSkinButton{Normal,Hovered,Pushed,Disabled,Checked} (512x128, DXT1): vertical gradient
-	       #4E6684 to #1A2232, GameUI/fg4_borders_stone_bg_01_result.htex at 24% opacity on top (a crop
-	       from (64,160) of half the fill size, upscaled 2x), then a white top gloss fading from alpha 55
-	       to 0 over the upper half. Hovered brightness x1.25; Pushed x0.72 with 35% gloss; Disabled
-	       x0.5 with 40% gloss and 25% saturation; Checked x1.35 with 130% gloss and an ivory (F3EEE2)
-	       glow rising quadratically to alpha 70 over the lower half.
-	     - GlueSkinFieldFill (512x128, DXT1): the same stone crop at 25% brightness.
-	     - GlueSkinRowHovered (512x128, DXT1): that stone crop at 42% brightness, the button gradient at
-	       18% over it and 45% gloss. Hover of realm and roster rows.
-	     - GlueSkinSteelFrameSelected (512, DXT5, borderSize 36): GlueSkinSteelFrame x1.6 brightness,
-	       multiplied by ivory F3EEE2 and x1.08, plus a 3 px ivory line just inside the steel band
-	       (alpha 190/120/50). Selected realm rows, roster rows and creation choices.
-	     - GlueSkinWellFrame (256, DXT5, borderSize 18): GlueSkinSteelFrame at 1x, a thin rim for wells.
-	     - GlueSkinWellFill (256, DXT1, tiling BOTH, inset 6): a 128 px stone crop from (64,160) at 22%
-	       brightness, mirrored to a seamless 256 tile.
-	     - GlueSkinArrow{Up,Down,Left,Right} (128, DXT5): grey copies of IconGold_ArrowUp/Down and
-	       fg4_iconsGold_left/rightArrow (luminance scaled so the 98th percentile is white), tinted per
-	       state in GlueArrowButton.
-	     List style (realm list, roster; baked the same way, no generator in the repo):
-	     - GlueListWell (128, DXT5, borderSize 32): sunken list well. Near-black brown fill (11 0C 08) at
-	       alpha 238, a 4 px rim (dark bronze, two bronze px, dark bronze: about 2 px at 1080p) and an
-	       inner shadow 28 px deep under the top rim and 10 px at the sides.
-	     - GlueListFade (256x16, DXT5): white, alpha 1 at the left falling as (1 - t)^1.6 to 0 at 85% of
-	       the width. Tinted for the hover (warm ivory) and selected (red) row glows.
-	     - GlueListAccent (32, DXT5): white in the left 12 columns, transparent elsewhere. With
-	       borderSize 12 it draws a 12 UI bar down the left edge of any row (selected accent); a crop
-	       of the bar's centre (left 2, top 14, right 22, bottom 14, no borderSize) is a solid fill for
-	       row separators and the scroll track. -->
+	<Script file="GlueMotion.lua" />
 
-	<!-- GlueButton template: Common buttons -->
-	<Frame name="GlueButton" type="Button" renderer="ButtonRenderer">
-		<Property name="Font" value="DefaultSmall" />
-		<Property name="Icon" />
+	<!-- Fonts. DefaultSmall and DefaultHeader keep their names: the client and older code refer to them. -->
+	<Font name="DefaultSmall" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="32" outline="0" shadowX="1.0" shadowY="1.0" />
+	<Font name="DefaultHeader" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="41" outline="0" shadowX="1.0" shadowY="1.0" />
+	<Font name="GlueNoteFont" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="28" outline="0" shadowX="1.0" shadowY="1.0" />
+	<Font name="GlueCaptionFont" file="Interface/GameUI/Themes/BlueGold/Fonts/Cinzel.ttf" size="28" outline="0" shadowX="1.0" shadowY="1.0" />
+	<Font name="GlueButtonFont" file="Interface/GameUI/Themes/BlueGold/Fonts/Cinzel.ttf" size="32" outline="0" shadowX="0" shadowY="0" />
+	<Font name="GlueButtonLargeFont" file="Interface/GameUI/Themes/BlueGold/Fonts/Cinzel.ttf" size="40" outline="0" shadowX="0" shadowY="0" />
+	<Font name="GlueTitleFont" file="Interface/GameUI/Themes/BlueGold/Fonts/Cinzel.ttf" size="66" outline="0" shadowX="2.0" shadowY="2.0" />
+	<Font name="GlueHeroFont" file="Interface/GameUI/Themes/BlueGold/Fonts/Cinzel.ttf" size="108" outline="0" shadowX="3.0" shadowY="3.0" />
 
-		<Visual inherits="ThemeGlueGlueButtonVisual" />
-		<Area>
-			<Size>
-				<AbsDimension x="440" y="128" />
-			</Size>
-		</Area>
-	</Frame>
-	
-	<!-- Primary glue button -->
-	<Frame name="GlueButtonPrimary" type="Button" renderer="ButtonRenderer">
-		<Visual inherits="ThemeGlueGlueButtonPrimaryVisual" />
-		<Area>
-			<Size>
-				<AbsDimension x="440" y="128" />
-			</Size>
-		</Area>
-	</Frame>
-	
-	<!-- Arrow button (scroll bars, character customization): the GlueButton frame with a neutral grey
-	     arrow (GlueSkinArrow*, see the GlueSkin note above) tinted per state, so it follows the ivory palette instead
-	     of the gold icon set. Set the arrow with the Icon property. -->
-	<Frame name="GlueArrowButton" type="Button" renderer="ButtonRenderer">
-		<Property name="Icon" />
+	<!-- ===== Text ======================================================================================== -->
 
-		<Visual inherits="ThemeGlueGlueArrowButtonVisual" />
-		<Area>
-			<Size>
-				<AbsDimension x="80" y="80" />
-			</Size>
-		</Area>
-	</Frame>
-
-	<!-- Small label -->
+	<!-- Body text. TextColor, HorzAlign and VertAlign are properties so frames and Lua can change them. -->
 	<Frame name="GlueTextSmall" renderer="DefaultRenderer">
 		<Property name="Font" value="DefaultSmall" />
 		<Property name="HorzAlign" value="LEFT" />
 		<Property name="VertAlign" value="TOP" />
-		<Property name="TextColor" value="FFCFE0D4" />
-
-		<Visual inherits="ThemeGlueGlueTextSmallVisual" />
-		<Area>
-			<Size><AbsDimension x="0" y="44" /></Size>
-		</Area>
+		<Property name="TextColor" value="FFEDE3CF" />
+		<Property name="Clickable" value="false" />
+		<Property name="MousePassThrough" value="true" />
+		<Visual>
+			<ImagerySection name="Text">
+				<TextComponent color="$TextColor" horzAlign="$HorzAlign" vertAlign="$VertAlign" />
+			</ImagerySection>
+			<StateImagery name="Enabled"><Layer><Section section="Text" /></Layer></StateImagery>
+			<StateImagery name="Disabled"><Layer><Section section="Text" /></Layer></StateImagery>
+		</Visual>
+		<Area><Size><AbsDimension x="0" y="44" /></Size></Area>
 	</Frame>
-	
-	<!-- Large label (headline) -->
-	<Frame name="GlueTextLarge" renderer="DefaultRenderer">
+
+	<Frame name="GlueTextLarge" inherits="GlueTextSmall">
 		<Property name="Font" value="DefaultHeader" />
 		<Property name="HorzAlign" value="CENTER" />
-		
-		<Visual inherits="ThemeGlueGlueTextLargeVisual" />
-		<Area>
-			<Size><AbsDimension x="0" y="60" /></Size>
-		</Area>
+		<Area><Size><AbsDimension x="0" y="60" /></Size></Area>
 	</Frame>
-	
-	<!-- TextField template -->
+
+	<!-- Secondary information: smaller and muted. -->
+	<Frame name="GlueNote" inherits="GlueTextSmall">
+		<Property name="Font" value="GlueNoteFont" />
+		<Property name="TextColor" value="FF9AA1A6" />
+		<Area><Size><AbsDimension x="0" y="38" /></Size></Area>
+	</Frame>
+
+	<!-- Small gold capitals above a title or a field ("eyebrow"). -->
+	<Frame name="GlueCaption" inherits="GlueTextSmall">
+		<Property name="Font" value="GlueCaptionFont" />
+		<Property name="TextColor" value="FFE3C78F" />
+		<Area><Size><AbsDimension x="0" y="40" /></Size></Area>
+	</Frame>
+
+	<Frame name="GlueTitle" inherits="GlueTextSmall">
+		<Property name="Font" value="GlueTitleFont" />
+		<Property name="VertAlign" value="CENTER" />
+		<Area><Size><AbsDimension x="0" y="96" /></Size></Area>
+	</Frame>
+
+	<Frame name="GlueHero" inherits="GlueTextSmall">
+		<Property name="Font" value="GlueHeroFont" />
+		<Property name="HorzAlign" value="CENTER" />
+		<Property name="VertAlign" value="CENTER" />
+		<Area><Size><AbsDimension x="0" y="150" /></Size></Area>
+	</Frame>
+
+	<!-- ===== Surfaces ==================================================================================== -->
+
+	<!-- Solid colour (FillColor). -->
+	<Frame name="GlueFill" renderer="DefaultRenderer">
+		<Property name="FillColor" value="FF000000" />
+		<Property name="Clickable" value="false" />
+		<Property name="MousePassThrough" value="true" />
+		<Visual>
+			<ImagerySection name="Fill"><ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="$FillColor" /></ImagerySection>
+			<StateImagery name="Enabled"><Layer><Section section="Fill" /></Layer></StateImagery>
+			<StateImagery name="Disabled"><Layer><Section section="Fill" /></Layer></StateImagery>
+		</Visual>
+	</Frame>
+
+	<!-- A 2 UI hairline; give it a width (or LEFT and RIGHT anchors). -->
+	<Frame name="GlueHairline" inherits="GlueFill">
+		<Property name="FillColor" value="4DD7C29A" />
+		<Area><Size><AbsDimension y="2" /></Size></Area>
+	</Frame>
+
+	<!-- Gradients that darken the art behind text: from the left edge, the bottom or the top. -->
+	<Frame name="GlueVeilLeft" renderer="DefaultRenderer">
+		<Property name="FillColor" value="E6080A0E" />
+		<Property name="Clickable" value="false" />
+		<Property name="MousePassThrough" value="true" />
+		<Visual>
+			<ImagerySection name="Fill"><ImageComponent texture="Interface/GlueUI/Art/FadeH.htex" tint="$FillColor" /></ImagerySection>
+			<StateImagery name="Enabled"><Layer><Section section="Fill" /></Layer></StateImagery>
+		</Visual>
+	</Frame>
+	<Frame name="GlueVeilBottom" renderer="DefaultRenderer">
+		<Property name="FillColor" value="E6080A0E" />
+		<Property name="Clickable" value="false" />
+		<Property name="MousePassThrough" value="true" />
+		<Visual>
+			<ImagerySection name="Fill"><ImageComponent texture="Interface/GlueUI/Art/FadeV.htex" tint="$FillColor" /></ImagerySection>
+			<StateImagery name="Enabled"><Layer><Section section="Fill" /></Layer></StateImagery>
+		</Visual>
+	</Frame>
+	<Frame name="GlueVeilTop" renderer="DefaultRenderer">
+		<Property name="FillColor" value="B3080A0E" />
+		<Property name="Clickable" value="false" />
+		<Property name="MousePassThrough" value="true" />
+		<Visual>
+			<ImagerySection name="Fill"><ImageComponent texture="Interface/GlueUI/Art/FadeVTop.htex" tint="$FillColor" /></ImagerySection>
+			<StateImagery name="Enabled"><Layer><Section section="Fill" /></Layer></StateImagery>
+		</Visual>
+	</Frame>
+
+	<!-- Soft radial light (FillColor). -->
+	<Frame name="GlueGlow" renderer="DefaultRenderer">
+		<Property name="FillColor" value="40E3C78F" />
+		<Property name="Clickable" value="false" />
+		<Property name="MousePassThrough" value="true" />
+		<Visual>
+			<ImagerySection name="Fill"><ImageComponent texture="Interface/GlueUI/Art/Glow.htex" tint="$FillColor" /></ImagerySection>
+			<StateImagery name="Enabled"><Layer><Section section="Fill" /></Layer></StateImagery>
+		</Visual>
+	</Frame>
+
+	<!-- Glass panel: translucent ink with a chamfered hairline rim. Content belongs 64 UI inside. -->
+	<Frame name="GluePanel" renderer="DefaultRenderer">
+		<Property name="FillColor" value="E0101419" />
+		<Property name="RimColor" value="4DD7C29A" />
+		<Visual>
+			<ImagerySection name="Surface">
+				<BorderComponent texture="Interface/GlueUI/Art/PanelFill.htex" borderSize="24" leftSize="28" rightSize="28" topSize="28" bottomSize="28" tint="$FillColor" />
+				<BorderComponent texture="Interface/GlueUI/Art/PanelLine.htex" borderSize="24" leftSize="28" rightSize="28" topSize="28" bottomSize="28" tint="$RimColor" />
+			</ImagerySection>
+			<StateImagery name="Enabled"><Layer><Section section="Surface" /></Layer></StateImagery>
+			<StateImagery name="Disabled"><Layer><Section section="Surface" /></Layer></StateImagery>
+		</Visual>
+	</Frame>
+
+	<!-- ===== Buttons ===================================================================================== -->
+
+	<!-- Secondary button: flat ink, hairline rim that turns gold on hover. -->
+	<Frame name="GlueButton" type="Button" renderer="ButtonRenderer">
+		<Property name="Font" value="GlueButtonFont" />
+		<Property name="Icon" />
+		<Visual>
+			<ImagerySection name="Rest">
+				<BorderComponent texture="Interface/GlueUI/Art/PanelFill.htex" borderSize="24" leftSize="24" rightSize="24" topSize="24" bottomSize="24" tint="B3121820" />
+				<BorderComponent texture="Interface/GlueUI/Art/PanelLine.htex" borderSize="24" leftSize="24" rightSize="24" topSize="24" bottomSize="24" tint="66D7C29A" />
+			</ImagerySection>
+			<ImagerySection name="Hover">
+				<BorderComponent texture="Interface/GlueUI/Art/PanelFill.htex" borderSize="24" leftSize="24" rightSize="24" topSize="24" bottomSize="24" tint="D91C232B" />
+				<BorderComponent texture="Interface/GlueUI/Art/PanelLine.htex" borderSize="24" leftSize="24" rightSize="24" topSize="24" bottomSize="24" tint="FFE3C78F" />
+			</ImagerySection>
+			<ImagerySection name="Press">
+				<BorderComponent texture="Interface/GlueUI/Art/PanelFill.htex" borderSize="24" leftSize="24" rightSize="24" topSize="24" bottomSize="24" tint="F00A0D11" />
+				<BorderComponent texture="Interface/GlueUI/Art/PanelLine.htex" borderSize="24" leftSize="24" rightSize="24" topSize="24" bottomSize="24" tint="CCC9A86E" />
+			</ImagerySection>
+			<ImagerySection name="Off">
+				<BorderComponent texture="Interface/GlueUI/Art/PanelFill.htex" borderSize="24" leftSize="24" rightSize="24" topSize="24" bottomSize="24" tint="66101419" />
+				<BorderComponent texture="Interface/GlueUI/Art/PanelLine.htex" borderSize="24" leftSize="24" rightSize="24" topSize="24" bottomSize="24" tint="26A0A0A0" />
+			</ImagerySection>
+			<ImagerySection name="Caption"><TextComponent color="FFE6DAC2" horzAlign="CENTER" vertAlign="CENTER" /></ImagerySection>
+			<StateImagery name="Normal"><Layer><Section section="Rest" /><Section section="Caption" /></Layer></StateImagery>
+			<StateImagery name="Hovered"><Layer><Section section="Hover" /><Section section="Caption" color="FFFFF6E2" /></Layer></StateImagery>
+			<StateImagery name="Pushed"><Layer><Section section="Press" /><Section section="Caption" color="FFD9CCB2" /></Layer></StateImagery>
+			<StateImagery name="Disabled"><Layer><Section section="Off" /><Section section="Caption" color="FF666D73" /></Layer></StateImagery>
+		</Visual>
+		<Area><Size><AbsDimension x="440" y="112" /></Size></Area>
+	</Frame>
+
+	<!-- Primary action: the brass Wayfinder button, with a light glint passing over it on hover. -->
+	<Frame name="GlueButtonPrimary" type="Button" renderer="ButtonRenderer">
+		<Property name="Font" value="GlueButtonLargeFont" />
+		<Visual>
+			<ImagerySection name="Base">
+				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/PrimaryButton.htex" borderSize="22" leftSize="36" rightSize="36" topSize="36" bottomSize="36" tint="FFE2D8C4" />
+			</ImagerySection>
+			<ImagerySection name="Hover">
+				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/PrimaryButton.htex" borderSize="22" leftSize="36" rightSize="36" topSize="36" bottomSize="36" tint="FFFFFAEE" />
+			</ImagerySection>
+			<ImagerySection name="Press">
+				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/PrimaryButton.htex" borderSize="22" leftSize="36" rightSize="36" topSize="36" bottomSize="36" tint="FFB9AE9A" />
+			</ImagerySection>
+			<ImagerySection name="Off">
+				<BorderComponent texture="Interface/GlueUI/Art/PanelFill.htex" borderSize="24" leftSize="24" rightSize="24" topSize="24" bottomSize="24" tint="80101419" />
+				<BorderComponent texture="Interface/GlueUI/Art/PanelLine.htex" borderSize="24" leftSize="24" rightSize="24" topSize="24" bottomSize="24" tint="40A0A0A0" />
+			</ImagerySection>
+			<ImagerySection name="Caption"><TextComponent color="FF26170A" horzAlign="CENTER" vertAlign="CENTER" /></ImagerySection>
+			<StateImagery name="Normal"><Layer><Section section="Base" /><Section section="Caption" /></Layer></StateImagery>
+			<StateImagery name="Hovered"><Layer><Section section="Hover" /><Section section="Caption" /></Layer></StateImagery>
+			<StateImagery name="Pushed"><Layer><Section section="Press" /><Section section="Caption" /></Layer></StateImagery>
+			<StateImagery name="Disabled"><Layer><Section section="Off" /><Section section="Caption" color="FF6E757A" /></Layer></StateImagery>
+		</Visual>
+		<Area><Size><AbsDimension x="560" y="128" /></Size></Area>
+
+		<!-- The glint: the sheen art faded in and out once per hover. Child 0 of every primary button. -->
+		<Frame name="Sheen" renderer="DefaultRenderer" setAllPoints="true">
+			<Property name="Clickable" value="false" />
+			<Property name="MousePassThrough" value="true" />
+			<Visual>
+				<ImagerySection name="Glint">
+					<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/PrimaryButtonSheen.htex" borderSize="22" leftSize="36" rightSize="36" topSize="36" bottomSize="36" />
+				</ImagerySection>
+				<StateImagery name="Enabled"><Layer><Section section="Glint" /></Layer></StateImagery>
+				<StateImagery name="Disabled" />
+			</Visual>
+			<Animations>
+				<Animation name="Glint" duration="0.55" loop="false">
+					<Track property="Opacity">
+						<Keyframe time="0" value="0" />
+						<Keyframe time="0.1" value="0.85" />
+						<Keyframe time="0.25" value="0.3" />
+						<Keyframe time="0.55" value="0" />
+					</Track>
+				</Animation>
+			</Animations>
+		</Frame>
+
+		<Scripts>
+			<OnLoad>return function(this) this:GetChild(0):SetOpacity(0); end</OnLoad>
+			<OnEnter>
+				return function(this)
+					if this:IsEnabled(false) then
+						this:GetChild(0):PlayAnimation("Glint");
+					end
+				end
+			</OnEnter>
+			<OnLeave>
+				return function(this)
+					this:GetChild(0):StopAnimation("Glint");
+					this:GetChild(0):SetOpacity(0);
+				end
+			</OnLeave>
+		</Scripts>
+	</Frame>
+
+	<!-- Text-only button for quiet actions (Quit, Change Realm): muted capitals that turn gold and grow
+	     a hairline underline on hover. Width follows the text (GlueLink_Fit). -->
+	<Frame name="GlueLinkButton" type="Button" renderer="ButtonRenderer">
+		<Property name="Font" value="GlueCaptionFont" />
+		<Visual>
+			<ImagerySection name="Caption"><TextComponent color="FFB8B1A3" horzAlign="CENTER" vertAlign="CENTER" /></ImagerySection>
+			<ImagerySection name="Underline">
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="CCE3C78F"><Area><Inset left="0" right="0" top="66" bottom="4" /></Area></ImageComponent>
+			</ImagerySection>
+			<StateImagery name="Normal"><Layer><Section section="Caption" /></Layer></StateImagery>
+			<StateImagery name="Hovered"><Layer><Section section="Underline" /><Section section="Caption" color="FFF0D9A8" /></Layer></StateImagery>
+			<StateImagery name="Pushed"><Layer><Section section="Underline" /><Section section="Caption" color="FFC9A86E" /></Layer></StateImagery>
+			<StateImagery name="Disabled"><Layer><Section section="Caption" color="FF5E656B" /></Layer></StateImagery>
+		</Visual>
+		<Area><Size><AbsDimension x="320" y="72" /></Size></Area>
+	</Frame>
+
+	<!-- Square icon button (paging, customization arrows). Icon is a white glyph, tinted per state. -->
+	<Frame name="GlueIconButton" type="Button" renderer="ButtonRenderer">
+		<Property name="Icon" />
+		<Visual>
+			<ImagerySection name="Rest">
+				<BorderComponent texture="Interface/GlueUI/Art/PanelFill.htex" borderSize="24" leftSize="20" rightSize="20" topSize="20" bottomSize="20" tint="99121820" />
+				<BorderComponent texture="Interface/GlueUI/Art/PanelLine.htex" borderSize="24" leftSize="20" rightSize="20" topSize="20" bottomSize="20" tint="4DD7C29A" />
+			</ImagerySection>
+			<ImagerySection name="Hover">
+				<BorderComponent texture="Interface/GlueUI/Art/PanelFill.htex" borderSize="24" leftSize="20" rightSize="20" topSize="20" bottomSize="20" tint="D91C232B" />
+				<BorderComponent texture="Interface/GlueUI/Art/PanelLine.htex" borderSize="24" leftSize="20" rightSize="20" topSize="20" bottomSize="20" tint="FFE3C78F" />
+			</ImagerySection>
+			<ImagerySection name="Glyph">
+				<ImageComponent tint="FFE6DAC2"><Area><Inset all="20" /></Area><PropertyValue property="Icon" /></ImageComponent>
+			</ImagerySection>
+			<StateImagery name="Normal"><Layer><Section section="Rest" /><Section section="Glyph" /></Layer></StateImagery>
+			<StateImagery name="Hovered"><Layer><Section section="Hover" /><Section section="Glyph" color="FFFFF0CC" /></Layer></StateImagery>
+			<StateImagery name="Pushed"><Layer><Section section="Rest" /><Section section="Glyph" color="FFC9A86E" /></Layer></StateImagery>
+			<StateImagery name="Disabled"><Layer><Section section="Rest" color="66FFFFFF" /><Section section="Glyph" color="40A0A0A0" /></Layer></StateImagery>
+		</Visual>
+		<Area><Size><AbsDimension x="88" y="88" /></Size></Area>
+	</Frame>
+
+	<!-- ===== Inputs ====================================================================================== -->
+
+	<!-- Text field. RimColor turns gold while the field has the keyboard (GlueFields_Update). -->
 	<Frame name="GlueTextField" type="TextField" renderer="TextFieldRenderer">
 		<Property name="TextSection" value="Text" />
 		<Property name="HorzAlign" value="LEFT" />
 		<Property name="VertAlign" value="CENTER" />
-	
-		<Visual inherits="ThemeGlueGlueTextFieldVisual" />
-		<Area>
-			<Size><AbsDimension x="440" y="128" /></Size>
-		</Area>
-
-		<!-- Text padding for the steel frame. There is no XML property for it, so the template sets it
-		     on load. Inheriting frames get this handler (unless they declare their own OnLoad), and so do
-		     Lua clones: Copy() carries the handler and AddChild() runs it. Insets in UI units: 34 sideways
-		     clears the steel band and its inner shadow (about 28); 36 above and below centres one line of
-		     DefaultSmall (56 UI from ascender to descender) in a 128 tall field, and the caret is one line
-		     tall because it spans the whole text area. -->
+		<Property name="RimColor" value="59D7C29A" />
+		<Visual>
+			<ImagerySection name="Field">
+				<BorderComponent texture="Interface/GlueUI/Art/PanelFill.htex" borderSize="24" leftSize="24" rightSize="24" topSize="24" bottomSize="24" tint="D90A0D11" />
+				<BorderComponent texture="Interface/GlueUI/Art/PanelLine.htex" borderSize="24" leftSize="24" rightSize="24" topSize="24" bottomSize="24" tint="$RimColor" />
+			</ImagerySection>
+			<ImagerySection name="Caret"><ImageComponent texture="Interface/GlueUI/Caret.htex" tint="FFE3C78F" /></ImagerySection>
+			<StateImagery name="Enabled"><Layer><Section section="Field" /></Layer></StateImagery>
+			<StateImagery name="Disabled"><Layer><Section section="Field" color="80FFFFFF" /></Layer></StateImagery>
+			<StateImagery name="Caret"><Layer><Section section="Caret" /></Layer></StateImagery>
+		</Visual>
+		<Area><Size><AbsDimension x="440" y="112" /></Size></Area>
+		<!-- No XML property for the text padding: set it on load (inheriting frames and clones run this). -->
 		<Scripts>
 			<OnLoad>
 				return function(this)
-					this:SetTextAreaOffset(Rect(34, 36, 34, 36));
+					this:SetTextAreaOffset(Rect(36, 28, 36, 28));
 				end
 			</OnLoad>
 		</Scripts>
 	</Frame>
 
-	<!-- Thin bronze rule (dividers): the straight metal strip of GlueSkinSteelFrame's top band, source
-	     rows 6-18 between the 36 px corners. Without borderSize a BorderComponent draws its corners and
-	     edges zero units wide and only its centre, which maps the source rect (left, top) to
-	     (width - right, height - bottom) onto the whole frame, so the sizes below crop that strip.
-	     Give it a width and about 12 UI of height. -->
-	<Frame name="GlueDivider" renderer="DefaultRenderer">
-		<Property name="Clickable" value="false" />
-		<Property name="LineColor" value="FFDEA660" />
-		<Visual inherits="ThemeGlueGlueDividerVisual" />
-		<Area>
-			<Size><AbsDimension y="12" /></Size>
-		</Area>
+	<Frame name="GlueCheckbox" type="Button" renderer="CheckboxRenderer">
+		<Property name="Checkable" value="true" />
+		<Visual>
+			<ImagerySection name="Box">
+				<BorderComponent texture="Interface/GlueUI/Art/PanelFill.htex" borderSize="24" leftSize="12" rightSize="12" topSize="12" bottomSize="12" tint="D90A0D11" />
+				<BorderComponent texture="Interface/GlueUI/Art/PanelLine.htex" borderSize="24" leftSize="12" rightSize="12" topSize="12" bottomSize="12" tint="80D7C29A" />
+			</ImagerySection>
+			<ImagerySection name="Hover">
+				<BorderComponent texture="Interface/GlueUI/Art/PanelLine.htex" borderSize="24" leftSize="12" rightSize="12" topSize="12" bottomSize="12" tint="FFE3C78F" />
+			</ImagerySection>
+			<ImagerySection name="Check">
+				<BorderComponent texture="Interface/GlueUI/Art/PanelFill.htex" borderSize="24" leftSize="8" rightSize="8" topSize="8" bottomSize="8" tint="FFE3C78F"><Area><Inset all="12" /></Area></BorderComponent>
+			</ImagerySection>
+			<StateImagery name="Normal"><Layer><Section section="Box" /></Layer></StateImagery>
+			<StateImagery name="Hovered"><Layer><Section section="Box" /><Section section="Hover" /></Layer></StateImagery>
+			<StateImagery name="Pushed"><Layer><Section section="Box" /><Section section="Hover" /></Layer></StateImagery>
+			<StateImagery name="Disabled"><Layer><Section section="Box" color="80FFFFFF" /></Layer></StateImagery>
+			<StateImagery name="NormalChecked"><Layer><Section section="Box" /><Section section="Check" /></Layer></StateImagery>
+			<StateImagery name="HoveredChecked"><Layer><Section section="Box" /><Section section="Hover" /><Section section="Check" /></Layer></StateImagery>
+			<StateImagery name="PushedChecked"><Layer><Section section="Box" /><Section section="Hover" /><Section section="Check" /></Layer></StateImagery>
+			<StateImagery name="DisabledChecked"><Layer><Section section="Box" color="80FFFFFF" /><Section section="Check" color="80FFFFFF" /></Layer></StateImagery>
+		</Visual>
+		<Area><Size><AbsDimension x="48" y="48" /></Size></Area>
 	</Frame>
 
-	<!-- Sunken list well (realm list, roster): clearly darker than the wood, with a thin bronze rim and
-	     an inner shadow under the top edge (GlueListWell, see the note above). Content belongs 8 UI
-	     inside it. -->
-	<Frame name="GlueListWell" renderer="DefaultRenderer">
-		<Visual inherits="ThemeGlueGlueListWellVisual" />
+	<!-- Selectable chip (race, gender, show outfit): ink at rest, gold rim and warm fill when chosen. -->
+	<Frame name="GlueChoice" type="Button" renderer="CheckboxRenderer">
+		<Property name="Font" value="DefaultSmall" />
+		<Property name="Checkable" value="true" />
+		<Visual>
+			<ImagerySection name="Rest">
+				<BorderComponent texture="Interface/GlueUI/Art/PanelFill.htex" borderSize="24" leftSize="20" rightSize="20" topSize="20" bottomSize="20" tint="99121820" />
+				<BorderComponent texture="Interface/GlueUI/Art/PanelLine.htex" borderSize="24" leftSize="20" rightSize="20" topSize="20" bottomSize="20" tint="40D7C29A" />
+			</ImagerySection>
+			<ImagerySection name="Hover">
+				<BorderComponent texture="Interface/GlueUI/Art/PanelFill.htex" borderSize="24" leftSize="20" rightSize="20" topSize="20" bottomSize="20" tint="CC1C232B" />
+				<BorderComponent texture="Interface/GlueUI/Art/PanelLine.htex" borderSize="24" leftSize="20" rightSize="20" topSize="20" bottomSize="20" tint="99E3C78F" />
+			</ImagerySection>
+			<ImagerySection name="Chosen">
+				<BorderComponent texture="Interface/GlueUI/Art/PanelFill.htex" borderSize="24" leftSize="20" rightSize="20" topSize="20" bottomSize="20" tint="E62A2418" />
+				<BorderComponent texture="Interface/GlueUI/Art/PanelLine.htex" borderSize="24" leftSize="20" rightSize="20" topSize="20" bottomSize="20" tint="FFE3C78F" />
+			</ImagerySection>
+			<ImagerySection name="Caption"><TextComponent color="FFCFC6B4" horzAlign="CENTER" vertAlign="CENTER" /></ImagerySection>
+			<StateImagery name="Normal"><Layer><Section section="Rest" /><Section section="Caption" /></Layer></StateImagery>
+			<StateImagery name="Hovered"><Layer><Section section="Hover" /><Section section="Caption" color="FFFFF6E2" /></Layer></StateImagery>
+			<StateImagery name="Pushed"><Layer><Section section="Hover" /><Section section="Caption" /></Layer></StateImagery>
+			<StateImagery name="Disabled"><Layer><Section section="Rest" color="66FFFFFF" /><Section section="Caption" color="FF5E656B" /></Layer></StateImagery>
+			<StateImagery name="NormalChecked"><Layer><Section section="Chosen" /><Section section="Caption" color="FFFFE9BD" /></Layer></StateImagery>
+			<StateImagery name="HoveredChecked"><Layer><Section section="Chosen" /><Section section="Caption" color="FFFFF3D6" /></Layer></StateImagery>
+			<StateImagery name="PushedChecked"><Layer><Section section="Chosen" /><Section section="Caption" color="FFFFE9BD" /></Layer></StateImagery>
+			<StateImagery name="DisabledChecked"><Layer><Section section="Chosen" color="80FFFFFF" /><Section section="Caption" color="FF8A8A8A" /></Layer></StateImagery>
+		</Visual>
+		<Area><Size><AbsDimension x="400" y="104" /></Size></Area>
 	</Frame>
 
-	<Frame name="GlueBorderFrame" renderer="DefaultRenderer">
-		<Visual inherits="ThemeGlueGlueBorderFrameVisual" />
-	</Frame>
+	<!-- ===== Lists ======================================================================================= -->
 
-	<!-- Scroll thumb: the red glue button art, 9-sliced (30) like GlueButton. -->
-	<Frame name="ThumbButtonTemplate" type="Thumb" renderer="ButtonRenderer">
-		<Visual inherits="ThemeGlueThumbButtonTemplateVisual" />
-		<Area>
-			<Anchor point="TOP" offset="80" />
-			<Anchor point="LEFT" offset="8" />
-			<Size>
-				<AbsDimension x="80" y="256" />
-			</Size>
-		</Area>
-	</Frame>
-
-	<!-- Scroll bar arrow: the red glue button art with an ivory arrow (GlueSkinArrow*) tinted per state.
-	     Set the arrow with the Icon property. GlueArrowButton (character creation) keeps the steel look. -->
-	<Frame name="GlueScrollArrowButton" type="Button" renderer="ButtonRenderer">
+	<!-- Thin scroll bar: a hairline track, a slim thumb and small chevron buttons (children 0 and 1). -->
+	<Frame name="GlueScrollArrow" type="Button" renderer="ButtonRenderer">
 		<Property name="Icon" />
+		<Visual>
+			<ImagerySection name="Glyph"><ImageComponent tint="FFB8B1A3"><Area><Inset all="12" /></Area><PropertyValue property="Icon" /></ImageComponent></ImagerySection>
+			<StateImagery name="Normal"><Layer><Section section="Glyph" /></Layer></StateImagery>
+			<StateImagery name="Hovered"><Layer><Section section="Glyph" color="FFF0D9A8" /></Layer></StateImagery>
+			<StateImagery name="Pushed"><Layer><Section section="Glyph" color="FFC9A86E" /></Layer></StateImagery>
+			<StateImagery name="Disabled"><Layer><Section section="Glyph" color="40A0A0A0" /></Layer></StateImagery>
+		</Visual>
+		<Area><Size><AbsDimension x="56" y="56" /></Size></Area>
+	</Frame>
 
-		<Visual inherits="ThemeGlueGlueScrollArrowButtonVisual" />
-		<Area>
-			<Size>
-				<AbsDimension x="80" y="80" />
-			</Size>
-		</Area>
+	<Frame name="ThumbButtonTemplate" type="Thumb" renderer="ButtonRenderer">
+		<Visual>
+			<ImagerySection name="Bar"><ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="99D7C29A"><Area><Inset left="22" right="22" /></Area></ImageComponent></ImagerySection>
+			<StateImagery name="Normal"><Layer><Section section="Bar" /></Layer></StateImagery>
+			<StateImagery name="Hovered"><Layer><Section section="Bar" color="FFFFE3A6" /></Layer></StateImagery>
+			<StateImagery name="Pushed"><Layer><Section section="Bar" color="FFFFE3A6" /></Layer></StateImagery>
+			<StateImagery name="Disabled"><Layer><Section section="Bar" color="40FFFFFF" /></Layer></StateImagery>
+		</Visual>
+		<Area><Size><AbsDimension x="56" y="128" /></Size></Area>
 	</Frame>
 
 	<Frame name="VerticalScrollBar" type="ScrollBar" renderer="DefaultRenderer">
 		<Property name="Orientation" value="VERTICAL" />
-
-		<Visual inherits="ThemeGlueVerticalScrollBarVisual" />
-
+		<Visual>
+			<ImagerySection name="Track">
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="33D7C29A"><Area><Inset left="27" right="27" top="56" bottom="56" /></Area></ImageComponent>
+			</ImagerySection>
+			<StateImagery name="Enabled"><Layer><Section section="Track" /></Layer></StateImagery>
+			<StateImagery name="Disabled"><Layer><Section section="Track" /></Layer></StateImagery>
+		</Visual>
 		<Area>
-			<Anchor point="RIGHT" offset="-16" />
-			<Size>
-				<AbsDimension x="96" y="256" />
-			</Size>
+			<Anchor point="RIGHT" offset="-8" />
+			<Size><AbsDimension x="56" y="256" /></Size>
 		</Area>
+		<Frame name="ScrollUpButton" inherits="GlueScrollArrow">
+			<Property name="Icon" value="Interface/GlueUI/Art/ChevronUp.htex" />
+			<Area><Anchor point="TOP" /><Anchor point="LEFT" /></Area>
+		</Frame>
+		<Frame name="ScrollDownButton" inherits="GlueScrollArrow">
+			<Property name="Icon" value="Interface/GlueUI/Art/ChevronDown.htex" />
+			<Area><Anchor point="BOTTOM" /><Anchor point="LEFT" /></Area>
+		</Frame>
+		<Frame name="ThumbButton" inherits="ThumbButtonTemplate">
+			<Area><Anchor point="TOP" offset="56" /><Anchor point="LEFT" /></Area>
+		</Frame>
+	</Frame>
 
-		<Frame name="ScrollUpButton" inherits="GlueScrollArrowButton">
-			<Property name="Icon" value="Interface/GlueUI/GlueSkinArrowUp.htex" />
-			<Area>
-				<Anchor point="TOP" offset="8" />
-				<Anchor point="LEFT" offset="8" />
-				<Size>
-					<AbsDimension x="80" y="80" />
-				</Size>
-			</Area>
-		</Frame>
-		
-		<Frame name="ScrollDownButton" inherits="GlueScrollArrowButton">
-			<Property name="Icon" value="Interface/GlueUI/GlueSkinArrowDown.htex" />
-			<Area>
-				<Anchor point="BOTTOM" offset="-8" />
-				<Anchor point="LEFT" offset="8" />
-				<Size>
-					<AbsDimension x="80" y="80" />
-				</Size>
-			</Area>
-		</Frame>
-		
-		<Frame name="ThumbButton" inherits="ThumbButtonTemplate">			
-			<Area>
-				<Anchor point="TOP" offset="80" />
-				<Anchor point="LEFT" offset="8" />
-				<Size>
-					<AbsDimension x="80" y="128" />
-				</Size>
-			</Area>
-		</Frame>
+	<!-- Selectable list row (realms): no box at rest, a hairline separator (SeparatorColor), a faint
+	     fade on hover and, when selected, a warm fade from the left with a gold accent bar. -->
+	<Frame name="GlueListRow" type="Button" renderer="CheckboxRenderer">
+		<Property name="Font" value="DefaultHeader" />
+		<Property name="Checkable" value="true" />
+		<Property name="NameVertAlign" value="CENTER" />
+		<Property name="SeparatorColor" value="26D7C29A" />
+		<Visual>
+			<ImagerySection name="Separator">
+				<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="$SeparatorColor"><Area><Inset left="0" right="0" top="148" bottom="0" /></Area></ImageComponent>
+			</ImagerySection>
+			<ImagerySection name="HoverFade"><ImageComponent texture="Interface/GlueUI/Art/FadeH.htex" tint="1FFFF2D9" /></ImagerySection>
+			<ImagerySection name="SelectedFade">
+				<ImageComponent texture="Interface/GlueUI/Art/FadeH.htex" tint="66C99A4E" />
+				<!-- GlueListAccent: white in its left 12 columns, so it draws a 12 UI bar at any row width. -->
+				<BorderComponent texture="Interface/GlueUI/GlueListAccent.htex" borderSize="12" tint="FFE3C78F"><Area><Inset top="24" bottom="26" /></Area></BorderComponent>
+			</ImagerySection>
+			<ImagerySection name="Name">
+				<TextComponent color="FFE6DAC2" horzAlign="LEFT" vertAlign="$NameVertAlign"><Area><Inset left="104" top="22" right="300" bottom="34" /></Area></TextComponent>
+			</ImagerySection>
+			<StateImagery name="Normal"><Layer><Section section="Separator" /><Section section="Name" /></Layer></StateImagery>
+			<StateImagery name="Hovered"><Layer><Section section="HoverFade" /><Section section="Separator" /><Section section="Name" color="FFFFF6E2" /></Layer></StateImagery>
+			<StateImagery name="Pushed"><Layer><Section section="HoverFade" /><Section section="Separator" /><Section section="Name" /></Layer></StateImagery>
+			<StateImagery name="Disabled"><Layer><Section section="Separator" /><Section section="Name" color="FF666D73" /></Layer></StateImagery>
+			<StateImagery name="NormalChecked"><Layer><Section section="SelectedFade" /><Section section="Separator" /><Section section="Name" color="FFFFF0D0" /></Layer></StateImagery>
+			<StateImagery name="HoveredChecked"><Layer><Section section="SelectedFade" /><Section section="Separator" /><Section section="Name" color="FFFFF6E2" /></Layer></StateImagery>
+			<StateImagery name="PushedChecked"><Layer><Section section="SelectedFade" /><Section section="Separator" /><Section section="Name" color="FFFFF0D0" /></Layer></StateImagery>
+			<StateImagery name="DisabledChecked"><Layer><Section section="SelectedFade" /><Section section="Separator" /><Section section="Name" color="FF8A8A8A" /></Layer></StateImagery>
+		</Visual>
+		<Area><Size><AbsDimension y="150" /></Size></Area>
 	</Frame>
 </UiLayout>

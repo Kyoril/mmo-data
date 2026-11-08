@@ -1,3 +1,0 @@
-Metrics.lua
-Fonts.xml
-Styles.xml

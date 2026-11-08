@@ -1,5 +1,0 @@
-../BlueGold/Theme.toc
-../../../GameUI/Themes/Wayfinder/Chrome.xml
-../../../GameUI/Themes/Wayfinder/Chrome.lua
-Styles.xml
-Theme.lua

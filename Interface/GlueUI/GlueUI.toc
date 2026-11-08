@@ -1,12 +1,7 @@
-# Load exactly one appearance before the shared layouts.
-Themes/Wayfinder/Theme.toc
-#Themes/BlueGold/Theme.toc
-#Themes/Legacy/Theme.toc
-# Include control templates first so that they are known when the layout files that
-# reference them by name are able to find them
+# Design system first (fonts, control templates, GlueMotion), so the layouts can inherit from it.
 GlueTemplates.xml
 
-# Load layout files
+# The stage, then the screens on it.
 GlueParent.xml
 AccountLogin.xml
 RealmList.xml
@@ -14,4 +9,3 @@ CharSelect.xml
 CharCreate.xml
 
 GlueDialog.xml
-GlueLayout.lua

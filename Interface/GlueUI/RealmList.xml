@@ -1,303 +1,172 @@
 <?xml version="1.0" ?>
+<!-- Copyright (C) 2019 - 2025, Kyoril. All rights reserved. -->
+<!-- Realm selection: takes the login column's place under the logo. A short list of realms (row pool,
+     scrolled by data offset), then Back and the brass Enter Realm button. -->
 <UiLayout>
 	<Script file="RealmList.lua" />
 
-	<!-- Small, non-interactive label used inside realm rows. Clicks fall through to the row. -->
-	<Frame name="RealmRowLabelTemplate" renderer="DefaultRenderer">
-		<Property name="Font" value="DefaultSmall" />
-		<Property name="Enabled" value="false" />
-		<Property name="Clickable" value="false" />
-		<Property name="TextColor" value="FFB5A892" />
-		<Property name="HorzAlign" value="LEFT" />
-
-		<Visual inherits="ThemeGlueRealmRowLabelTemplateVisual" />
-		<Area>
-			<Size><AbsDimension y="44" /></Size>
-		</Area>
-	</Frame>
-
-	<!-- One realm row. Checkable only so IsChecked() reports true: the click toggle is overwritten
-	     by the Lua refresh, which checks exactly the selected realm. Children are:
-	     0 = population gem, 1 = info line, 2 = population label.
-	     List style B (the roster rows in CharSelect.xml use the same states): no box at rest, a thin
-	     bronze separator along the bottom (SeparatorColor; the Lua clears it under the last row), a
-	     faint warm-ivory fade from the left on hover, and for the selected realm a red glow fading out
-	     by 85% of the width with a solid bronze accent bar on the left edge. Disabled only dims the
-	     text. Textures: GlueListFade, GlueListAccent (GlueTemplates.xml note). -->
-	<Frame name="RealmListRowTemplate" type="Button" renderer="CheckboxRenderer">
-		<Property name="Font" value="DefaultHeader" />
-		<Property name="Checkable" value="true" />
-		<!-- TOP when the row shows an info line beneath the name, CENTER when the name stands alone. -->
-		<Property name="NameVertAlign" value="CENTER" />
-		<Property name="SeparatorColor" value="598C6234" />
-
-		<Visual inherits="ThemeGlueRealmListRowTemplateVisual" />
-		<Area>
-			<Size><AbsDimension y="168" /></Size>
-		</Area>
-
-		<!-- Population gem: a soft glow tinted by the realm's population. -->
+	<!-- One realm row. Checkable only so IsChecked() reports true: the click toggle is overwritten by
+	     the Lua refresh, which checks exactly the selected realm. Children (Lua contract):
+	     0 = population dot, 1 = info line, 2 = population label. -->
+	<Frame name="RealmListRowTemplate" inherits="GlueListRow">
 		<Frame name="RealmRowGem" renderer="DefaultRenderer">
-			<Property name="Enabled" value="false" />
 			<Property name="Clickable" value="false" />
-			<Property name="GemColor" value="FF40D040" />
-			<Visual inherits="ThemeGlueRealmRowGemVisual" />
+			<Property name="MousePassThrough" value="true" />
+			<Property name="GemColor" value="FF4CD964" />
+			<Visual>
+				<ImagerySection name="Dot">
+					<ImageComponent texture="Interface/GlueUI/Art/Glow.htex" tint="$GemColor" />
+					<ImageComponent texture="Interface/GlueUI/Art/Dot.htex" tint="$GemColor"><Area><Inset all="22" /></Area></ImageComponent>
+				</ImagerySection>
+				<StateImagery name="Enabled"><Layer><Section section="Dot" /></Layer></StateImagery>
+				<StateImagery name="Disabled"><Layer><Section section="Dot" /></Layer></StateImagery>
+			</Visual>
 			<Area>
-				<Size><AbsDimension x="80" y="80" /></Size>
-				<Anchor point="LEFT" offset="48" />
+				<Size><AbsDimension x="64" y="64" /></Size>
+				<Anchor point="LEFT" offset="28" />
 				<Anchor point="V_CENTER" />
 			</Area>
 		</Frame>
 
-		<!-- Info line beneath the realm name (players online, last played). -->
-		<Frame name="RealmRowInfo" inherits="RealmRowLabelTemplate">
+		<Frame name="RealmRowInfo" inherits="GlueNote">
 			<Area>
-				<Anchor point="LEFT" offset="150" />
-				<Anchor point="RIGHT" offset="-560" />
-				<Anchor point="BOTTOM" offset="-34" />
+				<Anchor point="LEFT" offset="104" />
+				<Anchor point="RIGHT" offset="-300" />
+				<Anchor point="BOTTOM" offset="-22" />
 			</Area>
 		</Frame>
 
-		<!-- Population, right aligned under the column header. -->
-		<Frame name="RealmRowPopulation" inherits="RealmRowLabelTemplate">
-			<Property name="Font" value="DefaultHeader" />
+		<Frame name="RealmRowPopulation" inherits="GlueCaption">
 			<Property name="HorzAlign" value="RIGHT" />
+			<Property name="VertAlign" value="CENTER" />
 			<Area>
-				<Size><AbsDimension x="480" y="60" /></Size>
-				<Anchor point="RIGHT" offset="-56" />
+				<Size><AbsDimension x="280" y="60" /></Size>
+				<Anchor point="RIGHT" offset="-32" />
 				<Anchor point="V_CENTER" />
 			</Area>
 		</Frame>
 	</Frame>
 
-	<Frame name="RealmListFrame" parent="GlueParent" setAllPoints="true" renderer="DefaultRenderer">
+	<Frame name="RealmListFrame" parent="GlueParent" setAllPoints="true">
 		<Property name="Visible" value="false" />
+		<Property name="Clickable" value="false" />
 
-		<Animations>
-			<Animation name="FadeIn" duration="0.4" loop="false">
-				<Track property="Opacity" target="RealmListBorder">
-					<Keyframe time="0" value="0"/>
-					<Keyframe time="0.4" value="1"/>
-				</Track>
-			</Animation>
-			<Animation name="FadeOut" duration="0.3" loop="false">
-				<Track property="Opacity" target="RealmListBorder">
-					<Keyframe time="0" value="1"/>
-					<Keyframe time="0.3" value="0"/>
-				</Track>
-			</Animation>
-		</Animations>
-
-		<!-- Darkens the lower part of the backdrop so the panel reads as the focus. -->
-		<Frame name="RealmListShade" renderer="DefaultRenderer">
-			<Property name="Clickable" value="false" />
-			<Visual inherits="ThemeGlueRealmListShadeVisual" />
+		<Frame name="RealmListBorder">
 			<Area>
-				<Anchor point="LEFT" />
-				<Anchor point="RIGHT" />
-				<Anchor point="BOTTOM" />
-				<Size><AbsDimension y="900" /></Size>
-			</Area>
-		</Frame>
-
-		<Frame name="RealmListBorder" inherits="GlueBorderFrame">
-			<Area>
-				<Size><AbsDimension x="2000" y="1580" /></Size>
-				<Anchor point="V_CENTER" />
-				<Anchor point="H_CENTER" />
+				<Anchor point="LEFT" offset="260" />
+				<Anchor point="TOP" offset="760" />
+				<Size><AbsDimension x="1000" y="1200" /></Size>
 			</Area>
 
-			<Frame name="RealmListHeaderLabel" inherits="GlueTextLarge">
+			<Frame name="RealmListCaption" inherits="GlueCaption">
 				<Property name="Text" value="REALM_LIST" />
-				<Area>
-					<Anchor point="LEFT" offset="72" />
-					<Anchor point="RIGHT" offset="-72" />
-					<Anchor point="TOP" offset="72" />
-				</Area>
+				<Area><Anchor point="LEFT" /><Anchor point="RIGHT" /><Anchor point="TOP" /></Area>
 			</Frame>
-			<Frame name="RealmListHeaderSubLabel" inherits="GlueTextSmall">
+			<Frame name="RealmListHeaderLabel" inherits="GlueTitle">
+				<Property name="Text" value="REALM_LIST_HEADLINE" />
+				<Area><Anchor point="LEFT" /><Anchor point="RIGHT" /><Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmListCaption" offset="24" /></Area>
+			</Frame>
+			<Frame name="RealmListHeaderSubLabel" inherits="GlueNote">
 				<Property name="Text" value="CHOOSE_A_REALM" />
-				<Property name="HorzAlign" value="CENTER" />
-				<Property name="TextColor" value="FFCFE0D4" />
-				<Area>
-					<Anchor point="LEFT" offset="72" />
-					<Anchor point="RIGHT" offset="-72" />
-					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmListHeaderLabel" offset="4" />
-				</Area>
-			</Frame>
-			<Frame name="RealmListHeaderDivider" inherits="GlueDivider">
-				<Area>
-					<Size><AbsDimension x="900" y="12" /></Size>
-					<Anchor point="H_CENTER" />
-					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmListHeaderSubLabel" offset="20" />
-				</Area>
+				<Area><Anchor point="LEFT" /><Anchor point="RIGHT" /><Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmListHeaderLabel" offset="4" /></Area>
 			</Frame>
 
-			<!-- Footer: back on the left, primary action on the right, status in between. -->
-			<Frame name="RealmListBackButton" inherits="GlueButton">
-				<Property name="Text" value="REALM_BACK" />
+			<!-- Four rows of 150; a hairline above closes the list off at the top. -->
+			<Frame name="RealmList">
 				<Area>
-					<Size><AbsDimension x="440" y="128" /></Size>
-					<Anchor point="LEFT" offset="72" />
-					<Anchor point="BOTTOM" offset="-72" />
-				</Area>
-				<Scripts>
-					<OnClick>
-						return function(this)
-							RealmList_Cancel();
-						end
-					</OnClick>
-				</Scripts>
-			</Frame>
-			<Frame name="RealmListButton01" inherits="GlueButtonPrimary">
-				<Property name="Text" value="REALM_ENTER" />
-				<Area>
-					<Size><AbsDimension x="560" y="128" /></Size>
-					<Anchor point="RIGHT" offset="-72" />
-					<Anchor point="BOTTOM" offset="-72" />
-				</Area>
-				<Scripts>
-					<OnClick>
-						return function(this)
-							RealmList_Accept();
-						end
-					</OnClick>
-				</Scripts>
-			</Frame>
-			<Frame name="RealmListCountLabel" inherits="GlueTextSmall">
-				<Property name="HorzAlign" value="CENTER" />
-				<Property name="TextColor" value="FFF3EEE2" />
-				<Area>
-					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="RealmListBackButton" offset="24" />
-					<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="RealmListButton01" offset="-24" />
-					<Anchor point="TOP" relativePoint="TOP" relativeTo="RealmListBackButton" offset="16" />
-				</Area>
-			</Frame>
-			<Frame name="RealmListHintLabel" inherits="GlueTextSmall">
-				<Property name="Text" value="REALM_LIST_HINT" />
-				<Property name="HorzAlign" value="CENTER" />
-				<Property name="TextColor" value="FF9AA89E" />
-				<Area>
-					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="RealmListBackButton" offset="24" />
-					<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="RealmListButton01" offset="-24" />
-					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmListCountLabel" offset="8" />
-				</Area>
-			</Frame>
-
-			<!-- The realm list: a sunken well (GlueListWell). Rows are a fixed pool scrolled by data
-			     offset, 8 inside the well and touching (separators divide them). Six rows of 168 plus
-			     the insets need 1024; the panel height leaves 1028. -->
-			<Frame name="RealmList" inherits="GlueListWell">
-				<Area>
-					<Anchor point="LEFT" offset="72" />
-					<Anchor point="RIGHT" offset="-72" />
-					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmListHeaderDivider" offset="100" />
-					<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="RealmListBackButton" offset="-40" />
+					<Anchor point="LEFT" />
+					<Anchor point="RIGHT" />
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmListHeaderSubLabel" offset="44" />
+					<Size><AbsDimension y="602" /></Size>
 				</Area>
 
-				<!-- RealmList.lua moves the right edge in to 112 while the scroll bar shows. -->
+				<Frame name="RealmListTopRule" inherits="GlueHairline">
+					<Property name="FillColor" value="33D7C29A" />
+					<Area><Anchor point="LEFT" /><Anchor point="RIGHT" /><Anchor point="TOP" /></Area>
+				</Frame>
+
+				<!-- RealmList.lua moves the right edge in while the scroll bar shows. -->
 				<Frame name="RealmListContent">
 					<Area>
-						<Anchor point="LEFT" offset="8" />
-						<Anchor point="RIGHT" offset="-8" />
-						<Anchor point="TOP" offset="8" />
-						<Anchor point="BOTTOM" offset="-8" />
+						<Anchor point="LEFT" />
+						<Anchor point="RIGHT" />
+						<Anchor point="TOP" offset="2" />
+						<Anchor point="BOTTOM" />
 					</Area>
 
 					<Frame name="RealmListRow1" inherits="RealmListRowTemplate">
-						<Area>
-							<Anchor point="LEFT" />
-							<Anchor point="RIGHT" />
-							<Anchor point="TOP" />
-						</Area>
+						<Area><Anchor point="LEFT" /><Anchor point="RIGHT" /><Anchor point="TOP" /></Area>
 					</Frame>
 					<Frame name="RealmListRow2" inherits="RealmListRowTemplate">
-						<Area>
-							<Anchor point="LEFT" />
-							<Anchor point="RIGHT" />
-							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmListRow1" />
-						</Area>
+						<Area><Anchor point="LEFT" /><Anchor point="RIGHT" /><Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmListRow1" /></Area>
 					</Frame>
 					<Frame name="RealmListRow3" inherits="RealmListRowTemplate">
-						<Area>
-							<Anchor point="LEFT" />
-							<Anchor point="RIGHT" />
-							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmListRow2" />
-						</Area>
+						<Area><Anchor point="LEFT" /><Anchor point="RIGHT" /><Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmListRow2" /></Area>
 					</Frame>
 					<Frame name="RealmListRow4" inherits="RealmListRowTemplate">
-						<Area>
-							<Anchor point="LEFT" />
-							<Anchor point="RIGHT" />
-							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmListRow3" />
-						</Area>
-					</Frame>
-					<Frame name="RealmListRow5" inherits="RealmListRowTemplate">
-						<Area>
-							<Anchor point="LEFT" />
-							<Anchor point="RIGHT" />
-							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmListRow4" />
-						</Area>
-					</Frame>
-					<Frame name="RealmListRow6" inherits="RealmListRowTemplate">
-						<Area>
-							<Anchor point="LEFT" />
-							<Anchor point="RIGHT" />
-							<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmListRow5" />
-						</Area>
+						<Area><Anchor point="LEFT" /><Anchor point="RIGHT" /><Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmListRow3" /></Area>
 					</Frame>
 				</Frame>
 
-				<Frame name="RealmListEmptyLabel" inherits="GlueTextSmall">
+				<Frame name="RealmListEmptyLabel" inherits="GlueNote">
 					<Property name="Text" value="REALM_LIST_EMPTY" />
 					<Property name="HorzAlign" value="CENTER" />
-					<Property name="TextColor" value="FF9AA89E" />
 					<Property name="Visible" value="false" />
 					<Area>
-						<Anchor point="LEFT" offset="80" />
-						<Anchor point="RIGHT" offset="-80" />
+						<Anchor point="LEFT" offset="40" />
+						<Anchor point="RIGHT" offset="-40" />
 						<Anchor point="V_CENTER" />
+						<Size><AbsDimension y="80" /></Size>
 					</Area>
 				</Frame>
 
 				<Frame name="RealmListScrollBar" inherits="VerticalScrollBar">
 					<Property name="Visible" value="false" />
 					<Area>
-						<Anchor point="RIGHT" offset="-8" />
+						<Anchor point="RIGHT" />
 						<Anchor point="TOP" offset="8" />
 						<Anchor point="BOTTOM" offset="-8" />
 					</Area>
 				</Frame>
 			</Frame>
 
-			<!-- Column headers sit above the well and line up with the row content. -->
-			<Frame name="RealmListColumnName" inherits="GlueTextSmall">
-				<Property name="Text" value="REALM_COLUMN_NAME" />
-				<Property name="TextColor" value="FFCFE0D4" />
-				<Area>
-					<Size><AbsDimension x="800" y="44" /></Size>
-					<Anchor point="LEFT" relativePoint="LEFT" relativeTo="RealmListContent" offset="150" />
-					<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="RealmList" offset="-12" />
-				</Area>
+			<Frame name="RealmListCountLabel" inherits="GlueNote">
+				<Property name="TextColor" value="FFB8B1A3" />
+				<Area><Anchor point="LEFT" /><Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmList" offset="20" /><Size><AbsDimension x="400" y="38" /></Size></Area>
 			</Frame>
-			<Frame name="RealmListColumnPopulation" inherits="GlueTextSmall">
-				<Property name="Text" value="REALM_COLUMN_POPULATION" />
-				<Property name="TextColor" value="FFCFE0D4" />
-				<Property name="HorzAlign" value="RIGHT" />
+			<Frame name="RealmListHintLabel" inherits="GlueNote">
+				<Property name="Text" value="REALM_LIST_HINT" />
+				<Property name="TextColor" value="FF6F767C" />
+				<Area><Anchor point="LEFT" /><Anchor point="RIGHT" /><Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmListCountLabel" offset="4" /></Area>
+			</Frame>
+
+			<Frame name="RealmListBackButton" inherits="GlueButton">
+				<Property name="Text" value="REALM_BACK" />
 				<Area>
-					<Size><AbsDimension x="600" y="44" /></Size>
-					<Anchor point="RIGHT" relativePoint="RIGHT" relativeTo="RealmListContent" offset="-56" />
-					<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="RealmList" offset="-12" />
+					<Anchor point="LEFT" />
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmListHintLabel" offset="40" />
+					<Size><AbsDimension x="320" y="136" /></Size>
 				</Area>
+				<Scripts>
+					<OnClick>return function(this) RealmList_Cancel(); end</OnClick>
+				</Scripts>
+			</Frame>
+			<Frame name="RealmListButton01" inherits="GlueButtonPrimary">
+				<Property name="Text" value="REALM_ENTER" />
+				<Area>
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="RealmListBackButton" offset="24" />
+					<Anchor point="RIGHT" />
+					<Anchor point="TOP" relativePoint="TOP" relativeTo="RealmListBackButton" />
+					<Size><AbsDimension y="136" /></Size>
+				</Area>
+				<Scripts>
+					<OnClick>return function(this) RealmList_Accept(); end</OnClick>
+				</Scripts>
 			</Frame>
 		</Frame>
 
 		<Scripts>
-			<OnLoad>
-				return function(this)
-					RealmList_OnLoad(this);
-				end
-			</OnLoad>
+			<OnLoad>return function(this) RealmList_OnLoad(this); end</OnLoad>
 		</Scripts>
 	</Frame>
 </UiLayout>

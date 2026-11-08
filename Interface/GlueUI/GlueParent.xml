@@ -1,34 +1,114 @@
 <?xml version="1.0" ?>
+<!-- Copyright (C) 2019 - 2025, Kyoril. All rights reserved. -->
+<!-- The stage behind every Glue screen: the painted backdrops (gate for login and realm selection, hall
+     for the characters), the shared front-door chrome (logo, veils, footer) and the fade from black. -->
 <UiLayout>
 	<Script file="GlueParent.lua" />
-	
+
+	<!-- Painted backdrop. Explicitly sized and centred so GlueParent.lua can let it drift and zoom. -->
+	<Frame name="GlueBackdropTemplate" renderer="DefaultRenderer">
+		<Property name="Clickable" value="false" />
+		<Property name="MousePassThrough" value="true" />
+		<Area>
+			<Anchor point="H_CENTER" />
+			<Anchor point="V_CENTER" />
+			<Size><AbsDimension x="4100" y="2306" /></Size>
+		</Area>
+	</Frame>
+
 	<Frame name="GlueParent" parent="TopFrame" setAllPoints="true">
 		<Property name="Font" value="DefaultSmall" />
 
-		<!-- A theme can supply artwork here, or let the client attach the cinematic renderer. -->
+		<!-- The client looks this frame up: Cinematic=false keeps the 3D plaza scene unloaded, the screens
+		     use painted artwork instead. -->
 		<Frame name="GlueSceneFrame" renderer="DefaultRenderer" setAllPoints="true">
 			<Property name="MousePassThrough" value="true" />
-			<Property name="Cinematic" value="true" />
+			<Property name="Cinematic" value="false" />
 		</Frame>
 
-		<!-- Dark fill over the scene until its gate view is ready; GlueParent.lua fades it out. -->
-		<Frame name="GlueSceneFade" renderer="DefaultRenderer" setAllPoints="true">
-			<Property name="MousePassThrough" value="true" />
-			<Visual inherits="ThemeGlueGlueSceneFadeVisual" />
+		<Frame name="GlueBackdropGate" inherits="GlueBackdropTemplate">
+			<Visual>
+				<ImagerySection name="Art"><ImageComponent texture="Interface/GlueUI/LoginBackgroundPH.htex" tint="FFD2D8DE" /></ImagerySection>
+				<StateImagery name="Enabled"><Layer><Section section="Art" /></Layer></StateImagery>
+			</Visual>
+		</Frame>
+
+		<Frame name="GlueBackdropHall" inherits="GlueBackdropTemplate">
+			<Property name="Visible" value="false" />
+			<Visual>
+				<ImagerySection name="Art"><ImageComponent texture="Interface/GlueUI/BackgroundPH.htex" tint="FFA9AEB5" /></ImagerySection>
+				<StateImagery name="Enabled"><Layer><Section section="Art" /></Layer></StateImagery>
+			</Visual>
+		</Frame>
+
+		<!-- Front door: what login and realm selection share. The screens themselves only own their column. -->
+		<Frame name="GlueFrontdoor" setAllPoints="true">
+			<Property name="Clickable" value="false" />
+
+			<Frame name="GlueFrontdoorVeil" inherits="GlueVeilLeft">
+				<Property name="FillColor" value="F2070A0D" />
+				<Area>
+					<Anchor point="LEFT" />
+					<Anchor point="TOP" />
+					<Anchor point="BOTTOM" />
+					<Size><AbsDimension x="2300" /></Size>
+				</Area>
+			</Frame>
+			<Frame name="GlueFrontdoorFloor" inherits="GlueVeilBottom">
+				<Property name="FillColor" value="B3070A0D" />
+				<Area>
+					<Anchor point="LEFT" />
+					<Anchor point="RIGHT" />
+					<Anchor point="BOTTOM" />
+					<Size><AbsDimension y="520" /></Size>
+				</Area>
+			</Frame>
+
+			<Frame name="GlueLogo" renderer="DefaultRenderer">
+				<Property name="Clickable" value="false" />
+				<Property name="MousePassThrough" value="true" />
+				<Visual>
+					<ImagerySection name="Art"><ImageComponent texture="Interface/Logo.htex" /></ImagerySection>
+					<StateImagery name="Enabled"><Layer><Section section="Art" /></Layer></StateImagery>
+				</Visual>
+				<Area>
+					<Anchor point="LEFT" offset="190" />
+					<Anchor point="TOP" offset="120" />
+					<Size><AbsDimension x="880" y="464" /></Size>
+				</Area>
+			</Frame>
+
+			<Frame name="GlueCopyright" inherits="GlueNote">
+				<Property name="Text" value="COPYRIGHT_TEXT" />
+				<Property name="TextColor" value="FF6F767C" />
+				<Area>
+					<Anchor point="LEFT" offset="260" />
+					<Anchor point="BOTTOM" offset="-72" />
+					<Size><AbsDimension x="1600" y="38" /></Size>
+				</Area>
+			</Frame>
+
+			<!-- Leaving is always available on the front door, out of the way at the bottom right. -->
+			<Frame name="GlueQuitButton" inherits="GlueLinkButton">
+				<Property name="Text" value="QUIT" />
+				<Area>
+					<Anchor point="RIGHT" offset="-120" />
+					<Anchor point="BOTTOM" offset="-56" />
+				</Area>
+				<Scripts>
+					<OnClick>return function(this) RunConsoleCommand("quit"); end</OnClick>
+				</Scripts>
+			</Frame>
+		</Frame>
+
+		<!-- Covers everything at start-up and fades out once the screens are ready. Above the screens. -->
+		<Frame name="GlueSceneFade" inherits="GlueFill" setAllPoints="true" frameLevel="10">
+			<Property name="FillColor" value="FF000000" />
 		</Frame>
 
 		<Scripts>
-			<OnLoad>
-				return function(this)
-					GlueParent_OnLoad(this);
-				end
-			</OnLoad>
-			<!--<OnEvent>GlueParent_OnEvent();</OnEvent>-->
-			<OnUpdate>
-				return function(this, elapsed)
-					GlueParentFadeUpdate(this, elapsed);
-				end
-			</OnUpdate>
+			<OnLoad>return function(this) GlueParent_OnLoad(this); end</OnLoad>
+			<OnUpdate>return function(this, elapsed) GlueParent_OnUpdate(this, elapsed); end</OnUpdate>
 		</Scripts>
 	</Frame>
 </UiLayout>

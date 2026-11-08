@@ -1,154 +1,88 @@
 <?xml version="1.0"?>
+<!-- Copyright (C) 2019 - 2025, Kyoril. All rights reserved. -->
+<!-- Character selection: the selected character stands in the hall, its name large above it. Every
+     character is a card in the strip along the bottom (plus a "new character" card); the brass Enter
+     World button sits to the right of the strip. Drag a card to reorder, drag the hall to turn. -->
 <UiLayout xmlns="http://mmo-dev.net/ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://mmo-dev.net/ui UI.xsd">
 	<Script file="CharSelect.lua" />
 
-	<!-- Nameplate names: hovered (deeper shadow) and selected (larger, deeper shadow). The resting
-	     name uses DefaultHeader, the resting level line DefaultSmall. -->
-
-	<!-- Roster row: CharRosterRow1..N are a fixed pool showing a window of the character order
-	     (CharSelect.lua). List style B, like the realm rows (RealmList.xml): no box at rest, a thin
-	     bronze separator along the bottom (SeparatorColor, cleared from Lua under the last character
-	     and above the plaza divider), a faint warm-ivory fade on hover, and for the selected character
-	     a red glow fading out by 85% of the width with a bronze accent bar on the left edge.
-	     Children are: 0 = level/class line, 1 = "on the plaza" marker, 2 and 3 = the divider line and
-	     label before the first character who is not on the plaza. Those two sit in the
-	     ROSTER_DIVIDER_GAP (80) above the row and are shown only on the row of that character; the Lua
-	     opens the gap by anchoring the row 80 lower. -->
-	<Frame name="CharRosterRowTemplate" type="Button" renderer="CheckboxRenderer">
-		<Property name="Font" value="DefaultHeader" />
+	<!-- Character card. Checked = selected. Children (CharSelect.lua contract):
+	     0 = class glyph (Icon), 1 = name, 2 = level and class. -->
+	<Frame name="CharCardTemplate" type="Button" renderer="CheckboxRenderer">
 		<Property name="Checkable" value="true" />
-		<Property name="SeparatorColor" value="598C6234" />
+		<Property name="Font" value="DefaultHeader" />
+		<Visual>
+			<ImagerySection name="Rest">
+				<BorderComponent texture="Interface/GlueUI/Art/PanelFill.htex" borderSize="24" leftSize="28" rightSize="28" topSize="28" bottomSize="28" tint="CC0E1217" />
+				<BorderComponent texture="Interface/GlueUI/Art/PanelLine.htex" borderSize="24" leftSize="28" rightSize="28" topSize="28" bottomSize="28" tint="40D7C29A" />
+			</ImagerySection>
+			<ImagerySection name="Hover">
+				<BorderComponent texture="Interface/GlueUI/Art/PanelFill.htex" borderSize="24" leftSize="28" rightSize="28" topSize="28" bottomSize="28" tint="E6181E25" />
+				<BorderComponent texture="Interface/GlueUI/Art/PanelLine.htex" borderSize="24" leftSize="28" rightSize="28" topSize="28" bottomSize="28" tint="99E3C78F" />
+			</ImagerySection>
+			<ImagerySection name="Chosen">
+				<ImageComponent texture="Interface/GlueUI/Art/Glow.htex" tint="33E3C78F"><Area><Inset left="-60" right="-60" top="-40" bottom="-80" /></Area></ImageComponent>
+				<BorderComponent texture="Interface/GlueUI/Art/PanelFill.htex" borderSize="24" leftSize="28" rightSize="28" topSize="28" bottomSize="28" tint="F2221E17" />
+				<BorderComponent texture="Interface/GlueUI/Art/PanelLine.htex" borderSize="24" leftSize="28" rightSize="28" topSize="28" bottomSize="28" tint="FFE3C78F" />
+				<ImageComponent texture="Interface/GlueUI/Art/FadeV.htex" tint="40E3C78F"><Area><Inset left="4" right="4" top="110" bottom="4" /></Area></ImageComponent>
+			</ImagerySection>
+			<StateImagery name="Normal"><Layer><Section section="Rest" /></Layer></StateImagery>
+			<StateImagery name="Hovered"><Layer><Section section="Hover" /></Layer></StateImagery>
+			<StateImagery name="Pushed"><Layer><Section section="Hover" /></Layer></StateImagery>
+			<StateImagery name="Disabled"><Layer><Section section="Rest" color="80FFFFFF" /></Layer></StateImagery>
+			<StateImagery name="NormalChecked"><Layer><Section section="Chosen" /></Layer></StateImagery>
+			<StateImagery name="HoveredChecked"><Layer><Section section="Chosen" /></Layer></StateImagery>
+			<StateImagery name="PushedChecked"><Layer><Section section="Chosen" /></Layer></StateImagery>
+			<StateImagery name="DisabledChecked"><Layer><Section section="Chosen" color="80FFFFFF" /></Layer></StateImagery>
+		</Visual>
+		<Area><Size><AbsDimension x="360" y="232" /></Size></Area>
 
-		<Visual inherits="ThemeGlueCharRosterRowTemplateVisual" />
-		<Area>
-			<Size><AbsDimension y="144" /></Size>
-		</Area>
-
-		<!-- Level and class, beneath the name. -->
-		<Frame name="CharSubtext" renderer="DefaultRenderer">
-			<Property name="Font" value="DefaultSmall" />
-			<Property name="Enabled" value="false" />
+		<Frame name="CharCardGlyph" renderer="DefaultRenderer">
 			<Property name="Clickable" value="false" />
-
-			<Visual inherits="ThemeGlueCharSubtextVisual" />
-
-			<Area>
-				<Anchor point="LEFT" offset="40" />
-				<Anchor point="RIGHT" offset="-40" />
-				<Anchor point="BOTTOM" offset="-20" />
-				<Size><AbsDimension y="44" /></Size>
-			</Area>
-		</Frame>
-
-		<!-- "On the plaza" marker of the first five characters, top right, on the name's baseline. -->
-		<Frame name="CharPlazaMark" inherits="GlueTextSmall">
-			<Property name="Enabled" value="false" />
-			<Property name="Clickable" value="false" />
-			<Property name="HorzAlign" value="RIGHT" />
-			<Property name="TextColor" value="FFCDAE7E" />
-			<Area>
-				<Anchor point="TOP" offset="30" />
-				<Anchor point="RIGHT" offset="-40" />
-				<Size><AbsDimension x="280" y="44" /></Size>
-			</Area>
-		</Frame>
-
-		<!-- Divider before the characters who are not on the plaza, in the gap above the row. -->
-		<Frame name="CharRosterDivider" inherits="GlueDivider">
-			<Property name="Visible" value="false" />
-			<Area>
-				<Anchor point="LEFT" offset="16" />
-				<Anchor point="RIGHT" offset="-16" />
-				<Anchor point="TOP" offset="-72" />
-				<Size><AbsDimension y="12" /></Size>
-			</Area>
-		</Frame>
-		<Frame name="CharRosterDividerLabel" inherits="GlueTextSmall">
-			<Property name="Text" value="NOT_ON_THE_PLAZA" />
-			<Property name="Visible" value="false" />
-			<Property name="Enabled" value="false" />
-			<Property name="Clickable" value="false" />
-			<Property name="HorzAlign" value="CENTER" />
-			<Property name="TextColor" value="FFB5A892" />
-			<Area>
-				<Anchor point="LEFT" offset="16" />
-				<Anchor point="RIGHT" offset="-16" />
-				<Anchor point="TOP" offset="-52" />
-			</Area>
-		</Frame>
-	</Frame>
-
-	<!-- Virtual nameplate over a character on the plaza: name, "Level N Class" and, for the selected
-	     character, the zone. Text only, no card: the selected plate has a larger name, a short
-	     underline flourish and its level line in soft steel blue, and shows the zone line; a hovered
-	     plate brightens its name and level and deepens their shadow. Its bottom centre is placed over
-	     the character's head every frame (moved up when it would overlap another plate, see CharSelect.lua).
-	     The lines are stacked by offsets from the bottom: anchors between template children would
-	     resolve to the template's own children, not the copy's.
-	     Children (CharSelect.lua uses the indices): 0 = zone, 1 = level/class, 2 = name,
-	     3 = selected underline flourish. -->
-	<Frame name="CharNameplateTemplate">
-		<Property name="Visible" value="false" />
-		<Property name="MousePassThrough" value="true" />
-		<Area>
-			<Size><AbsDimension x="1200" y="172" /></Size>
-		</Area>
-
-		<Frame name="CharNameplateZone" inherits="GlueTextSmall">
-			<Property name="HorzAlign" value="CENTER" />
-			<Property name="TextColor" value="FFA0A0A0" />
-			<Area>
-				<Anchor point="LEFT" />
-				<Anchor point="RIGHT" />
-				<Anchor point="BOTTOM" />
-			</Area>
-		</Frame>
-		<Frame name="CharNameplateLevel" inherits="GlueTextSmall">
-			<Property name="HorzAlign" value="CENTER" />
-			<Property name="TextColor" value="FFE0E0E0" />
-			<Area>
-				<Anchor point="LEFT" />
-				<Anchor point="RIGHT" />
-				<Anchor point="BOTTOM" offset="-48" />
-			</Area>
-		</Frame>
-		<!-- The headline font with a settable colour and font, so a hovered or selected name can
-		     brighten and grow. -->
-		<Frame name="CharNameplateName" inherits="GlueTextSmall">
-			<Property name="Font" value="DefaultHeader" />
-			<Property name="HorzAlign" value="CENTER" />
-			<Property name="TextColor" value="FFF3EEE2" />
-			<Area>
-				<Anchor point="LEFT" />
-				<Anchor point="RIGHT" />
-				<Anchor point="BOTTOM" offset="-108" />
-				<Size><AbsDimension y="64" /></Size>
-			</Area>
-		</Frame>
-
-		<!-- Selected: a short, thin steel-blue line under the name (the divider strip of the selected
-		     steel frame, tinted). -->
-		<Frame name="CharNameplateSelectedMark" renderer="DefaultRenderer">
-			<Property name="Visible" value="false" />
-			<Property name="Clickable" value="false" />
+			<Property name="MousePassThrough" value="true" />
+			<Property name="Icon" />
+			<Property name="GlyphColor" value="FFD9CDB4" />
+			<Visual>
+				<ImagerySection name="Glyph"><ImageComponent tint="$GlyphColor"><PropertyValue property="Icon" /></ImageComponent></ImagerySection>
+				<StateImagery name="Enabled"><Layer><Section section="Glyph" /></Layer></StateImagery>
+				<StateImagery name="Disabled"><Layer><Section section="Glyph" color="80FFFFFF" /></Layer></StateImagery>
+			</Visual>
 			<Area>
 				<Anchor point="H_CENTER" />
-				<Anchor point="BOTTOM" offset="-97" />
-				<Size><AbsDimension x="220" y="6" /></Size>
+				<Anchor point="TOP" offset="30" />
+				<Size><AbsDimension x="76" y="76" /></Size>
 			</Area>
-			<Visual inherits="ThemeGlueCharNameplateSelectedMarkVisual" />
+		</Frame>
+		<Frame name="CharCardName" inherits="GlueTextLarge">
+			<Property name="VertAlign" value="CENTER" />
+			<Area>
+				<Anchor point="LEFT" offset="16" />
+				<Anchor point="RIGHT" offset="-16" />
+				<Anchor point="TOP" offset="118" />
+				<Size><AbsDimension y="56" /></Size>
+			</Area>
+		</Frame>
+		<Frame name="CharCardInfo" inherits="GlueNote">
+			<Property name="HorzAlign" value="CENTER" />
+			<Area>
+				<Anchor point="LEFT" offset="16" />
+				<Anchor point="RIGHT" offset="-16" />
+				<Anchor point="TOP" offset="172" />
+			</Area>
 		</Frame>
 	</Frame>
 
-	<!-- The character screen: minimal chrome over the glue scene's plaza. Covers the whole screen;
-	     a click on a character there selects it, a drag on empty space turns the selected character
-	     (CharSelect.lua). -->
 	<Frame name="CharSelect" parent="GlueParent" setAllPoints="true">
 		<Property name="Visible" value="false" />
 
-		<Frame name="CharSelectBackdrop" renderer="DefaultRenderer" setAllPoints="true">
-			<Property name="Visible" value="false" />
-			<Property name="MousePassThrough" value="true" />
+		<!-- Warm light pooling behind the character. -->
+		<Frame name="CharSelectGlow" inherits="GlueGlow">
+			<Property name="FillColor" value="33F2D3A0" />
+			<Area>
+				<Anchor point="H_CENTER" />
+				<Anchor point="BOTTOM" offset="-300" />
+				<Size><AbsDimension x="1800" y="1500" /></Size>
+			</Area>
 		</Frame>
 
 		<Frame name="CharSelectPreview" type="CharacterPreview">
@@ -159,373 +93,122 @@
 			<Property name="Zoom" value="4.0" />
 			<Property name="OffsetY" value="1.0" />
 			<Area>
-				<Anchor point="LEFT" offset="48" />
-				<Anchor point="RIGHT" relativePoint="H_CENTER" offset="360" />
-				<Anchor point="TOP" offset="240" />
-				<Anchor point="BOTTOM" offset="-240" />
+				<Anchor point="H_CENTER" />
+				<Anchor point="TOP" offset="380" />
+				<Anchor point="BOTTOM" offset="-380" />
+				<Size><AbsDimension x="1500" /></Size>
 			</Area>
 		</Frame>
 
-		<!-- Nameplates of the five plaza characters (1-5, by order index) and of a selected visitor (6). -->
-		<Frame name="CharSelectNameplates" setAllPoints="true">
-			<Property name="MousePassThrough" value="true" />
-
-			<Frame name="CharNameplate1" inherits="CharNameplateTemplate" />
-			<Frame name="CharNameplate2" inherits="CharNameplateTemplate" />
-			<Frame name="CharNameplate3" inherits="CharNameplateTemplate" />
-			<Frame name="CharNameplate4" inherits="CharNameplateTemplate" />
-			<Frame name="CharNameplate5" inherits="CharNameplateTemplate" />
-			<Frame name="CharNameplate6" inherits="CharNameplateTemplate" />
-		</Frame>
-
-		<!-- Everything clickable. Not clickable itself, so a click on empty space reaches CharSelect. -->
+		<!-- Everything clickable. Not clickable itself, so a drag on empty space reaches CharSelect. -->
 		<Frame name="CharSelectChrome" setAllPoints="true">
 			<Property name="Clickable" value="false" />
 
-			<Frame name="CharSelectSpotlight" inherits="GlueTextLarge">
-				<Property name="Visible" value="false" />
-				<Property name="Font" value="CharNameplateNameSelected" />
-				<Property name="Clickable" value="false" />
-				<Property name="MousePassThrough" value="true" />
-				<Area>
-					<Anchor point="TOP" offset="152" />
-					<Anchor point="LEFT" relativeTo="CharSelectPreview" />
-					<Anchor point="RIGHT" relativeTo="CharSelectPreview" />
-				</Area>
+			<Frame name="CharSelectTopVeil" inherits="GlueVeilTop">
+				<Property name="FillColor" value="CC070A0D" />
+				<Area><Anchor point="LEFT" /><Anchor point="RIGHT" /><Anchor point="TOP" /><Size><AbsDimension y="560" /></Size></Area>
+			</Frame>
+			<Frame name="CharSelectBottomBar" inherits="GlueVeilBottom">
+				<Property name="FillColor" value="F2070A0D" />
+				<Area><Anchor point="LEFT" /><Anchor point="RIGHT" /><Anchor point="BOTTOM" /><Size><AbsDimension y="760" /></Size></Area>
 			</Frame>
 
-			<!-- Bottom bar: a soft gradient behind the buttons. Not clickable, so drags on it still turn
-			     the selected character. -->
-			<Frame name="CharSelectBottomBar" renderer="DefaultRenderer">
+			<!-- Header: realm, the selected character's name, and its level, class and location. -->
+			<Frame name="CharSelectHeader">
 				<Property name="Clickable" value="false" />
 				<Area>
-					<Anchor point="LEFT"/>
-					<Anchor point="RIGHT"/>
-					<Anchor point="BOTTOM"/>
-					<Size><AbsDimension y="400" /></Size>
+					<Anchor point="H_CENTER" />
+					<Anchor point="TOP" offset="96" />
+					<Size><AbsDimension x="2400" y="300" /></Size>
 				</Area>
-				<Visual inherits="ThemeGlueCharSelectBottomBarVisual" />
+				<Frame name="RealmNameLabel" inherits="GlueCaption">
+					<Property name="HorzAlign" value="CENTER" />
+					<Area><Anchor point="LEFT" /><Anchor point="RIGHT" /><Anchor point="TOP" /></Area>
+				</Frame>
+				<Frame name="CharSelectSpotlight" inherits="GlueHero">
+					<Area><Anchor point="LEFT" /><Anchor point="RIGHT" /><Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmNameLabel" offset="36" /></Area>
+				</Frame>
+				<Frame name="CharSelectDetails" inherits="GlueTextSmall">
+					<Property name="HorzAlign" value="CENTER" />
+					<Property name="TextColor" value="FFB8B1A3" />
+					<Area><Anchor point="LEFT" /><Anchor point="RIGHT" /><Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharSelectSpotlight" offset="2" /></Area>
+				</Frame>
+			</Frame>
+
+			<!-- Top corners: back to the realms on the left, quit on the right. -->
+			<Frame name="ChangeRealmButton" inherits="GlueLinkButton">
+				<Property name="Text" value="CHANGE_REALM" />
+				<Area><Anchor point="LEFT" offset="120" /><Anchor point="TOP" offset="72" /></Area>
+				<Scripts><OnClick>return function(this) CharSelect_ChangeRealm(); end</OnClick></Scripts>
+			</Frame>
+			<Frame name="CharSelectQuitButton" inherits="GlueLinkButton">
+				<Property name="Text" value="QUIT" />
+				<Area><Anchor point="RIGHT" offset="-120" /><Anchor point="TOP" offset="72" /></Area>
+				<Scripts><OnClick>return function(this) RunConsoleCommand("quit"); end</OnClick></Scripts>
+			</Frame>
+
+			<!-- The card strip. CharSelect.lua sizes it to the visible cards and places them. -->
+			<Frame name="CharCardStrip">
+				<Property name="Clickable" value="false" />
+				<Area>
+					<Anchor point="H_CENTER" offset="-260" />
+					<Anchor point="BOTTOM" offset="-120" />
+					<Size><AbsDimension x="2400" y="232" /></Size>
+				</Area>
+				<Frame name="CharCard1" inherits="CharCardTemplate" />
+				<Frame name="CharCard2" inherits="CharCardTemplate" />
+				<Frame name="CharCard3" inherits="CharCardTemplate" />
+				<Frame name="CharCard4" inherits="CharCardTemplate" />
+				<Frame name="CharCard5" inherits="CharCardTemplate" />
+			</Frame>
+
+			<Frame name="CharCardPrevButton" inherits="GlueIconButton">
+				<Property name="Icon" value="Interface/GlueUI/Art/ChevronLeft.htex" />
+				<Property name="Visible" value="false" />
+				<Area><Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CharCardStrip" offset="-28" /><Anchor point="V_CENTER" relativePoint="V_CENTER" relativeTo="CharCardStrip" /></Area>
+				<Scripts><OnClick>return function(this) CharSelect_Page(-1); end</OnClick></Scripts>
+			</Frame>
+			<Frame name="CharCardNextButton" inherits="GlueIconButton">
+				<Property name="Icon" value="Interface/GlueUI/Art/ChevronRight.htex" />
+				<Property name="Visible" value="false" />
+				<Area><Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CharCardStrip" offset="28" /><Anchor point="V_CENTER" relativePoint="V_CENTER" relativeTo="CharCardStrip" /></Area>
+				<Scripts><OnClick>return function(this) CharSelect_Page(1); end</OnClick></Scripts>
+			</Frame>
+
+			<Frame name="CharRosterHint" inherits="GlueNote">
+				<Property name="Text" value="DRAG_TO_REORDER" />
+				<Property name="HorzAlign" value="CENTER" />
+				<Property name="TextColor" value="FF6F767C" />
+				<Area>
+					<Anchor point="H_CENTER" relativePoint="H_CENTER" relativeTo="CharCardStrip" />
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharCardStrip" offset="28" />
+					<Size><AbsDimension x="1200" y="38" /></Size>
+				</Area>
 			</Frame>
 
 			<Frame name="CharSelectEnterButton" inherits="GlueButtonPrimary">
 				<Property name="Text" value="ENTER_WORLD" />
 				<Property name="Enabled" value="False" />
 				<Area>
-					<Anchor point="BOTTOM" offset="-48" />
-					<Anchor point="H_CENTER" />
-					<Size><AbsDimension x="560" y="128" /></Size>
+					<Anchor point="RIGHT" offset="-120" />
+					<Anchor point="BOTTOM" offset="-120" />
+					<Size><AbsDimension x="600" y="232" /></Size>
 				</Area>
-				<Scripts>
-					<OnClick>
-						return function(this)
-							CharSelect_EnterWorld();
-						end
-					</OnClick>
-				</Scripts>
+				<Scripts><OnClick>return function(this) CharSelect_EnterWorld(); end</OnClick></Scripts>
 			</Frame>
 
-			<!-- Past the login screen this is the only way out besides closing the window. -->
-			<Frame name="CharSelectQuitButton" inherits="GlueButton">
-				<Property name="Text" value="QUIT" />
-				<Area>
-					<Anchor point="LEFT" offset="48" />
-					<Anchor point="BOTTOM" offset="-48" />
-				</Area>
-				<Scripts>
-					<OnClick>
-						return function(this)
-							RunConsoleCommand("quit");
-						end
-					</OnClick>
-				</Scripts>
-			</Frame>
-
-			<Frame name="ChangeRealmButton" inherits="GlueButton">
-				<Property name="Text" value="CHANGE_REALM" />
-				<Area>
-					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="CharSelectQuitButton" offset="24" />
-					<Anchor point="BOTTOM" offset="-48" />
-				</Area>
-				<Scripts>
-					<OnClick>
-						return function(this)
-							CharSelect_ChangeRealm();
-						end
-					</OnClick>
-				</Scripts>
-			</Frame>
-
-			<!-- "All characters (N)": opens and closes the roster panel. The text is set from Lua. -->
-			<Frame name="CharRosterButton" inherits="GlueButton">
-				<Property name="Text" value="" />
-				<Area>
-					<Anchor point="RIGHT" offset="-48" />
-					<Anchor point="BOTTOM" offset="-48" />
-				</Area>
-				<Scripts>
-					<OnClick>
-						return function(this)
-							CharSelect_ToggleRoster();
-						end
-					</OnClick>
-				</Scripts>
-			</Frame>
-
-			<Frame name="CharDeleteButton" inherits="GlueButton">
+			<Frame name="CharDeleteButton" inherits="GlueLinkButton">
 				<Property name="Text" value="DELETE_CHARACTER" />
 				<Property name="Enabled" value="False" />
-				<Area>
-					<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CharRosterButton" offset="-24" />
-					<Anchor point="BOTTOM" offset="-48" />
-				</Area>
-				<Scripts>
-					<OnClick>
-						return function(this)
-							CharSelect_DeleteCharacter();
-						end
-					</OnClick>
-				</Scripts>
-			</Frame>
-
-			<!-- Only shown with five or more characters; below that the plaza markers create characters. -->
-			<Frame name="CharCreateButton" inherits="GlueButton">
-				<Property name="Text" value="CREATE_CHARACTER" />
-				<Area>
-					<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="CharDeleteButton" offset="-24" />
-					<Anchor point="BOTTOM" offset="-48" />
-				</Area>
-				<Scripts>
-					<OnClick>
-						return function(this)
-							CharSelect_CreateCharacter();
-						end
-					</OnClick>
-				</Scripts>
-			</Frame>
-
-			<!-- Roster: every character, the first five marked as standing on the plaza, in a sunken list
-			     well. The rows are a fixed pool scrolled by data offset (CharSelect.lua) and reordered
-			     by dragging. Content keeps 72 UI from the panel edge (bronze edge and corner ornaments);
-			     1040 wide leaves the well 896. -->
-			<Frame name="CharRosterPanel" inherits="GlueBorderFrame">
-				<Property name="Visible" value="false" />
-				<Area>
-					<Anchor point="TOP" offset="48" />
-					<Anchor point="RIGHT" offset="-48" />
-					<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="CharRosterButton" offset="-32" />
-					<Size><AbsDimension x="1040" /></Size>
-				</Area>
-
-				<Frame name="RealmNameLabel" inherits="GlueTextLarge">
-					<Property name="Text" value="REALM" />
-					<Area>
-						<Anchor point="LEFT" offset="72" />
-						<Anchor point="RIGHT" offset="-72" />
-						<Anchor point="TOP" offset="72" />
-					</Area>
-				</Frame>
-				<Frame name="CharCountLabel" inherits="GlueTextSmall">
-					<Property name="Text" value="" />
-					<Property name="HorzAlign" value="CENTER" />
-					<Property name="TextColor" value="FFB5A892" />
-					<Area>
-						<Anchor point="LEFT" offset="72" />
-						<Anchor point="RIGHT" offset="-72" />
-						<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RealmNameLabel" offset="4" />
-					</Area>
-				</Frame>
-
-				<!-- The well is 1552 tall at the 2160 UI height: ten rows of 144 and the 80 divider gap
-				     need 1520 plus the 16 of insets. -->
-				<Frame name="CharRosterList" inherits="GlueListWell">
-					<Area>
-						<Anchor point="LEFT" offset="72" />
-						<Anchor point="RIGHT" offset="-72" />
-						<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharCountLabel" offset="32" />
-						<Anchor point="BOTTOM" offset="-140" />
-					</Area>
-
-					<!-- CharSelect.lua moves the right edge in to 112 while the scroll bar shows. -->
-					<Frame name="CharRosterContent">
-						<Area>
-							<Anchor point="LEFT" offset="8" />
-							<Anchor point="RIGHT" offset="-8" />
-							<Anchor point="TOP" offset="8" />
-							<Anchor point="BOTTOM" offset="-8" />
-						</Area>
-
-						<Frame name="CharRosterRow1" inherits="CharRosterRowTemplate">
-							<Area>
-								<Anchor point="LEFT" />
-								<Anchor point="RIGHT" />
-								<Anchor point="TOP" />
-							</Area>
-						</Frame>
-						<Frame name="CharRosterRow2" inherits="CharRosterRowTemplate">
-							<Area>
-								<Anchor point="LEFT" />
-								<Anchor point="RIGHT" />
-								<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharRosterRow1" />
-							</Area>
-						</Frame>
-						<Frame name="CharRosterRow3" inherits="CharRosterRowTemplate">
-							<Area>
-								<Anchor point="LEFT" />
-								<Anchor point="RIGHT" />
-								<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharRosterRow2" />
-							</Area>
-						</Frame>
-						<Frame name="CharRosterRow4" inherits="CharRosterRowTemplate">
-							<Area>
-								<Anchor point="LEFT" />
-								<Anchor point="RIGHT" />
-								<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharRosterRow3" />
-							</Area>
-						</Frame>
-						<Frame name="CharRosterRow5" inherits="CharRosterRowTemplate">
-							<Area>
-								<Anchor point="LEFT" />
-								<Anchor point="RIGHT" />
-								<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharRosterRow4" />
-							</Area>
-						</Frame>
-						<Frame name="CharRosterRow6" inherits="CharRosterRowTemplate">
-							<Area>
-								<Anchor point="LEFT" />
-								<Anchor point="RIGHT" />
-								<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharRosterRow5" />
-							</Area>
-						</Frame>
-						<Frame name="CharRosterRow7" inherits="CharRosterRowTemplate">
-							<Area>
-								<Anchor point="LEFT" />
-								<Anchor point="RIGHT" />
-								<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharRosterRow6" />
-							</Area>
-						</Frame>
-						<Frame name="CharRosterRow8" inherits="CharRosterRowTemplate">
-							<Area>
-								<Anchor point="LEFT" />
-								<Anchor point="RIGHT" />
-								<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharRosterRow7" />
-							</Area>
-						</Frame>
-						<Frame name="CharRosterRow9" inherits="CharRosterRowTemplate">
-							<Area>
-								<Anchor point="LEFT" />
-								<Anchor point="RIGHT" />
-								<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharRosterRow8" />
-							</Area>
-						</Frame>
-						<Frame name="CharRosterRow10" inherits="CharRosterRowTemplate">
-							<Area>
-								<Anchor point="LEFT" />
-								<Anchor point="RIGHT" />
-								<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="CharRosterRow9" />
-							</Area>
-						</Frame>
-					</Frame>
-
-					<Frame name="CharRosterScrollBar" inherits="VerticalScrollBar">
-						<Property name="Visible" value="false" />
-						<Area>
-							<Anchor point="RIGHT" offset="-8" />
-							<Anchor point="TOP" offset="8" />
-							<Anchor point="BOTTOM" offset="-8" />
-						</Area>
-					</Frame>
-				</Frame>
-
-				<Frame name="CharRosterHint" inherits="GlueTextSmall">
-					<Property name="Text" value="DRAG_TO_REORDER" />
-					<Property name="HorzAlign" value="CENTER" />
-					<Property name="TextColor" value="FFB5A892" />
-					<Area>
-						<Anchor point="LEFT" offset="72" />
-						<Anchor point="RIGHT" offset="-72" />
-						<Anchor point="BOTTOM" offset="-72" />
-					</Area>
-				</Frame>
-			</Frame>
-		</Frame>
-
-		<Frame name="DeleteConfirmation" setAllPoints="true">
-			<Property name="Visible" value="false" />
-
-			<Frame name="DeleteConfirmationFrame" inherits="GlueBorderFrame">
-				<!-- Content keeps 72 UI from the panel edge (bronze edge and corner ornaments). The header is
-				     three lines (question, blank, warning; about 215 UI), so 540 leaves ~50 above the buttons. -->
-				<Area>
-					<Anchor point="H_CENTER" />
-					<Anchor point="V_CENTER" />
-					<Size>
-						<AbsDimension x="1320" y="540" />
-					</Size>
-				</Area>
-
-				<Frame name="DeleteConfirmationHeader" inherits="GlueTextLarge">
-					<Property name="Text" value="CONFIRM_CHAR_DELETE" />
-					<Area>
-						<Anchor point="LEFT" offset="72" />
-						<Anchor point="RIGHT" offset="-72" />
-						<Anchor point="TOP" offset="72" />
-					</Area>
-				</Frame>
-
-				<Frame name="DeleteConfirmButton" inherits="GlueButton">
-					<Property name="Text" value="DELETE" />
-
-					<Area>
-						<Anchor point="LEFT" offset="72" />
-						<Anchor point="RIGHT" relativePoint="H_CENTER" offset="-24" />
-						<Anchor point="BOTTOM" offset="-72" />
-					</Area>
-
-					<Scripts>
-						<OnClick>
-							return function(this)
-								CharSelect_ConfirmDelete();
-							end
-						</OnClick>
-					</Scripts>
-				</Frame>
-
-				<Frame name="DeleteCancelButton" inherits="GlueButton">
-					<Property name="Text" value="CANCEL" />
-
-					<Area>
-						<Anchor point="LEFT" relativePoint="H_CENTER" offset="24" />
-						<Anchor point="RIGHT" offset="-72" />
-						<Anchor point="BOTTOM" offset="-72" />
-					</Area>
-
-					<Scripts>
-						<OnClick>
-							return function(this)
-								CharSelect_CancelDelete();
-							end
-						</OnClick>
-					</Scripts>
-				</Frame>
+				<Area><Anchor point="LEFT" offset="120" /><Anchor point="BOTTOM" offset="-56" /></Area>
+				<Scripts><OnClick>return function(this) CharSelect_DeleteCharacter(); end</OnClick></Scripts>
 			</Frame>
 		</Frame>
 
 		<Scripts>
-			<OnLoad>
-				return function(this)
-					CharSelect_OnLoad(this);
-				end
-			</OnLoad>
-			<OnUpdate>
-				return function(this, elapsed)
-					CharSelect_OnUpdate(this, elapsed);
-				end
-			</OnUpdate>
-			<OnHide>
-				return function(this)
-					CharSelect_OnHide(this);
-				end
-			</OnHide>
+			<OnLoad>return function(this) CharSelect_OnLoad(this); end</OnLoad>
+			<OnUpdate>return function(this, elapsed) CharSelect_OnUpdate(this, elapsed); end</OnUpdate>
+			<OnHide>return function(this) CharSelect_OnHide(this); end</OnHide>
 		</Scripts>
 	</Frame>
 </UiLayout>

@@ -1,8 +1,8 @@
-
+-- Copyright (C) 2019 - 2025, Kyoril. All rights reserved.
 -- Realm selection screen. Rows are a fixed pool (RealmListRow1..N) showing a window of the
 -- realm list; selection is keyed by realm id so periodic list refreshes never lose it.
 
-local VISIBLE_ROWS = 6
+local VISIBLE_ROWS = 4
 local DOUBLE_CLICK_MS = 400
 
 local KEY_ENTER = 0x0D
@@ -12,14 +12,14 @@ local KEY_DOWN = 0x28
 
 -- Population bands as sent by the login server (auth::realm_population), indexed from 0.
 local POPULATION_BANDS = {
-	[0] = { key = "REALM_POP_LOW", color = "FF4CD964" },
-	[1] = { key = "REALM_POP_MEDIUM", color = "FFF2C94C" },
-	[2] = { key = "REALM_POP_HIGH", color = "FFFF8A3D" },
-	[3] = { key = "REALM_POP_FULL", color = "FFFF4B4B" },
+	[0] = { key = "REALM_POP_LOW", color = "FF7FD49A" },
+	[1] = { key = "REALM_POP_MEDIUM", color = "FFE8C76A" },
+	[2] = { key = "REALM_POP_HIGH", color = "FFEE9A5B" },
+	[3] = { key = "REALM_POP_FULL", color = "FFE5675C" },
 }
 
--- Row separators (RealmListRowTemplate): thin bronze, cleared under the last realm.
-local SEPARATOR_COLOR = "598C6234"
+-- Row separators (GlueListRow): a faint hairline, cleared under the last realm.
+local SEPARATOR_COLOR = "26D7C29A"
 local NO_SEPARATOR = "00000000"
 
 -- auth::HiddenRealmPlayerCount: the exact count is only sent to game master accounts.
@@ -77,9 +77,8 @@ local function RealmList_Refresh()
 	local hasScroll = #realmEntries > VISIBLE_ROWS
 	scrollOffset = math.max(0, math.min(scrollOffset, MaxScrollOffset()))
 
-	-- Make room for the scroll bar only when it is needed; the column headers follow the content.
-	-- Content keeps 8 from the well's edge, and clears the scroll bar (96 wide, 8 in) by 8.
-	RealmListContent:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, hasScroll and -112 or -8)
+	-- Make room for the scroll bar (56 wide) only when it is needed.
+	RealmListContent:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, hasScroll and -72 or 0)
 	RealmListScrollBar:SetProperty("Visible", hasScroll and "true" or "false")
 	updatingScroll = true
 	RealmListScrollBar:SetMinimum(0)
@@ -89,7 +88,7 @@ local function RealmList_Refresh()
 
 	local lastRealmId = GetLastRealmId()
 	local playersFormat = Localize("REALM_PLAYERS_ONLINE")
-	local lastPlayedText = "|cFFE6D6BA" .. Localize("REALM_LAST_PLAYED") .. "|r     "
+	local lastPlayedText = "|cFFE3C78F" .. Localize("REALM_LAST_PLAYED") .. "|r  ·  "
 
 	for i = 1, VISIBLE_ROWS do
 		local row = _G["RealmListRow" .. i]
@@ -237,25 +236,49 @@ function RealmList_OnLoad(this)
 	this:RegisterEvent("GLUE_KEY_DOWN", RealmList_OnKeyDown)
 end
 
+local CONTENT_LEFT = 260
+local SLIDE_DISTANCE = 72
+
+-- Slides the realm column in from the right; its parts follow one after another.
+local function PlayEntrance()
+	RealmListBorder:SetOpacity(1)
+	GlueMotion.Offset(RealmListBorder, "slide", AnchorPoint.LEFT, AnchorPoint.LEFT, nil,
+		CONTENT_LEFT + SLIDE_DISTANCE, CONTENT_LEFT, 0.55, 0, GlueEase.OutQuint)
+	local parts = { RealmListCaption, RealmListHeaderLabel, RealmListHeaderSubLabel, RealmList,
+		RealmListCountLabel, RealmListHintLabel, RealmListBackButton, RealmListButton01 }
+	for index, frame in ipairs(parts) do
+		frame:SetOpacity(0)
+		GlueMotion.Fade(frame, 1, 0.4, (index - 1) * 0.04)
+	end
+end
+
+-- Slides the realm column out (to the left for forward, to the right for back), then calls done.
+local function PlayExit(forward, done)
+	local target = forward and (CONTENT_LEFT - SLIDE_DISTANCE) or (CONTENT_LEFT + SLIDE_DISTANCE)
+	GlueMotion.Offset(RealmListBorder, "slide", AnchorPoint.LEFT, AnchorPoint.LEFT, nil,
+		CONTENT_LEFT, target, 0.25, 0, GlueEase.InCubic)
+	GlueMotion.Fade(RealmListBorder, 0, 0.22, 0, function()
+		RealmListFrame:Hide()
+		RealmListBorder:SetOpacity(1)
+		RealmListBorder:Show()
+		if done then done() end
+	end, GlueEase.InCubic)
+end
+
 -- Shows the realm list. fromCharSelect makes Back return to the character screen of the realm
 -- that is still connected instead of logging out.
 function RealmList_Show(fromCharSelect)
 	-- Make sure the login frame is not left visible behind the realm list (e.g. when returning here
-	-- after a failed auto-connect to the last used realm, where the login frame was never faded out).
+	-- after a failed auto-connect to the last used realm).
 	AccountLogin:Hide()
 
 	returnToCharSelect = fromCharSelect == true
 	lastClickRealmId = nil
 
-	-- The realm list stands at the gate: never leave it covered by a fade held for the plaza (the
-	-- character list request it waited for may have been cancelled).
-	GlueSceneFade_Release()
-
+	GlueStage_Show("gate")
 	RealmListFrame:Show()
 	RealmList_Update()
-	if not GlueUsesStaticFrontEnd() then
-		RealmListFrame:PlayAnimation("FadeIn")
-	end
+	PlayEntrance()
 end
 
 function RealmList_Hide()
@@ -283,34 +306,11 @@ end
 
 function RealmList_Cancel()
 	if returnToCharSelect and realmConnector:IsConnected() then
-		RealmList_Hide()
-		-- Back to the plaza of the realm that is still connected: fly in again. The character
-		-- screen keeps its chrome hidden until the flight has finished.
-		if not GlueUsesStaticFrontEnd() then GlueFlyToPlaza() end
-		CharList_Show()
+		PlayExit(false, function() CharList_Show() end)
 		return
 	end
 
-	if GlueUsesStaticFrontEnd() then
-		RealmList_Hide()
-		AccountLogin:Show()
-		LoginButton:Enable()
-		AccountNameField:CaptureInput()
-		return
-	end
-
-	local anim = RealmListFrame:GetAnimation("FadeOut")
-	if anim and not anim:IsPlaying() then
-		anim:SetOnFinish(function(a)
-			a:SetOnFinish(nil)
-
-			RealmList_Hide()
-			AccountLogin:Show()
-			AccountLogin:PlayAnimation("FadeIn")
-			LoginButton:Enable()
-			AccountNameField:CaptureInput()
-		end)
-
-		RealmListFrame:PlayAnimation("FadeOut")
-	end
+	PlayExit(false, function()
+		AccountLogin_Return()
+	end)
 end

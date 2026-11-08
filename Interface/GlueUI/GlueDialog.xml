@@ -1,61 +1,99 @@
 <?xml version="1.0" ?>
+<!-- Copyright (C) 2019 - 2025, Kyoril. All rights reserved. -->
+<!-- Modal message: dims the screen and shows a compact glass card with the message, an indeterminate
+     progress line while something is in progress, and one or two buttons. -->
 <UiLayout>
 	<Script file="GlueDialog.lua" />
-	
-	<Frame name="GlueDialogBackground" parent="GlueParent" setAllPoints="true">
+
+	<Frame name="GlueDialogBackground" parent="GlueParent" setAllPoints="true" frameLevel="8">
 		<Property name="Visible" value="false" />
-	
-		<Frame name="GlueDialog" inherits="GlueBorderFrame">
+
+		<Frame name="GlueDialogDim" inherits="GlueFill" setAllPoints="true">
+			<Property name="FillColor" value="A6040608" />
+			<Property name="Clickable" value="true" />
+			<Property name="MousePassThrough" value="false" />
+		</Frame>
+
+		<Frame name="GlueDialog" inherits="GluePanel">
+			<Property name="FillColor" value="F2101419" />
+			<Property name="RimColor" value="73D7C29A" />
 			<Area>
 				<!-- The height is a placeholder: GlueDialog_Layout sizes it to the content on every show. -->
-				<Size><AbsDimension x="1600" y="360" /></Size>
+				<Size><AbsDimension x="1400" y="360" /></Size>
 				<Anchor point="H_CENTER" />
 				<Anchor point="V_CENTER" />
 			</Area>
-			
+
+			<!-- A gold accent along the top edge. -->
+			<Frame name="GlueDialogAccent" inherits="GlueFill">
+				<Property name="FillColor" value="B3E3C78F" />
+				<Area>
+					<Anchor point="H_CENTER" />
+					<Anchor point="TOP" offset="2" />
+					<Size><AbsDimension x="240" y="4" /></Size>
+				</Area>
+			</Frame>
+
 			<Frame name="GlueDialogLabel" inherits="GlueTextLarge">
 				<Property name="Text" value="CONNECTING" />
 				<Area>
-					<Anchor point="LEFT" offset="80" />
-					<Anchor point="RIGHT" offset="-80" />
-					<Anchor point="TOP" offset="72" />
+					<Anchor point="LEFT" offset="96" />
+					<Anchor point="RIGHT" offset="-96" />
+					<Anchor point="TOP" offset="80" />
 				</Area>
 			</Frame>
-			
+
+			<!-- Indeterminate progress: a short gold segment sweeping along a hairline (GlueDialog.lua). -->
+			<Frame name="GlueDialogBusy">
+				<Property name="Visible" value="false" />
+				<Area>
+					<Anchor point="LEFT" offset="320" />
+					<Anchor point="RIGHT" offset="-320" />
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="GlueDialogLabel" offset="44" />
+					<Size><AbsDimension y="4" /></Size>
+				</Area>
+				<Frame name="GlueDialogBusyTrack" inherits="GlueFill" setAllPoints="true">
+					<Property name="FillColor" value="26D7C29A" />
+				</Frame>
+				<Frame name="GlueDialogBusyBar" inherits="GlueFill">
+					<Property name="FillColor" value="FFE3C78F" />
+					<Area>
+						<Anchor point="LEFT" />
+						<Anchor point="TOP" />
+						<Anchor point="BOTTOM" />
+						<Size><AbsDimension x="180" /></Size>
+					</Area>
+				</Frame>
+			</Frame>
+
 			<Frame name="GlueButton01" inherits="GlueButton">
 				<Property name="Text" value="CANCEL" />
-				
 				<Area>
 					<Anchor point="H_CENTER" />
-					<Anchor point="BOTTOM" relativeTo="GlueDialog" offset="-72" />
+					<Anchor point="BOTTOM" offset="-72" />
+					<Size><AbsDimension x="400" y="112" /></Size>
 				</Area>
-				
 				<Scripts>
-					<OnClick>
-						return function(this)
-							GlueDialog_Button1Clicked();
-						end
-					</OnClick>
+					<OnClick>return function(this) GlueDialog_Button1Clicked(); end</OnClick>
 				</Scripts>
 			</Frame>
-			
+
 			<Frame name="GlueButton02" inherits="GlueButton">
 				<Property name="Text" value="CANCEL" />
 				<Property name="Visible" value="false" />
-				
 				<Area>
-					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="GlueButton01" offset="20" />
-					<Anchor point="BOTTOM" relativeTo="GlueDialog" offset="-72" />
+					<Anchor point="LEFT" relativePoint="H_CENTER" offset="12" />
+					<Anchor point="BOTTOM" offset="-72" />
+					<Size><AbsDimension x="400" y="112" /></Size>
 				</Area>
-
 				<Scripts>
-					<OnClick>
-						return function(this)
-							GlueDialog_Button2Clicked();
-						end
-					</OnClick>
+					<OnClick>return function(this) GlueDialog_Button2Clicked(); end</OnClick>
 				</Scripts>
 			</Frame>
 		</Frame>
+
+		<Scripts>
+			<OnUpdate>return function(this, elapsed) GlueDialog_OnUpdate(this, elapsed); end</OnUpdate>
+		</Scripts>
 	</Frame>
 </UiLayout>

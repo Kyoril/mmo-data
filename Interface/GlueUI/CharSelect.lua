@@ -1,60 +1,46 @@
--- Character screen over the glue scene's plaza: the bottom bar, the roster panel, the nameplates
--- and "new character" markers that follow the plaza, and the flights to and from it.
+-- Copyright (C) 2019 - 2025, Kyoril. All rights reserved.
+-- Character selection (CharSelect.xml): the card strip, the header over the character, paging,
+-- reordering by dragging a card, turning the character by dragging the hall, and leaving the screen
+-- (enter world, create, delete, change realm).
 --
 -- All state lives in file locals: fields set on `self` in a handler do not survive to the next
 -- handler call. Character views returned by GetCharacterInfo are never kept between calls either,
 -- because reordering and saving the roster moves them around.
 
-local PLAZA_SPOTS = 5
-local NAMEPLATE_COUNT = 6			-- One per plaza spot, plus a selected visitor
+local CARD_SLOTS = 5					-- cards visible at once (CharCard1..N)
+local CARD_WIDTH = 360
+local CARD_GAP = 28
+local CARD_LIFT_SELECTED = 28			-- UI units a selected card rises
+local CARD_LIFT_HOVERED = 10
+local CARD_ENTER_DROP = 120			-- cards rise from this far below when the screen opens
+
 local LEFT_MOUSE_BUTTON = 1
 local ROTATE_DEGREES_PER_PIXEL = 0.4
-local ROW_DRAG_THRESHOLD = 12		-- UI units the cursor moves before a row press becomes a drag
-local PLAZA_DRAG_THRESHOLD = 16	-- UI units the cursor moves before a plaza press turns the character instead of picking
-local DELETE_WALK_SECONDS = 1.5	-- The character runs out before the delete is sent
-local NAMEPLATE_PADDING = 24		-- UI units kept free beside the widest line when plates make way
-local NAMEPLATE_HEIGHT = 172		-- CharNameplateTemplate's height: bottom to the top of the name
-local NAMEPLATE_ZONE_LINE = 48		-- Height of the zone line at the bottom, empty unless selected
+local CARD_DRAG_THRESHOLD = 16			-- UI units the cursor moves before a card press becomes a drag
+local HALL_DRAG_THRESHOLD = 6
 
--- Roster list (CharSelect.xml): a fixed pool of rows (CharRosterRow1..N) showing a window of the
--- character order, like the realm list (RealmList.lua).
-local VISIBLE_ROWS = (GlueUITheme and GlueUITheme.RosterVisibleRows) or 10
-local staticFrontEnd = GlueUsesStaticFrontEnd()
-local ROSTER_PANEL_CHROME_HEIGHT = 460
-local ROSTER_DIVIDER_GAP = 80		-- UI units above the first character not on the plaza (divider and label)
-local ROSTER_AUTOSCROLL_SECONDS = 0.18	-- One row per step while a drag is held past the top or bottom row
-local SEPARATOR_COLOR = "598C6234"
-local NO_SEPARATOR = "00000000"
+local KEY_LEFT = 0x25
+local KEY_RIGHT = 0x27
+local KEY_DELETE = 0x2E
 
--- Roster row children (CharRosterRowTemplate in CharSelect.xml).
-local ROW_SUBTEXT = 0
-local ROW_PLAZA_MARK = 1
-local ROW_DIVIDER = 2
-local ROW_DIVIDER_LABEL = 3
+local HEADER_TOP = 96
 
--- Nameplate text colours: ivory at rest, brighter ivory while hovered, soft steel blue for the
--- selected character (name, level, underline; the zone a slightly dimmer blue).
-local NAME_COLOR = "FFF3EEE2"
-local NAME_COLOR_HOVERED = "FFFFFDF6"
-local NAME_COLOR_SELECTED = "FFFFC266"
-local LEVEL_COLOR = "FFE0E0E0"
-local LEVEL_COLOR_HOVERED = "FFFFFFFF"
-local LEVEL_COLOR_SELECTED = "FFFFC266"
-local ZONE_COLOR_SELECTED = "FFE0A458"
+local CLASS_GLYPHS = {
+	[0] = "Interface/GameUI/Themes/Wayfinder/Textures/Mage.htex",
+	[1] = "Interface/GameUI/Themes/Wayfinder/Textures/Warrior.htex",
+	[2] = "Interface/GameUI/Themes/Wayfinder/Textures/Cleric.htex",
+	[3] = "Interface/GameUI/Themes/Wayfinder/Textures/Acolyte.htex",
+	[4] = "Interface/GameUI/Themes/Wayfinder/Textures/Scout.htex",
+}
+local NEW_CARD_GLYPH = "Interface/GlueUI/Art/Plus.htex"
+local GLYPH_COLOR = "FFD9CDB4"
+local GLYPH_COLOR_SELECTED = "FFFFE2A8"
+local GLYPH_COLOR_NEW = "FF8F969B"
 
--- Nameplate fonts: at rest (GlueTemplates.xml), and with a deeper shadow while hovered or
--- selected (CharSelect.xml); the selected name is also larger.
-local NAME_FONT = "DefaultHeader"
-local NAME_FONT_HOVERED = "CharNameplateNameHovered"
-local NAME_FONT_SELECTED = "CharNameplateNameSelected"
-local SMALL_FONT = "DefaultSmall"
-local SMALL_FONT_HOVERED = "CharNameplateSmallHovered"
-
--- Nameplate children (CharNameplateTemplate in CharSelect.xml).
-local PLATE_ZONE = 0
-local PLATE_LEVEL = 1
-local PLATE_NAME = 2
-local PLATE_SELECTED_MARK = 3
+-- Card children (CharCardTemplate).
+local CARD_GLYPH = 0
+local CARD_NAME = 1
+local CARD_INFO = 2
 
 -- Order index of the selected character, or -1.
 local selectedIndex = -1
@@ -65,50 +51,24 @@ local selectedGuid = nil
 -- Set once world entry was requested, so it is not requested twice.
 local enteringWorld = false
 
--- Whether the chrome (buttons, roster, nameplates, markers) is shown. Hidden while flying.
-local chromeVisible = false
+-- First slot shown by CharCard1 (slots: one per character, then the "new character" card).
+local pageOffset = 0
 
--- "realmlist" while flying out to show the realm list at the gate.
-local afterFlight = nil
+-- Slot each card shows, or -1 when hidden.
+local cardSlot = {}
 
--- { guid, remaining } while a deleted character runs out.
-local pendingDelete = nil
+-- Current lift of each card and whether the cursor is over it.
+local cardLift = {}
+local cardHovered = {}
 
--- { x, y, rotating } while the left button is held on the plaza (empty space). A press that moves
--- less than PLAZA_DRAG_THRESHOLD is a click and picks the character under the cursor; beyond it,
--- the drag turns the selected character and never selects.
-local plazaPress = nil
+-- { slot, startX, moved } while a character card is pressed.
+local cardPress = nil
 
--- Order index of the plaza character under the cursor, or -1.
-local hoveredIndex = -1
+-- { x, rotating } while the left button is held on the hall (empty space).
+local hallPress = nil
 
--- What the hover was last evaluated for: cursor position and whether the plaza had the cursor.
-local hoverCursorX = nil
-local hoverCursorY = nil
-local hoverOverPlaza = false
-
--- Forces the next hover evaluation (the roster or selection changed under a still cursor).
-local hoverDirty = true
-
--- Characters scrolled past the top of the roster: row i shows order index scrollOffset + i - 1.
-local scrollOffset = 0
-
--- Set while the Lua moves the roster scroll bar, so its value handler does not scroll back.
-local updatingScroll = false
-
--- { index, startY, moved, edge } while a roster row is pressed. index is the dragged character's
--- position in the order (1-based); edge is -1 / 1 while the cursor is above / below the rows, which
--- auto-scrolls the list (CharSelect_OnUpdate), and 0 otherwise.
-local rosterDrag = nil
-
--- Time since the last auto-scroll step of a drag.
-local autoScrollElapsed = 0
-
--- Order index shown by each nameplate, or -1.
-local nameplateIndex = {}
-
--- Width in UI units each nameplate's lines need, measured when their text or style changes.
-local nameplateWidth = {}
+-- Set when a card drag ends, so the click that the release produces does not select.
+local suppressClick = false
 
 
 local function FindCharacterIndex(guid)
@@ -135,106 +95,126 @@ local function LevelClassText(character, index)
 	return text
 end
 
-local function CursorScreenY()
-	return GetCursorPosition().y * GetUIScale().y
+local function NumSlots()
+	return GetNumCharacters() + 1
 end
 
--- Styles the nameplates for the selection and the hover. Text only, no card: the selected
--- character's plate has a larger name over a short underline and a level line, all soft steel
--- blue, plus the zone line; a hovered one brightens its name and level and deepens their shadow.
-local function RefreshNameplateStyles()
-	for plate = 1, NAMEPLATE_COUNT do
-		local frame = _G["CharNameplate" .. plate]
-		local index = nameplateIndex[plate] or -1
-		local selected = index >= 0 and index == selectedIndex
-		local hovered = index >= 0 and index == hoveredIndex
+local function MaxPageOffset()
+	return math.max(0, NumSlots() - CARD_SLOTS)
+end
 
-		local nameFrame = frame:GetChild(PLATE_NAME)
-		local levelFrame = frame:GetChild(PLATE_LEVEL)
-		local zoneFrame = frame:GetChild(PLATE_ZONE)
+local function Card(i)
+	return _G["CharCard" .. i]
+end
 
-		if selected then
-			nameFrame:SetProperty("Font", NAME_FONT_SELECTED)
-			nameFrame:SetProperty("TextColor", NAME_COLOR_SELECTED)
-			levelFrame:SetProperty("Font", hovered and SMALL_FONT_HOVERED or SMALL_FONT)
-			levelFrame:SetProperty("TextColor", LEVEL_COLOR_SELECTED)
-		elseif hovered then
-			nameFrame:SetProperty("Font", NAME_FONT_HOVERED)
-			nameFrame:SetProperty("TextColor", NAME_COLOR_HOVERED)
-			levelFrame:SetProperty("Font", SMALL_FONT_HOVERED)
-			levelFrame:SetProperty("TextColor", LEVEL_COLOR_HOVERED)
-		else
-			nameFrame:SetProperty("Font", NAME_FONT)
-			nameFrame:SetProperty("TextColor", NAME_COLOR)
-			levelFrame:SetProperty("Font", SMALL_FONT)
-			levelFrame:SetProperty("TextColor", LEVEL_COLOR)
-		end
-		zoneFrame:SetProperty("TextColor", ZONE_COLOR_SELECTED)
-
-		frame:GetChild(PLATE_SELECTED_MARK):SetProperty("Visible", selected and "true" or "false")
-
-		-- What the plate needs beside other plates (see CharSelect_OnUpdate).
-		nameplateWidth[plate] = math.max(nameFrame:GetTextWidth(), levelFrame:GetTextWidth(), zoneFrame:GetTextWidth()) + 2 * NAMEPLATE_PADDING
+-- Scrolls the strip just far enough to show a slot.
+local function EnsureSlotVisible(slot)
+	if slot < pageOffset then
+		pageOffset = slot
+	elseif slot >= pageOffset + CARD_SLOTS then
+		pageOffset = slot - CARD_SLOTS + 1
 	end
+	pageOffset = math.max(0, math.min(pageOffset, MaxPageOffset()))
 end
 
--- Sets the plaza character under the cursor (-1 for none): it reacts on the plaza and its
--- nameplate brightens.
-local function SetHoveredCharacter(index, force)
-	if index == hoveredIndex and not force then
+local function TargetLift(i)
+	local slot = cardSlot[i] or -1
+	if slot >= 0 and slot == selectedIndex then
+		return CARD_LIFT_SELECTED
+	end
+	if cardHovered[i] then
+		return CARD_LIFT_HOVERED
+	end
+	return 0
+end
+
+-- Eases a card to its lift (selected, hovered or resting).
+local function AnimateLift(i, duration)
+	local card = Card(i)
+	local from = cardLift[i] or 0
+	local to = TargetLift(i)
+	if from == to and not GlueMotion.IsRunning(card:GetName() .. ":lift") then
 		return
 	end
-
-	hoveredIndex = index
-	SetPlazaHoverCharacter(index)
-	RefreshNameplateStyles()
+	GlueMotion.Tween(card:GetName() .. ":lift", {
+		from = from, to = to, duration = duration or 0.3, ease = GlueEase.OutCubic,
+		apply = function(v)
+			cardLift[i] = v
+			card:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.BOTTOM, nil, -v)
+		end,
+	})
 end
 
--- Whether the plaza takes mouse input: the character screen is showing with nothing over it.
-local function PlazaInputAllowed()
-	return chromeVisible and not IsGlueFlightActive()
-		and not DeleteConfirmation:IsVisible() and not CharCreate:IsVisible() and not GlueDialog:IsVisible()
-end
-
--- Re-picks the character under the cursor when the cursor moved, or when the plaza gained or
--- lost the cursor (a frame opened over it, a flight started). Not during a turning drag.
-local function UpdateHover()
-	if plazaPress and plazaPress.rotating then
-		return
-	end
-
-	local overPlaza = PlazaInputAllowed() and CharSelect:IsMouseClickTarget()
-	local cursor = GetCursorPosition()
-	if not hoverDirty and overPlaza == hoverOverPlaza and cursor.x == hoverCursorX and cursor.y == hoverCursorY then
-		return
-	end
-
-	local force = hoverDirty
-	hoverDirty = false
-	hoverOverPlaza = overPlaza
-	hoverCursorX = cursor.x
-	hoverCursorY = cursor.y
-
-	SetHoveredCharacter(overPlaza and GetPlazaCharacterAtCursor() or -1, force)
-end
-
-local function SetChromeVisible(visible)
-	chromeVisible = visible
-	CharSelectChrome:SetProperty("Visible", visible and "true" or "false")
-	CharSelectNameplates:SetProperty("Visible", visible and not staticFrontEnd and "true" or "false")
-	if not visible then
-		plazaPress = nil
-		SetHoveredCharacter(-1)
-	end
-	hoverDirty = true
-end
-
--- Enables the buttons for the current selection and character count.
-local function UpdateButtons()
+-- Fills the cards from the current order and page.
+local function RefreshCards()
 	local numCharacters = GetNumCharacters()
+	pageOffset = math.max(0, math.min(pageOffset, MaxPageOffset()))
 
-	CharRosterButton:SetText(string.format(Localize("ALL_CHARACTERS"), numCharacters))
+	local shown = math.min(CARD_SLOTS, NumSlots() - pageOffset)
+	CharCardStrip:SetWidth(shown * CARD_WIDTH + (shown - 1) * CARD_GAP)
 
+	for i = 1, CARD_SLOTS do
+		local card = Card(i)
+		local slot = pageOffset + i - 1
+		if i <= shown then
+			cardSlot[i] = slot
+			card:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, (i - 1) * (CARD_WIDTH + CARD_GAP))
+			local glyph = card:GetChild(CARD_GLYPH)
+			if slot < numCharacters then
+				local character = GetCharacterInfo(slot)
+				card:GetChild(CARD_NAME):SetProperty("Font", "DefaultHeader")
+				card:GetChild(CARD_NAME):SetText(character.name)
+				card:GetChild(CARD_NAME):SetProperty("TextColor", slot == selectedIndex and "FFFFF0D0" or "FFEDE3CF")
+				card:GetChild(CARD_INFO):SetText(LevelClassText(character, slot))
+				glyph:SetProperty("Icon", CLASS_GLYPHS[character.classId] or "")
+				glyph:SetProperty("GlyphColor", slot == selectedIndex and GLYPH_COLOR_SELECTED or GLYPH_COLOR)
+				card:SetChecked(slot == selectedIndex)
+			else
+				card:GetChild(CARD_NAME):SetProperty("Font", "GlueCaptionFont")
+				card:GetChild(CARD_NAME):SetText(Localize("NEW_CHARACTER"))
+				card:GetChild(CARD_NAME):SetProperty("TextColor", "FFB8B1A3")
+				card:GetChild(CARD_INFO):SetText("")
+				glyph:SetProperty("Icon", NEW_CARD_GLYPH)
+				glyph:SetProperty("GlyphColor", GLYPH_COLOR_NEW)
+				card:SetChecked(false)
+			end
+			card:Show()
+			AnimateLift(i)
+		else
+			cardSlot[i] = -1
+			card:SetChecked(false)
+			card:Hide()
+		end
+	end
+
+	CharCardPrevButton:SetProperty("Visible", pageOffset > 0 and "true" or "false")
+	CharCardNextButton:SetProperty("Visible", pageOffset < MaxPageOffset() and "true" or "false")
+	CharRosterHint:SetProperty("Visible", numCharacters > 1 and "true" or "false")
+end
+
+-- Header over the character: realm caption, name, level/class and location.
+local function RefreshHeader(animate)
+	local character = selectedIndex >= 0 and GetCharacterInfo(selectedIndex) or nil
+	if character then
+		CharSelectSpotlight:SetText(character.name)
+		local details = LevelClassText(character, selectedIndex)
+		local zone = GetCharacterZoneName(selectedIndex)
+		if zone and zone ~= "" then
+			details = details .. "   ·   " .. zone
+		end
+		CharSelectDetails:SetText(details)
+	else
+		CharSelectSpotlight:SetText(Localize("CREATE_CHARACTER"))
+		CharSelectDetails:SetText(Localize("NO_CHARACTERS_HINT"))
+	end
+
+	if animate then
+		GlueMotion.Enter(CharSelectHeader, AnchorPoint.TOP, AnchorPoint.TOP, nil, HEADER_TOP, 24, 0, 0.45)
+	end
+end
+
+-- Enables the buttons for the current selection.
+local function UpdateButtons()
 	if selectedIndex >= 0 and GetCharacterInfo(selectedIndex) then
 		-- Allow deletion regardless of disabled status, but block world entry for disabled characters
 		CharDeleteButton:Enable()
@@ -249,460 +229,231 @@ local function UpdateButtons()
 	end
 end
 
--- Fills the nameplate texts. Plates 1-5 show the plaza characters, plate 6 a selected visitor.
-local function RefreshNameplates()
-	local numCharacters = GetNumCharacters()
-
-	for plate = 1, NAMEPLATE_COUNT do
-		local index = -1
-		if plate <= PLAZA_SPOTS then
-			if plate - 1 < numCharacters then
-				index = plate - 1
-			end
-		elseif selectedIndex >= PLAZA_SPOTS then
-			index = selectedIndex
-		end
-
-		local frame = _G["CharNameplate" .. plate]
-		local character = index >= 0 and GetCharacterInfo(index) or nil
-		if character then
-			nameplateIndex[plate] = index
-			frame:GetChild(PLATE_NAME):SetText(character.name)
-			frame:GetChild(PLATE_LEVEL):SetText(LevelClassText(character, index))
-			frame:GetChild(PLATE_ZONE):SetText(index == selectedIndex and GetCharacterZoneName(index) or "")
-		else
-			nameplateIndex[plate] = -1
-			frame:Hide()
-		end
-	end
-
-	-- Order indices may now name other characters: pick the hovered one again.
-	hoverDirty = true
-	RefreshNameplateStyles()
-end
-
-local function RosterRow(rowIndex)
-	return _G["CharRosterRow" .. rowIndex]
-end
-
-local function MaxScrollOffset()
-	return math.max(0, GetNumCharacters() - VISIBLE_ROWS)
-end
-
--- Scrolls just far enough to bring the given order position (1-based) into view.
-local function EnsureVisible(index)
-	if index == nil then
-		return
-	end
-	if index <= scrollOffset then
-		scrollOffset = index - 1
-	elseif index > scrollOffset + VISIBLE_ROWS then
-		scrollOffset = index - VISIBLE_ROWS
-	end
-	scrollOffset = math.max(0, math.min(scrollOffset, MaxScrollOffset()))
-end
-
--- Fills the roster rows from the current order and scroll offset.
-function CharRoster_Refresh()
-	local numCharacters = GetNumCharacters()
-
-	CharCountLabel:SetText(string.format(Localize("CHAR_COUNT_FORMAT"), numCharacters))
-	if staticFrontEnd then
-		local rows = math.max(4, math.min(VISIBLE_ROWS, numCharacters))
-		CharRosterPanel:SetHeight(ROSTER_PANEL_CHROME_HEIGHT + rows * CharRosterRow1:GetHeight())
-	end
-
-	local hasScroll = numCharacters > VISIBLE_ROWS
-	scrollOffset = math.max(0, math.min(scrollOffset, MaxScrollOffset()))
-
-	-- Make room for the scroll bar only when it is needed (96 wide, 8 in from the well, 8 clear).
-	CharRosterContent:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, hasScroll and -112 or -8)
-	CharRosterScrollBar:SetProperty("Visible", hasScroll and "true" or "false")
-	updatingScroll = true
-	CharRosterScrollBar:SetMinimum(0)
-	CharRosterScrollBar:SetMaximum(MaxScrollOffset())
-	CharRosterScrollBar:SetValue(scrollOffset)
-	updatingScroll = false
-
-	local onThePlaza = Localize("ON_THE_PLAZA")
-	for rowIndex = 1, VISIBLE_ROWS do
-		local row = RosterRow(rowIndex)
-		local index = scrollOffset + rowIndex - 1
-		local character = index < numCharacters and GetCharacterInfo(index) or nil
-
-		-- The divider before the first character who is not on the plaza belongs to that character's
-		-- row: it sits in a gap opened above the row, wherever the row is in the window.
-		local dividerAbove = not staticFrontEnd and character ~= nil and index == PLAZA_SPOTS
-		if rowIndex == 1 then
-			row:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, dividerAbove and ROSTER_DIVIDER_GAP or 0)
-		else
-			row:SetAnchor(AnchorPoint.TOP, AnchorPoint.BOTTOM, RosterRow(rowIndex - 1), dividerAbove and ROSTER_DIVIDER_GAP or 0)
-		end
-		row:GetChild(ROW_DIVIDER):SetProperty("Visible", dividerAbove and "true" or "false")
-		row:GetChild(ROW_DIVIDER_LABEL):SetProperty("Visible", dividerAbove and "true" or "false")
-
-		if character then
-			row:SetText(character.name)
-			row:GetChild(ROW_SUBTEXT):SetText(LevelClassText(character, index))
-			local location = staticFrontEnd and GetCharacterZoneName(index) or (index < PLAZA_SPOTS and onThePlaza or "")
-			row:GetChild(ROW_PLAZA_MARK):SetText(location or "")
-			-- No separator under the last character, nor above the plaza divider.
-			local lastOfGroup = index == numCharacters - 1 or (not staticFrontEnd and index == PLAZA_SPOTS - 1)
-			row:SetProperty("SeparatorColor", lastOfGroup and NO_SEPARATOR or SEPARATOR_COLOR)
-			row:SetChecked(index == selectedIndex)
-			row:Show()
-		else
-			row:SetChecked(false)
-			row:Hide()
-		end
-	end
-end
-
--- Moves the dragged character to an order position (1-based). Live: characters dragged into or out
--- of the top five run in or out right away.
-local function RosterDragTo(target)
-	if target ~= rosterDrag.index then
-		MoveCharacterInOrder(rosterDrag.index - 1, target - 1)
-		rosterDrag.index = target
-		selectedIndex = GetSelectedCharacterIndex()
-		if not staticFrontEnd then RefreshNameplates() end
-	end
-	CharRoster_Refresh()
-end
-
--- The row under the cursor during a drag, clamped to the visible characters, and whether the
--- cursor is above the list (-1), below the last row (1) or on the rows (0).
-local function RosterRowAtCursor()
-	local visible = math.min(VISIBLE_ROWS, GetNumCharacters() - scrollOffset)
-	if visible <= 0 then
-		return nil, 0
-	end
-
-	local cursorY = CursorScreenY()
-	if cursorY < CharRosterContent:GetRect().top then
-		return 1, -1
-	end
-	for rowIndex = 1, visible do
-		if cursorY < RosterRow(rowIndex):GetRect().bottom then
-			return rowIndex, 0
-		end
-	end
-	return visible, 1
-end
-
--- One auto-scroll step of a drag held past the top or bottom row: scroll by one row and keep the
--- dragged character on the edge row.
-local function RosterAutoScroll(elapsed)
-	if not rosterDrag or not rosterDrag.moved or rosterDrag.edge == 0 then
-		autoScrollElapsed = 0
-		return
-	end
-
-	autoScrollElapsed = autoScrollElapsed + elapsed
-	if autoScrollElapsed < ROSTER_AUTOSCROLL_SECONDS then
-		return
-	end
-	autoScrollElapsed = autoScrollElapsed - ROSTER_AUTOSCROLL_SECONDS
-
-	local offset = math.max(0, math.min(scrollOffset + rosterDrag.edge, MaxScrollOffset()))
-	if offset == scrollOffset then
-		return
-	end
-	scrollOffset = offset
-
-	if rosterDrag.edge < 0 then
-		RosterDragTo(scrollOffset + 1)
-	else
-		RosterDragTo(math.min(scrollOffset + VISIBLE_ROWS, GetNumCharacters()))
-	end
-end
-
-local function Roster_OnMouseWheel(frame, delta)
-	if GetNumCharacters() <= VISIBLE_ROWS then
-		return
-	end
-	scrollOffset = scrollOffset - delta
-	CharRoster_Refresh()
-end
-
--- Wires a pool row's handlers. The row's index is captured in its handlers: fields set on a frame
--- from Lua do not survive between handler calls.
-local function SetupRosterRow(rowIndex)
-	local row = RosterRow(rowIndex)
-
-	row:SetClickedHandler(function()
-		-- The release that ends a drag is not a click.
-		if rosterDrag and rosterDrag.moved then
-			return
-		end
-		CharSelect_SelectIndex(scrollOffset + rowIndex - 1)
-	end)
-
-	row:SetOnMouseDownHandler(function(frame, button)
-		if button == LEFT_MOUSE_BUTTON and scrollOffset + rowIndex <= GetNumCharacters() then
-			rosterDrag = { index = scrollOffset + rowIndex, startY = GetCursorPosition().y, moved = false, edge = 0 }
-			autoScrollElapsed = 0
-		end
-	end)
-
-	-- Called for the pressed row and also for the row under the cursor; the handling depends only on
-	-- the cursor position, so running it twice for one move changes nothing.
-	row:SetOnMouseMoveHandler(function(frame, x, y, deltaX, deltaY)
-		if not rosterDrag then
-			return
-		end
-
-		if not rosterDrag.moved then
-			if math.abs(GetCursorPosition().y - rosterDrag.startY) < ROW_DRAG_THRESHOLD then
-				return
-			end
-			rosterDrag.moved = true
-		end
-
-		local targetRow, edge = RosterRowAtCursor()
-		if not targetRow then
-			return
-		end
-		rosterDrag.edge = edge
-		if edge == 0 then
-			autoScrollElapsed = 0
-		end
-		if scrollOffset + targetRow ~= rosterDrag.index then
-			RosterDragTo(scrollOffset + targetRow)
-		end
-	end)
-
-	row:SetOnMouseUpHandler(function(frame, button)
-		if button == LEFT_MOUSE_BUTTON then
-			if staticFrontEnd and rosterDrag and rosterDrag.moved then
-				SaveCharacterOrder()
-			end
-			rosterDrag = nil
-			-- A checkable button toggles itself on release: put the selection marks back.
-			CharRoster_Refresh()
-		end
-	end)
-
-	row:SetOnMouseWheelHandler(Roster_OnMouseWheel)
-end
-
 -- Selects a character by order index (-1 for none) and updates everything showing it.
-function CharSelect_SelectIndex(index)
+function CharSelect_SelectIndex(index, animate)
 	local character = index >= 0 and GetCharacterInfo(index) or nil
 	if not character then
 		index = -1
 	end
 
+	local changed = index ~= selectedIndex
 	selectedIndex = index
 	selectedGuid = character and character.guid or nil
 
 	SelectCharacter(index)
+	SetCharacterPreview(CharSelectPreview, index)
 	UpdateButtons()
 	if index >= 0 then
-		EnsureVisible(index + 1)
+		EnsureSlotVisible(index)
 	end
-	CharRoster_Refresh()
-	if staticFrontEnd then
-		CharSelectSpotlight:SetText(character and character.name or Localize("CREATE_CHARACTER"))
-		CharSelectSpotlight:Show()
-		SetCharacterPreview(CharSelectPreview, index)
-	else
-		RefreshNameplates()
-	end
+	RefreshCards()
+	RefreshHeader(changed and animate ~= false)
 end
 
-function CharSelect_ToggleRoster()
-	if CharRosterPanel:IsVisible() then
-		CharSelect_CloseRoster()
+function CharSelect_Page(step)
+	pageOffset = math.max(0, math.min(pageOffset + step, MaxPageOffset()))
+	RefreshCards()
+end
+
+-- The card's slot under the cursor during a drag, clamped to the character cards shown.
+local function CardSlotAtCursor()
+	local cursorX = GetCursorPosition().x * GetUIScale().x
+	local lastCharacterCard = nil
+	for i = 1, CARD_SLOTS do
+		local slot = cardSlot[i] or -1
+		if slot >= 0 and slot < GetNumCharacters() then
+			lastCharacterCard = i
+			if cursorX < Card(i):GetRect().right then
+				return slot
+			end
+		end
+	end
+	return lastCharacterCard and cardSlot[lastCharacterCard] or nil
+end
+
+local function Card_OnClicked(i)
+	-- The release that ends a drag is not a click.
+	if suppressClick then
+		suppressClick = false
 		return
 	end
 
-	if selectedIndex >= 0 then
-		EnsureVisible(selectedIndex + 1)
+	local slot = cardSlot[i] or -1
+	if slot < 0 then
+		return
 	end
-	CharRoster_Refresh()
-	CharRosterPanel:Show()
-	CharSelect_UpdateActionLayout()
+	if slot >= GetNumCharacters() then
+		RefreshCards()
+		CharSelect_CreateCharacter()
+		return
+	end
+	CharSelect_SelectIndex(slot)
 end
 
--- Closes the roster panel and sends the order if it changed (once, not per drop).
-function CharSelect_CloseRoster()
-	rosterDrag = nil
-	if CharRosterPanel:IsVisible() then
-		if not staticFrontEnd then CharRosterPanel:Hide() end
-		SaveCharacterOrder()
-	end
-	CharSelect_UpdateActionLayout()
+local function SetupCard(i)
+	local card = Card(i)
+	cardLift[i] = 0
+	cardHovered[i] = false
+
+	card:SetClickedHandler(function() Card_OnClicked(i) end)
+	card:SetOnEnterHandler(function()
+		cardHovered[i] = true
+		AnimateLift(i, 0.18)
+	end)
+	card:SetOnLeaveHandler(function()
+		cardHovered[i] = false
+		AnimateLift(i, 0.25)
+	end)
+
+	card:SetOnMouseDownHandler(function(frame, button)
+		local slot = cardSlot[i] or -1
+		suppressClick = false
+		if button == LEFT_MOUSE_BUTTON and slot >= 0 and slot < GetNumCharacters() then
+			cardPress = { slot = slot, startX = GetCursorPosition().x, moved = false }
+		end
+	end)
+
+	-- Called for the pressed card and for the card under the cursor; the handling depends only on the
+	-- cursor position, so running it twice for one move changes nothing.
+	card:SetOnMouseMoveHandler(function()
+		if not cardPress then
+			return
+		end
+		if not cardPress.moved then
+			if math.abs(GetCursorPosition().x - cardPress.startX) < CARD_DRAG_THRESHOLD then
+				return
+			end
+			cardPress.moved = true
+		end
+
+		local target = CardSlotAtCursor()
+		if target and target ~= cardPress.slot then
+			MoveCharacterInOrder(cardPress.slot, target)
+			cardPress.slot = target
+			selectedIndex = GetSelectedCharacterIndex()
+			RefreshCards()
+		end
+	end)
+
+	card:SetOnMouseUpHandler(function(frame, button)
+		if button == LEFT_MOUSE_BUTTON then
+			if cardPress and cardPress.moved then
+				SaveCharacterOrder()
+				suppressClick = true
+			end
+			cardPress = nil
+			-- A checkable button toggles itself on release: put the selection marks back.
+			RefreshCards()
+		end
+	end)
 end
 
--- Only clicks no frame took reach CharSelect (it covers the screen behind the chrome), so a press
--- here is a press on the plaza itself.
+-- Only presses no frame took reach CharSelect (it covers the screen behind the chrome): a drag
+-- there turns the character.
 local function CharSelect_OnMouseDown(self, button)
-	-- During a flight the click is left to the client, which skips the flight.
-	if button ~= LEFT_MOUSE_BUTTON or not PlazaInputAllowed() then
+	if button ~= LEFT_MOUSE_BUTTON or GlueDialog:IsVisible() then
 		return false
 	end
-
-	local cursor = GetCursorPosition()
-	plazaPress = { x = cursor.x, y = cursor.y, rotating = false }
+	hallPress = { x = GetCursorPosition().x, rotating = false }
 	return true
 end
 
 local function CharSelect_OnMouseUp(self, button)
-	if button ~= LEFT_MOUSE_BUTTON or not plazaPress then
-		return
-	end
-
-	local press = plazaPress
-	plazaPress = nil
-	hoverDirty = true
-
-	-- A drag that turned the character is not a click, and neither is a release over the chrome
-	-- or a frame that opened in the meantime.
-	if staticFrontEnd or press.rotating or not PlazaInputAllowed() or not CharSelect:IsMouseClickTarget() then
-		return
-	end
-
-	local index = GetPlazaCharacterAtCursor()
-	if index >= 0 and index ~= selectedIndex then
-		CharSelect_SelectIndex(index)
+	if button == LEFT_MOUSE_BUTTON then
+		hallPress = nil
 	end
 end
 
--- Also called while the cursor is over the chrome (moves bubble up to CharSelect); only a press
--- that started on the plaza acts on it.
 local function CharSelect_OnMouseMove(self, x, y, deltaX, deltaY)
-	if not plazaPress then
+	if not hallPress then
 		return
 	end
-
-	if not plazaPress.rotating then
-		local cursor = GetCursorPosition()
-		if math.abs(cursor.x - plazaPress.x) < PLAZA_DRAG_THRESHOLD and math.abs(cursor.y - plazaPress.y) < PLAZA_DRAG_THRESHOLD then
+	if not hallPress.rotating then
+		if math.abs(GetCursorPosition().x - hallPress.x) < HALL_DRAG_THRESHOLD then
 			return
 		end
-		plazaPress.rotating = true
+		hallPress.rotating = true
 	end
-
 	RotateCharacter(deltaX * ROTATE_DEGREES_PER_PIXEL)
 end
 
-local function CharSelect_OnFlightFinished(self, destination)
-	if destination == "gate" then
-		if afterFlight == "realmlist" then
-			afterFlight = nil
-			RealmList_Show(true)
-		end
+local function CharSelect_OnKeyDown(frame, key, isRepeat)
+	if not CharSelect:IsVisible() or GlueDialog:IsVisible() or CharCreate:IsVisible() or enteringWorld then
 		return
 	end
 
-	if CharSelect:IsVisible() and not enteringWorld and not pendingDelete then
-		SetChromeVisible(true)
+	local numCharacters = GetNumCharacters()
+	if numCharacters == 0 then
+		return
+	end
+	if key == KEY_LEFT then
+		CharSelect_SelectIndex(math.max(0, selectedIndex - 1))
+	elseif key == KEY_RIGHT then
+		CharSelect_SelectIndex(math.min(numCharacters - 1, selectedIndex + 1))
+	elseif key == KEY_DELETE and not isRepeat and selectedIndex >= 0 then
+		CharSelect_DeleteCharacter()
 	end
 end
 
-local function CharSelect_OnPushInFinished(self)
-	if enteringWorld then
-		EnterWorld()
-	end
-end
-
--- A character stopped running: it may now be under a cursor that did not move.
-local function CharSelect_OnPlazaArrival(self)
-	hoverDirty = true
-end
-
--- Leaving the character screen (or its parent hiding) drops the hover and any plaza press, so the
--- character does not keep reacting and a later release does not pick or turn anyone.
+-- Leaving the character screen (or its parent hiding) drops the preview and any press.
 function CharSelect_OnHide(self)
-	if staticFrontEnd then
-		SetCharacterPreview(CharSelectPreview, -1)
-	end
-	plazaPress = nil
-	SetHoveredCharacter(-1)
-	hoverDirty = true
+	SetCharacterPreview(CharSelectPreview, -1)
+	hallPress = nil
+	cardPress = nil
 end
 
 function CharSelect_OnLoad(self)
 	CharSelect:SetOnMouseDownHandler(CharSelect_OnMouseDown)
 	CharSelect:SetOnMouseUpHandler(CharSelect_OnMouseUp)
 	CharSelect:SetOnMouseMoveHandler(CharSelect_OnMouseMove)
+	CharSelect:RegisterEvent("GLUE_KEY_DOWN", CharSelect_OnKeyDown)
 
-	CharSelect:RegisterEvent("GLUE_FLIGHT_FINISHED", CharSelect_OnFlightFinished)
-	CharSelect:RegisterEvent("GLUE_PUSHIN_FINISHED", CharSelect_OnPushInFinished)
-	CharSelect:RegisterEvent("GLUE_PLAZA_ARRIVAL", CharSelect_OnPlazaArrival)
-
-	for plate = 1, NAMEPLATE_COUNT do
-		nameplateIndex[plate] = -1
-		nameplateWidth[plate] = 0
+	local function onMouseWheel(frame, delta)
+		CharSelect_Page(-delta)
+	end
+	for i = 1, CARD_SLOTS do
+		SetupCard(i)
+		Card(i):SetOnMouseWheelHandler(onMouseWheel)
 	end
 
-	for rowIndex = 1, VISIBLE_ROWS do
-		SetupRosterRow(rowIndex)
-	end
-	CharRosterList:SetOnMouseWheelHandler(Roster_OnMouseWheel)
-
-	CharRosterScrollBar:SetStep(1)
-	CharRosterScrollBar:SetOnValueChangedHandler(function(bar, value)
-		if updatingScroll then
-			return
-		end
-		scrollOffset = math.floor(value + 0.5)
-		CharRoster_Refresh()
-	end)
-end
-
--- Places a frame's bottom centre at a point given in UI units.
-local function PlaceAbove(frame, x, y)
-	frame:ClearAnchors()
-	frame:SetAnchor(AnchorPoint.H_CENTER, AnchorPoint.LEFT, nil, x)
-	frame:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.TOP, nil, y)
+	GlueLink_Fit(ChangeRealmButton)
+	GlueLink_Fit(CharSelectQuitButton)
+	GlueLink_Fit(CharDeleteButton)
 end
 
 function CharSelect_OnUpdate(self, elapsed)
-	if pendingDelete then
-		pendingDelete.remaining = pendingDelete.remaining - elapsed
-		if pendingDelete.remaining <= 0 then
-			local index = FindCharacterIndex(pendingDelete.guid)
-			pendingDelete = nil
-			local character = index and GetCharacterInfo(index) or nil
-			if character then
-				realmConnector:DeleteCharacter(character)
-				GlueDialog_Show("DELETING_CHARACTER")
-			else
-				SetChromeVisible(true)
-			end
+end
+
+-- Fades in the screen: header, then the cards rising one after another, then the actions.
+local function PlayEntrance()
+	CharSelectChrome:SetOpacity(1)
+	CharSelectChrome:Show()
+	GlueMotion.Enter(CharSelectHeader, AnchorPoint.TOP, AnchorPoint.TOP, nil, HEADER_TOP, 24, 0.15, 0.6)
+
+	for i = 1, CARD_SLOTS do
+		local card = Card(i)
+		if card:IsVisible() then
+			local delay = 0.2 + (i - 1) * 0.06
+			local to = TargetLift(i)
+			card:SetOpacity(0)
+			GlueMotion.Fade(card, 1, 0.35, delay)
+			GlueMotion.Tween(card:GetName() .. ":lift", {
+				from = -CARD_ENTER_DROP, to = to, duration = 0.6, delay = delay, ease = GlueEase.OutQuint,
+				apply = function(v)
+					cardLift[i] = v
+					card:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.BOTTOM, nil, -v)
+				end,
+			})
 		end
 	end
 
-	if not chromeVisible then
-		return
+	for index, frame in ipairs({ CharSelectEnterButton, ChangeRealmButton, CharSelectQuitButton, CharDeleteButton, CharRosterHint }) do
+		frame:SetOpacity(0)
+		GlueMotion.Fade(frame, 1, 0.4, 0.45 + index * 0.04)
 	end
 
-	RosterAutoScroll(elapsed)
-	if staticFrontEnd then return end
-	UpdateHover()
-
-	-- Nameplates follow the characters, including while they run. Plates that would overlap make
-	-- way (the farther character's moves up; the selected one keeps its place), eased by the client.
-	for plate = 1, NAMEPLATE_COUNT do
-		local index = nameplateIndex[plate]
-		local selected = index >= 0 and index == selectedIndex
-		SetPlazaNameplateBox(plate, index, nameplateWidth[plate] or 0, NAMEPLATE_HEIGHT, selected and 0 or NAMEPLATE_ZONE_LINE)
-	end
-	UpdatePlazaNameplates(elapsed)
-
-	for plate = 1, NAMEPLATE_COUNT do
-		local frame = _G["CharNameplate" .. plate]
-		local x, y, visible = GetPlazaNameplateLayout(plate)
-
-		if visible then
-			PlaceAbove(frame, x, y)
-			frame:Show()
-		else
-			frame:Hide()
-		end
-	end
+	CharSelectGlow:SetOpacity(0)
+	GlueMotion.Fade(CharSelectGlow, 1, 1.2, 0.2)
 end
 
 function CharList_Show()
@@ -710,16 +461,15 @@ function CharList_Show()
 	AccountLogin:Hide()
 	RealmListFrame:Hide()
 	CharCreate:Hide()
-	DeleteConfirmation:Hide()
 
 	enteringWorld = false
-	pendingDelete = nil
-	afterFlight = nil
-	rosterDrag = nil
-	plazaPress = nil
-	hoverDirty = true
-	CharRosterPanel:Hide()
-	CharSelect_UpdateActionLayout()
+	cardPress = nil
+	hallPress = nil
+
+	if GlueSceneFade:IsVisible() then
+		GlueMotion.Fade(GlueSceneFade, 0, 0.6)
+	end
+	GlueStage_Show("hall")
 
 	RealmNameLabel:SetText(realmConnector:GetRealmName())
 
@@ -728,52 +478,35 @@ function CharList_Show()
 	local index = FindCharacterIndex(selectedGuid) or GetInitialCharacterIndex()
 
 	CharSelect:Show()
-	if staticFrontEnd then
-		CharRosterPanel:Show()
-		CharSelect_UpdateActionLayout()
-	end
-	CharSelect_SelectIndex(index)
-
-	-- While the camera flies in, the chrome waits for GLUE_FLIGHT_FINISHED.
-	SetChromeVisible(not IsGlueFlightActive())
+	CharSelect_SelectIndex(index, false)
+	PlayEntrance()
 end
 
 function CharSelect_EnterWorld()
-	if enteringWorld or selectedIndex < 0 then
+	if enteringWorld or selectedIndex < 0 or not CharSelectEnterButton:IsEnabled(false) then
 		return
 	end
 
 	enteringWorld = true
-	CharSelect_CloseRoster()
 	SaveCharacterOrder()
 
 	-- The next visit to this realm opens on this character.
 	SetLastCharacter(selectedIndex)
 	RunConsoleCommand("saveconfig")
 
-	SetChromeVisible(false)
-	if staticFrontEnd or not GluePushIn() then
+	-- Fade to black, then go.
+	GlueMotion.Fade(CharSelectChrome, 0, 0.3)
+	GlueSceneFade:SetOpacity(0)
+	GlueMotion.Fade(GlueSceneFade, 1, 0.45, 0.1, function()
 		EnterWorld()
-	end
+	end, GlueEase.InCubic)
 end
 
 -- Fired by the client for the Enter key and the "enterworld" console command. Only acts while the
 -- character screen is the active screen and the selected character is allowed into the world, so
 -- it behaves exactly like clicking the enter button.
 function CharSelect_OnEnterWorldRequested()
-	if not CharSelect:IsVisible() or CharCreate:IsVisible() or DeleteConfirmation:IsVisible() then
-		return
-	end
-
-	if GlueDialog:IsVisible() then
-		return
-	end
-
-	if not chromeVisible or IsGlueFlightActive() then
-		return
-	end
-
-	if selectedIndex < 0 or not CharSelectEnterButton:IsEnabled(true) then
+	if not CharSelect:IsVisible() or CharCreate:IsVisible() or GlueDialog:IsVisible() then
 		return
 	end
 
@@ -786,56 +519,43 @@ function CharSelect_CreateCharacter()
 		return
 	end
 
-	CharSelect_CloseRoster()
-	CharCreate_Show()
+	SaveCharacterOrder()
+	GlueMotion.Fade(CharSelectChrome, 0, 0.2, 0, function()
+		CharCreate_Show()
+	end)
 end
 
 function CharSelect_DeleteCharacter()
-	DeleteConfirmation:Show()
+	local character = selectedIndex >= 0 and GetCharacterInfo(selectedIndex) or nil
+	if not character then
+		return
+	end
+	GlueDialog_Show("CONFIRM_DELETE_CHARACTER", string.format(Localize("CONFIRM_CHAR_DELETE_NAMED"), character.name))
 end
 
 function CharSelect_ChangeRealm()
-	CharSelect_CloseRoster()
-	SetChromeVisible(false)
-	CharSelect:Hide()
+	SaveCharacterOrder()
 	selectedGuid = nil
-
-	-- Fly back out through the gate; the realm list appears there.
-	if not staticFrontEnd and GlueFlyToGate() then
-		afterFlight = "realmlist"
-	else
+	GlueMotion.Fade(CharSelectChrome, 0, 0.2, 0, function()
+		CharSelect:Hide()
 		RealmList_Show(true)
-	end
+	end)
 end
 
 function CharSelect_ConfirmDelete()
-	DeleteConfirmation:Hide()
-
-	-- Closing the roster can save the order, which moves the client's character views: close it
-	-- before looking the character up, and keep only its guid, never the view.
-	CharSelect_CloseRoster()
+	-- Saving the order moves the client's character views: save first, then look the character up
+	-- and keep only what is needed.
+	SaveCharacterOrder()
 
 	local character = selectedIndex >= 0 and GetCharacterInfo(selectedIndex) or nil
 	if not character then
 		return
 	end
-	local guid = character.guid
-	if staticFrontEnd then
-		SetChromeVisible(false)
-		selectedGuid = nil
-		realmConnector:DeleteCharacter(character)
-		GlueDialog_Show("DELETING_CHARACTER")
-		return
-	end
-	character = nil
 
-	-- The character runs out first; the delete is sent once it is on its way (CharSelect_OnUpdate).
-	SetChromeVisible(false)
-	PlazaCharacterLeave(selectedIndex)
-	pendingDelete = { guid = guid, remaining = DELETE_WALK_SECONDS }
 	selectedGuid = nil
+	realmConnector:DeleteCharacter(character)
+	GlueDialog_Show("DELETING_CHARACTER")
 end
 
 function CharSelect_CancelDelete()
-	DeleteConfirmation:Hide()
 end

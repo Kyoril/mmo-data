@@ -1,3 +1,6 @@
+-- Copyright (C) 2019 - 2025, Kyoril. All rights reserved.
+-- Character creation (CharCreate.xml): step 1 picks race, class and gender, step 2 the appearance
+-- and the name. The client keeps the choices (Set/GetCharacterRace etc.) and renders CharCreateModel.
 
 CHAR_CREATION_ERROR_STRING = {}
 CHAR_CREATION_ERROR_STRING[1] = "CHAR_CREATE_ERR_ERROR"
@@ -7,27 +10,31 @@ CHAR_CREATION_ERROR_STRING[4] = "CHAR_CREATE_ERR_SERVER_LIMIT"
 CHAR_CREATION_ERROR_STRING[5] = "CHAR_CREATE_ERR_ACCOUNT_LIMIT"
 CHAR_CREATION_ERROR_STRING[6] = "CHAR_CREATE_ERR_ONLY_EXISTING"
 
+-- Line glyphs of the classes, by class id (the Wayfinder set used in game).
 CLASS_ICONS = {}
-CLASS_ICONS[0] = "Interface/Icons/Spells/S_Class_Mage.htex"
-CLASS_ICONS[1] = "Interface/Icons/Spells/S_Class_Warrior.htex"
-CLASS_ICONS[2] = "Interface/Icons/Spells/S_Class_Cleric.htex"
-CLASS_ICONS[3] = "Interface/Icons/Spells/S_Class_Acolyte.htex"
-CLASS_ICONS[4] = "Interface/Icons/Spells/S_Class_Scout.htex"
+CLASS_ICONS[0] = "Interface/GameUI/Themes/Wayfinder/Textures/Mage.htex"
+CLASS_ICONS[1] = "Interface/GameUI/Themes/Wayfinder/Textures/Warrior.htex"
+CLASS_ICONS[2] = "Interface/GameUI/Themes/Wayfinder/Textures/Cleric.htex"
+CLASS_ICONS[3] = "Interface/GameUI/Themes/Wayfinder/Textures/Acolyte.htex"
+CLASS_ICONS[4] = "Interface/GameUI/Themes/Wayfinder/Textures/Scout.htex"
 
 charCreateBackdropZoomed = false;
 
+-- Two columns of choices, 536 wide with a 24 gap (the panel's content is 1096 wide).
+local COLUMN_STEP = 560;
+local CHOICE_HEIGHT = 104;
+local CLASS_HEIGHT = 136;
+local ROW_GAP = 16;
+local SECTION_LABEL_HEIGHT = 60;		-- caption and its gap above the choices
+local PROPERTY_ROW_HEIGHT = 112;
+
+local STEP_BAR_ON = "FFE3C78F";
+local STEP_BAR_OFF = "33D7C29A";
+local PAGE_SLIDE = 64;
+
 function CharCreate_OnLoad(this)
 	SetCharCustomizeFrame(CharCreateModel);
-end
-
--- Everything in CharCreateSelectionPanel besides the race and class sections (CharCreate.xml): the
--- 72 UI margins at top and bottom, the title (60) and its 12 gap, the two 16 gaps between sections
--- and the gender section (188). 72 + 60 + 12 + 16 + 16 + 188 + 72 = 436.
-local SELECTION_PANEL_FIXED_HEIGHT = 436;
-
-function UpdateSelectionPanelHeight()
-	local contentHeight = SELECTION_PANEL_FIXED_HEIGHT + CharRaceSection:GetHeight() + CharClassSection:GetHeight();
-	CharCreateSelectionPanel:SetHeight(contentHeight);
+	GlueFields_Register(NewCharacterNameBox);
 end
 
 function CustomizationPropertyButton_UpdateValue(this)
@@ -37,16 +44,6 @@ function CustomizationPropertyButton_UpdateValue(this)
 		this:GetChild(3):SetText(value);
 	end
 end
-
--- Extra vertical space CharCreatePropertiesFrame must reserve below CharCreatePropertyList for
--- the CharCreateShowOutfitButton checkbox: the checkbox's own ListCheckButtonBase height (104)
--- plus its 16px TOP anchor offset from the list's BOTTOM in CharCreate.xml. Keep this in sync
--- with both of those values.
-local SHOW_OUTFIT_CHECKBOX_RESERVED_HEIGHT = 104 + 16;
-
--- The rest of CharCreatePropertiesFrame (CharCreate.xml): the 72 UI top margin, the title (60) and its
--- 16 gap, the list's own 8 top padding and the 72 UI bottom margin. 72 + 60 + 16 + 8 + 72 = 228.
-local PROPERTIES_FRAME_FIXED_HEIGHT = 228;
 
 function SetupCustomization()
 	local propertyCount = GetNumCustomizationProperties();
@@ -65,66 +62,63 @@ function SetupCustomization()
 
 		CharCreatePropertyList:AddChild(button);
 
-		button:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, 8 + i * 136);
-		button:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, 12);
-		button:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, -12);
+		button:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, i * PROPERTY_ROW_HEIGHT);
+		button:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, 0);
+		button:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil, 0);
 		button.userData = propertyName;
 	end
 
-	CharCreatePropertyList:SetHeight(8 + propertyCount * 136);
-	CharCreatePropertiesFrame:SetHeight(PROPERTIES_FRAME_FIXED_HEIGHT + propertyCount * 136 + SHOW_OUTFIT_CHECKBOX_RESERVED_HEIGHT);
+	CharCreatePropertyList:SetHeight(math.max(1, propertyCount) * PROPERTY_ROW_HEIGHT);
+end
+
+local function UpdateChecks(list, value)
+	for i = 0, list:GetChildCount() - 1 do
+		local button = list:GetChild(i);
+		button:SetChecked(button.id == value);
+	end
 end
 
 function OnRaceChanged()
-	local race = GetCharacterRace();
-	local raceBtnCount = CharRaceList:GetChildCount();
-	for i = 0, raceBtnCount - 1 do
-		local raceBtn = CharRaceList:GetChild(i);
-		raceBtn:SetChecked(raceBtn.id == race);
-	end
+	UpdateChecks(CharRaceList, GetCharacterRace());
 end
 
 function OnClassChanged()
-	local class = GetCharacterClass();
-	local classBtnCount = CharClassList:GetChildCount();
-	for i = 0, classBtnCount - 1 do
-		local classBtn = CharClassList:GetChild(i);
-		classBtn:SetChecked(classBtn.id == class);
-	end
+	UpdateChecks(CharClassList, GetCharacterClass());
 end
 
 function OnGenderChanged()
-	local gender = GetCharacterGender();
-	local genderBtnCount = CharGenderList:GetChildCount();
-	for i = 0, genderBtnCount - 1 do
-		local genderBtn = CharGenderList:GetChild(i);
-		genderBtn:SetChecked(genderBtn.id == gender);
-	end
+	UpdateChecks(CharGenderList, GetCharacterGender());
 end
 
--- Dynamically populate race buttons from server data and resize the frame accordingly.
+-- Places a choice in the two-column grid.
+local function PlaceChoice(button, count, height)
+	local column = count % 2;
+	local row = math.floor(count / 2);
+	button:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, row * (height + ROW_GAP));
+	button:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, column * COLUMN_STEP);
+end
+
+local function GridHeight(count, height)
+	local rows = math.max(1, math.ceil(count / 2));
+	return rows * height + (rows - 1) * ROW_GAP;
+end
+
+-- Fills the race choices from the server data.
 function SetupRaceButtons()
 	CharRaceList:RemoveAllChildren();
 
-	local numRaces = GetNumRaces();
 	local count = 0;
 	local firstAvailableRaceId = -1;
-
-	for i = 0, numRaces - 1 do
+	for i = 0, GetNumRaces() - 1 do
 		local raceId = GetRaceId(i);
 		if IsRaceAvailable(raceId) then
 			local btn = ListCheckButtonBase:Clone();
 			btn:SetText(GetRaceName(i));
 			btn:SetCheckable(true);
-			btn:SetSize(396, 104);
 			btn.id = raceId;
 
 			CharRaceList:AddChild(btn);
-			local column = count % 2;
-			local row = math.floor(count / 2);
-			btn:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, 12 + row * 112);
-			btn:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, 12 + column * 420);
-
+			PlaceChoice(btn, count, CHOICE_HEIGHT);
 			btn:SetClickedHandler(function(self)
 				OnRaceChange_Clicked(self);
 			end);
@@ -136,9 +130,7 @@ function SetupRaceButtons()
 		end
 	end
 
-	local rowCount = math.ceil(count / 2);
-	CharRaceSection:SetHeight(64 + rowCount * 112);
-	UpdateSelectionPanelHeight();
+	CharRaceSection:SetHeight(SECTION_LABEL_HEIGHT + GridHeight(count, CHOICE_HEIGHT));
 
 	if firstAvailableRaceId ~= -1 and not IsRaceAvailable(GetCharacterRace()) then
 		SetCharacterRace(firstAvailableRaceId);
@@ -146,30 +138,23 @@ function SetupRaceButtons()
 	end
 end
 
--- Dynamically populate class buttons from server data and resize the frame accordingly.
+-- Fills the class choices from the server data.
 function SetupClassButtons()
 	CharClassList:RemoveAllChildren();
 
-	local numClasses = GetNumClasses();
 	local count = 0;
 	local firstAvailableClassId = -1;
-
-	for i = 0, numClasses - 1 do
+	for i = 0, GetNumClasses() - 1 do
 		local classId = GetClassId(i);
 		if IsClassAvailable(classId) then
 			local btn = ClassCheckButtonBase:Clone();
 			btn:SetText(GetClassName(i));
 			btn:SetCheckable(true);
-			btn:SetSize(396, 144);
 			btn.id = classId;
 			btn:GetChild(0):SetProperty("Icon", CLASS_ICONS[classId] or "");
 
 			CharClassList:AddChild(btn);
-			local column = count % 2;
-			local row = math.floor(count / 2);
-			btn:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, nil, 12 + row * 152);
-			btn:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, 12 + column * 420);
-
+			PlaceChoice(btn, count, CLASS_HEIGHT);
 			btn:SetClickedHandler(function(self)
 				OnClassChange_Clicked(self);
 			end);
@@ -181,13 +166,30 @@ function SetupClassButtons()
 		end
 	end
 
-	local rowCount = math.ceil(count / 2);
-	CharClassSection:SetHeight(64 + rowCount * 152);
-	UpdateSelectionPanelHeight();
+	CharClassSection:SetHeight(SECTION_LABEL_HEIGHT + GridHeight(count, CLASS_HEIGHT));
 
 	if firstAvailableClassId ~= -1 and not IsClassAvailable(GetCharacterClass()) then
 		SetCharacterClass(firstAvailableClassId);
 	end
+end
+
+-- Step header: caption, title and the progress bars.
+local function SetStep(step)
+	CharCreateStepCaption:SetText(string.format(Localize("CHAR_CREATE_STEP_FORMAT"), step, 2));
+	CharCreateSelectionTitle:SetText(Localize(step == 1 and "CHAR_CREATE_STEP_ORIGIN" or "CHAR_CREATE_STEP_APPEARANCE"));
+	GlueMotion.Color(CharCreateStep2Bar, "FillColor", step == 1 and STEP_BAR_ON or STEP_BAR_OFF, step == 1 and STEP_BAR_OFF or STEP_BAR_ON, 0.35);
+end
+
+-- Slides a page in from the given side.
+local function EnterPage(page, fromRight)
+	page:Show();
+	page:SetOpacity(0);
+	GlueMotion.Fade(page, 1, 0.35, 0.05);
+	GlueMotion.Offset(page, "slide", AnchorPoint.LEFT, AnchorPoint.LEFT, nil,
+		72 + (fromRight and PAGE_SLIDE or -PAGE_SLIDE), 72, 0.45, 0.05, GlueEase.OutQuint);
+	GlueMotion.Offset(page, "slideRight", AnchorPoint.RIGHT, AnchorPoint.RIGHT, nil,
+		-72 + (fromRight and PAGE_SLIDE or -PAGE_SLIDE), -72, 0.45, 0.05, GlueEase.OutQuint);
+	GlueMotion.Enter(CharCreateSelectionTitle, AnchorPoint.TOP, AnchorPoint.BOTTOM, CharCreateStepCaption, 24, 16, 0, 0.35);
 end
 
 function CharCreate_Show()
@@ -202,22 +204,31 @@ function CharCreate_Show()
 	SetupRaceButtons();
 	SetupClassButtons();
 
-	-- Adjust the selected race/class/gender indicators
 	OnRaceChanged();
 	OnClassChanged();
 	OnGenderChanged();
 
-	-- Hide character selection
 	CharSelect:Hide();
 	NewCharacterNameBox:SetText("");
-	CharCreate_ShowSelectionPage(charCreateBackdropZoomed);
+	GlueStage_Show("create");
 	CharCreate:Show();
+	CharCreate_ShowSelectionPage(charCreateBackdropZoomed);
+
+	-- The panel slides in from the left, the light comes up behind the character.
+	CharCreatePanel:SetOpacity(0);
+	GlueMotion.Fade(CharCreatePanel, 1, 0.45);
+	GlueMotion.Offset(CharCreatePanel, "slide", AnchorPoint.LEFT, AnchorPoint.LEFT, nil, 40, 120, 0.6, 0, GlueEase.OutQuint);
+	CharCreateGlow:SetOpacity(0);
+	GlueMotion.Fade(CharCreateGlow, 1, 1.2, 0.2);
+	CharCreateBackdrop:SetOpacity(0);
+	GlueMotion.Fade(CharCreateBackdrop, 1, 0.6);
 end
 
 function CharCreate_ShowSelectionPage(animateBackdrop)
 	NewCharacterNameBox:ReleaseInput();
 	CharCreatePage2:Hide();
-	CharCreatePage1:Show();
+	SetStep(1);
+	EnterPage(CharCreatePage1, false);
 	CharCreateModel:SetProperty("Zoom", "5.0");
 	CharCreateModel:SetProperty("OffsetY", "1.00");
 
@@ -230,7 +241,8 @@ end
 
 function CharCreate_ShowCustomizationPage()
 	CharCreatePage1:Hide();
-	CharCreatePage2:Show();
+	SetStep(2);
+	EnterPage(CharCreatePage2, true);
 	CharCreateShowOutfitButton:SetChecked(IsCharCreateOutfitVisible());
 	CharCreateModel:SetProperty("Zoom", "2.25");
 	CharCreateModel:SetProperty("OffsetY", "1.35");
@@ -242,6 +254,7 @@ end
 
 function OnRaceChange_Clicked(this)
 	if not IsRaceAvailable(this.id) then
+		OnRaceChanged();
 		return;
 	end
 	SetCharacterRace(this.id);
@@ -251,6 +264,7 @@ end
 
 function OnClassChange_Clicked(this)
 	if not IsClassAvailable(this.id) then
+		OnClassChanged();
 		return;
 	end
 	SetCharacterClass(this.id);
@@ -274,37 +288,34 @@ function CharCreate_NameLength(text)
 end
 
 function CharCreate_Submit()
-	-- Ensure that the character name is at least 3 characters long
-	if (CharCreate_NameLength(NewCharacterNameBox:GetText()) < 3) then
+	local name = NewCharacterNameBox:GetText();
+
+	if CharCreate_NameLength(name) < 3 then
 		GlueDialog_Show("CHAR_CREATE_NAME_TOO_SHORT");
 		return;
 	end
-
-	-- Ensure that the character name is at most 12 characters long
-	if (CharCreate_NameLength(NewCharacterNameBox:GetText()) > 12) then
+	if CharCreate_NameLength(name) > 12 then
 		GlueDialog_Show("CHAR_CREATE_NAME_TOO_LONG");
 		return;
 	end
-
-	-- Reject names containing any whitespace
-	if (string.match(NewCharacterNameBox:GetText(), "%s")) then
-		GlueDialog_Show("CHAR_CREATE_ERR_INVALID_NAME");
-		return;
-	end
-
-	-- Reject names containing any digits
-	if (string.match(NewCharacterNameBox:GetText(), "%d")) then
+	-- Reject names containing whitespace or digits.
+	if string.match(name, "%s") or string.match(name, "%d") then
 		GlueDialog_Show("CHAR_CREATE_ERR_INVALID_NAME");
 		return;
 	end
 
 	GlueDialog_Show("CREATING_CHARACTER");
-	CreateCharacter(NewCharacterNameBox:GetText());
+	CreateCharacter(name);
 end
 
 function CharSelect_Cancel()
-	CharCreate:Hide();
-	CharList_Show();
+	NewCharacterNameBox:ReleaseInput();
+	GlueMotion.Fade(CharCreatePanel, 0, 0.2, 0, function()
+		CharCreate:Hide();
+		CharCreatePanel:SetOpacity(1);
+		CharCreatePanel:Show();
+		CharList_Show();
+	end);
 end
 
 CharCreate:RegisterEvent("CHAR_CREATION_FAILED", function(self, errorCode)

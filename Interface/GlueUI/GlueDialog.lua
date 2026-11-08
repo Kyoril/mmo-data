@@ -1,18 +1,22 @@
-
+-- Copyright (C) 2019 - 2025, Kyoril. All rights reserved.
 GlueDialogs = {}
 
 -- Vertical layout of GlueDialog, in UI units. The width stays as GlueDialog.xml sets it; the height
 -- follows the content each time a dialog is shown (GlueDialog_Layout).
--- 72 above and below, like every glue panel: clear of the bronze edge and the corner ornaments.
-local GLUE_DIALOG_PADDING_TOP = 72;
+local GLUE_DIALOG_PADDING_TOP = 80;
 local GLUE_DIALOG_PADDING_BOTTOM = 72;
-local GLUE_DIALOG_TEXT_BUTTON_SPACING = 40;
-local GLUE_DIALOG_BUTTON_SPACING = 20;
--- The wood panel's corner ornaments (GlueBorderFrame, borderSize 64) are 64 tall each; a shorter
--- panel would make the top and bottom corners overlap.
-local GLUE_DIALOG_MIN_HEIGHT = 2 * 64;
+local GLUE_DIALOG_TEXT_BUTTON_SPACING = 56;
+local GLUE_DIALOG_BUTTON_SPACING = 24;
+local GLUE_DIALOG_BUSY_HEIGHT = 48;		-- the progress line and its gap under the text
+local GLUE_DIALOG_MIN_HEIGHT = 240;
+local GLUE_DIALOG_CARD_RISE = 36;		-- the card rises this far into place when it opens
+
+-- Indeterminate progress sweep (GlueDialogBusyBar over GlueDialogBusyTrack).
+local BUSY_SWEEP_SECONDS = 1.4;
+local busyTime = 0;
 
 GlueDialogs["CONNECTING"] = {
+	busy = true,
 	text = "CONNECTING",
 	button1 = "CANCEL",
 	button2 = nil,
@@ -25,6 +29,7 @@ GlueDialogs["CONNECTING"] = {
 }
 
 GlueDialogs["CONNECTING_TO_REALM"] = {
+	busy = true,
 	text = "CONNECTING",
 	button1 = "CANCEL",
 	button2 = nil,
@@ -105,6 +110,7 @@ GlueDialogs["CHAR_CREATE_ERR_DISABLED"] = {
 }
 
 GlueDialogs["AUTH_SUCCESS"] = {
+	busy = true,
 	text = "AUTH_SUCCESS",
 	button1 = "CANCEL",
 	button2 = nil,
@@ -116,6 +122,7 @@ GlueDialogs["AUTH_SUCCESS"] = {
 }
 
 GlueDialogs["RETRIEVE_REALM_LIST"] = {
+	busy = true,
 	text = "RETRIEVING_REALM_LIST",
 	button1 = "CANCEL",
 	button2 = nil,
@@ -126,6 +133,7 @@ GlueDialogs["RETRIEVE_REALM_LIST"] = {
 }
 
 GlueDialogs["RETRIEVE_CHAR_LIST"] = {
+	busy = true,
 	text = "RETRIEVING_CHAR_LIST",
 	button1 = "CANCEL",
 	button2 = nil,
@@ -138,6 +146,7 @@ GlueDialogs["RETRIEVE_CHAR_LIST"] = {
 }
 
 GlueDialogs["CREATING_CHARACTER"] = {
+	busy = true,
 	text = "CREATING_CHARACTER",
 	button1 = "CANCEL",
 	button2 = nil,
@@ -148,6 +157,7 @@ GlueDialogs["CREATING_CHARACTER"] = {
 }
 
 GlueDialogs["DELETING_CHARACTER"] = {
+	busy = true,
 	text = "DELETING_CHARACTER",
 	button1 = "CANCEL",
 	button2 = nil,
@@ -235,12 +245,22 @@ REALM_AUTH_ERROR_STRING[4] = "AUTH_STATUS_FAIL_INVALID_SERVER"
 REALM_AUTH_ERROR_STRING[5] = "REALM_STATUS_FAIL_NO_ACCESS"
 REALM_AUTH_ERROR_STRING[6] = "AUTH_STATUS_FAIL_INTERNAL_ERROR"
 
-function GlueDialog_Show(which, text, data)
-	-- Dismiss any currently-visible dialog (without firing its callbacks).
-	if GlueDialogBackground:IsVisible() then
-		GlueDialogBackground:Hide()
-		GlueDialog.which = nil
+-- Asks before a character is deleted; the text names the character (CharSelect_DeleteCharacter).
+GlueDialogs["CONFIRM_DELETE_CHARACTER"] = {
+	text = "CONFIRM_CHAR_DELETE",
+	button1 = "DELETE",
+	button2 = "CANCEL",
+	OnAccept = function()
+		CharSelect_ConfirmDelete()
+	end,
+	OnCancel = function()
+		CharSelect_CancelDelete()
 	end
+}
+
+function GlueDialog_Show(which, text, data)
+	-- Replace any currently-visible dialog (without firing its callbacks).
+	GlueDialog.which = nil
 
 	-- Setup the dialog text. Callers that pick their message from an error table (AUTH_ERROR_STRING
 	-- and friends) pass it in; the rest carry their own. Either can resolve to nothing: an error code
@@ -289,27 +309,52 @@ function GlueDialog_Show(which, text, data)
 	if info.button2 then
 		buttonHeight = math.max(buttonHeight, GlueButton02:GetHeight())
 	end
-	GlueDialog_Layout(buttonHeight)
+	GlueDialogBusy:SetProperty("Visible", info.busy and "true" or "false")
+	busyTime = 0
+	GlueDialog_Layout(buttonHeight, info.busy)
 
 	-- Save parameters
 	GlueDialog.which = which
 	GlueDialog.data = data
 
-	-- Show the glue dialog
+	-- Show the glue dialog: the dim fades in, the card rises into place.
+	local wasVisible = GlueDialogBackground:IsVisible()
 	GlueDialogBackground:Show()
+	if not wasVisible then
+		GlueDialogDim:SetOpacity(0)
+		GlueMotion.Fade(GlueDialogDim, 1, 0.25)
+	end
+	GlueMotion.Enter(GlueDialog, AnchorPoint.V_CENTER, AnchorPoint.V_CENTER, nil, 0, GLUE_DIALOG_CARD_RISE, 0, 0.4)
+end
+
+function GlueDialog_OnUpdate(this, elapsed)
+	if not GlueDialogBusy:IsVisible() then
+		return
+	end
+
+	-- The segment eases across the track and starts over; it fades at both ends.
+	busyTime = (busyTime + elapsed) % BUSY_SWEEP_SECONDS
+	local t = GlueEase.InOutCubic(busyTime / BUSY_SWEEP_SECONDS)
+	local trackWidth = GlueDialogBusy:GetWidth() / GetUIScale().x
+	local barWidth = 180
+	GlueDialogBusyBar:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, nil, -barWidth + t * (trackWidth + barWidth))
+	GlueDialogBusyBar:SetOpacity(math.sin(math.pi * busyTime / BUSY_SWEEP_SECONDS))
 end
 
 -- Sizes GlueDialog's height to its content: top padding, the message word-wrapped at the label's
 -- width, spacing and the button row when a button shows, bottom padding. Never shorter than the
 -- panel's corner ornaments allow. Runs on every GlueDialog_Show, after the text is set.
 -- buttonHeight is the height of the button row, or 0 when no button shows.
-function GlueDialog_Layout(buttonHeight)
+function GlueDialog_Layout(buttonHeight, busy)
 	-- GetTextHeight measures the wrapped text in UI units at the label's current width (the label
 	-- spans the dialog, whose width never changes).
 	local textHeight = GlueDialogLabel:GetTextHeight()
 	GlueDialogLabel:SetHeight(textHeight)
 
 	local height = GLUE_DIALOG_PADDING_TOP + textHeight + GLUE_DIALOG_PADDING_BOTTOM
+	if busy then
+		height = height + GLUE_DIALOG_BUSY_HEIGHT
+	end
 	if buttonHeight > 0 then
 		height = height + GLUE_DIALOG_TEXT_BUTTON_SPACING + buttonHeight
 	end

@@ -1,207 +1,93 @@
 <?xml version="1.0" ?>
+<!-- Copyright (C) 2019 - 2025, Kyoril. All rights reserved. -->
+<!-- Login: one quiet column under the logo, on the dark side of the gate art (GlueParent's front door).
+     Caption and headline, the two fields, "remember", and the brass login button. -->
 <UiLayout>
-	<!-- Reference lua script file here -->
 	<Script file="AccountLogin.lua" />
 
-	<!--
-		Checkbox used by the login form: a frame border when unchecked, plus a checkmark icon when
-		checked. Mirrors GameUI's OptionsCheckboxTemplate, which the glue UI does not load.
-	-->
-	<Frame name="GlueCheckbox" type="Button" renderer="CheckboxRenderer">
-		<Property name="Checkable" value="true" />
-		<Area>
-			<Size><AbsDimension x="44" y="44" /></Size>
-		</Area>
-		<Visual inherits="ThemeGlueGlueCheckboxVisual" />
-	</Frame>
-
-	<!-- Account login frame -->
-	<Frame name="AccountLogin" parent="GlueParent" setAllPoints="true" renderer="DefaultRenderer">
+	<Frame name="AccountLogin" parent="GlueParent" setAllPoints="true">
+		<Property name="Clickable" value="false" />
 		<Property name="Focusable" value="true" />
-		
-		<Animations>
-			<Animation name="FadeIn" duration="0.5" loop="false">
-				<Track property="Opacity" target="AccountLoginContent">
-					<Keyframe time="0" value="0"/>
-					<Keyframe time="0.5" value="1"/>
-				</Track>
-			</Animation>
-			<Animation name="FadeOut" duration="0.5" loop="false">
-				<Track property="Opacity" target="AccountLoginContent">
-					<Keyframe time="0" value="1"/>
-					<Keyframe time="0.5" value="0"/>
-				</Track>
-			</Animation>
-		</Animations>
 
-		<Frame name="AccountLoginContent" setAllPoints="true">
-			<Frame name="LoginBackgroundFrameBottom" renderer="DefaultRenderer">
-				<Area>
-					<Anchor point="LEFT"/>
-					<Anchor point="RIGHT"/>
-					<Anchor point="BOTTOM"/>
-					<Size><AbsDimension y="500" /></Size>
-				</Area>
-				<Visual inherits="ThemeGlueLoginBackgroundFrameBottomVisual" />
+		<!-- The column. AccountLogin.lua slides it in; its children fade in one after another. -->
+		<Frame name="AccountLoginContent">
+			<Area>
+				<Anchor point="LEFT" offset="260" />
+				<Anchor point="TOP" offset="760" />
+				<Size><AbsDimension x="1000" y="1000" /></Size>
+			</Area>
+
+			<Frame name="AccountLoginCaption" inherits="GlueCaption">
+				<Property name="Text" value="LOGIN_CAPTION" />
+				<Area><Anchor point="LEFT" /><Anchor point="RIGHT" /><Anchor point="TOP" /></Area>
+			</Frame>
+			<Frame name="AccountLoginHeadline" inherits="GlueTitle">
+				<Property name="Text" value="LOGIN_HEADLINE" />
+				<Area><Anchor point="LEFT" /><Anchor point="RIGHT" /><Anchor point="TOP" relativePoint="BOTTOM" relativeTo="AccountLoginCaption" offset="24" /></Area>
 			</Frame>
 
-			<!-- Dark backdrop centered on logo + form area -->
-			<Frame name="LoginFormBackdrop" inherits="GlueBorderFrame">
-				<Area>
-					<Anchor point="H_CENTER" />
-					<Anchor point="V_CENTER" offset="16" />
-					<Size><AbsDimension x="740" y="740" /></Size>
-				</Area>
-			</Frame>
-
-			<!-- Game logo, always anchored near the top of the screen -->
-			<Frame name="LoginLogoFrame" renderer="DefaultRenderer">
-				<Area>
-					<Anchor point="TOP" offset="32" />
-					<Anchor point="H_CENTER" />
-					<Size><AbsDimension x="971" y="512" /></Size>
-				</Area>
-				<Visual inherits="ThemeGlueLoginLogoFrameVisual" />
-			</Frame>
-
-			<Frame name="AccountPasswordField" inherits="GlueTextField">
-				<Property name="Masked" value="true" />
-				<Area>
-					<Anchor point="BOTTOM" relativePoint="V_CENTER" offset="130" />
-					<Anchor point="H_CENTER" />
-					<Size><AbsDimension x="600" y="128" /></Size>
-				</Area>
-				<Scripts>
-					<OnTabPressed>
-						return function(this)
-							AccountNameField:CaptureInput();
-						end
-					</OnTabPressed>
-					<OnEnterPressed>
-						return function(this)
-							AccountLogin_Login();
-						end
-					</OnEnterPressed>
-				</Scripts>
-			</Frame>
-			<Frame name="AccountPasswordLabel" inherits="GlueTextLarge">
-				<Property name="Text" value="ACCOUNT_PASSWORD" />
-				<Area>
-					<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="AccountPasswordField" offset="-8" />
-					<Anchor point="H_CENTER" />
-				</Area>
+			<Frame name="AccountNameLabel" inherits="GlueCaption">
+				<Property name="Text" value="ACCOUNT_NAME" />
+				<Property name="TextColor" value="FF9AA1A6" />
+				<Area><Anchor point="LEFT" /><Anchor point="RIGHT" /><Anchor point="TOP" relativePoint="BOTTOM" relativeTo="AccountLoginHeadline" offset="56" /></Area>
 			</Frame>
 			<Frame name="AccountNameField" inherits="GlueTextField">
-				<Area>
-					<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="AccountPasswordLabel" offset="-16" />
-					<Anchor point="H_CENTER" />
-					<Size><AbsDimension x="600" y="128" /></Size>
-				</Area>
+				<Area><Anchor point="LEFT" /><Anchor point="RIGHT" /><Anchor point="TOP" relativePoint="BOTTOM" relativeTo="AccountNameLabel" offset="12" /></Area>
 				<Scripts>
-					<OnTabPressed>
-						return function(this)
-							AccountPasswordField:CaptureInput();
-						end
-					</OnTabPressed>
-					<OnEnterPressed>
-						return function(this)
-							AccountLogin_Login();
-						end
-					</OnEnterPressed>
+					<OnTabPressed>return function(this) AccountPasswordField:CaptureInput(); end</OnTabPressed>
+					<OnEnterPressed>return function(this) AccountLogin_Login(); end</OnEnterPressed>
 				</Scripts>
 			</Frame>
-			<Frame name="AccountNameLabel" inherits="GlueTextLarge">
-				<Property name="Text" value="ACCOUNT_NAME" />
-				<Area>
-					<Anchor point="BOTTOM" relativePoint="TOP" relativeTo="AccountNameField" offset="-8" />
-					<Anchor point="H_CENTER" />
-				</Area>
+
+			<Frame name="AccountPasswordLabel" inherits="GlueCaption">
+				<Property name="Text" value="ACCOUNT_PASSWORD" />
+				<Property name="TextColor" value="FF9AA1A6" />
+				<Area><Anchor point="LEFT" /><Anchor point="RIGHT" /><Anchor point="TOP" relativePoint="BOTTOM" relativeTo="AccountNameField" offset="36" /></Area>
+			</Frame>
+			<Frame name="AccountPasswordField" inherits="GlueTextField">
+				<Property name="Masked" value="true" />
+				<Area><Anchor point="LEFT" /><Anchor point="RIGHT" /><Anchor point="TOP" relativePoint="BOTTOM" relativeTo="AccountPasswordLabel" offset="12" /></Area>
+				<Scripts>
+					<OnTabPressed>return function(this) AccountNameField:CaptureInput(); end</OnTabPressed>
+					<OnEnterPressed>return function(this) AccountLogin_Login(); end</OnEnterPressed>
+				</Scripts>
 			</Frame>
 
 			<!-- Remembers the account name (never the password) between sessions. -->
 			<Frame name="RememberAccountNameCheck" inherits="GlueCheckbox">
-				<Area>
-					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="AccountPasswordField" offset="16" />
-					<Anchor point="LEFT" relativePoint="LEFT" relativeTo="AccountPasswordField" />
-					<Size><AbsDimension x="44" y="44" /></Size>
-				</Area>
+				<Area><Anchor point="LEFT" /><Anchor point="TOP" relativePoint="BOTTOM" relativeTo="AccountPasswordField" offset="32" /></Area>
 				<Scripts>
-					<OnClick>
-						return function(this)
-							AccountLogin_OnRememberAccountNameToggled();
-						end
-					</OnClick>
+					<OnClick>return function(this) AccountLogin_OnRememberAccountNameToggled(); end</OnClick>
 				</Scripts>
 			</Frame>
 			<Frame name="RememberAccountNameLabel" inherits="GlueTextSmall">
 				<Property name="Text" value="REMEMBER_ACCOUNT_NAME" />
 				<Property name="VertAlign" value="CENTER" />
+				<Property name="TextColor" value="FFB8B1A3" />
 				<Area>
-					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="RememberAccountNameCheck" offset="12" />
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="RememberAccountNameCheck" offset="20" />
+					<Anchor point="RIGHT" />
 					<Anchor point="V_CENTER" relativePoint="V_CENTER" relativeTo="RememberAccountNameCheck" />
-					<Size><AbsDimension x="520" y="44" /></Size>
+					<Size><AbsDimension y="48" /></Size>
 				</Area>
 			</Frame>
 
 			<Frame name="LoginButton" inherits="GlueButtonPrimary">
 				<Property name="Text" value="LOGIN" />
 				<Area>
-					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RememberAccountNameCheck" offset="24" />
-					<Anchor point="H_CENTER" />
-					<Size><AbsDimension x="600" y="128"/></Size>
+					<Anchor point="LEFT" />
+					<Anchor point="RIGHT" />
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="RememberAccountNameCheck" offset="64" />
+					<Size><AbsDimension y="136" /></Size>
 				</Area>
 				<Scripts>
-					<OnClick>
-						return function(this)
-							AccountLogin_Login();
-						end
-					</OnClick>
+					<OnClick>return function(this) AccountLogin_Login(); end</OnClick>
 				</Scripts>
-			</Frame>
-
-			<Frame name="QuitButton" inherits="GlueButton">
-				<Property name="Text" value="QUIT" />
-				<Area>
-					<Anchor point="RIGHT" offset="-24" />
-					<Anchor point="BOTTOM" offset="-24"/>
-				</Area>
-
-				<Scripts>
-					<OnClick>
-						return function(this)
-							RunConsoleCommand("quit");
-						end
-					</OnClick>
-				</Scripts>
-			</Frame>
-
-			<Frame name="CopyrightLabel" inherits="GlueTextSmall">
-				<Property name="Text" value="COPYRIGHT_TEXT" />
-				<Property name="HorzAlign" value="CENTER" />
-
-				<Area>
-					<Size><AbsDimension x="0" y="44" offset="-8" /></Size>
-					<Anchor point="H_CENTER" />
-					<Anchor point="BOTTOM" offset="-24" />
-				</Area>
-			</Frame>
-
-			<Frame name="LoginSettingsButton" inherits="GlueButton">
-				<Property name="Text" value="SETTINGS" />
-				<Property name="Enabled" value="False" />
-				<Area>
-					<Anchor point="LEFT" offset="24" />
-					<Anchor point="BOTTOM" offset="-24"/>
-				</Area>
 			</Frame>
 		</Frame>
 
 		<Scripts>
-			<OnLoad>
-				return function(this)
-					AccountLogin_OnLoad();
-				end
-			</OnLoad>
+			<OnLoad>return function(this) AccountLogin_OnLoad(); end</OnLoad>
 		</Scripts>
 	</Frame>
 </UiLayout>

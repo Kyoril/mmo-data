@@ -1,10 +1,76 @@
--- This script handles all the logic for the AccountLogin frame defined in the
--- AccountLogin.xml file.
+-- Copyright (C) 2019 - 2025, Kyoril. All rights reserved.
+-- Login screen logic (AccountLogin.xml) and the events of the login and realm handshake.
 
+-- Children of AccountLoginContent fade in one after another, in this order.
+local ENTRANCE_ORDER = {
+	"AccountLoginCaption", "AccountLoginHeadline",
+	"AccountNameLabel", "AccountNameField",
+	"AccountPasswordLabel", "AccountPasswordField",
+	"RememberAccountNameCheck", "RememberAccountNameLabel",
+	"LoginButton",
+};
+local ENTRANCE_STAGGER = 0.045;
+local CONTENT_LEFT = 260;
+local SLIDE_DISTANCE = 72;
 
 -- Reads a boolean console variable, which is missing entirely until it is first set.
 local function IsCvarOn(val)
 	return val == "1" or val == "true";
+end
+
+-- Slides the login column in and fades its parts in one after another.
+local function PlayEntrance(delay)
+	delay = delay or 0;
+	AccountLoginContent:SetOpacity(1);
+	GlueMotion.Offset(AccountLoginContent, "slide", AnchorPoint.LEFT, AnchorPoint.LEFT, nil,
+		CONTENT_LEFT - SLIDE_DISTANCE, CONTENT_LEFT, 0.6, delay, GlueEase.OutQuint);
+	for index, name in ipairs(ENTRANCE_ORDER) do
+		local frame = _G[name];
+		frame:SetOpacity(0);
+		GlueMotion.Fade(frame, 1, 0.4, delay + (index - 1) * ENTRANCE_STAGGER);
+	end
+end
+
+-- Puts the keyboard where the player has to type next.
+local function FocusFirstEmptyField()
+	if AccountNameField:GetText() ~= "" then
+		AccountPasswordField:CaptureInput();
+	else
+		AccountNameField:CaptureInput();
+	end
+end
+
+-- Shows the login screen (with its entrance) on the gate stage.
+function AccountLogin_Show()
+	GlueStage_Show("gate");
+	AccountLogin:Show();
+	LoginButton:Enable();
+	PlayEntrance(0.05);
+	FocusFirstEmptyField();
+end
+
+-- Back to the login screen from anywhere (realm dropped, session kicked, back from the realm list).
+function AccountLogin_Return()
+	GlueDialog_Hide();
+	RealmListFrame:Hide();
+	CharSelect:Hide();
+	CharCreate:Hide();
+	AccountPasswordField:SetText("");
+	AccountLogin_Show();
+end
+
+-- Slides the login column out to the left, then calls done.
+function AccountLogin_Leave(done)
+	AccountNameField:ReleaseInput();
+	AccountPasswordField:ReleaseInput();
+	GlueMotion.Offset(AccountLoginContent, "slide", AnchorPoint.LEFT, AnchorPoint.LEFT, nil,
+		CONTENT_LEFT, CONTENT_LEFT - SLIDE_DISTANCE, 0.25, 0, GlueEase.InCubic);
+	GlueMotion.Fade(AccountLoginContent, 0, 0.22, 0, function()
+		AccountLogin:Hide();
+		AccountLoginContent:SetOpacity(1);
+		AccountLoginContent:Show();
+		if done then done(); end
+	end, GlueEase.InCubic);
 end
 
 -- Called when the "remember account name" checkbox was clicked. The client clears the stored
@@ -17,17 +83,19 @@ end
 
 -- Initiates a login attempt using the values from the name and password fields.
 function AccountLogin_Login()
+	if not LoginButton:IsEnabled(false) then
+		return;
+	end
+
 	local username = AccountNameField:GetText();
 	local password = AccountPasswordField:GetText();
 
 	LoginButton:Disable();
-
 	GlueDialog_Show("CONNECTING");
-
 	RunConsoleCommand("login " .. username .. " " .. password);
 end
 
--- Called when the realm list was received — fade out, then show realm selection.
+-- Called when the realm list was received: the login column makes way for the realm list.
 function AccountLogin_OnRealmList()
 	-- The list is re-sent every few seconds while the realm list is open: update it in place so
 	-- the selection, scroll position and screen stay put.
@@ -42,23 +110,14 @@ function AccountLogin_OnRealmList()
 	end
 
 	GlueDialog_Hide();
-	if GlueUsesStaticFrontEnd() then
+	if AccountLogin:IsVisible() then
+		AccountLogin_Leave(function() RealmList_Show(); end);
+	else
 		RealmList_Show();
-		return;
-	end
-	local anim = AccountLogin:GetAnimation("FadeOut")
-	if anim and not anim:IsPlaying() then
-		anim:SetOnFinish(function(a)
-			a:SetOnFinish(nil);
-			AccountLogin:Hide();
-			RealmList_Show();
-		end);
-
-		AccountLogin:PlayAnimation("FadeOut");
 	end
 end
 
--- Called when the character list is ready — fade out, then show character select.
+-- Called when the character list is ready: show the characters.
 function AccountLogin_OnCharList()
 	GlueDialog_Hide();
 	CharList_Show();
@@ -80,6 +139,9 @@ end
 
 -- Called when the AccountLogin frame is loaded.
 function AccountLogin_OnLoad()
+	GlueFields_Register(AccountNameField);
+	GlueFields_Register(AccountPasswordField);
+
 	AccountLogin:RegisterEvent("AUTH_SUCCESS", function()
 		GlueDialog_Show("RETRIEVE_REALM_LIST");
 	end);
@@ -100,7 +162,7 @@ function AccountLogin_OnLoad()
 		GlueDialog_Show("CONNECTING_TO_REALM");
 	end);
 
-	-- Realm dropped while still in the GlueUI: fade to black, land on login with error.
+	-- Realm dropped while still in the GlueUI: back to login with an error.
 	AccountLogin:RegisterEvent("REALM_DISCONNECTED", function(frame, kickReason)
 		-- If the realm just rejected our auth session (e.g. not allowed to connect), the
 		-- REALM_AUTH_ERROR dialog is already showing and sends the player back to the realm list on
@@ -109,13 +171,7 @@ function AccountLogin_OnLoad()
 			return;
 		end
 
-		GlueDialog_Hide();
-		RealmListFrame:Hide();
-		CharSelect:Hide();
-		CharCreate:Hide();
-		AccountLogin:Show();
-		LoginButton:Enable();
-		AccountNameField:CaptureInput();
+		AccountLogin_Return();
 
 		-- The realm sends a reason when it terminated the session on purpose (account signed in
 		-- elsewhere, banned). Anything else is an ordinary drop and gets the generic message.
@@ -125,8 +181,6 @@ function AccountLogin_OnLoad()
 		else
 			GlueDialog_Show("REALM_DISCONNECTED_ERROR");
 		end
-
-		if not GlueUsesStaticFrontEnd() then AccountLogin:PlayAnimation("FadeIn"); end
 	end);
 
 	-- The login server terminated this session, most commonly because the account was signed in
@@ -135,17 +189,8 @@ function AccountLogin_OnLoad()
 		-- A reason this client build does not know still means the session is gone, so say
 		-- something generic rather than leaving the player on a screen that no longer works.
 		local reasonText = (kickReason and KICK_REASON_STRING[kickReason]) or "REALM_DISCONNECTED";
-
-		GlueDialog_Hide();
-		RealmListFrame:Hide();
-		CharSelect:Hide();
-		CharCreate:Hide();
-		AccountLogin:Show();
-		LoginButton:Enable();
-		AccountNameField:CaptureInput();
+		AccountLogin_Return();
 		GlueDialog_Show("SESSION_KICKED_ERROR", reasonText);
-
-		if not GlueUsesStaticFrontEnd() then AccountLogin:PlayAnimation("FadeIn"); end
 	end);
 
 	AccountLogin:RegisterEvent("REALM_LIST", AccountLogin_OnRealmList);
@@ -165,14 +210,7 @@ function AccountLogin_OnLoad()
 	end
 
 	if not realmConnector:IsConnected() then
-		-- With the account name already filled in, the password is what the player still has to
-		-- type, so start there instead.
-		if rememberedAccountName ~= "" then
-			AccountPasswordField:CaptureInput();
-		else
-			AccountNameField:CaptureInput();
-		end
+		FocusFirstEmptyField();
+		PlayEntrance(0.45);
 	end
-
-	if not GlueUsesStaticFrontEnd() then AccountLogin:PlayAnimation("FadeIn"); end
 end
