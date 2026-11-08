@@ -90,6 +90,69 @@
 			</Area>
 			<Visual inherits="ThemePlayerManaBarVisual" />
 		</Frame>
+		<!-- Brass diamond on the left end of the health bar holding the target's level, or a skull for
+		     hostile targets far above the player (TargetFrame_UpdateLevel). Wayfinder shows it, as it
+		     hides the portrait whose caption carries the level in the other themes. -->
+		<Frame name="TargetLevelBadge" renderer="DefaultRenderer">
+			<Property name="Visible" value="false" />
+			<Property name="Enabled" value="false" />
+			<Property name="Clickable" value="false" />
+			<Property name="Font" value="TargetLevelFont" />
+			<Property name="TextColor" value="FFFFD24F" />
+			<Area>
+				<Size>
+					<AbsDimension x="80" y="80" />
+				</Size>
+				<Anchor point="RIGHT" offset="12" relativeTo="TargetHealthBar" relativePoint="LEFT" />
+				<Anchor point="V_CENTER" offset="0" relativeTo="TargetHealthBar" relativePoint="V_CENTER" />
+			</Area>
+			<Visual>
+				<ImagerySection name="Diamond">
+					<ImageComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/LevelDiamond.htex" />
+				</ImagerySection>
+				<ImagerySection name="Level">
+					<TextComponent color="$TextColor" horzAlign="CENTER" vertAlign="CENTER" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Diamond" />
+						<Section section="Level" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="Disabled">
+					<Layer>
+						<Section section="Diamond" />
+						<Section section="Level" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+			<Frame name="TargetLevelSkull" renderer="DefaultRenderer">
+				<Property name="Visible" value="false" />
+				<Property name="Enabled" value="false" />
+				<Property name="Clickable" value="false" />
+				<Area>
+					<Anchor point="TOP" offset="19" />
+					<Anchor point="LEFT" offset="19" />
+					<Anchor point="BOTTOM" offset="-19" />
+					<Anchor point="RIGHT" offset="-19" />
+				</Area>
+				<Visual>
+					<ImagerySection name="Skull">
+						<ImageComponent texture="Interface/Icons/fg4_icons_emblemSkull_result.htex" tint="FFFF5A46" />
+					</ImagerySection>
+					<StateImagery name="Enabled">
+						<Layer>
+							<Section section="Skull" />
+						</Layer>
+					</StateImagery>
+					<StateImagery name="Disabled">
+						<Layer>
+							<Section section="Skull" />
+						</Layer>
+					</StateImagery>
+				</Visual>
+			</Frame>
+		</Frame>
 		<Frame name="TargetFrameClick" setAllPoints="true">
 			<Property name="HoverUnit" value="target" />
 			<Scripts>

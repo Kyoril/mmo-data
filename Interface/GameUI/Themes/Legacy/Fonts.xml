@@ -14,6 +14,8 @@
 	<Font name="ActionShortcutFont" file="Fonts/FRIZQT__.TTF" size="16" outline="1" shadowX="1.0" shadowY="1.0" />
 	<Font name="ActionCooldownFont" file="Fonts/FRIZQT__.TTF" size="34" outline="2" shadowX="1.0" shadowY="1.0" />
 	<Font name="ActionCostFont" file="Fonts/FRIZQT__.TTF" size="19" outline="1" shadowX="1.0" shadowY="1.0" />
+	<Font name="TargetLevelFont" file="Fonts/FRIZQT__.TTF" size="26" outline="1" shadowX="1.0" shadowY="1.0" />
+	<Font name="NameplateLevelFont" file="Fonts/FRIZQT__.TTF" size="22" outline="1" shadowX="1.0" shadowY="1.0" />
 	<Font name="MenuBarBadgeFont" file="Fonts/FRIZQT__.TTF" size="22" outline="1" />
 	<Font name="CombatHudNameFont" file="Fonts/FRIZQT__.TTF" size="24" outline="1" shadowX="1.0" shadowY="1.0" />
 	<Font name="CombatHudTextFont" file="Fonts/FRIZQT__.TTF" size="22" outline="1" shadowX="1.0" shadowY="1.0" />

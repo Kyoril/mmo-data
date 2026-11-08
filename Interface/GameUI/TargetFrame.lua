@@ -4,6 +4,66 @@ ResourceBarColors[0] = "FF328FEA"; -- Mana
 ResourceBarColors[1] = "FFE94B38"; -- Rage
 ResourceBarColors[2] = "FFF0C632"; -- Energy
 
+-- Hostile units this many levels above the player show a skull instead of their level.
+UNIT_LEVEL_SKULL_DIFFERENCE = 10;
+
+-- Level text colours by difficulty, i.e. the unit's level minus the player's.
+UNIT_LEVEL_COLOR_IMPOSSIBLE = "FFFF4A3D"; -- 5 or more above
+UNIT_LEVEL_COLOR_HARD = "FFFF9A3C";       -- 3 to 4 above
+UNIT_LEVEL_COLOR_EVEN = "FFFFD24F";       -- within 2
+UNIT_LEVEL_COLOR_EASY = "FF6FD36F";       -- 3 to 5 below
+UNIT_LEVEL_COLOR_TRIVIAL = "FFA0A0A0";    -- 6 or more below
+UNIT_LEVEL_COLOR_FRIENDLY = "FFF3EAD8";
+
+-- Whether a unit's level is hidden behind a skull: hostile and far above the player.
+function UnitLevel_ShowsSkull(unit)
+    local player = GetUnit("player");
+    return player ~= nil and unit:IsHostile() and unit:GetLevel() - player:GetLevel() >= UNIT_LEVEL_SKULL_DIFFERENCE;
+end
+
+-- Colour of a unit's level text, by difficulty for units the player can fight.
+function UnitLevel_GetColor(unit)
+    local player = GetUnit("player");
+    if player == nil or unit:IsFriendly() then
+        return UNIT_LEVEL_COLOR_FRIENDLY;
+    end
+
+    local difference = unit:GetLevel() - player:GetLevel();
+    if difference >= 5 then
+        return UNIT_LEVEL_COLOR_IMPOSSIBLE;
+    elseif difference >= 3 then
+        return UNIT_LEVEL_COLOR_HARD;
+    elseif difference >= -2 then
+        return UNIT_LEVEL_COLOR_EVEN;
+    elseif difference >= -5 then
+        return UNIT_LEVEL_COLOR_EASY;
+    end
+    return UNIT_LEVEL_COLOR_TRIVIAL;
+end
+
+-- Shows the target's level: in the diamond on the health bar (Wayfinder, which hides the portrait)
+-- and in the portrait caption of the other themes. A skull stands in for hostile targets far above.
+function TargetFrame_UpdateLevel(target)
+    local skull = UnitLevel_ShowsSkull(target);
+    local levelText = skull and "" or tostring(target:GetLevel());
+    local color = UnitLevel_GetColor(target);
+
+    TargetPortraitLevel:SetText(skull and "??" or levelText);
+
+    if GameUITheme and GameUITheme.Wayfinder then
+        TargetLevelBadge:SetText(levelText);
+        TargetLevelBadge:SetProperty("TextColor", color);
+        if skull then
+            TargetLevelSkull:Show();
+        else
+            TargetLevelSkull:Hide();
+        end
+        TargetLevelBadge:Show();
+    else
+        TargetLevelBadge:Hide();
+    end
+end
+
 -- A new target must not inherit the previous target's bar animation, so its bars snap.
 function TargetFrame_OnTargetChanged()
     TargetFrame_Update();
@@ -20,6 +80,8 @@ function TargetFrame_OnLoad()
     TargetFrame:RegisterEvent("UNIT_LEVEL_UPDATED", TargetFrame_OnUnitUpdate);
     TargetFrame:RegisterEvent("UNIT_NAME_UPDATED", TargetFrame_OnUnitUpdate);
     TargetFrame:RegisterEvent("UNIT_AURA_UPDATED", TargetFrame_OnAuraUpdate);
+    -- The level colour and skull depend on the player's level as well.
+    TargetFrame:RegisterEvent("PLAYER_LEVEL_UP", TargetFrame_Update);
 end
 
 -- Number of debuff slots available on the target frame (TargetAuraButton1..N).
@@ -116,7 +178,7 @@ function TargetFrame_Update()
 
     if target then
         TargetName:SetText(target:GetName());
-        TargetPortraitLevel:SetText(tostring(target:GetLevel()));
+        TargetFrame_UpdateLevel(target);
         TargetPortraitModel:SetUnit("target");
 
         if GameUITheme and GameUITheme.Wayfinder then

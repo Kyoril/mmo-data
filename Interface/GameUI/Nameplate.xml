@@ -11,6 +11,8 @@
 		- NameplateHighlightTemplate : white backing shown behind the bar of the selected unit,
 		                               reading as an outline around it.
 		- NameplateCastBarTemplate   : the spell cast/channel bar shown below the health bar.
+		- NameplateLevelTemplate     : the unit's level right of the health bar.
+		- NameplateSkullTemplate     : shown instead of the level for hostile units 10+ levels above.
 
 		The bar fill color is driven through the health bar's "ProgressColor" property which
 		the frame sets based on the unit's reaction (hostile / neutral / friendly / player).
@@ -46,6 +48,50 @@
 
 		<Area>
 			<Size><AbsDimension x="240" y="30" /></Size>
+		</Area>
+	</Frame>
+
+	<!--
+		The unit's level, right of the health bar. "TextColor" is driven at runtime with the
+		level's difficulty colour. Hostile units 10+ levels above the player show the skull
+		template instead. Both must stay childless (cloned via Copy()).
+	-->
+	<Frame name="NameplateLevelTemplate" renderer="DefaultRenderer">
+		<Property name="Font" value="NameplateLevelFont" />
+		<Property name="TextColor" value="FFFFD24F" />
+
+		<Visual>
+			<ImagerySection name="Text">
+				<TextComponent color="$TextColor" horzAlign="LEFT" vertAlign="CENTER" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer><Section section="Text" /></Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer><Section section="Text" /></Layer>
+			</StateImagery>
+		</Visual>
+
+		<Area>
+			<Size><AbsDimension x="40" y="30" /></Size>
+		</Area>
+	</Frame>
+
+	<Frame name="NameplateSkullTemplate" renderer="DefaultRenderer">
+		<Visual>
+			<ImagerySection name="Skull">
+				<ImageComponent texture="Interface/Icons/fg4_icons_emblemSkull_result.htex" tint="FFFF5A46" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer><Section section="Skull" /></Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer><Section section="Skull" /></Layer>
+			</StateImagery>
+		</Visual>
+
+		<Area>
+			<Size><AbsDimension x="30" y="30" /></Size>
 		</Area>
 	</Frame>
 
