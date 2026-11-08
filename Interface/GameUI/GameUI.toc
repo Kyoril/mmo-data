@@ -41,6 +41,7 @@ TalentFrame.xml
 TradeFrame.xml
 StaticDialog.xml
 Minimap.xml
+WorldMap.xml
 QuestTracker.xml
 LootRollFrame.xml
 

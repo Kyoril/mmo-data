@@ -159,6 +159,8 @@ function Minimap_OnUpdate(self, elapsed)
     for i, obj in ipairs(objects) do
         if obj.type == "party" then
             GameTooltip_AddLine(obj.name, TOOLTIP_LINE_LEFT, "FF00CCFF");
+        elseif obj.type == "guild" then
+            GameTooltip_AddLine(obj.name, TOOLTIP_LINE_LEFT, "FF4DF266");
         elseif obj.type == "questgiver" then
             GameTooltip_AddLine(obj.name, TOOLTIP_LINE_LEFT, "FFFFFF00");
         end

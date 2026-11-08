@@ -1,0 +1,170 @@
+<?xml version="1.0" ?>
+<UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
+	<!-- Labels drawn into the map itself by the native WorldMap frame (see world_map_frame.h). -->
+	<Font name="WorldMapTitleFont" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="64" outline="0" shadowX="0" shadowY="0" />
+	<Font name="WorldMapZoneFont" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="40" outline="0" shadowX="0" shadowY="0" />
+	<Font name="WorldMapSubZoneFont" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="28" outline="0" shadowX="0" shadowY="0" />
+
+	<Script file="WorldMap.lua" />
+
+	<Frame name="WorldMapFrame" inherits="SidePanelTemplate" parent="GameParent">
+		<Property name="Visible" value="False" />
+
+		<Scripts>
+			<OnLoad>
+				return function(self)
+					WorldMapFrame_OnLoad(self);
+				end
+			</OnLoad>
+			<OnShow>
+				return function(self)
+					WorldMapFrame_OnShow(self);
+				end
+			</OnShow>
+			<OnHide>
+				return function(self)
+					WorldMapFrame_OnHide(self);
+				end
+			</OnHide>
+			<OnUpdate>
+				return function(self, elapsed)
+					WorldMapFrame_OnUpdate(self, elapsed);
+				end
+			</OnUpdate>
+		</Scripts>
+
+		<!-- The map: scroll to zoom, drag to pan, left click into a zone, right click out. -->
+		<Frame name="WorldMapCanvas" type="WorldMap">
+			<Property name="Clickable" value="true" />
+			<Area>
+				<Anchor point="LEFT" offset="32" />
+				<Anchor point="RIGHT" offset="-32" />
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="WorldMapFrame_SidePanelTitleBar" offset="12" />
+				<Anchor point="BOTTOM" offset="-96" />
+			</Area>
+
+			<Frame name="WorldMapNoMapText" inherits="TextCenter">
+				<Property name="Text" value="WORLDMAP_NO_MAP" />
+				<Property name="Visible" value="false" />
+				<Property name="Clickable" value="false" />
+				<Property name="MousePassThrough" value="true" />
+				<Area>
+					<Anchor point="LEFT" />
+					<Anchor point="RIGHT" />
+					<Anchor point="TOP" />
+					<Anchor point="BOTTOM" />
+				</Area>
+			</Frame>
+
+			<Frame name="WorldMapZoomInButton" inherits="RoundIconButton">
+				<Property name="Icon" value="Interface/Icons/fg4_iconsBrown_plus_result.htex" />
+				<Area>
+					<Anchor point="TOP" offset="24" />
+					<Anchor point="RIGHT" offset="-24" />
+				</Area>
+				<Scripts>
+					<OnClick>
+						return function(self, button)
+							WorldMapZoomIn();
+						end
+					</OnClick>
+					<OnEnter>
+						return function(self)
+							WorldMapButton_ShowTooltip(self, "WORLDMAP_ZOOM_IN");
+						end
+					</OnEnter>
+					<OnLeave>
+						return function(self)
+							GameTooltip:Hide();
+						end
+					</OnLeave>
+				</Scripts>
+			</Frame>
+
+			<Frame name="WorldMapZoomOutButton" inherits="RoundIconButton">
+				<Property name="Icon" value="Interface/Icons/fg4_iconsBrown_minus_result.htex" />
+				<Area>
+					<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="WorldMapZoomInButton" offset="12" />
+					<Anchor point="RIGHT" offset="-24" />
+				</Area>
+				<Scripts>
+					<OnClick>
+						return function(self, button)
+							WorldMapZoomOut();
+						end
+					</OnClick>
+					<OnEnter>
+						return function(self)
+							WorldMapButton_ShowTooltip(self, "WORLDMAP_ZOOM_OUT");
+						end
+					</OnEnter>
+					<OnLeave>
+						return function(self)
+							GameTooltip:Hide();
+						end
+					</OnLeave>
+				</Scripts>
+			</Frame>
+		</Frame>
+
+		<!-- Footer: zone under the cursor on the left, the player's position and view buttons on the right. -->
+		<Frame name="WorldMapHoverText" inherits="TextSmall">
+			<Property name="Clickable" value="false" />
+			<Property name="Enabled" value="false" />
+			<Property name="VertAlign" value="CENTER" />
+			<Property name="TextColor" value="FFE8D6A8" />
+			<Area>
+				<Anchor point="LEFT" offset="40" />
+				<Anchor point="RIGHT" relativePoint="H_CENTER" offset="0" />
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="WorldMapCanvas" offset="8" />
+				<Anchor point="BOTTOM" offset="-28" />
+			</Area>
+		</Frame>
+
+		<Frame name="WorldMapShowAllButton" inherits="GlueButton">
+			<Property name="Text" value="WORLDMAP_SHOW_ALL" />
+			<Area>
+				<Size><AbsDimension x="300" y="64" /></Size>
+				<Anchor point="RIGHT" offset="-32" />
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="WorldMapCanvas" offset="12" />
+			</Area>
+			<Scripts>
+				<OnClick>
+					return function(self, button)
+						WorldMapShowWholeMap();
+					end
+				</OnClick>
+			</Scripts>
+		</Frame>
+
+		<Frame name="WorldMapFindMeButton" inherits="GlueButton">
+			<Property name="Text" value="WORLDMAP_FIND_ME" />
+			<Area>
+				<Size><AbsDimension x="300" y="64" /></Size>
+				<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="WorldMapShowAllButton" offset="-16" />
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="WorldMapCanvas" offset="12" />
+			</Area>
+			<Scripts>
+				<OnClick>
+					return function(self, button)
+						WorldMapCenterOnPlayer();
+					end
+				</OnClick>
+			</Scripts>
+		</Frame>
+
+		<Frame name="WorldMapPlayerText" inherits="TextSmall">
+			<Property name="HorzAlign" value="RIGHT" />
+			<Property name="Clickable" value="false" />
+			<Property name="Enabled" value="false" />
+			<Property name="VertAlign" value="CENTER" />
+			<Property name="TextColor" value="FFC9D6E2" />
+			<Area>
+				<Anchor point="LEFT" relativePoint="H_CENTER" offset="0" />
+				<Anchor point="RIGHT" relativePoint="LEFT" relativeTo="WorldMapFindMeButton" offset="-24" />
+				<Anchor point="TOP" relativePoint="BOTTOM" relativeTo="WorldMapCanvas" offset="8" />
+				<Anchor point="BOTTOM" offset="-28" />
+			</Area>
+		</Frame>
+	</Frame>
+</UiLayout>

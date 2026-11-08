@@ -728,6 +728,11 @@ function CloseAllWindows(ignoreCenter)
 		windowsVisible = true;
 	end
 
+	if (WorldMapFrame and WorldMapFrame:IsVisible()) then
+		WorldMapFrame:Hide();
+		windowsVisible = true;
+	end
+
 	-- Close context menu if visible
 	if (ContextMenu_IsShown and ContextMenu_IsShown()) then
 		ContextMenu_Hide();

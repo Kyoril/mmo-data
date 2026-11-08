@@ -453,6 +453,14 @@
         end
 	</Binding>
     
+    <Binding name="TOGGLEWORLDMAP" description="Toggle the world map." category="INTERFACE">
+		return function(key, keystate)
+            if keystate == "DOWN" then
+                WorldMapFrame_Toggle();
+            end
+        end
+	</Binding>
+    
     <Binding name="MINIMAPZOOMIN" description="Increases the zoom level of the minimap." category="INTERFACE">
 		return function(key, keystate)
             if keystate == "DOWN" then
