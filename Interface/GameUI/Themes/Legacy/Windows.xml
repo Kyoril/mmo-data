@@ -3753,10 +3753,15 @@
 	</Frame>
 
 	<!-- VendorFrame.xml: VendorText1 -->
+	<!--
+		The vendor card name must never word-wrap: a second line would be drawn over the
+		price row below it, because a text component does not clip to its frame. The name
+		is shortened with a trailing ellipsis instead (see GameUI/VendorFrame.lua).
+	-->
 	<Frame name="ThemeVendorText1Visual">
 		<Visual>
 			<ImagerySection name="Text">
-				<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" />
+				<TextComponent color="FFFFD100" horzAlign="LEFT" vertAlign="TOP" wrap="false" />
 			</ImagerySection>
 			<StateImagery name="Enabled">
 				<Layer>
