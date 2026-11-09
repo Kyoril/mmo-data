@@ -174,6 +174,22 @@ OPTIONS_CATEGORIES = {
 				end,
 			},
 			{
+				-- How the world is brought up to native resolution whenever it renders below it: the
+				-- render scale above, or the dynamic resolution of the target frame rate.
+				type = "dropdown",
+				labelKey = "OPTIONS_UPSCALE_FILTER",
+				tooltipKey = "OPTIONS_TT_UPSCALE_FILTER",
+				cvar = "gxUpscaleFilter",
+				defaultValue = "3",
+				indent = 1,
+				items = {
+					{ labelKey = "OPTIONS_UPSCALE_POINT",    value = "0", tipKey = "OPTIONS_TT_UPSCALE_POINT" },
+					{ labelKey = "OPTIONS_UPSCALE_BILINEAR", value = "1", tipKey = "OPTIONS_TT_UPSCALE_BILINEAR" },
+					{ labelKey = "OPTIONS_UPSCALE_BICUBIC",  value = "2", tipKey = "OPTIONS_TT_UPSCALE_BICUBIC" },
+					{ labelKey = "OPTIONS_UPSCALE_FSR",      value = "3", tipKey = "OPTIONS_TT_UPSCALE_FSR" },
+				},
+			},
+			{
 				type = "toggle",
 				labelKey = "OPTIONS_VSYNC",
 				tooltipKey = "OPTIONS_TT_VSYNC",
