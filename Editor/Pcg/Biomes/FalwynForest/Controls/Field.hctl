@@ -1,0 +1,64 @@
+{
+  "defaultTags": [
+    "exclusion",
+    "field"
+  ],
+  "groups": [
+    {
+      "name": "Field",
+      "properties": [
+        {
+          "default": {
+            "type": "string",
+            "value": "Editor/Pcg/Sections/FieldEdge.hsec"
+          },
+          "description": "Edge section (.hsec) laid around the field",
+          "enumValues": [],
+          "max": 0.0,
+          "min": 0.0,
+          "name": "section",
+          "type": "asset"
+        },
+        {
+          "default": {
+            "type": "string",
+            "value": "Models/Terrain/Briarwatch_Farmland_Plowed.hmi"
+          },
+          "description": "Tile material that carries the soil layer",
+          "enumValues": [],
+          "max": 0.0,
+          "min": 0.0,
+          "name": "tileMaterial",
+          "type": "asset"
+        },
+        {
+          "default": {
+            "type": "string",
+            "value": "Textures/Tilesets/T_Field_Plowed_C.htex"
+          },
+          "description": "Terrain layer the area is painted with",
+          "enumValues": [],
+          "max": 0.0,
+          "min": 0.0,
+          "name": "texture",
+          "type": "asset"
+        },
+        {
+          "default": {
+            "type": "float",
+            "value": 1.5
+          },
+          "description": "Distance over which the soil fades out at the edge",
+          "enumValues": [],
+          "max": 20.0,
+          "min": 0.0,
+          "name": "falloff",
+          "type": "float"
+        }
+      ]
+    }
+  ],
+  "name": "Field",
+  "shape": "rectangle",
+  "version": 1
+}

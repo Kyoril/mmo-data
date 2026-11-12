@@ -143,10 +143,40 @@
       "fromPin": "Out",
       "toNode": 25,
       "toPin": "In"
+    },
+    {
+      "fromNode": 26,
+      "fromPin": "Out",
+      "toNode": 27,
+      "toPin": "In"
+    },
+    {
+      "fromNode": 26,
+      "fromPin": "Out",
+      "toNode": 28,
+      "toPin": "In"
+    },
+    {
+      "fromNode": 29,
+      "fromPin": "Out",
+      "toNode": 28,
+      "toPin": "Exclude"
+    },
+    {
+      "fromNode": 29,
+      "fromPin": "Out",
+      "toNode": 13,
+      "toPin": "Exclude"
+    },
+    {
+      "fromNode": 30,
+      "fromPin": "Out",
+      "toNode": 11,
+      "toPin": "Exclude"
     }
   ],
   "name": "FalwynValley",
-  "nextNodeId": 26,
+  "nextNodeId": 31,
   "nodes": [
     {
       "comment": "",
@@ -625,6 +655,87 @@
         }
       },
       "type": "StampSectionAtPoints"
+    },
+    {
+      "comment": "",
+      "debug": false,
+      "editorX": 0.0,
+      "editorY": 1420.0,
+      "id": 26,
+      "settings": {
+        "tags": {
+          "type": "string",
+          "value": "field"
+        }
+      },
+      "type": "GetControls"
+    },
+    {
+      "comment": "texture, falloff and tileMaterial come from the Field control; before the section so its edge paint lies on top",
+      "debug": false,
+      "editorX": 260.0,
+      "editorY": 1420.0,
+      "id": 27,
+      "settings": {},
+      "type": "PaintSplat"
+    },
+    {
+      "comment": "Edge section from the Field control, floor side towards the field",
+      "debug": false,
+      "editorX": 260.0,
+      "editorY": 1620.0,
+      "id": 28,
+      "settings": {
+        "floorInside": {
+          "type": "bool",
+          "value": true
+        },
+        "heightMode": {
+          "type": "string",
+          "value": "keepGround"
+        },
+        "sectionAttribute": {
+          "type": "string",
+          "value": "section"
+        }
+      },
+      "type": "LaySectionAlongLoop"
+    },
+    {
+      "comment": "Exclusion areas without fields (a field must not cut its own fence); valley wall and field edges",
+      "debug": false,
+      "editorX": 0.0,
+      "editorY": 1620.0,
+      "id": 29,
+      "settings": {
+        "excludeTags": {
+          "type": "string",
+          "value": "field"
+        },
+        "tags": {
+          "type": "string",
+          "value": "exclusion"
+        }
+      },
+      "type": "GetControls"
+    },
+    {
+      "comment": "Exclusion areas without roads and fields (a road must not strip its own props)",
+      "debug": false,
+      "editorX": -260.0,
+      "editorY": 420.0,
+      "id": 30,
+      "settings": {
+        "excludeTags": {
+          "type": "string",
+          "value": "road,field"
+        },
+        "tags": {
+          "type": "string",
+          "value": "exclusion"
+        }
+      },
+      "type": "GetControls"
     }
   ],
   "parameters": [

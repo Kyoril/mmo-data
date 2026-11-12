@@ -1,0 +1,53 @@
+{
+  "halfWidth": 2.0,
+  "length": 20.0,
+  "name": "FieldEdge",
+  "rules": [
+    {
+      "asset": "Models/FalwynPlains/Plants/Bush_01.hmsh",
+      "keepChance": 0.7,
+      "positionJitter": 0.5,
+      "scaleJitter": 0.15,
+      "swapGroup": [
+        "Models/FalwynPlains/Plants/Bush_02.hmsh"
+      ],
+      "yawJitterDeg": 180.0
+    }
+  ],
+  "runs": [
+    {
+      "keepChance": 1.0,
+      "members": [
+        8944371112535437613,
+        8945614068746168200,
+        8947475605829177880,
+        8948901845720037850,
+        8950329267430092937,
+        8951460954179332711
+      ],
+      "name": "Fence"
+    },
+    {
+      "keepChance": 1.0,
+      "members": [
+        8952411309458345060,
+        8953379466986906318,
+        8954434776092797395,
+        8955398097456843379,
+        8956391235732455622,
+        8957219834564857813
+      ],
+      "name": "Fence"
+    }
+  ],
+  "sideFalloff": 1.0,
+  "variants": [
+    {
+      "originX": 0.0
+    },
+    {
+      "originX": 60.0,
+      "role": "innerCorner"
+    }
+  ]
+}
