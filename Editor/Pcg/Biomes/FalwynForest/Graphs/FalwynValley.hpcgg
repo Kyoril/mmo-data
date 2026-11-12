@@ -163,20 +163,20 @@
       "toPin": "Exclude"
     },
     {
-      "fromNode": 29,
-      "fromPin": "Out",
-      "toNode": 13,
-      "toPin": "Exclude"
-    },
-    {
       "fromNode": 30,
       "fromPin": "Out",
       "toNode": 11,
       "toPin": "Exclude"
+    },
+    {
+      "fromNode": 31,
+      "fromPin": "Out",
+      "toNode": 13,
+      "toPin": "Exclude"
     }
   ],
   "name": "FalwynValley",
-  "nextNodeId": 31,
+  "nextNodeId": 32,
   "nodes": [
     {
       "comment": "",
@@ -720,7 +720,7 @@
       "type": "GetControls"
     },
     {
-      "comment": "Exclusion areas without roads and fields (a road must not strip its own props)",
+      "comment": "Exclusion areas without roads, fields and water (a road must not strip its own props; rivers and lakes leave road props alone)",
       "debug": false,
       "editorX": -260.0,
       "editorY": 420.0,
@@ -728,7 +728,25 @@
       "settings": {
         "excludeTags": {
           "type": "string",
-          "value": "road,field"
+          "value": "road,field,water"
+        },
+        "tags": {
+          "type": "string",
+          "value": "exclusion"
+        }
+      },
+      "type": "GetControls"
+    },
+    {
+      "comment": "Exclusion areas without fields and water (rivers and lakes leave the valley wall alone)",
+      "debug": false,
+      "editorX": -260.0,
+      "editorY": 620.0,
+      "id": 31,
+      "settings": {
+        "excludeTags": {
+          "type": "string",
+          "value": "field,water"
         },
         "tags": {
           "type": "string",
