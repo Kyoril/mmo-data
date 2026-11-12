@@ -9,3 +9,9 @@ Food Crate8Models/FalwynPlains/Props/WoodProps/SM_hc_WoodCrate.hmsh
 .E2E Test DoorModels/Dungeon/Door_01.hmsh
 1E2E Test WallModels/Dungeon/FP_Wall_01.hmsh
 C	Hollow Choir Magic Barrier#Models/Dungeon/MagicBarrier_01.hmsh
+N
+Road Lantern<Models/FalwynPlains/Props/WoodProps/SM_hc_WoodLantern_A.hmsh
+PWatch-Fire Brazier8Models/FalwynPlains/Props/Furniture/SM_hc_Brazier_A.hmsh
+2Buried Root!Models/Crafting/SM_G_Root_03.hmsh
+@Skiff5Models/FalwynPlains/Props/Furniture/SM_hc_Boat_A.hmsh
+@Resonance Shard+Models/RuneStone/Runestone_01_Unstable.hmsh
