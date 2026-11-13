@@ -247,12 +247,18 @@ end
 -- template in GameTemplates.xml).
 local SIDE_PANEL_TITLE_SUBTEXT_CHILD = 2;
 
+-- The NPC name label of every side panel which already built one, keyed by the panel's name.
+-- The client hands every event handler a fresh wrapper of the frame, so a label remembered on
+-- `self` would be gone by the next interaction and another one cloned on top of it.
+local npcTitleStateByPanel = {};
+
 -- Sets a side panel's title bar text and clears the second header line below it.
 function SidePanel_SetTitle(self, text)
 	local titleBar = self:GetChild(0);
-	if self.npcNameLabel then
-		self.npcNameLabel:Hide();
-		titleBar:SetHeight(self.defaultTitleHeight);
+	local state = npcTitleStateByPanel[self:GetName()];
+	if state then
+		state.label:Hide();
+		titleBar:SetHeight(state.defaultTitleHeight);
 		local close = titleBar:GetChild(0);
 		close:SetAnchor(AnchorPoint.TOP, AnchorPoint.TOP, titleBar, 8);
 		close:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.BOTTOM, titleBar, -18);
@@ -271,15 +277,17 @@ function SidePanel_SetUnitTitle(self, unit)
 	local titleBar = self:GetChild(0);
 	local subtext = titleBar:GetChild(SIDE_PANEL_TITLE_SUBTEXT_CHILD);
 	if GameUITheme and GameUITheme.NpcDialogNameFont and subtext then
-		if not self.npcNameLabel then
+		local state = npcTitleStateByPanel[self:GetName()];
+		if not state then
 			local rect = titleBar:GetRect();
-			self.defaultTitleHeight = (rect.bottom - rect.top) / GetUIScale().y;
-			self.npcNameLabel = TextSmall:Clone();
-			self.npcNameLabel:SetProperty("Clickable", "false");
-			self.npcNameLabel:SetProperty("MousePassThrough", "true");
-			titleBar:AddChild(self.npcNameLabel);
+			local label = TextSmall:Clone();
+			label:SetProperty("Clickable", "false");
+			label:SetProperty("MousePassThrough", "true");
+			titleBar:AddChild(label);
+			state = { label = label, defaultTitleHeight = (rect.bottom - rect.top) / GetUIScale().y };
+			npcTitleStateByPanel[self:GetName()] = state;
 		end
-		local name = self.npcNameLabel;
+		local name = state.label;
 		name:SetProperty("Font", GameUITheme.NpcDialogNameFont);
 		name:SetProperty("TextColor", "FFF3EAD2");
 		name:SetAnchor(AnchorPoint.LEFT, AnchorPoint.LEFT, titleBar, 16);
@@ -299,7 +307,7 @@ function SidePanel_SetUnitTitle(self, unit)
 		subtext:SetText(subtitle);
 		local subtitleHeight = subtitle ~= "" and subtext:GetTextHeight() or 0;
 		subtext:SetHeight(subtitleHeight);
-		titleBar:SetHeight(math.max(self.defaultTitleHeight, 12 + nameHeight + (subtitleHeight > 0 and 6 + subtitleHeight or 0) + 18));
+		titleBar:SetHeight(math.max(state.defaultTitleHeight, 12 + nameHeight + (subtitleHeight > 0 and 6 + subtitleHeight or 0) + 18));
 		-- The close control stays square when a long name expands the header.
 		local close = titleBar:GetChild(0);
 		close:ClearAnchor(AnchorPoint.BOTTOM);

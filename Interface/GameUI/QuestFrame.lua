@@ -352,6 +352,12 @@ end
 
 -- Theme-only greeting layout. The original parchment/list layout remains the
 -- fallback for Legacy; quest details and reward panels keep their own surfaces.
+
+-- The greeting layout, built once for the quest frame's greeting panel. The client hands every
+-- event handler a fresh wrapper of the frame, so a layout remembered on `self` would be gone by
+-- the next NPC dialog and another greeting panel cloned on top of the previous one.
+local npcGreetingLayout = nil;
+
 local function NpcDialog_Container(parent)
 	local frame = TextSmall:Clone();
 	frame:SetText("");
@@ -405,13 +411,13 @@ local function NpcDialog_CreateGreeting(self)
 	greeting:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, card, -24);
 	local quests = NpcDialog_Container(content);
 	local services = NpcDialog_Container(content);
-	self.npcGreetingLayout = { root = root, clip = clip, content = content, scroll = scroll,
+	npcGreetingLayout = { root = root, clip = clip, content = content, scroll = scroll,
 		card = card, greeting = greeting, quests = quests, services = services };
 	GreetingText:Hide();
 	AvailableQuestList:Hide();
 	GossipActionList:Hide();
 	GreetingPanelScrollBar:Hide();
-	return self.npcGreetingLayout;
+	return npcGreetingLayout;
 end
 
 local function NpcDialog_AddChoices(container, titleKey, count, getEntry, clicked)
@@ -459,7 +465,7 @@ local function NpcDialog_AddChoices(container, titleKey, count, getEntry, clicke
 end
 
 local function NpcDialog_UpdateGreeting(self, reserveScrollBar)
-	local layout = self.npcGreetingLayout or NpcDialog_CreateGreeting(self);
+	local layout = npcGreetingLayout or NpcDialog_CreateGreeting(self);
 	layout.clip:SetAnchor(AnchorPoint.RIGHT, AnchorPoint.RIGHT, layout.root, reserveScrollBar and -100 or -20);
 	-- Resolve the visible panel before measuring wrapped text and the scroll viewport.
 	QuestFrame_ShowPanel(QuestFrameGreetingPanel);
