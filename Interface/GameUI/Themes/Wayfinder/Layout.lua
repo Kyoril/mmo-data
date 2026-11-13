@@ -345,6 +345,10 @@ function Wayfinder_ApplyLayout()
 	Center(clasp, ActionBar, claspWidth, claspWidth);
 	clasp:SetAnchor(A.TOP, A.TOP, ActionBar, -8);
 
+	-- The page number sits above the clasp, in the gap between the banks of the second bar.
+	Center(ActionBarPageIndicator, ActionBar, 64, 64);
+	ActionBarPageIndicator:SetAnchor(A.BOTTOM, A.TOP, ActionBar, -18);
+
 	WayfinderEmpty:CopyVisuals(PlayerFrame);
 	Center(PlayerFrame, GameParent, barWidth, 36);
 	PlayerFrame:SetAnchor(A.BOTTOM, A.BOTTOM, GameMenuBar, -57);

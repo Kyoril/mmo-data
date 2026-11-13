@@ -117,6 +117,42 @@
 				<Anchor point="TOP" offset="0" />
 			</Area>
 		</Frame>
+		<!-- Brass diamond with the number of the page the main bar shows, hidden on page 1
+		     (ActionBar_UpdatePageIndicator). Sits left of the bar; Wayfinder moves it above the clasp. -->
+		<Frame name="ActionBarPageIndicator" renderer="DefaultRenderer">
+			<Property name="Visible" value="false" />
+			<Property name="Enabled" value="false" />
+			<Property name="Clickable" value="false" />
+			<Property name="Font" value="TargetLevelFont" />
+			<Property name="TextColor" value="FFFFD24F" />
+			<Area>
+				<Size>
+					<AbsDimension x="72" y="72" />
+				</Size>
+				<Anchor point="RIGHT" offset="-4" relativePoint="LEFT" />
+				<Anchor point="V_CENTER" offset="0" />
+			</Area>
+			<Visual>
+				<ImagerySection name="Diamond">
+					<ImageComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/LevelDiamond.htex" />
+				</ImagerySection>
+				<ImagerySection name="Page">
+					<TextComponent color="$TextColor" horzAlign="CENTER" vertAlign="CENTER" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Diamond" />
+						<Section section="Page" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="Disabled">
+					<Layer>
+						<Section section="Diamond" />
+						<Section section="Page" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+		</Frame>
 		<Scripts>
 			<OnLoad>
                 return function(this)
