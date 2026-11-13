@@ -209,7 +209,10 @@ function QuestLogFrame_UpdateQuestDetails()
         titleText = titleText .. "  (" .. Localize("QUEST_WRONG_CLASS") .. ")";
     elseif questLogEntry.status == QS_FAILED then
         titleText = titleText .. "  (" .. Localize("QUEST_FAILED") .. ")";
-    elseif questLogEntry.status ~= QS_COMPLETE then
+    else
+        -- A timed quest without objectives is complete from the moment it is accepted, but its
+        -- deadline keeps running and still fails the quest, so the countdown is shown for a
+        -- complete quest as well.
         local timeLeft = GetQuestLogTimeLeft(questLogEntry.quest.id);
         if timeLeft and timeLeft > 0 then
             titleText = titleText .. "  (" .. string.format(Localize("QUEST_TIME_REMAINING"), FormatQuestTime(timeLeft)) .. ")";

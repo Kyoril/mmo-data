@@ -255,7 +255,10 @@ function QuestTracker_Refresh()
         if isUnlock then
             titleText = string.format(Localize("QUEST_CLASS_UNLOCK_FORMAT"), titleText)
         end
-        if not isDisabled and not isFailed and not isComplete then
+        -- A timed quest without objectives is complete from the moment it is accepted, but its
+        -- deadline keeps running and still fails the quest, so the countdown stays on the title
+        -- until the quest is turned in or lost.
+        if not isDisabled and not isFailed then
             local timeLeft = GetQuestLogTimeLeft(entry.id)
             if timeLeft and timeLeft > 0 then
                 titleText = titleText .. "  (" .. FormatQuestTime(timeLeft) .. ")"
