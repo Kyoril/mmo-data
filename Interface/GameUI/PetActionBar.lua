@@ -138,6 +138,7 @@ function PetActionBar_Update(self)
     -- temporary pets get the commands only.
     if not HasPetUI() then
         bar:Hide();
+        PetActionBar_UpdateHudLayout();
         return;
     end
 
@@ -148,6 +149,15 @@ function PetActionBar_Update(self)
     PetActionBar_UpdateStrategy();
     PetActionBar_UpdateAbilities();
     bar:Show();
+    PetActionBar_UpdateHudLayout();
+end
+
+-- The Wayfinder cast bar sits above the pet bar while that is shown. Skipped while the UI still
+-- loads (the cast bar comes later in the TOC); the theme lays everything out once at the end.
+function PetActionBar_UpdateHudLayout()
+    if GameUITheme and GameUITheme.Wayfinder and PlayerCastBar ~= nil and ActionBar2 ~= nil then
+        Wayfinder_UpdateActionBarLayout(ActionBar2);
+    end
 end
 
 function PetActionButton_OnClick(self, button)

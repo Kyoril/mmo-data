@@ -64,9 +64,82 @@ function TargetFrame_UpdateLevel(target)
     end
 end
 
+-- Fill colours of the target's cast bar.
+TARGET_CAST_COLOR = "FFE2B53C";
+TARGET_CAST_COLOR_WAYFINDER = "FFD8B677";
+TARGET_CAST_INTERRUPTED_COLOR = "FFB5524A";
+
+-- What the cast bar shows right now, so that its text and colour are only set when they change.
+local targetCastText = nil;
+local targetCastColor = nil;
+
+-- Whether the Wayfinder layout currently has room for the resource and the cast bar.
+local targetLayoutPower = nil;
+local targetLayoutCast = nil;
+
+-- The Wayfinder theme stacks the resource and cast bars and closes the gap of a hidden one.
+local function TargetFrame_UpdateLayout(hasPower, casting)
+    if not (GameUITheme and GameUITheme.Wayfinder) then
+        return;
+    end
+
+    if hasPower == targetLayoutPower and casting == targetLayoutCast then
+        return;
+    end
+
+    targetLayoutPower = hasPower;
+    targetLayoutCast = casting;
+    Wayfinder_LayoutTargetFrame(hasPower, casting);
+end
+
+-- Shows the target's cast or channel, and "Interrupted" for a moment after a failed cast. Runs
+-- every frame while the target frame is visible: the progress comes from timestamps on the unit.
+function TargetFrame_UpdateCastBar()
+    local target = GetUnit("target");
+    local spellName = target and target:GetCastSpellName() or nil;
+    local interrupted = target ~= nil and spellName == nil and target:IsCastInterrupted();
+
+    if spellName == nil and not interrupted then
+        if targetCastText ~= nil then
+            targetCastText = nil;
+            TargetCastBar:Hide();
+            TargetFrame_UpdateLayout(targetLayoutPower, false);
+        end
+        return;
+    end
+
+    local text = spellName;
+    local color = GameUITheme and GameUITheme.Wayfinder and TARGET_CAST_COLOR_WAYFINDER or TARGET_CAST_COLOR;
+    local progress = 1.0;
+    if interrupted then
+        text = Localize("NAMEPLATE_INTERRUPTED");
+        color = TARGET_CAST_INTERRUPTED_COLOR;
+    else
+        progress = target:GetCastProgress();
+    end
+
+    if color ~= targetCastColor then
+        targetCastColor = color;
+        TargetCastBar:SetProperty("ProgressColor", color);
+    end
+
+    TargetCastBar:SetProgress(progress);
+
+    if text ~= targetCastText then
+        local wasHidden = targetCastText == nil;
+        targetCastText = text;
+        TargetCastBar:SetText(text);
+        if wasHidden then
+            TargetCastBar:Show();
+            TargetFrame_UpdateLayout(targetLayoutPower, true);
+        end
+    end
+end
+
 -- A new target must not inherit the previous target's bar animation, so its bars snap.
 function TargetFrame_OnTargetChanged()
     TargetFrame_Update();
+    TargetFrame_UpdateCastBar();
     TargetHealthBar:SetProgressInstant(TargetHealthBar:GetProgress());
     TargetManaBar:SetProgressInstant(TargetManaBar:GetProgress());
 end
@@ -216,14 +289,27 @@ function TargetFrame_Update()
 
         local power = target:GetPower(powerType);
         local maxPower = target:GetMaxPower(powerType);
+        local hasPower = maxPower > 0;
         if (maxPower == 0) then
             power = 0;
             maxPower = 1;
         end
-        
+
         local powerPct = power / maxPower;
         TargetManaBar:SetProgress(powerPct);
-        TargetManaBar:SetText(math.floor(powerPct * 100) .. "%");
+
+        if GameUITheme and GameUITheme.Wayfinder then
+            -- The bar shows the value, and a target without a resource does not get an empty bar.
+            TargetManaBar:SetText(power .. " / " .. maxPower);
+            if hasPower then
+                TargetManaBar:Show();
+            else
+                TargetManaBar:Hide();
+            end
+            TargetFrame_UpdateLayout(hasPower, targetCastText ~= nil);
+        else
+            TargetManaBar:SetText(math.floor(powerPct * 100) .. "%");
+        end
 
         TargetFrame:Show();
         TargetAuraFrame:Show();

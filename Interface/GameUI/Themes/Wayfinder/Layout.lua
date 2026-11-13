@@ -75,7 +75,128 @@ function Wayfinder_UpdateActionBarLayout(bar)
 		PetActionBar:SetAnchor(A.BOTTOM, A.TOP, topBar, -16);
 	end
 	if PlayerCastBar then
-		PlayerCastBar:SetAnchor(A.BOTTOM, A.TOP, topBar, -16);
+		-- Centred like the pet bar's right half, so it goes above that bar while a pet is out.
+		local petBarShown = PetActionBar and PetActionBar:IsVisible();
+		PlayerCastBar:SetAnchor(A.BOTTOM, A.TOP, petBarShown and PetActionBar or topBar, -16);
+	end
+end
+
+local targetNameHeight = 46;
+local targetHealthHeight = 31;
+local targetPowerHeight = 24;
+local targetCastHeight = 28;
+local targetBarGap = 4;
+
+-- Stacks the target's bars below its name and sizes the frame to them, so that the debuff row
+-- below the frame follows. Called by TargetFrame.lua when the resource or cast bar appears or goes.
+function Wayfinder_LayoutTargetFrame(hasPower, casting)
+	local y = targetNameHeight + 2 + targetHealthHeight;
+	if hasPower then
+		TargetManaBar:SetAnchor(A.TOP, A.TOP, TargetFrame, y + targetBarGap);
+		y = y + targetBarGap + targetPowerHeight;
+	end
+	if casting then
+		TargetCastBar:SetAnchor(A.TOP, A.TOP, TargetFrame, y + targetBarGap);
+		y = y + targetBarGap + targetCastHeight;
+	end
+	TargetFrame:SetHeight(y);
+end
+
+local function SetupTargetFrame()
+	WayfinderEmpty:CopyVisuals(TargetFrame);
+	Center(TargetFrame, GameParent, 598, 108);
+	TargetFrame:SetAnchor(A.TOP, A.TOP, GameParent, 38);
+	TargetPortrait:Hide();
+	TargetName:ClearAnchors();
+	Span(TargetName, TargetFrame, 0);
+	TargetName:SetAnchor(A.TOP, A.TOP, TargetFrame, 0);
+	TargetName:SetHeight(targetNameHeight);
+	TargetName:SetProperty("HorzAlign", "CENTER");
+
+	local heights = { targetHealthHeight, targetPowerHeight, targetCastHeight };
+	for i, rail in ipairs({ TargetHealthBar, TargetManaBar, TargetCastBar }) do
+		rail:ClearAnchors();
+		Span(rail, TargetFrame, 0);
+		rail:SetHeight(heights[i]);
+		rail:SetProperty("ProgressInset", i == 1 and "4" or "3");
+		rail:SetProperty("FillMaterialTint", "FFFFFFFF");
+	end
+	TargetHealthBar:SetAnchor(A.TOP, A.TOP, TargetFrame, targetNameHeight + 2);
+	WayfinderMeter:CopyVisuals(TargetHealthBar);
+	for _, rail in ipairs({ TargetManaBar, TargetCastBar }) do
+		WayfinderSmallMeter:CopyVisuals(rail);
+		rail:SetProperty("Font", "WayfinderXPFont");
+	end
+	Wayfinder_LayoutTargetFrame(true, false);
+end
+
+local petFrameWidth = 440;
+local petBarInset = 40;
+
+local function SetupPetFrame()
+	WayfinderEmpty:CopyVisuals(PetFrame);
+	PetFrame:SetSize(petFrameWidth, 92);
+	PetPortrait:Hide();
+
+	PetName:ClearAnchors();
+	PetName:SetAnchor(A.LEFT, A.LEFT, PetFrame, petBarInset + 14);
+	PetName:SetAnchor(A.RIGHT, A.RIGHT, PetFrame, 0);
+	PetName:SetAnchor(A.TOP, A.TOP, PetFrame, 0);
+	PetName:SetHeight(38);
+	PetName:SetProperty("TextColor", "FFF3EAD8");
+
+	local tops = { 40, 72, 82 };
+	local heights = { 30, 8, 8 };
+	for i, rail in ipairs({ PetHealthBar, PetManaBar, PetExperienceBar }) do
+		rail:ClearAnchors();
+		rail:SetAnchor(A.LEFT, A.LEFT, PetFrame, petBarInset);
+		rail:SetAnchor(A.RIGHT, A.RIGHT, PetFrame, 0);
+		rail:SetAnchor(A.TOP, A.TOP, PetFrame, tops[i]);
+		rail:SetHeight(heights[i]);
+		rail:SetProperty("ProgressInset", i == 1 and "4" or "2");
+		rail:SetProperty("FillMaterialTint", "FFFFFFFF");
+	end
+	WayfinderMeter:CopyVisuals(PetHealthBar);
+	PetHealthBar:SetProperty("Font", "WayfinderXPFont");
+	PetHealthBar:SetProperty("ProgressColor", "FF76BC93");
+	WayfinderThinMeter:CopyVisuals(PetManaBar);
+	WayfinderThinMeter:CopyVisuals(PetExperienceBar);
+	PetExperienceBar:SetProperty("ProgressColor", "FFB48AE0");
+
+	TargetLevelBadge:CopyVisuals(PetLevelBadge);
+	PetLevelBadge:Show();
+end
+
+local partyNameHeight = 38;
+local partyHealthHeight = 28;
+local partyPowerHeight = 8;
+
+local function SetupPartyFrame()
+	WayfinderEmpty:CopyVisuals(PartyFrame);
+	PartyFrame:SetWidth(340);
+	for i = 1, 4 do
+		local member = _G["PartyMember" .. i];
+		member:SetHeight(GameUITheme.PartyMemberHeight);
+
+		local name, health, power, leader = member:GetChild(0), member:GetChild(1), member:GetChild(2), member:GetChild(3);
+		name:SetHeight(partyNameHeight);
+		name:SetProperty("TextColor", "FFF3EAD8");
+		name:SetProperty("Font", "CombatHudNameFont");
+		leader:SetSize(26, 26);
+		leader:SetAnchor(A.TOP, A.TOP, member, 2);
+
+		health:SetHeight(partyHealthHeight);
+		health:SetProperty("ProgressInset", "4");
+		health:SetProperty("ProgressColor", "FF76BC93");
+		health:SetProperty("FillMaterialTint", "FFFFFFFF");
+		health:SetProperty("Font", "WayfinderXPFont");
+		WayfinderMeter:CopyVisuals(health);
+
+		power:SetHeight(partyPowerHeight);
+		power:SetAnchor(A.TOP, A.BOTTOM, health, 2);
+		power:SetProperty("ProgressInset", "2");
+		power:SetProperty("FillMaterialTint", "FFFFFFFF");
+		WayfinderThinMeter:CopyVisuals(power);
 	end
 end
 
@@ -362,31 +483,14 @@ function Wayfinder_ApplyLayout()
 	end
 	PlayerHealthBar:SetProperty("ProgressColor", "FF76BC93");
 
-	WayfinderEmpty:CopyVisuals(TargetFrame);
-	Center(TargetFrame, GameParent, 598, 108);
-	TargetFrame:SetAnchor(A.TOP, A.TOP, GameParent, 38);
-	TargetPortrait:Hide();
-	TargetName:ClearAnchors();
-	Span(TargetName, TargetFrame, 0);
-	TargetName:SetAnchor(A.TOP, A.TOP, TargetFrame, 0);
-	TargetName:SetHeight(46);
-	TargetName:SetProperty("HorzAlign", "CENTER");
-	for i, rail in ipairs({ TargetHealthBar, TargetManaBar }) do
-		rail:ClearAnchors();
-		Span(rail, TargetFrame, 0);
-		rail:SetAnchor(A.TOP, A.TOP, TargetFrame, i == 1 and 48 or 83);
-		rail:SetHeight(i == 1 and 31 or 12);
-		rail:SetProperty("ProgressInset", i == 1 and "4" or "2");
-	end
-	WayfinderMeter:CopyVisuals(TargetHealthBar);
-	WayfinderThinMeter:CopyVisuals(TargetManaBar);
+	SetupTargetFrame();
+	SetupPetFrame();
+	SetupPartyFrame();
 	WayfinderLevelXP:CopyVisuals(PlayerExperienceBar);
 	WayfinderClassXP:CopyVisuals(PlayerClassExperienceBar);
 	PlayerExperienceBar:SetProperty("Font", "WayfinderXPFont");
 	PlayerClassExperienceBar:SetProperty("Font", "WayfinderXPFont");
 	WayfinderMeter:CopyVisuals(PlayerCastBar);
-	PlayerCastBar:ClearAnchor(A.H_CENTER);
-	PlayerCastBar:SetAnchor(A.RIGHT, A.RIGHT, ActionBar, 0);
 	PlayerCastBar:SetWidth(540);
 	PlayerCastBar:SetHeight(40);
 	PlayerCastBar:SetProperty("ProgressInset", "4");

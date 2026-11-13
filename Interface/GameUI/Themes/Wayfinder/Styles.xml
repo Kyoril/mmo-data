@@ -342,6 +342,41 @@
 		</Visual>
 	</Frame>
 
+	<!-- A meter between WayfinderMeter and WayfinderThinMeter: resource and cast bars of unit frames. -->
+	<Frame name="WayfinderSmallMeter">
+		<Visual>
+			<ImagerySection name="Background">
+				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/MeterWell.htex" borderSize="10" leftSize="56" rightSize="56" topSize="60" bottomSize="60" />
+			</ImagerySection>
+			<ImagerySection name="Progress">
+				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/MeterFill.htex" borderSize="7" leftSize="56" rightSize="56" topSize="60" bottomSize="60" tint="FFFFFFFF" />
+			</ImagerySection>
+			<ImagerySection name="Frame">
+				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/MeterRim.htex" borderSize="10" leftSize="56" rightSize="56" topSize="60" bottomSize="60" />
+			</ImagerySection>
+			<ImagerySection name="Text">
+				<ImageComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/MeterLabelShade.htex" tint="3AFFFFFF" />
+				<TextComponent color="FFF3EEE0" horzAlign="CENTER" vertAlign="CENTER" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Background" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Progress">
+				<Layer>
+					<Section section="Progress" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Overlay">
+				<Layer>
+					<Section section="Frame" />
+					<Section section="Text" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+	</Frame>
+
 	<Frame name="WayfinderLevelXP">
 		<Visual>
 			<ImagerySection name="Background">

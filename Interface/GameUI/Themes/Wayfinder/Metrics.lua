@@ -20,6 +20,7 @@ GameUITheme.ActionEmptySocketTint = "603B4C59";
 GameUITheme.SocialLeftOffset = 40;
 GameUITheme.SocialTopOffset = 256;
 GameUITheme.MenuButtonRightInset = 0;
+GameUITheme.PartyMemberHeight = 92;
 
 GameUITheme.QuestTracker = {
 	titleColor = "FFF1DFBE",

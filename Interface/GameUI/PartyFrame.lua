@@ -20,15 +20,22 @@ function PartyMemberFrame_UpdateMember(self)
         local unit = GetUnit(unitName);
         if (unit) then
             name:SetText(unit:GetName());
-            healthbar:SetProgress(unit:GetHealth() / unit:GetMaxHealth());
+
+            -- A member whose stats have not arrived yet reports a maximum of 0.
+            local maxHealth = unit:GetMaxHealth();
+            local healthPct = maxHealth > 0 and unit:GetHealth() / maxHealth or 0;
+            healthbar:SetProgress(healthPct);
+            if GameUITheme and GameUITheme.Wayfinder then
+                healthbar:SetText(math.floor(healthPct * 100) .. "%");
+            end
 
             -- Get power type
             local powerType = unit:GetPowerType();
             manabar:SetProperty("ProgressColor", ResourceBarColors[powerType]);
-    
+
             local power = unit:GetPower(powerType);
             local maxPower = unit:GetMaxPower(powerType);
-            manabar:SetProgress(power / maxPower);
+            manabar:SetProgress(maxPower > 0 and power / maxPower or 0);
         end
 
         self:Show();
@@ -164,7 +171,7 @@ function PartyFrame_OnMembersChanged(self)
         return;
     end
 
-    self:SetHeight(20 + partySize * 128);
+    self:SetHeight(20 + partySize * (GameUITheme and GameUITheme.PartyMemberHeight or 128));
     self:Show();
 end
 

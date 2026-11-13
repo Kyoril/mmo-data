@@ -270,6 +270,23 @@
 				</StateImagery>
 			</Visual>
 		</Frame>
+		<!-- Level diamond on the left end of the health bar, as on the target frame. Only the Wayfinder
+		     theme shows it (and gives it its look), as it hides the portrait whose caption carries
+		     the level in the other themes. -->
+		<Frame name="PetLevelBadge" renderer="DefaultRenderer">
+			<Property name="Visible" value="false" />
+			<Property name="Enabled" value="false" />
+			<Property name="Clickable" value="false" />
+			<Property name="Font" value="CombatHudTextFont" />
+			<Property name="TextColor" value="FFF3EAD8" />
+			<Area>
+				<Size>
+					<AbsDimension x="64" y="64" />
+				</Size>
+				<Anchor point="RIGHT" offset="12" relativeTo="PetHealthBar" relativePoint="LEFT" />
+				<Anchor point="V_CENTER" offset="0" relativeTo="PetHealthBar" relativePoint="V_CENTER" />
+			</Area>
+		</Frame>
 		<Frame name="PetFrameClick" setAllPoints="true">
 			<Property name="HoverUnit" value="pet" />
 			<Scripts>

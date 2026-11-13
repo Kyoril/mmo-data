@@ -47,12 +47,23 @@ function PetFrame_Update(self)
     end
     PetName:SetText(name);
     PetPortraitLevel:SetText(tostring(pet:GetLevel()));
+    PetLevelBadge:SetText(tostring(pet:GetLevel()));
 
     PetFrame_SetBar(PetHealthBar, pet:GetHealth(), pet:GetMaxHealth());
 
     local powerType = pet:GetPowerType();
+    local maxPower = pet:GetMaxPower(powerType);
     PetManaBar:SetProperty("ProgressColor", petPowerColors[powerType] or petPowerColors[0]);
-    PetFrame_SetBar(PetManaBar, pet:GetPower(powerType), pet:GetMaxPower(powerType));
+    PetFrame_SetBar(PetManaBar, pet:GetPower(powerType), maxPower);
+
+    if GameUITheme and GameUITheme.Wayfinder then
+        -- A pet without a resource does not get an empty bar.
+        if maxPower ~= nil and maxPower > 0 then
+            PetManaBar:Show();
+        else
+            PetManaBar:Hide();
+        end
+    end
 
     PetFrame_UpdateExperience();
     frame:Show();
