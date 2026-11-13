@@ -84,19 +84,35 @@ end
 local targetNameHeight = 46;
 local targetHealthHeight = 31;
 local targetPowerHeight = 24;
-local targetCastHeight = 28;
+local targetCastHeight = 24;
 local targetBarGap = 4;
+
+-- How far the lower corners of a WayfinderMeter lie inside its pointed ends. The bars hanging
+-- below a meter (WayfinderTailMeter) start there and carry the diagonal on at 45 degrees, so each
+-- one is inset by this plus the height and gaps above it.
+local meterCornerInset = 14;
+
+-- Hangs a tail bar below a meter: inset so that its ends meet the diagonal coming from above.
+-- leftInset is where the meter starts inside parent (it ends at parent's right edge); drop is the
+-- distance from the meter's bottom edge to the bar's top edge.
+local function HangBelow(bar, parent, leftInset, drop)
+	bar:SetAnchor(A.LEFT, A.LEFT, parent, leftInset + meterCornerInset + drop);
+	bar:SetAnchor(A.RIGHT, A.RIGHT, parent, -(meterCornerInset + drop));
+end
 
 -- Stacks the target's bars below its name and sizes the frame to them, so that the debuff row
 -- below the frame follows. Called by TargetFrame.lua when the resource or cast bar appears or goes.
 function Wayfinder_LayoutTargetFrame(hasPower, casting)
-	local y = targetNameHeight + 2 + targetHealthHeight;
+	local healthBottom = targetNameHeight + 2 + targetHealthHeight;
+	local y = healthBottom;
 	if hasPower then
 		TargetManaBar:SetAnchor(A.TOP, A.TOP, TargetFrame, y + targetBarGap);
+		HangBelow(TargetManaBar, TargetFrame, 0, y + targetBarGap - healthBottom);
 		y = y + targetBarGap + targetPowerHeight;
 	end
 	if casting then
 		TargetCastBar:SetAnchor(A.TOP, A.TOP, TargetFrame, y + targetBarGap);
+		HangBelow(TargetCastBar, TargetFrame, 0, y + targetBarGap - healthBottom);
 		y = y + targetBarGap + targetCastHeight;
 	end
 	TargetFrame:SetHeight(y);
@@ -124,7 +140,7 @@ local function SetupTargetFrame()
 	TargetHealthBar:SetAnchor(A.TOP, A.TOP, TargetFrame, targetNameHeight + 2);
 	WayfinderMeter:CopyVisuals(TargetHealthBar);
 	for _, rail in ipairs({ TargetManaBar, TargetCastBar }) do
-		WayfinderSmallMeter:CopyVisuals(rail);
+		WayfinderTailLabelMeter:CopyVisuals(rail);
 		rail:SetProperty("Font", "WayfinderXPFont");
 	end
 	Wayfinder_LayoutTargetFrame(true, false);
@@ -159,8 +175,10 @@ local function SetupPetFrame()
 	WayfinderMeter:CopyVisuals(PetHealthBar);
 	PetHealthBar:SetProperty("Font", "WayfinderXPFont");
 	PetHealthBar:SetProperty("ProgressColor", "FF76BC93");
-	WayfinderThinMeter:CopyVisuals(PetManaBar);
-	WayfinderThinMeter:CopyVisuals(PetExperienceBar);
+	WayfinderTailMeter:CopyVisuals(PetManaBar);
+	WayfinderTailMeter:CopyVisuals(PetExperienceBar);
+	HangBelow(PetManaBar, PetFrame, petBarInset, tops[2] - tops[1] - heights[1]);
+	HangBelow(PetExperienceBar, PetFrame, petBarInset, tops[3] - tops[1] - heights[1]);
 	PetExperienceBar:SetProperty("ProgressColor", "FFB48AE0");
 
 	TargetLevelBadge:CopyVisuals(PetLevelBadge);
@@ -194,9 +212,10 @@ local function SetupPartyFrame()
 
 		power:SetHeight(partyPowerHeight);
 		power:SetAnchor(A.TOP, A.BOTTOM, health, 2);
+		HangBelow(power, member, 0, 2);
 		power:SetProperty("ProgressInset", "2");
 		power:SetProperty("FillMaterialTint", "FFFFFFFF");
-		WayfinderThinMeter:CopyVisuals(power);
+		WayfinderTailMeter:CopyVisuals(power);
 	end
 end
 
