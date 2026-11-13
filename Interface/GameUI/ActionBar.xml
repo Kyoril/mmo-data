@@ -117,37 +117,38 @@
 				<Anchor point="TOP" offset="0" />
 			</Area>
 		</Frame>
-		<!-- Brass diamond with the number of the page the main bar shows, hidden on page 1
-		     (ActionBar_UpdatePageIndicator). Sits left of the bar; Wayfinder moves it above the clasp. -->
+		<!-- Small plate with the number of the page the main bar shows (ActionBar_UpdatePageIndicator).
+		     Deliberately a plain plate and not the level diamond of the target frame, so it is not
+		     read as a level. Sits left of the bar; Wayfinder puts it left of the health rail. -->
 		<Frame name="ActionBarPageIndicator" renderer="DefaultRenderer">
-			<Property name="Visible" value="false" />
 			<Property name="Enabled" value="false" />
 			<Property name="Clickable" value="false" />
-			<Property name="Font" value="TargetLevelFont" />
-			<Property name="TextColor" value="FFFFD24F" />
+			<Property name="Font" value="CombatHudTextFont" />
+			<Property name="TextColor" value="FFB5A78B" />
+			<Property name="Text" value="1" />
 			<Area>
 				<Size>
-					<AbsDimension x="72" y="72" />
+					<AbsDimension x="48" y="48" />
 				</Size>
-				<Anchor point="RIGHT" offset="-4" relativePoint="LEFT" />
+				<Anchor point="RIGHT" offset="-8" relativePoint="LEFT" />
 				<Anchor point="V_CENTER" offset="0" />
 			</Area>
 			<Visual>
-				<ImagerySection name="Diamond">
-					<ImageComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/LevelDiamond.htex" />
+				<ImagerySection name="Plate">
+					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFB6A890" />
 				</ImagerySection>
 				<ImagerySection name="Page">
 					<TextComponent color="$TextColor" horzAlign="CENTER" vertAlign="CENTER" />
 				</ImagerySection>
 				<StateImagery name="Enabled">
 					<Layer>
-						<Section section="Diamond" />
+						<Section section="Plate" />
 						<Section section="Page" />
 					</Layer>
 				</StateImagery>
 				<StateImagery name="Disabled">
 					<Layer>
-						<Section section="Diamond" />
+						<Section section="Plate" />
 						<Section section="Page" />
 					</Layer>
 				</StateImagery>

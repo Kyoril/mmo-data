@@ -345,10 +345,6 @@ function Wayfinder_ApplyLayout()
 	Center(clasp, ActionBar, claspWidth, claspWidth);
 	clasp:SetAnchor(A.TOP, A.TOP, ActionBar, -8);
 
-	-- The page number sits above the clasp, in the gap between the banks of the second bar.
-	Center(ActionBarPageIndicator, ActionBar, 64, 64);
-	ActionBarPageIndicator:SetAnchor(A.BOTTOM, A.TOP, ActionBar, -18);
-
 	WayfinderEmpty:CopyVisuals(PlayerFrame);
 	Center(PlayerFrame, GameParent, barWidth, 36);
 	PlayerFrame:SetAnchor(A.BOTTOM, A.BOTTOM, GameMenuBar, -57);
@@ -365,6 +361,13 @@ function Wayfinder_ApplyLayout()
 		rail:SetProperty("ProgressInset", "4");
 	end
 	PlayerHealthBar:SetProperty("ProgressColor", "FF76BC93");
+
+	-- The page number of the main bar is a small plate in the rails' style, left of the health rail.
+	WayfinderPageTab:CopyVisuals(ActionBarPageIndicator);
+	ActionBarPageIndicator:ClearAnchors();
+	ActionBarPageIndicator:SetSize(52, 36);
+	ActionBarPageIndicator:SetAnchor(A.RIGHT, A.LEFT, PlayerHealthBar, -6);
+	ActionBarPageIndicator:SetAnchor(A.TOP, A.TOP, PlayerHealthBar, 0);
 
 	WayfinderEmpty:CopyVisuals(TargetFrame);
 	Center(TargetFrame, GameParent, 598, 108);

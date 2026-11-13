@@ -87,19 +87,19 @@ function ActionButton_GetSlot(button)
     return button.id - 1;
 end
 
--- Shows the page number on the main bar while it is not on its first page.
+-- Text colours of the page number: quiet on the first page, lit while another page is shown.
+ACTION_BAR_PAGE_COLOR = "FFB5A78B";
+ACTION_BAR_PAGE_ACTIVE_COLOR = "FFFFD24F";
+
+-- Shows the number of the page the main bar is on.
 function ActionBar_UpdatePageIndicator()
     if ActionBarPageIndicator == nil then
         return;
     end
 
     local page = ActionBar_GetPage();
-    if page == 1 then
-        ActionBarPageIndicator:Hide();
-    else
-        ActionBarPageIndicator:SetText(tostring(page));
-        ActionBarPageIndicator:Show();
-    end
+    ActionBarPageIndicator:SetText(tostring(page));
+    ActionBarPageIndicator:SetProperty("TextColor", page == 1 and ACTION_BAR_PAGE_COLOR or ACTION_BAR_PAGE_ACTIVE_COLOR);
 end
 
 -- Redraws the main bar after its page changed.
