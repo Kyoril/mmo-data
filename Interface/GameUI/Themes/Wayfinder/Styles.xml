@@ -410,6 +410,7 @@
 
 	<!-- Plate of the main action bar's page number: an empty piece of rail with a caption. -->
 	<Frame name="WayfinderPageTab">
+		<Property name="TextColor" value="FFB5A78B" />
 		<Visual>
 			<ImagerySection name="Plate">
 				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/MeterWell.htex" borderSize="18" leftSize="56" rightSize="56" topSize="60" bottomSize="60" />
