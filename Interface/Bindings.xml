@@ -348,6 +348,29 @@
             end
         end
 	</Binding>
+	<Binding name="ACTIONBARPAGE1" description="Show action bar 1 on the main bar" category="ACTIONBAR">
+		return function(key, keystate)
+            if keystate == "DOWN" then
+                ActionBar_SetPage(1);
+            end
+        end
+	</Binding>
+	<Binding name="ACTIONBARPAGE2" description="Show action bar 2 on the main bar" category="ACTIONBAR">
+		return function(key, keystate)
+            if keystate == "DOWN" then
+                ActionBar_SetPage(2);
+            end
+        end
+	</Binding>
+	<Binding name="ACTIONBARPAGE2HOLD" description="Show action bar 2 on the main bar while held" category="ACTIONBAR">
+		return function(key, keystate)
+            if keystate == "DOWN" then
+                ActionBar_HoldPage(true);
+            elseif keystate == "UP" then
+                ActionBar_HoldPage(false);
+            end
+        end
+	</Binding>
     
 	<Binding name="TARGETSELF" description="Target yourself" category="TARGET">
         return function(key, keystate)

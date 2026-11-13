@@ -117,6 +117,43 @@
 				<Anchor point="TOP" offset="0" />
 			</Area>
 		</Frame>
+		<!-- Small plate with the number of the page the main bar shows (ActionBar_UpdatePageIndicator).
+		     Deliberately a plain plate and not the level diamond of the target frame, so it is not
+		     read as a level. Sits left of the bar; Wayfinder puts it left of the health rail. -->
+		<Frame name="ActionBarPageIndicator" renderer="DefaultRenderer">
+			<Property name="Enabled" value="false" />
+			<Property name="Clickable" value="false" />
+			<Property name="Font" value="CombatHudTextFont" />
+			<Property name="TextColor" value="FFB5A78B" />
+			<Property name="Text" value="1" />
+			<Area>
+				<Size>
+					<AbsDimension x="48" y="48" />
+				</Size>
+				<Anchor point="RIGHT" offset="-8" relativePoint="LEFT" />
+				<Anchor point="V_CENTER" offset="0" />
+			</Area>
+			<Visual>
+				<ImagerySection name="Plate">
+					<BorderComponent texture="Interface/GameUI/fg4_borders_insetBlackSmall.htex" borderSize="11" tint="FFB6A890" />
+				</ImagerySection>
+				<ImagerySection name="Page">
+					<TextComponent color="$TextColor" horzAlign="CENTER" vertAlign="CENTER" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer>
+						<Section section="Plate" />
+						<Section section="Page" />
+					</Layer>
+				</StateImagery>
+				<StateImagery name="Disabled">
+					<Layer>
+						<Section section="Plate" />
+						<Section section="Page" />
+					</Layer>
+				</StateImagery>
+			</Visual>
+		</Frame>
 		<Scripts>
 			<OnLoad>
                 return function(this)

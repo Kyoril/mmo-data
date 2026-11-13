@@ -502,6 +502,13 @@ function Wayfinder_ApplyLayout()
 	end
 	PlayerHealthBar:SetProperty("ProgressColor", "FF76BC93");
 
+	-- The page number of the main bar is a small plate in the rails' style, left of the health rail.
+	WayfinderPageTab:CopyVisuals(ActionBarPageIndicator);
+	ActionBarPageIndicator:ClearAnchors();
+	ActionBarPageIndicator:SetSize(52, 36);
+	ActionBarPageIndicator:SetAnchor(A.RIGHT, A.LEFT, PlayerHealthBar, -6);
+	ActionBarPageIndicator:SetAnchor(A.TOP, A.TOP, PlayerHealthBar, 0);
+
 	SetupTargetFrame();
 	SetupPetFrame();
 	SetupPartyFrame();

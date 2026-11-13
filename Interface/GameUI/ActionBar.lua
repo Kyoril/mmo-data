@@ -64,6 +64,79 @@ local actionReadyFlashes = {};
 -- Fallback icon for emotes without an authored icon.
 EMOTE_FALLBACK_ICON = "Interface/Icons/fg4_iconsFlat_dialogue.htex";
 
+-- Number of pages the main bar can show. Page n shows the slots of bar n.
+ACTION_BAR_PAGES = MAX_ACTION_BUTTONS / ACTION_BUTTONS_PER_BAR;
+
+-- Page the main bar was switched to (ACTIONBARPAGE1 / ACTIONBARPAGE2), and whether the key that
+-- shows page 2 for as long as it is held (ACTIONBARPAGE2HOLD) is down. Not saved: the main bar
+-- starts on page 1 after every login.
+local actionBarPage = 1;
+local actionBarPageHeld = false;
+
+-- Page the main bar shows right now.
+function ActionBar_GetPage()
+    return actionBarPageHeld and 2 or actionBarPage;
+end
+
+-- Zero-based action slot a button stands for. The twelve main bar buttons follow the main bar's
+-- page; the second bar's buttons always are slots 13-24.
+function ActionButton_GetSlot(button)
+    if button.id <= ACTION_BUTTONS_PER_BAR then
+        return (ActionBar_GetPage() - 1) * ACTION_BUTTONS_PER_BAR + button.id - 1;
+    end
+    return button.id - 1;
+end
+
+-- Text colours of the page number: quiet on the first page, lit while another page is shown.
+ACTION_BAR_PAGE_COLOR = "FFB5A78B";
+ACTION_BAR_PAGE_ACTIVE_COLOR = "FFFFD24F";
+
+-- Shows the number of the page the main bar is on.
+function ActionBar_UpdatePageIndicator()
+    if ActionBarPageIndicator == nil then
+        return;
+    end
+
+    local page = ActionBar_GetPage();
+    ActionBarPageIndicator:SetText(tostring(page));
+    ActionBarPageIndicator:SetProperty("TextColor", page == 1 and ACTION_BAR_PAGE_COLOR or ACTION_BAR_PAGE_ACTIVE_COLOR);
+end
+
+-- Redraws the main bar after its page changed.
+local function ActionBar_OnPageChanged(previousPage)
+    if ActionBar_GetPage() == previousPage then
+        return;
+    end
+
+    -- The buttons now stand for other spells, whose cooldowns must not inherit the countdown and
+    -- ready flash of the spells shown before.
+    for i = 1, ACTION_BUTTONS_PER_BAR do
+        actionCooldownLong[i] = nil;
+    end
+
+    GameTooltip:Hide();
+    ActionBar_UpdateButtons();
+    ActionBar_UpdatePageIndicator();
+end
+
+-- Switches the main bar to the given page until it is switched again.
+function ActionBar_SetPage(page)
+    if page < 1 or page > ACTION_BAR_PAGES then
+        return;
+    end
+
+    local previousPage = ActionBar_GetPage();
+    actionBarPage = page;
+    ActionBar_OnPageChanged(previousPage);
+end
+
+-- Shows page 2 on the main bar while held, and the switched-to page again once released.
+function ActionBar_HoldPage(held)
+    local previousPage = ActionBar_GetPage();
+    actionBarPageHeld = held;
+    ActionBar_OnPageChanged(previousPage);
+end
+
 -- Shows or hides the second action bar according to the interface option. Called on load and
 -- whenever the option is toggled. The bar may be passed in explicitly, because its own OnLoad
 -- runs before the frame is reachable through its global name.
@@ -129,8 +202,8 @@ function ActionBar_UpdateSecondBarLayout(bar)
 end
 
 function ActionButton_OnEnter(self)
-    if IsActionButtonSpell(self.id - 1) then
-        local spell = GetActionButtonSpell(self.id - 1);
+    if IsActionButtonSpell(ActionButton_GetSlot(self)) then
+        local spell = GetActionButtonSpell(ActionButton_GetSlot(self));
         if (spell ~= nil) then
             GameTooltip:ClearAnchors();
             GameTooltip:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.TOP, self, -16);
@@ -138,8 +211,8 @@ function ActionButton_OnEnter(self)
             GameTooltip_SetSpell(spell);
             GameTooltip:Show();
         end
-    elseif IsActionButtonItem(self.id - 1) then
-        local item = GetActionButtonItem(self.id - 1);
+    elseif IsActionButtonItem(ActionButton_GetSlot(self)) then
+        local item = GetActionButtonItem(ActionButton_GetSlot(self));
         if (item ~= nil) then
             GameTooltip:ClearAnchors();
             GameTooltip:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.TOP, self, -16);
@@ -147,8 +220,8 @@ function ActionButton_OnEnter(self)
             GameTooltip_SetItemTemplate(item);
             GameTooltip:Show();
         end
-    elseif IsActionButtonEmote(self.id - 1) then
-        local emote = GetActionButtonEmote(self.id - 1);
+    elseif IsActionButtonEmote(ActionButton_GetSlot(self)) then
+        local emote = GetActionButtonEmote(ActionButton_GetSlot(self));
         if (emote ~= nil) then
             GameTooltip:ClearAnchors();
             GameTooltip:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.TOP, self, -16);
@@ -160,11 +233,11 @@ function ActionButton_OnEnter(self)
 end
 
 function ActionBarButton_OnDrag(this, button, position)
-    PickupActionButton(this.id - 1);
+    PickupActionButton(ActionButton_GetSlot(this));
 end
 
 function ActionBarButton_OnDrop(this, button, position)
-    PickupActionButton(this.id - 1);
+    PickupActionButton(ActionButton_GetSlot(this));
 end
 
 function ActionButton_OnLeave(self)
@@ -208,14 +281,16 @@ function ActionButton_Up(id)
         button:SetButtonState(ButtonState.NORMAL);
     end
 
-    ActionButton_OnClick(button, "LEFT");
+    -- A key press always uses the slot. Only a Shift-click picks it up: Shift may be the key held
+    -- to show page 2, and must then not turn every key press into a pickup.
+    UseActionButton(ActionButton_GetSlot(button));
 end
 
 function ActionButton_OnClick(self, button)
     if (IsShiftKeyDown()) then
-        PickupActionButton(self.id - 1);
+        PickupActionButton(ActionButton_GetSlot(self));
     else
-        UseActionButton(self.id - 1);
+        UseActionButton(ActionButton_GetSlot(self));
     end
 end
 
@@ -223,11 +298,12 @@ function ActionBar_UpdateButtons(self)
     for i = 1, MAX_ACTION_BUTTONS do
         local button = _G["ActionButton"..i];
         if button ~= nil then
+            local slot = ActionButton_GetSlot(button);
 
             button:SetOpacity(1.0);
-        
-            if IsActionButtonSpell(i - 1) then
-                local spell = GetActionButtonSpell(i - 1);
+
+            if IsActionButtonSpell(slot) then
+                local spell = GetActionButtonSpell(slot);
                 if (spell ~= nil) then
                     button:SetProperty("Icon", spell.icon);
                 else
@@ -235,8 +311,8 @@ function ActionBar_UpdateButtons(self)
                 end
 
                 button:SetText("");
-            elseif IsActionButtonItem(i - 1) then
-                local item = GetActionButtonItem(i - 1);
+            elseif IsActionButtonItem(slot) then
+                local item = GetActionButtonItem(slot);
 
                 if (item ~= nil) then
                     button:SetProperty("Icon", item.GetIcon(item));
@@ -247,8 +323,8 @@ function ActionBar_UpdateButtons(self)
                     button:SetProperty("Icon", "");
                     button:SetText("");
                 end
-            elseif IsActionButtonEmote(i - 1) then
-                local emote = GetActionButtonEmote(i - 1);
+            elseif IsActionButtonEmote(slot) then
+                local emote = GetActionButtonEmote(slot);
 
                 if (emote ~= nil and emote.icon ~= "") then
                     button:SetProperty("Icon", emote.icon);
@@ -272,8 +348,8 @@ function ActionBar_UpdateButtons(self)
 end
 
 function ActionButton_OnUpdate(self)
-    local usable = IsActionButtonUsable(self.id - 1);
-    local occupied = IsActionButtonSpell(self.id - 1) or IsActionButtonItem(self.id - 1) or IsActionButtonEmote(self.id - 1);
+    local usable = IsActionButtonUsable(ActionButton_GetSlot(self));
+    local occupied = IsActionButtonSpell(ActionButton_GetSlot(self)) or IsActionButtonItem(ActionButton_GetSlot(self)) or IsActionButtonEmote(ActionButton_GetSlot(self));
     if usable or not occupied then
         self:SetProperty("Color", "FFFFFFFF");
     else
@@ -283,7 +359,7 @@ function ActionButton_OnUpdate(self)
     ActionButton_UpdateSocketStyle(self, occupied);
 
     -- Toggle the "active" glow for spells that stay active while their aura persists (e.g. Stealth).
-    if IsActionButtonActive(self.id - 1) then
+    if IsActionButtonActive(ActionButton_GetSlot(self)) then
         self:SetProperty("ActiveGlowTint", ACTION_BUTTON_ACTIVE_GLOW);
     else
         self:SetProperty("ActiveGlowTint", ACTION_BUTTON_INACTIVE_GLOW);
@@ -309,8 +385,8 @@ function ActionButton_UpdateCost(self)
     end
 
     local spell = nil;
-    if ActionBar_IsCostShown() and IsActionButtonSpell(self.id - 1) then
-        spell = GetActionButtonSpell(self.id - 1);
+    if ActionBar_IsCostShown() and IsActionButtonSpell(ActionButton_GetSlot(self)) then
+        spell = GetActionButtonSpell(ActionButton_GetSlot(self));
     end
 
     local color = spell ~= nil and ACTION_COST_COLORS[spell.powertype] or nil;
@@ -426,10 +502,10 @@ function ActionButton_UpdateCooldown(self)
     -- Resolve the spell driving this button's cooldown. For spell buttons this is the spell
     -- itself; for item buttons it is the item's "On Use" spell (e.g. a potion's heal effect).
     local spell = nil;
-    if IsActionButtonSpell(self.id - 1) then
-        spell = GetActionButtonSpell(self.id - 1);
-    elseif IsActionButtonItem(self.id - 1) then
-        spell = ActionButton_GetItemUseSpell(self.id - 1);
+    if IsActionButtonSpell(ActionButton_GetSlot(self)) then
+        spell = GetActionButtonSpell(ActionButton_GetSlot(self));
+    elseif IsActionButtonItem(ActionButton_GetSlot(self)) then
+        spell = ActionButton_GetItemUseSpell(ActionButton_GetSlot(self));
     end
 
     if spell ~= nil and IsSpellOnCooldown(spell.id) then

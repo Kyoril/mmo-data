@@ -408,6 +408,31 @@
 		</Visual>
 	</Frame>
 
+	<!-- Plate of the main action bar's page number: an empty piece of rail with a caption. -->
+	<Frame name="WayfinderPageTab">
+		<Visual>
+			<ImagerySection name="Plate">
+				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/MeterWell.htex" borderSize="18" leftSize="56" rightSize="56" topSize="60" bottomSize="60" />
+				<BorderComponent texture="Interface/GameUI/Themes/Wayfinder/Textures/MeterRim.htex" borderSize="18" leftSize="56" rightSize="56" topSize="60" bottomSize="60" />
+			</ImagerySection>
+			<ImagerySection name="Page">
+				<TextComponent color="$TextColor" horzAlign="CENTER" vertAlign="CENTER" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer>
+					<Section section="Plate" />
+					<Section section="Page" />
+				</Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer>
+					<Section section="Plate" />
+					<Section section="Page" />
+				</Layer>
+			</StateImagery>
+		</Visual>
+	</Frame>
+
 	<Frame name="WayfinderLevelXP">
 		<Visual>
 			<ImagerySection name="Background">
