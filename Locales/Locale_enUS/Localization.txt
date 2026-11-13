@@ -460,6 +460,7 @@ strings =
 	(key = "QUEST_WRONG_CLASS_FORMAT", string = "%s (Wrong Class)")
 	(key = "QUEST_CLASS_UNLOCK_FORMAT", string = "[Unlock] %s")
 	(key = "QUEST_TIME_REMAINING", string = "Time Left: %s")
+	(key = "QUEST_LOG_FULL", string = "Your quest log is full.")
 	(key = "CONTINUE", string = "Continue")
 	(key = "COMPLETE_QUEST", string = "Complete")
 	(key = "QUEST_REWARDED_TITLE", string = "%s completed")

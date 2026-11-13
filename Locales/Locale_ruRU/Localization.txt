@@ -454,6 +454,7 @@ strings =
 	(key = "QUEST_WRONG_CLASS_FORMAT", string = "%s (Неверный класс)")
 	(key = "QUEST_CLASS_UNLOCK_FORMAT", string = "[Открытие] %s")
 	(key = "QUEST_TIME_REMAINING", string = "Осталось: %s")
+	(key = "QUEST_LOG_FULL", string = "Ваш журнал заданий заполнен.")
 	(key = "CONTINUE", string = "Continue")
 	(key = "COMPLETE_QUEST", string = "Complete")
 	(key = "QUEST_REWARDED_TITLE", string = "%s completed")
