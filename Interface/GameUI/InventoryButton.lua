@@ -8,6 +8,13 @@ INVENTORY_ICON_COLOR_DISABLED = "FFFF4040";
 INVENTORY_QUALITY_COLOR_NONE = "FFFFFFFF";
 INVENTORY_QUALITY_COLOR_EMPTY = (GameUITheme and GameUITheme.EmptySlotQualityColor) or "FF505050";
 
+-- Slot id of the button the tooltip was last filled for, and the item it was filled from. Only
+-- one inventory button can be hovered at a time, so a single entry is enough. Kept here and not
+-- on the frames: the slot buttons are unnamed clones, so Lua fields set on them do not survive
+-- between handler calls.
+local tooltipSlot = nil;
+local tooltipItem = nil;
+
 -- Recolors the button frame to the item's quality color. Only slots whose "QualityBorder"
 -- property is enabled participate; every other inventory button keeps its plain frame.
 function InventoryItemButton_UpdateQualityBorder(this, item)
@@ -55,6 +62,12 @@ end
 
 function InventoryItemButton_OnEnter(this)
     local item = GetInventorySlotItem("player", this.id);
+
+    -- Remember what the tooltip shows, so InventoryItemButton_OnUpdate notices when the slot's
+    -- content changes while the cursor rests on the button.
+    tooltipSlot = this.id;
+    tooltipItem = item;
+
     if not item then
         return;
     end
@@ -141,8 +154,42 @@ function InventoryItemButton_OnLeave(this)
     GameTooltip:Hide();
 end
 
+-- Rebuilds the tooltip of the hovered slot after its item was replaced. The mouse enters a frame
+-- only once, so a slot whose content changes underneath the resting cursor (right clicking an item
+-- to equip it swaps the slot) would keep showing the previous item until the cursor moves.
+function InventoryItemButton_RefreshTooltip(this, item)
+    if not this:IsHovered() then
+        -- Only the button the tooltip belongs to may drop the remembered slot.
+        if tooltipSlot == this.id then
+            tooltipSlot = nil;
+            tooltipItem = nil;
+        end
+        return;
+    end
+
+    if tooltipSlot ~= this.id then
+        return;
+    end
+
+    local unchanged = (tooltipItem == nil and item == nil)
+        or (tooltipItem ~= nil and item ~= nil and tooltipItem:IsSameItem(item));
+    if unchanged then
+        return;
+    end
+
+    if item then
+        InventoryItemButton_OnEnter(this);
+    else
+        tooltipItem = nil;
+        GameTooltip:Hide();
+    end
+end
+
 function InventoryItemButton_OnUpdate(this, elapsed)
     local item = GetInventorySlotItem("player", this.id);
+
+    InventoryItemButton_RefreshTooltip(this, item);
+
     if GameUITheme and GameUITheme.Wayfinder then
         InventoryFrame_ApplySearch(this, item);
     end

@@ -244,6 +244,13 @@ function ActionButton_OnLeave(self)
     GameTooltip:Hide();
 end
 
+-- Rebuilds the tooltip of a button the cursor already rests on, after its action changed. Hiding
+-- first covers a slot that was emptied: ActionButton_OnEnter then shows nothing for it.
+function ActionButton_RefreshTooltip(self)
+    GameTooltip:Hide();
+    ActionButton_OnEnter(self);
+end
+
 function ActionButton_Down(id)
     if (id == nil) then
         return;
@@ -343,6 +350,13 @@ function ActionBar_UpdateButtons(self)
             -- Recompute the usable tint as well, so that changes which only affect usability
             -- (e.g. consuming the last item: count 1 -> 0) are reflected immediately.
             ActionButton_OnUpdate(button);
+
+            -- The mouse enters a frame only once, so a slot whose action changed underneath the
+            -- resting cursor (a spell dropped onto it) would keep showing the previous action's
+            -- tooltip until the cursor moves.
+            if button:IsHovered() then
+                ActionButton_RefreshTooltip(button);
+            end
         end
     end
 end
