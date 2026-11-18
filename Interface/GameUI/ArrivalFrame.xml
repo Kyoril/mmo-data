@@ -1,7 +1,9 @@
 <?xml version="1.0" ?>
 <UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
 	<!-- The arrival of a brand-new character: letterbox, title card, camera pull-in, then a pointer to
-	     the first quest giver. Everything is mouse-transparent so the player can move right away. -->
+	     the first quest giver. Everything is mouse-transparent so the player can move right away.
+	     No child may use CharacterTitleFont (or the other window title fonts): the Wayfinder theme
+	     restyles such a child as a window title (left aligned, with a rule under it). -->
 	<Script file="ArrivalFrame.lua" />
 
 	<Frame name="ArrivalFrame" parent="GameParent">
@@ -16,7 +18,7 @@
 			<Frame name="ArrivalBarTop" renderer="DefaultRenderer">
 				<Property name="MousePassThrough" value="true" />
 				<Area>
-					<Size><AbsDimension y="110" /></Size>
+					<Size><AbsDimension y="230" /></Size>
 					<Anchor point="LEFT" />
 					<Anchor point="RIGHT" />
 					<Anchor point="TOP" />
@@ -34,7 +36,7 @@
 			<Frame name="ArrivalBarBottom" renderer="DefaultRenderer">
 				<Property name="MousePassThrough" value="true" />
 				<Area>
-					<Size><AbsDimension y="110" /></Size>
+					<Size><AbsDimension y="230" /></Size>
 					<Anchor point="LEFT" />
 					<Anchor point="RIGHT" />
 					<Anchor point="BOTTOM" />
@@ -64,7 +66,7 @@
 
 			<Frame name="ArrivalTagline" inherits="TextSmall">
 				<Property name="MousePassThrough" value="true" />
-				<Property name="Font" value="CharacterTitleFont" />
+				<Property name="Font" value="DefaultHeader" />
 				<Property name="HorzAlign" value="CENTER" />
 				<Property name="TextColor" value="FFE8E2D2" />
 				<Area>

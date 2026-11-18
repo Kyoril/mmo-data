@@ -94,7 +94,9 @@ local function Start(frame)
 	ZoneText:Hide();
 	ZoneSubText:Hide();
 
-	ArrivalTitle:SetText(GetZoneText() or "");
+	-- The place the player stands in (Oakenshire), not the region around it (Falwyn Forest).
+	local subZone = GetSubZoneText();
+	ArrivalTitle:SetText((subZone and subZone ~= "") and subZone or (GetZoneText() or ""));
 	ArrivalTagline:SetText(Localize("ARRIVAL_TAGLINE"));
 	ArrivalHint:SetText(Localize("ARRIVAL_HINT"));
 
