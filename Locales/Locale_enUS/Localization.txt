@@ -1,6 +1,6 @@
 strings = 
 {
-	(key = "GAME_TITLE", string = "MMORPG")
+	(key = "GAME_TITLE", string = "Alestia Online")
 
 	(key = "OKAY", string = "Okay")
 	(key = "CANCEL", string = "Cancel")
@@ -1350,4 +1350,6 @@ strings =
 	(key = "WAYFINDER_SEARCH_NO_RESULTS", string = "No spells match your search.")
 	(key = "WAYFINDER_SHORTCUTS_COLLAPSE", string = "Collapse shortcuts")
 	(key = "WAYFINDER_SHORTCUTS_EXPAND", string = "Expand shortcuts")
+	(key = "QUESTS", string = "Quests")
+	(key = "DELETE_ITEM", string = "Do you really want to destroy this item?")
 }

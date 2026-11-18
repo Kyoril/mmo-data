@@ -1,6 +1,6 @@
 strings = 
 {
-	(key = "GAME_TITLE", string = "MMORPG")
+	(key = "GAME_TITLE", string = "Alestia Online")
 
 	(key = "OKAY", string = "Valider")
 	(key = "CANCEL", string = "Annuler")
@@ -1344,4 +1344,13 @@ strings =
 	(key = "WAYFINDER_SEARCH_NO_RESULTS", string = "Aucun sort ne correspond à votre recherche.")
 	(key = "WAYFINDER_SHORTCUTS_COLLAPSE", string = "Réduire les raccourcis")
 	(key = "WAYFINDER_SHORTCUTS_EXPAND", string = "Développer les raccourcis")
+	(key = "STAMINA_HEALTH_BONUS", string = "Augmente vos points de vie maximum.")
+	(key = "STRENGTH_ATTACK_BONUS", string = "Augmente votre puissance d'attaque en mêlée.")
+	(key = "AGILITY_ATTACK_BONUS", string = "Augmente votre puissance d'attaque en mêlée.")
+	(key = "AGILITY_CRIT_BONUS", string = "Augmente vos chances de coup critique en mêlée.")
+	(key = "INTELLECT_MANA_BONUS", string = "Augmente votre mana maximum.")
+	(key = "WHISPER", string = "Chuchoter")
+	(key = "TRADE", string = "Échanger")
+	(key = "QUESTS", string = "Quêtes")
+	(key = "DELETE_ITEM", string = "Voulez-vous vraiment détruire cet objet ?")
 }

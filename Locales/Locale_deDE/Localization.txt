@@ -1,6 +1,6 @@
 strings = 
 {
-	(key = "GAME_TITLE", string = "MMORPG")
+	(key = "GAME_TITLE", string = "Alestia Online")
 
 	(key = "OKAY", string = "Okay")
 	(key = "CANCEL", string = "Abbrechen")
@@ -1343,4 +1343,13 @@ strings =
 	(key = "WAYFINDER_SEARCH_NO_RESULTS", string = "Keine passenden Zauber gefunden.")
 	(key = "WAYFINDER_SHORTCUTS_COLLAPSE", string = "Schnellzugriffe einklappen")
 	(key = "WAYFINDER_SHORTCUTS_EXPAND", string = "Schnellzugriffe ausklappen")
+	(key = "STAMINA_HEALTH_BONUS", string = "Erhöht Eure maximale Gesundheit.")
+	(key = "STRENGTH_ATTACK_BONUS", string = "Erhöht Eure Nahkampfangriffskraft.")
+	(key = "AGILITY_ATTACK_BONUS", string = "Erhöht Eure Nahkampfangriffskraft.")
+	(key = "AGILITY_CRIT_BONUS", string = "Erhöht Eure Chance auf kritische Treffer mit Nahkampfangriffen.")
+	(key = "INTELLECT_MANA_BONUS", string = "Erhöht Euer maximales Mana.")
+	(key = "WHISPER", string = "Flüstern")
+	(key = "TRADE", string = "Handeln")
+	(key = "QUESTS", string = "Quests")
+	(key = "DELETE_ITEM", string = "Wollt Ihr diesen Gegenstand wirklich zerstören?")
 }
