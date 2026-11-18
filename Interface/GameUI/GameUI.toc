@@ -6,6 +6,7 @@ GameTemplates.xml
 GameParent.xml
 ComboBoxDropdown.xml
 ZoneText.xml
+ArrivalFrame.xml
 GameMenuBar.xml
 ActionBarButton.xml
 ActionBar.xml

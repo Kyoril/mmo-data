@@ -4,6 +4,11 @@ ZoneHoldDuration = 1000;
 ZoneFadeOutDuration = 2000;
 
 function OnZoneChanged(frame)
+    -- A new character's arrival card shows the zone name itself.
+    if ArrivalTitleActive then
+        return;
+    end
+
     local newText = GetZoneText() or "";
     local newSubText = GetSubZoneText() or "";
 

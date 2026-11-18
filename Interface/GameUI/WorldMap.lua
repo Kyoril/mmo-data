@@ -81,8 +81,14 @@ local function UpdateMemberTooltip(info)
 
 	GameTooltip_Clear();
 	for _, member in ipairs(members) do
-		local color = member.type == "guild" and "FF4DF266" or "FF00CCFF";
-		local kind = member.type == "guild" and Localize("WORLDMAP_GUILD_MEMBER") or Localize("WORLDMAP_PARTY_MEMBER");
+		local color, kind;
+		if member.type == "questarea" then
+			color, kind = "FFFFD24D", Localize("MAP_QUEST_AREA");
+		elseif member.type == "guild" then
+			color, kind = "FF4DF266", Localize("WORLDMAP_GUILD_MEMBER");
+		else
+			color, kind = "FF00CCFF", Localize("WORLDMAP_PARTY_MEMBER");
+		end
 		GameTooltip_AddLine(member.name .. "  (" .. kind .. ")", TOOLTIP_LINE_LEFT, color);
 	end
 	GameTooltip_ShrinkToTextWidth();

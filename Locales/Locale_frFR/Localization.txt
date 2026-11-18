@@ -1353,4 +1353,7 @@ strings =
 	(key = "TRADE", string = "Échanger")
 	(key = "QUESTS", string = "Quêtes")
 	(key = "DELETE_ITEM", string = "Voulez-vous vraiment détruire cet objet ?")
+	(key = "ARRIVAL_TAGLINE", string = "Ici commence votre histoire en Alestia.")
+	(key = "ARRIVAL_HINT", string = "Le fermier Haldor aurait besoin d'aide. Faites un clic droit sur lui pour lui parler.")
+	(key = "MAP_QUEST_AREA", string = "Zone de quête")
 }

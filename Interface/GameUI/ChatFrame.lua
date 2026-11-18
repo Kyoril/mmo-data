@@ -612,6 +612,12 @@ function ChatFrame_OnLootMoneyNotify(this, goldAmount)
 end
 
 function ChatFrame_OnTimePlayedUpdated(this, timePlayedSeconds)
+    -- The arrival sequence asks for the played time on login; that answer is not for the chat.
+    if SuppressNextTimePlayedMessage then
+        SuppressNextTimePlayedMessage = false;
+        return;
+    end
+
     -- Calculate days, hours, minutes, and seconds
     local days = math.floor(timePlayedSeconds / 86400);
     local hours = math.floor((timePlayedSeconds % 86400) / 3600);

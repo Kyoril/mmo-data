@@ -1352,4 +1352,7 @@ strings =
 	(key = "TRADE", string = "Handeln")
 	(key = "QUESTS", string = "Quests")
 	(key = "DELETE_ITEM", string = "Wollt Ihr diesen Gegenstand wirklich zerstören?")
+	(key = "ARRIVAL_TAGLINE", string = "Hier beginnt Eure Geschichte in Alestia.")
+	(key = "ARRIVAL_HINT", string = "Bauer Haldor könnte Hilfe gebrauchen. Klickt ihn mit der rechten Maustaste an, um mit ihm zu sprechen.")
+	(key = "MAP_QUEST_AREA", string = "Questgebiet")
 }

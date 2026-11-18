@@ -1351,4 +1351,7 @@ strings =
 	(key = "TIME_PLAYED_HOURS", string = "Total time played: %d hours, %d minutes, %d seconds")
 	(key = "QUESTS", string = "Задания")
 	(key = "DELETE_ITEM", string = "Вы действительно хотите уничтожить этот предмет?")
+	(key = "ARRIVAL_TAGLINE", string = "Здесь начинается ваша история в Алестии.")
+	(key = "ARRIVAL_HINT", string = "Фермеру Хальдору нужна помощь. Щёлкните по нему правой кнопкой мыши, чтобы поговорить.")
+	(key = "MAP_QUEST_AREA", string = "Район задания")
 }

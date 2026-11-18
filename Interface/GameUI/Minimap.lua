@@ -163,6 +163,8 @@ function Minimap_OnUpdate(self, elapsed)
             GameTooltip_AddLine(obj.name, TOOLTIP_LINE_LEFT, "FF4DF266");
         elseif obj.type == "questgiver" then
             GameTooltip_AddLine(obj.name, TOOLTIP_LINE_LEFT, "FFFFFF00");
+        elseif obj.type == "questarea" then
+            GameTooltip_AddLine(obj.name .. "  (" .. Localize("MAP_QUEST_AREA") .. ")", TOOLTIP_LINE_LEFT, "FFFFD24D");
         end
     end
 

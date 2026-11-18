@@ -1352,4 +1352,7 @@ strings =
 	(key = "WAYFINDER_SHORTCUTS_EXPAND", string = "Expand shortcuts")
 	(key = "QUESTS", string = "Quests")
 	(key = "DELETE_ITEM", string = "Do you really want to destroy this item?")
+	(key = "ARRIVAL_TAGLINE", string = "Your story in Alestia begins here.")
+	(key = "ARRIVAL_HINT", string = "Farmer Haldor could use a hand. Right-click him to talk.")
+	(key = "MAP_QUEST_AREA", string = "Quest area")
 }
