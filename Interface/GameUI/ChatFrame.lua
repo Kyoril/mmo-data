@@ -501,8 +501,16 @@ function ChatFrame_OnMOTD(this, motd)
     ChatFrame:AddMessage(motd, 1.0, 1.0, 0.0);
 end
 
+-- Returns a clickable item hyperlink rendered as "[Name]" in the item's quality color. The item
+-- id is the payload HYPERLINK_CLICKED hands to the item link tooltip, so a loot line links to
+-- the same tooltip as an item link a player posted. Items without an id stay plain text.
 function ChatFrame_GetItemNameLinkText(itemName, itemId, quality)
-    return string.format("|c%s[%s]|r", ItemQualityColors[quality], itemName);
+    local color = ItemQualityColors[quality];
+    if ( not itemId or itemId <= 0 ) then
+        return string.format("|c%s[%s]|r", color, itemName);
+    end
+
+    return string.format("|c%s|Hitem:%d|h[%s]|h|r", color, itemId, itemName);
 end
 
 function ChatFrame_OnLootItemReceived(this, itemName, itemId, quality, amount)
@@ -788,6 +796,10 @@ function ChatFrame_OnLoad(this)
             if not ChatInputFrame:IsVisible() then
                 ChatFrame_OpenChat();
             end
+        elseif type == "item" then
+            -- Click on an item link: show the item in the item link tooltip, the one window
+            -- which exists beside the hover tooltip.
+            ItemRefTooltip_SetItem(payload);
         elseif type == "emote" then
             -- Click on an emote link: open the emote list focused on that emote.
             local emoteId = tonumber(payload);
