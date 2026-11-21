@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
-	<!-- The arrival of a brand-new character: letterbox, title card, camera pull-in, then a pointer to
+	<!-- The arrival of a brand-new character: title card, camera pull-in, then a pointer to
 	     the first quest giver. Everything is mouse-transparent so the player can move right away.
 	     No child may use CharacterTitleFont (or the other window title fonts): the Wayfinder theme
 	     restyles such a child as a window title (left aligned, with a rule under it). -->
@@ -14,42 +14,6 @@
 			<Anchor point="TOP" />
 			<Anchor point="BOTTOM" />
 		</Area>
-
-			<Frame name="ArrivalBarTop" renderer="DefaultRenderer">
-				<Property name="MousePassThrough" value="true" />
-				<Area>
-					<Size><AbsDimension y="230" /></Size>
-					<Anchor point="LEFT" />
-					<Anchor point="RIGHT" />
-					<Anchor point="TOP" />
-				</Area>
-				<Visual>
-					<ImagerySection name="Fill">
-						<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF000000" />
-					</ImagerySection>
-					<StateImagery name="Enabled">
-						<Layer><Section section="Fill" /></Layer>
-					</StateImagery>
-				</Visual>
-			</Frame>
-
-			<Frame name="ArrivalBarBottom" renderer="DefaultRenderer">
-				<Property name="MousePassThrough" value="true" />
-				<Area>
-					<Size><AbsDimension y="230" /></Size>
-					<Anchor point="LEFT" />
-					<Anchor point="RIGHT" />
-					<Anchor point="BOTTOM" />
-				</Area>
-				<Visual>
-					<ImagerySection name="Fill">
-						<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF000000" />
-					</ImagerySection>
-					<StateImagery name="Enabled">
-						<Layer><Section section="Fill" /></Layer>
-					</StateImagery>
-				</Visual>
-			</Frame>
 
 			<Frame name="ArrivalTitle" inherits="TextSmall">
 				<Property name="MousePassThrough" value="true" />

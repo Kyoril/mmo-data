@@ -1353,5 +1353,7 @@ strings =
 	(key = "DELETE_ITEM", string = "Вы действительно хотите уничтожить этот предмет?")
 	(key = "ARRIVAL_TAGLINE", string = "Здесь начинается ваша история в Алестии.")
 	(key = "ARRIVAL_HINT", string = "Фермеру Хальдору нужна помощь. Щёлкните по нему правой кнопкой мыши, чтобы поговорить.")
+	(key = "UNIT_IN_CUTSCENE", string = "Смотрит ролик")
+	(key = "CUTSCENE_SKIP_HINT", string = "Нажмите Escape ещё раз, чтобы пропустить")
 	(key = "MAP_QUEST_AREA", string = "Район задания")
 }

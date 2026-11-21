@@ -443,6 +443,11 @@ function GameParent_OnHoveredObjectChanged(self)
 		else
 			GameTooltip_AddLine(string.format(Localize("LEVEL_FORMAT"), mouseOverUnit:GetLevel()), TOOLTIP_LINE_LEFT, "FFFFFFFF");
 		end
+
+		-- The player is away watching a cutscene: the character stands still and cannot be harmed
+		if (mouseOverUnit:IsInCutscene()) then
+			GameTooltip_AddLine(Localize("UNIT_IN_CUTSCENE"), TOOLTIP_LINE_LEFT, "FFB0B0B0");
+		end
 	else
 		GameTooltip_AddLine(mouseOverUnit:GetName(), TOOLTIP_LINE_LEFT, color);
 		GameTooltip_AddLine(string.format(Localize("LEVEL_FORMAT"), mouseOverUnit:GetLevel()), TOOLTIP_LINE_LEFT, "FFFFFFFF");
