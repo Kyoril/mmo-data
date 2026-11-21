@@ -20,6 +20,38 @@ local vigorState = {
 	fullTime = nil,
 };
 
+-- Puts the bar on top of the action bars, and the Wayfinder pet and cast bars above it while it is
+-- shown. Called whenever the bar appears or goes.
+local function VigorBar_UpdateLayout()
+	if GameUITheme and GameUITheme.Wayfinder then
+		if ActionBar2 ~= nil then
+			Wayfinder_UpdateActionBarLayout(ActionBar2);
+		end
+		return;
+	end
+
+	local below = ActionBar;
+	if ActionBar2 ~= nil and ActionBar2:IsVisible() then
+		below = ActionBar2;
+	elseif ExperienceDock ~= nil and ExperienceDock:IsVisible() then
+		below = ExperienceDock;
+	end
+	VigorBar:SetAnchor(AnchorPoint.BOTTOM, AnchorPoint.TOP, below, -14);
+end
+
+local function VigorBar_SetShown(shown)
+	if VigorBar:IsVisible() == shown then
+		return;
+	end
+
+	if shown then
+		VigorBar:Show();
+	else
+		VigorBar:Hide();
+	end
+	VigorBar_UpdateLayout();
+end
+
 local function VigorBar_SetTint(tint)
 	if vigorState.tint ~= tint then
 		vigorState.tint = tint;
@@ -31,7 +63,7 @@ function VigorBar_Refresh()
 	local maxVigor = UnitVigorMax("player");
 	if maxVigor == nil or maxVigor <= 0 then
 		vigorState.fullTime = nil;
-		VigorBar:Hide();
+		VigorBar_SetShown(false);
 		return;
 	end
 
@@ -48,7 +80,7 @@ function VigorBar_Refresh()
 	if fraction < 1 then
 		vigorState.fullTime = nil;
 		VigorBar:SetOpacity(1.0);
-		VigorBar:Show();
+		VigorBar_SetShown(true);
 	elseif VigorBar:IsVisible() and vigorState.fullTime == nil then
 		-- Just became full: keep it visible for a moment, then fade (VigorBar_OnUpdate).
 		vigorState.fullTime = 0;
@@ -65,7 +97,7 @@ function VigorBar_OnUpdate(self, elapsed)
 	local fadeProgress = (vigorState.fullTime - VIGOR_FULL_HOLD) / VIGOR_FADE_TIME;
 	if fadeProgress >= 1 then
 		vigorState.fullTime = nil;
-		VigorBar:Hide();
+		VigorBar_SetShown(false);
 		VigorBar:SetOpacity(1.0);
 	elseif fadeProgress > 0 then
 		VigorBar:SetOpacity(1.0 - fadeProgress);

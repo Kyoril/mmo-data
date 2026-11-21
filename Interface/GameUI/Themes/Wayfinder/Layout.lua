@@ -71,6 +71,13 @@ end
 function Wayfinder_UpdateActionBarLayout(bar)
 	bar:SetAnchor(A.BOTTOM, A.TOP, ActionBar, -12);
 	local topBar = bar:IsVisible() and bar or ActionBar;
+	-- The vigor bar (Dash, Glider) sits on top of the action bars while shown; the rest stacks above it.
+	if VigorBar then
+		VigorBar:SetAnchor(A.BOTTOM, A.TOP, topBar, -12);
+		if VigorBar:IsVisible() then
+			topBar = VigorBar;
+		end
+	end
 	if PetActionBar then
 		PetActionBar:SetAnchor(A.BOTTOM, A.TOP, topBar, -16);
 	end
