@@ -63,6 +63,13 @@
             end
         end
 	</Binding>
+	<Binding name="DASH" description="Dash" category="MOVEMENT">
+		return function(key, keystate)
+			if keystate == "DOWN" then
+				ToggleDash();
+			end
+		end
+	</Binding>
 	<Binding name="SITORSTAND" description="Toggle sit/stand" category="MOVEMENT">
         return function(key, keystate)
 		    -- SitOrStand();

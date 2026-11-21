@@ -23,6 +23,7 @@ SpellBook.xml
 Crafting.xml
 EmoteList.xml
 CastBar.xml
+VigorBar.xml
 #CombatLog.xml
 AuraButton.xml
 AuraBar.xml

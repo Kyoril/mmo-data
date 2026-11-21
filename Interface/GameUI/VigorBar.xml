@@ -1,0 +1,37 @@
+<?xml version="1.0" ?>
+<UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
+	<Script file="VigorBar.lua" />
+
+	<!-- Vigor of the own character (Dash, Glider): a slim bar centred above the action bar. Hidden
+	     while the character knows no traversal ability, fades out a moment after Vigor is full. -->
+	<Frame name="VigorBar" type="ProgressBar" parent="GameParent">
+		<Property name="FillMaterial" value="Interface/ProgressFill.hmat" />
+		<Property name="FillMaterialTint" value="FF4FC3D9" />
+		<Property name="SmoothSpeed" value="10" />
+		<Property name="Progress" value="1" />
+		<Property name="Text" value="VIGOR" />
+		<Property name="Font" value="ExperienceHudFont" />
+		<Property name="Visible" value="False" />
+
+		<Area>
+			<Size><AbsDimension x="560" y="32" /></Size>
+			<Anchor point="H_CENTER" relativeTo="ActionBar" relativePoint="H_CENTER" offset="0" />
+			<Anchor point="BOTTOM" relativeTo="ActionBar" relativePoint="TOP" offset="-14" />
+		</Area>
+
+		<Visual inherits="ThemePlayerExperienceBarVisual" />
+
+		<Scripts>
+			<OnLoad>
+				return function(this)
+					VigorBar_OnLoad(this);
+				end
+			</OnLoad>
+			<OnUpdate>
+				return function(this, elapsed)
+					VigorBar_OnUpdate(this, elapsed);
+				end
+			</OnUpdate>
+		</Scripts>
+	</Frame>
+</UiLayout>
