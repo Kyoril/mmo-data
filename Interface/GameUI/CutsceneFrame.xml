@@ -38,15 +38,16 @@
 
 		<Frame name="CutsceneSubtitle" inherits="TextSmall">
 			<Property name="MousePassThrough" value="true" />
-			<Property name="Font" value="DefaultHeader" />
+			<!-- The outlined zone font: narration has to stay readable over snow, water and sky alike -->
+			<Property name="Font" value="ZoneTextFontSmall" />
 			<Property name="HorzAlign" value="CENTER" />
 			<Property name="VertAlign" value="BOTTOM" />
 			<Property name="TextColor" value="FFF4EEDD" />
 			<Area>
-				<Size><AbsDimension y="160" /></Size>
-				<Anchor point="LEFT" offset="320" />
-				<Anchor point="RIGHT" offset="-320" />
-				<Anchor point="BOTTOM" offset="-140" />
+				<Size><AbsDimension y="240" /></Size>
+				<Anchor point="LEFT" offset="360" />
+				<Anchor point="RIGHT" offset="-360" />
+				<Anchor point="BOTTOM" offset="-150" />
 			</Area>
 		</Frame>
 
