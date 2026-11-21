@@ -95,6 +95,25 @@
 		</Area>
 	</Frame>
 
+	<!-- Shown left of the health bar while the player behind the unit watches a cutscene. -->
+	<Frame name="NameplateCutsceneTemplate" renderer="DefaultRenderer">
+		<Visual>
+			<ImagerySection name="Icon">
+				<ImageComponent texture="Interface/Icons/fg4_iconsFlat_dialogue.htex" tint="FFE8E2D2" />
+			</ImagerySection>
+			<StateImagery name="Enabled">
+				<Layer><Section section="Icon" /></Layer>
+			</StateImagery>
+			<StateImagery name="Disabled">
+				<Layer><Section section="Icon" /></Layer>
+			</StateImagery>
+		</Visual>
+
+		<Area>
+			<Size><AbsDimension x="30" y="30" /></Size>
+		</Area>
+	</Frame>
+
 	<Frame name="NameplateHighlightTemplate" renderer="DefaultRenderer">
 		<Visual inherits="ThemeNameplateHighlightTemplateVisual" />
 

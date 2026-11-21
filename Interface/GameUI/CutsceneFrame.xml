@@ -1,0 +1,79 @@
+<?xml version="1.0" ?>
+<UiLayout xmlns="http://www.w3schools.com/Ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com/Ui.xsd file:///F:/mmo/data/client/Interface/Ui.xsd">
+	<!-- What a cutscene draws over the world while the rest of the ui is hidden: the fade to and from
+	     black, the subtitle of the narration and the hint how to skip. The client hides the ui itself
+	     (FrameManager::SetUiHidden); this frame and its children are the only ones that stay, because
+	     of VisibleWhileUiHidden. Nothing in here takes mouse input.
+	     No child may use CharacterTitleFont (or the other window title fonts): the Wayfinder theme
+	     restyles such a child as a window title. -->
+	<Script file="CutsceneFrame.lua" />
+
+	<Frame name="CutsceneFrame" parent="GameParent" frameLevel="5000">
+		<Property name="MousePassThrough" value="true" />
+		<Property name="VisibleWhileUiHidden" value="true" />
+		<Area>
+			<Anchor point="LEFT" />
+			<Anchor point="RIGHT" />
+			<Anchor point="TOP" />
+			<Anchor point="BOTTOM" />
+		</Area>
+
+		<Frame name="CutsceneFade" renderer="DefaultRenderer">
+			<Property name="MousePassThrough" value="true" />
+			<Area>
+				<Anchor point="LEFT" />
+				<Anchor point="RIGHT" />
+				<Anchor point="TOP" />
+				<Anchor point="BOTTOM" />
+			</Area>
+			<Visual>
+				<ImagerySection name="Fill">
+					<ImageComponent texture="Textures/Character/T_EV_BlankWhite_01.htex" tint="FF000000" />
+				</ImagerySection>
+				<StateImagery name="Enabled">
+					<Layer><Section section="Fill" /></Layer>
+				</StateImagery>
+			</Visual>
+		</Frame>
+
+		<Frame name="CutsceneSubtitle" inherits="TextSmall">
+			<Property name="MousePassThrough" value="true" />
+			<Property name="Font" value="DefaultHeader" />
+			<Property name="HorzAlign" value="CENTER" />
+			<Property name="VertAlign" value="BOTTOM" />
+			<Property name="TextColor" value="FFF4EEDD" />
+			<Area>
+				<Size><AbsDimension y="160" /></Size>
+				<Anchor point="LEFT" offset="320" />
+				<Anchor point="RIGHT" offset="-320" />
+				<Anchor point="BOTTOM" offset="-140" />
+			</Area>
+		</Frame>
+
+		<Frame name="CutsceneSkipHint" inherits="TextSmall">
+			<Property name="MousePassThrough" value="true" />
+			<Property name="Font" value="CharacterBodyFont" />
+			<Property name="HorzAlign" value="RIGHT" />
+			<Property name="TextColor" value="FFC8C2B4" />
+			<Area>
+				<Size><AbsDimension y="40" /></Size>
+				<Anchor point="LEFT" />
+				<Anchor point="RIGHT" offset="-48" />
+				<Anchor point="BOTTOM" offset="-40" />
+			</Area>
+		</Frame>
+
+		<Scripts>
+			<OnLoad>
+				return function(this)
+					CutsceneFrame_OnLoad(this);
+				end
+			</OnLoad>
+			<OnUpdate>
+				return function(this, elapsed)
+					CutsceneFrame_OnUpdate(this, elapsed);
+				end
+			</OnUpdate>
+		</Scripts>
+	</Frame>
+</UiLayout>
