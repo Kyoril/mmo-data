@@ -10,6 +10,8 @@
 		     keeps it below every sibling, including HUD overlays that use a negative level to
 		     stay underneath the game windows. -->
 		<Frame name="WorldFrame" type="World" renderer="WorldRenderer" setAllPoints="true" frameLevel="-1000">
+			<!-- A cutscene hides the ui but not the world -->
+			<Property name="VisibleWhileUiHidden" value="true" />
 			<Scripts>
 				<OnMouseDown>
 					return function(this, button)

@@ -1357,5 +1357,7 @@ strings =
 	(key = "DELETE_ITEM", string = "Wollt Ihr diesen Gegenstand wirklich zerstören?")
 	(key = "ARRIVAL_TAGLINE", string = "Hier beginnt Eure Geschichte in Alestia.")
 	(key = "ARRIVAL_HINT", string = "Bauer Haldor könnte Hilfe gebrauchen. Klickt ihn mit der rechten Maustaste an, um mit ihm zu sprechen.")
+	(key = "UNIT_IN_CUTSCENE", string = "In einer Zwischensequenz")
+	(key = "CUTSCENE_SKIP_HINT", string = "Erneut Escape drücken, um zu überspringen")
 	(key = "MAP_QUEST_AREA", string = "Questgebiet")
 }

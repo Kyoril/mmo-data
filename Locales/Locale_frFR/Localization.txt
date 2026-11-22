@@ -1358,5 +1358,7 @@ strings =
 	(key = "DELETE_ITEM", string = "Voulez-vous vraiment détruire cet objet ?")
 	(key = "ARRIVAL_TAGLINE", string = "Ici commence votre histoire en Alestia.")
 	(key = "ARRIVAL_HINT", string = "Le fermier Haldor aurait besoin d'aide. Faites un clic droit sur lui pour lui parler.")
+	(key = "UNIT_IN_CUTSCENE", string = "Dans une cinématique")
+	(key = "CUTSCENE_SKIP_HINT", string = "Appuyez de nouveau sur Échap pour passer")
 	(key = "MAP_QUEST_AREA", string = "Zone de quête")
 }
