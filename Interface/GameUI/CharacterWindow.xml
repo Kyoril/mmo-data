@@ -138,7 +138,7 @@
 		<Visual inherits="ThemeBugReportFrameVisual" />
 		<Area>
 			<Size>
-				<AbsDimension x="1440" y="1280" />
+				<AbsDimension x="1440" y="1440" />
 			</Size>
 			<Anchor point="LEFT" offset="0" />
 			<Anchor point="TOP" offset="300" />
@@ -362,7 +362,7 @@
 					<AbsDimension x="112" y="112" />
 				</Size>
 				<Anchor point="LEFT" offset="368" />
-				<Anchor point="BOTTOM" offset="-64" />
+				<Anchor point="BOTTOM" offset="-224" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotMainHand" inherits="InventoryItemButtonTemplate" id="65295">
@@ -372,7 +372,7 @@
 					<AbsDimension x="112" y="112" />
 				</Size>
 				<Anchor point="LEFT" offset="240" />
-				<Anchor point="BOTTOM" offset="-64" />
+				<Anchor point="BOTTOM" offset="-224" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotRanged" inherits="InventoryItemButtonTemplate" id="65297">
@@ -382,6 +382,42 @@
 					<AbsDimension x="112" y="112" />
 				</Size>
 				<Anchor point="LEFT" offset="496" />
+				<Anchor point="BOTTOM" offset="-224" />
+			</Area>
+		</Frame>
+		<!-- Travel row: the glider slot below the weapons, with room for a mount slot beside it later. -->
+		<Frame name="CharacterTravelDivider" renderer="DefaultRenderer">
+			<Property name="Clickable" value="false" />
+			<Area>
+				<Size>
+					<AbsDimension y="2" />
+				</Size>
+				<Anchor point="LEFT" offset="160" />
+				<Anchor point="RIGHT" offset="-752" />
+				<Anchor point="BOTTOM" offset="-196" />
+			</Area>
+			<Visual inherits="ThemeCharacterWindowTitleDividerVisual" />
+		</Frame>
+		<Frame name="CharacterTravelLabel" inherits="TextSmall">
+			<Property name="Font" value="SmallLabelFont" />
+			<Property name="Text" value="CHARACTER_SLOT_GLIDER" />
+			<Property name="HorzAlign" value="RIGHT" />
+			<Property name="VertAlign" value="CENTER" />
+			<Area>
+				<Size>
+					<AbsDimension x="196" y="112" />
+				</Size>
+				<Anchor point="LEFT" offset="160" />
+				<Anchor point="BOTTOM" offset="-64" />
+			</Area>
+		</Frame>
+		<Frame name="CharacterInvSlotGlider" inherits="InventoryItemButtonTemplate" id="65366">
+			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_glider.htex" />
+			<Area>
+				<Size>
+					<AbsDimension x="112" y="112" />
+				</Size>
+				<Anchor point="LEFT" offset="368" />
 				<Anchor point="BOTTOM" offset="-64" />
 			</Area>
 		</Frame>
@@ -906,7 +942,7 @@
 				<Anchor point="LEFT" offset="160" />
 				<Anchor point="RIGHT" offset="-752" />
 				<Anchor point="TOP" offset="152" />
-				<Anchor point="BOTTOM" offset="-192" />
+				<Anchor point="BOTTOM" offset="-352" />
 			</Area>
 			<Visual inherits="ThemeCharacterModelFrameBorderVisual" />
 			<Frame name="CharacterFrameModel" type="UnitModel" renderer="ModelRenderer">

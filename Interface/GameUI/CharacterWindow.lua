@@ -511,7 +511,7 @@ local CHARACTER_EQUIPMENT_SLOTS = {
     "CharacterInvSlotWaist", "CharacterInvSlotLegs", "CharacterInvSlotFeet",
     "CharacterInvSlotFinger1", "CharacterInvSlotFinger2", "CharacterInvSlotTrinket1",
     "CharacterInvSlotTrinket2", "CharacterInvSlotMainHand", "CharacterInvSlotOffHand",
-    "CharacterInvSlotRanged",
+    "CharacterInvSlotRanged", "CharacterInvSlotGlider",
 };
 
 -- The paperdoll slots color their button border by the equipped item's quality, so the

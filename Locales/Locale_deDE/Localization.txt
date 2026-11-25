@@ -567,6 +567,7 @@ strings =
 	(key = "LOOT_EMPTY", string = "Keine Beute")
 	(key = "ERR_TOO_FAR_AWAY_TO_LOOT", string = "Ihr seid zu weit entfernt, um das zu plündern.")
 	(key = "ERR_NO_GLIDER_EQUIPPED", string = "Ihr habt keinen Gleiter angelegt.")
+	(key = "CHARACTER_SLOT_GLIDER", string = "Gleiter")
 	(key = "SET_LOOT_METHOD", string = "Beutemethode festlegen")
 	(key = "LOOT_METHOD_TITLE", string = "Gruppenbeute-Regeln")
 	(key = "LOOT_OPTIONS_HEADER", string = "Beute-Optionen")
