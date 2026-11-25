@@ -1,9 +1,13 @@
 -- The arrival of a brand-new character.
 --
 -- On the first world entry of a session the client asks for the character's played time. A character
--- that has played for less than NEW_CHARACTER_SECONDS gets a short title card: letterbox bars, the
--- zone name and a tagline, while the camera pulls in from a wide shot to the player's own zoom. When the
--- card fades, a hint points at the first quest giver until the player talks to someone.
+-- that has played for less than NEW_CHARACTER_SECONDS gets a short title card: the zone name and a
+-- tagline, while the camera pulls in from a wide shot to the player's own zoom. When the card fades,
+-- a hint points at the first quest giver until the player talks to someone.
+--
+-- A new character may be shown an intro cutscene first (see CutsceneFrame). The card then waits for
+-- the cutscene to end and comes without the camera pull-in: the cutscene has just flown the camera
+-- to the character.
 --
 -- State lives in this table, not on the frame: fields set on a frame from Lua do not survive between
 -- handler calls.
@@ -11,7 +15,6 @@
 local NEW_CHARACTER_SECONDS = 60;
 
 -- Timeline in milliseconds from the start of the sequence.
-local BARS_IN = 600;
 local TITLE_IN_START = 700;
 local TITLE_IN = 1200;
 local TAGLINE_IN_START = 1700;
@@ -30,6 +33,7 @@ local CAMERA_TIME = 6000;
 local Arrival = {
 	checked = false,      -- the played-time request was sent this session
 	waiting = false,      -- the answer to that request has not arrived yet
+	deferred = false,     -- the card waits for the intro cutscene to end
 	running = false,
 	startTime = 0,
 	hintDismissed = false,
@@ -60,8 +64,6 @@ local function EaseOutCubic(t)
 end
 
 local function HideAll()
-	ArrivalBarTop:Hide();
-	ArrivalBarBottom:Hide();
 	ArrivalTitle:Hide();
 	ArrivalTagline:Hide();
 	ArrivalHint:Hide();
@@ -84,7 +86,7 @@ local function Finish(frame)
 	frame:Hide();
 end
 
-local function Start(frame)
+local function Start(frame, withCamera)
 	Arrival.running = true;
 	Arrival.startTime = GetTime();
 	Arrival.hintDismissed = false;
@@ -100,7 +102,7 @@ local function Start(frame)
 	ArrivalTagline:SetText(Localize("ARRIVAL_TAGLINE"));
 	ArrivalHint:SetText(Localize("ARRIVAL_HINT"));
 
-	for _, child in ipairs({ ArrivalBarTop, ArrivalBarBottom, ArrivalTitle, ArrivalTagline, ArrivalHint }) do
+	for _, child in ipairs({ ArrivalTitle, ArrivalTagline, ArrivalHint }) do
 		child:SetOpacity(0);
 		child:Show();
 	end
@@ -108,7 +110,7 @@ local function Start(frame)
 	-- Camera pull-in: allow the wide start for the duration of the shot only.
 	Arrival.targetZoom = tonumber(GetCVar("CameraZoom")) or 8;
 	Arrival.maxZoom = tonumber(GetCVar("MaxCameraZoom")) or 8;
-	if Arrival.targetZoom > 0 then
+	if withCamera and Arrival.targetZoom > 0 then
 		Arrival.cameraDone = false;
 		SetCVar("MaxCameraZoom", tostring(math.max(Arrival.maxZoom, CAMERA_START_ZOOM)));
 		SetCVar("CameraZoom", tostring(CAMERA_START_ZOOM));
@@ -133,7 +135,19 @@ local function OnTimePlayed(frame, seconds)
 	end
 	Arrival.waiting = false;
 	if (tonumber(seconds) or NEW_CHARACTER_SECONDS) < NEW_CHARACTER_SECONDS then
-		Start(frame);
+		if IsCutscenePlaying() then
+			Arrival.deferred = true;
+		else
+			Start(frame, true);
+		end
+	end
+end
+
+-- The intro cutscene is over, however it ended: now the title card has the screen.
+local function OnCutsceneEnded(frame)
+	if Arrival.deferred then
+		Arrival.deferred = false;
+		Start(frame, false);
 	end
 end
 
@@ -147,6 +161,7 @@ function ArrivalFrame_OnLoad(frame)
 	frame:Hide();
 	frame:RegisterEvent("PLAYER_ENTER_WORLD", OnEnterWorld);
 	frame:RegisterEvent("TIME_PLAYED_UPDATED", OnTimePlayed);
+	frame:RegisterEvent("CUTSCENE_ENDED", OnCutsceneEnded);
 	frame:RegisterEvent("GOSSIP_SHOW", OnInteraction);
 	frame:RegisterEvent("QUEST_GREETING", OnInteraction);
 	frame:RegisterEvent("QUEST_DETAIL", OnInteraction);
@@ -172,8 +187,6 @@ function ArrivalFrame_OnUpdate(frame)
 
 	-- Title card
 	local out = 1 - Fade(frame, now, HOLD_UNTIL, FADE_OUT);
-	ArrivalBarTop:SetOpacity(0.85 * Fade(frame, now, 0, BARS_IN) * out);
-	ArrivalBarBottom:SetOpacity(0.85 * Fade(frame, now, 0, BARS_IN) * out);
 	ArrivalTitle:SetOpacity(Fade(frame, now, TITLE_IN_START, TITLE_IN) * out);
 	ArrivalTagline:SetOpacity(Fade(frame, now, TAGLINE_IN_START, TAGLINE_IN) * out);
 	if now >= HOLD_UNTIL + FADE_OUT then
