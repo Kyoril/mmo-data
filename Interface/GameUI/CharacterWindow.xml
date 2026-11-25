@@ -138,7 +138,7 @@
 		<Visual inherits="ThemeBugReportFrameVisual" />
 		<Area>
 			<Size>
-				<AbsDimension x="1440" y="1280" />
+				<AbsDimension x="1680" y="1280" />
 			</Size>
 			<Anchor point="LEFT" offset="0" />
 			<Anchor point="TOP" offset="300" />
@@ -201,7 +201,7 @@
 				<Size>
 					<AbsDimension x="96" y="96" />
 				</Size>
-				<Anchor point="LEFT" offset="296" />
+				<Anchor point="LEFT" offset="536" />
 				<Anchor point="TOP" offset="192" />
 			</Area>
 		</Frame>
@@ -211,7 +211,7 @@
 				<Size>
 					<AbsDimension x="96" y="96" />
 				</Size>
-				<Anchor point="LEFT" offset="296" />
+				<Anchor point="LEFT" offset="536" />
 				<Anchor point="TOP" offset="460" />
 			</Area>
 		</Frame>
@@ -221,7 +221,7 @@
 				<Size>
 					<AbsDimension x="96" y="96" />
 				</Size>
-				<Anchor point="LEFT" offset="404" />
+				<Anchor point="LEFT" offset="644" />
 				<Anchor point="TOP" offset="192" />
 			</Area>
 		</Frame>
@@ -231,7 +231,7 @@
 				<Size>
 					<AbsDimension x="96" y="96" />
 				</Size>
-				<Anchor point="LEFT" offset="296" />
+				<Anchor point="LEFT" offset="536" />
 				<Anchor point="TOP" offset="620" />
 			</Area>
 		</Frame>
@@ -241,7 +241,7 @@
 				<Size>
 					<AbsDimension x="96" y="96" />
 				</Size>
-				<Anchor point="LEFT" offset="512" />
+				<Anchor point="LEFT" offset="752" />
 				<Anchor point="TOP" offset="192" />
 			</Area>
 		</Frame>
@@ -251,7 +251,7 @@
 				<Size>
 					<AbsDimension x="96" y="96" />
 				</Size>
-				<Anchor point="LEFT" offset="404" />
+				<Anchor point="LEFT" offset="644" />
 				<Anchor point="TOP" offset="620" />
 			</Area>
 		</Frame>
@@ -261,7 +261,7 @@
 				<Size>
 					<AbsDimension x="96" y="96" />
 				</Size>
-				<Anchor point="LEFT" offset="512" />
+				<Anchor point="LEFT" offset="752" />
 				<Anchor point="TOP" offset="620" />
 			</Area>
 		</Frame>
@@ -271,7 +271,7 @@
 				<Size>
 					<AbsDimension x="96" y="96" />
 				</Size>
-				<Anchor point="LEFT" offset="620" />
+				<Anchor point="LEFT" offset="860" />
 				<Anchor point="TOP" offset="192" />
 			</Area>
 		</Frame>
@@ -281,7 +281,7 @@
 				<Size>
 					<AbsDimension x="96" y="96" />
 				</Size>
-				<Anchor point="LEFT" offset="728" />
+				<Anchor point="LEFT" offset="968" />
 				<Anchor point="TOP" offset="192" />
 			</Area>
 		</Frame>
@@ -291,7 +291,7 @@
 				<Size>
 					<AbsDimension x="96" y="96" />
 				</Size>
-				<Anchor point="LEFT" offset="296" />
+				<Anchor point="LEFT" offset="536" />
 				<Anchor point="TOP" offset="300" />
 			</Area>
 		</Frame>
@@ -301,7 +301,7 @@
 				<Size>
 					<AbsDimension x="96" y="96" />
 				</Size>
-				<Anchor point="LEFT" offset="404" />
+				<Anchor point="LEFT" offset="644" />
 				<Anchor point="TOP" offset="300" />
 			</Area>
 		</Frame>
@@ -311,7 +311,7 @@
 				<Size>
 					<AbsDimension x="96" y="96" />
 				</Size>
-				<Anchor point="LEFT" offset="512" />
+				<Anchor point="LEFT" offset="752" />
 				<Anchor point="TOP" offset="300" />
 			</Area>
 		</Frame>
@@ -321,7 +321,7 @@
 				<Size>
 					<AbsDimension x="96" y="96" />
 				</Size>
-				<Anchor point="LEFT" offset="404" />
+				<Anchor point="LEFT" offset="644" />
 				<Anchor point="TOP" offset="460" />
 			</Area>
 		</Frame>
@@ -331,7 +331,7 @@
 				<Size>
 					<AbsDimension x="96" y="96" />
 				</Size>
-				<Anchor point="LEFT" offset="512" />
+				<Anchor point="LEFT" offset="752" />
 				<Anchor point="TOP" offset="460" />
 			</Area>
 		</Frame>
@@ -341,7 +341,7 @@
 				<Size>
 					<AbsDimension x="96" y="96" />
 				</Size>
-				<Anchor point="LEFT" offset="620" />
+				<Anchor point="LEFT" offset="860" />
 				<Anchor point="TOP" offset="460" />
 			</Area>
 		</Frame>
@@ -351,7 +351,7 @@
 				<Size>
 					<AbsDimension x="96" y="96" />
 				</Size>
-				<Anchor point="LEFT" offset="728" />
+				<Anchor point="LEFT" offset="968" />
 				<Anchor point="TOP" offset="460" />
 			</Area>
 		</Frame>
@@ -361,7 +361,7 @@
 				<Size>
 					<AbsDimension x="96" y="96" />
 				</Size>
-				<Anchor point="LEFT" offset="404" />
+				<Anchor point="LEFT" offset="644" />
 				<Anchor point="TOP" offset="780" />
 			</Area>
 		</Frame>
@@ -371,7 +371,7 @@
 				<Size>
 					<AbsDimension x="96" y="96" />
 				</Size>
-				<Anchor point="LEFT" offset="296" />
+				<Anchor point="LEFT" offset="536" />
 				<Anchor point="TOP" offset="780" />
 			</Area>
 		</Frame>
@@ -381,7 +381,7 @@
 				<Size>
 					<AbsDimension x="96" y="96" />
 				</Size>
-				<Anchor point="LEFT" offset="512" />
+				<Anchor point="LEFT" offset="752" />
 				<Anchor point="TOP" offset="780" />
 			</Area>
 		</Frame>
@@ -391,7 +391,7 @@
 				<Size>
 					<AbsDimension x="96" y="96" />
 				</Size>
-				<Anchor point="LEFT" offset="296" />
+				<Anchor point="LEFT" offset="536" />
 				<Anchor point="TOP" offset="940" />
 			</Area>
 		</Frame>
@@ -402,7 +402,7 @@
 				<Size>
 					<AbsDimension x="528" y="36" />
 				</Size>
-				<Anchor point="LEFT" offset="296" />
+				<Anchor point="LEFT" offset="536" />
 				<Anchor point="TOP" offset="152" />
 			</Area>
 		</Frame>
@@ -412,7 +412,7 @@
 				<Size>
 					<AbsDimension x="528" y="36" />
 				</Size>
-				<Anchor point="LEFT" offset="296" />
+				<Anchor point="LEFT" offset="536" />
 				<Anchor point="TOP" offset="420" />
 			</Area>
 		</Frame>
@@ -422,7 +422,7 @@
 				<Size>
 					<AbsDimension x="528" y="36" />
 				</Size>
-				<Anchor point="LEFT" offset="296" />
+				<Anchor point="LEFT" offset="536" />
 				<Anchor point="TOP" offset="580" />
 			</Area>
 		</Frame>
@@ -432,7 +432,7 @@
 				<Size>
 					<AbsDimension x="528" y="36" />
 				</Size>
-				<Anchor point="LEFT" offset="296" />
+				<Anchor point="LEFT" offset="536" />
 				<Anchor point="TOP" offset="740" />
 			</Area>
 		</Frame>
@@ -442,7 +442,7 @@
 				<Size>
 					<AbsDimension x="528" y="36" />
 				</Size>
-				<Anchor point="LEFT" offset="296" />
+				<Anchor point="LEFT" offset="536" />
 				<Anchor point="TOP" offset="900" />
 			</Area>
 		</Frame>
@@ -457,7 +457,7 @@
 					<AbsDimension y="44" />
 				</Size>
 				<Anchor point="LEFT" offset="32" />
-				<Anchor point="RIGHT" offset="-624" />
+				<Anchor point="RIGHT" offset="-616" />
 				<Anchor point="BOTTOM" offset="-12" />
 			</Area>
 		</Frame>
@@ -467,7 +467,7 @@
 					<AbsDimension y="64" />
 				</Size>
 				<Anchor point="TOP" offset="144" />
-				<Anchor point="LEFT" offset="848" />
+				<Anchor point="LEFT" offset="1088" />
 				<Anchor point="RIGHT" offset="-32" />
 			</Area>
 			<Frame name="CharacterWindowTab1" inherits="CharacterWindowTabButtonTemplate" id="1">
@@ -496,7 +496,7 @@
 			<Visual inherits="ThemeCharacterAttributesPageVisual" />
 			<Area>
 				<Anchor point="TOP" offset="12" relativeTo="CharacterWindowTabBar" relativePoint="BOTTOM" />
-				<Anchor point="LEFT" offset="848" />
+				<Anchor point="LEFT" offset="1088" />
 				<Anchor point="RIGHT" offset="-32" />
 				<Anchor point="BOTTOM" offset="-40" />
 			</Area>
@@ -853,7 +853,7 @@
 			<Visual inherits="ThemeCharacterAttributesPageVisual" />
 			<Area>
 				<Anchor point="TOP" offset="12" relativeTo="CharacterWindowTabBar" relativePoint="BOTTOM" />
-				<Anchor point="LEFT" offset="848" />
+				<Anchor point="LEFT" offset="1088" />
 				<Anchor point="RIGHT" offset="-32" />
 				<Anchor point="BOTTOM" offset="-40" />
 			</Area>
@@ -958,8 +958,8 @@
 					<AbsDimension y="36" />
 				</Size>
 				<Anchor point="TOP" offset="100" />
-				<Anchor point="LEFT" offset="152" />
-				<Anchor point="RIGHT" offset="-744" />
+				<Anchor point="LEFT" offset="32" />
+				<Anchor point="RIGHT" offset="-1168" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterModelFrameBorder" renderer="DefaultRenderer">
