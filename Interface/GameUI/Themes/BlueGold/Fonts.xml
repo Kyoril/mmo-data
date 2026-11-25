@@ -23,7 +23,8 @@
 	<Font name="DefaultSmallBorder" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="22" outline="0" shadowX="1.0" shadowY="1.0" />
 	<Font name="DefaultHeader" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="42" outline="0" />
 	<Font name="DefaultSmallOutline" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="22" outline="0" shadowX="1.0" shadowY="1.0" />
-	<Font name="SmallLabelFont" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="20" outline="0" shadowX="1.0" shadowY="1.0" />
+	<Font name="SmallLabelFont" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="20" outline="0" shadowX="1.0" shadowY="1.0" />
+	<Font name="EquipmentSlotLabelFont" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="16" outline="0" shadowX="1.0" shadowY="1.0" />
 	<Font name="AuraTimeFont" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="18" outline="0" shadowX="1.0" shadowY="1.0" />
 	<Font name="AlestiaWindowTitleFont" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="36" outline="0" shadowX="1.0" shadowY="1.0" />
 	<Font name="TooltipTitleFont" file="Interface/GameUI/Themes/BlueGold/Fonts/PTSerif-Regular.ttf" size="28" outline="0" shadowX="1.0" shadowY="1.0" />
