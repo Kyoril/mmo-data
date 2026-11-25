@@ -505,7 +505,7 @@ end
 -- id is the payload HYPERLINK_CLICKED hands to the item link tooltip, so a loot line links to
 -- the same tooltip as an item link a player posted. Items without an id stay plain text.
 function ChatFrame_GetItemNameLinkText(itemName, itemId, quality)
-    local color = ItemQualityColors[quality];
+    local color = ItemQualityColors[quality] or ItemQualityColors[1];
     if ( not itemId or itemId <= 0 ) then
         return string.format("|c%s[%s]|r", color, itemName);
     end
