@@ -138,7 +138,7 @@
 		<Visual inherits="ThemeBugReportFrameVisual" />
 		<Area>
 			<Size>
-				<AbsDimension x="1680" y="1048" />
+				<AbsDimension x="1680" y="1280" />
 			</Size>
 			<Anchor point="LEFT" offset="0" />
 			<Anchor point="TOP" offset="300" />
@@ -200,7 +200,7 @@
 			<Property name="Clickable" value="false" />
 			<Area>
 				<Size>
-					<AbsDimension x="248" y="592" />
+					<AbsDimension x="272" y="816" />
 				</Size>
 				<Anchor point="LEFT" offset="32" />
 				<Anchor point="TOP" offset="196" />
@@ -211,9 +211,9 @@
 			<Property name="Clickable" value="false" />
 			<Area>
 				<Size>
-					<AbsDimension x="248" y="592" />
+					<AbsDimension x="272" y="816" />
 				</Size>
-				<Anchor point="LEFT" offset="816" />
+				<Anchor point="LEFT" offset="792" />
 				<Anchor point="TOP" offset="196" />
 			</Area>
 			<Visual inherits="ThemeCharacterModelFrameBorderVisual" />
@@ -225,7 +225,7 @@
 			<Property name="VertAlign" value="CENTER" />
 			<Area>
 				<Size>
-					<AbsDimension x="248" y="36" />
+					<AbsDimension x="272" y="36" />
 				</Size>
 				<Anchor point="LEFT" offset="32" />
 				<Anchor point="TOP" offset="152" />
@@ -238,9 +238,9 @@
 			<Property name="VertAlign" value="CENTER" />
 			<Area>
 				<Size>
-					<AbsDimension x="248" y="36" />
+					<AbsDimension x="272" y="36" />
 				</Size>
-				<Anchor point="LEFT" offset="816" />
+				<Anchor point="LEFT" offset="792" />
 				<Anchor point="TOP" offset="152" />
 			</Area>
 		</Frame>
@@ -251,10 +251,10 @@
 			<Property name="VertAlign" value="CENTER" />
 			<Area>
 				<Size>
-					<AbsDimension x="320" y="36" />
+					<AbsDimension x="344" y="36" />
 				</Size>
-				<Anchor point="LEFT" offset="316" />
-				<Anchor point="TOP" offset="836" />
+				<Anchor point="LEFT" offset="296" />
+				<Anchor point="TOP" offset="1052" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterEquipmentGroupHeader5" inherits="TextSmall">
@@ -264,210 +264,210 @@
 			<Property name="VertAlign" value="CENTER" />
 			<Area>
 				<Size>
-					<AbsDimension x="176" y="36" />
+					<AbsDimension x="184" y="36" />
 				</Size>
-				<Anchor point="LEFT" offset="644" />
-				<Anchor point="TOP" offset="836" />
+				<Anchor point="LEFT" offset="656" />
+				<Anchor point="TOP" offset="1052" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotHead" inherits="InventoryItemButtonTemplate" id="65280">
 			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_helmet.htex" />
 			<Area>
 				<Size>
-					<AbsDimension x="96" y="96" />
+					<AbsDimension x="104" y="104" />
 				</Size>
-				<Anchor point="LEFT" offset="52" />
-				<Anchor point="TOP" offset="228" />
+				<Anchor point="LEFT" offset="56" />
+				<Anchor point="TOP" offset="236" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotNeck" inherits="InventoryItemButtonTemplate" id="65281">
 			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_necklace.htex" />
 			<Area>
 				<Size>
-					<AbsDimension x="96" y="96" />
+					<AbsDimension x="104" y="104" />
 				</Size>
-				<Anchor point="LEFT" offset="836" />
-				<Anchor point="TOP" offset="228" />
+				<Anchor point="LEFT" offset="816" />
+				<Anchor point="TOP" offset="236" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotShoulder" inherits="InventoryItemButtonTemplate" id="65282">
 			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_spaulders.htex" />
 			<Area>
 				<Size>
-					<AbsDimension x="96" y="96" />
+					<AbsDimension x="104" y="104" />
 				</Size>
-				<Anchor point="LEFT" offset="164" />
-				<Anchor point="TOP" offset="228" />
+				<Anchor point="LEFT" offset="176" />
+				<Anchor point="TOP" offset="236" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotBack" inherits="InventoryItemButtonTemplate" id="65294">
 			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_cape.htex" />
 			<Area>
 				<Size>
-					<AbsDimension x="96" y="96" />
+					<AbsDimension x="104" y="104" />
 				</Size>
-				<Anchor point="LEFT" offset="948" />
-				<Anchor point="TOP" offset="228" />
+				<Anchor point="LEFT" offset="936" />
+				<Anchor point="TOP" offset="236" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotChest" inherits="InventoryItemButtonTemplate" id="65283">
 			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_chest.htex" />
 			<Area>
 				<Size>
-					<AbsDimension x="96" y="96" />
+					<AbsDimension x="104" y="104" />
 				</Size>
-				<Anchor point="LEFT" offset="52" />
-				<Anchor point="TOP" offset="372" />
+				<Anchor point="LEFT" offset="56" />
+				<Anchor point="TOP" offset="447" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotShirt" inherits="InventoryItemButtonTemplate" id="65284">
 			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_shirt.htex" />
 			<Area>
 				<Size>
-					<AbsDimension x="96" y="96" />
+					<AbsDimension x="104" y="104" />
 				</Size>
-				<Anchor point="LEFT" offset="836" />
-				<Anchor point="TOP" offset="660" />
+				<Anchor point="LEFT" offset="816" />
+				<Anchor point="TOP" offset="868" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotTabard" inherits="InventoryItemButtonTemplate" id="65298">
 			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_shirt.htex" />
 			<Area>
 				<Size>
-					<AbsDimension x="96" y="96" />
+					<AbsDimension x="104" y="104" />
 				</Size>
-				<Anchor point="LEFT" offset="948" />
-				<Anchor point="TOP" offset="660" />
+				<Anchor point="LEFT" offset="936" />
+				<Anchor point="TOP" offset="868" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotWrists" inherits="InventoryItemButtonTemplate" id="65288">
 			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_arms.htex" />
 			<Area>
 				<Size>
-					<AbsDimension x="96" y="96" />
+					<AbsDimension x="104" y="104" />
 				</Size>
-				<Anchor point="LEFT" offset="164" />
-				<Anchor point="TOP" offset="372" />
+				<Anchor point="LEFT" offset="176" />
+				<Anchor point="TOP" offset="447" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotHands" inherits="InventoryItemButtonTemplate" id="65289">
 			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_gloves.htex" />
 			<Area>
 				<Size>
-					<AbsDimension x="96" y="96" />
+					<AbsDimension x="104" y="104" />
 				</Size>
-				<Anchor point="LEFT" offset="52" />
-				<Anchor point="TOP" offset="516" />
+				<Anchor point="LEFT" offset="56" />
+				<Anchor point="TOP" offset="657" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotWaist" inherits="InventoryItemButtonTemplate" id="65285">
 			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_belt.htex" />
 			<Area>
 				<Size>
-					<AbsDimension x="96" y="96" />
+					<AbsDimension x="104" y="104" />
 				</Size>
-				<Anchor point="LEFT" offset="164" />
-				<Anchor point="TOP" offset="516" />
+				<Anchor point="LEFT" offset="176" />
+				<Anchor point="TOP" offset="657" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotLegs" inherits="InventoryItemButtonTemplate" id="65286">
 			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_pants.htex" />
 			<Area>
 				<Size>
-					<AbsDimension x="96" y="96" />
+					<AbsDimension x="104" y="104" />
 				</Size>
-				<Anchor point="LEFT" offset="52" />
-				<Anchor point="TOP" offset="660" />
+				<Anchor point="LEFT" offset="56" />
+				<Anchor point="TOP" offset="868" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotFeet" inherits="InventoryItemButtonTemplate" id="65287">
 			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_boots.htex" />
 			<Area>
 				<Size>
-					<AbsDimension x="96" y="96" />
+					<AbsDimension x="104" y="104" />
 				</Size>
-				<Anchor point="LEFT" offset="164" />
-				<Anchor point="TOP" offset="660" />
+				<Anchor point="LEFT" offset="176" />
+				<Anchor point="TOP" offset="868" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotFinger1" inherits="InventoryItemButtonTemplate" id="65290">
 			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_ring.htex" />
 			<Area>
 				<Size>
-					<AbsDimension x="96" y="96" />
+					<AbsDimension x="104" y="104" />
 				</Size>
-				<Anchor point="LEFT" offset="836" />
-				<Anchor point="TOP" offset="372" />
+				<Anchor point="LEFT" offset="816" />
+				<Anchor point="TOP" offset="447" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotFinger2" inherits="InventoryItemButtonTemplate" id="65291">
 			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_ring.htex" />
 			<Area>
 				<Size>
-					<AbsDimension x="96" y="96" />
+					<AbsDimension x="104" y="104" />
 				</Size>
-				<Anchor point="LEFT" offset="948" />
-				<Anchor point="TOP" offset="372" />
+				<Anchor point="LEFT" offset="936" />
+				<Anchor point="TOP" offset="447" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotTrinket1" inherits="InventoryItemButtonTemplate" id="65292">
 			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_trinket.htex" />
 			<Area>
 				<Size>
-					<AbsDimension x="96" y="96" />
+					<AbsDimension x="104" y="104" />
 				</Size>
-				<Anchor point="LEFT" offset="836" />
-				<Anchor point="TOP" offset="516" />
+				<Anchor point="LEFT" offset="816" />
+				<Anchor point="TOP" offset="657" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotTrinket2" inherits="InventoryItemButtonTemplate" id="65293">
 			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_trinket.htex" />
 			<Area>
 				<Size>
-					<AbsDimension x="96" y="96" />
+					<AbsDimension x="104" y="104" />
 				</Size>
-				<Anchor point="LEFT" offset="948" />
-				<Anchor point="TOP" offset="516" />
+				<Anchor point="LEFT" offset="936" />
+				<Anchor point="TOP" offset="657" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotOffHand" inherits="InventoryItemButtonTemplate" id="65296">
 			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_shield.htex" />
 			<Area>
 				<Size>
-					<AbsDimension x="96" y="96" />
+					<AbsDimension x="104" y="104" />
 				</Size>
-				<Anchor point="LEFT" offset="428" />
-				<Anchor point="TOP" offset="880" />
+				<Anchor point="LEFT" offset="416" />
+				<Anchor point="TOP" offset="1096" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotMainHand" inherits="InventoryItemButtonTemplate" id="65295">
 			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_sword.htex" />
 			<Area>
 				<Size>
-					<AbsDimension x="96" y="96" />
+					<AbsDimension x="104" y="104" />
 				</Size>
-				<Anchor point="LEFT" offset="316" />
-				<Anchor point="TOP" offset="880" />
+				<Anchor point="LEFT" offset="296" />
+				<Anchor point="TOP" offset="1096" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotRanged" inherits="InventoryItemButtonTemplate" id="65297">
 			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_bow.htex" />
 			<Area>
 				<Size>
-					<AbsDimension x="96" y="96" />
+					<AbsDimension x="104" y="104" />
 				</Size>
-				<Anchor point="LEFT" offset="540" />
-				<Anchor point="TOP" offset="880" />
+				<Anchor point="LEFT" offset="536" />
+				<Anchor point="TOP" offset="1096" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotGlider" inherits="InventoryItemButtonTemplate" id="65366">
 			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_glider.htex" />
 			<Area>
 				<Size>
-					<AbsDimension x="96" y="96" />
+					<AbsDimension x="104" y="104" />
 				</Size>
-				<Anchor point="LEFT" offset="684" />
-				<Anchor point="TOP" offset="880" />
+				<Anchor point="LEFT" offset="696" />
+				<Anchor point="TOP" offset="1096" />
 			</Area>
 		</Frame>
 		<!-- Aggregate warning shown when one or more equipped items cannot be used by the active class. -->
@@ -982,16 +982,16 @@
 					<AbsDimension y="36" />
 				</Size>
 				<Anchor point="TOP" offset="152" />
-				<Anchor point="LEFT" offset="296" />
-				<Anchor point="RIGHT" offset="-880" />
+				<Anchor point="LEFT" offset="320" />
+				<Anchor point="RIGHT" offset="-904" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterModelFrameBorder" renderer="DefaultRenderer">
 			<Area>
-				<Anchor point="LEFT" offset="296" />
-				<Anchor point="RIGHT" offset="-880" />
+				<Anchor point="LEFT" offset="320" />
+				<Anchor point="RIGHT" offset="-904" />
 				<Anchor point="TOP" offset="196" />
-				<Anchor point="BOTTOM" offset="-260" />
+				<Anchor point="BOTTOM" offset="-268" />
 			</Area>
 			<Visual inherits="ThemeCharacterModelFrameBorderVisual" />
 			<Frame name="CharacterFrameModel" type="UnitModel" renderer="ModelRenderer">
