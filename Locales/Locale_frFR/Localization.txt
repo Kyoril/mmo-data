@@ -566,6 +566,7 @@ strings =
 	(key = "LOOT_GROUP_LOOT", string = "Butin de groupe")
 	(key = "LOOT_EMPTY", string = "Aucun butin")
 	(key = "ERR_TOO_FAR_AWAY_TO_LOOT", string = "Vous êtes trop loin pour ramasser cela.")
+	(key = "ERR_NO_GLIDER_EQUIPPED", string = "Vous n'avez pas de planeur équipé.")
 	(key = "SET_LOOT_METHOD", string = "Définir la méthode de butin")
 	(key = "LOOT_METHOD_TITLE", string = "Règles de butin de groupe")
 	(key = "LOOT_OPTIONS_HEADER", string = "Options de butin")

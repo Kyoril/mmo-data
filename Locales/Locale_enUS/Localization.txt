@@ -575,6 +575,7 @@ strings =
 	(key = "LOOT_GROUP_LOOT", string = "Group Loot")
 	(key = "LOOT_EMPTY", string = "No loot")
 	(key = "ERR_TOO_FAR_AWAY_TO_LOOT", string = "You are too far away to loot that.")
+	(key = "ERR_NO_GLIDER_EQUIPPED", string = "You have no glider equipped.")
 	(key = "SET_LOOT_METHOD", string = "Set Loot Method")
 	(key = "LOOT_METHOD_TITLE", string = "Party Loot Rules")
 	(key = "LOOT_OPTIONS_HEADER", string = "Loot Options")

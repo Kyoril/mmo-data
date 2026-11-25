@@ -598,6 +598,7 @@ strings =
 	(key = "ERR_LOOT_MASTER_UNIQUE_ITEM", string = "У этого игрока уже слишком много таких предметов.")
 	(key = "ERR_LOOT_MASTER_OTHER", string = "Вы не можете отдать этот предмет этому игроку.")
 	(key = "ERR_TOO_FAR_AWAY_TO_LOOT", string = "Вы слишком далеко, чтобы обыскать это.")
+	(key = "ERR_NO_GLIDER_EQUIPPED", string = "У вас не надет планер.")
 	(key = "LOOTMETHOD_USAGE", string = "Usage: /lootmethod [freeforall|roundrobin|masterloot|grouploot]")
 	(key = "LOOT_METHOD_SET", string = "Loot method set to: %s")
 	(key = "LOOT_METHOD_SET_THRESHOLD", string = "Loot method set to: %s (Threshold: %s)")
