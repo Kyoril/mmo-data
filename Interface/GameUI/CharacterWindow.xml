@@ -195,80 +195,29 @@
 				<Visual inherits="ThemeCharacterWindowTitleDividerVisual" />
 			</Frame>
 		</Frame>
-		<!-- Equipment: two framed 2x4 blocks beside the model, weapons and travel centred below it. -->
-		<Frame name="CharacterEquipmentCardLeft" renderer="DefaultRenderer">
+		<!-- Equipment: one quiet panel holding both slot blocks, the model between them and the
+		     weapon and travel row below it. -->
+		<Frame name="CharacterModelFrameBorder" renderer="DefaultRenderer">
 			<Property name="Clickable" value="false" />
 			<Area>
-				<Size>
-					<AbsDimension x="280" y="816" />
-				</Size>
 				<Anchor point="LEFT" offset="32" />
-				<Anchor point="TOP" offset="196" />
+				<Anchor point="RIGHT" offset="-616" />
+				<Anchor point="TOP" offset="144" />
+				<Anchor point="BOTTOM" offset="-40" />
 			</Area>
-			<Visual inherits="ThemeCharacterModelFrameBorderVisual" />
-		</Frame>
-		<Frame name="CharacterEquipmentCardRight" renderer="DefaultRenderer">
-			<Property name="Clickable" value="false" />
-			<Area>
-				<Size>
-					<AbsDimension x="280" y="816" />
-				</Size>
-				<Anchor point="LEFT" offset="784" />
-				<Anchor point="TOP" offset="196" />
-			</Area>
-			<Visual inherits="ThemeCharacterModelFrameBorderVisual" />
-		</Frame>
-		<Frame name="CharacterEquipmentGroupHeader1" inherits="TextSmall">
-			<Property name="Font" value="SmallLabelFont" />
-			<Property name="Text" value="CHARACTER_GROUP_ARMOR" />
-			<Property name="HorzAlign" value="CENTER" />
-			<Property name="VertAlign" value="CENTER" />
-			<Area>
-				<Size>
-					<AbsDimension x="280" y="36" />
-				</Size>
-				<Anchor point="LEFT" offset="32" />
-				<Anchor point="TOP" offset="152" />
-			</Area>
-		</Frame>
-		<Frame name="CharacterEquipmentGroupHeader2" inherits="TextSmall">
-			<Property name="Font" value="SmallLabelFont" />
-			<Property name="Text" value="CHARACTER_GROUP_ACCESSORIES" />
-			<Property name="HorzAlign" value="CENTER" />
-			<Property name="VertAlign" value="CENTER" />
-			<Area>
-				<Size>
-					<AbsDimension x="280" y="36" />
-				</Size>
-				<Anchor point="LEFT" offset="784" />
-				<Anchor point="TOP" offset="152" />
-			</Area>
-		</Frame>
-		<Frame name="CharacterEquipmentGroupHeader4" inherits="TextSmall">
-			<Property name="Font" value="SmallLabelFont" />
-			<Property name="Text" value="CHARACTER_GROUP_WEAPONS" />
-			<Property name="HorzAlign" value="CENTER" />
-			<Property name="VertAlign" value="CENTER" />
-			<Area>
-				<Size>
-					<AbsDimension x="384" y="36" />
-				</Size>
-				<Anchor point="LEFT" offset="272" />
-				<Anchor point="TOP" offset="1052" />
-			</Area>
-		</Frame>
-		<Frame name="CharacterEquipmentGroupHeader5" inherits="TextSmall">
-			<Property name="Font" value="SmallLabelFont" />
-			<Property name="Text" value="CHARACTER_GROUP_TRAVEL" />
-			<Property name="HorzAlign" value="CENTER" />
-			<Property name="VertAlign" value="CENTER" />
-			<Area>
-				<Size>
-					<AbsDimension x="224" y="36" />
-				</Size>
-				<Anchor point="LEFT" offset="660" />
-				<Anchor point="TOP" offset="1052" />
-			</Area>
+			<Visual inherits="ThemeCharacterAttributesPageVisual" />
+			<Frame name="CharacterFrameModel" type="UnitModel" renderer="ModelRenderer">
+				<Property name="Yaw" value="-120" />
+				<Property name="Zoom" value="2.75" />
+				<Property name="OffsetY" value="1.0" />
+				<Property name="Animation" value="Idle" />
+				<Area>
+					<Anchor point="LEFT" offset="296" />
+					<Anchor point="RIGHT" offset="-296" />
+					<Anchor point="TOP" offset="76" />
+					<Anchor point="BOTTOM" offset="-210" />
+				</Area>
+			</Frame>
 		</Frame>
 		<Frame name="CharacterInvSlotHead" inherits="InventoryItemButtonTemplate" id="65280">
 			<Property name="Background" value="Interface/Icons/ItemSlots/icons_01_helmet.htex" />
@@ -276,8 +225,8 @@
 				<Size>
 					<AbsDimension x="104" y="104" />
 				</Size>
-				<Anchor point="LEFT" offset="52" />
-				<Anchor point="TOP" offset="224" />
+				<Anchor point="LEFT" offset="56" />
+				<Anchor point="TOP" offset="184" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotNeck" inherits="InventoryItemButtonTemplate" id="65281">
@@ -286,8 +235,8 @@
 				<Size>
 					<AbsDimension x="104" y="104" />
 				</Size>
-				<Anchor point="LEFT" offset="804" />
-				<Anchor point="TOP" offset="224" />
+				<Anchor point="LEFT" offset="800" />
+				<Anchor point="TOP" offset="184" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotShoulder" inherits="InventoryItemButtonTemplate" id="65282">
@@ -296,8 +245,8 @@
 				<Size>
 					<AbsDimension x="104" y="104" />
 				</Size>
-				<Anchor point="LEFT" offset="188" />
-				<Anchor point="TOP" offset="224" />
+				<Anchor point="LEFT" offset="192" />
+				<Anchor point="TOP" offset="184" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotBack" inherits="InventoryItemButtonTemplate" id="65294">
@@ -306,8 +255,8 @@
 				<Size>
 					<AbsDimension x="104" y="104" />
 				</Size>
-				<Anchor point="LEFT" offset="940" />
-				<Anchor point="TOP" offset="224" />
+				<Anchor point="LEFT" offset="936" />
+				<Anchor point="TOP" offset="184" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotChest" inherits="InventoryItemButtonTemplate" id="65283">
@@ -316,8 +265,8 @@
 				<Size>
 					<AbsDimension x="104" y="104" />
 				</Size>
-				<Anchor point="LEFT" offset="52" />
-				<Anchor point="TOP" offset="431" />
+				<Anchor point="LEFT" offset="56" />
+				<Anchor point="TOP" offset="403" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotShirt" inherits="InventoryItemButtonTemplate" id="65284">
@@ -326,8 +275,8 @@
 				<Size>
 					<AbsDimension x="104" y="104" />
 				</Size>
-				<Anchor point="LEFT" offset="804" />
-				<Anchor point="TOP" offset="846" />
+				<Anchor point="LEFT" offset="800" />
+				<Anchor point="TOP" offset="841" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotTabard" inherits="InventoryItemButtonTemplate" id="65298">
@@ -336,8 +285,8 @@
 				<Size>
 					<AbsDimension x="104" y="104" />
 				</Size>
-				<Anchor point="LEFT" offset="940" />
-				<Anchor point="TOP" offset="846" />
+				<Anchor point="LEFT" offset="936" />
+				<Anchor point="TOP" offset="841" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotWrists" inherits="InventoryItemButtonTemplate" id="65288">
@@ -346,8 +295,8 @@
 				<Size>
 					<AbsDimension x="104" y="104" />
 				</Size>
-				<Anchor point="LEFT" offset="188" />
-				<Anchor point="TOP" offset="431" />
+				<Anchor point="LEFT" offset="192" />
+				<Anchor point="TOP" offset="403" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotHands" inherits="InventoryItemButtonTemplate" id="65289">
@@ -356,8 +305,8 @@
 				<Size>
 					<AbsDimension x="104" y="104" />
 				</Size>
-				<Anchor point="LEFT" offset="52" />
-				<Anchor point="TOP" offset="639" />
+				<Anchor point="LEFT" offset="56" />
+				<Anchor point="TOP" offset="622" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotWaist" inherits="InventoryItemButtonTemplate" id="65285">
@@ -366,8 +315,8 @@
 				<Size>
 					<AbsDimension x="104" y="104" />
 				</Size>
-				<Anchor point="LEFT" offset="188" />
-				<Anchor point="TOP" offset="639" />
+				<Anchor point="LEFT" offset="192" />
+				<Anchor point="TOP" offset="622" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotLegs" inherits="InventoryItemButtonTemplate" id="65286">
@@ -376,8 +325,8 @@
 				<Size>
 					<AbsDimension x="104" y="104" />
 				</Size>
-				<Anchor point="LEFT" offset="52" />
-				<Anchor point="TOP" offset="846" />
+				<Anchor point="LEFT" offset="56" />
+				<Anchor point="TOP" offset="841" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotFeet" inherits="InventoryItemButtonTemplate" id="65287">
@@ -386,8 +335,8 @@
 				<Size>
 					<AbsDimension x="104" y="104" />
 				</Size>
-				<Anchor point="LEFT" offset="188" />
-				<Anchor point="TOP" offset="846" />
+				<Anchor point="LEFT" offset="192" />
+				<Anchor point="TOP" offset="841" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotFinger1" inherits="InventoryItemButtonTemplate" id="65290">
@@ -396,8 +345,8 @@
 				<Size>
 					<AbsDimension x="104" y="104" />
 				</Size>
-				<Anchor point="LEFT" offset="804" />
-				<Anchor point="TOP" offset="431" />
+				<Anchor point="LEFT" offset="800" />
+				<Anchor point="TOP" offset="403" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotFinger2" inherits="InventoryItemButtonTemplate" id="65291">
@@ -406,8 +355,8 @@
 				<Size>
 					<AbsDimension x="104" y="104" />
 				</Size>
-				<Anchor point="LEFT" offset="940" />
-				<Anchor point="TOP" offset="431" />
+				<Anchor point="LEFT" offset="936" />
+				<Anchor point="TOP" offset="403" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotTrinket1" inherits="InventoryItemButtonTemplate" id="65292">
@@ -416,8 +365,8 @@
 				<Size>
 					<AbsDimension x="104" y="104" />
 				</Size>
-				<Anchor point="LEFT" offset="804" />
-				<Anchor point="TOP" offset="639" />
+				<Anchor point="LEFT" offset="800" />
+				<Anchor point="TOP" offset="622" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotTrinket2" inherits="InventoryItemButtonTemplate" id="65293">
@@ -426,8 +375,8 @@
 				<Size>
 					<AbsDimension x="104" y="104" />
 				</Size>
-				<Anchor point="LEFT" offset="940" />
-				<Anchor point="TOP" offset="639" />
+				<Anchor point="LEFT" offset="936" />
+				<Anchor point="TOP" offset="622" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotOffHand" inherits="InventoryItemButtonTemplate" id="65296">
@@ -436,8 +385,8 @@
 				<Size>
 					<AbsDimension x="104" y="104" />
 				</Size>
-				<Anchor point="LEFT" offset="412" />
-				<Anchor point="TOP" offset="1096" />
+				<Anchor point="LEFT" offset="408" />
+				<Anchor point="TOP" offset="1060" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotMainHand" inherits="InventoryItemButtonTemplate" id="65295">
@@ -447,7 +396,7 @@
 					<AbsDimension x="104" y="104" />
 				</Size>
 				<Anchor point="LEFT" offset="272" />
-				<Anchor point="TOP" offset="1096" />
+				<Anchor point="TOP" offset="1060" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotRanged" inherits="InventoryItemButtonTemplate" id="65297">
@@ -456,8 +405,8 @@
 				<Size>
 					<AbsDimension x="104" y="104" />
 				</Size>
-				<Anchor point="LEFT" offset="552" />
-				<Anchor point="TOP" offset="1096" />
+				<Anchor point="LEFT" offset="544" />
+				<Anchor point="TOP" offset="1060" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotGlider" inherits="InventoryItemButtonTemplate" id="65366">
@@ -467,7 +416,7 @@
 					<AbsDimension x="104" y="104" />
 				</Size>
 				<Anchor point="LEFT" offset="720" />
-				<Anchor point="TOP" offset="1096" />
+				<Anchor point="TOP" offset="1060" />
 			</Area>
 		</Frame>
 		<!-- Slot names under each equipment slot. -->
@@ -482,8 +431,8 @@
 				<Size>
 					<AbsDimension x="132" y="32" />
 				</Size>
-				<Anchor point="LEFT" offset="38" />
-				<Anchor point="TOP" offset="334" />
+				<Anchor point="LEFT" offset="42" />
+				<Anchor point="TOP" offset="294" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotShoulderLabel" inherits="TextSmall">
@@ -497,8 +446,8 @@
 				<Size>
 					<AbsDimension x="132" y="32" />
 				</Size>
-				<Anchor point="LEFT" offset="174" />
-				<Anchor point="TOP" offset="334" />
+				<Anchor point="LEFT" offset="178" />
+				<Anchor point="TOP" offset="294" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotChestLabel" inherits="TextSmall">
@@ -512,8 +461,8 @@
 				<Size>
 					<AbsDimension x="132" y="32" />
 				</Size>
-				<Anchor point="LEFT" offset="38" />
-				<Anchor point="TOP" offset="541" />
+				<Anchor point="LEFT" offset="42" />
+				<Anchor point="TOP" offset="513" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotWristsLabel" inherits="TextSmall">
@@ -527,8 +476,8 @@
 				<Size>
 					<AbsDimension x="132" y="32" />
 				</Size>
-				<Anchor point="LEFT" offset="174" />
-				<Anchor point="TOP" offset="541" />
+				<Anchor point="LEFT" offset="178" />
+				<Anchor point="TOP" offset="513" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotHandsLabel" inherits="TextSmall">
@@ -542,8 +491,8 @@
 				<Size>
 					<AbsDimension x="132" y="32" />
 				</Size>
-				<Anchor point="LEFT" offset="38" />
-				<Anchor point="TOP" offset="749" />
+				<Anchor point="LEFT" offset="42" />
+				<Anchor point="TOP" offset="732" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotWaistLabel" inherits="TextSmall">
@@ -557,8 +506,8 @@
 				<Size>
 					<AbsDimension x="132" y="32" />
 				</Size>
-				<Anchor point="LEFT" offset="174" />
-				<Anchor point="TOP" offset="749" />
+				<Anchor point="LEFT" offset="178" />
+				<Anchor point="TOP" offset="732" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotLegsLabel" inherits="TextSmall">
@@ -572,8 +521,8 @@
 				<Size>
 					<AbsDimension x="132" y="32" />
 				</Size>
-				<Anchor point="LEFT" offset="38" />
-				<Anchor point="TOP" offset="956" />
+				<Anchor point="LEFT" offset="42" />
+				<Anchor point="TOP" offset="951" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotFeetLabel" inherits="TextSmall">
@@ -587,8 +536,8 @@
 				<Size>
 					<AbsDimension x="132" y="32" />
 				</Size>
-				<Anchor point="LEFT" offset="174" />
-				<Anchor point="TOP" offset="956" />
+				<Anchor point="LEFT" offset="178" />
+				<Anchor point="TOP" offset="951" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotNeckLabel" inherits="TextSmall">
@@ -602,8 +551,8 @@
 				<Size>
 					<AbsDimension x="132" y="32" />
 				</Size>
-				<Anchor point="LEFT" offset="790" />
-				<Anchor point="TOP" offset="334" />
+				<Anchor point="LEFT" offset="786" />
+				<Anchor point="TOP" offset="294" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotBackLabel" inherits="TextSmall">
@@ -617,8 +566,8 @@
 				<Size>
 					<AbsDimension x="132" y="32" />
 				</Size>
-				<Anchor point="LEFT" offset="926" />
-				<Anchor point="TOP" offset="334" />
+				<Anchor point="LEFT" offset="922" />
+				<Anchor point="TOP" offset="294" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotFinger1Label" inherits="TextSmall">
@@ -632,8 +581,8 @@
 				<Size>
 					<AbsDimension x="132" y="32" />
 				</Size>
-				<Anchor point="LEFT" offset="790" />
-				<Anchor point="TOP" offset="541" />
+				<Anchor point="LEFT" offset="786" />
+				<Anchor point="TOP" offset="513" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotFinger2Label" inherits="TextSmall">
@@ -647,8 +596,8 @@
 				<Size>
 					<AbsDimension x="132" y="32" />
 				</Size>
-				<Anchor point="LEFT" offset="926" />
-				<Anchor point="TOP" offset="541" />
+				<Anchor point="LEFT" offset="922" />
+				<Anchor point="TOP" offset="513" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotTrinket1Label" inherits="TextSmall">
@@ -662,8 +611,8 @@
 				<Size>
 					<AbsDimension x="132" y="32" />
 				</Size>
-				<Anchor point="LEFT" offset="790" />
-				<Anchor point="TOP" offset="749" />
+				<Anchor point="LEFT" offset="786" />
+				<Anchor point="TOP" offset="732" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotTrinket2Label" inherits="TextSmall">
@@ -677,8 +626,8 @@
 				<Size>
 					<AbsDimension x="132" y="32" />
 				</Size>
-				<Anchor point="LEFT" offset="926" />
-				<Anchor point="TOP" offset="749" />
+				<Anchor point="LEFT" offset="922" />
+				<Anchor point="TOP" offset="732" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotShirtLabel" inherits="TextSmall">
@@ -692,8 +641,8 @@
 				<Size>
 					<AbsDimension x="132" y="32" />
 				</Size>
-				<Anchor point="LEFT" offset="790" />
-				<Anchor point="TOP" offset="956" />
+				<Anchor point="LEFT" offset="786" />
+				<Anchor point="TOP" offset="951" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotTabardLabel" inherits="TextSmall">
@@ -707,8 +656,8 @@
 				<Size>
 					<AbsDimension x="132" y="32" />
 				</Size>
-				<Anchor point="LEFT" offset="926" />
-				<Anchor point="TOP" offset="956" />
+				<Anchor point="LEFT" offset="922" />
+				<Anchor point="TOP" offset="951" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotMainHandLabel" inherits="TextSmall">
@@ -720,10 +669,10 @@
 			<Property name="Clickable" value="false" />
 			<Area>
 				<Size>
-					<AbsDimension x="136" y="32" />
+					<AbsDimension x="132" y="32" />
 				</Size>
-				<Anchor point="LEFT" offset="256" />
-				<Anchor point="TOP" offset="1206" />
+				<Anchor point="LEFT" offset="258" />
+				<Anchor point="TOP" offset="1170" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotOffHandLabel" inherits="TextSmall">
@@ -735,10 +684,10 @@
 			<Property name="Clickable" value="false" />
 			<Area>
 				<Size>
-					<AbsDimension x="136" y="32" />
+					<AbsDimension x="132" y="32" />
 				</Size>
-				<Anchor point="LEFT" offset="396" />
-				<Anchor point="TOP" offset="1206" />
+				<Anchor point="LEFT" offset="394" />
+				<Anchor point="TOP" offset="1170" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotRangedLabel" inherits="TextSmall">
@@ -750,10 +699,10 @@
 			<Property name="Clickable" value="false" />
 			<Area>
 				<Size>
-					<AbsDimension x="136" y="32" />
+					<AbsDimension x="132" y="32" />
 				</Size>
-				<Anchor point="LEFT" offset="536" />
-				<Anchor point="TOP" offset="1206" />
+				<Anchor point="LEFT" offset="530" />
+				<Anchor point="TOP" offset="1170" />
 			</Area>
 		</Frame>
 		<Frame name="CharacterInvSlotGliderLabel" inherits="TextSmall">
@@ -765,10 +714,10 @@
 			<Property name="Clickable" value="false" />
 			<Area>
 				<Size>
-					<AbsDimension x="136" y="32" />
+					<AbsDimension x="132" y="32" />
 				</Size>
-				<Anchor point="LEFT" offset="704" />
-				<Anchor point="TOP" offset="1206" />
+				<Anchor point="LEFT" offset="706" />
+				<Anchor point="TOP" offset="1170" />
 			</Area>
 		</Frame>
 		<!-- Aggregate warning shown when one or more equipped items cannot be used by the active class. -->
@@ -1282,31 +1231,10 @@
 				<Size>
 					<AbsDimension y="36" />
 				</Size>
-				<Anchor point="TOP" offset="152" />
+				<Anchor point="TOP" offset="172" />
 				<Anchor point="LEFT" offset="328" />
 				<Anchor point="RIGHT" offset="-912" />
 			</Area>
-		</Frame>
-		<Frame name="CharacterModelFrameBorder" renderer="DefaultRenderer">
-			<Area>
-				<Anchor point="LEFT" offset="328" />
-				<Anchor point="RIGHT" offset="-912" />
-				<Anchor point="TOP" offset="196" />
-				<Anchor point="BOTTOM" offset="-268" />
-			</Area>
-			<Visual inherits="ThemeCharacterModelFrameBorderVisual" />
-			<Frame name="CharacterFrameModel" type="UnitModel" renderer="ModelRenderer">
-				<Property name="Yaw" value="-120" />
-				<Property name="Zoom" value="2.75" />
-				<Property name="OffsetY" value="1.0" />
-				<Property name="Animation" value="Idle" />
-				<Area>
-					<Anchor point="LEFT" offset="8" />
-					<Anchor point="RIGHT" offset="-8" />
-					<Anchor point="TOP" offset="8" />
-					<Anchor point="BOTTOM" offset="-8" />
-				</Area>
-			</Frame>
 		</Frame>
 	</Frame>
 </UiLayout>
