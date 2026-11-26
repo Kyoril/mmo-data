@@ -1,0 +1,98 @@
+{
+  "halfWidth": 2.0,
+  "length": 20.0,
+  "name": "WheatEdge",
+  "rules": [
+    {
+      "asset": "Models/Dreamscape/Foliage/SM_Bush_02.hmsh",
+      "keepChance": 0.5,
+      "positionJitter": 0.5,
+      "scaleJitter": 0.15,
+      "swapGroup": [
+        "Models/Dreamscape/Foliage/SM_Bush_04.hmsh"
+      ],
+      "yawJitterDeg": 180
+    },
+    {
+      "asset": "Models/Dreamscape/Foliage/SM_Bush_04.hmsh",
+      "keepChance": 0.5,
+      "positionJitter": 0.5,
+      "scaleJitter": 0.15,
+      "swapGroup": [
+        "Models/Dreamscape/Foliage/SM_Bush_02.hmsh"
+      ],
+      "yawJitterDeg": 180
+    },
+    {
+      "asset": "Models/Dreamscape/Foliage/SM_FlowerGroup_01.hmsh",
+      "keepChance": 0.5,
+      "positionJitter": 0.6,
+      "scaleJitter": 0.15,
+      "swapGroup": [
+        "Models/Dreamscape/Foliage/SM_FlowerGroup_02.hmsh",
+        "Models/Dreamscape/Foliage/SM_Flower_01.hmsh"
+      ],
+      "yawJitterDeg": 180
+    },
+    {
+      "asset": "Models/Dreamscape/Foliage/SM_FlowerGroup_02.hmsh",
+      "keepChance": 0.5,
+      "positionJitter": 0.6,
+      "scaleJitter": 0.15,
+      "swapGroup": [
+        "Models/Dreamscape/Foliage/SM_FlowerGroup_01.hmsh",
+        "Models/Dreamscape/Foliage/SM_Flower_01.hmsh"
+      ],
+      "yawJitterDeg": 180
+    },
+    {
+      "asset": "Models/Dreamscape/Foliage/SM_Flower_01.hmsh",
+      "keepChance": 0.5,
+      "positionJitter": 0.6,
+      "scaleJitter": 0.15,
+      "swapGroup": [
+        "Models/Dreamscape/Foliage/SM_FlowerGroup_01.hmsh",
+        "Models/Dreamscape/Foliage/SM_FlowerGroup_02.hmsh"
+      ],
+      "yawJitterDeg": 180
+    }
+  ],
+  "runs": [
+    {
+      "keepChance": 1.0,
+      "members": [
+        15883996252473287035,
+        15884170423817802060,
+        15884421632154926605,
+        15884446397646116909,
+        15884660885462687389,
+        15884664875679867794,
+        15885003499133224352
+      ],
+      "name": "Fence"
+    },
+    {
+      "keepChance": 1.0,
+      "members": [
+        15885757990058847912,
+        15885879506748793612,
+        15886073527023488246,
+        15886134863170658817,
+        15886345973979993364,
+        15886350646405933618,
+        15886545070141951717
+      ],
+      "name": "Fence"
+    }
+  ],
+  "sideFalloff": 1.0,
+  "variants": [
+    {
+      "originX": 0.0
+    },
+    {
+      "originX": 100.0,
+      "role": "innerCorner"
+    }
+  ]
+}

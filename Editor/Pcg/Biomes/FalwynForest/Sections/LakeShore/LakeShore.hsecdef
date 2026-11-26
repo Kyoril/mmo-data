@@ -1,0 +1,130 @@
+{
+  "halfWidth": 5.0,
+  "length": 24.0,
+  "name": "LakeShore",
+  "rules": [
+    {
+      "asset": "Models/Dreamscape/Stones/SM_RockLarge_01.hmsh",
+      "keepChance": 0.35,
+      "positionJitter": 1.5,
+      "scaleJitter": 0.25,
+      "swapGroup": [
+        "Models/Dreamscape/Stones/SM_RockLarge_02.hmsh"
+      ],
+      "yawJitterDeg": 180
+    },
+    {
+      "asset": "Models/Dreamscape/Stones/SM_RockLarge_02.hmsh",
+      "keepChance": 0.35,
+      "positionJitter": 1.5,
+      "scaleJitter": 0.25,
+      "swapGroup": [
+        "Models/Dreamscape/Stones/SM_RockLarge_01.hmsh"
+      ],
+      "yawJitterDeg": 180
+    },
+    {
+      "asset": "Models/Dreamscape/Stones/SM_RockMedium_01.hmsh",
+      "keepChance": 0.6,
+      "positionJitter": 1.5,
+      "scaleJitter": 0.25,
+      "swapGroup": [
+        "Models/Dreamscape/Stones/SM_RockMedium_02.hmsh"
+      ],
+      "yawJitterDeg": 180
+    },
+    {
+      "asset": "Models/Dreamscape/Stones/SM_RockMedium_02.hmsh",
+      "keepChance": 0.6,
+      "positionJitter": 1.5,
+      "scaleJitter": 0.25,
+      "swapGroup": [
+        "Models/Dreamscape/Stones/SM_RockMedium_01.hmsh"
+      ],
+      "yawJitterDeg": 180
+    },
+    {
+      "asset": "Models/Dreamscape/Stones/SM_RockSmall_01.hmsh",
+      "keepChance": 0.8,
+      "positionJitter": 1.5,
+      "scaleJitter": 0.25,
+      "swapGroup": [
+        "Models/Dreamscape/Stones/SM_RockSmall_02.hmsh",
+        "Models/Dreamscape/Stones/SM_RockSmall_03.hmsh"
+      ],
+      "yawJitterDeg": 180
+    },
+    {
+      "asset": "Models/Dreamscape/Stones/SM_RockSmall_02.hmsh",
+      "keepChance": 0.8,
+      "positionJitter": 1.5,
+      "scaleJitter": 0.25,
+      "swapGroup": [
+        "Models/Dreamscape/Stones/SM_RockSmall_01.hmsh",
+        "Models/Dreamscape/Stones/SM_RockSmall_03.hmsh"
+      ],
+      "yawJitterDeg": 180
+    },
+    {
+      "asset": "Models/Dreamscape/Stones/SM_RockSmall_03.hmsh",
+      "keepChance": 0.8,
+      "positionJitter": 1.5,
+      "scaleJitter": 0.25,
+      "swapGroup": [
+        "Models/Dreamscape/Stones/SM_RockSmall_01.hmsh",
+        "Models/Dreamscape/Stones/SM_RockSmall_02.hmsh"
+      ],
+      "yawJitterDeg": 180
+    },
+    {
+      "asset": "Models/Dreamscape/Stones/SM_Pebbles_Dense_Stone.hmsh",
+      "keepChance": 0.9,
+      "positionJitter": 1.5,
+      "scaleJitter": 0.2,
+      "swapGroup": [
+        "Models/Dreamscape/Stones/SM_Pebbles_Scattered_Stone.hmsh"
+      ],
+      "yawJitterDeg": 180
+    },
+    {
+      "asset": "Models/Dreamscape/Stones/SM_Pebbles_Scattered_Stone.hmsh",
+      "keepChance": 0.9,
+      "positionJitter": 1.5,
+      "scaleJitter": 0.2,
+      "swapGroup": [
+        "Models/Dreamscape/Stones/SM_Pebbles_Dense_Stone.hmsh"
+      ],
+      "yawJitterDeg": 180
+    },
+    {
+      "asset": "Models/Dreamscape/Foliage/SM_Grass_Medium.hmsh",
+      "keepChance": 0.7,
+      "positionJitter": 1.0,
+      "scaleJitter": 0.2,
+      "swapGroup": [
+        "Models/Dreamscape/Foliage/SM_Grass_Small.hmsh"
+      ],
+      "yawJitterDeg": 180
+    },
+    {
+      "asset": "Models/Dreamscape/Foliage/SM_Grass_Small.hmsh",
+      "keepChance": 0.7,
+      "positionJitter": 1.0,
+      "scaleJitter": 0.2,
+      "swapGroup": [
+        "Models/Dreamscape/Foliage/SM_Grass_Medium.hmsh"
+      ],
+      "yawJitterDeg": 180
+    }
+  ],
+  "runs": [],
+  "sideFalloff": 3.0,
+  "variants": [
+    {
+      "originX": 0.0
+    },
+    {
+      "originX": 100.0
+    }
+  ]
+}

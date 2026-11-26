@@ -1,0 +1,119 @@
+{
+  "halfWidth": 3.0,
+  "length": 16.0,
+  "name": "RuinWall",
+  "rules": [
+    {
+      "asset": "Models/Dreamscape/Structures/SM_Floor_01.hmsh",
+      "keepChance": 0.4,
+      "positionJitter": 0.8,
+      "scaleJitter": 0.1,
+      "swapGroup": [
+        "Models/Dreamscape/Structures/SM_Floor_02.hmsh",
+        "Models/Dreamscape/Structures/SM_Floor_03.hmsh"
+      ],
+      "yawJitterDeg": 180
+    },
+    {
+      "asset": "Models/Dreamscape/Structures/SM_Floor_02.hmsh",
+      "keepChance": 0.4,
+      "positionJitter": 0.8,
+      "scaleJitter": 0.1,
+      "swapGroup": [
+        "Models/Dreamscape/Structures/SM_Floor_01.hmsh",
+        "Models/Dreamscape/Structures/SM_Floor_03.hmsh"
+      ],
+      "yawJitterDeg": 180
+    },
+    {
+      "asset": "Models/Dreamscape/Structures/SM_Floor_03.hmsh",
+      "keepChance": 0.4,
+      "positionJitter": 0.8,
+      "scaleJitter": 0.1,
+      "swapGroup": [
+        "Models/Dreamscape/Structures/SM_Floor_01.hmsh",
+        "Models/Dreamscape/Structures/SM_Floor_02.hmsh"
+      ],
+      "yawJitterDeg": 180
+    },
+    {
+      "asset": "Models/Dreamscape/Structures/SM_Brick_01.hmsh",
+      "keepChance": 0.7,
+      "positionJitter": 2.0,
+      "scaleJitter": 0.2,
+      "swapGroup": [],
+      "yawJitterDeg": 180
+    },
+    {
+      "asset": "Models/Dreamscape/Foliage/SM_Vines_Wide_01.hmsh",
+      "keepChance": 0.4,
+      "positionJitter": 0.5,
+      "scaleJitter": 0.1,
+      "swapGroup": [],
+      "yawJitterDeg": 0
+    },
+    {
+      "asset": "Models/Dreamscape/Foliage/SM_Vines_Wide_02.hmsh",
+      "keepChance": 0.4,
+      "positionJitter": 0.5,
+      "scaleJitter": 0.1,
+      "swapGroup": [],
+      "yawJitterDeg": 0
+    },
+    {
+      "asset": "Models/Dreamscape/Foliage/SM_Vines_Bent_01.hmsh",
+      "keepChance": 0.4,
+      "positionJitter": 0.5,
+      "scaleJitter": 0.1,
+      "swapGroup": [],
+      "yawJitterDeg": 0
+    }
+  ],
+  "runs": [
+    {
+      "keepChance": 1.0,
+      "members": [
+        15275722699809060574,
+        15276358875445468716,
+        15276308392438259833,
+        15276598833056937189,
+        15276771932558049266
+      ],
+      "name": "Wall"
+    },
+    {
+      "keepChance": 1.0,
+      "members": [
+        15278336520598420898,
+        15278604509892620225,
+        15278485267188649904,
+        15278632715927708863,
+        15278931276363013289
+      ],
+      "name": "Wall"
+    },
+    {
+      "keepChance": 1.0,
+      "members": [
+        15280601528694215887,
+        15280636379316212253,
+        15280576741183306257,
+        15280817205266231904,
+        15281090613218606223
+      ],
+      "name": "Wall"
+    }
+  ],
+  "sideFalloff": 2.0,
+  "variants": [
+    {
+      "originX": 0.0
+    },
+    {
+      "originX": 100.0
+    },
+    {
+      "originX": 200.0
+    }
+  ]
+}

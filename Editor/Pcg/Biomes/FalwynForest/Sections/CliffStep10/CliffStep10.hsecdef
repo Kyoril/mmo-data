@@ -1,0 +1,104 @@
+{
+  "halfWidth": 8.0,
+  "length": 20.0,
+  "name": "CliffStep10",
+  "rules": [
+    {
+      "asset": "Models/Dreamscape/Cliffs/SM_Cliff_03.hmsh",
+      "keepChance": 1.0,
+      "positionJitter": 0.0,
+      "scaleJitter": 0.05,
+      "swapGroup": [
+        "Models/Dreamscape/Cliffs/SM_Cliff_06.hmsh",
+        "Models/Dreamscape/Cliffs/SM_Cliff_07.hmsh",
+        "Models/Dreamscape/Cliffs/SM_Cliff_04.hmsh"
+      ],
+      "yawJitterDeg": 8.0
+    },
+    {
+      "asset": "Models/Dreamscape/Cliffs/SM_Cliff_06.hmsh",
+      "keepChance": 1.0,
+      "positionJitter": 0.0,
+      "scaleJitter": 0.05,
+      "swapGroup": [
+        "Models/Dreamscape/Cliffs/SM_Cliff_03.hmsh",
+        "Models/Dreamscape/Cliffs/SM_Cliff_07.hmsh",
+        "Models/Dreamscape/Cliffs/SM_Cliff_04.hmsh"
+      ],
+      "yawJitterDeg": 8.0
+    },
+    {
+      "asset": "Models/Dreamscape/Cliffs/SM_Cliff_07.hmsh",
+      "keepChance": 1.0,
+      "positionJitter": 0.0,
+      "scaleJitter": 0.05,
+      "swapGroup": [
+        "Models/Dreamscape/Cliffs/SM_Cliff_03.hmsh",
+        "Models/Dreamscape/Cliffs/SM_Cliff_06.hmsh",
+        "Models/Dreamscape/Cliffs/SM_Cliff_04.hmsh"
+      ],
+      "yawJitterDeg": 8.0
+    },
+    {
+      "asset": "Models/Dreamscape/Cliffs/SM_Cliff_04.hmsh",
+      "keepChance": 1.0,
+      "positionJitter": 0.0,
+      "scaleJitter": 0.05,
+      "swapGroup": [
+        "Models/Dreamscape/Cliffs/SM_Cliff_03.hmsh",
+        "Models/Dreamscape/Cliffs/SM_Cliff_06.hmsh",
+        "Models/Dreamscape/Cliffs/SM_Cliff_07.hmsh"
+      ],
+      "yawJitterDeg": 8.0
+    },
+    {
+      "asset": "Models/Dreamscape/Foliage/SM_Bush_03.hmsh",
+      "keepChance": 0.5,
+      "positionJitter": 1.0,
+      "scaleJitter": 0.15,
+      "swapGroup": [
+        "Models/Dreamscape/Foliage/SM_Bush_05.hmsh"
+      ],
+      "yawJitterDeg": 180
+    },
+    {
+      "asset": "Models/Dreamscape/Foliage/SM_Bush_05.hmsh",
+      "keepChance": 0.5,
+      "positionJitter": 1.0,
+      "scaleJitter": 0.15,
+      "swapGroup": [
+        "Models/Dreamscape/Foliage/SM_Bush_03.hmsh"
+      ],
+      "yawJitterDeg": 180
+    },
+    {
+      "asset": "Models/Dreamscape/Stones/SM_RockMedium_01.hmsh",
+      "keepChance": 0.5,
+      "positionJitter": 1.5,
+      "scaleJitter": 0.2,
+      "swapGroup": [],
+      "yawJitterDeg": 180
+    },
+    {
+      "asset": "Models/Dreamscape/Stones/SM_RockMedium_02.hmsh",
+      "keepChance": 0.5,
+      "positionJitter": 1.5,
+      "scaleJitter": 0.2,
+      "swapGroup": [],
+      "yawJitterDeg": 180
+    }
+  ],
+  "runs": [],
+  "sideFalloff": 6.0,
+  "variants": [
+    {
+      "originX": 0.0
+    },
+    {
+      "originX": 100.0
+    },
+    {
+      "originX": 200.0
+    }
+  ]
+}
