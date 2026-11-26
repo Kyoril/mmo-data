@@ -196,6 +196,10 @@ strings =
 	(key = "LEVEL_REQUIREMENT_FORMAT", string = "Requires level %d")
 
 	(key = "MANA", string = "Mana")
+	(key = "GLIDE_SPEED", string = "% Glide Speed")
+	(key = "GLIDE_AGILITY", string = "% Agility in Flight")
+	(key = "GLIDE_LIFT", string = "% Lift")
+	(key = "GLIDE_ENDURANCE", string = "% Flight Endurance")
 	(key = "RAGE", string = "Rage")
 	(key = "ENERGY", string = "Energy")
 	
