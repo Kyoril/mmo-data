@@ -17,18 +17,6 @@
           "min": 0.0,
           "name": "density",
           "type": "float"
-        },
-        {
-          "default": {
-            "type": "float",
-            "value": 9.0
-          },
-          "description": "Minimum distance between trees in metres",
-          "enumValues": [],
-          "max": 100.0,
-          "min": 0.0,
-          "name": "minSpacing",
-          "type": "float"
         }
       ]
     }

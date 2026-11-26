@@ -1,10 +1,10 @@
 {
-  "halfWidth": 22.0,
-  "length": 44.0,
+  "halfWidth": 10.0,
+  "length": 2.0,
   "name": "Island",
   "rules": [],
   "runs": [],
-  "sideFalloff": 0.0,
+  "sideFalloff": 10.0,
   "variants": [
     {
       "originX": 0.0

@@ -157,22 +157,22 @@
    "toPin": "Subtract"
   },
   {
-   "fromNode": 8,
-   "fromPin": "Out",
-   "toNode": 27,
-   "toPin": "Subtract"
-  },
-  {
-   "fromNode": 2,
-   "fromPin": "Out",
-   "toNode": 27,
-   "toPin": "Subtract"
-  },
-  {
    "fromNode": 27,
    "fromPin": "Out",
    "toNode": 28,
    "toPin": "In"
+  },
+  {
+   "fromNode": 8,
+   "fromPin": "Out",
+   "toNode": 28,
+   "toPin": "Target"
+  },
+  {
+   "fromNode": 2,
+   "fromPin": "Out",
+   "toNode": 28,
+   "toPin": "Target"
   },
   {
    "fromNode": 28,
@@ -193,7 +193,7 @@
    "toPin": "In"
   },
   {
-   "fromNode": 1,
+   "fromNode": 31,
    "fromPin": "Out",
    "toNode": 32,
    "toPin": "In"
@@ -205,25 +205,7 @@
    "toPin": "In"
   },
   {
-   "fromNode": 9,
-   "fromPin": "Out",
-   "toNode": 33,
-   "toPin": "Subtract"
-  },
-  {
-   "fromNode": 6,
-   "fromPin": "Out",
-   "toNode": 33,
-   "toPin": "Subtract"
-  },
-  {
-   "fromNode": 7,
-   "fromPin": "Out",
-   "toNode": 33,
-   "toPin": "Subtract"
-  },
-  {
-   "fromNode": 33,
+   "fromNode": 1,
    "fromPin": "Out",
    "toNode": 34,
    "toPin": "In"
@@ -235,10 +217,40 @@
    "toPin": "In"
   },
   {
+   "fromNode": 9,
+   "fromPin": "Out",
+   "toNode": 35,
+   "toPin": "Subtract"
+  },
+  {
+   "fromNode": 6,
+   "fromPin": "Out",
+   "toNode": 35,
+   "toPin": "Subtract"
+  },
+  {
+   "fromNode": 7,
+   "fromPin": "Out",
+   "toNode": 35,
+   "toPin": "Subtract"
+  },
+  {
    "fromNode": 35,
    "fromPin": "Out",
    "toNode": 36,
    "toPin": "In"
+  },
+  {
+   "fromNode": 4,
+   "fromPin": "Out",
+   "toNode": 36,
+   "toPin": "Subtract"
+  },
+  {
+   "fromNode": 5,
+   "fromPin": "Out",
+   "toNode": 36,
+   "toPin": "Subtract"
   },
   {
    "fromNode": 36,
@@ -253,7 +265,7 @@
    "toPin": "In"
   },
   {
-   "fromNode": 1,
+   "fromNode": 38,
    "fromPin": "Out",
    "toNode": 39,
    "toPin": "In"
@@ -265,43 +277,13 @@
    "toPin": "In"
   },
   {
-   "fromNode": 9,
-   "fromPin": "Out",
-   "toNode": 40,
-   "toPin": "Subtract"
-  },
-  {
-   "fromNode": 6,
-   "fromPin": "Out",
-   "toNode": 40,
-   "toPin": "Subtract"
-  },
-  {
-   "fromNode": 7,
-   "fromPin": "Out",
-   "toNode": 40,
-   "toPin": "Subtract"
-  },
-  {
-   "fromNode": 4,
-   "fromPin": "Out",
-   "toNode": 40,
-   "toPin": "Subtract"
-  },
-  {
-   "fromNode": 5,
-   "fromPin": "Out",
-   "toNode": 40,
-   "toPin": "Subtract"
-  },
-  {
    "fromNode": 40,
    "fromPin": "Out",
    "toNode": 41,
    "toPin": "In"
   },
   {
-   "fromNode": 41,
+   "fromNode": 1,
    "fromPin": "Out",
    "toNode": 42,
    "toPin": "In"
@@ -313,7 +295,61 @@
    "toPin": "In"
   },
   {
+   "fromNode": 9,
+   "fromPin": "Out",
+   "toNode": 43,
+   "toPin": "Subtract"
+  },
+  {
+   "fromNode": 6,
+   "fromPin": "Out",
+   "toNode": 43,
+   "toPin": "Subtract"
+  },
+  {
+   "fromNode": 7,
+   "fromPin": "Out",
+   "toNode": 43,
+   "toPin": "Subtract"
+  },
+  {
+   "fromNode": 4,
+   "fromPin": "Out",
+   "toNode": 43,
+   "toPin": "Subtract"
+  },
+  {
+   "fromNode": 5,
+   "fromPin": "Out",
+   "toNode": 43,
+   "toPin": "Subtract"
+  },
+  {
    "fromNode": 43,
+   "fromPin": "Out",
+   "toNode": 49,
+   "toPin": "In"
+  },
+  {
+   "fromNode": 8,
+   "fromPin": "Out",
+   "toNode": 49,
+   "toPin": "Target"
+  },
+  {
+   "fromNode": 2,
+   "fromPin": "Out",
+   "toNode": 49,
+   "toPin": "Target"
+  },
+  {
+   "fromNode": 49,
+   "fromPin": "Out",
+   "toNode": 50,
+   "toPin": "In"
+  },
+  {
+   "fromNode": 50,
    "fromPin": "Out",
    "toNode": 44,
    "toPin": "In"
@@ -325,7 +361,7 @@
    "toPin": "In"
   },
   {
-   "fromNode": 1,
+   "fromNode": 45,
    "fromPin": "Out",
    "toNode": 46,
    "toPin": "In"
@@ -337,55 +373,13 @@
    "toPin": "In"
   },
   {
-   "fromNode": 9,
-   "fromPin": "Out",
-   "toNode": 47,
-   "toPin": "Subtract"
-  },
-  {
-   "fromNode": 6,
-   "fromPin": "Out",
-   "toNode": 47,
-   "toPin": "Subtract"
-  },
-  {
-   "fromNode": 7,
-   "fromPin": "Out",
-   "toNode": 47,
-   "toPin": "Subtract"
-  },
-  {
    "fromNode": 47,
    "fromPin": "Out",
    "toNode": 48,
    "toPin": "In"
   },
   {
-   "fromNode": 2,
-   "fromPin": "Out",
-   "toNode": 48,
-   "toPin": "Target"
-  },
-  {
-   "fromNode": 8,
-   "fromPin": "Out",
-   "toNode": 48,
-   "toPin": "Target"
-  },
-  {
-   "fromNode": 48,
-   "fromPin": "Out",
-   "toNode": 49,
-   "toPin": "In"
-  },
-  {
-   "fromNode": 49,
-   "fromPin": "Out",
-   "toNode": 50,
-   "toPin": "In"
-  },
-  {
-   "fromNode": 50,
+   "fromNode": 1,
    "fromPin": "Out",
    "toNode": 51,
    "toPin": "In"
@@ -397,20 +391,98 @@
    "toPin": "In"
   },
   {
+   "fromNode": 9,
+   "fromPin": "Out",
+   "toNode": 52,
+   "toPin": "Subtract"
+  },
+  {
+   "fromNode": 6,
+   "fromPin": "Out",
+   "toNode": 52,
+   "toPin": "Subtract"
+  },
+  {
+   "fromNode": 7,
+   "fromPin": "Out",
+   "toNode": 52,
+   "toPin": "Subtract"
+  },
+  {
    "fromNode": 52,
    "fromPin": "Out",
    "toNode": 53,
    "toPin": "In"
   },
   {
+   "fromNode": 4,
+   "fromPin": "Out",
+   "toNode": 53,
+   "toPin": "Subtract"
+  },
+  {
+   "fromNode": 5,
+   "fromPin": "Out",
+   "toNode": 53,
+   "toPin": "Subtract"
+  },
+  {
    "fromNode": 53,
    "fromPin": "Out",
    "toNode": 54,
    "toPin": "In"
+  },
+  {
+   "fromNode": 2,
+   "fromPin": "Out",
+   "toNode": 54,
+   "toPin": "Target"
+  },
+  {
+   "fromNode": 8,
+   "fromPin": "Out",
+   "toNode": 54,
+   "toPin": "Target"
+  },
+  {
+   "fromNode": 54,
+   "fromPin": "Out",
+   "toNode": 55,
+   "toPin": "In"
+  },
+  {
+   "fromNode": 55,
+   "fromPin": "Out",
+   "toNode": 56,
+   "toPin": "In"
+  },
+  {
+   "fromNode": 56,
+   "fromPin": "Out",
+   "toNode": 57,
+   "toPin": "In"
+  },
+  {
+   "fromNode": 57,
+   "fromPin": "Out",
+   "toNode": 58,
+   "toPin": "In"
+  },
+  {
+   "fromNode": 58,
+   "fromPin": "Out",
+   "toNode": 59,
+   "toPin": "In"
+  },
+  {
+   "fromNode": 59,
+   "fromPin": "Out",
+   "toNode": 60,
+   "toPin": "In"
   }
  ],
  "name": "TowerLake",
- "nextNodeId": 55,
+ "nextNodeId": 61,
  "nodes": [
   {
    "comment": "Tower forest areas",
@@ -920,7 +992,7 @@
    "type": "Difference"
   },
   {
-   "comment": "Clear strip along cliffs, ruins, roads, fields and the lake, so crowns do not hang over them",
+   "comment": "Clear strip along cliffs, ruins and roads (Difference widens splines only)",
    "debug": false,
    "editorX": 780.0,
    "editorY": 300.0,
@@ -934,11 +1006,51 @@
    "type": "Difference"
   },
   {
-   "comment": "",
+   "comment": "Distance to the fields and the lake",
+   "debug": false,
+   "editorX": 780.0,
+   "editorY": 450.0,
+   "id": 28,
+   "settings": {
+    "attributeName": {
+     "type": "string",
+     "value": "distanceToOpen"
+    },
+    "maxDistance": {
+     "type": "float",
+     "value": 30.0
+    }
+   },
+   "type": "DistanceTo"
+  },
+  {
+   "comment": "Keep trunks 5 m off fields and the lake, so crowns do not hang over them",
    "debug": false,
    "editorX": 1040.0,
    "editorY": 150.0,
-   "id": 28,
+   "id": 29,
+   "settings": {
+    "attribute": {
+     "type": "string",
+     "value": "distanceToOpen"
+    },
+    "op": {
+     "type": "string",
+     "value": ">="
+    },
+    "value": {
+     "type": "float",
+     "value": 5.0
+    }
+   },
+   "type": "FilterByAttribute"
+  },
+  {
+   "comment": "",
+   "debug": false,
+   "editorX": 1040.0,
+   "editorY": 300.0,
+   "id": 30,
    "settings": {
     "minSpacing": {
      "type": "string",
@@ -960,7 +1072,7 @@
    "debug": false,
    "editorX": 1300.0,
    "editorY": 0.0,
-   "id": 29,
+   "id": 31,
    "settings": {
     "excludeUnderWater": {
      "type": "bool",
@@ -982,7 +1094,7 @@
    "debug": false,
    "editorX": 1560.0,
    "editorY": 0.0,
-   "id": 30,
+   "id": 32,
    "settings": {
     "orientation": {
      "type": "string",
@@ -1024,7 +1136,7 @@
    "debug": false,
    "editorX": 1820.0,
    "editorY": 0.0,
-   "id": 31,
+   "id": 33,
    "settings": {
     "collides": {
      "type": "bool",
@@ -1046,7 +1158,7 @@
    "debug": false,
    "editorX": 520.0,
    "editorY": 300.0,
-   "id": 32,
+   "id": 34,
    "settings": {
     "cellSize": {
      "type": "float",
@@ -1063,8 +1175,8 @@
    "comment": "",
    "debug": false,
    "editorX": 780.0,
-   "editorY": 450.0,
-   "id": 33,
+   "editorY": 600.0,
+   "id": 35,
    "settings": {
     "clearanceAttribute": {
      "type": "string",
@@ -1078,11 +1190,25 @@
    "type": "Difference"
   },
   {
+   "comment": "Nothing grows in the cliff face or through a wall",
+   "debug": false,
+   "editorX": 780.0,
+   "editorY": 750.0,
+   "id": 36,
+   "settings": {
+    "distance": {
+     "type": "float",
+     "value": 2.5
+    }
+   },
+   "type": "Difference"
+  },
+  {
    "comment": "Patches instead of an even carpet",
    "debug": false,
    "editorX": 1040.0,
-   "editorY": 300.0,
-   "id": 34,
+   "editorY": 450.0,
+   "id": 37,
    "settings": {
     "amount": {
      "type": "float",
@@ -1104,7 +1230,7 @@
    "debug": false,
    "editorX": 1300.0,
    "editorY": 150.0,
-   "id": 35,
+   "id": 38,
    "settings": {
     "maxDensity": {
      "type": "float",
@@ -1122,7 +1248,7 @@
    "debug": false,
    "editorX": 1560.0,
    "editorY": 150.0,
-   "id": 36,
+   "id": 39,
    "settings": {
     "excludeUnderWater": {
      "type": "bool",
@@ -1144,7 +1270,7 @@
    "debug": false,
    "editorX": 1820.0,
    "editorY": 150.0,
-   "id": 37,
+   "id": 40,
    "settings": {
     "orientation": {
      "type": "string",
@@ -1186,7 +1312,7 @@
    "debug": false,
    "editorX": 2080.0,
    "editorY": 0.0,
-   "id": 38,
+   "id": 41,
    "settings": {
     "collides": {
      "type": "bool",
@@ -1208,7 +1334,7 @@
    "debug": false,
    "editorX": 520.0,
    "editorY": 450.0,
-   "id": 39,
+   "id": 42,
    "settings": {
     "cellSize": {
      "type": "float",
@@ -1225,8 +1351,8 @@
    "comment": "",
    "debug": false,
    "editorX": 780.0,
-   "editorY": 600.0,
-   "id": 40,
+   "editorY": 900.0,
+   "id": 43,
    "settings": {
     "clearanceAttribute": {
      "type": "string",
@@ -1243,8 +1369,8 @@
    "comment": "",
    "debug": false,
    "editorX": 1040.0,
-   "editorY": 450.0,
-   "id": 41,
+   "editorY": 600.0,
+   "id": 44,
    "settings": {
     "amount": {
      "type": "float",
@@ -1266,7 +1392,7 @@
    "debug": false,
    "editorX": 1300.0,
    "editorY": 300.0,
-   "id": 42,
+   "id": 45,
    "settings": {
     "maxDensity": {
      "type": "float",
@@ -1284,7 +1410,7 @@
    "debug": false,
    "editorX": 1560.0,
    "editorY": 300.0,
-   "id": 43,
+   "id": 46,
    "settings": {
     "excludeUnderWater": {
      "type": "bool",
@@ -1306,7 +1432,7 @@
    "debug": false,
    "editorX": 1820.0,
    "editorY": 300.0,
-   "id": 44,
+   "id": 47,
    "settings": {
     "orientation": {
      "type": "string",
@@ -1348,7 +1474,7 @@
    "debug": false,
    "editorX": 2080.0,
    "editorY": 150.0,
-   "id": 45,
+   "id": 48,
    "settings": {
     "collides": {
      "type": "bool",
@@ -1366,11 +1492,51 @@
    "type": "SpawnMeshes"
   },
   {
+   "comment": "",
+   "debug": false,
+   "editorX": 780.0,
+   "editorY": 1050.0,
+   "id": 49,
+   "settings": {
+    "attributeName": {
+     "type": "string",
+     "value": "distanceToOpen"
+    },
+    "maxDistance": {
+     "type": "float",
+     "value": 30.0
+    }
+   },
+   "type": "DistanceTo"
+  },
+  {
+   "comment": "Hazel keeps the same 5 m off fields and the lake",
+   "debug": false,
+   "editorX": 1040.0,
+   "editorY": 750.0,
+   "id": 50,
+   "settings": {
+    "attribute": {
+     "type": "string",
+     "value": "distanceToOpen"
+    },
+    "op": {
+     "type": "string",
+     "value": ">="
+    },
+    "value": {
+     "type": "float",
+     "value": 5.0
+    }
+   },
+   "type": "FilterByAttribute"
+  },
+  {
    "comment": "Meadow flower candidates",
    "debug": false,
    "editorX": 520.0,
    "editorY": 600.0,
-   "id": 46,
+   "id": 51,
    "settings": {
     "cellSize": {
      "type": "float",
@@ -1387,8 +1553,8 @@
    "comment": "",
    "debug": false,
    "editorX": 780.0,
-   "editorY": 750.0,
-   "id": 47,
+   "editorY": 1200.0,
+   "id": 52,
    "settings": {
     "clearanceAttribute": {
      "type": "string",
@@ -1402,11 +1568,25 @@
    "type": "Difference"
   },
   {
+   "comment": "",
+   "debug": false,
+   "editorX": 780.0,
+   "editorY": 1350.0,
+   "id": 53,
+   "settings": {
+    "distance": {
+     "type": "float",
+     "value": 2.5
+    }
+   },
+   "type": "Difference"
+  },
+  {
    "comment": "Distance to the lake and the fields",
    "debug": false,
    "editorX": 1040.0,
-   "editorY": 600.0,
-   "id": 48,
+   "editorY": 900.0,
+   "id": 54,
    "settings": {
     "attributeName": {
      "type": "string",
@@ -1424,7 +1604,7 @@
    "debug": false,
    "editorX": 1300.0,
    "editorY": 450.0,
-   "id": 49,
+   "id": 55,
    "settings": {
     "attribute": {
      "type": "string",
@@ -1446,7 +1626,7 @@
    "debug": false,
    "editorX": 1560.0,
    "editorY": 450.0,
-   "id": 50,
+   "id": 56,
    "settings": {
     "amount": {
      "type": "float",
@@ -1468,7 +1648,7 @@
    "debug": false,
    "editorX": 1820.0,
    "editorY": 450.0,
-   "id": 51,
+   "id": 57,
    "settings": {
     "maxDensity": {
      "type": "float",
@@ -1486,7 +1666,7 @@
    "debug": false,
    "editorX": 2080.0,
    "editorY": 300.0,
-   "id": 52,
+   "id": 58,
    "settings": {
     "excludeUnderWater": {
      "type": "bool",
@@ -1508,7 +1688,7 @@
    "debug": false,
    "editorX": 2340.0,
    "editorY": 0.0,
-   "id": 53,
+   "id": 59,
    "settings": {
     "orientation": {
      "type": "string",
@@ -1550,7 +1730,7 @@
    "debug": false,
    "editorX": 2600.0,
    "editorY": 0.0,
-   "id": 54,
+   "id": 60,
    "settings": {
     "collides": {
      "type": "bool",
