@@ -1,0 +1,28 @@
+{
+  "defaultTags": [
+    "exclusion",
+    "island"
+  ],
+  "groups": [
+    {
+      "name": "Island",
+      "properties": [
+        {
+          "default": {
+            "type": "string",
+            "value": "Editor/Pcg/Biomes/FalwynForest/Sections/Island.hsec"
+          },
+          "description": "Island section (.hsec) stamped at the point",
+          "enumValues": [],
+          "max": 0.0,
+          "min": 0.0,
+          "name": "section",
+          "type": "asset"
+        }
+      ]
+    }
+  ],
+  "name": "Island",
+  "shape": "point",
+  "version": 1
+}

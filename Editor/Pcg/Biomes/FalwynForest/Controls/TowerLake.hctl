@@ -1,0 +1,41 @@
+{
+  "defaultTags": [
+    "exclusion",
+    "water",
+    "towerlake"
+  ],
+  "groups": [
+    {
+      "name": "Water",
+      "properties": [
+        {
+          "default": {
+            "type": "float",
+            "value": 1.0
+          },
+          "description": "Water level (world height)",
+          "enumValues": [],
+          "max": 1000.0,
+          "min": -1000.0,
+          "name": "level",
+          "type": "float"
+        },
+        {
+          "default": {
+            "type": "string",
+            "value": "Editor/Pcg/Biomes/FalwynForest/Sections/LakeShore.hsec"
+          },
+          "description": "Shore section (.hsec) laid around the lake",
+          "enumValues": [],
+          "max": 0.0,
+          "min": 0.0,
+          "name": "section",
+          "type": "asset"
+        }
+      ]
+    }
+  ],
+  "name": "Tower Lake",
+  "shape": "closedLoop",
+  "version": 1
+}

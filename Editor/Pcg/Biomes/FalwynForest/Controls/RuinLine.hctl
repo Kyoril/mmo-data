@@ -1,0 +1,27 @@
+{
+  "defaultTags": [
+    "ruin"
+  ],
+  "groups": [
+    {
+      "name": "Ruin",
+      "properties": [
+        {
+          "default": {
+            "type": "string",
+            "value": "Editor/Pcg/Biomes/FalwynForest/Sections/RuinWall.hsec"
+          },
+          "description": "Ruin wall section (.hsec) laid along the line",
+          "enumValues": [],
+          "max": 0.0,
+          "min": 0.0,
+          "name": "section",
+          "type": "asset"
+        }
+      ]
+    }
+  ],
+  "name": "Ruin Line",
+  "shape": "openSpline",
+  "version": 1
+}

@@ -1,0 +1,27 @@
+{
+  "defaultTags": [
+    "cliffedge"
+  ],
+  "groups": [
+    {
+      "name": "Cliff",
+      "properties": [
+        {
+          "default": {
+            "type": "string",
+            "value": "Editor/Pcg/Biomes/FalwynForest/Sections/CliffStep5.hsec"
+          },
+          "description": "Cliff step section (.hsec) laid along the line",
+          "enumValues": [],
+          "max": 0.0,
+          "min": 0.0,
+          "name": "section",
+          "type": "asset"
+        }
+      ]
+    }
+  ],
+  "name": "Cliff Edge",
+  "shape": "openSpline",
+  "version": 1
+}
