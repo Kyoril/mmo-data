@@ -137,8 +137,7 @@ function LootRollFrame_OnRollWon(self, rollId, itemId, winningRoll, winningVote,
 		voteStr = "Greed";
 	end
 
-	local color = ItemQualityColors[quality] or "FFFFFFFF";
-	local itemLink = "|c" .. color .. "[" .. (itemName or "Unknown") .. "]|r";
+	local itemLink = ChatFrame_GetItemNameLinkText(itemName or "Unknown", itemId, quality);
 	local name = winnerName or "Unknown";
 
 	if winningRoll and winningRoll > 0 then
@@ -158,8 +157,7 @@ function LootRollFrame_OnAllPassed(self, rollId, itemId)
 	-- Print chat message
 	local rollInfo = LootRoll_ActiveRolls[key];
 	if rollInfo then
-		local color = ItemQualityColors[rollInfo.quality] or "FFFFFFFF";
-		local itemLink = "|c" .. color .. "[" .. (rollInfo.itemName or "Unknown") .. "]|r";
+		local itemLink = ChatFrame_GetItemNameLinkText(rollInfo.itemName or "Unknown", rollInfo.itemId or itemId, rollInfo.quality);
 		ChatFrame:AddMessage("Everyone passed on " .. itemLink, 0.0, 0.75, 0.0);
 	end
 
@@ -303,9 +301,8 @@ function LootRollItem_OnLeave(frameIndex)
 	GameTooltip:Hide();
 end
 
-function LootRollFrame_OnRollResult(self, vote, rollValue, playerName, itemName, quality)
-	local color = ItemQualityColors[quality] or "FFFFFFFF";
-	local itemLink = "|c" .. color .. "[" .. (itemName or "Unknown") .. "]|r";
+function LootRollFrame_OnRollResult(self, vote, rollValue, playerName, itemName, quality, itemId)
+	local itemLink = ChatFrame_GetItemNameLinkText(itemName or "Unknown", itemId, quality);
 	local name = playerName or "Unknown";
 
 	if vote == 0 then

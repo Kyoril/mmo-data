@@ -26,6 +26,7 @@ ITEM_COMPARE_TOOLTIP_GAP = 8.0;
 -- on use because this script loads before they exist.
 local TOOLTIP_TARGET_MAIN = { frame = "GameTooltip", lines = "GameTooltipLines", money = "TooltipMoneyFrame", moneyText = "TooltipMoneyText" };
 local TOOLTIP_TARGET_COMPARE = { frame = "ItemCompareTooltip", lines = "ItemCompareTooltipLines", money = "ItemCompareTooltipMoneyFrame", moneyText = "ItemCompareTooltipMoneyText" };
+local TOOLTIP_TARGET_ITEM_REF = { frame = "ItemRefTooltip", lines = "ItemRefTooltipLines", money = "ItemRefTooltipMoneyFrame", moneyText = "ItemRefTooltipMoneyText" };
 local tooltipTarget = TOOLTIP_TARGET_MAIN;
 
 local function ClearTooltip()
@@ -1014,5 +1015,90 @@ function GameTooltip_OnUpdate(self, deltaTime)
         else
             GameTooltip:SetOpacity(newOpacity);
         end
+    end
+end
+
+-- Seconds between attempts to fill the item link tooltip while the item data is still on its
+-- way from the server, and how many attempts are made before the window gives up and closes.
+local ITEM_REF_TOOLTIP_RETRY_INTERVAL = 0.2;
+local ITEM_REF_TOOLTIP_MAX_RETRIES = 25;
+
+-- Fills the item link tooltip with the item of the given entry id, using the same functions as
+-- the hover tooltip. Returns false while the item data has not arrived yet; GetCachedItemInfo
+-- asks the server for it in that case. The target is restored even if filling fails, or the
+-- hover tooltip would write its lines into the wrong window from then on.
+local function FillItemRefTooltip(itemId)
+    local item = GetCachedItemInfo(itemId);
+    if (item == nil) then
+        return false;
+    end
+
+    local mainHeight = TooltipHeight;
+    tooltipTarget = TOOLTIP_TARGET_ITEM_REF;
+
+    -- Filled like an embedded template: the equipped item comparison belongs to the hover
+    -- tooltip, which is the one reacting to Alt.
+    local ok, err = pcall(function()
+        ClearTooltip();
+        AppendItemTemplateLines(item, true);
+    end);
+
+    tooltipTarget = TOOLTIP_TARGET_MAIN;
+    TooltipHeight = mainHeight;
+
+    if (not ok) then
+        error(err, 0);
+    end
+
+    return true;
+end
+
+-- Shows the item link tooltip for an item entry id, for example after a click on an item link
+-- in the chat. There is only one of these windows: a second click refills this one instead of
+-- opening another, and the hover tooltip keeps working beside it.
+function ItemRefTooltip_SetItem(itemId)
+    itemId = tonumber(itemId);
+    if (itemId == nil or itemId <= 0) then
+        return;
+    end
+
+    ItemRefTooltip.itemId = itemId;
+    ItemRefTooltip.pendingRetries = 0;
+    ItemRefTooltip.pendingDelay = ITEM_REF_TOOLTIP_RETRY_INTERVAL;
+    ItemRefTooltip.pending = not FillItemRefTooltip(itemId);
+    ItemRefTooltip:Show();
+end
+
+-- Closes the item link tooltip.
+function ItemRefTooltip_Hide()
+    ItemRefTooltip.pending = false;
+    ItemRefTooltip.itemId = nil;
+    ItemRefTooltip:Hide();
+end
+
+function ItemRefTooltip_OnLoad(self)
+    self.defaultWidth = self:GetWidth();
+    ItemRefTooltipCloseButton:SetClickedHandler(ItemRefTooltip_Hide);
+end
+
+-- Item data arrives asynchronously, so a tooltip opened for an item the client does not know
+-- yet is filled as soon as the server answered, and closes itself if the answer never comes.
+function ItemRefTooltip_OnUpdate(self, deltaTime)
+    if (not self.pending) then
+        return;
+    end
+
+    self.pendingDelay = self.pendingDelay - deltaTime;
+    if (self.pendingDelay > 0.0) then
+        return;
+    end
+
+    self.pendingDelay = ITEM_REF_TOOLTIP_RETRY_INTERVAL;
+    self.pendingRetries = self.pendingRetries + 1;
+
+    if (FillItemRefTooltip(self.itemId)) then
+        self.pending = false;
+    elseif (self.pendingRetries >= ITEM_REF_TOOLTIP_MAX_RETRIES) then
+        ItemRefTooltip_Hide();
     end
 end
