@@ -155,4 +155,72 @@
 			</OnUpdate>
 		</Scripts>
 	</Frame>
+
+	<!-- Shows the item of a clicked item link. A window of its own: it stays until its close
+	     button is used and never takes the place of the hover tooltip above. There is only one
+	     of them, so the next link click refills this window. -->
+	<Frame name="ItemRefTooltip" renderer="DefaultRenderer" parent="GameParent" frameLevel="99">
+		<Property name="Visible" value="False" />
+
+		<Visual inherits="ThemeGameTooltipVisual" />
+
+		<Frame name="ItemRefTooltipLines">
+			<Area>
+				<Anchor point="TOP" relativePoint="TOP" offset="16" />
+				<Anchor point="LEFT" offset="8" />
+				<Anchor point="RIGHT" offset="-40" />
+				<Anchor point="BOTTOM" offset="-8" />
+			</Area>
+		</Frame>
+
+		<Frame name="ItemRefTooltipMoneyText" inherits="TextSmall">
+			<Property name="Text" value="SELL_PRICE" />
+			<Property name="Font" value="SmallLabelFont" />
+
+			<Area>
+				<Anchor point="LEFT" offset="16" />
+				<Anchor point="RIGHT" offset="-16" />
+				<Anchor point="BOTTOM" offset="-16" />
+			</Area>
+		</Frame>
+
+		<Frame name="ItemRefTooltipMoneyFrame" inherits="MoneyFrameTemplate">
+			<Property name="Visible" value="False" />
+
+			<Area>
+				<Anchor point="BOTTOM" offset="-16" />
+				<Anchor point="LEFT" offset="16" />
+				<Anchor point="RIGHT" offset="-16" />
+			</Area>
+		</Frame>
+
+		<Frame name="ItemRefTooltipCloseButton" inherits="IconButton">
+			<Property name="Icon" value="Interface/Icons/fg4_iconsGold_close_result.htex" />
+
+			<Area>
+				<Size><AbsDimension x="32" y="32" /></Size>
+				<Anchor point="TOP" offset="4" />
+				<Anchor point="RIGHT" offset="-4" />
+			</Area>
+		</Frame>
+
+		<Area>
+			<Size><AbsDimension x="540" y="96" /></Size>
+			<Anchor point="H_CENTER" />
+			<Anchor point="V_CENTER" offset="-120" />
+		</Area>
+
+		<Scripts>
+			<OnLoad>
+				return function(self)
+					ItemRefTooltip_OnLoad(self);
+				end
+			</OnLoad>
+			<OnUpdate>
+				return function(self, deltaTime)
+					ItemRefTooltip_OnUpdate(self, deltaTime);
+				end
+			</OnUpdate>
+		</Scripts>
+	</Frame>
 </UiLayout>
