@@ -1,0 +1,31 @@
+{
+ "extraTags": [],
+ "halfExtents": [
+  5.0,
+  5.0,
+  5.0
+ ],
+ "id": 8370890276278298030,
+ "name": "TestIsland",
+ "nextPointId": 1,
+ "overrides": {},
+ "pointIds": [],
+ "position": [
+  968.0,
+  68.63,
+  2803.0
+ ],
+ "rotation": [
+  1.0,
+  0.0,
+  0.0,
+  0.0
+ ],
+ "spline": {
+  "closed": false,
+  "interpolation": "linear",
+  "points": []
+ },
+ "typePath": "Editor/Pcg/Biomes/FalwynForest/Controls/Island.hctl",
+ "version": 1
+}

@@ -1,0 +1,31 @@
+{
+  "extraTags": [],
+  "halfExtents": [
+    20.0,
+    0.5,
+    15.0
+  ],
+  "id": 9814668166045567818,
+  "name": "TestWheatB",
+  "nextPointId": 1,
+  "overrides": {},
+  "pointIds": [],
+  "position": [
+    1002.0,
+    75.16421508789063,
+    3060.0
+  ],
+  "rotation": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "spline": {
+    "closed": false,
+    "interpolation": "linear",
+    "points": []
+  },
+  "typePath": "Editor/Pcg/Biomes/FalwynForest/Controls/WheatField.hctl",
+  "version": 1
+}

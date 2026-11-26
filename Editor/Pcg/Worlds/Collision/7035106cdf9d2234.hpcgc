@@ -1,0 +1,178 @@
+{
+ "extraTags": [],
+ "halfExtents": [
+  5.0,
+  5.0,
+  5.0
+ ],
+ "id": 8085386765807723060,
+ "name": "TestLake",
+ "nextPointId": 11,
+ "overrides": {
+  "level": {
+   "type": "float",
+   "value": 71.63
+  }
+ },
+ "pointIds": [
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10
+ ],
+ "position": [
+  0.0,
+  0.0,
+  0.0
+ ],
+ "rotation": [
+  1.0,
+  0.0,
+  0.0,
+  0.0
+ ],
+ "spline": {
+  "closed": true,
+  "interpolation": "catmullRom",
+  "points": [
+   {
+    "autoTangents": true,
+    "inX": 0.0,
+    "inY": 0.0,
+    "inZ": 0.0,
+    "outX": 0.0,
+    "outY": 0.0,
+    "outZ": 0.0,
+    "width": 0.0,
+    "x": 1005.5,
+    "y": 74.9909439086914,
+    "z": 2800.0
+   },
+   {
+    "autoTangents": true,
+    "inX": 0.0,
+    "inY": 0.0,
+    "inZ": 0.0,
+    "outX": 0.0,
+    "outY": 0.0,
+    "outZ": 0.0,
+    "width": 0.0,
+    "x": 995.9000244140625,
+    "y": 75.45662689208984,
+    "z": 2818.0
+   },
+   {
+    "autoTangents": true,
+    "inX": 0.0,
+    "inY": 0.0,
+    "inZ": 0.0,
+    "outX": 0.0,
+    "outY": 0.0,
+    "outZ": 0.0,
+    "width": 0.0,
+    "x": 973.0999755859375,
+    "y": 75.45567321777344,
+    "z": 2820.10009765625
+   },
+   {
+    "autoTangents": true,
+    "inX": 0.0,
+    "inY": 0.0,
+    "inZ": 0.0,
+    "outX": 0.0,
+    "outY": 0.0,
+    "outZ": 0.0,
+    "width": 0.0,
+    "x": 955.0,
+    "y": 75.04541778564453,
+    "z": 2824.699951171875
+   },
+   {
+    "autoTangents": true,
+    "inX": 0.0,
+    "inY": 0.0,
+    "inZ": 0.0,
+    "outX": 0.0,
+    "outY": 0.0,
+    "outZ": 0.0,
+    "width": 0.0,
+    "x": 930.5999755859375,
+    "y": 75.90031433105469,
+    "z": 2820.10009765625
+   },
+   {
+    "autoTangents": true,
+    "inX": 0.0,
+    "inY": 0.0,
+    "inZ": 0.0,
+    "outX": 0.0,
+    "outY": 0.0,
+    "outZ": 0.0,
+    "width": 0.0,
+    "x": 929.9000244140625,
+    "y": 75.83300018310547,
+    "z": 2800.0
+   },
+   {
+    "autoTangents": true,
+    "inX": 0.0,
+    "inY": 0.0,
+    "inZ": 0.0,
+    "outX": 0.0,
+    "outY": 0.0,
+    "outZ": 0.0,
+    "width": 0.0,
+    "x": 940.2999877929688,
+    "y": 75.03370666503906,
+    "z": 2785.60009765625
+   },
+   {
+    "autoTangents": true,
+    "inX": 0.0,
+    "inY": 0.0,
+    "inZ": 0.0,
+    "outX": 0.0,
+    "outY": 0.0,
+    "outZ": 0.0,
+    "width": 0.0,
+    "x": 953.7000122070312,
+    "y": 74.43394470214844,
+    "z": 2772.10009765625
+   },
+   {
+    "autoTangents": true,
+    "inX": 0.0,
+    "inY": 0.0,
+    "inZ": 0.0,
+    "outX": 0.0,
+    "outY": 0.0,
+    "outZ": 0.0,
+    "width": 0.0,
+    "x": 975.4000244140625,
+    "y": 74.53341674804688,
+    "z": 2774.199951171875
+   },
+   {
+    "autoTangents": true,
+    "inX": 0.0,
+    "inY": 0.0,
+    "inZ": 0.0,
+    "outX": 0.0,
+    "outY": 0.0,
+    "outZ": 0.0,
+    "width": 0.0,
+    "x": 990.5,
+    "y": 75.0980224609375,
+    "z": 2785.10009765625
+   }
+  ]
+ },
+ "typePath": "Editor/Pcg/Biomes/FalwynForest/Controls/TowerLake.hctl",
+ "version": 1
+}
