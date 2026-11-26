@@ -21,7 +21,7 @@
         {
           "default": {
             "type": "float",
-            "value": 7.0
+            "value": 9.0
           },
           "description": "Minimum distance between trees in metres",
           "enumValues": [],

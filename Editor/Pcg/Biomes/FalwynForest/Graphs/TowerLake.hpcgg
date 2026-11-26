@@ -1,0 +1,1598 @@
+{
+ "links": [
+  {
+   "fromNode": 1,
+   "fromPin": "Out",
+   "toNode": 12,
+   "toPin": "In"
+  },
+  {
+   "fromNode": 2,
+   "fromPin": "Out",
+   "toNode": 13,
+   "toPin": "In"
+  },
+  {
+   "fromNode": 2,
+   "fromPin": "Out",
+   "toNode": 14,
+   "toPin": "In"
+  },
+  {
+   "fromNode": 11,
+   "fromPin": "Out",
+   "toNode": 14,
+   "toPin": "Exclude"
+  },
+  {
+   "fromNode": 3,
+   "fromPin": "Out",
+   "toNode": 15,
+   "toPin": "In"
+  },
+  {
+   "fromNode": 4,
+   "fromPin": "Out",
+   "toNode": 16,
+   "toPin": "In"
+  },
+  {
+   "fromNode": 5,
+   "fromPin": "Out",
+   "toNode": 17,
+   "toPin": "In"
+  },
+  {
+   "fromNode": 11,
+   "fromPin": "Out",
+   "toNode": 17,
+   "toPin": "Exclude"
+  },
+  {
+   "fromNode": 6,
+   "fromPin": "Out",
+   "toNode": 18,
+   "toPin": "In"
+  },
+  {
+   "fromNode": 11,
+   "fromPin": "Out",
+   "toNode": 18,
+   "toPin": "Exclude"
+  },
+  {
+   "fromNode": 7,
+   "fromPin": "Out",
+   "toNode": 19,
+   "toPin": "In"
+  },
+  {
+   "fromNode": 8,
+   "fromPin": "Out",
+   "toNode": 20,
+   "toPin": "In"
+  },
+  {
+   "fromNode": 8,
+   "fromPin": "Out",
+   "toNode": 21,
+   "toPin": "In"
+  },
+  {
+   "fromNode": 10,
+   "fromPin": "Out",
+   "toNode": 21,
+   "toPin": "Exclude"
+  },
+  {
+   "fromNode": 8,
+   "fromPin": "Out",
+   "toNode": 22,
+   "toPin": "In"
+  },
+  {
+   "fromNode": 22,
+   "fromPin": "Out",
+   "toNode": 23,
+   "toPin": "In"
+  },
+  {
+   "fromNode": 23,
+   "fromPin": "Out",
+   "toNode": 24,
+   "toPin": "In"
+  },
+  {
+   "fromNode": 1,
+   "fromPin": "Out",
+   "toNode": 25,
+   "toPin": "In"
+  },
+  {
+   "fromNode": 25,
+   "fromPin": "Out",
+   "toNode": 26,
+   "toPin": "In"
+  },
+  {
+   "fromNode": 9,
+   "fromPin": "Out",
+   "toNode": 26,
+   "toPin": "Subtract"
+  },
+  {
+   "fromNode": 6,
+   "fromPin": "Out",
+   "toNode": 26,
+   "toPin": "Subtract"
+  },
+  {
+   "fromNode": 7,
+   "fromPin": "Out",
+   "toNode": 26,
+   "toPin": "Subtract"
+  },
+  {
+   "fromNode": 26,
+   "fromPin": "Out",
+   "toNode": 27,
+   "toPin": "In"
+  },
+  {
+   "fromNode": 4,
+   "fromPin": "Out",
+   "toNode": 27,
+   "toPin": "Subtract"
+  },
+  {
+   "fromNode": 5,
+   "fromPin": "Out",
+   "toNode": 27,
+   "toPin": "Subtract"
+  },
+  {
+   "fromNode": 6,
+   "fromPin": "Out",
+   "toNode": 27,
+   "toPin": "Subtract"
+  },
+  {
+   "fromNode": 8,
+   "fromPin": "Out",
+   "toNode": 27,
+   "toPin": "Subtract"
+  },
+  {
+   "fromNode": 2,
+   "fromPin": "Out",
+   "toNode": 27,
+   "toPin": "Subtract"
+  },
+  {
+   "fromNode": 27,
+   "fromPin": "Out",
+   "toNode": 28,
+   "toPin": "In"
+  },
+  {
+   "fromNode": 28,
+   "fromPin": "Out",
+   "toNode": 29,
+   "toPin": "In"
+  },
+  {
+   "fromNode": 29,
+   "fromPin": "Out",
+   "toNode": 30,
+   "toPin": "In"
+  },
+  {
+   "fromNode": 30,
+   "fromPin": "Out",
+   "toNode": 31,
+   "toPin": "In"
+  },
+  {
+   "fromNode": 1,
+   "fromPin": "Out",
+   "toNode": 32,
+   "toPin": "In"
+  },
+  {
+   "fromNode": 32,
+   "fromPin": "Out",
+   "toNode": 33,
+   "toPin": "In"
+  },
+  {
+   "fromNode": 9,
+   "fromPin": "Out",
+   "toNode": 33,
+   "toPin": "Subtract"
+  },
+  {
+   "fromNode": 6,
+   "fromPin": "Out",
+   "toNode": 33,
+   "toPin": "Subtract"
+  },
+  {
+   "fromNode": 7,
+   "fromPin": "Out",
+   "toNode": 33,
+   "toPin": "Subtract"
+  },
+  {
+   "fromNode": 33,
+   "fromPin": "Out",
+   "toNode": 34,
+   "toPin": "In"
+  },
+  {
+   "fromNode": 34,
+   "fromPin": "Out",
+   "toNode": 35,
+   "toPin": "In"
+  },
+  {
+   "fromNode": 35,
+   "fromPin": "Out",
+   "toNode": 36,
+   "toPin": "In"
+  },
+  {
+   "fromNode": 36,
+   "fromPin": "Out",
+   "toNode": 37,
+   "toPin": "In"
+  },
+  {
+   "fromNode": 37,
+   "fromPin": "Out",
+   "toNode": 38,
+   "toPin": "In"
+  },
+  {
+   "fromNode": 1,
+   "fromPin": "Out",
+   "toNode": 39,
+   "toPin": "In"
+  },
+  {
+   "fromNode": 39,
+   "fromPin": "Out",
+   "toNode": 40,
+   "toPin": "In"
+  },
+  {
+   "fromNode": 9,
+   "fromPin": "Out",
+   "toNode": 40,
+   "toPin": "Subtract"
+  },
+  {
+   "fromNode": 6,
+   "fromPin": "Out",
+   "toNode": 40,
+   "toPin": "Subtract"
+  },
+  {
+   "fromNode": 7,
+   "fromPin": "Out",
+   "toNode": 40,
+   "toPin": "Subtract"
+  },
+  {
+   "fromNode": 4,
+   "fromPin": "Out",
+   "toNode": 40,
+   "toPin": "Subtract"
+  },
+  {
+   "fromNode": 5,
+   "fromPin": "Out",
+   "toNode": 40,
+   "toPin": "Subtract"
+  },
+  {
+   "fromNode": 40,
+   "fromPin": "Out",
+   "toNode": 41,
+   "toPin": "In"
+  },
+  {
+   "fromNode": 41,
+   "fromPin": "Out",
+   "toNode": 42,
+   "toPin": "In"
+  },
+  {
+   "fromNode": 42,
+   "fromPin": "Out",
+   "toNode": 43,
+   "toPin": "In"
+  },
+  {
+   "fromNode": 43,
+   "fromPin": "Out",
+   "toNode": 44,
+   "toPin": "In"
+  },
+  {
+   "fromNode": 44,
+   "fromPin": "Out",
+   "toNode": 45,
+   "toPin": "In"
+  },
+  {
+   "fromNode": 1,
+   "fromPin": "Out",
+   "toNode": 46,
+   "toPin": "In"
+  },
+  {
+   "fromNode": 46,
+   "fromPin": "Out",
+   "toNode": 47,
+   "toPin": "In"
+  },
+  {
+   "fromNode": 9,
+   "fromPin": "Out",
+   "toNode": 47,
+   "toPin": "Subtract"
+  },
+  {
+   "fromNode": 6,
+   "fromPin": "Out",
+   "toNode": 47,
+   "toPin": "Subtract"
+  },
+  {
+   "fromNode": 7,
+   "fromPin": "Out",
+   "toNode": 47,
+   "toPin": "Subtract"
+  },
+  {
+   "fromNode": 47,
+   "fromPin": "Out",
+   "toNode": 48,
+   "toPin": "In"
+  },
+  {
+   "fromNode": 2,
+   "fromPin": "Out",
+   "toNode": 48,
+   "toPin": "Target"
+  },
+  {
+   "fromNode": 8,
+   "fromPin": "Out",
+   "toNode": 48,
+   "toPin": "Target"
+  },
+  {
+   "fromNode": 48,
+   "fromPin": "Out",
+   "toNode": 49,
+   "toPin": "In"
+  },
+  {
+   "fromNode": 49,
+   "fromPin": "Out",
+   "toNode": 50,
+   "toPin": "In"
+  },
+  {
+   "fromNode": 50,
+   "fromPin": "Out",
+   "toNode": 51,
+   "toPin": "In"
+  },
+  {
+   "fromNode": 51,
+   "fromPin": "Out",
+   "toNode": 52,
+   "toPin": "In"
+  },
+  {
+   "fromNode": 52,
+   "fromPin": "Out",
+   "toNode": 53,
+   "toPin": "In"
+  },
+  {
+   "fromNode": 53,
+   "fromPin": "Out",
+   "toNode": 54,
+   "toPin": "In"
+  }
+ ],
+ "name": "TowerLake",
+ "nextNodeId": 55,
+ "nodes": [
+  {
+   "comment": "Tower forest areas",
+   "debug": false,
+   "editorX": 0.0,
+   "editorY": 0.0,
+   "id": 1,
+   "settings": {
+    "tags": {
+     "type": "string",
+     "value": "towerforest"
+    }
+   },
+   "type": "GetControls"
+  },
+  {
+   "comment": "Tower lakes",
+   "debug": false,
+   "editorX": 0.0,
+   "editorY": 150.0,
+   "id": 2,
+   "settings": {
+    "tags": {
+     "type": "string",
+     "value": "towerlake"
+    }
+   },
+   "type": "GetControls"
+  },
+  {
+   "comment": "Islands",
+   "debug": false,
+   "editorX": 0.0,
+   "editorY": 300.0,
+   "id": 3,
+   "settings": {
+    "tags": {
+     "type": "string",
+     "value": "island"
+    }
+   },
+   "type": "GetControls"
+  },
+  {
+   "comment": "Cliff edges",
+   "debug": false,
+   "editorX": 0.0,
+   "editorY": 450.0,
+   "id": 4,
+   "settings": {
+    "tags": {
+     "type": "string",
+     "value": "cliffedge"
+    }
+   },
+   "type": "GetControls"
+  },
+  {
+   "comment": "Ruin lines",
+   "debug": false,
+   "editorX": 0.0,
+   "editorY": 600.0,
+   "id": 5,
+   "settings": {
+    "tags": {
+     "type": "string",
+     "value": "ruin"
+    }
+   },
+   "type": "GetControls"
+  },
+  {
+   "comment": "Roads",
+   "debug": false,
+   "editorX": 0.0,
+   "editorY": 750.0,
+   "id": 6,
+   "settings": {
+    "tags": {
+     "type": "string",
+     "value": "road"
+    }
+   },
+   "type": "GetControls"
+  },
+  {
+   "comment": "Rivers",
+   "debug": false,
+   "editorX": 0.0,
+   "editorY": 900.0,
+   "id": 7,
+   "settings": {
+    "tags": {
+     "type": "string",
+     "value": "river"
+    }
+   },
+   "type": "GetControls"
+  },
+  {
+   "comment": "Wheat fields",
+   "debug": false,
+   "editorX": 0.0,
+   "editorY": 1050.0,
+   "id": 8,
+   "settings": {
+    "tags": {
+     "type": "string",
+     "value": "wheat"
+    }
+   },
+   "type": "GetControls"
+  },
+  {
+   "comment": "Everything that keeps scatter out",
+   "debug": false,
+   "editorX": 0.0,
+   "editorY": 1200.0,
+   "id": 9,
+   "settings": {
+    "tags": {
+     "type": "string",
+     "value": "exclusion"
+    }
+   },
+   "type": "GetControls"
+  },
+  {
+   "comment": "Exclusions that may cut a field fence",
+   "debug": false,
+   "editorX": 0.0,
+   "editorY": 1350.0,
+   "id": 10,
+   "settings": {
+    "excludeTags": {
+     "type": "string",
+     "value": "field"
+    },
+    "tags": {
+     "type": "string",
+     "value": "exclusion"
+    }
+   },
+   "type": "GetControls"
+  },
+  {
+   "comment": "Exclusions that cut roads, ruins and the shore",
+   "debug": false,
+   "editorX": 0.0,
+   "editorY": 1500.0,
+   "id": 11,
+   "settings": {
+    "excludeTags": {
+     "type": "string",
+     "value": "road,field,water,island"
+    },
+    "tags": {
+     "type": "string",
+     "value": "exclusion"
+    }
+   },
+   "type": "GetControls"
+  },
+  {
+   "comment": "Rolling ground under the forest",
+   "debug": false,
+   "editorX": 260.0,
+   "editorY": 0.0,
+   "id": 12,
+   "settings": {
+    "amplitude": {
+     "type": "string",
+     "value": "$hillAmplitude"
+    },
+    "stackOrder": {
+     "type": "int",
+     "value": -10
+    }
+   },
+   "type": "TerrainNoise"
+  },
+  {
+   "comment": "Lake basin and water",
+   "debug": false,
+   "editorX": 260.0,
+   "editorY": 150.0,
+   "id": 13,
+   "settings": {
+    "depth": {
+     "type": "float",
+     "value": 4.0
+    },
+    "material": {
+     "type": "string",
+     "value": "Worlds/Water_Base.hmat"
+    },
+    "shoreWidth": {
+     "type": "float",
+     "value": 6.0
+    },
+    "stackOrder": {
+     "type": "int",
+     "value": 0
+    }
+   },
+   "type": "WaterArea"
+  },
+  {
+   "comment": "Rocky shore ring",
+   "debug": false,
+   "editorX": 260.0,
+   "editorY": 300.0,
+   "id": 14,
+   "settings": {
+    "floorInside": {
+     "type": "bool",
+     "value": true
+    },
+    "heightMode": {
+     "type": "string",
+     "value": "keepGround"
+    },
+    "sectionAttribute": {
+     "type": "string",
+     "value": "section"
+    }
+   },
+   "type": "LaySectionAlongLoop"
+  },
+  {
+   "comment": "Island in the lake (the control point y is the water level)",
+   "debug": false,
+   "editorX": 260.0,
+   "editorY": 450.0,
+   "id": 15,
+   "settings": {
+    "anchor": {
+     "type": "string",
+     "value": "center"
+    },
+    "heightMode": {
+     "type": "string",
+     "value": "followSpline"
+    },
+    "section": {
+     "type": "string",
+     "value": "Editor/Pcg/Biomes/FalwynForest/Sections/Island.hsec"
+    },
+    "stackOrder": {
+     "type": "int",
+     "value": 20
+    }
+   },
+   "type": "StampSectionAtPoints"
+  },
+  {
+   "comment": "Terrace step faced with cliffs; the mass keeps the high side high",
+   "debug": false,
+   "editorX": 260.0,
+   "editorY": 600.0,
+   "id": 16,
+   "settings": {
+    "heightMode": {
+     "type": "string",
+     "value": "followGround"
+    },
+    "massDepth": {
+     "type": "float",
+     "value": 45.0
+    },
+    "massDetailAmplitude": {
+     "type": "float",
+     "value": 0.4
+    },
+    "massEnabled": {
+     "type": "bool",
+     "value": true
+    },
+    "massHeight": {
+     "type": "float",
+     "value": 5.0
+    },
+    "massNoiseAmplitude": {
+     "type": "float",
+     "value": 0.8
+    },
+    "massRise": {
+     "type": "float",
+     "value": 0.2
+    },
+    "sectionAttribute": {
+     "type": "string",
+     "value": "section"
+    },
+    "stackOrder": {
+     "type": "int",
+     "value": 5
+    }
+   },
+   "type": "LaySectionAlongSpline"
+  },
+  {
+   "comment": "Ruined walls",
+   "debug": false,
+   "editorX": 260.0,
+   "editorY": 750.0,
+   "id": 17,
+   "settings": {
+    "heightMode": {
+     "type": "string",
+     "value": "keepGround"
+    },
+    "sectionAttribute": {
+     "type": "string",
+     "value": "section"
+    }
+   },
+   "type": "LaySectionAlongSpline"
+  },
+  {
+   "comment": "Roads",
+   "debug": false,
+   "editorX": 260.0,
+   "editorY": 900.0,
+   "id": 18,
+   "settings": {
+    "heightMode": {
+     "type": "string",
+     "value": "smoothedGround"
+    },
+    "section": {
+     "type": "string",
+     "value": "Editor/Pcg/Sections/TestRoad.hsec"
+    }
+   },
+   "type": "LaySectionAlongSpline"
+  },
+  {
+   "comment": "Streams",
+   "debug": false,
+   "editorX": 260.0,
+   "editorY": 1050.0,
+   "id": 19,
+   "settings": {
+    "waterMargin": {
+     "type": "float",
+     "value": 3.0
+    }
+   },
+   "type": "River"
+  },
+  {
+   "comment": "Field soil",
+   "debug": false,
+   "editorX": 260.0,
+   "editorY": 1200.0,
+   "id": 20,
+   "settings": {},
+   "type": "PaintSplat"
+  },
+  {
+   "comment": "Field fence",
+   "debug": false,
+   "editorX": 260.0,
+   "editorY": 1350.0,
+   "id": 21,
+   "settings": {
+    "floorInside": {
+     "type": "bool",
+     "value": true
+    },
+    "heightMode": {
+     "type": "string",
+     "value": "keepGround"
+    },
+    "sectionAttribute": {
+     "type": "string",
+     "value": "section"
+    }
+   },
+   "type": "LaySectionAlongLoop"
+  },
+  {
+   "comment": "Wheat plants",
+   "debug": false,
+   "editorX": 520.0,
+   "editorY": 0.0,
+   "id": 22,
+   "settings": {
+    "cellSize": {
+     "type": "string",
+     "value": "$wheatSpacing"
+    },
+    "jitter": {
+     "type": "float",
+     "value": 1.0
+    }
+   },
+   "type": "SampleArea"
+  },
+  {
+   "comment": "",
+   "debug": false,
+   "editorX": 780.0,
+   "editorY": 0.0,
+   "id": 23,
+   "settings": {
+    "orientation": {
+     "type": "string",
+     "value": "upright"
+    },
+    "scaleMax": {
+     "type": "vector3",
+     "value": [
+      1.15,
+      1.15,
+      1.15
+     ]
+    },
+    "scaleMin": {
+     "type": "vector3",
+     "value": [
+      0.85,
+      0.85,
+      0.85
+     ]
+    },
+    "uniformScale": {
+     "type": "bool",
+     "value": true
+    },
+    "yawMax": {
+     "type": "float",
+     "value": 360.0
+    },
+    "yawMin": {
+     "type": "float",
+     "value": 0.0
+    }
+   },
+   "type": "TransformPoints"
+  },
+  {
+   "comment": "Wheat is foliage: drawn to the view distance, no collision",
+   "debug": false,
+   "editorX": 1040.0,
+   "editorY": 0.0,
+   "id": 24,
+   "settings": {
+    "collides": {
+     "type": "bool",
+     "value": false
+    },
+    "kind": {
+     "type": "string",
+     "value": "Foliage"
+    },
+    "meshes": {
+     "type": "string",
+     "value": "Models/Dreamscape/Foliage/SM_Wheat_01.hmsh|3;Models/Dreamscape/Foliage/SM_Wheat_02.hmsh|3;Models/Dreamscape/Foliage/SM_WheatGrass.hmsh|1"
+    }
+   },
+   "type": "SpawnMeshes"
+  },
+  {
+   "comment": "Tree candidates",
+   "debug": false,
+   "editorX": 520.0,
+   "editorY": 150.0,
+   "id": 25,
+   "settings": {
+    "cellSize": {
+     "type": "float",
+     "value": 2.0
+    },
+    "densityAttribute": {
+     "type": "string",
+     "value": "density"
+    },
+    "jitter": {
+     "type": "float",
+     "value": 1.0
+    },
+    "minSpacing": {
+     "type": "string",
+     "value": "$minSpacing"
+    }
+   },
+   "type": "SampleArea"
+  },
+  {
+   "comment": "Keep out of exclusions, roads, streams, cliffs and ruins",
+   "debug": false,
+   "editorX": 780.0,
+   "editorY": 150.0,
+   "id": 26,
+   "settings": {
+    "clearanceAttribute": {
+     "type": "string",
+     "value": "clearance"
+    },
+    "distance": {
+     "type": "float",
+     "value": 0.0
+    }
+   },
+   "type": "Difference"
+  },
+  {
+   "comment": "Clear strip along cliffs, ruins, roads, fields and the lake, so crowns do not hang over them",
+   "debug": false,
+   "editorX": 780.0,
+   "editorY": 300.0,
+   "id": 27,
+   "settings": {
+    "distance": {
+     "type": "float",
+     "value": 6.0
+    }
+   },
+   "type": "Difference"
+  },
+  {
+   "comment": "",
+   "debug": false,
+   "editorX": 1040.0,
+   "editorY": 150.0,
+   "id": 28,
+   "settings": {
+    "minSpacing": {
+     "type": "string",
+     "value": "$minSpacing"
+    },
+    "planar": {
+     "type": "bool",
+     "value": true
+    },
+    "priority": {
+     "type": "string",
+     "value": "density"
+    }
+   },
+   "type": "SelfPrune"
+  },
+  {
+   "comment": "No trees on steep ground or under water",
+   "debug": false,
+   "editorX": 1300.0,
+   "editorY": 0.0,
+   "id": 29,
+   "settings": {
+    "excludeUnderWater": {
+     "type": "bool",
+     "value": true
+    },
+    "maxSlope": {
+     "type": "float",
+     "value": 28.0
+    },
+    "minSlope": {
+     "type": "float",
+     "value": 0.0
+    }
+   },
+   "type": "FilterByTerrain"
+  },
+  {
+   "comment": "",
+   "debug": false,
+   "editorX": 1560.0,
+   "editorY": 0.0,
+   "id": 30,
+   "settings": {
+    "orientation": {
+     "type": "string",
+     "value": "upright"
+    },
+    "scaleMax": {
+     "type": "vector3",
+     "value": [
+      1.25,
+      1.25,
+      1.25
+     ]
+    },
+    "scaleMin": {
+     "type": "vector3",
+     "value": [
+      0.8,
+      0.8,
+      0.8
+     ]
+    },
+    "uniformScale": {
+     "type": "bool",
+     "value": true
+    },
+    "yawMax": {
+     "type": "float",
+     "value": 360.0
+    },
+    "yawMin": {
+     "type": "float",
+     "value": 0.0
+    }
+   },
+   "type": "TransformPoints"
+  },
+  {
+   "comment": "Trees: 13 Dreamscape kinds, about one in six an existing Falwyn tree",
+   "debug": false,
+   "editorX": 1820.0,
+   "editorY": 0.0,
+   "id": 31,
+   "settings": {
+    "collides": {
+     "type": "bool",
+     "value": true
+    },
+    "kind": {
+     "type": "string",
+     "value": "Foliage"
+    },
+    "meshes": {
+     "type": "string",
+     "value": "Models/Dreamscape/Trees/SM_Tree_A_01.hmsh|3;Models/Dreamscape/Trees/SM_Tree_A_02.hmsh|3;Models/Dreamscape/Trees/SM_Tree_A_03.hmsh|3;Models/Dreamscape/Trees/SM_Tree_B_01.hmsh|3;Models/Dreamscape/Trees/SM_Tree_B_02.hmsh|3;Models/Dreamscape/Trees/SM_Tree_C_01.hmsh|3;Models/Dreamscape/Trees/SM_Tree_C_02.hmsh|3;Models/Dreamscape/Trees/SM_Tree_D_01.hmsh|3;Models/Dreamscape/Trees/SM_Tree_D_02.hmsh|3;Models/Dreamscape/Trees/SM_Tree_E_01.hmsh|3;Models/Dreamscape/Trees/SM_Tree_E_02.hmsh|3;Models/Dreamscape/Trees/SM_Tree_F_01.hmsh|3;Models/Dreamscape/Trees/SM_Tree_F_02.hmsh|3;Models/Trees/Tree_02.hmsh|4;Models/Trees/SM_Tree_05.hmsh|4"
+    }
+   },
+   "type": "SpawnMeshes"
+  },
+  {
+   "comment": "Understorey candidates",
+   "debug": false,
+   "editorX": 520.0,
+   "editorY": 300.0,
+   "id": 32,
+   "settings": {
+    "cellSize": {
+     "type": "float",
+     "value": 3.0
+    },
+    "jitter": {
+     "type": "float",
+     "value": 1.0
+    }
+   },
+   "type": "SampleArea"
+  },
+  {
+   "comment": "",
+   "debug": false,
+   "editorX": 780.0,
+   "editorY": 450.0,
+   "id": 33,
+   "settings": {
+    "clearanceAttribute": {
+     "type": "string",
+     "value": "clearance"
+    },
+    "distance": {
+     "type": "float",
+     "value": 0.0
+    }
+   },
+   "type": "Difference"
+  },
+  {
+   "comment": "Patches instead of an even carpet",
+   "debug": false,
+   "editorX": 1040.0,
+   "editorY": 300.0,
+   "id": 34,
+   "settings": {
+    "amount": {
+     "type": "float",
+     "value": 1.0
+    },
+    "frequency": {
+     "type": "float",
+     "value": 0.035
+    },
+    "octaves": {
+     "type": "int",
+     "value": 2
+    }
+   },
+   "type": "DensityNoise"
+  },
+  {
+   "comment": "",
+   "debug": false,
+   "editorX": 1300.0,
+   "editorY": 150.0,
+   "id": 35,
+   "settings": {
+    "maxDensity": {
+     "type": "float",
+     "value": 1.0
+    },
+    "minDensity": {
+     "type": "float",
+     "value": 0.45
+    }
+   },
+   "type": "DensityFilter"
+  },
+  {
+   "comment": "",
+   "debug": false,
+   "editorX": 1560.0,
+   "editorY": 150.0,
+   "id": 36,
+   "settings": {
+    "excludeUnderWater": {
+     "type": "bool",
+     "value": true
+    },
+    "maxSlope": {
+     "type": "float",
+     "value": 32.0
+    },
+    "minSlope": {
+     "type": "float",
+     "value": 0.0
+    }
+   },
+   "type": "FilterByTerrain"
+  },
+  {
+   "comment": "",
+   "debug": false,
+   "editorX": 1820.0,
+   "editorY": 150.0,
+   "id": 37,
+   "settings": {
+    "orientation": {
+     "type": "string",
+     "value": "upright"
+    },
+    "scaleMax": {
+     "type": "vector3",
+     "value": [
+      1.3,
+      1.3,
+      1.3
+     ]
+    },
+    "scaleMin": {
+     "type": "vector3",
+     "value": [
+      0.8,
+      0.8,
+      0.8
+     ]
+    },
+    "uniformScale": {
+     "type": "bool",
+     "value": true
+    },
+    "yawMax": {
+     "type": "float",
+     "value": 360.0
+    },
+    "yawMin": {
+     "type": "float",
+     "value": 0.0
+    }
+   },
+   "type": "TransformPoints"
+  },
+  {
+   "comment": "Bushes, leaves, grass tufts, small stones",
+   "debug": false,
+   "editorX": 2080.0,
+   "editorY": 0.0,
+   "id": 38,
+   "settings": {
+    "collides": {
+     "type": "bool",
+     "value": false
+    },
+    "kind": {
+     "type": "string",
+     "value": "Foliage"
+    },
+    "meshes": {
+     "type": "string",
+     "value": "Models/Dreamscape/Foliage/SM_Bush_01.hmsh|2;Models/Dreamscape/Foliage/SM_Bush_02.hmsh|2;Models/Dreamscape/Foliage/SM_Bush_03.hmsh|2;Models/Dreamscape/Foliage/SM_Bush_04.hmsh|2;Models/Dreamscape/Foliage/SM_Bush_05.hmsh|2;Models/Dreamscape/Foliage/SM_Bush_06.hmsh|2;Models/Dreamscape/Foliage/SM_Bush_07.hmsh|2;Models/Dreamscape/Foliage/SM_Flower_01.hmsh|2;Models/Dreamscape/Foliage/SM_Flower_02.hmsh|2;Models/Dreamscape/Foliage/SM_LeafField_01.hmsh|3;Models/Dreamscape/Foliage/SM_LeafField_02.hmsh|3;Models/Dreamscape/Foliage/SM_Grass_Medium.hmsh|4;Models/Dreamscape/Foliage/SM_Grass_Large.hmsh|2;Models/Dreamscape/Foliage/SM_Grass_ScatteredGroup.hmsh|3;Models/Dreamscape/Foliage/SM_Weed_01.hmsh|2;Models/Dreamscape/Stones/SM_RockSmall_01.hmsh|1;Models/Dreamscape/Stones/SM_RockSmall_03.hmsh|1"
+    }
+   },
+   "type": "SpawnMeshes"
+  },
+  {
+   "comment": "Hazel candidates",
+   "debug": false,
+   "editorX": 520.0,
+   "editorY": 450.0,
+   "id": 39,
+   "settings": {
+    "cellSize": {
+     "type": "float",
+     "value": 14.0
+    },
+    "jitter": {
+     "type": "float",
+     "value": 1.0
+    }
+   },
+   "type": "SampleArea"
+  },
+  {
+   "comment": "",
+   "debug": false,
+   "editorX": 780.0,
+   "editorY": 600.0,
+   "id": 40,
+   "settings": {
+    "clearanceAttribute": {
+     "type": "string",
+     "value": "clearance"
+    },
+    "distance": {
+     "type": "float",
+     "value": 2.0
+    }
+   },
+   "type": "Difference"
+  },
+  {
+   "comment": "",
+   "debug": false,
+   "editorX": 1040.0,
+   "editorY": 450.0,
+   "id": 41,
+   "settings": {
+    "amount": {
+     "type": "float",
+     "value": 1.0
+    },
+    "frequency": {
+     "type": "float",
+     "value": 0.02
+    },
+    "octaves": {
+     "type": "int",
+     "value": 2
+    }
+   },
+   "type": "DensityNoise"
+  },
+  {
+   "comment": "",
+   "debug": false,
+   "editorX": 1300.0,
+   "editorY": 300.0,
+   "id": 42,
+   "settings": {
+    "maxDensity": {
+     "type": "float",
+     "value": 1.0
+    },
+    "minDensity": {
+     "type": "float",
+     "value": 0.6
+    }
+   },
+   "type": "DensityFilter"
+  },
+  {
+   "comment": "",
+   "debug": false,
+   "editorX": 1560.0,
+   "editorY": 300.0,
+   "id": 43,
+   "settings": {
+    "excludeUnderWater": {
+     "type": "bool",
+     "value": true
+    },
+    "maxSlope": {
+     "type": "float",
+     "value": 25.0
+    },
+    "minSlope": {
+     "type": "float",
+     "value": 0.0
+    }
+   },
+   "type": "FilterByTerrain"
+  },
+  {
+   "comment": "",
+   "debug": false,
+   "editorX": 1820.0,
+   "editorY": 300.0,
+   "id": 44,
+   "settings": {
+    "orientation": {
+     "type": "string",
+     "value": "upright"
+    },
+    "scaleMax": {
+     "type": "vector3",
+     "value": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    },
+    "scaleMin": {
+     "type": "vector3",
+     "value": [
+      0.7,
+      0.7,
+      0.7
+     ]
+    },
+    "uniformScale": {
+     "type": "bool",
+     "value": true
+    },
+    "yawMax": {
+     "type": "float",
+     "value": 360.0
+    },
+    "yawMin": {
+     "type": "float",
+     "value": 0.0
+    }
+   },
+   "type": "TransformPoints"
+  },
+  {
+   "comment": "Hazel bushes are tree-sized: they collide",
+   "debug": false,
+   "editorX": 2080.0,
+   "editorY": 150.0,
+   "id": 45,
+   "settings": {
+    "collides": {
+     "type": "bool",
+     "value": true
+    },
+    "kind": {
+     "type": "string",
+     "value": "Foliage"
+    },
+    "meshes": {
+     "type": "string",
+     "value": "Models/Dreamscape/Foliage/SM_HazelBush_01.hmsh|1;Models/Dreamscape/Foliage/SM_HazelBush_02.hmsh|1;Models/Dreamscape/Foliage/SM_HazelBush_03.hmsh|1"
+    }
+   },
+   "type": "SpawnMeshes"
+  },
+  {
+   "comment": "Meadow flower candidates",
+   "debug": false,
+   "editorX": 520.0,
+   "editorY": 600.0,
+   "id": 46,
+   "settings": {
+    "cellSize": {
+     "type": "float",
+     "value": 3.5
+    },
+    "jitter": {
+     "type": "float",
+     "value": 1.0
+    }
+   },
+   "type": "SampleArea"
+  },
+  {
+   "comment": "",
+   "debug": false,
+   "editorX": 780.0,
+   "editorY": 750.0,
+   "id": 47,
+   "settings": {
+    "clearanceAttribute": {
+     "type": "string",
+     "value": "clearance"
+    },
+    "distance": {
+     "type": "float",
+     "value": 0.0
+    }
+   },
+   "type": "Difference"
+  },
+  {
+   "comment": "Distance to the lake and the fields",
+   "debug": false,
+   "editorX": 1040.0,
+   "editorY": 600.0,
+   "id": 48,
+   "settings": {
+    "attributeName": {
+     "type": "string",
+     "value": "distanceToOpen"
+    },
+    "maxDistance": {
+     "type": "float",
+     "value": 80.0
+    }
+   },
+   "type": "DistanceTo"
+  },
+  {
+   "comment": "Only within 45 m of them",
+   "debug": false,
+   "editorX": 1300.0,
+   "editorY": 450.0,
+   "id": 49,
+   "settings": {
+    "attribute": {
+     "type": "string",
+     "value": "distanceToOpen"
+    },
+    "op": {
+     "type": "string",
+     "value": "<="
+    },
+    "value": {
+     "type": "float",
+     "value": 45.0
+    }
+   },
+   "type": "FilterByAttribute"
+  },
+  {
+   "comment": "",
+   "debug": false,
+   "editorX": 1560.0,
+   "editorY": 450.0,
+   "id": 50,
+   "settings": {
+    "amount": {
+     "type": "float",
+     "value": 1.0
+    },
+    "frequency": {
+     "type": "float",
+     "value": 0.05
+    },
+    "octaves": {
+     "type": "int",
+     "value": 2
+    }
+   },
+   "type": "DensityNoise"
+  },
+  {
+   "comment": "",
+   "debug": false,
+   "editorX": 1820.0,
+   "editorY": 450.0,
+   "id": 51,
+   "settings": {
+    "maxDensity": {
+     "type": "float",
+     "value": 1.0
+    },
+    "minDensity": {
+     "type": "float",
+     "value": 0.5
+    }
+   },
+   "type": "DensityFilter"
+  },
+  {
+   "comment": "",
+   "debug": false,
+   "editorX": 2080.0,
+   "editorY": 300.0,
+   "id": 52,
+   "settings": {
+    "excludeUnderWater": {
+     "type": "bool",
+     "value": true
+    },
+    "maxSlope": {
+     "type": "float",
+     "value": 25.0
+    },
+    "minSlope": {
+     "type": "float",
+     "value": 0.0
+    }
+   },
+   "type": "FilterByTerrain"
+  },
+  {
+   "comment": "",
+   "debug": false,
+   "editorX": 2340.0,
+   "editorY": 0.0,
+   "id": 53,
+   "settings": {
+    "orientation": {
+     "type": "string",
+     "value": "upright"
+    },
+    "scaleMax": {
+     "type": "vector3",
+     "value": [
+      1.3,
+      1.3,
+      1.3
+     ]
+    },
+    "scaleMin": {
+     "type": "vector3",
+     "value": [
+      0.9,
+      0.9,
+      0.9
+     ]
+    },
+    "uniformScale": {
+     "type": "bool",
+     "value": true
+    },
+    "yawMax": {
+     "type": "float",
+     "value": 360.0
+    },
+    "yawMin": {
+     "type": "float",
+     "value": 0.0
+    }
+   },
+   "type": "TransformPoints"
+  },
+  {
+   "comment": "Flower fields",
+   "debug": false,
+   "editorX": 2600.0,
+   "editorY": 0.0,
+   "id": 54,
+   "settings": {
+    "collides": {
+     "type": "bool",
+     "value": false
+    },
+    "kind": {
+     "type": "string",
+     "value": "Foliage"
+    },
+    "meshes": {
+     "type": "string",
+     "value": "Models/Dreamscape/Foliage/SM_FlowerField_01.hmsh|3;Models/Dreamscape/Foliage/SM_FlowerField_02.hmsh|3;Models/Dreamscape/Foliage/SM_FlowerGroup_01.hmsh|2;Models/Dreamscape/Foliage/SM_FlowerGroup_02.hmsh|2;Models/Dreamscape/Foliage/SM_FlowerGroup_03.hmsh|2;Models/Dreamscape/Foliage/SM_FlowerTall_01.hmsh|1"
+    }
+   },
+   "type": "SpawnMeshes"
+  }
+ ],
+ "parameters": [
+  {
+   "default": {
+    "type": "float",
+    "value": 9.0
+   },
+   "description": "Minimum distance between trees in metres",
+   "name": "minSpacing"
+  },
+  {
+   "default": {
+    "type": "float",
+    "value": 6.0
+   },
+   "description": "Height (m, +-) of the rolling ground under the forest",
+   "name": "hillAmplitude"
+  },
+  {
+   "default": {
+    "type": "float",
+    "value": 0.9
+   },
+   "description": "Distance between wheat plants in metres",
+   "name": "wheatSpacing"
+  }
+ ],
+ "version": 1
+}
