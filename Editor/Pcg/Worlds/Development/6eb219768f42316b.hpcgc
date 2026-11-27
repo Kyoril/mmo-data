@@ -1,0 +1,173 @@
+{
+  "extraTags": [],
+  "halfExtents": [
+    5.0,
+    5.0,
+    5.0
+  ],
+  "id": 7976465887026884971,
+  "name": "IslandClear",
+  "nextPointId": 11,
+  "overrides": {},
+  "pointIds": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
+  ],
+  "position": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "rotation": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "spline": {
+    "closed": true,
+    "interpolation": "catmullRom",
+    "points": [
+      {
+        "autoTangents": true,
+        "inX": 0.0,
+        "inY": 0.0,
+        "inZ": 0.0,
+        "outX": 0.0,
+        "outY": 0.0,
+        "outZ": 0.0,
+        "width": 0.0,
+        "x": 64.0,
+        "y": 62.0,
+        "z": -1055.0
+      },
+      {
+        "autoTangents": true,
+        "inX": 0.0,
+        "inY": 0.0,
+        "inZ": 0.0,
+        "outX": 0.0,
+        "outY": 0.0,
+        "outZ": 0.0,
+        "width": 0.0,
+        "x": 59.79999923706055,
+        "y": 62.02831268310547,
+        "z": -1042.0999755859375
+      },
+      {
+        "autoTangents": true,
+        "inX": 0.0,
+        "inY": 0.0,
+        "inZ": 0.0,
+        "outX": 0.0,
+        "outY": 0.0,
+        "outZ": 0.0,
+        "width": 0.0,
+        "x": 48.79999923706055,
+        "y": 62.07688903808594,
+        "z": -1034.0999755859375
+      },
+      {
+        "autoTangents": true,
+        "inX": 0.0,
+        "inY": 0.0,
+        "inZ": 0.0,
+        "outX": 0.0,
+        "outY": 0.0,
+        "outZ": 0.0,
+        "width": 0.0,
+        "x": 35.20000076293945,
+        "y": 62.082611083984375,
+        "z": -1034.0999755859375
+      },
+      {
+        "autoTangents": true,
+        "inX": 0.0,
+        "inY": 0.0,
+        "inZ": 0.0,
+        "outX": 0.0,
+        "outY": 0.0,
+        "outZ": 0.0,
+        "width": 0.0,
+        "x": 24.200000762939453,
+        "y": 62.02265167236328,
+        "z": -1042.0999755859375
+      },
+      {
+        "autoTangents": true,
+        "inX": 0.0,
+        "inY": 0.0,
+        "inZ": 0.0,
+        "outX": 0.0,
+        "outY": 0.0,
+        "outZ": 0.0,
+        "width": 0.0,
+        "x": 20.0,
+        "y": 63.52850341796875,
+        "z": -1055.0
+      },
+      {
+        "autoTangents": true,
+        "inX": 0.0,
+        "inY": 0.0,
+        "inZ": 0.0,
+        "outX": 0.0,
+        "outY": 0.0,
+        "outZ": 0.0,
+        "width": 0.0,
+        "x": 24.200000762939453,
+        "y": 62.43365478515625,
+        "z": -1067.9000244140625
+      },
+      {
+        "autoTangents": true,
+        "inX": 0.0,
+        "inY": 0.0,
+        "inZ": 0.0,
+        "outX": 0.0,
+        "outY": 0.0,
+        "outZ": 0.0,
+        "width": 0.0,
+        "x": 35.20000076293945,
+        "y": 62.0,
+        "z": -1075.9000244140625
+      },
+      {
+        "autoTangents": true,
+        "inX": 0.0,
+        "inY": 0.0,
+        "inZ": 0.0,
+        "outX": 0.0,
+        "outY": 0.0,
+        "outZ": 0.0,
+        "width": 0.0,
+        "x": 48.79999923706055,
+        "y": 62.0,
+        "z": -1075.9000244140625
+      },
+      {
+        "autoTangents": true,
+        "inX": 0.0,
+        "inY": 0.0,
+        "inZ": 0.0,
+        "outX": 0.0,
+        "outY": 0.0,
+        "outZ": 0.0,
+        "width": 0.0,
+        "x": 59.79999923706055,
+        "y": 62.0,
+        "z": -1067.9000244140625
+      }
+    ]
+  },
+  "typePath": "Editor/Pcg/Biomes/FalwynForest/Controls/Exclusion.hctl",
+  "version": 1
+}

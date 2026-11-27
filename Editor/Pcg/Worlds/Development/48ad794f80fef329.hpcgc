@@ -1,0 +1,31 @@
+{
+ "extraTags": [],
+ "halfExtents": [
+  5.0,
+  5.0,
+  5.0
+ ],
+ "id": 5236975324075324201,
+ "name": "BergseeIsland",
+ "nextPointId": 1,
+ "overrides": {},
+ "pointIds": [],
+ "position": [
+  42.0,
+  67.0,
+  -1055.0
+ ],
+ "rotation": [
+  1.0,
+  0.0,
+  0.0,
+  0.0
+ ],
+ "spline": {
+  "closed": false,
+  "interpolation": "linear",
+  "points": []
+ },
+ "typePath": "Editor/Pcg/Biomes/FalwynForest/Controls/Island.hctl",
+ "version": 1
+}

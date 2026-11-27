@@ -1,0 +1,89 @@
+{
+  "extraTags": [],
+  "halfExtents": [
+    5.0,
+    5.0,
+    5.0
+  ],
+  "id": 2229674538877886071,
+  "name": "PathClear1",
+  "nextPointId": 5,
+  "overrides": {},
+  "pointIds": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "position": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "rotation": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "spline": {
+    "closed": true,
+    "interpolation": "catmullRom",
+    "points": [
+      {
+        "autoTangents": true,
+        "inX": 0.0,
+        "inY": 0.0,
+        "inZ": 0.0,
+        "outX": 0.0,
+        "outY": 0.0,
+        "outZ": 0.0,
+        "width": 0.0,
+        "x": -47.29999923706055,
+        "y": 12.864908218383789,
+        "z": -631.0999755859375
+      },
+      {
+        "autoTangents": true,
+        "inX": 0.0,
+        "inY": 0.0,
+        "inZ": 0.0,
+        "outX": 0.0,
+        "outY": 0.0,
+        "outZ": 0.0,
+        "width": 0.0,
+        "x": 48.900001525878906,
+        "y": 29.20478057861328,
+        "z": -687.7000122070313
+      },
+      {
+        "autoTangents": true,
+        "inX": 0.0,
+        "inY": 0.0,
+        "inZ": 0.0,
+        "outX": 0.0,
+        "outY": 0.0,
+        "outZ": 0.0,
+        "width": 0.0,
+        "x": 42.29999923706055,
+        "y": 30.048938751220703,
+        "z": -698.9000244140625
+      },
+      {
+        "autoTangents": true,
+        "inX": 0.0,
+        "inY": 0.0,
+        "inZ": 0.0,
+        "outX": 0.0,
+        "outY": 0.0,
+        "outZ": 0.0,
+        "width": 0.0,
+        "x": -53.900001525878906,
+        "y": 12.950254440307617,
+        "z": -642.2999877929688
+      }
+    ]
+  },
+  "typePath": "Editor/Pcg/Biomes/FalwynForest/Controls/Exclusion.hctl",
+  "version": 1
+}

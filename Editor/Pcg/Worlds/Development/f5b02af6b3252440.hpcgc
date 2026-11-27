@@ -1,0 +1,94 @@
+{
+ "extraTags": [],
+ "halfExtents": [
+  5.0,
+  5.0,
+  5.0
+ ],
+ "id": 17703697374249296960,
+ "name": "BergseeForest",
+ "nextPointId": 5,
+ "overrides": {
+  "density": {
+   "type": "float",
+   "value": 0.3
+  }
+ },
+ "pointIds": [
+  1,
+  2,
+  3,
+  4
+ ],
+ "position": [
+  0.0,
+  0.0,
+  0.0
+ ],
+ "rotation": [
+  1.0,
+  0.0,
+  0.0,
+  0.0
+ ],
+ "spline": {
+  "closed": true,
+  "interpolation": "catmullRom",
+  "points": [
+   {
+    "autoTangents": true,
+    "inX": 0.0,
+    "inY": 0.0,
+    "inZ": 0.0,
+    "outX": 0.0,
+    "outY": 0.0,
+    "outZ": 0.0,
+    "width": 0.0,
+    "x": -495.0,
+    "y": 1.2249404191970825,
+    "z": -572.0
+   },
+   {
+    "autoTangents": true,
+    "inX": 0.0,
+    "inY": 0.0,
+    "inZ": 0.0,
+    "outX": 0.0,
+    "outY": 0.0,
+    "outZ": 0.0,
+    "width": 0.0,
+    "x": 495.0,
+    "y": 1.0156797170639038,
+    "z": -572.0
+   },
+   {
+    "autoTangents": true,
+    "inX": 0.0,
+    "inY": 0.0,
+    "inZ": 0.0,
+    "outX": 0.0,
+    "outY": 0.0,
+    "outZ": 0.0,
+    "width": 0.0,
+    "x": 495.0,
+    "y": 0.6278168559074402,
+    "z": -1562.0
+   },
+   {
+    "autoTangents": true,
+    "inX": 0.0,
+    "inY": 0.0,
+    "inZ": 0.0,
+    "outX": 0.0,
+    "outY": 0.0,
+    "outZ": 0.0,
+    "width": 0.0,
+    "x": -495.0,
+    "y": 0.5121945738792419,
+    "z": -1562.0
+   }
+  ]
+ },
+ "typePath": "Editor/Pcg/Biomes/FalwynForest/Controls/TowerForest.hctl",
+ "version": 1
+}
